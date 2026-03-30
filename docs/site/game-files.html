@@ -1,0 +1,2823 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Files - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item active" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Game Files</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="09-trackmania-2020-game-files-analysis"><a class="anchor" href="#09-trackmania-2020-game-files-analysis">#</a>09 - Trackmania 2020 Game Files Analysis</h1>
+<p>> Comprehensive reverse-engineering analysis of all files in the Trackmania install directory. > > <strong>Install Path</strong>: <code>/Users/kelvinnewton/Library/Application Support/CrossOver/Bottles/Steam/drive_c/Program Files (x86)/Steam/steamapps/common/Trackmania/</code> > > <strong>Analysis Date</strong>: 2026-03-27</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-dll-analysis">DLL Analysis</a></li>
+  <li><a href="#2-nadeoimportermateriallibtxt---complete-material-database">NadeoImporterMaterialLib.txt - Complete Material Database</a></li>
+  <li><a href="#3-pack-files">Pack Files</a></li>
+  <li><a href="#4-gfxdeviceperfstxt---gpu-performance-database">GfxDevicePerfs.txt - GPU Performance Database</a></li>
+  <li><a href="#5-openplanet-directory">Openplanet Directory</a></li>
+  <li><a href="#6-dxvk--d3d11-log-analysis">DXVK / D3D11 Log Analysis</a></li>
+  <li><a href="#7-nadeoimporterexe---asset-pipeline">NadeoImporter.exe - Asset Pipeline</a></li>
+  <li><a href="#8-updater_filestxt---update-system">updater_files.txt - Update System</a></li>
+  <li><a href="#9-nadeoini---configuration">Nadeo.ini - Configuration</a></li>
+  <li><a href="#10-shader-system-gpucache">Shader System (GpuCache)</a></li>
+  <li><a href="#11-key-findings-for-browser-recreation">Key Findings for Browser Recreation</a></li>
+</ol>
+<hr>
+<h2 id="1-dll-analysis"><a class="anchor" href="#1-dll-analysis">#</a>1. DLL Analysis</h2>
+<h3 id="11-anzudll-in-game-advertising-sdk-anzuio"><a class="anchor" href="#11-anzudll-in-game-advertising-sdk-anzuio">#</a>1.1 anzu.dll - In-Game Advertising SDK (Anzu.io)</h3>
+<p><strong>File Size</strong>: 3,930,968 bytes (3.75 MB) <strong>Evidence</strong>: Strings <code>Anzu SDK 5.41 is being initialized</code>, <code>https://l1-1.anzu.io/</code>, <code>AnzuSDK/5.41 (native;</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: Anzu.io is an in-game advertising SDK that renders programmatic ads on 3D surfaces within the game world (billboards, track-side screens). This is NOT cosmetic -- it dynamically fetches and renders real ad content onto in-game textures.</p>
+<p><strong>Key functionality strings found</strong>:</p>
+<ul>
+  <li><code>AnzuSDK_Init(</code> -- SDK initialization entry point</li>
+  <li><code>https://l1-1.anzu.io/</code> -- Anzu L1 (first-level) server endpoint</li>
+  <li><code>RenderScreen</code> -- Renders ad content to screen surfaces</li>
+  <li><code>placement</code> -- Ad placement system</li>
+  <li><code>impression</code> -- Ad impression tracking</li>
+  <li><code>interstitial</code> -- Interstitial ad format support</li>
+  <li><code>video</code> / <code>videotextures</code> -- Video ad support</li>
+  <li><code>texture</code> / <code>web texture id=%d entrypoint</code> -- Web-sourced texture rendering</li>
+  <li><code>mqtt message for %s : %s</code> -- MQTT-based real-time ad updates</li>
+  <li><code>Anzu Scheduler Thread</code> -- Background thread for ad scheduling</li>
+  <li><code>AnzuSDK/5.41 (native;</code> -- HTTP User-Agent identifying SDK version</li>
+  <li><code>ScriptableSDKObj.prototype.</code> -- Embedded JavaScript engine for ad logic</li>
+  <li>JavaScript polyfills for <code>window.setInterval</code>, <code>window.setTimeout</code>, <code>Date.now</code>, <code>console.log</code></li>
+  <li><code>error extracting %s from zip</code> -- Downloaded ad assets arrive as zip packages</li>
+  <li><code>PNG Decoder Error</code> -- PNG image decoding for ad textures</li>
+  <li><code>anzu::PngAnimatedTexture::ReadPng</code> -- Animated PNG texture support</li>
+  <li><code>anzu::BaseAnimatedTexture::OnStreamOpened</code> -- Streaming texture support</li>
+  <li><code>Error on channel '%s': Creating duplicate channels</code> -- Ad channel system</li>
+</ul>
+<p><strong>Version</strong>: 5.41 <strong>Network</strong>: HTTPS to <code>l1-1.anzu.io</code>, MQTT for real-time updates <strong>Relevance to browser recreation</strong>: LOW -- This is a monetization SDK. No gameplay impact. Browser version would not need this.</p>
+<hr>
+<h3 id="12-d3dcompiler_47dll-microsoft-d3d-shader-compiler"><a class="anchor" href="#12-d3dcompiler_47dll-microsoft-d3d-shader-compiler">#</a>1.2 d3dcompiler_47.dll - Microsoft D3D Shader Compiler</h3>
+<p><strong>File Size</strong>: 4,346,120 bytes (4.15 MB) <strong>Evidence</strong>: Strings <code>Microsoft (R) D3D Shader Disassembler</code>, <code>Microsoft (R) Optimizing Compiler</code>, HLSL-related strings <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: Official Microsoft Direct3D shader compiler. Compiles HLSL shaders at runtime when precompiled cache misses occur.</p>
+<p><strong>Key functionality strings found</strong>:</p>
+<ul>
+  <li><code>PixelShader</code>, <code>VertexShader</code>, <code>GeometryShader</code>, <code>HullShader</code>, <code>DomainShader</code>, <code>ComputeShader</code> -- All shader stages supported</li>
+  <li><code>S_COMPILE2</code>, <code>S_COMPILE3</code> -- PDB symbol types for compiled shaders</li>
+  <li><code>S_DEFRANGE_HLSL</code>, <code>S_GDATA_HLSL</code>, <code>S_LDATA_HLSL</code> -- HLSL debug info types</li>
+  <li><code>UAVs at every shader stage</code> -- Unordered Access Views at all stages (DX11.1 feature)</li>
+  <li><code>SV_RenderTargetArrayIndex or SV_ViewportArrayIndex from any shader feeding rasterizer</code> -- Advanced instanced rendering</li>
+  <li><code>enable11_1ShaderExtensions</code> -- D3D 11.1 shader extension support</li>
+  <li><code>Shader extensions for 11.1</code> -- Confirms D3D11.1 feature requirements</li>
+  <li><code>Microsoft (R) D3DX9 Shader Disassembler</code> -- Legacy D3DX9 support included</li>
+  <li><code>D3DCOMPILER_DISASSEMBLY_FORCE_HEX_LITERALS</code> -- Disassembly flag</li>
+</ul>
+<p><strong>Relevance to browser recreation</strong>: HIGH -- Tells us Trackmania uses D3D11.1 features. WebGPU/WebGL2 must replicate equivalent shader functionality. Shader model SM5 is the target.</p>
+<hr>
+<h3 id="13-dinput8dll-openplanet-hook-loader-directinput8-proxy"><a class="anchor" href="#13-dinput8dll-openplanet-hook-loader-directinput8-proxy">#</a>1.3 dinput8.dll - Openplanet Hook Loader (DirectInput8 Proxy)</h3>
+<p><strong>File Size</strong>: 14,336 bytes (14 KB) <strong>Evidence</strong>: Strings <code>Starting on %d-%02d-%02d</code>, <code>Openplanet.dll</code>, <code>DirectInput8Create</code>, <code>G:\Games\Trackmania\dinput8.pdb</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: This is NOT the real DirectInput8 DLL. It is a tiny proxy/hook DLL placed by Openplanet that intercepts the game's attempt to load dinput8.dll. It loads the real dinput8.dll from the system directory and also injects Openplanet.dll.</p>
+<p><strong>Hook mechanism (verified from strings)</strong>:</p>
+<ol>
+  <li><code>[%02d:%02d:%02d]</code> -- Timestamped logging</li>
+  <li><code>UPLAY_ARGUMENTS</code> -- Checks environment variable</li>
+  <li><code>Pause key held - not loading Openplanet.</code> -- Pause key bypass for troubleshooting</li>
+  <li><code>Finding libs path</code> -- Locates <code>Openplanet\Lib</code> subdirectory</li>
+  <li><code>Updating PATH to add: '%s'</code> -- Modifies PATH to include Openplanet libraries</li>
+  <li><code>Attaching DLL to: '%s'</code> -- Identifies target process (Trackmania.exe)</li>
+  <li><code>Openplanet.dll</code> / <code>Failed to load Openplanet module, error %d</code> -- Loads main Openplanet DLL</li>
+  <li><code>Try installing this: https://aka.ms/vs/17/release/vc_redist.x64.exe</code> -- MSVC runtime dependency</li>
+  <li><code>Assuming you are on Wine/Linux</code> -- Wine/CrossOver detection</li>
+  <li><code>\dinput8.dll</code> / <code>Couldn't load original dinput8.dll!</code> -- Loads real dinput8.dll from system directory</li>
+  <li><code>DirectInput8Create</code> -- Exported function that forwards to real DLL</li>
+</ol>
+<p><strong>PDB Path</strong>: <code>G:\Games\Trackmania\dinput8.pdb</code> (developer build path) <strong>Relevance to browser recreation</strong>: NONE -- Mod framework hook, not part of game.</p>
+<hr>
+<h3 id="14-libfbxsdkdll-autodesk-fbx-sdk-2018"><a class="anchor" href="#14-libfbxsdkdll-autodesk-fbx-sdk-2018">#</a>1.4 libfbxsdk.dll - Autodesk FBX SDK (2018)</h3>
+<p><strong>File Size</strong>: 8,341,944 bytes (7.95 MB) <strong>Evidence</strong>: Strings <code>FbxScene</code>, <code>FBX Extensions SDK</code>, <code>FbxSDKBindPose</code>, <code>FbxImporter</code>, file date 2018-07-09 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: Autodesk FBX SDK for importing 3D model files (.fbx format). Used by NadeoImporter.exe to convert FBX models into Nadeo's internal GBX format.</p>
+<p><strong>Key classes found in strings</strong>:</p>
+<ul>
+  <li><code>FbxScene</code> -- Scene container</li>
+  <li><code>FbxNode</code>, <code>FbxMesh</code>, <code>FbxSkin</code>, <code>FbxCluster</code> -- Mesh and skinning</li>
+  <li><code>FbxBlendShape</code>, <code>FbxBlendShapeChannel</code> -- Morph targets</li>
+  <li><code>FbxAnimEvaluator</code> -- Animation evaluation</li>
+  <li><code>FbxGeometryConverter</code> -- Geometry conversion utilities</li>
+  <li><code>FbxImporter</code>, <code>FbxIOSettings</code> -- File import pipeline</li>
+  <li><code>FbxGlobalSettings</code>, <code>FbxSystemUnit</code> -- Scene units/settings</li>
+  <li><code>FbxPose</code>, <code>FbxCharacterPose</code> -- Character poses</li>
+  <li><code>FbxDocument</code>, <code>FbxLibrary</code> -- Document management</li>
+</ul>
+<p><strong>Build Date</strong>: July 9, 2018 <strong>Relevance to browser recreation</strong>: LOW -- Only used for asset import pipeline, not runtime.</p>
+<hr>
+<h3 id="15-libwebp64dll-webp-image-codec"><a class="anchor" href="#15-libwebp64dll-webp-image-codec">#</a>1.5 libwebp64.dll - WebP Image Codec</h3>
+<p><strong>File Size</strong>: 677,960 bytes (662 KB) <strong>Evidence</strong>: Strings <code>WebPDecode</code>, <code>WebPEncode</code>, <code>SharpYuv</code>, <code>libwebp64.dll</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: Google WebP image format encoder/decoder. Used for texture compression in the game.</p>
+<p><strong>Exported functions (sample)</strong>:</p>
+<ul>
+  <li><code>WebPDecode</code>, <code>WebPDecodeRGBA</code>, <code>WebPDecodeRGBAInto</code> -- Decoding</li>
+  <li><code>WebPEncode</code>, <code>WebPEncodeBGR</code> -- Encoding</li>
+  <li><code>WebPConfigInitInternal</code>, <code>WebPConfigLosslessPreset</code> -- Configuration</li>
+  <li><code>WebPBlendAlpha</code>, <code>WebPCleanupTransparentArea</code>, <code>WebPCopyPixels</code> -- Pixel operations</li>
+  <li><code>SharpYuvComputeConversionMatrix</code>, <code>SharpYuvGetVersion</code> -- YUV conversion</li>
+</ul>
+<p><strong>Relevance to browser recreation</strong>: MEDIUM -- Browser natively supports WebP, but understanding the texture pipeline is useful.</p>
+<hr>
+<h3 id="16-ntdll_odll-winecrossover-ntdll-backup"><a class="anchor" href="#16-ntdll_odll-winecrossover-ntdll-backup">#</a>1.6 ntdll_o.dll - Wine/CrossOver NTDLL Backup</h3>
+<p><strong>File Size</strong>: 687,696 bytes (672 KB) <strong>Evidence</strong>: String <code>Wine builtin DLL</code> at offset 0, <code>ntdll.dll</code> references, <code>wine: could not open working directory</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: This is a backup/original copy of Wine's <code>ntdll.dll</code>. The <code>_o</code> suffix indicates it was renamed by Openplanet or CrossOver during the DLL hooking process. The real ntdll.dll in the system directory may have been replaced or patched, and this is the original Wine builtin version.</p>
+<p><strong>Key strings</strong>:</p>
+<ul>
+  <li><code>Wine builtin DLL</code> -- Identifies as Wine-generated</li>
+  <li><code>ntdll</code> (multiple references) -- Self-identifies as ntdll</li>
+  <li><code>loaddll</code> -- DLL loading subsystem</li>
+  <li><code>LdrSetAppCompatDllRedirectionCallback</code> -- DLL redirection</li>
+  <li><code>LdrSetDllManifestProber</code> -- Manifest probing</li>
+  <li><code>wine: could not open working directory %s, starting in the Windows directory.</code></li>
+  <li><code>Wrong version definition in manifest file (%s)</code></li>
+</ul>
+<p><strong>Relevance to browser recreation</strong>: NONE -- Wine/CrossOver infrastructure artifact.</p>
+<hr>
+<h3 id="17-openal64_bundleddll-openal-soft-audio-library"><a class="anchor" href="#17-openal64_bundleddll-openal-soft-audio-library">#</a>1.7 OpenAL64_bundled.dll - OpenAL Soft Audio Library</h3>
+<p><strong>File Size</strong>: 1,446,928 bytes (1.38 MB) <strong>Evidence</strong>: OpenAL buffer/source management strings, extensive audio API <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: OpenAL Soft -- cross-platform 3D audio API. Bundled with the game to ensure consistent audio behavior across systems.</p>
+<p><strong>Key functionality strings found</strong>:</p>
+<ul>
+  <li>Buffer management: <code>Generating %d buffers</code>, <code>Deleting in-use buffer %u</code>, <code>Mapping buffer %u</code></li>
+  <li>Source management: audio source positioning and control</li>
+  <li><code>Modifying in-use buffer %u's ambisonic layout</code> -- Ambisonic (spatial) audio support</li>
+  <li><code>Modifying in-use buffer %u's ambisonic scaling</code> -- Ambisonic scaling</li>
+  <li><code>Modifying in-use buffer %u's loop points</code> -- Audio looping</li>
+  <li><code>alBufferSamplesSOFT not supported</code> -- OpenAL Soft extensions</li>
+  <li>Extensive error handling for buffer operations</li>
+</ul>
+<p><strong>Audio Features</strong>: 3D positional audio, ambisonic support, loop points, buffer streaming <strong>Relevance to browser recreation</strong>: HIGH -- Web Audio API can replicate most OpenAL functionality for 3D spatial audio.</p>
+<hr>
+<h3 id="18-openplanetdll-openplanet-mod-framework-v1291"><a class="anchor" href="#18-openplanetdll-openplanet-mod-framework-v1291">#</a>1.8 Openplanet.dll - Openplanet Mod Framework (v1.29.1)</h3>
+<p><strong>File Size</strong>: 12,764,672 bytes (12.17 MB) <strong>Evidence</strong>: String <code>\$z Openplanet 1.29.1</code>, <code>1.29.1 (next, Public, 2026-01-31)</code>, <code>e:\Dev\openplanet\</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: The main Openplanet modding framework DLL. Provides plugin system, script engine, ImGui overlay, and game hooking infrastructure.</p>
+<p><strong>Version</strong>: 1.29.1 (next, Public, 2026-01-31) <strong>Build Path</strong>: <code>e:\Dev\openplanet\</code> (developer machine)</p>
+<p><strong>Key components identified from strings</strong>:</p>
+<ul>
+  <li><strong>Script Engine</strong>: <code>Angelscript</code> -- AngelScript scripting language</li>
+  <li><strong>UI Framework</strong>: <code>dear imgui</code> version <code>1.92.1 WIP</code> -- ImGui for overlay UI</li>
+  <li><strong>Markdown</strong>: <code>imgui_md</code> -- Markdown rendering in ImGui</li>
+  <li><strong>TOML Parser</strong>: <code>e:\Dev\openplanet\Libs\toml11\include\toml11\parser.hpp</code></li>
+  <li><strong>Crypto</strong>: <code>RC4 for x86_64, CRYPTOGAMS</code>, <code>AES for x86_64, CRYPTOGAMS</code>, <code>Montgomery Multiplication for x86_64, CRYPTOGAMS</code>, <code>VIA Padlock x86_64 module</code> -- Cryptographic operations (signature verification)</li>
+  <li><strong>AES-NI GCM</strong>: <code>AES-NI GCM module for x86_64, CRYPTOGAMS</code> -- Hardware-accelerated encryption</li>
+</ul>
+<p><strong>Game hooks (verified)</strong>:</p>
+<ul>
+  <li><code>GamePhysics</code> -- Physics update hook</li>
+  <li><code>Update_GameAppAsync</code> -- Async game update hook</li>
+  <li><code>GamePhysics_Late</code> -- Late physics hook</li>
+  <li><code>AllScripts_Before</code>, <code>AllScripts_After</code> -- Script execution hooks</li>
+  <li><code>Fatal: Unable to detect MainUpdate hook pointer.</code> -- Main game loop hook</li>
+  <li><code>Fatal: Unable to detect SetAuthToken hook pointer.</code> -- Auth system hook</li>
+  <li><code>SModel</code> -- Model data access</li>
+</ul>
+<p><strong>Plugin system</strong>: <code>Plugin render early</code>, <code>Plugin render interface</code>, <code>Plugin render</code> -- Multiple render passes for plugins</p>
+<p><strong>Relevance to browser recreation</strong>: LOW -- Mod framework, not game code. However, the hook points reveal game architecture: physics loop, script execution, rendering pipeline order.</p>
+<hr>
+<h3 id="19-upc_r2_loader64dll-ubisoft-connect-upc-sdk"><a class="anchor" href="#19-upc_r2_loader64dll-ubisoft-connect-upc-sdk">#</a>1.9 upc_r2_loader64.dll - Ubisoft Connect (UPC) SDK</h3>
+<p><strong>File Size</strong>: 436,032 bytes (426 KB) <strong>Evidence</strong>: 98 exported <code>UPC_*</code> functions found <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: Ubisoft Connect platform integration library. Handles authentication, achievements, friends, multiplayer sessions, cloud storage, overlay, and store interactions.</p>
+<p><strong>Complete exported API (98 functions)</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Category</th>
+  <th style="text-align:left">Functions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Lifecycle</strong></td>
+  <td style="text-align:left"><code>UPC_Init</code>, <code>UPC_Uninit</code>, <code>UPC_Update</code>, <code>UPC_ContextCreate</code>, <code>UPC_ContextFree</code>, <code>UPC_Cancel</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Error</strong></td>
+  <td style="text-align:left"><code>UPC_ErrorToString</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Events</strong></td>
+  <td style="text-align:left"><code>UPC_EventNextPoll</code>, <code>UPC_EventNextPeek</code>, <code>UPC_EventRegisterHandler</code>, <code>UPC_EventUnregisterHandler</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Achievements</strong></td>
+  <td style="text-align:left"><code>UPC_AchievementUnlock</code>, <code>UPC_AchievementListGet</code>, <code>UPC_AchievementListFree</code>, <code>UPC_AchievementImageGet</code>, <code>UPC_AchievementImageFree</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>User/Identity</strong></td>
+  <td style="text-align:left"><code>UPC_IdGet</code>, <code>UPC_IdGet_Extended</code>, <code>UPC_NameGet</code>, <code>UPC_NameGet_Extended</code>, <code>UPC_EmailGet</code>, <code>UPC_EmailGet_Extended</code>, <code>UPC_UserGet</code>, <code>UPC_UserFree</code>, <code>UPC_UserPlayedWithAdd</code>, <code>UPC_UserPlayedWithAdd_Extended</code>, <code>UPC_AvatarGet</code>, <code>UPC_AvatarFree</code>, <code>UPC_ApplicationIdGet</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Friends/Social</strong></td>
+  <td style="text-align:left"><code>UPC_FriendListGet</code>, <code>UPC_FriendListFree</code>, <code>UPC_FriendAdd</code>, <code>UPC_FriendRemove</code>, <code>UPC_FriendCheck</code>, <code>UPC_FriendCheck_Extended</code>, <code>UPC_BlacklistHas</code>, <code>UPC_BlacklistHas_Extended</code>, <code>UPC_BlacklistAdd</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Multiplayer</strong></td>
+  <td style="text-align:left"><code>UPC_MultiplayerSessionSet</code>, <code>UPC_MultiplayerSessionSet_Extended</code>, <code>UPC_MultiplayerSessionGet</code>, <code>UPC_MultiplayerSessionFree</code>, <code>UPC_MultiplayerInvite</code>, <code>UPC_MultiplayerInviteAnswer</code>, <code>UPC_MultiplayerSessionClear</code>, <code>UPC_MultiplayerSessionClear_Extended</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Cloud Storage</strong></td>
+  <td style="text-align:left"><code>UPC_StorageFileListGet</code>, <code>UPC_StorageFileListFree</code>, <code>UPC_StorageFileOpen</code>, <code>UPC_StorageFileClose</code>, <code>UPC_StorageFileDelete</code>, <code>UPC_StorageFileRead</code>, <code>UPC_StorageFileWrite</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Store/Products</strong></td>
+  <td style="text-align:left"><code>UPC_ProductListGet</code>, <code>UPC_ProductListFree</code>, <code>UPC_ProductConsume</code>, <code>UPC_ProductConsumeSignatureFree</code>, <code>UPC_StoreProductListGet</code>, <code>UPC_StoreProductListFree</code>, <code>UPC_StoreCheckout</code>, <code>UPC_StoreProductDetailsShow</code>, <code>UPC_StoreProductsShow</code>, <code>UPC_StorePartnerGet</code>, <code>UPC_StorePartnerGet_Extended</code>, <code>UPC_StoreIsEnabled</code>, <code>UPC_StoreIsEnabled_Extended</code>, <code>UPC_StoreLanguageSet</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Overlay</strong></td>
+  <td style="text-align:left"><code>UPC_OverlayShow</code>, <code>UPC_OverlayBrowserUrlShow</code>, <code>UPC_OverlayMicroAppShow</code>, <code>UPC_OverlayNotificationShow</code>, <code>UPC_OverlayNotificationShow_Extended</code>, <code>UPC_OverlayFriendInvitationShow</code>, <code>UPC_OverlayFriendInvitationShow_Extended</code>, <code>UPC_OverlayFriendSelectionShow</code>, <code>UPC_OverlayFriendSelectionFree</code>, <code>UPC_ShowBrowserUrl</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Install</strong></td>
+  <td style="text-align:left"><code>UPC_InstallChunkListGet</code>, <code>UPC_InstallChunkListFree</code>, <code>UPC_InstallChunksOrderUpdate</code>, <code>UPC_InstallChunksOrderUpdate_Extended</code>, <code>UPC_InstallChunksPresenceCheck</code>, <code>UPC_InstallLanguageGet</code>, <code>UPC_InstallLanguageGet_Extended</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Hardware</strong></td>
+  <td style="text-align:left"><code>UPC_CPUScoreGet</code>, <code>UPC_GPUScoreGet</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Streaming</strong></td>
+  <td style="text-align:left"><code>UPC_StreamingCurrentUserCountryFree</code>, <code>UPC_StreamingCurrentUserCountryGet</code>, <code>UPC_StreamingDeviceTypeGet</code>, <code>UPC_StreamingInputGamepadTypeGet</code>, <code>UPC_StreamingInputTypeGet</code>, <code>UPC_StreamingNetworkDelayForInputGet</code>, <code>UPC_StreamingNetworkDelayForVideoGet</code>, <code>UPC_StreamingNetworkDelayRoundtripGet</code>, <code>UPC_StreamingResolutionFree</code>, <code>UPC_StreamingResolutionGet</code>, <code>UPC_StreamingTypeGet</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Auth</strong></td>
+  <td style="text-align:left"><code>UPC_TicketGet</code>, <code>UPC_TicketGet_Extended</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Rich Presence</strong></td>
+  <td style="text-align:left"><code>UPC_RichPresenceSet</code>, <code>UPC_RichPresenceSet_Extended</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>UPlay App ID</strong>: 7015 (from Nadeo.ini) <strong>Relevance to browser recreation</strong>: MEDIUM -- Need to replicate auth flow. The UPC API reveals what platform features Trackmania depends on.</p>
+<hr>
+<h3 id="110-vivoxsdkdll-vivox-voice-chat-sdk-v5192"><a class="anchor" href="#110-vivoxsdkdll-vivox-voice-chat-sdk-v5192">#</a>1.10 vivoxsdk.dll - Vivox Voice Chat SDK (v5.19.2)</h3>
+<p><strong>File Size</strong>: 12,441,688 bytes (11.87 MB) <strong>Evidence</strong>: String <code><VivoxSDK><SDK_VERSION>5.19.2.33478.213423bef1</SDK_VERSION></code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: Vivox real-time voice communication SDK. Provides voice chat, text-to-speech, speech-to-text, and 3D positional audio communication.</p>
+<p><strong>Version</strong>: 5.19.2.33478.213423bef1 <strong>Protocol</strong>: SIP (Session Initiation Protocol) based, with STUN, RTP, HTTP</p>
+<p><strong>Key features from strings</strong>:</p>
+<ul>
+  <li>Voice: <code>vx_audio_device_hot_swap_event_type_active_capture_device_changed</code> -- Audio device management</li>
+  <li>3D Spatial: <code>channel_rolloff_curve_type_inverse_distance_clamped</code>, <code>channel_rolloff_curve_type_linear_distance_clamped</code>, <code>channel_rolloff_curve_type_exponential_distance_clamped</code> -- 3D voice rolloff curves</li>
+  <li>Channel types: <code>sip:confctl-e-</code> (echo), <code>sip:confctl-g-</code> (group), <code>sip:confctl-d-</code> (direct)</li>
+  <li>Session management: <code>session_media_connecting</code>, <code>session_media_connected</code>, <code>session_media_disconnected</code></li>
+  <li>Text: <code>session_text_connecting</code>, <code>session_text_connected</code></li>
+  <li>Audio processing: <code>VIVOX_FORCE_NO_AEC</code> (echo cancellation), <code>VIVOX_FORCE_NO_AGC</code> (gain control), <code>VIVOX_FORCE_NO_VAD</code> (voice activity detection)</li>
+  <li>Buffer management: <code>aux_buffer_audio_capture</code>, <code>aux_buffer_audio_render</code></li>
+  <li>Recovery: <code>connection_state_recovering</code>, <code>connection_state_recovered</code>, <code>connection_state_failed_to_recover</code></li>
+</ul>
+<p><strong>Relevance to browser recreation</strong>: LOW -- Voice chat can use WebRTC in a browser implementation.</p>
+<hr>
+<h3 id="111-voicechatdll-nadeo-voice-chat-wrapper"><a class="anchor" href="#111-voicechatdll-nadeo-voice-chat-wrapper">#</a>1.11 VoiceChat.dll - Nadeo Voice Chat Wrapper</h3>
+<p><strong>File Size</strong>: 1,298,648 bytes (1.24 MB) <strong>Evidence</strong>: Strings <code>VivoxTrackmania</code>, <code>voicechat.vivox.<em></code> config keys, <code>HARBOUR_TAG_VOICECHAT_VIVOX_</em></code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: Nadeo's wrapper around the Vivox SDK, integrating voice chat into Trackmania's game architecture ("Harbour" framework).</p>
+<p><strong>Configuration keys discovered</strong>:</p>
+<ul>
+  <li><code>voicechat.vivox.server_url</code> -- Vivox server URL</li>
+  <li><code>voicechat.vivox.token_issuer</code> -- Token authentication issuer</li>
+  <li><code>voicechat.vivox.access_token_key</code> -- Access token key</li>
+  <li><code>voicechat.vivox.log_level</code> -- Logging verbosity</li>
+  <li><code>voicechat.vivox.domain</code> -- Vivox domain</li>
+  <li><code>voicechat.vivox.channel_uri</code> -- Channel URI</li>
+  <li><code>voicechat.vivox.account_uri</code> -- Account URI</li>
+  <li><code>voicechat.vivox.profile_id</code> -- User profile ID</li>
+  <li><code>voicechat.vivox.token</code> -- Auth token</li>
+  <li><code>voicechat.vivox.token_type</code> -- Token type</li>
+  <li><code>voicechat.vivox.account_name</code> -- Account name</li>
+  <li><code>voicechat.vivox.3d</code> -- 3D positional audio enabled</li>
+  <li><code>voicechat.vivox.default_language.text_chat</code> -- Default text language</li>
+  <li><code>voicechat.vivox.default_language.voice_chat</code> -- Default voice language</li>
+  <li><code>voicechat.vivox.default_language.text_to_speech</code> -- TTS language</li>
+  <li><code>voicechat.vivox.default_language.speech_to_text</code> -- STT language</li>
+  <li><code>voicechat.vivox.platform_check_permission</code> -- Permission checks</li>
+  <li><code>voicechat.vivox.delay_connect</code> -- Delayed connection</li>
+  <li><code>voicechat.vivox.logfileName</code> -- <code>VivoxTrackmania</code></li>
+</ul>
+<p><strong>Default Vivox server</strong>: <code>https://hyxd.www.vivox.com/api2</code></p>
+<p><strong>Harbour Tags</strong> (internal module tagging system):</p>
+<ul>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_SDK</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_CONFIG</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_CONTEXT</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_CHANNEL</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_USER</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_REQUIREMENT</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_BINDINGS</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_DOTNET</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_TEST</code></li>
+  <li><code>HARBOUR_TAG_VOICECHAT_VIVOX_EXAMPLE</code></li>
+</ul>
+<p><strong>Operations</strong>: <code>MuteLocal</code>, <code>MuteRemote</code>, <code>Unmute</code>, <code>SetVoiceDetection</code>, <code>ChannelJoin</code>, <code>ChannelLeave</code></p>
+<p><strong>Relevance to browser recreation</strong>: LOW -- Voice chat is a separate system from core gameplay.</p>
+<hr>
+<h3 id="112-vorbis64dll-ogg-vorbis-audio-codec"><a class="anchor" href="#112-vorbis64dll-ogg-vorbis-audio-codec">#</a>1.12 vorbis64.dll - Ogg Vorbis Audio Codec</h3>
+<p><strong>File Size</strong>: 866,304 bytes (846 KB) <strong>Evidence</strong>: Strings <code>Xiph.Org libVorbis I 20150105</code>, <code>Xiph.Org libVorbis 1.3.5</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Purpose</strong>: Ogg Vorbis lossy audio codec for game audio (music, sound effects).</p>
+<p><strong>Version</strong>: libVorbis 1.3.5 (January 5, 2015)</p>
+<p><strong>Exported functions</strong>:</p>
+<ul>
+  <li><code>vorbis_analysis</code>, <code>vorbis_analysis_blockout</code>, <code>vorbis_analysis_buffer</code>, <code>vorbis_analysis_headerout</code>, <code>vorbis_analysis_init</code>, <code>vorbis_analysis_wrote</code> -- Encoding</li>
+  <li><code>vorbis_block_clear</code>, <code>vorbis_block_init</code> -- Block management</li>
+  <li><code>vorbis_comment_add</code>, <code>vorbis_comment_add_tag</code>, <code>vorbis_comment_clear</code>, <code>vorbis_comment_init</code> -- Metadata</li>
+  <li><code>vorbis_dsp_clear</code> -- DSP cleanup</li>
+  <li><code>vorbis_encode_init</code>, <code>vorbis_encode_init_vbr</code>, <code>vorbis_encode_setup_init</code>, <code>vorbis_encode_setup_managed</code>, <code>vorbis_encode_setup_vbr</code> -- Encoder setup</li>
+  <li><code>vorbis_info_blocksize</code> -- Block size info</li>
+  <li><code>vorbis_bitrate_addblock</code>, <code>vorbis_bitrate_flushpacket</code> -- Bitrate management</li>
+  <li><code>vorbis_granule_time</code> -- Timestamp conversion</li>
+</ul>
+<p><strong>Relevance to browser recreation</strong>: MEDIUM -- Browser can decode Ogg Vorbis natively. Useful to know game audio is in this format.</p>
+<hr>
+<h2 id="dll-summary-table"><a class="anchor" href="#dll-summary-table">#</a>DLL Summary Table</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Purpose</th>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Relevance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>anzu.dll</code></td>
+  <td style="text-align:left">3.75 MB</td>
+  <td style="text-align:left">Anzu.io in-game advertising SDK</td>
+  <td style="text-align:left">5.41</td>
+  <td style="text-align:left">LOW</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>d3dcompiler_47.dll</code></td>
+  <td style="text-align:left">4.15 MB</td>
+  <td style="text-align:left">Microsoft D3D HLSL shader compiler</td>
+  <td style="text-align:left">47</td>
+  <td style="text-align:left">HIGH</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>dinput8.dll</code></td>
+  <td style="text-align:left">14 KB</td>
+  <td style="text-align:left">Openplanet hook loader (DI8 proxy)</td>
+  <td style="text-align:left">N/A</td>
+  <td style="text-align:left">NONE</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>libfbxsdk.dll</code></td>
+  <td style="text-align:left">7.95 MB</td>
+  <td style="text-align:left">Autodesk FBX SDK for 3D import</td>
+  <td style="text-align:left">2018</td>
+  <td style="text-align:left">LOW</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>libwebp64.dll</code></td>
+  <td style="text-align:left">662 KB</td>
+  <td style="text-align:left">Google WebP image codec</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left">MEDIUM</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ntdll_o.dll</code></td>
+  <td style="text-align:left">672 KB</td>
+  <td style="text-align:left">Wine builtin ntdll backup</td>
+  <td style="text-align:left">N/A</td>
+  <td style="text-align:left">NONE</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
+  <td style="text-align:left">1.38 MB</td>
+  <td style="text-align:left">OpenAL Soft 3D audio</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left">HIGH</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Openplanet.dll</code></td>
+  <td style="text-align:left">12.17 MB</td>
+  <td style="text-align:left">Openplanet mod framework</td>
+  <td style="text-align:left">1.29.1</td>
+  <td style="text-align:left">LOW</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>upc_r2_loader64.dll</code></td>
+  <td style="text-align:left">426 KB</td>
+  <td style="text-align:left">Ubisoft Connect platform SDK</td>
+  <td style="text-align:left">R2</td>
+  <td style="text-align:left">MEDIUM</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>vivoxsdk.dll</code></td>
+  <td style="text-align:left">11.87 MB</td>
+  <td style="text-align:left">Vivox voice chat SDK</td>
+  <td style="text-align:left">5.19.2</td>
+  <td style="text-align:left">LOW</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>VoiceChat.dll</code></td>
+  <td style="text-align:left">1.24 MB</td>
+  <td style="text-align:left">Nadeo Vivox wrapper</td>
+  <td style="text-align:left">N/A</td>
+  <td style="text-align:left">LOW</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>vorbis64.dll</code></td>
+  <td style="text-align:left">846 KB</td>
+  <td style="text-align:left">Ogg Vorbis audio codec</td>
+  <td style="text-align:left">1.3.5</td>
+  <td style="text-align:left">MEDIUM</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="2-nadeoimportermateriallibtxt-complete-material-database"><a class="anchor" href="#2-nadeoimportermateriallibtxt-complete-material-database">#</a>2. NadeoImporterMaterialLib.txt - Complete Material Database</h2>
+<p><strong>File Path</strong>: <code>NadeoImporterMaterialLib.txt</code> <strong>File Size</strong>: 32,786 bytes <strong>Total Lines</strong>: 1,375 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (entire file read and parsed)</p>
+<h3 id="21-structure-format"><a class="anchor" href="#21-structure-format">#</a>2.1 Structure Format</h3>
+<p>The file uses a custom declaration format:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>DLibrary(Stadium)                    -- Library declaration (only &quot;Stadium&quot;)
+DMaterial(MaterialName)              -- Material definition
+    DSurfaceId  (SurfaceType)        -- Physics surface type
+    DGameplayId (GameplayType)       -- Gameplay modifier type
+    DUvLayer    (LayerType, index)   -- UV channel mapping
+    DColor0     ()                   -- Color channel (for decals/non-lightmapped)
+    DLinkFull   (Path\To\Resource)   -- External resource link for modifier materials</code></pre></div>
+<h3 id="22-complete-surface-id-enumeration"><a class="anchor" href="#22-complete-surface-id-enumeration">#</a>2.2 Complete Surface ID Enumeration</h3>
+<p>All unique surface IDs found in the material library:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Surface ID</th>
+  <th style="text-align:left">Physics Behavior</th>
+  <th style="text-align:left">Materials Using It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Asphalt</code></td>
+  <td style="text-align:left">Standard road grip</td>
+  <td style="text-align:left">RoadTech, PlatformTech, OpenTechBorders</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RoadSynthetic</code></td>
+  <td style="text-align:left">Synthetic road surface</td>
+  <td style="text-align:left">RoadBump, ScreenBack</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Dirt</code></td>
+  <td style="text-align:left">Loose dirt surface</td>
+  <td style="text-align:left">RoadDirt, CustomDirt, PlatformDirt variants</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RoadIce</code></td>
+  <td style="text-align:left">Icy road surface</td>
+  <td style="text-align:left">RoadIce, PlatformIce variants, PlatformPlastic variants</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Plastic</code></td>
+  <td style="text-align:left">Plastic surface</td>
+  <td style="text-align:left">ItemInflatableFloor, ItemInflatableMat, ItemObstacle, PoolBorders, WaterBorders, Underwater</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Rubber</code></td>
+  <td style="text-align:left">Rubber surface</td>
+  <td style="text-align:left">TrackBorders, TrackBordersOff, CustomPlastic, CustomPlasticShiny</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Metal</code></td>
+  <td style="text-align:left">Metal surface</td>
+  <td style="text-align:left">Technics, TechnicsSpecials, TechnicsTrims, Pylon, ItemPillar, ItemPillar2, ItemTrackBarrier<em>, ItemBorder, ItemRamp, ItemBase, ItemCactus, ItemLamp</em>, RaceArchCheckpoint, RaceArchFinish, Speedometer, CustomMetal, CustomMetalPainted, ScreenPusher, ItemSupportConnector, ItemSupportTube, SpeedometerLight_Dyna</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ResonantMetal</code></td>
+  <td style="text-align:left">Resonant metal</td>
+  <td style="text-align:left">TrackWallClips, Structure</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MetalTrans</code></td>
+  <td style="text-align:left">Transparent metal</td>
+  <td style="text-align:left">LightSpot, LightSpot2, Ad screens (all), RaceAd6x1, RaceScreenStart<em>, SpecialSignTurbo, SpecialSignOff, modifier Sign materials, CustomModTrans</em></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Wood</code></td>
+  <td style="text-align:left">Wood surface</td>
+  <td style="text-align:left">TrackWall, CustomRoughWood</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Concrete</code></td>
+  <td style="text-align:left">Concrete surface</td>
+  <td style="text-align:left">Waterground, ItemCurveSign<em>, ItemWrongWaySign, CustomConcrete, CustomMod</em> (Opaque, Colorize, SelfIllum variants)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Grass</code></td>
+  <td style="text-align:left">Grass surface</td>
+  <td style="text-align:left">Grass, DecoHill, DecoHill2</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Green</code></td>
+  <td style="text-align:left">Green/vegetation</td>
+  <td style="text-align:left">CustomGlass, CustomGrass, PlatformGrass variants</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Pavement</code></td>
+  <td style="text-align:left">Paved surface</td>
+  <td style="text-align:left">CustomBricks</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ice</code></td>
+  <td style="text-align:left">Pure ice surface</td>
+  <td style="text-align:left">CustomIce</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Rock</code></td>
+  <td style="text-align:left">Rock surface</td>
+  <td style="text-align:left">CustomRock</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Sand</code></td>
+  <td style="text-align:left">Sandy surface</td>
+  <td style="text-align:left">CustomSand, PlatformDirt DecoHill variants</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Snow</code></td>
+  <td style="text-align:left">Snowy surface</td>
+  <td style="text-align:left">CustomSnow, PlatformIce DecoHill variants</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NotCollidable</code></td>
+  <td style="text-align:left">No collision (visual only)</td>
+  <td style="text-align:left">All Decal<em>, Chrono</em>, GlassWaterWall, SpecialFX, TriggerFX, CustomModDecal*</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23-complete-gameplay-id-enumeration"><a class="anchor" href="#23-complete-gameplay-id-enumeration">#</a>2.3 Complete Gameplay ID Enumeration</h3>
+<p><strong>Every material in the file has <code>DGameplayId (None)</code>.</strong> No gameplay-modifying materials are defined directly in the material library. Gameplay effects (boost, turbo, etc.) are instead applied through the block/item system, not the material system.</p>
+<h3 id="24-uv-layer-configurations"><a class="anchor" href="#24-uv-layer-configurations">#</a>2.4 UV Layer Configurations</h3>
+<p>Three UV layer patterns are used:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Pattern</th>
+  <th style="text-align:left">UV0</th>
+  <th style="text-align:left">UV1</th>
+  <th style="text-align:left">Used By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Standard Opaque</strong></td>
+  <td style="text-align:left"><code>BaseMaterial, 0</code></td>
+  <td style="text-align:left"><code>Lightmap, 1</code></td>
+  <td style="text-align:left">Most solid materials</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Decal/Non-Lightmapped</strong></td>
+  <td style="text-align:left"><code>BaseMaterial, 0</code></td>
+  <td style="text-align:left"><code>DColor0()</code></td>
+  <td style="text-align:left">All decals, glass, chrono displays</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Lightmap Only</strong></td>
+  <td style="text-align:left"><code>Lightmap, 0</code></td>
+  <td style="text-align:left">--</td>
+  <td style="text-align:left">Grass, all Custom* materials</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="25-complete-material-catalog-by-category"><a class="anchor" href="#25-complete-material-catalog-by-category">#</a>2.5 Complete Material Catalog (by Category)</h3>
+<h4 id="roads-lines-3-58"><a class="anchor" href="#roads-lines-3-58">#</a>Roads (Lines 3-58)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">RoadTech</td>
+  <td style="text-align:left">Asphalt</td>
+  <td style="text-align:left">Main racing surface</td>
+</tr>
+<tr>
+  <td style="text-align:left">RoadBump</td>
+  <td style="text-align:left">RoadSynthetic</td>
+  <td style="text-align:left">Bumpy road variant</td>
+</tr>
+<tr>
+  <td style="text-align:left">RoadDirt</td>
+  <td style="text-align:left">Dirt</td>
+  <td style="text-align:left">Dirt road</td>
+</tr>
+<tr>
+  <td style="text-align:left">RoadIce</td>
+  <td style="text-align:left">RoadIce</td>
+  <td style="text-align:left">Ice road</td>
+</tr>
+<tr>
+  <td style="text-align:left">PlatformTech</td>
+  <td style="text-align:left">Asphalt</td>
+  <td style="text-align:left">Platform surface</td>
+</tr>
+<tr>
+  <td style="text-align:left">OpenTechBorders</td>
+  <td style="text-align:left">Asphalt</td>
+  <td style="text-align:left">Open platform borders</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemInflatableFloor</td>
+  <td style="text-align:left">Plastic</td>
+  <td style="text-align:left">Inflatable floor</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemInflatableMat</td>
+  <td style="text-align:left">Plastic</td>
+  <td style="text-align:left">Inflatable mat</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemInflatableTube</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Inflatable tube</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="technics-lines-61-158"><a class="anchor" href="#technics-lines-61-158">#</a>Technics (Lines 61-158)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">TrackBorders</td>
+  <td style="text-align:left">Rubber</td>
+  <td style="text-align:left">Track edge barriers</td>
+</tr>
+<tr>
+  <td style="text-align:left">TrackBordersOff</td>
+  <td style="text-align:left">Rubber</td>
+  <td style="text-align:left">Track borders (off variant)</td>
+</tr>
+<tr>
+  <td style="text-align:left">PoolBorders</td>
+  <td style="text-align:left">Plastic</td>
+  <td style="text-align:left">Pool area borders</td>
+</tr>
+<tr>
+  <td style="text-align:left">WaterBorders</td>
+  <td style="text-align:left">Plastic</td>
+  <td style="text-align:left">Water area borders</td>
+</tr>
+<tr>
+  <td style="text-align:left">Underwater</td>
+  <td style="text-align:left">Plastic</td>
+  <td style="text-align:left">Underwater surface</td>
+</tr>
+<tr>
+  <td style="text-align:left">Waterground</td>
+  <td style="text-align:left">Concrete</td>
+  <td style="text-align:left">Water ground surface</td>
+</tr>
+<tr>
+  <td style="text-align:left">TrackWall</td>
+  <td style="text-align:left">Wood</td>
+  <td style="text-align:left">Track walls</td>
+</tr>
+<tr>
+  <td style="text-align:left">TrackWallClips</td>
+  <td style="text-align:left">ResonantMetal</td>
+  <td style="text-align:left">Clipping track walls</td>
+</tr>
+<tr>
+  <td style="text-align:left">Technics</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">General technical surfaces</td>
+</tr>
+<tr>
+  <td style="text-align:left">TechnicsSpecials</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Special technical surfaces</td>
+</tr>
+<tr>
+  <td style="text-align:left">TechnicsTrims</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Technical trim pieces</td>
+</tr>
+<tr>
+  <td style="text-align:left">Pylon</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Support pylons</td>
+</tr>
+<tr>
+  <td style="text-align:left">ScreenBack</td>
+  <td style="text-align:left">RoadSynthetic</td>
+  <td style="text-align:left">Screen backing</td>
+</tr>
+<tr>
+  <td style="text-align:left">Structure</td>
+  <td style="text-align:left">ResonantMetal</td>
+  <td style="text-align:left">Structural elements</td>
+</tr>
+<tr>
+  <td style="text-align:left">LightSpot</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">Light fixtures</td>
+</tr>
+<tr>
+  <td style="text-align:left">LightSpot2</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">Light fixtures variant 2</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="ad-screens-lines-161-197"><a class="anchor" href="#ad-screens-lines-161-197">#</a>Ad Screens (Lines 161-197)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Ad1x1Screen</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">1:1 aspect ratio ad screen</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ad2x1Screen</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">2:1 aspect ratio ad screen</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ad4x1Screen</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">4:1 wide ad screen</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ad16x9Screen</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">16:9 widescreen ad screen</td>
+</tr>
+<tr>
+  <td style="text-align:left">16x9ScreenOff</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">16:9 screen (off state)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ad2x3Screen</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">2:3 portrait ad screen</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="racing-lines-200-382"><a class="anchor" href="#racing-lines-200-382">#</a>Racing (Lines 200-382)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">RaceArchCheckpoint</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Checkpoint arch structure</td>
+</tr>
+<tr>
+  <td style="text-align:left">RaceArchFinish</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Finish line arch</td>
+</tr>
+<tr>
+  <td style="text-align:left">RaceAd6x1</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">6:1 race ad screen</td>
+</tr>
+<tr>
+  <td style="text-align:left">RaceScreenStart</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">Start screen</td>
+</tr>
+<tr>
+  <td style="text-align:left">RaceScreenStartSmall</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">Small start screen</td>
+</tr>
+<tr>
+  <td style="text-align:left">SpeedometerLight_Dyna</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Dynamic speedometer light</td>
+</tr>
+<tr>
+  <td style="text-align:left">Speedometer</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Speedometer display</td>
+</tr>
+<tr>
+  <td style="text-align:left">ChronoCheckpoint-XX-XX-XX</td>
+  <td style="text-align:left">NotCollidable</td>
+  <td style="text-align:left">Checkpoint chrono digits (7 digit positions)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ChronoFinish-XX-XX-XX</td>
+  <td style="text-align:left">NotCollidable</td>
+  <td style="text-align:left">Finish chrono digits (7 digit positions)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Chrono-XX-XX-XX</td>
+  <td style="text-align:left">NotCollidable</td>
+  <td style="text-align:left">General chrono digits (6 digit positions)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Chrono digit naming convention</strong>: <code>Chrono{Type}-{tens_min}-{ones_min}-{tens_sec}-{ones_sec}-{tenths}-{hundredths}-{thousandths}</code> Each position: <code>10-00-00</code>, <code>01-00-00</code>, <code>00-10-00</code>, <code>00-01-00</code>, <code>00-00-10</code>, <code>00-00-01</code>, <code>00-00-001</code></p>
+<h4 id="deco-lines-386-410"><a class="anchor" href="#deco-lines-386-410">#</a>Deco (Lines 386-410)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Grass</td>
+  <td style="text-align:left">Grass</td>
+  <td style="text-align:left">Grass (lightmap UV0 only)</td>
+</tr>
+<tr>
+  <td style="text-align:left">DecoHill</td>
+  <td style="text-align:left">Grass</td>
+  <td style="text-align:left">Hillside decoration</td>
+</tr>
+<tr>
+  <td style="text-align:left">DecoHill2</td>
+  <td style="text-align:left">Grass</td>
+  <td style="text-align:left">Hillside decoration variant</td>
+</tr>
+<tr>
+  <td style="text-align:left">GlassWaterWall</td>
+  <td style="text-align:left">NotCollidable</td>
+  <td style="text-align:left">Glass water wall (visual only)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="item-obstacles-lines-413-491"><a class="anchor" href="#item-obstacles-lines-413-491">#</a>Item Obstacles (Lines 413-491)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">ItemPillar</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Pillar (obsolete, use ItemPillar2)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemPillar2</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Pillar v2</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemTrackBarrier</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Track barrier</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemTrackBarrierB</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Track barrier variant B</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemTrackBarrierC</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Track barrier variant C</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemBorder</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Item border</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemObstacle</td>
+  <td style="text-align:left">Plastic</td>
+  <td style="text-align:left">Obstacle (no lightmap)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemRamp</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Ramp</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemObstacleLight</td>
+  <td style="text-align:left">Plastic</td>
+  <td style="text-align:left">Light obstacle (no lightmap)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemObstaclePusher</td>
+  <td style="text-align:left">Plastic</td>
+  <td style="text-align:left">Pusher obstacle</td>
+</tr>
+<tr>
+  <td style="text-align:left">ScreenPusher</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Pusher screen</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemSupportConnector</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Support connector</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemSupportTube</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Support tube</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="item-deco-lines-493-559"><a class="anchor" href="#item-deco-lines-493-559">#</a>Item Deco (Lines 493-559)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">ItemBase</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Base item surface</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemCactus</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Cactus decoration</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemLamp</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Lamp</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemLampLight/B/C</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Lamp light variants</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemRoadSign</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Road sign</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemCurveSign/B/C</td>
+  <td style="text-align:left">Concrete</td>
+  <td style="text-align:left">Curve signs</td>
+</tr>
+<tr>
+  <td style="text-align:left">ItemWrongWaySign</td>
+  <td style="text-align:left">Concrete</td>
+  <td style="text-align:left">Wrong way sign</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="decals-markings-lines-561-597"><a class="anchor" href="#decals-markings-lines-561-597">#</a>Decals - Markings (Lines 561-597)</h4>
+<p>All decals use <code>NotCollidable</code> + <code>BaseMaterial UV0</code> + <code>DColor0</code>:</p>
+<ul>
+  <li>DecalCurbs, DecalMarks, DecalMarksItems, DecalMarksRamp, DecalMarksStart, DecalPlatform</li>
+</ul>
+<h4 id="decals-animated-obstacles-lines-600-624"><a class="anchor" href="#decals-animated-obstacles-lines-600-624">#</a>Decals - Animated Obstacles (Lines 600-624)</h4>
+<ul>
+  <li>DecalObstaclePusher, DecalObstacleTube, DecalObstacleTurnstileLeft, DecalObstacleTurnstileRight</li>
+</ul>
+<h4 id="decals-sponsors-branding-lines-627-712"><a class="anchor" href="#decals-sponsors-branding-lines-627-712">#</a>Decals - Sponsors & Branding (Lines 627-712)</h4>
+<p>Paint/sponsor decals in various configurations:</p>
+<ul>
+  <li>DecalPaintLogo4x1, DecalPaint2Logo4x1, DecalPaintLogo8x1, DecalPaint2Logo8x1</li>
+  <li>DecalPaintLogo8x1Colorize</li>
+  <li>DecalPaintSponsor4x1A/B/C/D (and DecalPaint2 variants)</li>
+  <li>DecalSponsor1x1BigA</li>
+</ul>
+<h4 id="special-turbo-lines-714-742"><a class="anchor" href="#special-turbo-lines-714-742">#</a>Special Turbo (Lines 714-742)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">DecalSpecialTurbo</td>
+  <td style="text-align:left">NotCollidable</td>
+  <td style="text-align:left">Turbo decal</td>
+</tr>
+<tr>
+  <td style="text-align:left">SpecialSignTurbo</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">Turbo sign</td>
+</tr>
+<tr>
+  <td style="text-align:left">SpecialFXTurbo</td>
+  <td style="text-align:left">NotCollidable</td>
+  <td style="text-align:left">Turbo visual effect</td>
+</tr>
+<tr>
+  <td style="text-align:left">SpecialSignOff</td>
+  <td style="text-align:left">MetalTrans</td>
+  <td style="text-align:left">Sign off state</td>
+</tr>
+<tr>
+  <td style="text-align:left">TriggerFXTurbo</td>
+  <td style="text-align:left">NotCollidable</td>
+  <td style="text-align:left">Turbo trigger VFX</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="customizable-materials-lines-744-815"><a class="anchor" href="#customizable-materials-lines-744-815">#</a>Customizable Materials (Lines 744-815)</h4>
+<p>Custom materials for user-created content. Each uses <code>Lightmap UV0</code> only:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Material</th>
+  <th style="text-align:left">SurfaceId</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">CustomBricks</td>
+  <td style="text-align:left">Pavement</td>
+  <td style="text-align:left">Brick pattern</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomConcrete</td>
+  <td style="text-align:left">Concrete</td>
+  <td style="text-align:left">Concrete</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomDirt</td>
+  <td style="text-align:left">Dirt</td>
+  <td style="text-align:left">Dirt</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomGlass</td>
+  <td style="text-align:left">Green</td>
+  <td style="text-align:left">Glass</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomGrass</td>
+  <td style="text-align:left">Green</td>
+  <td style="text-align:left">Grass</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomIce</td>
+  <td style="text-align:left">Ice</td>
+  <td style="text-align:left">Ice</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomMetal</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Metal</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomMetalPainted</td>
+  <td style="text-align:left">Metal</td>
+  <td style="text-align:left">Painted metal</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomPlastic</td>
+  <td style="text-align:left">Rubber</td>
+  <td style="text-align:left">Plastic</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomPlasticShiny</td>
+  <td style="text-align:left">Rubber</td>
+  <td style="text-align:left">Shiny plastic</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomRock</td>
+  <td style="text-align:left">Rock</td>
+  <td style="text-align:left">Rock</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomRoughWood</td>
+  <td style="text-align:left">Wood</td>
+  <td style="text-align:left">Rough wood</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomSand</td>
+  <td style="text-align:left">Sand</td>
+  <td style="text-align:left">Sand</td>
+</tr>
+<tr>
+  <td style="text-align:left">CustomSnow</td>
+  <td style="text-align:left">Snow</td>
+  <td style="text-align:left">Snow</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="modable-materials-lines-817-901"><a class="anchor" href="#modable-materials-lines-817-901">#</a>Modable Materials (Lines 817-901)</h4>
+<p>Materials supporting custom textures/mods (pairs with numbered variants):</p>
+<ul>
+  <li>CustomModAddSelfIllum/2 -- Additive self-illumination</li>
+  <li>CustomModOpaque/2 -- Opaque with lightmap</li>
+  <li>CustomModColorize/2 -- Colorizable</li>
+  <li>CustomModSelfIllum/2 -- Self-illuminating</li>
+  <li>CustomModSelfIllumSimple/2 -- Simple self-illuminating</li>
+  <li>CustomModTrans/2 -- Transparent (MetalTrans surface)</li>
+  <li>CustomModDecal/2 -- Decal (NotCollidable)</li>
+</ul>
+<h4 id="modifier-materials-with-dlinkfull-lines-905-1375"><a class="anchor" href="#modifier-materials-with-dlinkfull-lines-905-1375">#</a>Modifier Materials with DLinkFull (Lines 905-1375)</h4>
+<p>These materials use <code>DLinkFull</code> to reference external resources in <code>Media\Modifier\{ModifierName}\{Part}</code>.</p>
+<p><strong>Each modifier has 4-5 material parts</strong>:</p>
+<ul>
+  <li><code>{Name}_Decal</code> -- Ground decal (NotCollidable)</li>
+  <li><code>{Name}_Sign</code> -- Sign display (MetalTrans + lightmap)</li>
+  <li><code>{Name}_SignOff</code> -- Sign off-state (some modifiers only)</li>
+  <li><code>{Name}_SpecialFX</code> -- Visual effect (NotCollidable)</li>
+  <li><code>{Name}_TriggerFX</code> -- Trigger visual effect (NotCollidable)</li>
+</ul>
+<p><strong>Complete Modifier List</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Modifier</th>
+  <th style="text-align:left">Path</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Boost</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\Boost\*</code></td>
+  <td style="text-align:left">Speed boost</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Boost2</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\Boost2\*</code></td>
+  <td style="text-align:left">Speed boost level 2</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Cruise</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\Cruise\*</code></td>
+  <td style="text-align:left">Cruise control</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Fragile</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\Fragile\*</code></td>
+  <td style="text-align:left">Fragile mode</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>NoBrake</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\NoBrake\*</code></td>
+  <td style="text-align:left">No braking</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>NoEngine</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\NoEngine\*</code></td>
+  <td style="text-align:left">No engine</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>NoSteering</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\NoSteering\*</code></td>
+  <td style="text-align:left">No steering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Reset</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\Reset\*</code></td>
+  <td style="text-align:left">Car reset</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>SlowMotion</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\SlowMotion\*</code></td>
+  <td style="text-align:left">Slow motion</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Turbo</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\Turbo\*</code></td>
+  <td style="text-align:left">Turbo boost</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Turbo2</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\Turbo2\*</code></td>
+  <td style="text-align:left">Turbo level 2</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>TurboRoulette</strong></td>
+  <td style="text-align:left"><code>Media\Modifier\TurboRoulette\*</code></td>
+  <td style="text-align:left">Random turbo</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Platform Modifier Materials</strong> (modify the platform surface type):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Modifier</th>
+  <th style="text-align:left">Surface Override</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>PlatformDirt</strong></td>
+  <td style="text-align:left">Dirt (road), Sand (deco hills)</td>
+  <td style="text-align:left">Dirt platform</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>PlatformGrass</strong></td>
+  <td style="text-align:left">Green</td>
+  <td style="text-align:left">Grass platform</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>PlatformIce</strong></td>
+  <td style="text-align:left">RoadIce (road), Snow (deco hills)</td>
+  <td style="text-align:left">Ice platform</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>PlatformPlastic</strong></td>
+  <td style="text-align:left">RoadIce</td>
+  <td style="text-align:left">Plastic platform (uses ice physics!)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="3-pack-files"><a class="anchor" href="#3-pack-files">#</a>3. Pack Files</h2>
+<h3 id="31-pak-files-nadeopak-format"><a class="anchor" href="#31-pak-files-nadeopak-format">#</a>3.1 PAK Files (NadeoPak Format)</h3>
+<p>All <code>.pak</code> files use the <code>NadeoPak</code> format.</p>
+<p><strong>Header structure</strong> (from xxd analysis):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Size  Description
+0x00    8     Magic: &quot;NadeoPak&quot; (ASCII)
+0x08    4     Version: 0x00000012 (18)
+0x0C    32    SHA-256 checksum (matches updater_files.txt checksums)
+0x2C    4     Flags/type field (varies: 0x00000007, 0x00000000, 0x00000006)
+0x30    4     Offset/alignment field (0x00003000 or 0x00004000)
+0x34-3F 12    Reserved (zeros)
+0x40    varies String table begins (&quot;Titl...&quot; for title-linked packs)</code></pre></div>
+<p><strong>Evidence</strong>: All pak files start with bytes <code>4e61 6465 6f50 616b 1200 0000</code>, confirming NadeoPak v18 format. Checksums at offset 0x0C match SHA-256 values in <code>updater_files.txt</code>. <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> (from hex analysis, no decompiled parser available to confirm header field boundaries)</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Pack File</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Stadium.pak</td>
+  <td style="text-align:left">1.63 GB</td>
+  <td style="text-align:left">Main stadium environment (blocks, models, textures)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Skins_StadiumPrestige.pak</td>
+  <td style="text-align:left">959 MB</td>
+  <td style="text-align:left">Prestige car skins</td>
+</tr>
+<tr>
+  <td style="text-align:left">RedIsland.pak</td>
+  <td style="text-align:left">776 MB</td>
+  <td style="text-align:left">Red Island environment theme</td>
+</tr>
+<tr>
+  <td style="text-align:left">Trackmania.Title.Pack.Gbx</td>
+  <td style="text-align:left">744 MB</td>
+  <td style="text-align:left">Title pack (GBX container wrapping NadeoPak)</td>
+</tr>
+<tr>
+  <td style="text-align:left">GreenCoast.pak</td>
+  <td style="text-align:left">569 MB</td>
+  <td style="text-align:left">Green Coast environment theme</td>
+</tr>
+<tr>
+  <td style="text-align:left">BlueBay.pak</td>
+  <td style="text-align:left">530 MB</td>
+  <td style="text-align:left">Blue Bay environment theme</td>
+</tr>
+<tr>
+  <td style="text-align:left">WhiteShore.pak</td>
+  <td style="text-align:left">411 MB</td>
+  <td style="text-align:left">White Shore environment theme</td>
+</tr>
+<tr>
+  <td style="text-align:left">Skins_Stadium.pak</td>
+  <td style="text-align:left">264 MB</td>
+  <td style="text-align:left">Stadium car skins</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_Skins.zip</td>
+  <td style="text-align:left">221 MB</td>
+  <td style="text-align:left">Cross-game skin assets</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet.pak</td>
+  <td style="text-align:left">169 MB</td>
+  <td style="text-align:left">Core ManiaPlanet engine assets</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_ModelsSport.pak</td>
+  <td style="text-align:left">123 MB</td>
+  <td style="text-align:left">Sport car models</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_Core.pak</td>
+  <td style="text-align:left">33.7 MB</td>
+  <td style="text-align:left">Core engine resources</td>
+</tr>
+<tr>
+  <td style="text-align:left">GpuCache_D3D11_SM5.zip</td>
+  <td style="text-align:left">16.2 MB</td>
+  <td style="text-align:left">Precompiled D3D11 SM5 shaders</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_Flags.zip</td>
+  <td style="text-align:left">5.89 MB</td>
+  <td style="text-align:left">Country/region flag images</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_Painter.zip</td>
+  <td style="text-align:left">3.45 MB</td>
+  <td style="text-align:left">In-game painting tools</td>
+</tr>
+<tr>
+  <td style="text-align:left">Translations.zip</td>
+  <td style="text-align:left">2.87 MB</td>
+  <td style="text-align:left">Localization files</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_Extras.zip</td>
+  <td style="text-align:left">2.30 MB</td>
+  <td style="text-align:left">Extra media (color gradings, effects)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Stadium_Skins.zip</td>
+  <td style="text-align:left">2.09 MB</td>
+  <td style="text-align:left">Stadium-specific skin overlays</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_Live.zip</td>
+  <td style="text-align:left">1.63 MB</td>
+  <td style="text-align:left">Live service scripts (ManiaApps)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Titles.pak</td>
+  <td style="text-align:left">1.41 MB</td>
+  <td style="text-align:left">Title definitions</td>
+</tr>
+<tr>
+  <td style="text-align:left">Resource.pak</td>
+  <td style="text-align:left">178 KB</td>
+  <td style="text-align:left">Small resource pack</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Total pack size</strong>: ~6.4 GB</p>
+<h3 id="32-environment-theme-packs"><a class="anchor" href="#32-environment-theme-packs">#</a>3.2 Environment Theme Packs</h3>
+<p>Four distinct environment themes identified:</p>
+<ul>
+  <li><strong>GreenCoast</strong> (597 MB) -- Lush green coastal theme</li>
+  <li><strong>BlueBay</strong> (556 MB) -- Blue bay/ocean theme</li>
+  <li><strong>RedIsland</strong> (813 MB) -- Red desert/volcanic island theme</li>
+  <li><strong>WhiteShore</strong> (431 MB) -- White/snowy shore theme</li>
+</ul>
+<p><strong>Evidence</strong>: Pack names and updater_files.txt group "TMStadium" <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="33-trackmaniatitlepackgbx"><a class="anchor" href="#33-trackmaniatitlepackgbx">#</a>3.3 Trackmania.Title.Pack.Gbx</h3>
+<p><strong>Evidence</strong>: Header starts with <code>NadeoPak</code> followed by <code>nadeo_game</code> string at offset 0x56, and location string <code>World|Europe|France|Ile-de-France|Paris</code> at offset 0x63. <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>This is the title pack that defines Trackmania as a game within the ManiaPlanet engine. Contains title metadata including publisher location (Nadeo, Paris, France).</p>
+<h3 id="34-zip-pack-contents"><a class="anchor" href="#34-zip-pack-contents">#</a>3.4 ZIP Pack Contents</h3>
+<p><strong>GpuCache_D3D11_SM5.zip</strong> -- See Section 10 (Shader System) below.</p>
+<p><strong>Maniaplanet_Extras.zip</strong> -- Media assets:</p>
+<ul>
+  <li><code>Media/Images/Effects/</code> -- Effect textures (BlackSquare.tga, FramingCenter/Phi/Thirds.dds, Vignette.dds)</li>
+  <li><code>Media/ColorGradings/</code> -- Color grading LUTs (~50+ presets: Abyss, Apocalypse, Arcade, Arizona, etc.)</li>
+</ul>
+<p><strong>Maniaplanet_Flags.zip</strong> -- Regional flags:</p>
+<ul>
+  <li><code>Media/Flags/</code> -- Thousands of flag images (.dds, .jpg, .png) for countries, states, regions worldwide</li>
+</ul>
+<p><strong>Maniaplanet_Live.zip</strong> -- Live service ManiaApp scripts:</p>
+<ul>
+  <li><code>Media/ManiaApps/Nadeo/System/</code> -- Core system scripts</li>
+  <li>Subsystems: <code>Auth</code>, <code>NadeoFunctions</code>, <code>TrackmaniaAuth</code>, <code>advert</code>, <code>browser</code>, <code>channels</code>, <code>chat</code>, <code>keys</code>, <code>links</code>, <code>notifications</code></li>
+  <li>Script format: <code>.Script.txt</code> (ManiaScript) and <code>.xml</code> (ManiaLink UI definitions)</li>
+</ul>
+<p><strong>Maniaplanet_Painter.zip</strong> -- Skin painting tools:</p>
+<ul>
+  <li><code>Media/Painter/Stencils/</code> -- Brush stencils (EllipseRound, AirBrush, Square, etc.) with Brush.tga and Icon.dds</li>
+</ul>
+<p><strong>Maniaplanet_Skins.zip</strong> -- Skinning system:</p>
+<ul>
+  <li><code>Skins/Any/Advertisement1x1/</code> -- Ad screen skins (animated .webm, static .dds/.tga)</li>
+  <li>Various themed advertisement skins (Desert, Fall, Snow, Valley, Summer, etc.)</li>
+  <li>Stunt-colored variants (Blue, Cyan, Lime, Orange, Pink)</li>
+  <li>Rally and Snow themed variants</li>
+</ul>
+<p><strong>Stadium_Skins.zip</strong> -- Stadium-specific skins:</p>
+<ul>
+  <li><code>Skins/Stadium/Canopy/</code> -- Canopy glass textures (_D, _N, _R, _D_HueMask) in 4 variants (ConcentricInside, ConcentricOutside, Opaque, TM)</li>
+  <li><code>Skins/Stadium/ItemFlag/</code> -- Seasonal flag skins (Fall, Spring, Summer, Winter, Nadeo)</li>
+  <li>Texture channels: <code>_D</code> (Diffuse), <code>_N</code> (Normal), <code>_R</code> (Roughness), <code>_D_HueMask</code> (Color customization mask)</li>
+</ul>
+<p><strong>Translations.zip</strong> -- Localization:</p>
+<ul>
+  <li>14 language pairs: cs-CZ, de-DE, en-US, es-ES, fr-FR, it-IT, ja-JP, ko-KR, nl-NL, pl-PL, pt-BR, ru-RU, tr-TR, zh-CN</li>
+  <li>Format: <code>.mo</code> (compiled gettext) with <code>core.{locale}.mo</code> + <code>trackmania.{locale}.mo</code> per language</li>
+</ul>
+<hr>
+<h2 id="4-gfxdeviceperfstxt-gpu-performance-database"><a class="anchor" href="#4-gfxdeviceperfstxt-gpu-performance-database">#</a>4. GfxDevicePerfs.txt - GPU Performance Database</h2>
+<p><strong>File Path</strong>: <code>GameData/GfxDevicePerfs.txt</code> <strong>File Size</strong>: 82,909 bytes <strong>Total Lines</strong>: 1,050 (1 header + 1,049 GPU entries) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="41-format"><a class="anchor" href="#41-format">#</a>4.1 Format</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Vendor Device GVertexMath GPixelMath GOutputBytes GAniso1 GAniso2 GAniso4 GAniso8 GAniso16</code></pre></div>
+<p><strong>Column definitions</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Column</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Vendor</td>
+  <td style="text-align:left">Hex</td>
+  <td style="text-align:left">PCI Vendor ID</td>
+</tr>
+<tr>
+  <td style="text-align:left">Device</td>
+  <td style="text-align:left">Hex</td>
+  <td style="text-align:left">PCI Device ID</td>
+</tr>
+<tr>
+  <td style="text-align:left">GVertexMath</td>
+  <td style="text-align:left">Float</td>
+  <td style="text-align:left">Vertex shader arithmetic throughput benchmark score</td>
+</tr>
+<tr>
+  <td style="text-align:left">GPixelMath</td>
+  <td style="text-align:left">Float</td>
+  <td style="text-align:left">Pixel/fragment shader arithmetic throughput benchmark score</td>
+</tr>
+<tr>
+  <td style="text-align:left">GOutputBytes</td>
+  <td style="text-align:left">Float</td>
+  <td style="text-align:left">Render output bandwidth benchmark score</td>
+</tr>
+<tr>
+  <td style="text-align:left">GAniso1</td>
+  <td style="text-align:left">Float</td>
+  <td style="text-align:left">Anisotropic filtering x1 texture fill rate</td>
+</tr>
+<tr>
+  <td style="text-align:left">GAniso2</td>
+  <td style="text-align:left">Float</td>
+  <td style="text-align:left">Anisotropic filtering x2 texture fill rate</td>
+</tr>
+<tr>
+  <td style="text-align:left">GAniso4</td>
+  <td style="text-align:left">Float</td>
+  <td style="text-align:left">Anisotropic filtering x4 texture fill rate</td>
+</tr>
+<tr>
+  <td style="text-align:left">GAniso8</td>
+  <td style="text-align:left">Float</td>
+  <td style="text-align:left">Anisotropic filtering x8 texture fill rate</td>
+</tr>
+<tr>
+  <td style="text-align:left">GAniso16</td>
+  <td style="text-align:left">Float</td>
+  <td style="text-align:left">Anisotropic filtering x16 texture fill rate</td>
+</tr>
+</tbody>
+</table></div>
+<p>Followed by quoted GPU name string.</p>
+<h3 id="42-gpu-vendor-distribution"><a class="anchor" href="#42-gpu-vendor-distribution">#</a>4.2 GPU Vendor Distribution</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">PCI Vendor ID</th>
+  <th style="text-align:left">Vendor</th>
+  <th style="text-align:left">GPU Entries</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>10DE</code></td>
+  <td style="text-align:left">NVIDIA</td>
+  <td style="text-align:left">621</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>1002</code></td>
+  <td style="text-align:left">AMD/ATI</td>
+  <td style="text-align:left">334</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>8086</code></td>
+  <td style="text-align:left">Intel</td>
+  <td style="text-align:left">92</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>15AD</code></td>
+  <td style="text-align:left">VMware</td>
+  <td style="text-align:left">1</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>1AB8</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - possibly Parallels]</span></td>
+  <td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Total</strong>: 1,049 GPU profiles</p>
+<h3 id="43-purpose"><a class="anchor" href="#43-purpose">#</a>4.3 Purpose</h3>
+<p>This database is used by the game's auto-quality settings system. When the game first launches, it identifies the GPU by PCI vendor/device ID and looks up the pre-benchmarked performance scores. These scores determine the default graphics quality preset without requiring an in-game benchmark.</p>
+<p>The GAniso columns show anisotropic filtering performance at different levels, allowing the game to choose the optimal aniso level per GPU.</p>
+<p><strong>Evidence</strong>: File named <code>GfxDevicePerfs.txt</code>, located in <code>GameData/</code>, header row matches benchmark metric naming convention, and values correlate with known GPU relative performance (e.g., RTX 4090 scores higher than GTX 1060). <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="44-notable-entries"><a class="anchor" href="#44-notable-entries">#</a>4.4 Notable Entries</h3>
+<ul>
+  <li>Oldest GPUs: ATI Radeon 9500/9600 series (circa 2002-2003)</li>
+  <li>Newest GPUs: AMD Radeon RX 7900 series, NVIDIA RTX 40-series, Intel Arc</li>
+  <li>Zero-value entries (0.00 across all fields): GPUs known to exist but not benchmarked</li>
+  <li>Some anomalous values in GAniso1 column (e.g., 255.34, 1044.63, 1324.65) -- likely measurement errors or driver bugs</li>
+</ul>
+<hr>
+<h2 id="5-openplanet-directory"><a class="anchor" href="#5-openplanet-directory">#</a>5. Openplanet Directory</h2>
+<p><strong>Path</strong>: <code>Openplanet/</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="51-directory-structure"><a class="anchor" href="#51-directory-structure">#</a>5.1 Directory Structure</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Openplanet/
+  cacert.pem          (225,076 bytes) - CA certificate bundle for HTTPS
+  DefaultStyle.toml   (1,942 bytes)   - ImGui UI style configuration
+  READ_ME.txt         (284 bytes)     - Warning about plugin placement
+  Fonts/              - Font files for UI overlay
+  Plugins/            - Bundled Openplanet plugins
+  Scripts/            - AngelScript core scripts</code></pre></div>
+<h3 id="52-cacertpem"><a class="anchor" href="#52-cacertpem">#</a>5.2 cacert.pem</h3>
+<p>Standard Mozilla CA certificate bundle (225 KB). Used by Openplanet for HTTPS connections to <code>openplanet.dev</code> and other services. Contains the standard set of trusted root certificates.</p>
+<h3 id="53-defaultstyletoml"><a class="anchor" href="#53-defaultstyletoml">#</a>5.3 DefaultStyle.toml</h3>
+<p>ImGui UI theme configuration in TOML format:</p>
+<p><strong>Style settings</strong>:</p>
+<ul>
+  <li><code>WindowRounding = 3</code>, <code>ChildRounding = 2</code>, <code>FrameRounding = 3</code> -- Rounded corners</li>
+  <li><code>WindowBorderSize = 0</code> -- No window borders</li>
+  <li><code>ScrollbarSize = 14</code>, <code>ScrollbarRounding = 2</code></li>
+  <li><code>TabBarOverlineSize = 2</code></li>
+  <li><code>ItemSpacing = [10, 6]</code>, <code>IndentSpacing = 22</code>, <code>FramePadding = [7, 4]</code></li>
+</ul>
+<p><strong>Color scheme</strong> (dark theme with blue accent <code>#566AFF</code>):</p>
+<ul>
+  <li>Background: <code>WindowBg = "#202020FD"</code>, <code>PopupBg = "#1C1C1CFD"</code></li>
+  <li>Text: <code>Text = "#FFFFFF"</code>, <code>TextDisabled = "#7F7F7F"</code></li>
+  <li>Primary accent: <code>ButtonHovered = "#566AFF"</code>, <code>HeaderActive = "#566AFF"</code>, <code>CheckMark = "#566AFF"</code></li>
+  <li>Active: <code>ButtonActive = "#394CAB"</code></li>
+  <li>Scrollbar: dark with gray grab handles</li>
+  <li>Tables: alternating rows with <code>#2B2B2BA0</code> / <code>#242424A0</code></li>
+</ul>
+<h3 id="54-fonts-directory"><a class="anchor" href="#54-fonts-directory">#</a>5.4 Fonts Directory</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Font File</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">DroidSans.ttf</td>
+  <td style="text-align:left">41 KB</td>
+  <td style="text-align:left">Google Droid Sans (regular) - main UI font</td>
+</tr>
+<tr>
+  <td style="text-align:left">DroidSans-Bold.ttf</td>
+  <td style="text-align:left">42 KB</td>
+  <td style="text-align:left">Google Droid Sans (bold)</td>
+</tr>
+<tr>
+  <td style="text-align:left">DroidSansMono.ttf</td>
+  <td style="text-align:left">117 KB</td>
+  <td style="text-align:left">Monospace font for code/console</td>
+</tr>
+<tr>
+  <td style="text-align:left">ManiaIcons.ttf</td>
+  <td style="text-align:left">250 KB</td>
+  <td style="text-align:left">ManiaPlanet icon font (game-specific glyphs)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Montserrat.ttf</td>
+  <td style="text-align:left">336 KB</td>
+  <td style="text-align:left">Montserrat (regular)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Montserrat-Bold.ttf</td>
+  <td style="text-align:left">331 KB</td>
+  <td style="text-align:left">Montserrat (bold)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Oswald.ttf</td>
+  <td style="text-align:left">88 KB</td>
+  <td style="text-align:left">Oswald (regular)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Oswald-Bold.ttf</td>
+  <td style="text-align:left">88 KB</td>
+  <td style="text-align:left">Oswald (bold)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="55-plugins-directory"><a class="anchor" href="#55-plugins-directory">#</a>5.5 Plugins Directory</h3>
+<p>Bundled Openplanet plugins (each in its own subdirectory):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Plugin</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">BigDecor</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Possibly landscape/decoration tool</td>
+</tr>
+<tr>
+  <td style="text-align:left">Camera</td>
+  <td style="text-align:left">Camera control/manipulation</td>
+</tr>
+<tr>
+  <td style="text-align:left">ClassicMenu</td>
+  <td style="text-align:left">Classic menu interface</td>
+</tr>
+<tr>
+  <td style="text-align:left">Controls</td>
+  <td style="text-align:left">Input control configuration</td>
+</tr>
+<tr>
+  <td style="text-align:left">Discord</td>
+  <td style="text-align:left">Discord Rich Presence integration</td>
+</tr>
+<tr>
+  <td style="text-align:left">EditorDeveloper</td>
+  <td style="text-align:left">Map editor development tools</td>
+</tr>
+<tr>
+  <td style="text-align:left">Finetuner</td>
+  <td style="text-align:left">Fine-tuning/adjustment tools</td>
+</tr>
+<tr>
+  <td style="text-align:left">InfiniteEmbedSize</td>
+  <td style="text-align:left">Removes embed size limitations</td>
+</tr>
+<tr>
+  <td style="text-align:left">NadeoServices</td>
+  <td style="text-align:left">Nadeo online services integration</td>
+</tr>
+<tr>
+  <td style="text-align:left">PluginManager</td>
+  <td style="text-align:left">Plugin management interface</td>
+</tr>
+<tr>
+  <td style="text-align:left">Stats</td>
+  <td style="text-align:left">Statistics display</td>
+</tr>
+<tr>
+  <td style="text-align:left">UsefulInformation</td>
+  <td style="text-align:left">Information display overlay</td>
+</tr>
+<tr>
+  <td style="text-align:left">VehicleState</td>
+  <td style="text-align:left">Vehicle state monitoring/display</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="56-scripts-directory"><a class="anchor" href="#56-scripts-directory">#</a>5.6 Scripts Directory</h3>
+<p>Core AngelScript files with signature verification:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Script</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Compatibility.as</td>
+  <td style="text-align:left">4,274 bytes</td>
+  <td style="text-align:left">Compatibility layer for different game versions</td>
+</tr>
+<tr>
+  <td style="text-align:left">Compatibility.as.sig</td>
+  <td style="text-align:left">104 bytes</td>
+  <td style="text-align:left">Digital signature</td>
+</tr>
+<tr>
+  <td style="text-align:left">Dialogs.as</td>
+  <td style="text-align:left">3,043 bytes</td>
+  <td style="text-align:left">Dialog/popup system</td>
+</tr>
+<tr>
+  <td style="text-align:left">Dialogs.as.sig</td>
+  <td style="text-align:left">104 bytes</td>
+  <td style="text-align:left">Digital signature</td>
+</tr>
+<tr>
+  <td style="text-align:left">Patch.as</td>
+  <td style="text-align:left">2,512 bytes</td>
+  <td style="text-align:left">Game patching utilities</td>
+</tr>
+<tr>
+  <td style="text-align:left">Patch.as.sig</td>
+  <td style="text-align:left">104 bytes</td>
+  <td style="text-align:left">Digital signature</td>
+</tr>
+<tr>
+  <td style="text-align:left">Plugin_MapAudioFix.as</td>
+  <td style="text-align:left">965 bytes</td>
+  <td style="text-align:left">Fix for map audio issues</td>
+</tr>
+<tr>
+  <td style="text-align:left">Plugin_MapAudioFix.as.sig</td>
+  <td style="text-align:left">104 bytes</td>
+  <td style="text-align:left">Digital signature</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Signature system</strong>: Every <code>.as</code> script has a corresponding <code>.sig</code> file (104 bytes each). This is a code-signing mechanism to prevent tampering with core Openplanet scripts.</p>
+<h3 id="57-read_metxt"><a class="anchor" href="#57-read_metxt">#</a>5.7 READ_ME.txt</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>IMPORTANT!!
+
+Do NOT place your own scripts in the Scripts or Plugins folders here!
+When Openplanet updates, this folder is cleared, and you will lose any custom scripts.
+Instead, use your Openplanet user data folder to place plugins:
+    C:\Users\&lt;Your Name&gt;\OpenplanetNext\</code></pre></div>
+<h3 id="58-openplanethooklog"><a class="anchor" href="#58-openplanethooklog">#</a>5.8 OpenplanetHook.log</h3>
+<p><strong>File Path</strong>: <code>OpenplanetHook.log</code> (in game root, not Openplanet/ directory) <strong>Size</strong>: 126,720 bytes</p>
+<p>Contains timestamped hook injection logs. Each game launch generates 6 log lines:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>[HH:MM:SS] Starting on YYYY-MM-DD
+[HH:MM:SS] Finding libs path
+[HH:MM:SS] Updating PATH to add: &#x27;...\Openplanet\Lib&#x27;
+[HH:MM:SS] Attaching DLL to: &#x27;...\Trackmania.exe&#x27;
+[HH:MM:SS] Module handle: XXXXXXXXXXXXXXXX
+[HH:MM:SS] DirectInput8Create</code></pre></div>
+<p><strong>Evidence</strong>: First entry dated 2025-10-27, module handles vary between launches (ASLR), target is always <code>Trackmania.exe</code>. <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<hr>
+<h2 id="6-dxvk-d3d11-log-analysis"><a class="anchor" href="#6-dxvk-d3d11-log-analysis">#</a>6. DXVK / D3D11 Log Analysis</h2>
+<p><strong>File Path</strong>: <code>Trackmania_d3d11.log</code> <strong>Size</strong>: 22,121 bytes (354 lines) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="61-runtime-environment"><a class="anchor" href="#61-runtime-environment">#</a>6.1 Runtime Environment</h3>
+<ul>
+  <li><strong>DXVK Version</strong>: <code>cxaddon-1.10.3-1-25-g737aacd</code> (CrossOver custom build of DXVK)</li>
+  <li><strong>Game</strong>: <code>Trackmania.exe</code></li>
+  <li><strong>D3D Feature Level</strong>: <code>D3D_FEATURE_LEVEL_11_0</code></li>
+  <li><strong>GPU</strong>: Apple M4 (Vulkan backend)</li>
+  <li><strong>Driver</strong>: 0.2.2018 (MoltenVK/Metal translation layer)</li>
+</ul>
+<h3 id="62-vulkan-extensions-used"><a class="anchor" href="#62-vulkan-extensions-used">#</a>6.2 Vulkan Extensions Used</h3>
+<p>Required extensions revealing D3D11 feature needs:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Extension</th>
+  <th style="text-align:left">D3D11 Feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">VK_EXT_4444_formats</td>
+  <td style="text-align:left">4-bit-per-channel textures</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_EXT_extended_dynamic_state</td>
+  <td style="text-align:left">Dynamic pipeline state</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_EXT_host_query_reset</td>
+  <td style="text-align:left">CPU-side query management</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_EXT_robustness2</td>
+  <td style="text-align:left">Robust buffer/image access</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_EXT_shader_demote_to_helper_invocation</td>
+  <td style="text-align:left">Pixel shader helper invocations</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_EXT_shader_stencil_export</td>
+  <td style="text-align:left">Stencil buffer writes from shaders</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_EXT_shader_viewport_index_layer</td>
+  <td style="text-align:left">Instanced rendering to array targets</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_EXT_transform_feedback</td>
+  <td style="text-align:left">Stream output (geometry shader output)</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_EXT_vertex_attribute_divisor</td>
+  <td style="text-align:left">Instanced vertex data</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_KHR_sampler_mirror_clamp_to_edge</td>
+  <td style="text-align:left">Mirror-clamp texture addressing</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_KHR_swapchain</td>
+  <td style="text-align:left">Present/display</td>
+</tr>
+<tr>
+  <td style="text-align:left">VK_KHR_timeline_semaphore</td>
+  <td style="text-align:left">GPU synchronization</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="63-required-gpu-features"><a class="anchor" href="#63-required-gpu-features">#</a>6.3 Required GPU Features</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Feature</th>
+  <th style="text-align:left">Required</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">robustBufferAccess</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Safe out-of-bounds buffer reads</td>
+</tr>
+<tr>
+  <td style="text-align:left">fullDrawIndexUint32</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">32-bit index buffers</td>
+</tr>
+<tr>
+  <td style="text-align:left">imageCubeArray</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Cubemap arrays (environment maps)</td>
+</tr>
+<tr>
+  <td style="text-align:left">independentBlend</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Per-RT blend states</td>
+</tr>
+<tr>
+  <td style="text-align:left">geometryShader</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Geometry shaders used</td>
+</tr>
+<tr>
+  <td style="text-align:left">tessellationShader</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Tessellation used</td>
+</tr>
+<tr>
+  <td style="text-align:left">sampleRateShading</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Per-sample pixel shading</td>
+</tr>
+<tr>
+  <td style="text-align:left">dualSrcBlend</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Dual-source blending</td>
+</tr>
+<tr>
+  <td style="text-align:left">multiDrawIndirect</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Indirect draw calls</td>
+</tr>
+<tr>
+  <td style="text-align:left">depthClamp</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Depth clamping</td>
+</tr>
+<tr>
+  <td style="text-align:left">depthBiasClamp</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Depth bias clamping</td>
+</tr>
+<tr>
+  <td style="text-align:left">fillModeNonSolid</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Wireframe rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left">multiViewport</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Multiple viewports</td>
+</tr>
+<tr>
+  <td style="text-align:left">samplerAnisotropy</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Anisotropic filtering</td>
+</tr>
+<tr>
+  <td style="text-align:left">textureCompressionBC</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">BC texture compression (DXT/BCn)</td>
+</tr>
+<tr>
+  <td style="text-align:left">occlusionQueryPrecise</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Precise occlusion queries</td>
+</tr>
+<tr>
+  <td style="text-align:left">pipelineStatisticsQuery</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Pipeline statistics</td>
+</tr>
+<tr>
+  <td style="text-align:left">shaderImageGatherExtended</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Texture gather operations</td>
+</tr>
+<tr>
+  <td style="text-align:left">shaderClipDistance</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Custom clip distances</td>
+</tr>
+<tr>
+  <td style="text-align:left">shaderCullDistance</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Custom cull distances</td>
+</tr>
+<tr>
+  <td style="text-align:left">transformFeedback</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Stream output</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="64-vertex-formats-from-pipeline-compilation-errors"><a class="anchor" href="#64-vertex-formats-from-pipeline-compilation-errors">#</a>6.4 Vertex Formats (from Pipeline Compilation Errors)</h3>
+<p>The failed pipeline compilations reveal the game's vertex buffer layouts:</p>
+<p><strong>Format A (28-byte vertex)</strong> -- Simple geometry:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Location 0: R32G32B32_SFLOAT   (Position, 12 bytes, offset 0)
+Location 1: R16G16B16A16_SNORM (Normal, 8 bytes, offset 12)
+Location 2: R32G32_SFLOAT      (UV0, 8 bytes, offset 20)
+Stride: 28 bytes</code></pre></div>
+<p><strong>Format B (44-byte vertex)</strong> -- Standard with tangent frame:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Location 0: R32G32B32_SFLOAT   (Position, 12 bytes, offset 0)
+Location 1: R16G16B16A16_SNORM (Normal, 8 bytes, offset 12)
+Location 4: R32G32_SFLOAT      (UV0, 8 bytes, offset 20)
+Location 2: R16G16B16A16_SNORM (Tangent, 8 bytes, offset 28)
+Location 3: R16G16B16A16_SNORM (Binormal/Bitangent, 8 bytes, offset 36)
+Stride: 44 bytes</code></pre></div>
+<p><strong>Format C (52-byte vertex)</strong> -- Standard with dual UV:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Location 0: R32G32B32_SFLOAT   (Position, 12 bytes, offset 0)
+Location 1: R16G16B16A16_SNORM (Normal, 8 bytes, offset 12)
+Location 4: R32G32_SFLOAT      (UV0, 8 bytes, offset 20)
+Location 5: R32G32_SFLOAT      (UV1/Lightmap, 8 bytes, offset 28)
+Location 2: R16G16B16A16_SNORM (Tangent, 8 bytes, offset 36)
+Location 3: R16G16B16A16_SNORM (Binormal, 8 bytes, offset 44)
+Stride: 52 bytes</code></pre></div>
+<p><strong>Format D (56-byte vertex)</strong> -- With vertex color:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Location 0: R32G32B32_SFLOAT   (Position, 12 bytes, offset 0)
+Location 1: R16G16B16A16_SNORM (Normal, 8 bytes, offset 12)
+Location 2: B8G8R8A8_UNORM     (VertexColor, 4 bytes, offset 20)
+Location 5: R32G32_SFLOAT      (UV0, 8 bytes, offset 24)
+Location 6: R32G32_SFLOAT      (UV1/Lightmap, 8 bytes, offset 32)
+Location 3: R16G16B16A16_SNORM (Tangent, 8 bytes, offset 40)
+Location 4: R16G16B16A16_SNORM (Binormal, 8 bytes, offset 48)
+Stride: 56 bytes</code></pre></div>
+<h3 id="65-swap-chain-configuration"><a class="anchor" href="#65-swap-chain-configuration">#</a>6.5 Swap Chain Configuration</h3>
+<ul>
+  <li><strong>Format</strong>: <code>VK_FORMAT_B8G8R8A8_SRGB</code> (sRGB backbuffer)</li>
+  <li><strong>Present Mode</strong>: <code>VK_PRESENT_MODE_IMMEDIATE_KHR</code> (no vsync, uncapped FPS)</li>
+  <li><strong>Buffer Size</strong>: 1512x982 (windowed/borderless)</li>
+  <li><strong>Image Count</strong>: 3 (triple buffering)</li>
+  <li><strong>Depth Format</strong>: D24_UNORM_S8_UINT mapped to D32_SFLOAT_S8_UINT (DXVK fallback)</li>
+  <li><strong>Display Mode</strong>: 1512x982@120Hz</li>
+</ul>
+<hr>
+<h2 id="7-nadeoimporterexe-asset-pipeline"><a class="anchor" href="#7-nadeoimporterexe-asset-pipeline">#</a>7. NadeoImporter.exe - Asset Pipeline</h2>
+<p><strong>File Size</strong>: 8,675,328 bytes (8.27 MB) <strong>Build Date</strong>: July 12, 2022 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="71-supported-file-formats"><a class="anchor" href="#71-supported-file-formats">#</a>7.1 Supported File Formats</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Extension</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>.fbx</code></td>
+  <td style="text-align:left">Source 3D model (FBX format)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.tga</code></td>
+  <td style="text-align:left">Source texture (Targa format)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.dds</code></td>
+  <td style="text-align:left">Compiled texture (DirectDraw Surface)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Item.gbx</code></td>
+  <td style="text-align:left">Compiled item definition</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Mesh.gbx</code></td>
+  <td style="text-align:left">Compiled mesh data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Shape.gbx</code></td>
+  <td style="text-align:left">Compiled collision shape</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Material.gbx</code></td>
+  <td style="text-align:left">Compiled material definition</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Material.txt</code></td>
+  <td style="text-align:left">Material text description</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Skel.gbx</code></td>
+  <td style="text-align:left">Compiled skeleton data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Rig.gbx</code></td>
+  <td style="text-align:left">Compiled rig data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Anim.gbx</code></td>
+  <td style="text-align:left">Compiled animation data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.AnimImportConfig.gbx.json</code></td>
+  <td style="text-align:left">Animation import configuration</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.MeshParams.xml</code></td>
+  <td style="text-align:left">Mesh import parameters</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Item.xml</code></td>
+  <td style="text-align:left">Item definition XML</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Model.fbx</code></td>
+  <td style="text-align:left">Model source file</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Texture.Gbx</code></td>
+  <td style="text-align:left">Compiled texture</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.GpuCache.Gbx</code></td>
+  <td style="text-align:left">Compiled GPU shader cache</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Impostor.Gbx</code></td>
+  <td style="text-align:left">LOD impostor</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Reduction40.Gbx</code></td>
+  <td style="text-align:left">40% polygon reduction LOD</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.ReductionRetextured.Gbx</code></td>
+  <td style="text-align:left">Retextured reduced LOD</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.Remesh.Gbx</code></td>
+  <td style="text-align:left">Remeshed variant</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.gbx.json</code></td>
+  <td style="text-align:left">GBX metadata/config</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.gbx.xml</code></td>
+  <td style="text-align:left">GBX XML representation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.pack.gbx</code></td>
+  <td style="text-align:left">Asset pack</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.skin.pack.gbx</code></td>
+  <td style="text-align:left">Skin pack</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.environment.gbx</code></td>
+  <td style="text-align:left">Environment definition</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72-class-hierarchy-from-strings"><a class="anchor" href="#72-class-hierarchy-from-strings">#</a>7.2 Class Hierarchy (from strings)</h3>
+<p>Key game engine classes referenced:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Class</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>CGameBlockItem</code></td>
+  <td style="text-align:left">Block-based items</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CGameCtnBlock</code></td>
+  <td style="text-align:left">Track blocks</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CGameCtnBlockInfo</code></td>
+  <td style="text-align:left">Block metadata</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CGameCtnBlockInfoClip</code></td>
+  <td style="text-align:left">Block clip connections</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CGameCtnBlockInfoVariant</code></td>
+  <td style="text-align:left">Block variants (Ground/Air)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CGameCtnBlockUnit</code> / <code>CGameCtnBlockUnitInfo</code></td>
+  <td style="text-align:left">Block unit definitions</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CGameCtnImporter</code></td>
+  <td style="text-align:left">Main import orchestrator</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CGameCtnMacroBlockInfo</code></td>
+  <td style="text-align:left">Macro block (multi-block) definitions</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CBlock</code>, <code>CBlockModel</code>, <code>CBlockClip</code></td>
+  <td style="text-align:left">Block system internals</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CCrystal</code></td>
+  <td style="text-align:left">Crystal/collision mesh system</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="73-block-types"><a class="anchor" href="#73-block-types">#</a>7.3 Block Types</h3>
+<p><strong>Evidence</strong>: Strings <code>|BlockInfo|Checkpoint</code>, <code>|BlockInfo|Finish</code>, <code>|BlockInfo|Start</code>, <code>|BlockInfo|Start/Finish</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>Block waypoint types:</p>
+<ul>
+  <li><code>Start</code> -- Race start position</li>
+  <li><code>Finish</code> -- Race finish line</li>
+  <li><code>Checkpoint</code> -- Intermediate checkpoint</li>
+  <li><code>Start/Finish</code> -- Combined start/finish (for multilap)</li>
+</ul>
+<h3 id="74-mesh-processing-pipeline"><a class="anchor" href="#74-mesh-processing-pipeline">#</a>7.4 Mesh Processing Pipeline</h3>
+<p>From strings analysis:</p>
+<ol>
+  <li>FBX import via <code>FbxImporter</code> (libfbxsdk.dll)</li>
+  <li>Geometry conversion: <code>FbxGeometryConverter</code></li>
+  <li>Skeleton/skinning: <code>FbxSkin</code>, <code>FbxCluster</code>, <code>FbxBlendShape</code></li>
+  <li>Material mapping: references <code>MaterialLib</code> (NadeoImporterMaterialLib.txt)</li>
+  <li>Collision shape generation: <code>CCrystal::ArchiveCrystal</code></li>
+  <li>LOD generation: Reduction40, ReductionRetextured, Remesh, Impostor</li>
+  <li>Lightmap UV handling: <code>TreeGen Solid's LightMapUVs: Mesh has no LM UVs => abort</code></li>
+  <li>GBX output: <code>ArchiveNod::LoadGbx_Body(Solid1)</code>, <code>ArchiveNod::LoadGbx_Body(Solid2)</code></li>
+</ol>
+<h3 id="75-shader-references"><a class="anchor" href="#75-shader-references">#</a>7.5 Shader References</h3>
+<ul>
+  <li><code>GbxVisualPw01Shadow</code> -- Shadow pass shader</li>
+  <li><code>GbxDebugValue</code> -- Debug visualization shader</li>
+  <li><code>GbxP_DbgTest0</code> -- Debug test output</li>
+  <li><code>MDbgId_Enabled(-1)</code> -- Debug ID system</li>
+  <li><code>!!!!  PLEASE USE RIGHT PRE-COMPILED SHADERS  !!!!</code> -- Shader compilation warning</li>
+</ul>
+<h3 id="76-version-string"><a class="anchor" href="#76-version-string">#</a>7.6 Version String</h3>
+<p><strong>Evidence</strong>: String <code>"Version" : "Tm2020"</code> -- Identifies as Trackmania 2020 importer variant. <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="77-command-line-options"><a class="anchor" href="#77-command-line-options">#</a>7.7 Command Line Options</h3>
+<p><strong>Evidence</strong>: Strings <code>/LogMeshStats</code>, <code>/MaterialList</code>, <code>/MeshSkipPrefix</code> -- command-line flags <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<ul>
+  <li><code>/LogMeshStats</code> -- Log mesh statistics during import</li>
+  <li><code>/MaterialList</code> -- List available materials</li>
+  <li><code>/MeshSkipPrefix</code> -- Skip mesh prefix during processing</li>
+</ul>
+<hr>
+<h2 id="8-updater_filestxt-update-system"><a class="anchor" href="#8-updater_filestxt-update-system">#</a>8. updater_files.txt - Update System</h2>
+<p><strong>File Path</strong>: <code>GameData/updater_files.txt</code> <strong>Size</strong>: 4,791 bytes <strong>Format</strong>: XML <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="81-xml-structure"><a class="anchor" href="#81-xml-structure">#</a>8.1 XML Structure</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;updater AllowedVersion=&quot;2026-01-10&quot; Description=&quot;Trackmania&quot;
+         UpdateVersion=&quot;2026-01-10&quot; manialink=&quot;&quot; version=&quot;1&quot;&gt;
+    &lt;group name=&quot;GroupName&quot; [demoappid=&quot;&quot;] [mainappid=&quot;&quot;]&gt;
+        &lt;file [dontinstall=&quot;1&quot;] [level=&quot;CanBeNewer&quot;] [optional=&quot;1&quot;] [forcenorestart=&quot;1&quot;]&gt;
+            &lt;filename&gt;PackFile.ext&lt;/filename&gt;
+            &lt;checksum&gt;SHA256_HASH&lt;/checksum&gt;
+            &lt;size&gt;BYTES&lt;/size&gt;
+            &lt;lastupdate&gt;DD/MM/YYYY HH:MM&lt;/lastupdate&gt;
+        &lt;/file&gt;
+    &lt;/group&gt;
+&lt;/updater&gt;</code></pre></div>
+<h3 id="82-file-groups"><a class="anchor" href="#82-file-groups">#</a>8.2 File Groups</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Group</th>
+  <th style="text-align:left">Steam AppIDs</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>ManiaPlanet</strong></td>
+  <td style="text-align:left">--</td>
+  <td style="text-align:left">Core engine packs (5 files)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Titles</strong></td>
+  <td style="text-align:left">--</td>
+  <td style="text-align:left">Title/game definition packs (3 files)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Common</strong></td>
+  <td style="text-align:left">--</td>
+  <td style="text-align:left">Shared content packs (5 files)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>TMStadium</strong></td>
+  <td style="text-align:left">demo=233070, main=232910</td>
+  <td style="text-align:left">Stadium-specific content (6 files)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="83-file-attributes"><a class="anchor" href="#83-file-attributes">#</a>8.3 File Attributes</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Attribute</th>
+  <th style="text-align:left">Values</th>
+  <th style="text-align:left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>dontinstall="1"</code></td>
+  <td style="text-align:left">GpuCache_D3D11_SM5.zip</td>
+  <td style="text-align:left">Downloaded but not auto-extracted</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>level="CanBeNewer"</code></td>
+  <td style="text-align:left">Various</td>
+  <td style="text-align:left">Local copy can be newer than server version</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>optional="1"</code></td>
+  <td style="text-align:left">Translations.zip</td>
+  <td style="text-align:left">Optional download</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>forcenorestart="1"</code></td>
+  <td style="text-align:left">Translations.zip</td>
+  <td style="text-align:left">Update without game restart</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="84-steam-app-ids"><a class="anchor" href="#84-steam-app-ids">#</a>8.4 Steam App IDs</h3>
+<ul>
+  <li><strong>Main App</strong>: 232910</li>
+  <li><strong>Demo App</strong>: 233070</li>
+</ul>
+<p>> <strong>Note</strong>: These are legacy ManiaPlanet-era App IDs (TrackMania Canyon and its demo) preserved in the updater system's "TMStadium" group, NOT the actual Trackmania 2020 Steam App ID, which is <strong>2225070</strong>.</p>
+<h3 id="85-update-version"><a class="anchor" href="#85-update-version">#</a>8.5 Update Version</h3>
+<p><strong>Current version</strong>: 2026-01-10 <strong>Checksum algorithm</strong>: SHA-256 (256-bit / 64 hex characters) <strong>Date format</strong>: DD/MM/YYYY HH:MM</p>
+<hr>
+<h2 id="9-nadeoini-configuration"><a class="anchor" href="#9-nadeoini-configuration">#</a>9. Nadeo.ini - Configuration</h2>
+<p><strong>File Path</strong>: <code>Nadeo.ini</code> <strong>Size</strong>: 256 bytes <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="91-full-contents"><a class="anchor" href="#91-full-contents">#</a>9.1 Full Contents</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-ini">[Trackmania]
+WindowTitle=Trackmania
+Updater=Steam
+Distro=AZURO
+UPlayAppId=7015
+UserDir={userdocs}\Trackmania
+CommonDir={commondata}\Trackmania</code></pre></div>
+<h3 id="92-field-analysis"><a class="anchor" href="#92-field-analysis">#</a>9.2 Field Analysis</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Key</th>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>WindowTitle</code></td>
+  <td style="text-align:left"><code>Trackmania</code></td>
+  <td style="text-align:left">Window title bar text</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Updater</code></td>
+  <td style="text-align:left"><code>Steam</code></td>
+  <td style="text-align:left">Update distribution platform</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Distro</code></td>
+  <td style="text-align:left"><code>AZURO</code></td>
+  <td style="text-align:left">Distribution channel codename</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>UPlayAppId</code></td>
+  <td style="text-align:left"><code>7015</code></td>
+  <td style="text-align:left">Ubisoft Connect application ID</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>UserDir</code></td>
+  <td style="text-align:left"><code>{userdocs}\Trackmania</code></td>
+  <td style="text-align:left">User data directory (expands to <code>Documents\Trackmania</code>)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CommonDir</code></td>
+  <td style="text-align:left"><code>{commondata}\Trackmania</code></td>
+  <td style="text-align:left">Shared data directory (expands to <code>ProgramData\Trackmania</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>"AZURO"</strong>: This is the internal codename for the Trackmania 2020 distribution. Previous ManiaPlanet distributions had different codenames. This identifies the specific build/distribution variant to the engine.</p>
+<hr>
+<h2 id="10-shader-system-gpucache"><a class="anchor" href="#10-shader-system-gpucache">#</a>10. Shader System (GpuCache)</h2>
+<p><strong>Source</strong>: <code>Packs/GpuCache_D3D11_SM5.zip</code> <strong>Size</strong>: 16.2 MB (compressed), 23.9 MB (uncompressed) <strong>Total Files</strong>: 1,113 compiled shader files <strong>Format</strong>: <code>.hlsl.GpuCache.Gbx</code> (HLSL compiled into GBX containers) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="101-shader-categories"><a class="anchor" href="#101-shader-categories">#</a>10.1 Shader Categories</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Category</th>
+  <th style="text-align:left">Description</th>
+  <th style="text-align:left">Count (approx)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Bench/</strong></td>
+  <td style="text-align:left">GPU benchmarking shaders</td>
+  <td style="text-align:left">~5</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Clouds/</strong></td>
+  <td style="text-align:left">Volumetric cloud rendering</td>
+  <td style="text-align:left">~9</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Editor/</strong></td>
+  <td style="text-align:left">Map editor visualization</td>
+  <td style="text-align:left">~3</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/</strong></td>
+  <td style="text-align:left">Post-processing and effects</td>
+  <td style="text-align:left">~100+</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/Energy</strong></td>
+  <td style="text-align:left">Energy/glow effects</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/Fog</strong></td>
+  <td style="text-align:left">Fog rendering</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/Particles</strong></td>
+  <td style="text-align:left">Particle systems</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/Particles/CameraWaterDroplets</strong></td>
+  <td style="text-align:left">Camera water droplet effect</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/Particles/SelfShadow</strong></td>
+  <td style="text-align:left">Particle self-shadowing</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/Particles/VortexSimulation</strong></td>
+  <td style="text-align:left">Vortex particle simulation</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/PostFx</strong></td>
+  <td style="text-align:left">Post-processing pipeline</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/PostFx/HBAO_plus</strong></td>
+  <td style="text-align:left">NVIDIA HBAO+ ambient occlusion</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/SignedDistanceField</strong></td>
+  <td style="text-align:left">SDF rendering</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/SortLib</strong></td>
+  <td style="text-align:left">GPU sort library</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/SubSurface</strong></td>
+  <td style="text-align:left">Subsurface scattering</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Effects/TemporalAA</strong></td>
+  <td style="text-align:left">Temporal anti-aliasing</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Engines/</strong></td>
+  <td style="text-align:left">Core rendering engine shaders</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Engines/NormalMapBaking</strong></td>
+  <td style="text-align:left">Normal map generation</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Garage/</strong></td>
+  <td style="text-align:left">Garage/car viewer shaders</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Lightmap/</strong></td>
+  <td style="text-align:left">Lightmap baking/rendering</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Menu/</strong></td>
+  <td style="text-align:left">Menu UI rendering</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Noise/</strong></td>
+  <td style="text-align:left">Noise generation</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Painter/</strong></td>
+  <td style="text-align:left">Car skin painter</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>ShadowCache/</strong></td>
+  <td style="text-align:left">Shadow map caching</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>ShootMania/</strong></td>
+  <td style="text-align:left">ShootMania-specific (legacy)</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Sky/</strong></td>
+  <td style="text-align:left">Sky/atmosphere rendering</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Tech3/</strong></td>
+  <td style="text-align:left">Tech3 material system</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Tech3/Grass</strong></td>
+  <td style="text-align:left">Grass rendering</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Tech3/Trees</strong></td>
+  <td style="text-align:left">Tree rendering</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Techno3/</strong></td>
+  <td style="text-align:left">Techno3 advanced materials</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Test/</strong></td>
+  <td style="text-align:left">Test/debug shaders</td>
+  <td style="text-align:left"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="102-shader-naming-convention"><a class="anchor" href="#102-shader-naming-convention">#</a>10.2 Shader Naming Convention</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>{Category}/{ShaderName}_{stage}.hlsl.GpuCache.Gbx</code></pre></div>
+<p>Stages:</p>
+<ul>
+  <li><code>_v</code> = Vertex shader</li>
+  <li><code>_p</code> = Pixel/Fragment shader</li>
+  <li><code>_g</code> = Geometry shader</li>
+  <li><code>_c</code> = Compute shader</li>
+  <li><code>_h</code> = Hull shader (tessellation)</li>
+  <li><code>_d</code> = Domain shader (tessellation)</li>
+</ul>
+<h3 id="103-key-shader-programs"><a class="anchor" href="#103-key-shader-programs">#</a>10.3 Key Shader Programs</h3>
+<p><strong>Benchmark shaders</strong> (from <code>Bench/</code>):</p>
+<ul>
+  <li><code>Anisotropy_p/v</code> -- Anisotropic filtering benchmark</li>
+  <li><code>Geometry_p/v</code> -- Vertex processing benchmark</li>
+  <li><code>OutputBandwidth_p/v</code> -- Fill rate benchmark</li>
+  <li><code>PixelArithmetic_p</code> -- ALU benchmark</li>
+</ul>
+<p><strong>Cloud shaders</strong> (from <code>Clouds/</code>):</p>
+<ul>
+  <li><code>CloudsEdgeLight_p</code> -- Cloud edge lighting</li>
+  <li><code>CloudsGodLight_p</code> -- God ray/volumetric light through clouds</li>
+  <li><code>CloudsGodMask_p</code> -- God ray masking</li>
+  <li><code>CloudsT3b_p/v</code> -- Cloud Tech3b rendering (main cloud shader)</li>
+  <li><code>CloudsTech3_p/v</code> -- Cloud Tech3 base</li>
+  <li><code>CloudsTech3_Opacity_p/v</code> -- Cloud opacity pass</li>
+</ul>
+<p><strong>Copy/Utility shaders</strong>:</p>
+<ul>
+  <li><code>CopyTextureFloatToInt_c</code> -- Float to integer texture conversion (compute)</li>
+  <li><code>CopyTextureIntToFloat_c</code> -- Integer to float texture conversion (compute)</li>
+</ul>
+<h3 id="104-rendering-pipeline-insights"><a class="anchor" href="#104-rendering-pipeline-insights">#</a>10.4 Rendering Pipeline Insights</h3>
+<p>The shader categories reveal Trackmania's rendering pipeline:</p>
+<ol>
+  <li><strong>Shadow Pass</strong>: <code>ShadowCache/</code> -- Shadow map rendering and caching</li>
+  <li><strong>Lightmap</strong>: <code>Lightmap/</code> -- Baked/dynamic lightmap rendering</li>
+  <li><strong>Main Geometry</strong>: <code>Tech3/</code>, <code>Techno3/</code> -- Material rendering system</li>
+  <li><strong>Sky/Atmosphere</strong>: <code>Sky/</code> -- Sky dome and atmospheric scattering</li>
+  <li><strong>Clouds</strong>: <code>Clouds/</code> -- Volumetric cloud rendering</li>
+  <li><strong>Particles</strong>: <code>Effects/Particles/</code> -- Particle rendering with self-shadow and water droplets</li>
+  <li><strong>Post-Processing</strong>: <code>Effects/PostFx/</code> -- TAA, HBAO+, tone mapping</li>
+  <li><strong>Effects</strong>: <code>Effects/</code> -- Flares, lens dirt, fog, subsurface, SDF</li>
+  <li><strong>UI</strong>: <code>Menu/</code> -- Menu rendering</li>
+  <li><strong>Special</strong>: <code>Garage/</code>, <code>Painter/</code> -- Car viewer and skin painting</li>
+</ol>
+<hr>
+<h2 id="11-key-findings-for-browser-recreation"><a class="anchor" href="#11-key-findings-for-browser-recreation">#</a>11. Key Findings for Browser Recreation</h2>
+<h3 id="111-graphics-requirements"><a class="anchor" href="#111-graphics-requirements">#</a>11.1 Graphics Requirements</h3>
+<ul>
+  <li><strong>Target API</strong>: D3D11.0 feature level (DX11 Shader Model 5.0)</li>
+  <li><strong>WebGPU equivalent</strong>: Fully achievable -- WebGPU supports compute shaders, geometry processing, and all required texture formats</li>
+  <li><strong>Shader model</strong>: SM5 (HLSL) -- 1,113 precompiled shaders in cache</li>
+  <li><strong>Key features needed</strong>: Geometry shaders, tessellation, transform feedback, compute shaders, BC texture compression, anisotropic filtering, dual-source blending</li>
+  <li><strong>Render target format</strong>: B8G8R8A8_SRGB (sRGB output)</li>
+  <li><strong>Depth format</strong>: D24_UNORM_S8_UINT (24-bit depth + 8-bit stencil)</li>
+  <li><strong>Triple buffered</strong> with immediate present (no vsync by default)</li>
+</ul>
+<h3 id="112-vertex-buffer-formats"><a class="anchor" href="#112-vertex-buffer-formats">#</a>11.2 Vertex Buffer Formats</h3>
+<p>Four vertex formats identified with strides of 28, 44, 52, and 56 bytes. All use:</p>
+<ul>
+  <li>Position: <code>R32G32B32_SFLOAT</code> (vec3)</li>
+  <li>Normal: <code>R16G16B16A16_SNORM</code> (packed normalized)</li>
+  <li>UV: <code>R32G32_SFLOAT</code> (vec2)</li>
+  <li>Tangent/Binormal: <code>R16G16B16A16_SNORM</code> (optional)</li>
+  <li>Vertex Color: <code>B8G8R8A8_UNORM</code> (optional)</li>
+</ul>
+<h3 id="113-material-system"><a class="anchor" href="#113-material-system">#</a>11.3 Material System</h3>
+<ul>
+  <li><strong>19 unique surface types</strong> controlling physics behavior</li>
+  <li><strong>All gameplay IDs are "None"</strong> in the material library -- gameplay effects come from block/item system, not materials</li>
+  <li><strong>UV layouts</strong>: BaseMaterial (UV0) + Lightmap (UV1) for most materials, Lightmap-only (UV0) for Custom* materials</li>
+  <li><strong>Skin textures use 4 channels</strong>: <code>_D</code> (diffuse), <code>_N</code> (normal), <code>_R</code> (roughness), <code>_D_HueMask</code> (color customization)</li>
+</ul>
+<h3 id="114-audio-system"><a class="anchor" href="#114-audio-system">#</a>11.4 Audio System</h3>
+<ul>
+  <li><strong>3D audio</strong>: OpenAL Soft with ambisonic support</li>
+  <li><strong>Codec</strong>: Ogg Vorbis 1.3.5</li>
+  <li><strong>Browser equivalent</strong>: Web Audio API with spatialization</li>
+</ul>
+<h3 id="115-networkplatform-dependencies"><a class="anchor" href="#115-networkplatform-dependencies">#</a>11.5 Network/Platform Dependencies</h3>
+<ul>
+  <li><strong>Auth</strong>: Ubisoft Connect (UPC SDK) with ticket-based authentication</li>
+  <li><strong>Voice</strong>: Vivox SDK (SIP-based) -- replaceable with WebRTC</li>
+  <li><strong>Ads</strong>: Anzu.io SDK -- not needed for recreation</li>
+  <li><strong>Updates</strong>: Custom XML-based updater with SHA-256 checksums</li>
+</ul>
+<h3 id="116-asset-pipeline"><a class="anchor" href="#116-asset-pipeline">#</a>11.6 Asset Pipeline</h3>
+<ul>
+  <li><strong>Source format</strong>: FBX (via Autodesk SDK 2018)</li>
+  <li><strong>Runtime formats</strong>: GBX containers (NadeoPak for archives)</li>
+  <li><strong>Pack files</strong>: ~6.4 GB total, NadeoPak v18 format with SHA-256 integrity</li>
+  <li><strong>LOD system</strong>: Full mesh, Reduction40, ReductionRetextured, Remesh, Impostor</li>
+  <li><strong>Texture formats</strong>: DDS (BC compressed), TGA, WebP, PNG</li>
+</ul>
+<h3 id="117-environment-themes"><a class="anchor" href="#117-environment-themes">#</a>11.7 Environment Themes</h3>
+<p>Four environment variations (each ~400-800 MB of assets):</p>
+<ul>
+  <li>GreenCoast, BlueBay, RedIsland, WhiteShore</li>
+</ul>
+<h3 id="118-localization"><a class="anchor" href="#118-localization">#</a>11.8 Localization</h3>
+<p>14 supported languages via gettext (.mo files): cs-CZ, de-DE, en-US, es-ES, fr-FR, it-IT, ja-JP, ko-KR, nl-NL, pl-PL, pt-BR, ru-RU, tr-TR, zh-CN</p>
+
+                        <nav class="prev-next"><a class="prev" href="networking.html">&larr; Networking</a><a class="next" href="tmnf-crossref.html">TMNF Comparison &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-dll-analysis">1. DLL Analysis</a></li>
+  <li class="toc-h3"><a href="#11-anzudll-in-game-advertising-sdk-anzuio">1.1 anzu.dll - In-Game Advertising SDK (Anzu.io)</a></li>
+  <li class="toc-h3"><a href="#12-d3dcompiler_47dll-microsoft-d3d-shader-compiler">1.2 d3dcompiler_47.dll - Microsoft D3D Shader Compiler</a></li>
+  <li class="toc-h3"><a href="#13-dinput8dll-openplanet-hook-loader-directinput8-proxy">1.3 dinput8.dll - Openplanet Hook Loader (DirectInput8 Proxy)</a></li>
+  <li class="toc-h3"><a href="#14-libfbxsdkdll-autodesk-fbx-sdk-2018">1.4 libfbxsdk.dll - Autodesk FBX SDK (2018)</a></li>
+  <li class="toc-h3"><a href="#15-libwebp64dll-webp-image-codec">1.5 libwebp64.dll - WebP Image Codec</a></li>
+  <li class="toc-h3"><a href="#16-ntdll_odll-winecrossover-ntdll-backup">1.6 ntdll_o.dll - Wine/CrossOver NTDLL Backup</a></li>
+  <li class="toc-h3"><a href="#17-openal64_bundleddll-openal-soft-audio-library">1.7 OpenAL64_bundled.dll - OpenAL Soft Audio Library</a></li>
+  <li class="toc-h3"><a href="#18-openplanetdll-openplanet-mod-framework-v1291">1.8 Openplanet.dll - Openplanet Mod Framework (v1.29.1)</a></li>
+  <li class="toc-h3"><a href="#19-upc_r2_loader64dll-ubisoft-connect-upc-sdk">1.9 upc_r2_loader64.dll - Ubisoft Connect (UPC) SDK</a></li>
+  <li class="toc-h3"><a href="#110-vivoxsdkdll-vivox-voice-chat-sdk-v5192">1.10 vivoxsdk.dll - Vivox Voice Chat SDK (v5.19.2)</a></li>
+  <li class="toc-h3"><a href="#111-voicechatdll-nadeo-voice-chat-wrapper">1.11 VoiceChat.dll - Nadeo Voice Chat Wrapper</a></li>
+  <li class="toc-h3"><a href="#112-vorbis64dll-ogg-vorbis-audio-codec">1.12 vorbis64.dll - Ogg Vorbis Audio Codec</a></li>
+<li class=""><a href="#dll-summary-table">DLL Summary Table</a></li>
+<li class=""><a href="#2-nadeoimportermateriallibtxt-complete-material-database">2. NadeoImporterMaterialLib.txt - Complete Material Database</a></li>
+  <li class="toc-h3"><a href="#21-structure-format">2.1 Structure Format</a></li>
+  <li class="toc-h3"><a href="#22-complete-surface-id-enumeration">2.2 Complete Surface ID Enumeration</a></li>
+  <li class="toc-h3"><a href="#23-complete-gameplay-id-enumeration">2.3 Complete Gameplay ID Enumeration</a></li>
+  <li class="toc-h3"><a href="#24-uv-layer-configurations">2.4 UV Layer Configurations</a></li>
+  <li class="toc-h3"><a href="#25-complete-material-catalog-by-category">2.5 Complete Material Catalog (by Category)</a></li>
+<li class=""><a href="#3-pack-files">3. Pack Files</a></li>
+  <li class="toc-h3"><a href="#31-pak-files-nadeopak-format">3.1 PAK Files (NadeoPak Format)</a></li>
+  <li class="toc-h3"><a href="#32-environment-theme-packs">3.2 Environment Theme Packs</a></li>
+  <li class="toc-h3"><a href="#33-trackmaniatitlepackgbx">3.3 Trackmania.Title.Pack.Gbx</a></li>
+  <li class="toc-h3"><a href="#34-zip-pack-contents">3.4 ZIP Pack Contents</a></li>
+<li class=""><a href="#4-gfxdeviceperfstxt-gpu-performance-database">4. GfxDevicePerfs.txt - GPU Performance Database</a></li>
+  <li class="toc-h3"><a href="#41-format">4.1 Format</a></li>
+  <li class="toc-h3"><a href="#42-gpu-vendor-distribution">4.2 GPU Vendor Distribution</a></li>
+  <li class="toc-h3"><a href="#43-purpose">4.3 Purpose</a></li>
+  <li class="toc-h3"><a href="#44-notable-entries">4.4 Notable Entries</a></li>
+<li class=""><a href="#5-openplanet-directory">5. Openplanet Directory</a></li>
+  <li class="toc-h3"><a href="#51-directory-structure">5.1 Directory Structure</a></li>
+  <li class="toc-h3"><a href="#52-cacertpem">5.2 cacert.pem</a></li>
+  <li class="toc-h3"><a href="#53-defaultstyletoml">5.3 DefaultStyle.toml</a></li>
+  <li class="toc-h3"><a href="#54-fonts-directory">5.4 Fonts Directory</a></li>
+  <li class="toc-h3"><a href="#55-plugins-directory">5.5 Plugins Directory</a></li>
+  <li class="toc-h3"><a href="#56-scripts-directory">5.6 Scripts Directory</a></li>
+  <li class="toc-h3"><a href="#57-read_metxt">5.7 READ_ME.txt</a></li>
+  <li class="toc-h3"><a href="#58-openplanethooklog">5.8 OpenplanetHook.log</a></li>
+<li class=""><a href="#6-dxvk-d3d11-log-analysis">6. DXVK / D3D11 Log Analysis</a></li>
+  <li class="toc-h3"><a href="#61-runtime-environment">6.1 Runtime Environment</a></li>
+  <li class="toc-h3"><a href="#62-vulkan-extensions-used">6.2 Vulkan Extensions Used</a></li>
+  <li class="toc-h3"><a href="#63-required-gpu-features">6.3 Required GPU Features</a></li>
+  <li class="toc-h3"><a href="#64-vertex-formats-from-pipeline-compilation-errors">6.4 Vertex Formats (from Pipeline Compilation Errors)</a></li>
+  <li class="toc-h3"><a href="#65-swap-chain-configuration">6.5 Swap Chain Configuration</a></li>
+<li class=""><a href="#7-nadeoimporterexe-asset-pipeline">7. NadeoImporter.exe - Asset Pipeline</a></li>
+  <li class="toc-h3"><a href="#71-supported-file-formats">7.1 Supported File Formats</a></li>
+  <li class="toc-h3"><a href="#72-class-hierarchy-from-strings">7.2 Class Hierarchy (from strings)</a></li>
+  <li class="toc-h3"><a href="#73-block-types">7.3 Block Types</a></li>
+  <li class="toc-h3"><a href="#74-mesh-processing-pipeline">7.4 Mesh Processing Pipeline</a></li>
+  <li class="toc-h3"><a href="#75-shader-references">7.5 Shader References</a></li>
+  <li class="toc-h3"><a href="#76-version-string">7.6 Version String</a></li>
+  <li class="toc-h3"><a href="#77-command-line-options">7.7 Command Line Options</a></li>
+<li class=""><a href="#8-updater_filestxt-update-system">8. updater_files.txt - Update System</a></li>
+  <li class="toc-h3"><a href="#81-xml-structure">8.1 XML Structure</a></li>
+  <li class="toc-h3"><a href="#82-file-groups">8.2 File Groups</a></li>
+  <li class="toc-h3"><a href="#83-file-attributes">8.3 File Attributes</a></li>
+  <li class="toc-h3"><a href="#84-steam-app-ids">8.4 Steam App IDs</a></li>
+  <li class="toc-h3"><a href="#85-update-version">8.5 Update Version</a></li>
+<li class=""><a href="#9-nadeoini-configuration">9. Nadeo.ini - Configuration</a></li>
+  <li class="toc-h3"><a href="#91-full-contents">9.1 Full Contents</a></li>
+  <li class="toc-h3"><a href="#92-field-analysis">9.2 Field Analysis</a></li>
+<li class=""><a href="#10-shader-system-gpucache">10. Shader System (GpuCache)</a></li>
+  <li class="toc-h3"><a href="#101-shader-categories">10.1 Shader Categories</a></li>
+  <li class="toc-h3"><a href="#102-shader-naming-convention">10.2 Shader Naming Convention</a></li>
+  <li class="toc-h3"><a href="#103-key-shader-programs">10.3 Key Shader Programs</a></li>
+  <li class="toc-h3"><a href="#104-rendering-pipeline-insights">10.4 Rendering Pipeline Insights</a></li>
+<li class=""><a href="#11-key-findings-for-browser-recreation">11. Key Findings for Browser Recreation</a></li>
+  <li class="toc-h3"><a href="#111-graphics-requirements">11.1 Graphics Requirements</a></li>
+  <li class="toc-h3"><a href="#112-vertex-buffer-formats">11.2 Vertex Buffer Formats</a></li>
+  <li class="toc-h3"><a href="#113-material-system">11.3 Material System</a></li>
+  <li class="toc-h3"><a href="#114-audio-system">11.4 Audio System</a></li>
+  <li class="toc-h3"><a href="#115-networkplatform-dependencies">11.5 Network/Platform Dependencies</a></li>
+  <li class="toc-h3"><a href="#116-asset-pipeline">11.6 Asset Pipeline</a></li>
+  <li class="toc-h3"><a href="#117-environment-themes">11.7 Environment Themes</a></li>
+  <li class="toc-h3"><a href="#118-localization">11.8 Localization</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

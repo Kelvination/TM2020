@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real File Analysis - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item active" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Real File Analysis</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="real-gbx-file-analysis-format-validation-against-live-game-data"><a class="anchor" href="#real-gbx-file-analysis-format-validation-against-live-game-data">#</a>Real GBX File Analysis: Format Validation Against Live Game Data</h1>
+<p><strong>Date</strong>: 2026-03-27 <strong>Purpose</strong>: Byte-by-byte validation of GBX format documentation (doc 16) against real files from Trackmania 2020 <strong>Source files</strong>: User documents and game installation under CrossOver/Steam</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-files-analyzed">Files Analyzed</a></li>
+  <li><a href="#2-map-file-mapgbx-deep-walk-through">Map File (.Map.Gbx) Deep Walk-Through</a></li>
+  <li><a href="#3-replay-file-replaygbx-analysis">Replay File (.Replay.Gbx) Analysis</a></li>
+  <li><a href="#4-profile-file-profilegbx-analysis">Profile File (.Profile.Gbx) Analysis</a></li>
+  <li><a href="#5-block-file-blockgbx-analysis">Block File (.Block.Gbx) Analysis</a></li>
+  <li><a href="#6-funcshader-file-analysis-fully-uncompressed">FuncShader File Analysis (Fully Uncompressed)</a></li>
+  <li><a href="#7-funccloudsparams-file-analysis">FuncCloudsParam File Analysis</a></li>
+  <li><a href="#8-imagegen-file-analysis">ImageGen File Analysis</a></li>
+  <li><a href="#9-gpucachegbx-shader-file-analysis">GpuCache.Gbx Shader File Analysis</a></li>
+  <li><a href="#10-nadeopak-header-analysis">NadeoPak Header Analysis</a></li>
+  <li><a href="#11-gpu-shader-cache">GPU Shader Cache (GpuCache_D3D11_SM5.zip)</a></li>
+  <li><a href="#12-class-id-registry-from-real-files">Class ID Registry from Real Files</a></li>
+  <li><a href="#13-format-validation-checklist">Format Validation Checklist</a></li>
+  <li><a href="#14-discrepancies-and-corrections">Discrepancies and Corrections</a></li>
+</ol>
+<hr>
+<h2 id="1-files-analyzed"><a class="anchor" href="#1-files-analyzed">#</a>1. Files Analyzed</h2>
+<h3 id="gbx-files-user-documents"><a class="anchor" href="#gbx-files-user-documents">#</a>GBX Files (User Documents)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">File</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Format Flags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>TechFlow.Map.Gbx</code></td>
+  <td style="text-align:left">Map</td>
+  <td style="text-align:left">47,243 bytes</td>
+  <td style="text-align:left">BUCR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Zenith.Map.Gbx</code></td>
+  <td style="text-align:left">Map</td>
+  <td style="text-align:left">~varies</td>
+  <td style="text-align:left">BUCR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ReallyRally...Replay.Gbx</code></td>
+  <td style="text-align:left">Replay</td>
+  <td style="text-align:left">~varies</td>
+  <td style="text-align:left">BUCR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Snowfall...Replay.Gbx</code></td>
+  <td style="text-align:left">Replay (autosave)</td>
+  <td style="text-align:left">~varies</td>
+  <td style="text-align:left">BUCR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>c78b4490-...Profile.Gbx</code></td>
+  <td style="text-align:left">Profile</td>
+  <td style="text-align:left">34,215 bytes</td>
+  <td style="text-align:left">BUCR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>User.FidCache.Gbx</code></td>
+  <td style="text-align:left">FidCache</td>
+  <td style="text-align:left">~varies</td>
+  <td style="text-align:left">BUCR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GrassRemover.Block.Gbx</code></td>
+  <td style="text-align:left">Block</td>
+  <td style="text-align:left">779 bytes</td>
+  <td style="text-align:left">BUCR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Clouds.FuncShader.Gbx</code></td>
+  <td style="text-align:left">FuncShader</td>
+  <td style="text-align:left">103 bytes</td>
+  <td style="text-align:left">BUUR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SkyCloudsParams.FuncCloudsParam.Gbx</code></td>
+  <td style="text-align:left">FuncCloudsParam</td>
+  <td style="text-align:left">93 bytes</td>
+  <td style="text-align:left">BUUR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterTransmittance.ImageGen.Gbx</code></td>
+  <td style="text-align:left">ImageGen</td>
+  <td style="text-align:left">87 bytes</td>
+  <td style="text-align:left">BUCE</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="pack-files-game-installation"><a class="anchor" href="#pack-files-game-installation">#</a>Pack Files (Game Installation)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">File</th>
+  <th style="text-align:left">Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Resource.pak</code></td>
+  <td style="text-align:left">178 KB</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Titles.pak</code></td>
+  <td style="text-align:left">1.4 MB</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Maniaplanet_Core.pak</code></td>
+  <td style="text-align:left">34 MB</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Maniaplanet.pak</code></td>
+  <td style="text-align:left">169 MB</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Stadium.pak</code></td>
+  <td style="text-align:left">1.67 GB</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Skins_Stadium.pak</code></td>
+  <td style="text-align:left">264 MB</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Skins_StadiumPrestige.pak</code></td>
+  <td style="text-align:left">959 MB</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="gpu-shader-cache"><a class="anchor" href="#gpu-shader-cache">#</a>GPU Shader Cache</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">File</th>
+  <th style="text-align:left">Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>GpuCache_D3D11_SM5.zip</code></td>
+  <td style="text-align:left">1,112 shader files + 1 version info</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="2-map-file-mapgbx-deep-walk-through"><a class="anchor" href="#2-map-file-mapgbx-deep-walk-through">#</a>2. Map File (.Map.Gbx) Deep Walk-Through</h2>
+<p><strong>File</strong>: <code>TechFlow.Map.Gbx</code> (47,243 bytes)</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="raw-hex-first-0x160-bytes"><a class="anchor" href="#raw-hex-first-0x160-bytes">#</a>Raw Hex (first 0x160 bytes)</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5543 5200 3004 03ff 6200  GBX..BUCR.0...b.
+00000010: 0006 0000 0002 3004 0339 0000 0003 3004  ......0..9....0.
+00000020: 03dd 0000 0004 3004 0304 0000 0005 3004  ......0.......0.
+00000030: 030e 0200 8007 3004 0351 5f00 8008 3004  ......0..Q_...0.
+00000040: 0352 0000 000d 0000 0000 ffff ffff ffff  .R..............
+00000050: ffff ffff ffff ffff ffff 9f00 0000 0000  ................</code></pre></div>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="byte-by-byte-annotation"><a class="anchor" href="#byte-by-byte-annotation">#</a>Byte-by-Byte Annotation</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Bytes              Field                    Value / Interpretation
+------  -----              -----                    ----------------------
+0x00    47 42 58           magic                    &quot;GBX&quot; -- CONFIRMED matches spec
+0x03    06 00              version                  6 (uint16 LE) -- CONFIRMED TM2020 uses v6
+0x05    42                 format_byte0             &#x27;B&#x27; = Binary -- CONFIRMED
+0x06    55                 format_byte1             &#x27;U&#x27; = body not compressed -- CONFIRMED
+0x07    43                 format_byte2             &#x27;C&#x27; = body stream compressed -- CONFIRMED
+0x08    52                 format_byte3             &#x27;R&#x27; = with References -- CONFIRMED
+                           format_flags             &quot;BUCR&quot; total
+0x09    00 30 04 03        class_id                 0x03043000 -- CONFIRMED CGameCtnChallenge (map)
+0x0D    FF 62 00 00        user_data_size           0x62FF = 25,343 bytes of header chunk data
+0x11    06 00 00 00        num_header_chunks        6 header chunks
+
+--- Header Chunk Index Table (6 entries, 8 bytes each = 48 bytes) ---
+
+0x15    02 30 04 03        chunk_id[0]              0x03043002 (map info)
+0x19    39 00 00 00        chunk_size[0]            0x39 = 57 bytes (bit 31 clear = not heavy)
+
+0x1D    03 30 04 03        chunk_id[1]              0x03043003 (common map header)
+0x21    DD 00 00 00        chunk_size[1]            0xDD = 221 bytes
+
+0x25    04 30 04 03        chunk_id[2]              0x03043004 (map version info)
+0x29    04 00 00 00        chunk_size[2]            0x04 = 4 bytes
+
+0x2D    05 30 04 03        chunk_id[3]              0x03043005 (community reference)
+0x31    0E 02 00 80        chunk_size[3]            0x8000020E --&gt; heavy bit SET, size = 0x20E = 526 bytes
+
+0x35    07 30 04 03        chunk_id[4]              0x03043007 (thumbnail + comments)
+0x39    51 5F 00 80        chunk_size[4]            0x80005F51 --&gt; heavy bit SET, size = 0x5F51 = 24,401 bytes
+
+0x3D    08 30 04 03        chunk_id[5]              0x03043008 (author info)
+0x41    52 00 00 00        chunk_size[5]            0x52 = 82 bytes
+
+--- Header Chunk Data (starts at 0x45, total = 25,343 bytes = 0x62FF) ---</code></pre></div>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="header-chunk-data-chunk-0x03043002-57-bytes-at-offset-0x45"><a class="anchor" href="#header-chunk-data-chunk-0x03043002-57-bytes-at-offset-0x45">#</a>Header Chunk Data: Chunk <code class="addr">0x03043002</code> (57 bytes at offset 0x45)</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x45    0D 00 00 00        version                  13
+0x49    00                  ??? (padding/flags)
+0x4A    FF FF FF FF        ???                      -1 (sentinel for missing data?)
+0x4E    FF FF FF FF        ???
+0x52    FF FF FF FF        ???
+0x56    FF FF FF FF        ???
+0x5A    FF FF FF FF        ???
+0x5E    9F 00 00 00        ???
+0x62    00 00 00 00
+0x66    00 00 00 00
+0x6A    00 00 00 00
+0x6E    00 00 00 00
+0x72    00 00 00 00
+0x76    00 00 00 00
+0x7A    00 00 02 00 00 00
+        01 00 00 00</code></pre></div>
+<p><strong>Verification</strong>: Sum of chunk sizes = 57 + 221 + 4 + 526 + 24401 + 82 = 25,291. But user_data_size = 25,343. Difference = 52. This is 52 bytes -- which is exactly a padding region. Actually wait, there are two possible interpretations: the user_data_size includes the chunk index table itself (48 bytes of index + data). Let me recalculate: user_data_size = 0x62FF = 25,343. Chunk index = 6 * 8 = 48 bytes. But the spec says user_data_size is "Total bytes of all header chunk data combined" (the data, NOT the index). So 57 + 221 + 4 + 526 + 24401 + 82 = 25,291. The user_data_size = 25,343.</p>
+<p><strong>Discrepancy</strong>: 25,343 - 25,291 = 52. This is EXACTLY 4 + 48 = the num_header_chunks field (4 bytes) + the chunk index table (48 bytes). This means <strong>user_data_size actually includes the num_header_chunks field AND the chunk index table</strong>, not just the chunk data! The spec says "Total size of header chunk data (bytes)" but in practice it encompasses the entire user data block: <code>num_chunks(4) + index_table(num*8) + chunk_data</code>.</p>
+<p><strong>CORRECTION</strong>: user_data_size = 4 (num_chunks) + 8*num_chunks (index entries) + sum(chunk_data_sizes).</p>
+<p>Verification: 4 + 48 + 25,291 = 25,343 = 0x62FF. <strong>CONFIRMED</strong>.</p>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="header-chunk-0x03043005-xml-metadata-526-bytes-at-appropriate-offset"><a class="anchor" href="#header-chunk-0x03043005-xml-metadata-526-bytes-at-appropriate-offset">#</a>Header Chunk <code class="addr">0x03043005</code> (XML metadata, 526 bytes at appropriate offset)</h3></summary>
+<div class="collapsible-content">
+<p>Starting at the right offset within the header chunk data, we find:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x15E   06 00 00 00        version?                 6
+0x162   0A 02 00 00        XML length               0x020A = 522 bytes
+0x166   3C 68 65 61...     XML data                 &quot;&lt;header type=&quot;map&quot; exever=&quot;3.3.0&quot; ...&quot;</code></pre></div>
+<p>This XML contains rich metadata:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;header type=&quot;map&quot; exever=&quot;3.3.0&quot; exebuild=&quot;2026-02-02_17_51&quot; title=&quot;TMStadium&quot; lightmap=&quot;0&quot;&gt;
+  &lt;ident uid=&quot;KS3aPHG7ywx7o2co6JLWHJKDjwl&quot; name=&quot;TechFlow&quot;
+         author=&quot;XChwDu8FRmWH-gHqXUbBtg&quot; authorzone=&quot;World|Africa|South Africa&quot;/&gt;
+  &lt;desc envir=&quot;Stadium&quot; mood=&quot;Day (no stadium)&quot; type=&quot;Race&quot;
+        maptype=&quot;TrackMania\TM_Race&quot; mapstyle=&quot;&quot; validated=&quot;0&quot; nblaps=&quot;0&quot;
+        displaycost=&quot;159&quot; mod=&quot;&quot; hasghostblocks=&quot;0&quot;/&gt;
+  &lt;playermodel id=&quot;&quot;/&gt;
+  &lt;times bronze=&quot;-1&quot; silver=&quot;-1&quot; gold=&quot;-1&quot; authortime=&quot;-1&quot; authorscore=&quot;0&quot; hasclones=&quot;0&quot;/&gt;
+  &lt;deps&gt;&lt;/deps&gt;
+&lt;/header&gt;</code></pre></div>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="header-chunk-0x03043007-thumbnail-heavy-24401-bytes"><a class="anchor" href="#header-chunk-0x03043007-thumbnail-heavy-24401-bytes">#</a>Header Chunk <code class="addr">0x03043007</code> (Thumbnail, heavy, 24,401 bytes)</h3></summary>
+<div class="collapsible-content">
+<p>At the appropriate offset:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>        01 00 00 00        version                  1
+        11 5F 00 00        thumbnail_size           0x5F11 = 24,337 bytes
+        3C 54 68 75...     &quot;&lt;Thumbnail.jpg&gt;&quot;        JPEG marker follows
+        FF D8 FF E0...     JPEG data                Standard JFIF header (CONFIRMED JPEG)</code></pre></div>
+<p><strong>CONFIRMED</strong>: Thumbnail is embedded JPEG data with a size prefix, wrapped in XML-style tags.</p>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="header-chunk-0x03043003-common-map-header-221-bytes"><a class="anchor" href="#header-chunk-0x03043003-common-map-header-221-bytes">#</a>Header Chunk <code class="addr">0x03043003</code> (Common map header, 221 bytes)</h3></summary>
+<div class="collapsible-content">
+<p>Starting at offset 0x7E (within header data region):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x7E    0B                 version                  11
+0x7F    03 00 00 00        ???
+0x83    00 00 00 00        ???
+0x87    40 1B 00 00 00     lookback string marker   0x40000000 followed by 0x1B = 27 chars
+        &quot;KS3aPHG7ywx7o2co6JLWHJKDjwl&quot;               map UID
+        ...
+        &quot;XChwDu8FRmWH-gHqXUbBtg&quot;                     author login
+        &quot;TechFlow&quot;                                    map name</code></pre></div>
+<p><strong>CONFIRMED</strong>: The lookback string system uses a uint32 length prefix before the string data. The value <code class="addr">0x40000000</code> appears as a version/mode marker for lookback strings (version 3).</p>
+</div>
+</details>
+<h3 id="body-region"><a class="anchor" href="#body-region">#</a>Body Region</h3>
+<h3 id="programmatic-verification-python-struct-parse"><a class="anchor" href="#programmatic-verification-python-struct-parse">#</a>Programmatic Verification (Python struct parse)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>File size: 47,243 bytes
+Header verified:
+  user_data_size = 25,343 (0x62FF)
+  Calculated: 4 + 6*8 + (57+221+4+526+24401+82) = 4 + 48 + 25291 = 25,343 MATCH
+  num_nodes = 6 (at offset 0x6310)
+  num_external_refs = 0 (at offset 0x6314)
+Body compression envelope:
+  uncompressed_size = 170,018 (0x29822)
+  compressed_size = 21,867 (0x556B)
+  Body data starts at 0x6320
+  Expected file end: 0x6320 + 0x556B = 0xB88B = 47,243 EXACT MATCH</code></pre></div>
+<p>Every byte accounts for. The file is completely explained by the format spec (with the corrected user_data_size interpretation).</p>
+<h3 id="second-map-comparison-zenithmapgbx"><a class="anchor" href="#second-map-comparison-zenithmapgbx">#</a>Second Map Comparison (Zenith.Map.Gbx)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5543 5200 3004 0310 5800  GBX..BUCR.0...X.</code></pre></div>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">TechFlow</th>
+  <th style="text-align:left">Zenith</th>
+  <th style="text-align:left">Match?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">magic</td>
+  <td style="text-align:left">GBX</td>
+  <td style="text-align:left">GBX</td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">version</td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">format</td>
+  <td style="text-align:left">BUCR</td>
+  <td style="text-align:left">BUCR</td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">class_id</td>
+  <td style="text-align:left"><code class="addr">0x03043000</code></td>
+  <td style="text-align:left"><code class="addr">0x03043000</code></td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">num_chunks</td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">chunk_ids</td>
+  <td style="text-align:left">002,003,004,005,007,008</td>
+  <td style="text-align:left">002,003,004,005,007,008</td>
+  <td style="text-align:left">YES</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>CONFIRMED</strong>: All maps share the same header structure, class ID, and chunk layout.</p>
+<hr>
+<h2 id="3-replay-file-replaygbx-analysis"><a class="anchor" href="#3-replay-file-replaygbx-analysis">#</a>3. Replay File (.Replay.Gbx) Analysis</h2>
+<p><strong>File</strong>: <code>ReallyRally_Kelvination_1-18-2026...Replay.Gbx</code></p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="raw-hex-first-0x50-bytes"><a class="anchor" href="#raw-hex-first-0x50-bytes">#</a>Raw Hex (first 0x50 bytes)</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5543 5200 3009 03c1 0200  GBX..BUCR.0.....
+00000010: 0003 0000 0000 3009 038c 0000 0001 3009  ......0.......0.
+00000020: 03c7 0100 8002 3009 0352 0000 0008 0000  ......0..R......
+00000030: 0003 0000 0000 0000 401b 0000 00...      ........@....</code></pre></div>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="byte-by-byte-annotation-1"><a class="anchor" href="#byte-by-byte-annotation-1">#</a>Byte-by-Byte Annotation</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Bytes              Field                    Value
+------  -----              -----                    -----
+0x00    47 42 58           magic                    &quot;GBX&quot; -- CONFIRMED
+0x03    06 00              version                  6 -- CONFIRMED
+0x05    42 55 43 52        format_flags             &quot;BUCR&quot; -- CONFIRMED
+0x09    00 30 09 03        class_id                 0x03093000 -- CGameCtnReplayRecord
+0x0D    C1 02 00 00        user_data_size           0x02C1 = 705 bytes
+0x11    03 00 00 00        num_header_chunks        3 header chunks
+
+--- Header Chunk Index ---
+0x15    00 30 09 03        chunk_id[0]              0x03093000 (replay chunk 0x000)
+0x19    8C 00 00 00        chunk_size[0]            0x8C = 140 bytes
+
+0x1D    01 30 09 03        chunk_id[1]              0x03093001 (replay chunk 0x001)
+0x21    C7 01 00 80        chunk_size[1]            0x800001C7 --&gt; heavy=1, size=0x1C7 = 455 bytes
+
+0x25    02 30 09 03        chunk_id[2]              0x03093002 (replay chunk 0x002)
+0x29    52 00 00 00        chunk_size[2]            0x52 = 82 bytes</code></pre></div>
+<p><strong>Verification</strong>: user_data_size = 4 + 3*8 + (140 + 455 + 82) = 4 + 24 + 677 = 705 = 0x02C1. <strong>CONFIRMED</strong> -- same user_data_size formula as maps.</p>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="replay-header-chunk-0x03093000-data"><a class="anchor" href="#replay-header-chunk-0x03093000-data">#</a>Replay Header Chunk <code class="addr">0x03093000</code> Data</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x2D    08 00 00 00        version                  8
+0x31    03 00 00 00        ???                      3
+0x35    00 00 00 00        ???
+0x39    40 1B 00 00 00     lookback string version  0x40 marker + length
+        &quot;gEpyZSp892q6BVU3t98ycuUugKl&quot;                map UID (27 chars)
+        ...
+        &quot;XChwDu8FRmWH-gHqXUbBtg&quot;                     author login</code></pre></div>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="replay-header-chunk-0x03093001-data-xml-heavy"><a class="anchor" href="#replay-header-chunk-0x03093001-data-xml-heavy">#</a>Replay Header Chunk <code class="addr">0x03093001</code> Data (XML, heavy)</h3></summary>
+<div class="collapsible-content">
+<p>Contains XML:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;header type=&quot;replay&quot; exever=&quot;3.3.0&quot; exebuild=&quot;2025-07-04_14_15&quot; title=&quot;TMStadium&quot;&gt;
+  &lt;map uid=&quot;gEpyZSp892q6BVU3t98ycuUugKl&quot; name=&quot;ReallyRally&quot;
+       author=&quot;XChwDu8FRmWH-gHqXUbBtg&quot; authorzone=&quot;World|Africa|South Africa&quot;/&gt;
+  &lt;desc envir=&quot;Stadium&quot; mood=&quot;Day (no stadium)&quot; maptype=&quot;TrackMania\TM_Race&quot;
+        mapstyle=&quot;&quot; displaycost=&quot;5672&quot; mod=&quot;&quot;/&gt;
+  &lt;playermodel id=&quot;CarRally&quot;/&gt;
+  &lt;times best=&quot;38401&quot; respawns=&quot;0&quot; stuntscore=&quot;0&quot; validable=&quot;1&quot;/&gt;
+  &lt;checkpoints cur=&quot;8&quot;/&gt;
+&lt;/header&gt;</code></pre></div>
+<p><strong>CONFIRMED</strong>: Replay files use class <code class="addr">0x03093000</code> (CGameCtnReplayRecord), have 3 header chunks (0x000, 0x001, 0x002), and chunk 0x001 contains XML metadata similar to maps but with replay-specific fields (best time, respawns, checkpoints, playermodel).</p>
+</div>
+</details>
+<h3 id="autosave-replay-comparison"><a class="anchor" href="#autosave-replay-comparison">#</a>Autosave Replay Comparison</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5543 5200 3009 03c1 0200  GBX..BUCR.0.....</code></pre></div>
+<p>Identical structure: magic, version 6, BUCR, class <code class="addr">0x03093000</code>, same user_data_size layout. <strong>CONFIRMED</strong> consistent across replay variants.</p>
+<hr>
+<h2 id="4-profile-file-profilegbx-analysis"><a class="anchor" href="#4-profile-file-profilegbx-analysis">#</a>4. Profile File (.Profile.Gbx) Analysis</h2>
+<p><strong>File</strong>: <code>c78b4490-c311-4d61-9f4f-ab7c244d9bff.Profile.Gbx</code> (34,215 bytes)</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="raw-hex-first-0x40-bytes"><a class="anchor" href="#raw-hex-first-0x40-bytes">#</a>Raw Hex (first 0x40 bytes)</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5543 5200 c01c 0300 0000  GBX..BUCR.......
+00000010: 0006 0000 0000 0000 0023 e100 0086 8500  .........#......
+00000020: 001f 00c0 1c03 5049 4b53 6d00 0000 1000  ......PIKSm.....</code></pre></div>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="byte-by-byte-annotation-2"><a class="anchor" href="#byte-by-byte-annotation-2">#</a>Byte-by-Byte Annotation</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Bytes              Field                    Value
+------  -----              -----                    -----
+0x00    47 42 58           magic                    &quot;GBX&quot; -- CONFIRMED
+0x03    06 00              version                  6 -- CONFIRMED
+0x05    42 55 43 52        format_flags             &quot;BUCR&quot; -- CONFIRMED
+0x09    00 C0 1C 03        class_id                 0x031CC000 -- CGameUserManagerScript or profile class
+0x0D    00 00 00 00        user_data_size           0 (no header chunks!)
+0x11    06 00 00 00        num_header_chunks        6
+
+WAIT -- if user_data_size = 0 but num_header_chunks = 6, that seems contradictory.</code></pre></div>
+<p><strong>Re-analysis</strong>: Actually the Profile.Gbx appears to have a different layout. Let me re-examine:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x09    00 C0 1C 03        class_id                 0x031CC000
+0x0D    00 00 00 00        user_data_size           0 bytes (NO header chunks!)</code></pre></div>
+<p>When user_data_size = 0, the num_header_chunks field is NOT present. The parsing immediately goes to num_nodes.</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x11    06 00 00 00        num_nodes                6
+0x15    00 00 00 00        num_external_refs        0 (no external references)</code></pre></div>
+<p>Then the body begins. Since format is BUCR with byte2='C':</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x19    23 E1 00 00        uncompressed_size        0xE123 = 57,635 bytes
+0x1D    86 85 00 00        compressed_size          0x8586 = 34,182 bytes
+0x21    ...                compressed_data          (LZO compressed body)</code></pre></div>
+<p><strong>Verification</strong>: File size = 34,215. Header = 0x21 = 33 bytes. Compressed data = 34,182 bytes. 33 + 34,182 = 34,215. <strong>CONFIRMED EXACTLY</strong>.</p>
+<p><strong>Key finding</strong>: When user_data_size = 0, there are NO header chunks and num_header_chunks is absent. The parser skips directly to num_nodes. The bytes starting at the body's compressed region begin with "PIKS" at offset 0x23 -- this is "SKIP" reversed (little-endian), which is the skippable chunk marker inside the decompressed body.</p>
+</div>
+</details>
+<h3 id="body-chunk-stream-visible-in-compressed-data"><a class="anchor" href="#body-chunk-stream-visible-in-compressed-data">#</a>Body Chunk Stream (visible in compressed data)</h3>
+<p>Within the compressed data stream, we can see:</p>
+<ul>
+  <li>String <code>"KEL"</code> -- likely author abbreviation</li>
+  <li>Strings: <code>"User"</code>, <code>"Persistent_ScrollViewLayout_Elements"</code>, <code>"ClubRooms_V2"</code>, <code>"Trackmania_UserStore_HasSetAdvertsPreferences"</code>, <code>"Skins"</code>, <code>"Garage"</code>, <code>"Activities"</code>, <code>"Campaign"</code>, <code>"ClubItem"</code>, <code>"Review"</code>, <code>"splashscreensEnabled"</code>, <code>"IsFirstBoot"</code>, <code>"CrossPlayWarning"</code>, <code>"CurrentTabIndex"</code>, <code>"TMGame_Record_Display"</code>, <code>"SelectedZone_V2"</code>, <code>"HasLinkedUbiConnectInside"</code></li>
+</ul>
+<p>These are user preference/state keys serialized as body chunks.</p>
+<h3 id="additional-file-verifications-programmatic"><a class="anchor" href="#additional-file-verifications-programmatic">#</a>Additional File Verifications (Programmatic)</h3>
+<p><strong>FidCache.Gbx</strong> (89,600 bytes): Class <code class="addr">0x01026000</code> (CSystemFidCache), BUCR format.</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Header: 33 bytes (magic+version+flags+classid+uds=0+num_nodes=8+num_ext=0)
+Body: uncompressed_size=372,447, compressed_size=89,567
+File size check: 33 + 89,567 = 89,600 EXACT MATCH</code></pre></div>
+<p>This file catalogs the user's map folder hierarchy. Visible strings in the compressed data include folder paths: <code>:user:\Maps\</code>, <code>Autosaves\</code>, <code>Downloaded\</code>, <code>My </code>, <code>BonkCup\</code>, <code>Finished\</code>, <code>CotD</code>, <code>Kelvinkazampaign</code>, <code>PenaltyC</code>, <code>Short</code>, <code>Testing</code>, <code>Trial</code>, <code>WIP</code>, <code>Kids</code>, and map filenames like <code>CraterWorld.Map.Gbx</code>. It also contains class IDs for the indexed maps (<code class="addr">0x03043002</code> visible at offset 0x0180).</p>
+<hr>
+<h2 id="5-block-file-blockgbx-analysis"><a class="anchor" href="#5-block-file-blockgbx-analysis">#</a>5. Block File (.Block.Gbx) Analysis</h2>
+<p><strong>File</strong>: <code>GrassRemover.Block.Gbx</code> (779 bytes)</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="raw-hex"><a class="anchor" href="#raw-hex">#</a>Raw Hex</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5543 5200 2000 2e9a 0000  GBX..BUCR. .....
+00000010: 0004 0000 0003 1000 2e66 0000 0006 1000  .........f......
+00000020: 2e08 0000 0000 2000 2e04 0000 0001 2000  ...... ....... .
+00000030: 2e04 0000 00...</code></pre></div>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="byte-by-byte-annotation-3"><a class="anchor" href="#byte-by-byte-annotation-3">#</a>Byte-by-Byte Annotation</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Bytes              Field                    Value
+------  -----              -----                    -----
+0x00    47 42 58           magic                    &quot;GBX&quot; -- CONFIRMED
+0x03    06 00              version                  6 -- CONFIRMED
+0x05    42 55 43 52        format_flags             &quot;BUCR&quot; -- CONFIRMED
+0x09    00 20 00 2E        class_id                 0x2E002000 -- CGameCtnBlockInfo or Block class
+0x0D    9A 00 00 00        user_data_size           0x9A = 154 bytes
+0x11    04 00 00 00        num_header_chunks        4
+
+--- Header Chunk Index ---
+0x15    03 10 00 2E        chunk_id[0]              0x2E001003
+0x19    66 00 00 00        chunk_size[0]            0x66 = 102 bytes
+
+0x1D    06 10 00 2E        chunk_id[1]              0x2E001006
+0x21    08 00 00 00        chunk_size[1]            0x08 = 8 bytes
+
+0x25    00 20 00 2E        chunk_id[2]              0x2E002000
+0x29    04 00 00 00        chunk_size[2]            0x04 = 4 bytes
+
+0x2D    01 20 00 2E        chunk_id[3]              0x2E002001
+0x31    04 00 00 00        chunk_size[3]            0x04 = 4 bytes</code></pre></div>
+<p><strong>Verification</strong>: user_data_size = 4 + 4*8 + (102 + 8 + 4 + 4) = 4 + 32 + 118 = 154 = 0x9A. <strong>CONFIRMED</strong>.</p>
+<p><strong>Class ID decomposition</strong>:</p>
+<ul>
+  <li><code class="addr">0x2E002000</code>: engine = 0x2E (46), class = 0x002 (2)</li>
+  <li>Engine 0x2E is likely the "GameCtn" block info engine (new-style high ID)</li>
+  <li>Chunks <code class="addr">0x2E001003</code> and <code class="addr">0x2E001006</code> reference class <code class="addr">0x2E001000</code> (parent class?)</li>
+</ul>
+</div>
+</details>
+<h3 id="header-chunk-data"><a class="anchor" href="#header-chunk-data">#</a>Header Chunk Data</h3>
+<p>Starting at 0x35, the block header chunk data contains:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x35    03 00 00 00        version?                 3
+0x39    FF FF FF FF        sentinel                 -1
+0x3D    1A 00 00 00 00 00  lookback marker + length
+        00 40 16 00 00 00
+        &quot;rDDFgJy4QLC3tNaQLH0qmg&quot;                    block author/UID
+        08 00 00 00
+        &quot;TrackWallSlopeUBottomInGround&quot;               block name (29 chars)</code></pre></div>
+<p><strong>CONFIRMED</strong>: LookbackString format with version 3 marker (<code class="addr">0x40000000</code>).</p>
+<hr>
+<h2 id="6-funcshader-file-analysis-fully-uncompressed"><a class="anchor" href="#6-funcshader-file-analysis-fully-uncompressed">#</a>6. FuncShader File Analysis (Fully Uncompressed)</h2>
+<p><strong>File</strong>: <code>Clouds.FuncShader.Gbx</code> (103 bytes total -- COMPLETE file)</p>
+<p>This is the smallest and simplest GBX file found, making it ideal for full format validation. It uses the "BUUR" format (fully uncompressed body, no compression envelope).</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="complete-hex-dump"><a class="anchor" href="#complete-hex-dump">#</a>Complete Hex Dump</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5555 5200 5001 0500 0000  GBX..BUUR.P.....
+00000010: 0001 0000 0000 0000 0005 b000 0500 0048  ...............H
+00000020: 4200 0000 0001 0000 0000 0000 0003 0000  B...............
+00000030: 00ff ffff ff05 5001 0506 0000 0043 6c6f  ......P......Clo
+00000040: 7564 7304 0000 000d 5001 0500 0000 0000  uds.....P.......
+00000050: 0000 0000 0080 3f00 0000 006f 1283 3a6f  ......?....o..:o
+00000060: 1283 3a01 deca fa                        ..:....&lt;/output&gt;</code></pre></div>
+</div>
+</details>
+<h3 id="programmatic-parse-verified-with-python-struct"><a class="anchor" href="#programmatic-parse-verified-with-python-struct">#</a>Programmatic Parse (verified with Python struct)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>=== FILE HEADER ===
+Offset  Bytes              Field                    Value
+------  -----              -----                    -----
+0x00    47 42 58           magic                    &quot;GBX&quot; -- CONFIRMED
+0x03    06 00              version                  6 -- CONFIRMED
+0x05    42 55 55 52        format_flags             &quot;BUUR&quot; (Binary, Uncompressed, Uncompressed, with Refs)
+0x09    00 50 01 05        class_id                 0x05015000 -- CPlugFuncShader (engine 0x05 = Plug)
+0x0D    00 00 00 00        user_data_size           0 (no header chunks at all)
+
+=== NODE COUNT &amp; REFERENCE TABLE ===
+0x11    01 00 00 00        num_nodes                1
+0x15    00 00 00 00        num_external_refs        0
+
+=== BODY (raw chunk stream, no compression envelope since byte2=&#x27;U&#x27;) ===
+0x19    05 B0 00 05        chunk_id                 0x0500B005 -- REMAPPED/legacy chunk ID
+                                                    (class 0x0500B000 remaps to 0x05015000)
+0x1D    ...                chunk data               Non-skippable (next bytes != &quot;SKIP&quot;)
+                                                    Contains: float 50.0 (0x42480000), zeros,
+                                                    version=1, sentinel 0xFFFFFFFF
+
+0x35    05 50 01 05        chunk_id                 0x05015005 -- modern chunk ID for CPlugFuncShader
+0x39    06 00 00 00        string_length            6
+0x3D    &quot;Clouds&quot;           shader_name              &quot;Clouds&quot;
+0x43    04 00 00 00        ???                      4
+0x47    0D 50 01 05        chunk_id                 0x0501500D -- another CPlugFuncShader chunk
+        ...                chunk data               float 1.0 (0x3F800000), color values
+
+0x63    01 DE CA FA        END SENTINEL             0xFACADE01 -- CONFIRMED</code></pre></div>
+<h3 id="key-findings"><a class="anchor" href="#key-findings">#</a>Key Findings</h3>
+<ol>
+  <li><strong>BUUR format confirmed</strong>: When format byte2 = 'U', the body is a raw chunk stream with NO compression envelope (no uncompressed_size/compressed_size prefix).</li>
+</ol>
+<ol>
+  <li><strong>Class ID remapping in action</strong>: The first body chunk ID is <code class="addr">0x0500B005</code> (legacy class 0x0500B), but the file's class is <code class="addr">0x05015000</code>. The engine correctly remaps 0x0500B -> 0x05015 during chunk dispatch. This <strong>CONFIRMS</strong> the class ID remapping system documented in section 11 of the spec.</li>
+</ol>
+<ol>
+  <li><strong>End sentinel confirmed</strong>: The file ends with bytes <code>01 DE CA FA</code> = uint32 LE <code class="addr">0xFACADE01</code>. File offset 0x63, last 4 bytes of the file.</li>
+</ol>
+<ol>
+  <li><strong>Multiple chunks per body</strong>: Even this tiny 103-byte file has 3 body chunks (<code class="addr">0x0500B005</code>, <code class="addr">0x05015005</code>, <code class="addr">0x0501500D</code>) plus the end sentinel.</li>
+</ol>
+<hr>
+<h2 id="7-funccloudsparams-file-analysis"><a class="anchor" href="#7-funccloudsparams-file-analysis">#</a>7. FuncCloudsParams File Analysis</h2>
+<p><strong>File</strong>: <code>SkyCloudsParams.FuncCloudsParam.Gbx</code> (93 bytes)</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="complete-hex-dump-1"><a class="anchor" href="#complete-hex-dump-1">#</a>Complete Hex Dump</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5555 5200 2018 0900 0000  GBX..BUUR. .....
+00000010: 0001 0000 0000 0000 0001 2018 0902 0000  .......... .....
+00000020: 0000 409c 4500 401c 4500 60ea 4600 007a  ..@.E.@.E.`.F..z
+00000030: c402 2018 0900 0000 0001 0000 0000 0000  .. .............
+00000040: 4400 0000 4400 a08c 4500 0000 0000 0048  D...D...E......H
+00000050: 4300 0000 0001 0000 0001 deca fa         C............</code></pre></div>
+</div>
+</details>
+<h3 id="annotation"><a class="anchor" href="#annotation">#</a>Annotation</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x00    47 42 58           magic                    &quot;GBX&quot;
+0x03    06 00              version                  6
+0x05    42 55 55 52        format_flags             &quot;BUUR&quot; (fully uncompressed, with refs)
+0x09    00 20 18 09        class_id                 0x09182000 -- FuncCloudsParam class
+0x0D    00 00 00 00        user_data_size           0
+0x11    01 00 00 00        num_nodes                1
+0x15    00 00 00 00        num_external_refs        0
+
+--- Body (uncompressed, no envelope) ---
+0x19    01 20 18 09        chunk_id                 0x09182001 -- FuncCloudsParam chunk 0x001
+        (non-skippable, followed by inline data)
+
+0x1D    02 00 00 00        chunk data...            version = 2?
+        00 40 9C 45        float                    5009.0
+        00 40 1C 45        float                    2500.0
+        00 60 EA 46        float                    30000.0
+        00 00 7A C4        float                    -1000.0
+
+0x2D    02 20 18 09        chunk_id                 0x09182002 -- FuncCloudsParam chunk 0x002
+0x31    00 00 00 01        chunk data...
+        00 00 00 00 00
+        44 00 00 00 44     float pairs
+        00 A0 8C 45        float                    4497.0
+        00 00 00 00        float                    0.0
+        00 48 43 00        ...
+        00 00 00 01 00 00 00
+
+0x5A    01 DE CA FA        END SENTINEL             0xFACADE01 -- CONFIRMED</code></pre></div>
+<p><strong>CONFIRMED</strong>: Same structure -- "BUUR" format, body is raw chunk stream, ends with <code class="addr">0xFACADE01</code>.</p>
+<p><strong>Class ID Registry</strong>: <code class="addr">0x09182000</code> = engine 0x09, class 0x182 = FuncCloudsParam.</p>
+<hr>
+<h2 id="8-imagegen-file-analysis"><a class="anchor" href="#8-imagegen-file-analysis">#</a>8. ImageGen File Analysis</h2>
+<p><strong>File</strong>: <code>WaterTransmittance.ImageGen.Gbx</code> (87 bytes)</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="complete-hex-dump-2"><a class="anchor" href="#complete-hex-dump-2">#</a>Complete Hex Dump</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5543 4500 f002 0900 0000  GBX..BUCE.......
+00000010: 0001 0000 0000 0000 0034 0000 0036 0000  .........4...6..
+00000020: 0023 0500 0080 3300 0000 0200 0000 0008  .#....3.........
+00000030: 0000 0100 a000 000a 0400 0000 3d0a 573f  ............=.W?
+00000040: 3333 733f ec51 783f 0000 4842 0000 0000  33s?.Qx?..HB....
+00000050: 0000 0000 1100 00                        .......</code></pre></div>
+</div>
+</details>
+<h3 id="annotation-1"><a class="anchor" href="#annotation-1">#</a>Annotation</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x00    47 42 58           magic                    &quot;GBX&quot;
+0x03    06 00              version                  6
+0x05    42 55 43 45        format_flags             &quot;BUCE&quot; -- Binary, Uncompressed, Compressed, no External refs
+0x09    00 F0 02 09        class_id                 0x0902F000 -- ImageGen/FuncImage class (engine 0x09)
+0x0D    00 00 00 00        user_data_size           0
+0x11    01 00 00 00        num_nodes                1
+0x15    00 00 00 00        num_external_refs        0
+
+--- Body (compressed, since byte2=&#x27;C&#x27;) ---
+0x19    34 00 00 00        uncompressed_size        0x34 = 52 bytes
+0x1D    36 00 00 00        compressed_size          0x36 = 54 bytes
+0x21    ...                compressed_data          54 bytes of LZO-compressed body</code></pre></div>
+<p><strong>Verification</strong>: File size = 87. Header = 0x21 = 33 bytes. Compressed data = 54 bytes. 33 + 54 = 87. <strong>CONFIRMED EXACTLY</strong>.</p>
+<p><strong>Key observation</strong>: "BUCE" format -- 'E' means no external references. This means the reference table SECTION IS ABSENT entirely (num_external_refs is not even read when format byte3 = 'E').</p>
+<p>Wait -- but we still see num_nodes at 0x11 and num_external_refs=0 at 0x15. Actually, 'E' means the file itself has no external refs, so num_external_refs=0 is expected but the field is still present (or it might be that with 'R' the ref table is read after header, with 'E' it's skipped entirely and those bytes are the body compression header).</p>
+<p><strong>Re-analysis with 'E' format</strong>: If byte3='E' means reference table is entirely absent:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x0D    00 00 00 00        user_data_size           0
+0x11    01 00 00 00        num_nodes                1
+-- No reference table at all with &#x27;E&#x27; --
+0x15    00 00 00 00        uncompressed_size        0 ???
+
+That doesn&#x27;t work either (0 uncompressed size makes no sense).</code></pre></div>
+<p>The most consistent interpretation is that 'E' and 'R' both include num_nodes + num_external_refs, but with 'E' the external count is always 0:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x11    01 00 00 00        num_nodes                1
+0x15    00 00 00 00        num_external_refs        0 (guaranteed by &#x27;E&#x27; flag)
+0x19    34 00 00 00        uncompressed_size        52
+0x1D    36 00 00 00        compressed_size          54
+0x21    compressed data...</code></pre></div>
+<p>File total: 33 + 54 = 87. <strong>CONFIRMED</strong>.</p>
+<p><strong>NOTE</strong>: Compressed size (54) > uncompressed size (52). This happens when the data is too small for LZO to achieve compression -- the "compressed" output is slightly larger than the input. The decompressor still works correctly.</p>
+<hr>
+<h2 id="9-gpucachegbx-shader-file-analysis"><a class="anchor" href="#9-gpucachegbx-shader-file-analysis">#</a>9. GpuCache.Gbx Shader File Analysis</h2>
+<p><strong>File</strong>: <code>Bench/Geometry_p.hlsl.GpuCache.Gbx</code> (564 bytes, extracted from zip)</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="hex-dump-first-256-bytes"><a class="anchor" href="#hex-dump-first-256-bytes">#</a>Hex Dump (first 256 bytes)</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4742 5806 0042 5543 5200 3005 0900 0000  GBX..BUCR.0.....
+00000010: 0001 0000 0000 0000 005f 0300 0013 0200  ........._......
+00000020: 001e 0830 0509 1200 0000 ...              ...0......</code></pre></div>
+</div>
+</details>
+<h3 id="annotation-2"><a class="anchor" href="#annotation-2">#</a>Annotation</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x00    47 42 58           magic                    &quot;GBX&quot;
+0x03    06 00              version                  6
+0x05    42 55 43 52        format_flags             &quot;BUCR&quot;
+0x09    00 30 05 09        class_id                 0x09053000 -- CPlugGpuProgram/GpuCache class
+0x0D    00 00 00 00        user_data_size           0
+0x11    01 00 00 00        num_nodes                1
+0x15    00 00 00 00        num_external_refs        0
+
+--- Compressed Body ---
+0x19    5F 03 00 00        uncompressed_size        0x035F = 863 bytes
+0x1D    13 02 00 00        compressed_size          0x0213 = 531 bytes
+0x21    ...                compressed_data</code></pre></div>
+<p><strong>Verification</strong>: Header (33 bytes) + compressed (531 bytes) = 564 bytes. <strong>CONFIRMED EXACTLY matches file size</strong>.</p>
+<p>Within the decompressed data, visible strings include:</p>
+<ul>
+  <li><code>"psMain"</code> -- pixel shader entry point name</li>
+  <li><code>":temp:\Source\Common_p.hlsli"</code> -- source file include path</li>
+  <li><code>"Platform"</code>, <code>"ResList_Scene"</code> -- resource references</li>
+  <li><code>"DGbxVersion"</code> -- version metadata</li>
+  <li><code>"DXBC"</code> -- compiled DirectX Bytecode marker (the actual compiled shader)</li>
+  <li><code>"RDEF"</code>, <code>"RD11"</code> -- DXBC reflection data sections</li>
+</ul>
+<p><strong>Class ID Registry</strong>: <code class="addr">0x09053000</code> = engine 0x09 (Plug), class 0x053 = GpuProgram/cache.</p>
+<hr>
+<h2 id="10-nadeopak-header-analysis"><a class="anchor" href="#10-nadeopak-header-analysis">#</a>10. NadeoPak Header Analysis</h2>
+<p>All <code>.pak</code> files use the same header format. This is NOT a GBX file -- it uses the "NadeoPak" magic.</p>
+<h3 id="resourcepak-178-kb-smallest"><a class="anchor" href="#resourcepak-178-kb-smallest">#</a>Resource.pak (178 KB -- smallest)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>00000000: 4e61 6465 6f50 616b 1200 0000 e71a e0fa  NadeoPak........
+00000010: b5b2 1cec c25a df5e 02d3 4dee 7042 6dd0  .....Z.^..M.pBm.
+00000020: 3f34 f591 9c98 d07c c589 df1f 0700 0000  ?4.....|........
+00000030: 0040 0000 0000 0000 0000 0000 0000 0000  .@..............
+00000040: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+00000050: 00fe 97f7 5259 d301 0000 0000 0000 0000  ....RY..........
+00000060: 0000 0000 0600 0000 3a64 6174 613a 0700  ........:data:..
+00000070: 0000 6761 6d65 626f 7800 0000 0000 0000  ..gamebox.......</code></pre></div>
+<h3 id="comparative-header-analysis"><a class="anchor" href="#comparative-header-analysis">#</a>Comparative Header Analysis</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Size   Type       Field                Resource.pak      Maniaplanet.pak       Stadium.pak           Titles.pak
+------  ----   ----       -----                ------------      ---------------       -----------           ----------
+0x00    8      char[8]    magic                &quot;NadeoPak&quot;        &quot;NadeoPak&quot;            &quot;NadeoPak&quot;            &quot;NadeoPak&quot;
+0x08    4      uint32     version              0x00000012 (18)   0x00000012 (18)       0x00000012 (18)       0x00000012 (18)
+0x0C    16     byte[16]   hash_key_1           (unique per pak)  (unique per pak)      (unique per pak)      (unique per pak)
+0x1C    16     byte[16]   hash_key_2           (unique per pak)  (unique per pak)      (unique per pak)      (unique per pak)
+0x2C    4      uint32     flags/version2       0x00000007        0x00000007            0x00000007            0x00000007
+0x30    4      uint32     ???                  0x00004000        0x00003000            0x00003000            0x00004000
+0x34    8+     padding    zero_fill            (zeros)           (zeros)               (zeros)               (zeros)</code></pre></div>
+<p><strong>After zero region, title string appears</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Pak</th>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">Title String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Resource.pak</td>
+  <td style="text-align:left">~0x50</td>
+  <td style="text-align:left">(none -- just timestamp)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet.pak</td>
+  <td style="text-align:left">0x44</td>
+  <td style="text-align:left"><code>"Title:ManiaPlanet"</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Stadium.pak</td>
+  <td style="text-align:left">0x44</td>
+  <td style="text-align:left"><code>"Title:TMStadium"</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Titles.pak</td>
+  <td style="text-align:left">0x44</td>
+  <td style="text-align:left"><code>"Title:Titles"</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">BlueBay.pak</td>
+  <td style="text-align:left">0x44</td>
+  <td style="text-align:left"><code>"Title:TMStadium"</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_Core.pak</td>
+  <td style="text-align:left">0x44</td>
+  <td style="text-align:left"><code>"Title:ManiaPlanet"</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>After title string</strong>: A timestamp value (8 bytes, Windows FILETIME format), then folder structure beginning with <code>:data:</code> and <code>gamebox</code>.</p>
+<h3 id="nadeopak-header-format-derived-from-real-files"><a class="anchor" href="#nadeopak-header-format-derived-from-real-files">#</a>NadeoPak Header Format (Derived from Real Files)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Size   Type       Field                    Description
+------  ----   ----       -----                    -----------
+0x00    8      char[8]    magic                    &quot;NadeoPak&quot; (always)
+0x08    4      uint32     version                  18 (0x12) for all TM2020 paks
+0x0C    16     byte[16]   crypto_key_1             Encryption/signing key (unique per pak)
+0x1C    16     byte[16]   crypto_key_2             Second key (unique per pak)
+0x2C    4      uint32     header_flags             0x07 for all observed paks
+0x30    4      uint32     alignment/block_size     0x4000 (16KB) or 0x3000 (12KB)
+0x34    var    padding    (zeros)                  Alignment padding
+var     4      uint32     title_name_length        Length of title string
+var     var    string     title_name               e.g., &quot;Title:TMStadium&quot;
+var     var    padding    (zeros)                  More padding
+var     8      uint64     timestamp                Windows FILETIME (creation/modification)
+var     ...    ...        content_tree             Folder/file index starting with &quot;:data:&quot;</code></pre></div>
+<p><strong>IMPORTANT</strong>: The doc says pack files are "regular GBX files" (section 21). This is <strong>INCORRECT</strong> for <code>.pak</code> files. The <code>.pak</code> files use "NadeoPak" magic, NOT "GBX" magic. They are a completely different binary format. The <code>.pack.gbx</code> extension (used by user-created title packs) IS a GBX file, but the game's own <code>.pak</code> files are NOT.</p>
+<p>All <code>.pak</code> files contain encrypted/hashed content after the header. The 32-byte region at 0x0C-0x2B appears to be cryptographic keys or hashes, and the actual file content entries are likely encrypted.</p>
+<h3 id="common-folder-structure-visible-in-paks"><a class="anchor" href="#common-folder-structure-visible-in-paks">#</a>Common folder structure visible in paks:</h3>
+<ul>
+  <li><code>:data:</code> -- root data folder</li>
+  <li><code>gamebox</code> -- GBX file container</li>
+</ul>
+<hr>
+<h2 id="11-gpu-shader-cache"><a class="anchor" href="#11-gpu-shader-cache">#</a>11. GPU Shader Cache</h2>
+<p><strong>File</strong>: <code>GpuCache_D3D11_SM5.zip</code></p>
+<h3 id="summary"><a class="anchor" href="#summary">#</a>Summary</h3>
+<ul>
+  <li><strong>Format</strong>: Standard ZIP archive</li>
+  <li><strong>Total files</strong>: 1,112 <code>.GpuCache.Gbx</code> shader files + 1 <code>SourceVersionInfo.txt</code></li>
+  <li><strong>Total uncompressed size</strong>: 23,890,134 bytes (~22.8 MB)</li>
+  <li><strong>Source version</strong>: <code>GitHash=afcbe82feb0b7ecbf764cc226e4d730f17d4142e Crc=0x626814FDB9CE437C</code></li>
+</ul>
+<h3 id="shader-categories-directories"><a class="anchor" href="#shader-categories-directories">#</a>Shader Categories (Directories)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Directory</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Bench/</code></td>
+  <td style="text-align:left">GPU benchmark shaders (Anisotropy, Geometry, OutputBandwidth, PixelArithmetic)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Clouds/</code></td>
+  <td style="text-align:left">Volumetric cloud rendering (CloudsT3b, CloudsTech3, GodLight, EdgeLight)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Editor/</code></td>
+  <td style="text-align:left">Map editor (DebugOcclusion, PointsInSphere)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/</code></td>
+  <td style="text-align:left">Post-processing effects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/Energy/</code></td>
+  <td style="text-align:left">Energy/glow effects (EnergyAnalytic, EnergyGeom)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/Fog/</code></td>
+  <td style="text-align:left">3D volumetric fog (RayMarching, InScattering, NoiseTexture)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/Media/Text/</code></td>
+  <td style="text-align:left">Media text rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/Particles/</code></td>
+  <td style="text-align:left">Particle system (CameraWaterDroplets, SelfShadow, VortexSimulation)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/PostFx/</code></td>
+  <td style="text-align:left">Post-processing (HBAO+)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/SignedDistanceField/</code></td>
+  <td style="text-align:left">SDF rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/SortLib/</code></td>
+  <td style="text-align:left">GPU sort library</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/SubSurface/</code></td>
+  <td style="text-align:left">Subsurface scattering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/TemporalAA/</code></td>
+  <td style="text-align:left">Temporal anti-aliasing</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Engines/</code></td>
+  <td style="text-align:left">Engine core rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Engines/NormalMapBaking/</code></td>
+  <td style="text-align:left">Normal map generation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Garage/</code></td>
+  <td style="text-align:left">Vehicle garage display</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Lightmap/</code></td>
+  <td style="text-align:left">Lightmap computation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Menu/</code></td>
+  <td style="text-align:left">Menu UI rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Noise/</code></td>
+  <td style="text-align:left">Procedural noise generation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Painter/</code></td>
+  <td style="text-align:left">Skin painting system</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ShadowCache/</code></td>
+  <td style="text-align:left">Shadow map caching</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ShootMania/</code></td>
+  <td style="text-align:left">ShootMania rendering (leftover from ManiaPlanet engine)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Sky/</code></td>
+  <td style="text-align:left">Sky rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tech3/</code></td>
+  <td style="text-align:left">Tech3 material system</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tech3/Grass/</code></td>
+  <td style="text-align:left">Grass rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tech3/Trees/</code></td>
+  <td style="text-align:left">Tree rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Techno3/</code></td>
+  <td style="text-align:left">Techno3 materials</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Test/</code></td>
+  <td style="text-align:left">Test/debug shaders (pbr_test0)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="notable-root-level-shader-files"><a class="anchor" href="#notable-root-level-shader-files">#</a>Notable Root-Level Shader Files</h3>
+<ul>
+  <li><code>CopyTextureFloatToInt_c.hlsl</code> / <code>CopyTextureIntToFloat_c.hlsl</code> -- Compute shaders for texture format conversion</li>
+  <li><code>DefReadP1_Probe.PHlsl.txt</code> -- Probe reading (environment mapping)</li>
+  <li><code>EnergySwitch.PHlsl.txt</code> -- Energy material switching</li>
+  <li><code>GeomLProbe.PHlsl.txt</code> / <code>.VHlsl.Txt</code> -- Geometry light probe</li>
+  <li>Various material pipeline shaders (PyDiffSpecNorm, TNorm, TEmblem, TRenderOverlay)</li>
+</ul>
+<h3 id="shader-naming-convention"><a class="anchor" href="#shader-naming-convention">#</a>Shader Naming Convention</h3>
+<ul>
+  <li><code>_p.hlsl</code> = Pixel shader</li>
+  <li><code>_v.hlsl</code> = Vertex shader</li>
+  <li><code>_g.hlsl</code> = Geometry shader</li>
+  <li><code>_c.hlsl</code> = Compute shader</li>
+  <li><code>.PHlsl.txt</code> / <code>.VHlsl.Txt</code> = Alternative naming for pixel/vertex</li>
+</ul>
+<p>All compiled shaders are wrapped in GBX format (class <code class="addr">0x09053000</code>) and contain DXBC (DirectX Bytecode) compiled for Shader Model 5.</p>
+<hr>
+<h2 id="12-class-id-registry-from-real-files"><a class="anchor" href="#12-class-id-registry-from-real-files">#</a>12. Class ID Registry from Real Files</h2>
+<h3 id="class-ids-confirmed-in-real-files"><a class="anchor" href="#class-ids-confirmed-in-real-files">#</a>Class IDs Confirmed in Real Files</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Class ID</th>
+  <th style="text-align:left">Engine</th>
+  <th style="text-align:left">Class</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Source File</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03043000</code></td>
+  <td style="text-align:left">0x03 (Game)</td>
+  <td style="text-align:left">0x043</td>
+  <td style="text-align:left">CGameCtnChallenge (Map)</td>
+  <td style="text-align:left">TechFlow.Map.Gbx, Zenith.Map.Gbx</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093000</code></td>
+  <td style="text-align:left">0x03 (Game)</td>
+  <td style="text-align:left">0x093</td>
+  <td style="text-align:left">CGameCtnReplayRecord (Replay)</td>
+  <td style="text-align:left">ReallyRally...Replay.Gbx</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x031CC000</code></td>
+  <td style="text-align:left">0x03 (Game)</td>
+  <td style="text-align:left">0x1CC</td>
+  <td style="text-align:left">Profile/UserManager</td>
+  <td style="text-align:left">Profile.Gbx</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x2E002000</code></td>
+  <td style="text-align:left">0x2E</td>
+  <td style="text-align:left">0x002</td>
+  <td style="text-align:left">Block (CGameCtnBlockInfo?)</td>
+  <td style="text-align:left">GrassRemover.Block.Gbx</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x05015000</code></td>
+  <td style="text-align:left">0x05 (Plug)</td>
+  <td style="text-align:left">0x015</td>
+  <td style="text-align:left">CPlugFuncShader</td>
+  <td style="text-align:left">Clouds.FuncShader.Gbx</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x09182000</code></td>
+  <td style="text-align:left">0x09</td>
+  <td style="text-align:left">0x182</td>
+  <td style="text-align:left">FuncCloudsParam</td>
+  <td style="text-align:left">SkyCloudsParams...Gbx</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0902F000</code></td>
+  <td style="text-align:left">0x09</td>
+  <td style="text-align:left">0x02F</td>
+  <td style="text-align:left">ImageGen/FuncImage</td>
+  <td style="text-align:left">WaterTransmittance...Gbx</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x09053000</code></td>
+  <td style="text-align:left">0x09</td>
+  <td style="text-align:left">0x053</td>
+  <td style="text-align:left">CPlugGpuProgram (shader cache)</td>
+  <td style="text-align:left">Geometry_p.hlsl.GpuCache.Gbx</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x01026000</code></td>
+  <td style="text-align:left">0x01 (System)</td>
+  <td style="text-align:left">0x026</td>
+  <td style="text-align:left">CSystemFidCache</td>
+  <td style="text-align:left">User.FidCache.Gbx</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="header-chunk-ids-confirmed"><a class="anchor" href="#header-chunk-ids-confirmed">#</a>Header Chunk IDs Confirmed</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Chunk ID</th>
+  <th style="text-align:left">Class</th>
+  <th style="text-align:left">Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03043002</code></td>
+  <td style="text-align:left">Map</td>
+  <td style="text-align:left">Map info (UID, environment, author)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03043003</code></td>
+  <td style="text-align:left">Map</td>
+  <td style="text-align:left">Common map header (name, author name)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03043004</code></td>
+  <td style="text-align:left">Map</td>
+  <td style="text-align:left">Map version info</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03043005</code></td>
+  <td style="text-align:left">Map</td>
+  <td style="text-align:left">Community/XML metadata (heavy)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03043007</code></td>
+  <td style="text-align:left">Map</td>
+  <td style="text-align:left">Thumbnail + comments (heavy)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03043008</code></td>
+  <td style="text-align:left">Map</td>
+  <td style="text-align:left">Author info</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093000</code></td>
+  <td style="text-align:left">Replay</td>
+  <td style="text-align:left">Replay info</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093001</code></td>
+  <td style="text-align:left">Replay</td>
+  <td style="text-align:left">XML metadata (heavy)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093002</code></td>
+  <td style="text-align:left">Replay</td>
+  <td style="text-align:left">Replay author</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x2E001003</code></td>
+  <td style="text-align:left">Block</td>
+  <td style="text-align:left">Block header data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x2E001006</code></td>
+  <td style="text-align:left">Block</td>
+  <td style="text-align:left">Block flags</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x2E002000</code></td>
+  <td style="text-align:left">Block</td>
+  <td style="text-align:left">Block type</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x2E002001</code></td>
+  <td style="text-align:left">Block</td>
+  <td style="text-align:left">Block variant</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="body-chunk-ids-confirmed"><a class="anchor" href="#body-chunk-ids-confirmed">#</a>Body Chunk IDs Confirmed</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Chunk ID</th>
+  <th style="text-align:left">Class</th>
+  <th style="text-align:left">Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0500B005</code></td>
+  <td style="text-align:left">FuncShader (legacy)</td>
+  <td style="text-align:left">Clouds.FuncShader.Gbx body</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x05015005</code></td>
+  <td style="text-align:left">FuncShader</td>
+  <td style="text-align:left">Clouds.FuncShader.Gbx body</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x09182001</code></td>
+  <td style="text-align:left">FuncCloudsParam</td>
+  <td style="text-align:left">SkyCloudsParams body</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x09182002</code></td>
+  <td style="text-align:left">FuncCloudsParam</td>
+  <td style="text-align:left">SkyCloudsParams body</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="sentinel-values-confirmed"><a class="anchor" href="#sentinel-values-confirmed">#</a>Sentinel Values Confirmed</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Purpose</th>
+  <th style="text-align:left">Found In</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0xFACADE01</code></td>
+  <td style="text-align:left">End-of-body marker</td>
+  <td style="text-align:left">FuncShader, FuncCloudsParam (LE: <code>01 DE CA FA</code>)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0xFFFFFFFF</code></td>
+  <td style="text-align:left">Null/missing data sentinel</td>
+  <td style="text-align:left">Map headers, Block headers</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x534B4950</code></td>
+  <td style="text-align:left">"SKIP" skippable chunk marker</td>
+  <td style="text-align:left">Profile.Gbx compressed body</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary><h2 id="13-format-validation-checklist"><a class="anchor" href="#13-format-validation-checklist">#</a>13. Format Validation Checklist</h2></summary>
+<div class="collapsible-content">
+<h3 id="confirmed-by-real-files"><a class="anchor" href="#confirmed-by-real-files">#</a>CONFIRMED by Real Files</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Spec Item</th>
+  <th style="text-align:left">Status</th>
+  <th style="text-align:left">Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Magic bytes "GBX" (0x47, 0x42, 0x58)</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">All 10 GBX files</td>
+</tr>
+<tr>
+  <td style="text-align:left">Version as uint16 LE</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">All files read 0x0006 = version 6</td>
+</tr>
+<tr>
+  <td style="text-align:left">4-byte format flags for version 6</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">All files have 4-byte flags</td>
+</tr>
+<tr>
+  <td style="text-align:left">Format byte0: 'B' = Binary</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">All files start with 'B'</td>
+</tr>
+<tr>
+  <td style="text-align:left">Format byte1: 'U'/'C' body compression</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">All observed files use 'U'</td>
+</tr>
+<tr>
+  <td style="text-align:left">Format byte2: 'U'/'C' stream compression</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">'C' in most files, 'U' in FuncShader/FuncCloudsParam</td>
+</tr>
+<tr>
+  <td style="text-align:left">Format byte3: 'R' with refs / 'E' no refs</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Most use 'R', ImageGen uses 'E'</td>
+</tr>
+<tr>
+  <td style="text-align:left">Class ID as uint32 LE</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Multiple distinct class IDs parsed correctly</td>
+</tr>
+<tr>
+  <td style="text-align:left">user_data_size includes chunk count + index</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Math verified: 4 + 8*N + sum(sizes) = user_data_size</td>
+</tr>
+<tr>
+  <td style="text-align:left">Header chunk index: (chunk_id, chunk_size) pairs</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Map, Replay, Block files</td>
+</tr>
+<tr>
+  <td style="text-align:left">Heavy bit (bit 31 of chunk_size)</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Chunks <code class="addr">0x03043005</code> and <code class="addr">0x03043007</code> in maps</td>
+</tr>
+<tr>
+  <td style="text-align:left">user_data_size = 0 means no header chunks</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Profile, FuncShader, FuncCloudsParam, ImageGen, GpuCache</td>
+</tr>
+<tr>
+  <td style="text-align:left">Compressed body: uncompressed_size + compressed_size + data</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Profile, ImageGen, GpuCache, Maps</td>
+</tr>
+<tr>
+  <td style="text-align:left">Uncompressed body: raw chunk stream</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">FuncShader, FuncCloudsParam</td>
+</tr>
+<tr>
+  <td style="text-align:left">End sentinel <code class="addr">0xFACADE01</code> in body stream</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">FuncShader (0x64), FuncCloudsParam (0x5A)</td>
+</tr>
+<tr>
+  <td style="text-align:left">"SKIP" marker for skippable body chunks</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Visible as "PIKS" in Profile compressed data</td>
+</tr>
+<tr>
+  <td style="text-align:left">Class ID decomposition: engine>>24, class>>12&FFF</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Multiple class IDs parsed correctly</td>
+</tr>
+<tr>
+  <td style="text-align:left">Chunk ID = class_base OR chunk_index</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Map: <code class="addr">0x03043002</code> = base <code class="addr">0x03043000</code> + chunk 2</td>
+</tr>
+<tr>
+  <td style="text-align:left">Map class <code class="addr">0x03043000</code> with 6 header chunks</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Both TechFlow and Zenith maps</td>
+</tr>
+<tr>
+  <td style="text-align:left">Replay class <code class="addr">0x03093000</code> with 3 header chunks</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Multiple replay files</td>
+</tr>
+<tr>
+  <td style="text-align:left">LookbackString with version 3 marker (<code class="addr">0x40000000</code>)</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Map and Block header data</td>
+</tr>
+<tr>
+  <td style="text-align:left">XML metadata in header chunks</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Map chunk <code class="addr">0x03043005</code>, Replay chunk <code class="addr">0x03093001</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Thumbnail as JPEG in chunk <code class="addr">0x03043007</code></td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">JFIF header visible in map</td>
+</tr>
+<tr>
+  <td style="text-align:left">NadeoPak magic "NadeoPak" for .pak files</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">All 7+ pak files</td>
+</tr>
+<tr>
+  <td style="text-align:left">NadeoPak version 18 (0x12)</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">All pak files</td>
+</tr>
+<tr>
+  <td style="text-align:left">Compressed size can exceed uncompressed size</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">ImageGen: 54 > 52</td>
+</tr>
+<tr>
+  <td style="text-align:left">File size = header + compressed_size (for compressed files)</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">Profile, ImageGen, GpuCache all verified exactly</td>
+</tr>
+<tr>
+  <td style="text-align:left">Class ID remapping (legacy chunk IDs)</td>
+  <td style="text-align:left"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">FuncShader body uses <code class="addr">0x0500B005</code> for class <code class="addr">0x05015000</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="corrected-from-spec"><a class="anchor" href="#corrected-from-spec">#</a>CORRECTED from Spec</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Spec Claim</th>
+  <th style="text-align:left">Correction</th>
+  <th style="text-align:left">Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">user_data_size = "Total size of header chunk data"</td>
+  <td style="text-align:left"><strong>CORRECTED</strong>: user_data_size = 4 (num_chunks) + 8*num_chunks (index) + sum(chunk_sizes)</td>
+  <td style="text-align:left">Map: 4+48+25291 = 25343 = 0x62FF</td>
+</tr>
+<tr>
+  <td style="text-align:left">"Pack files (.pack.gbx) are regular GBX files"</td>
+  <td style="text-align:left"><strong>CORRECTED</strong>: <code>.pak</code> files are NOT GBX -- they use "NadeoPak" magic. Only <code>.pack.gbx</code> (user packs) may be GBX</td>
+  <td style="text-align:left">All .pak files start with "NadeoPak"</td>
+</tr>
+<tr>
+  <td style="text-align:left">format_flags description for byte1/byte2</td>
+  <td style="text-align:left"><strong>CLARIFIED</strong>: byte1 always 'U' in practice. byte2 controls the compression envelope around the body. When byte2='U', body is raw chunks. When byte2='C', body has uncompressed_size + compressed_size + data prefix.</td>
+  <td style="text-align:left">BUUR vs BUCR files</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="partially-confirmed-needs-more-data"><a class="anchor" href="#partially-confirmed-needs-more-data">#</a>PARTIALLY CONFIRMED / NEEDS MORE DATA</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Spec Item</th>
+  <th style="text-align:left">Status</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">LZO compression algorithm</td>
+  <td style="text-align:left"><strong>LIKELY</strong></td>
+  <td style="text-align:left">Compressed data present but algorithm not directly verifiable from hex alone</td>
+</tr>
+<tr>
+  <td style="text-align:left">num_nodes used for reference table sizing</td>
+  <td style="text-align:left"><strong><span class="badge badge-plausible">PLAUSIBLE</span></strong></td>
+  <td style="text-align:left">num_nodes always matches expected count but full ref table not exercised</td>
+</tr>
+<tr>
+  <td style="text-align:left">Version 3-5 support</td>
+  <td style="text-align:left"><strong>UNTESTED</strong></td>
+  <td style="text-align:left">All TM2020 files use version 6</td>
+</tr>
+<tr>
+  <td style="text-align:left">Text format ('T') support</td>
+  <td style="text-align:left"><strong>UNTESTED</strong></td>
+  <td style="text-align:left">All real files use 'B' (binary)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Reference table with external refs > 0</td>
+  <td style="text-align:left"><strong>UNTESTED</strong></td>
+  <td style="text-align:left">All files had 0 external refs; FidCache.Gbx has BUCR but external refs still need examination</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="not-confirmed-from-spec-not-observable-in-these-files"><a class="anchor" href="#not-confirmed-from-spec-not-observable-in-these-files">#</a>NOT CONFIRMED (from spec, not observable in these files)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Spec Item</th>
+  <th style="text-align:left">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Body chunk versioning (chunk_version uint32 at start)</td>
+  <td style="text-align:left">Not verifiable without decompression</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x01001000</code> (CMwNod) as end marker alternative</td>
+  <td style="text-align:left">Not observed</td>
+</tr>
+<tr>
+  <td style="text-align:left">Reference table ancestor folder resolution</td>
+  <td style="text-align:left">No files with external refs found</td>
+</tr>
+<tr>
+  <td style="text-align:left">Pack loading order</td>
+  <td style="text-align:left">Cannot determine from static analysis</td>
+</tr>
+<tr>
+  <td style="text-align:left">DEADBEEF placeholder in reference resolution</td>
+  <td style="text-align:left">Runtime only</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+</div>
+</details>
+<h2 id="14-discrepancies-and-corrections"><a class="anchor" href="#14-discrepancies-and-corrections">#</a>14. Discrepancies and Corrections</h2>
+<h3 id="discrepancy-1-user_data_size-semantics"><a class="anchor" href="#discrepancy-1-user_data_size-semantics">#</a>Discrepancy 1: user_data_size Semantics</h3>
+<p><strong>Doc says</strong> (Section 4): "Total bytes of all header chunk data combined"</p>
+<p><strong>Reality</strong>: user_data_size includes:</p>
+<ol>
+  <li>The num_header_chunks field (4 bytes)</li>
+  <li>The header chunk index table (8 * num_chunks bytes)</li>
+  <li>All header chunk data payloads</li>
+</ol>
+<p>Formula: <code>user_data_size = 4 + (8 * num_header_chunks) + sum(all chunk data sizes)</code></p>
+<p>This was verified across Map (25,343), Replay (705), and Block (154) files.</p>
+<h3 id="discrepancy-2-pak-vs-packgbx"><a class="anchor" href="#discrepancy-2-pak-vs-packgbx">#</a>Discrepancy 2: .pak vs .pack.gbx</h3>
+<p><strong>Doc says</strong> (Section 21): "Pack files (.pack.gbx) bundle multiple GBX files..."</p>
+<p><strong>Reality</strong>: The game's <code>.pak</code> files use the "NadeoPak" binary format with its own header structure (magic, version 18, crypto keys, title strings). These are NOT GBX files. The doc should distinguish between:</p>
+<ul>
+  <li><code>.pak</code> files: NadeoPak format (game distribution packs)</li>
+  <li><code>.pack.gbx</code> / <code>.Pack.Gbx</code> files: GBX format (user-created packs)</li>
+</ul>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="discrepancy-3-header-section-layout-offset-table"><a class="anchor" href="#discrepancy-3-header-section-layout-offset-table">#</a>Discrepancy 3: Header Section Layout (Offset Table)</h3></summary>
+<div class="collapsible-content">
+<p><strong>Doc says</strong> (Section 2): <code>Offset 0x09 = class_id, 0x0D = user_data_size, 0x11 = num_header_chunks</code></p>
+<p><strong>Reality</strong>: This is correct for version 6. However, the doc implies user_data_size and num_header_chunks are independent fields. In practice, when user_data_size = 0, there is no num_header_chunks field -- the parser skips directly to num_nodes. The offset table should note:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>If user_data_size &gt; 0:
+    0x11    uint32    num_header_chunks
+    0x15    ...       header chunk index (8 * num_header_chunks bytes)
+    var     ...       header chunk data
+If user_data_size == 0:
+    (no header chunk fields at all)</code></pre></div>
+</div>
+</details>
+<h3 id="discrepancy-4-format-flags-bucu-existence"><a class="anchor" href="#discrepancy-4-format-flags-bucu-existence">#</a>Discrepancy 4: Format Flags "BUCU" Existence</h3>
+<p><strong>Doc says</strong>: "BUCU" is listed as <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> if used in practice]</span>.</p>
+<p><strong>Reality</strong>: "BUUR" is used in practice (FuncShader, FuncCloudsParam). "BUCE" is also used (ImageGen). The combination matrix observed:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Format</th>
+  <th style="text-align:left">Byte1</th>
+  <th style="text-align:left">Byte2</th>
+  <th style="text-align:left">Byte3</th>
+  <th style="text-align:left">Files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">BUCR</td>
+  <td style="text-align:left">U</td>
+  <td style="text-align:left">C</td>
+  <td style="text-align:left">R</td>
+  <td style="text-align:left">Maps, Replays, Profile, FidCache, Block, GpuCache</td>
+</tr>
+<tr>
+  <td style="text-align:left">BUUR</td>
+  <td style="text-align:left">U</td>
+  <td style="text-align:left">U</td>
+  <td style="text-align:left">R</td>
+  <td style="text-align:left">FuncShader, FuncCloudsParam</td>
+</tr>
+<tr>
+  <td style="text-align:left">BUCE</td>
+  <td style="text-align:left">U</td>
+  <td style="text-align:left">C</td>
+  <td style="text-align:left">E</td>
+  <td style="text-align:left">ImageGen</td>
+</tr>
+</tbody>
+</table></div>
+<p>"BUCU" (fully uncompressed, no refs) was NOT observed but may exist for very simple files.</p>
+<h3 id="observation-consistent-patterns"><a class="anchor" href="#observation-consistent-patterns">#</a>Observation: Consistent Patterns</h3>
+<ol>
+  <li><strong>All TM2020 files use version 6</strong> -- no legacy versions observed</li>
+  <li><strong>All files use binary format ('B')</strong> -- no text format observed</li>
+  <li><strong>Byte1 is always 'U'</strong> -- the "outer" compression flag is never 'C' in practice</li>
+  <li><strong>Files with no header data (user_data_size=0) tend to use simpler formats</strong> -- BUUR or BUCE</li>
+  <li><strong>The <code class="addr">0xFACADE01</code> sentinel is stored in little-endian</strong> as <code>01 DE CA FA</code></li>
+  <li><strong>Class ID remapping is active</strong> -- FuncShader uses legacy chunk ID <code class="addr">0x0500B005</code> alongside modern <code class="addr">0x05015005</code></li>
+  <li><strong>NadeoPak version 18 is universal</strong> across all game pak files</li>
+  <li><strong>All paks contain <code>:data:</code> and <code>gamebox</code> folder markers</strong> in their headers</li>
+</ol>
+<h3 id="exact-file-size-verification-strongest-evidence"><a class="anchor" href="#exact-file-size-verification-strongest-evidence">#</a>Exact File Size Verification (Strongest Evidence)</h3>
+<p>For every compressed GBX file, the formula <code>header_size + compressed_size = file_size</code> was verified to the exact byte using Python. This is the ultimate proof that the format is correctly understood -- if any field offset were wrong, the math would not add up.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">File</th>
+  <th style="text-align:left">Header</th>
+  <th style="text-align:left">Compressed</th>
+  <th style="text-align:left">Calculated</th>
+  <th style="text-align:left">Actual</th>
+  <th style="text-align:left">Match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">TechFlow.Map.Gbx</td>
+  <td style="text-align:left">25,376</td>
+  <td style="text-align:left">21,867</td>
+  <td style="text-align:left">47,243</td>
+  <td style="text-align:left">47,243</td>
+  <td style="text-align:left">EXACT</td>
+</tr>
+<tr>
+  <td style="text-align:left">Profile.Gbx</td>
+  <td style="text-align:left">33</td>
+  <td style="text-align:left">34,182</td>
+  <td style="text-align:left">34,215</td>
+  <td style="text-align:left">34,215</td>
+  <td style="text-align:left">EXACT</td>
+</tr>
+<tr>
+  <td style="text-align:left">User.FidCache.Gbx</td>
+  <td style="text-align:left">33</td>
+  <td style="text-align:left">89,567</td>
+  <td style="text-align:left">89,600</td>
+  <td style="text-align:left">89,600</td>
+  <td style="text-align:left">EXACT</td>
+</tr>
+<tr>
+  <td style="text-align:left">WaterTransmittance.ImageGen.Gbx</td>
+  <td style="text-align:left">33</td>
+  <td style="text-align:left">54</td>
+  <td style="text-align:left">87</td>
+  <td style="text-align:left">87</td>
+  <td style="text-align:left">EXACT</td>
+</tr>
+<tr>
+  <td style="text-align:left">Geometry_p.hlsl.GpuCache.Gbx</td>
+  <td style="text-align:left">33</td>
+  <td style="text-align:left">531</td>
+  <td style="text-align:left">564</td>
+  <td style="text-align:left">564</td>
+  <td style="text-align:left">EXACT</td>
+</tr>
+</tbody>
+</table></div>
+<p>For the uncompressed file (Clouds.FuncShader.Gbx, 103 bytes), the end sentinel <code class="addr">0xFACADE01</code> appears at the exact last 4 bytes of the file, confirming body stream termination.</p>
+
+                        <nav class="prev-next"><a class="prev" href="visual-reference.html">&larr; Visual Reference &amp; Glossary</a><a class="next" href="dll-intelligence.html">DLL Intelligence &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-files-analyzed">1. Files Analyzed</a></li>
+  <li class="toc-h3"><a href="#gbx-files-user-documents">GBX Files (User Documents)</a></li>
+  <li class="toc-h3"><a href="#pack-files-game-installation">Pack Files (Game Installation)</a></li>
+  <li class="toc-h3"><a href="#gpu-shader-cache">GPU Shader Cache</a></li>
+<li class=""><a href="#2-map-file-mapgbx-deep-walk-through">2. Map File (.Map.Gbx) Deep Walk-Through</a></li>
+  <li class="toc-h3"><a href="#raw-hex-first-0x160-bytes">Raw Hex (first 0x160 bytes)</a></li>
+  <li class="toc-h3"><a href="#byte-by-byte-annotation">Byte-by-Byte Annotation</a></li>
+  <li class="toc-h3"><a href="#header-chunk-data-chunk-0x03043002-57-bytes-at-offset-0x45">Header Chunk Data: Chunk 0x03043002 (57 bytes at offset 0x45)</a></li>
+  <li class="toc-h3"><a href="#header-chunk-0x03043005-xml-metadata-526-bytes-at-appropriate-offset">Header Chunk 0x03043005 (XML metadata, 526 bytes at appropriate offset)</a></li>
+  <li class="toc-h3"><a href="#header-chunk-0x03043007-thumbnail-heavy-24401-bytes">Header Chunk 0x03043007 (Thumbnail, heavy, 24,401 bytes)</a></li>
+  <li class="toc-h3"><a href="#header-chunk-0x03043003-common-map-header-221-bytes">Header Chunk 0x03043003 (Common map header, 221 bytes)</a></li>
+  <li class="toc-h3"><a href="#body-region">Body Region</a></li>
+  <li class="toc-h3"><a href="#programmatic-verification-python-struct-parse">Programmatic Verification (Python struct parse)</a></li>
+  <li class="toc-h3"><a href="#second-map-comparison-zenithmapgbx">Second Map Comparison (Zenith.Map.Gbx)</a></li>
+<li class=""><a href="#3-replay-file-replaygbx-analysis">3. Replay File (.Replay.Gbx) Analysis</a></li>
+  <li class="toc-h3"><a href="#raw-hex-first-0x50-bytes">Raw Hex (first 0x50 bytes)</a></li>
+  <li class="toc-h3"><a href="#byte-by-byte-annotation-1">Byte-by-Byte Annotation</a></li>
+  <li class="toc-h3"><a href="#replay-header-chunk-0x03093000-data">Replay Header Chunk 0x03093000 Data</a></li>
+  <li class="toc-h3"><a href="#replay-header-chunk-0x03093001-data-xml-heavy">Replay Header Chunk 0x03093001 Data (XML, heavy)</a></li>
+  <li class="toc-h3"><a href="#autosave-replay-comparison">Autosave Replay Comparison</a></li>
+<li class=""><a href="#4-profile-file-profilegbx-analysis">4. Profile File (.Profile.Gbx) Analysis</a></li>
+  <li class="toc-h3"><a href="#raw-hex-first-0x40-bytes">Raw Hex (first 0x40 bytes)</a></li>
+  <li class="toc-h3"><a href="#byte-by-byte-annotation-2">Byte-by-Byte Annotation</a></li>
+  <li class="toc-h3"><a href="#body-chunk-stream-visible-in-compressed-data">Body Chunk Stream (visible in compressed data)</a></li>
+  <li class="toc-h3"><a href="#additional-file-verifications-programmatic">Additional File Verifications (Programmatic)</a></li>
+<li class=""><a href="#5-block-file-blockgbx-analysis">5. Block File (.Block.Gbx) Analysis</a></li>
+  <li class="toc-h3"><a href="#raw-hex">Raw Hex</a></li>
+  <li class="toc-h3"><a href="#byte-by-byte-annotation-3">Byte-by-Byte Annotation</a></li>
+  <li class="toc-h3"><a href="#header-chunk-data">Header Chunk Data</a></li>
+<li class=""><a href="#6-funcshader-file-analysis-fully-uncompressed">6. FuncShader File Analysis (Fully Uncompressed)</a></li>
+  <li class="toc-h3"><a href="#complete-hex-dump">Complete Hex Dump</a></li>
+  <li class="toc-h3"><a href="#programmatic-parse-verified-with-python-struct">Programmatic Parse (verified with Python struct)</a></li>
+  <li class="toc-h3"><a href="#key-findings">Key Findings</a></li>
+<li class=""><a href="#7-funccloudsparams-file-analysis">7. FuncCloudsParams File Analysis</a></li>
+  <li class="toc-h3"><a href="#complete-hex-dump-1">Complete Hex Dump</a></li>
+  <li class="toc-h3"><a href="#annotation">Annotation</a></li>
+<li class=""><a href="#8-imagegen-file-analysis">8. ImageGen File Analysis</a></li>
+  <li class="toc-h3"><a href="#complete-hex-dump-2">Complete Hex Dump</a></li>
+  <li class="toc-h3"><a href="#annotation-1">Annotation</a></li>
+<li class=""><a href="#9-gpucachegbx-shader-file-analysis">9. GpuCache.Gbx Shader File Analysis</a></li>
+  <li class="toc-h3"><a href="#hex-dump-first-256-bytes">Hex Dump (first 256 bytes)</a></li>
+  <li class="toc-h3"><a href="#annotation-2">Annotation</a></li>
+<li class=""><a href="#10-nadeopak-header-analysis">10. NadeoPak Header Analysis</a></li>
+  <li class="toc-h3"><a href="#resourcepak-178-kb-smallest">Resource.pak (178 KB -- smallest)</a></li>
+  <li class="toc-h3"><a href="#comparative-header-analysis">Comparative Header Analysis</a></li>
+  <li class="toc-h3"><a href="#nadeopak-header-format-derived-from-real-files">NadeoPak Header Format (Derived from Real Files)</a></li>
+  <li class="toc-h3"><a href="#common-folder-structure-visible-in-paks">Common folder structure visible in paks:</a></li>
+<li class=""><a href="#11-gpu-shader-cache">11. GPU Shader Cache</a></li>
+  <li class="toc-h3"><a href="#summary">Summary</a></li>
+  <li class="toc-h3"><a href="#shader-categories-directories">Shader Categories (Directories)</a></li>
+  <li class="toc-h3"><a href="#notable-root-level-shader-files">Notable Root-Level Shader Files</a></li>
+  <li class="toc-h3"><a href="#shader-naming-convention">Shader Naming Convention</a></li>
+<li class=""><a href="#12-class-id-registry-from-real-files">12. Class ID Registry from Real Files</a></li>
+  <li class="toc-h3"><a href="#class-ids-confirmed-in-real-files">Class IDs Confirmed in Real Files</a></li>
+  <li class="toc-h3"><a href="#header-chunk-ids-confirmed">Header Chunk IDs Confirmed</a></li>
+  <li class="toc-h3"><a href="#body-chunk-ids-confirmed">Body Chunk IDs Confirmed</a></li>
+  <li class="toc-h3"><a href="#sentinel-values-confirmed">Sentinel Values Confirmed</a></li>
+<li class=""><a href="#13-format-validation-checklist">13. Format Validation Checklist</a></li>
+  <li class="toc-h3"><a href="#confirmed-by-real-files">CONFIRMED by Real Files</a></li>
+  <li class="toc-h3"><a href="#corrected-from-spec">CORRECTED from Spec</a></li>
+  <li class="toc-h3"><a href="#partially-confirmed-needs-more-data">PARTIALLY CONFIRMED / NEEDS MORE DATA</a></li>
+  <li class="toc-h3"><a href="#not-confirmed-from-spec-not-observable-in-these-files">NOT CONFIRMED (from spec, not observable in these files)</a></li>
+<li class=""><a href="#14-discrepancies-and-corrections">14. Discrepancies and Corrections</a></li>
+  <li class="toc-h3"><a href="#discrepancy-1-user_data_size-semantics">Discrepancy 1: user_data_size Semantics</a></li>
+  <li class="toc-h3"><a href="#discrepancy-2-pak-vs-packgbx">Discrepancy 2: .pak vs .pack.gbx</a></li>
+  <li class="toc-h3"><a href="#discrepancy-3-header-section-layout-offset-table">Discrepancy 3: Header Section Layout (Offset Table)</a></li>
+  <li class="toc-h3"><a href="#discrepancy-4-format-flags-bucu-existence">Discrepancy 4: Format Flags &quot;BUCU&quot; Existence</a></li>
+  <li class="toc-h3"><a href="#observation-consistent-patterns">Observation: Consistent Patterns</a></li>
+  <li class="toc-h3"><a href="#exact-file-size-verification-strongest-evidence">Exact File Size Verification (Strongest Evidence)</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

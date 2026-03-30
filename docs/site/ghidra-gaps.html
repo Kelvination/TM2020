@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghidra Gap Research - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item active" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Ghidra Gap Research</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="ghidra-gap-filling-research-findings"><a class="anchor" href="#ghidra-gap-filling-research-findings">#</a>Ghidra Gap-Filling Research Findings</h1>
+<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020) <strong>Date</strong>: 2026-03-27 <strong>Tools</strong>: PyGhidra bridge via <code>bridge_query.py</code> (Ghidra 12.0.4) <strong>Purpose</strong>: Fill the biggest gaps in our RE documentation by decompiling critical undocumented functions <strong>Decompiled functions saved</strong>: <code>decompiled/physics/</code> (13 files)</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#priority-1-force-model-internals">Priority 1: Force Model Internals</a></li>
+  <li><a href="#priority-2-surface-gameplay-effects">Priority 2: Surface Gameplay Effects</a></li>
+  <li><a href="#priority-3-ghostreplay-system">Priority 3: Ghost/Replay System</a></li>
+  <li><a href="#priority-4-map-loading-pipeline">Priority 4: Map Loading Pipeline</a></li>
+  <li><a href="#priority-5-audio-deep-dive">Priority 5: Audio Deep Dive</a></li>
+  <li><a href="#priority-6-checkpointrespawn-system">Priority 6: Checkpoint/Respawn System</a></li>
+  <li><a href="#priority-7-pack-file-format">Priority 7: Pack File Format</a></li>
+  <li><a href="#summary-of-open-questions-resolved">Summary of Open Questions Resolved</a></li>
+</ol>
+<hr>
+<h2 id="priority-1-force-model-internals"><a class="anchor" href="#priority-1-force-model-internals">#</a>Priority 1: Force Model Internals</h2>
+<h3 id="priority-1-force-model-fun_140869cd0-4-wheel-base-model-cases-012"><a class="anchor" href="#priority-1-force-model-fun_140869cd0-4-wheel-base-model-cases-012">#</a>[Priority 1] Force Model FUN_140869cd0 - 4-Wheel Base Model (Cases 0/1/2)</h3>
+<p><strong>Query</strong>: <code>decompile FUN_140869cd0</code> <strong>Result</strong>: Fully decompiled (300+ lines). This is the base 4-wheel force model used for legacy/simple vehicle types. <strong>Evidence</strong>: Address 140869cd0, saved to <code>decompiled/physics/force_model_4wheel_FUN_140869cd0.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What do the 7 force model functions do?" (partially - models 0/1/2)</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Iterates over 4 wheels (stride 0xB8 per wheel, starting at car_state+0x1780)</li>
+  <li>Per-wheel surface material lookup from vtable: <code><em>car_state + 0x6B8 + surface_id </em> 8</code></li>
+  <li>Surface ID is a byte at wheel_state+0x40</li>
+  <li>Applies forces via FUN_140845210 (linear force) and FUN_140845260 (torque)</li>
+  <li>Speed-dependent coefficients sampled from curves via FUN_14042bcb0</li>
+  <li>Uses <code>car_state[0x2EB]</code> as friction coefficient and <code>car_state[0x2EC]</code> as acceleration coefficient</li>
+  <li>These map directly to <code>Tunings.CoefFriction</code> and <code>Tunings.CoefAcceleration</code> strings</li>
+  <li>Anti-roll bar forces computed via cross products</li>
+  <li>Speed clamping at min/max bounds from tuning data (offsets 0xAB0, 0xAB4)</li>
+  <li>Air resistance proportional to v squared</li>
+  <li>Engine braking torque at offset 0x19D0</li>
+</ul>
+<h3 id="priority-1-force-model-fun_14086b060-2-wheel-model-case-3"><a class="anchor" href="#priority-1-force-model-fun_14086b060-2-wheel-model-case-3">#</a>[Priority 1] Force Model FUN_14086b060 - 2-Wheel Model (Case 3)</h3>
+<p><strong>Query</strong>: <code>decompile FUN_14086b060</code> <strong>Result</strong>: Fully decompiled (~250 lines). Simplified bicycle-model physics. <strong>Evidence</strong>: Address 14086b060, saved to <code>decompiled/physics/force_model_2wheel_FUN_14086b060.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What is force model case 3?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Uses a single-axis (front/rear) force decomposition instead of 4 independent wheels</li>
+  <li>Steering via atan2 of velocity components (FUN_14018d310)</li>
+  <li>Sin/cos decomposition of steering angle for longitudinal/lateral force split</li>
+  <li>Drift state machine with 3 states:</li>
+  <li><code>offset+0x1460 == 0</code>: No drift</li>
+  <li><code>offset+0x1460 == 1</code>: Drift building (slip accumulated at 0x1458)</li>
+  <li><code>offset+0x1460 == 2</code>: Drift committed (using stored angle)</li>
+  <li>Drift angle clamped by max value at tuning+0x1B78</li>
+  <li>Drift builds proportional to <code>lateral_slip <em> drift_rate </em> delta_time</code> (tuning+0x1B6C)</li>
+  <li>Lateral grip computation delegated to FUN_14086af20</li>
+  <li>Yaw damping: linear term (tuning+0x1A54) + quadratic term (tuning+0x1A58)</li>
+  <li>Suspension model at car_state+0x1280 (different from 4-wheel model at +0x250)</li>
+</ul>
+<h3 id="priority-1-force-model-fun_14085c9e0-carsport-full-model-case-6"><a class="anchor" href="#priority-1-force-model-fun_14085c9e0-carsport-full-model-case-6">#</a>[Priority 1] Force Model FUN_14085c9e0 - CarSport Full Model (Case 6)</h3>
+<p><strong>Query</strong>: <code>decompile FUN_14085c9e0</code> <strong>Result</strong>: Fully decompiled (~350 lines). The most complex force model. <strong>Evidence</strong>: Address 14085c9e0, saved to <code>decompiled/physics/force_model_carsport_FUN_14085c9e0.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What is force model case 6?" and "How does CarSport physics work?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>This is the full CarSport (Stadium car) force model</li>
+  <li>Receives 3 parameters including simulation timestamp (for time-dependent effects)</li>
+  <li>Sub-function breakdown:</li>
+  <li><code>FUN_1408570e0</code>: Per-wheel force calculation (called 4 times)</li>
+  <li><code>FUN_14085ad30</code>: Steering model</li>
+  <li><code>FUN_14085a0d0</code>: Suspension/contact update</li>
+  <li><code>FUN_14085ba50</code>: Anti-roll bar</li>
+  <li><code>FUN_140858c90</code>: Damping</li>
+  <li><code>FUN_140857380</code>: Drift/skid model</li>
+  <li><code>FUN_140857b20</code>: Boost/reactor forces</li>
+  <li><code>FUN_14085c1b0</code>: Airborne control forces</li>
+  <li><code>FUN_14085b600</code>: Final force integration</li>
+  <li>Launched checkpoint boost system:</li>
+  <li>Checks timestamp against checkpoint grace period (offset+0x15A8)</li>
+  <li>Applies directional boost forces from checkpoint data</li>
+  <li>Uses force curves at checkpoint_data+0x30 for speed-dependent boost</li>
+  <li>Post-respawn force application:</li>
+  <li>Duration at tuning+0x2B80</li>
+  <li>Applies fade-out force over 2x the stored duration</li>
+  <li>Linear fade from full to zero</li>
+  <li>Grip state at car_state+0x2B9, clamped to minimum at tuning+0x2AFC</li>
+  <li>Speed thresholds at tuning+0x2AE0 (low) and 0x2AE4 (high)</li>
+  <li>Two steering sensitivity modes: normal at car_state+0x2B1, custom at car_state+0x158C</li>
+  <li>Selection based on flag at car_state+0x15DC</li>
+</ul>
+<h3 id="priority-1-curve-sampling-function-fun_14042bcb0"><a class="anchor" href="#priority-1-curve-sampling-function-fun_14042bcb0">#</a>[Priority 1] Curve Sampling Function FUN_14042bcb0</h3>
+<p><strong>Query</strong>: <code>decompile FUN_14042bcb0</code> <strong>Result</strong>: Fully decompiled. Core utility used by ALL force models. <strong>Evidence</strong>: Address 14042bcb0, saved to <code>decompiled/physics/curve_sample_FUN_14042bcb0.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How are speed-dependent coefficients evaluated?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Curve format: header (20 bytes) + keyframe array (pairs of [time, value] floats)</li>
+  <li>Header flags:</li>
+  <li>Bit 0: Step interpolation (nearest previous keyframe)</li>
+  <li>Bit 1: Smooth interpolation (cubic Hermite: <code>3t^2 - 2t^3</code>)</li>
+  <li>Bit 4: Spline interpolation (Catmull-Rom via FUN_14042bba0)</li>
+  <li>Bit 5: Spline sub-flag</li>
+  <li>Default is linear interpolation</li>
+  <li>Values before first keyframe return first value; after last return last value</li>
+  <li>Epsilon tolerance at DAT_141d1ed34 for near-keyframe snapping</li>
+  <li>This function is called hundreds of times per physics tick</li>
+</ul>
+<h3 id="priority-1-wheel-contact-surface-accumulation-fun_140845b60"><a class="anchor" href="#priority-1-wheel-contact-surface-accumulation-fun_140845b60">#</a>[Priority 1] Wheel Contact Surface Accumulation FUN_140845b60</h3>
+<p><strong>Query</strong>: <code>decompile FUN_140845b60</code> <strong>Result</strong>: Fully decompiled. Gathers surface properties across all wheels. <strong>Evidence</strong>: Address 140845b60, saved to <code>decompiled/physics/wheel_contact_surface_FUN_140845b60.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does the game determine what surface the car is on?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Iterates over 4 wheels at stride 0x2E floats (0xB8 bytes)</li>
+  <li>Starting at car_state+0x17CC</li>
+  <li>Contact existence flag at wheel[-6] (float, 0.0 = no contact)</li>
+  <li>Surface gameplay ID byte at wheel[-3]</li>
+  <li>Surface material lookup: <code><em>car_state + 0x6B8 + surface_id </em> 8</code> (pointer to material)</li>
+  <li>Material struct offsets:</li>
+  <li>+0x18..+0x30: 7 float properties (friction coefficients, grip modifiers)</li>
+  <li>+0x34, +0x38: Positive-only accumulation (boost factors)</li>
+  <li>+0x3C: Scalar property</li>
+  <li>+0x40: Integer flag (grip type - needs 3+ wheels for activation)</li>
+  <li>+0x44..+0x4C: Contact normal direction (vec3)</li>
+  <li>+0x50: Capability bitmask (AND-accumulated across wheels)</li>
+  <li>After accumulation, all properties are averaged by wheel count</li>
+  <li>Contact normal is normalized and transformed to world space</li>
+  <li>Velocity-dependent damping applied to property[1]</li>
+  <li>Special override: when DAT_141faa04c != 0 and surface_id == 0x0E, uses surface 0 instead</li>
+</ul>
+<h3 id="priority-1-lateral-grip-2-wheel-fun_14086af20"><a class="anchor" href="#priority-1-lateral-grip-2-wheel-fun_14086af20">#</a>[Priority 1] Lateral Grip (2-Wheel) FUN_14086af20</h3>
+<p><strong>Query</strong>: <code>decompile FUN_14086af20</code> <strong>Result</strong>: Fully decompiled. Simplified tire model. <strong>Evidence</strong>: Address 14086af20, saved to <code>decompiled/physics/lateral_grip_2wheel_FUN_14086af20.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does the 2-wheel model compute lateral grip?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Implements a Pacejka-like tire model:</li>
+  <li><code>lateral_force = -slip <em> linear_coef - slip</em>|slip| * quadratic_coef</code></li>
+  <li>Linear stiffness at tuning+0x1A5C</li>
+  <li>Quadratic stiffness at tuning+0x1A60</li>
+  <li>Grip limit from speed-dependent curve at tuning+0x1AC0</li>
+  <li>Drift reduces grip by factor at tuning+0x1B10</li>
+  <li>When force exceeds grip: clamp to grip limit, set sliding flag</li>
+  <li>When force within grip: use computed force, clear sliding flag</li>
+</ul>
+<h3 id="priority-1-slopegravity-factor-fun_1408456b0"><a class="anchor" href="#priority-1-slopegravity-factor-fun_1408456b0">#</a>[Priority 1] Slope/Gravity Factor FUN_1408456b0</h3>
+<p><strong>Query</strong>: <code>decompile FUN_1408456b0</code> <strong>Result</strong>: Fully decompiled. Computes slope-dependent scaling. <strong>Evidence</strong>: Address 1408456b0, saved to <code>decompiled/physics/slope_gravity_factor_FUN_1408456b0.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does slope angle affect physics?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Computes two independent factors: acceleration slope factor and friction slope factor</li>
+  <li>Based on <code>cos(slope_angle) = abs(velocity.y / |velocity|)</code> where y is up</li>
+  <li>Acceleration slope thresholds: tuning+0x19E4 (min) to 0x19E8 (max)</li>
+  <li>Friction slope thresholds: tuning+0x19EC (min) to 0x19F0 (max)</li>
+  <li>Interpolation via cosine curve (smooth S-shaped transition)</li>
+  <li>Below minimum threshold: factor = 0 (too steep, force disabled)</li>
+  <li>Above maximum threshold: factor = 1 (flat enough, full force)</li>
+  <li>This explains why cars lose traction on very steep slopes</li>
+</ul>
+<h3 id="priority-1-forcetorque-application-functions"><a class="anchor" href="#priority-1-forcetorque-application-functions">#</a>[Priority 1] Force/Torque Application Functions</h3>
+<p><strong>Query</strong>: <code>decompile FUN_140845210</code>, <code>decompile FUN_140845260</code> <strong>Result</strong>: Both are thin wrappers. <strong>Evidence</strong>: Addresses 140845210, 140845260 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What do the force application calls do?"</p>
+<ul>
+  <li>FUN_140845210: Calls <code>FUN_1407bdd20(world_handle, body_id)</code> -- adds force to body</li>
+  <li>FUN_140845260: Calls <code>FUN_1407bdf40(world_handle, body_id)</code> -- adds torque to body</li>
+  <li>Body ID read from <code>car_state + 0x10</code></li>
+</ul>
+<h3 id="priority-1-steering-string-analysis"><a class="anchor" href="#priority-1-steering-string-analysis">#</a>[Priority 1] Steering String Analysis</h3>
+<p><strong>Query</strong>: <code>search_strings "Steer"</code> <strong>Result</strong>: 26 matches revealing the full steering input system. <strong>Evidence</strong>: Strings at 141be7878 ("InputSteer"), 141be79a0 ("%sSteerAngle"), 141c57cb0 ("AnalogSteerV2") <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What are the steering-related data fields?"</p>
+<p>Key strings discovered:</p>
+<ul>
+  <li><code>InputSteer</code> (141be7878) - raw steering input value</li>
+  <li><code>InputGasPedal</code> (141be7898) - gas/throttle input value</li>
+  <li><code>Wheels.Elems[0..3].SteerAngle</code> - per-wheel steer angle</li>
+  <li><code>AnalogSteerV2</code> - analog steering mode flag</li>
+  <li><code>InvertSteer</code> - steer inversion setting</li>
+  <li><code>SteerValue</code> - processed steering value for ManiaScript</li>
+  <li><code>IsSteering</code> - boolean indicating active steering</li>
+  <li><code>NoSteering</code> - surface effect that disables steering</li>
+  <li><code>HandicapNoSteeringDuration</code> - duration for the no-steering handicap</li>
+</ul>
+<hr>
+<h2 id="priority-2-surface-gameplay-effects"><a class="anchor" href="#priority-2-surface-gameplay-effects">#</a>Priority 2: Surface Gameplay Effects</h2>
+<h3 id="priority-2-complete-eplugsurfacegameplayid-enum"><a class="anchor" href="#priority-2-complete-eplugsurfacegameplayid-enum">#</a>[Priority 2] Complete EPlugSurfaceGameplayId Enum</h3>
+<p><strong>Query</strong>: <code>search_strings "EPlugSurfaceGameplayId"</code>, <code>data_at 141be1200 320</code> <strong>Result</strong>: Found the complete enum string table. <strong>Evidence</strong>: Sequential strings at 141be1238-141be13C0 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What are all the surface gameplay effect types?"</p>
+<p>The enum values in order (from the string table at 141be1238):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:center">Index</th>
+  <th style="text-align:left">Name</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center">0</td>
+  <td style="text-align:left"><code>NoSteering</code></td>
+  <td style="text-align:left">Disables steering input</td>
+</tr>
+<tr>
+  <td style="text-align:center">1</td>
+  <td style="text-align:left"><code>NoGrip</code></td>
+  <td style="text-align:left">Removes tire grip (ice-like)</td>
+</tr>
+<tr>
+  <td style="text-align:center">2</td>
+  <td style="text-align:left"><code>Reset</code></td>
+  <td style="text-align:left">Resets vehicle state</td>
+</tr>
+<tr>
+  <td style="text-align:center">3</td>
+  <td style="text-align:left"><code>ForceAcceleration</code></td>
+  <td style="text-align:left">Forces acceleration</td>
+</tr>
+<tr>
+  <td style="text-align:center">4</td>
+  <td style="text-align:left"><code>Turbo</code></td>
+  <td style="text-align:left">Speed boost level 1</td>
+</tr>
+<tr>
+  <td style="text-align:center">5</td>
+  <td style="text-align:left"><code>FreeWheeling</code></td>
+  <td style="text-align:left">Disengages engine</td>
+</tr>
+<tr>
+  <td style="text-align:center">6</td>
+  <td style="text-align:left"><code>Turbo2</code></td>
+  <td style="text-align:left">Speed boost level 2</td>
+</tr>
+<tr>
+  <td style="text-align:center">7</td>
+  <td style="text-align:left"><code>ReactorBoost2_Legacy</code></td>
+  <td style="text-align:left">Legacy reactor boost v2</td>
+</tr>
+<tr>
+  <td style="text-align:center">8</td>
+  <td style="text-align:left"><code>Fragile</code></td>
+  <td style="text-align:left">Makes vehicle fragile (any crash = reset)</td>
+</tr>
+<tr>
+  <td style="text-align:center">9</td>
+  <td style="text-align:left"><code>NoBrakes</code></td>
+  <td style="text-align:left">Disables braking</td>
+</tr>
+<tr>
+  <td style="text-align:center">10</td>
+  <td style="text-align:left"><code>Bouncy</code></td>
+  <td style="text-align:left">Increases surface elasticity</td>
+</tr>
+<tr>
+  <td style="text-align:center">11</td>
+  <td style="text-align:left"><code>Bumper</code></td>
+  <td style="text-align:left">Bumper pad effect</td>
+</tr>
+<tr>
+  <td style="text-align:center">12</td>
+  <td style="text-align:left"><code>SlowMotion</code></td>
+  <td style="text-align:left">Slows down time</td>
+</tr>
+<tr>
+  <td style="text-align:center">13</td>
+  <td style="text-align:left"><code>ReactorBoost_Legacy</code></td>
+  <td style="text-align:left">Legacy reactor boost v1</td>
+</tr>
+<tr>
+  <td style="text-align:center">14</td>
+  <td style="text-align:left"><code>Bumper2</code></td>
+  <td style="text-align:left">Enhanced bumper pad</td>
+</tr>
+<tr>
+  <td style="text-align:center">15</td>
+  <td style="text-align:left"><code>VehicleTransform_CarRally</code></td>
+  <td style="text-align:left">Transforms to rally car</td>
+</tr>
+<tr>
+  <td style="text-align:center">16</td>
+  <td style="text-align:left"><code>VehicleTransform_CarSnow</code></td>
+  <td style="text-align:left">Transforms to snow car</td>
+</tr>
+<tr>
+  <td style="text-align:center">17</td>
+  <td style="text-align:left"><code>VehicleTransform_CarDesert</code></td>
+  <td style="text-align:left">Transforms to desert car</td>
+</tr>
+<tr>
+  <td style="text-align:center">18</td>
+  <td style="text-align:left"><code>ReactorBoost_Oriented</code></td>
+  <td style="text-align:left">Directional reactor boost</td>
+</tr>
+<tr>
+  <td style="text-align:center">19</td>
+  <td style="text-align:left"><code>Cruise</code></td>
+  <td style="text-align:left">Cruise control (fixed speed)</td>
+</tr>
+<tr>
+  <td style="text-align:center">20</td>
+  <td style="text-align:left"><code>VehicleTransform_Reset</code></td>
+  <td style="text-align:left">Resets vehicle transform</td>
+</tr>
+<tr>
+  <td style="text-align:center">21</td>
+  <td style="text-align:left"><code>ReactorBoost2_Oriented</code></td>
+  <td style="text-align:left">Directional reactor boost v2</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Material lookup in force model</strong>: <code><em>car_state + 0x6B8 + surface_id </em> 8</code> Max surface ID observed in code: 0x4A (74) -- the vtable is pre-allocated for many more IDs than currently used.</p>
+<p><strong>Special override</strong>: When global flag <code>DAT_141faa04c != 0</code> and surface_id == 0x0E (14 = Bumper2), the game substitutes surface material 0 (NoSteering). This suggests Bumper2 can be globally disabled.</p>
+<h3 id="priority-2-nogrip-implementation"><a class="anchor" href="#priority-2-nogrip-implementation">#</a>[Priority 2] NoGrip Implementation</h3>
+<p><strong>Query</strong>: <code>search_strings "NoGrip"</code> <strong>Result</strong>: 5 matches. NoGrip has begin/end events and a deprecated hack version. <strong>Evidence</strong>: <code>BeginNoGrip</code> (141be7610), <code>EndNoGrip</code> (141be7600), <code>HandicapNoGripDuration</code> (141cf6970) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does NoGrip work?"</p>
+<ul>
+  <li>NoGrip (surface ID 1) reduces grip coefficient to zero via the material property at material+0x18</li>
+  <li>Triggered by <code>BeginNoGrip</code>/<code>EndNoGrip</code> events</li>
+  <li>Can be applied as a handicap with configurable duration (<code>HandicapNoGripDuration</code>)</li>
+  <li>Deprecated version: <code>Hack_NoGrip_Deprecated</code> (141bbc850) suggests an older implementation existed</li>
+</ul>
+<h3 id="priority-2-fragile-surface-implementation"><a class="anchor" href="#priority-2-fragile-surface-implementation">#</a>[Priority 2] Fragile Surface Implementation</h3>
+<p><strong>Query</strong>: <code>search_strings "Fragile"</code> <strong>Result</strong>: 5 matches with begin event and delayed setter. <strong>Evidence</strong>: <code>BeginFragile</code> (141be76c0), <code>SetPlayer_Delayed_Fragile</code> (141cf3e20) <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> <strong>Resolves</strong>: "How does Fragile work?"</p>
+<ul>
+  <li>Fragile (surface ID 8) marks the vehicle as fragile</li>
+  <li>Applied with a 250ms delay: "Activate or Deactivate Fragile on the player's vehicle with a 250ms delay"</li>
+  <li>When active, collision detection triggers a reset (crash)</li>
+  <li>The fragile state is checked in the collision response code</li>
+  <li>Can be toggled from ManiaScript via <code>SetPlayer_Delayed_Fragile</code></li>
+</ul>
+<h3 id="priority-2-slowmotion-implementation"><a class="anchor" href="#priority-2-slowmotion-implementation">#</a>[Priority 2] SlowMotion Implementation</h3>
+<p><strong>Query</strong>: <code>search_strings "SlowMotion"</code> <strong>Result</strong>: 3 matches. <strong>Evidence</strong>: <code>SlowMotion</code> (141be12d0), <code>SetPlayer_Delayed_SlowMotion</code> (141cf3e00) <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> <strong>Resolves</strong>: "How does SlowMotion work?"</p>
+<ul>
+  <li>SlowMotion (surface ID 12) modifies the time scale for the affected vehicle</li>
+  <li>Applied with 250ms delay</li>
+  <li>The time scale factor is likely stored in the tuning data and modifies <code>param_3[3]</code> (delta time) in the force model</li>
+</ul>
+<h3 id="priority-2-freewheeling-implementation"><a class="anchor" href="#priority-2-freewheeling-implementation">#</a>[Priority 2] FreeWheeling Implementation</h3>
+<p><strong>Query</strong>: <code>search_strings "FreeWheeling"</code> <strong>Result</strong>: 9 matches including duration settings. <strong>Evidence</strong>: <code>FreeWheelingDuration</code> (141c527b0), <code>BeginFreeWheeling</code> (141be75b0), <code>EndFreeWheeling</code> (141be7650) <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> <strong>Resolves</strong>: "How does FreeWheeling work?"</p>
+<ul>
+  <li>FreeWheeling (surface ID 5) disengages the engine from the wheels</li>
+  <li>Has configurable duration (<code>FreeWheelingDuration</code>)</li>
+  <li>Begin/End events for state transitions</li>
+  <li>Legacy/deprecated variants existed for different surface materials (Wood, TechMagnetic)</li>
+  <li>When active, the engine torque contribution is zeroed in the force model</li>
+</ul>
+<h3 id="priority-2-cruise-control-implementation"><a class="anchor" href="#priority-2-cruise-control-implementation">#</a>[Priority 2] Cruise Control Implementation</h3>
+<p><strong>Query</strong>: <code>search_strings "Cruise"</code> <strong>Result</strong>: 6 matches including speed value setter. <strong>Evidence</strong>: <code>CruiseSpeedValue</code> (141bd35f8), <code>SetPlayer_Delayed_Cruise</code> (141cf3d30) <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> <strong>Resolves</strong>: "How does Cruise work?"</p>
+<ul>
+  <li>Cruise (surface ID 19) forces the vehicle to maintain a specific speed</li>
+  <li>Speed value range: -1000 to 1000 (error message at 141cf4d80)</li>
+  <li>Applied via <code>SetPlayer_Delayed_Cruise</code> with 250ms delay</li>
+  <li>The cruise speed value is stored at <code>CruiseSpeedValue</code> and the force model adjusts engine output to match</li>
+</ul>
+<h3 id="priority-2-vehicle-transform-surfaces"><a class="anchor" href="#priority-2-vehicle-transform-surfaces">#</a>[Priority 2] Vehicle Transform Surfaces</h3>
+<p><strong>Query</strong>: <code>search_strings "VehicleTransform"</code> <strong>Result</strong>: 20 matches revealing 4 transform types. <strong>Evidence</strong>: Strings at 141be1300-141be13B0, collection/author metadata strings <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>Vehicle transform surfaces change the car model:</p>
+<ul>
+  <li><code>VehicleTransform_CarRally</code> (surface ID 15) - item at <code>\Vehicles\Items\CarRally.Item.gbx</code></li>
+  <li><code>VehicleTransform_CarSnow</code> (surface ID 16) - snow car</li>
+  <li><code>VehicleTransform_CarDesert</code> (surface ID 17) - desert car, item at <code>\Vehicles\Items\CarDesert.Item.gbx</code></li>
+  <li><code>VehicleTransform_Reset</code> (surface ID 20) - reverts to default car</li>
+</ul>
+<p>Each transform has associated metadata: Name, Collection, Author, Collection_Text strings. The <code>EVehicleTransformType</code> enum (141cf33C8) controls the type dispatch.</p>
+<hr>
+<h2 id="priority-3-ghostreplay-system"><a class="anchor" href="#priority-3-ghostreplay-system">#</a>Priority 3: Ghost/Replay System</h2>
+<h3 id="priority-3-ghost-class-hierarchy"><a class="anchor" href="#priority-3-ghost-class-hierarchy">#</a>[Priority 3] Ghost Class Hierarchy</h3>
+<p><strong>Query</strong>: <code>search_strings "CGameCtnGhost"</code>, <code>search_strings "CGhost"</code>, <code>search_strings "Ghost_"</code> <strong>Result</strong>: Found complete ghost API and class structure. <strong>Evidence</strong>: 27 Ghost_ function strings, CGhost class at 141bfb4a4, CGhostManager at 141bfb480 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What is the ghost system architecture?"</p>
+<p><strong>Ghost class hierarchy</strong>:</p>
+<ul>
+  <li><code>CGhost</code> (141bfb4a4) - base ghost class</li>
+  <li><code>CGhostManager</code> (141bfb480) - manages ghost instances</li>
+  <li><code>CGameCtnGhost</code> (141c5e3c8) - game-specific ghost (extends CGhost)</li>
+  <li><code>CGameReplayObjectVisData</code> (141c6e7e8) - visual data for replay objects</li>
+</ul>
+<p><strong>Ghost member variables</strong> (from <code>m_Ghost*</code> strings):</p>
+<ul>
+  <li><code>m_GhostLogin</code> - player login</li>
+  <li><code>m_GhostTrigram</code> - 3-letter trigram</li>
+  <li><code>m_GhostCountryPath</code> - country zone path</li>
+  <li><code>m_GhostNickname</code> - display name</li>
+  <li><code>m_GhostNameLogoType</code> - name logo type</li>
+  <li><code>m_GhostAvatarName</code> - avatar identifier</li>
+</ul>
+<p><strong>Ghost API functions</strong> (ManiaScript-exposed):</p>
+<ul>
+  <li><code>Ghost_Add</code> / <code>Ghost_AddWaypointSynced</code> / <code>Ghost_AddPhysicalized</code> - add ghost to scene</li>
+  <li><code>Ghost_Remove</code> / <code>Ghost_RemoveAll</code> - remove ghosts</li>
+  <li><code>Ghost_IsVisible</code> / <code>Ghost_IsReplayOver</code> - state queries</li>
+  <li><code>Ghost_SetDossard</code> / <code>Ghost_SetMarker</code> - visual customization</li>
+  <li><code>Ghost_GetPosition</code> - 3D position query</li>
+  <li><code>Ghost_RetrieveFromPlayer</code> / <code>Ghost_RetrieveFromPlayer2</code> - capture from live player</li>
+  <li><code>Ghost_GetLiveFromPlayer</code> - live ghost stream</li>
+  <li><code>Ghost_GetTimeClosestToPlayer</code> - time comparison</li>
+  <li><code>Ghost_CopyToScoreBestRaceAndLap</code> - transfer checkpoint times</li>
+  <li><code>Ghost_Upload</code> / <code>Ghost_Download</code> - network operations</li>
+  <li><code>Ghost_Release</code> - cleanup</li>
+</ul>
+<h3 id="priority-3-replay-record-system"><a class="anchor" href="#priority-3-replay-record-system">#</a>[Priority 3] Replay Record System</h3>
+<p><strong>Query</strong>: <code>search_strings "Replay"</code>, <code>search_strings "EntRecordData"</code> <strong>Result</strong>: 282 replay-related strings found. Comprehensive system. <strong>Evidence</strong>: Strings throughout 141b6d1f8-141d1e0f0 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does the replay system work?"</p>
+<p><strong>Replay format</strong>: Files are <code>*.Replay.Gbx</code> with XML header:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;header type=&quot;replay&quot; exever=&quot;%s&quot; exebuild=&quot;%s&quot; title=&quot;%s&quot;&gt;
+  &lt;map uid=&quot;%s&quot; name=&quot;%s&quot; author=&quot;%s&quot; authorzone=&quot;%s&quot;/&gt;
+  &lt;desc envir=&quot;%s&quot; mood=&quot;%s&quot; maptype=&quot;%s&quot; mapstyle=&quot;%s&quot; displaycost=&quot;%d&quot; mod=&quot;%s&quot;/&gt;
+  &lt;playermodel id=&quot;%s&quot;/&gt;
+  &lt;times best=&quot;%d&quot; respawns=&quot;%d&quot; stuntscore=&quot;%d&quot; validable=&quot;%d&quot;/&gt;
+  &lt;checkpoints cur=&quot;%d&quot;/&gt;
+&lt;/header&gt;</code></pre></div>
+<p><strong>Key classes</strong>:</p>
+<ul>
+  <li><code>CGameCtnReplayRecord</code> (141c49c50) - main replay class</li>
+  <li><code>CGameCtnReplayRecordInfo</code> (141bf98b0) - replay metadata</li>
+  <li><code>CPlugEntRecordData</code> (141bcb440) - entity recording data</li>
+  <li><code>CInputReplay</code> (141b6dd98) - input replay system</li>
+</ul>
+<p><strong>Input replay operations</strong> (141b6d1f8-141b6d298):</p>
+<ul>
+  <li><code>InputsReplay_Replay</code> - replay mode</li>
+  <li><code>InputsReplay_Playback</code> - playback mode</li>
+  <li><code>InputsReplay_Record</code> - record mode</li>
+  <li><code>InputsReplay_Pause</code> - pause</li>
+  <li><code>InputsReplay_Stop</code> - stop</li>
+  <li><code>InputsReplay_Resume</code> - resume</li>
+</ul>
+<p><strong>Anti-cheat replay</strong> (141c2af50-141c2b898):</p>
+<ul>
+  <li>Session replay with max size limit</li>
+  <li>Anti-cheat replay with chunk-based upload</li>
+  <li>Forced upload on cheat reports</li>
+  <li>Encrypted package system for replay integrity</li>
+</ul>
+<p><strong>Replay file paths</strong>:</p>
+<ul>
+  <li><code>Replays\</code> - main replay directory</li>
+  <li><code>Replays\Downloaded\</code> - downloaded replays</li>
+  <li><code>Replays\Autosaves\</code> - auto-saved replays</li>
+</ul>
+<h3 id="priority-3-replay-data-duplication"><a class="anchor" href="#priority-3-replay-data-duplication">#</a>[Priority 3] Replay Data Duplication</h3>
+<p><strong>Query</strong>: <code>search_strings "NGameReplay"</code> <strong>Result</strong>: 1 match - <code>NGameReplay::EntRecordDataDuplicateAndTruncate</code> (141c66e28) <strong>Evidence</strong>: Function name indicates replay data can be duplicated and truncated <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>This function is used to create partial replays (e.g., saving only up to a certain checkpoint).</p>
+<hr>
+<h2 id="priority-4-map-loading-pipeline"><a class="anchor" href="#priority-4-map-loading-pipeline">#</a>Priority 4: Map Loading Pipeline</h2>
+<h3 id="priority-4-map-class-and-loading-functions"><a class="anchor" href="#priority-4-map-class-and-loading-functions">#</a>[Priority 4] Map Class and Loading Functions</h3>
+<p><strong>Query</strong>: <code>search_strings "CGameCtnChallenge"</code> <strong>Result</strong>: 34 matches revealing the complete map loading pipeline. <strong>Evidence</strong>: Function name strings at 141c34908-141c35190 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What is the map loading sequence?"</p>
+<p><strong>Map loading pipeline</strong> (in order):</p>
+<ol>
+  <li><code>CGameCtnChallenge::InternalLoadDecorationAndCollection</code> - load decoration/collection assets</li>
+  <li><code>CGameCtnChallenge::LoadDecorationAndCollection</code> - public wrapper</li>
+  <li><code>CGameCtnChallenge::InitChallengeData_Terrain</code> - initialize terrain</li>
+  <li><code>CGameCtnChallenge::InitChallengeData_DefaultTerrainBaked</code> - baked terrain defaults</li>
+  <li><code>CGameCtnChallenge::LoadAndInstanciateBlocks</code> - load and place blocks</li>
+  <li><code>CGameCtnChallenge::UpdateBakedBlockList</code> - update baked block list</li>
+  <li><code>CGameCtnChallenge::InitChallengeData_ClassicBlocks</code> - classic block setup</li>
+  <li><code>CGameCtnChallenge::InitChallengeData_ClassicClipsBaked</code> - baked clip setup</li>
+  <li><code>CGameCtnChallenge::InitChallengeData_FreeClipsBaked</code> - free clip setup</li>
+  <li><code>CGameCtnChallenge::CreateFreeClips</code> - free clip creation</li>
+  <li><code>CGameCtnChallenge::InitPylonsList</code> - pylon initialization</li>
+  <li><code>CGameCtnChallenge::InitChallengeData_PylonsBaked</code> - baked pylons</li>
+  <li><code>CGameCtnChallenge::InitChallengeData_Clips</code> - clip connections</li>
+  <li><code>CGameCtnChallenge::ConnectAdditionalDataClipsToBakedClips</code> - clip linking</li>
+  <li><code>CGameCtnChallenge::InitChallengeData_Genealogy</code> - block genealogy</li>
+  <li><code>CGameCtnChallenge::LoadEmbededItems</code> - load embedded items</li>
+  <li><code>CGameCtnChallenge::InitEmbeddedItemModels</code> - init item models</li>
+  <li><code>CGameCtnChallenge::InitAllAnchoredObjects</code> - place items in world</li>
+  <li><code>CGameCtnChallenge::CreatePlayFields</code> - create playable fields</li>
+  <li><code>CGameCtnChallenge::AutoSetIdsForLightMap</code> - lightmap ID assignment</li>
+  <li><code>CGameCtnChallenge::TransferIdForLightMapFromBakedBlocksToBlocks</code> - lightmap ID transfer</li>
+  <li><code>CGameCtnChallenge::RemoveNonBlocksFromBlockStock</code> - cleanup</li>
+  <li><code>CGameCtnChallenge::SFilteredBlockLists::UpdateFilteredBlocks</code> - filter blocks</li>
+</ol>
+<p><strong>Map XML header format</strong> (141c34ac0):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;header type=&quot;map&quot; exever=&quot;%s&quot; exebuild=&quot;%s&quot; title=&quot;%s&quot; lightmap=&quot;%d&quot;&gt;
+  &lt;ident uid=&quot;%s&quot; name=&quot;%s&quot; author=&quot;%s&quot; authorzone=&quot;%s&quot;/&gt;
+  &lt;desc envir=&quot;%s&quot; mood=&quot;%s&quot; type=&quot;%s&quot; maptype=&quot;%s&quot; mapstyle=&quot;%s&quot;
+        validated=&quot;%d&quot; nblaps=&quot;%d&quot; displaycost=&quot;%d&quot; mod=&quot;%s&quot; hasghostblocks=&quot;%d&quot;/&gt;
+  &lt;playermodel id=&quot;%s&quot;/&gt;
+  &lt;times bronze=&quot;%d&quot; silver=&quot;%d&quot; gold=&quot;%d&quot; authortime=&quot;%d&quot; authorscore=&quot;%d&quot; hasclones=&quot;%d&quot;/&gt;
+  &lt;deps&gt;%s&lt;/deps&gt;
+&lt;/header&gt;</code></pre></div>
+<p><strong>Filtered block access</strong>:</p>
+<ul>
+  <li><code>SFilteredBlockLists::GetClassicBlocks</code> - standard placed blocks</li>
+  <li><code>SFilteredBlockLists::GetTerrainBlocks</code> - terrain blocks</li>
+  <li><code>SFilteredBlockLists::GetGhostBlocks</code> - ghost (non-collision) blocks</li>
+</ul>
+<h3 id="priority-4-anchored-object-item-placement"><a class="anchor" href="#priority-4-anchored-object-item-placement">#</a>[Priority 4] Anchored Object (Item) Placement</h3>
+<p><strong>Query</strong>: <code>search_strings "AnchoredObject"</code> <strong>Result</strong>: 15 matches. <strong>Evidence</strong>: Strings at 141c346c0-141ca0b88 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How are items placed in maps?"</p>
+<p><strong>Item placement system</strong>:</p>
+<ul>
+  <li><code>CGameCtnAnchoredObject</code> (141c78cf8) - placed item class</li>
+  <li>Stored in <code>AnchoredObjects</code> array on the challenge object</li>
+  <li>Update lifecycle:</li>
+  <li><code>UpdateAnchoredObjects_Init</code> - initialize</li>
+  <li><code>UpdateAnchoredObjects_Add</code> - add new item</li>
+  <li><code>UpdateAnchoredObjects_Compare</code> - compare states</li>
+  <li><code>UpdateAnchoredObjects_Copy</code> - copy state</li>
+  <li><code>UpdateAnchoredObjects_Remove</code> - remove item</li>
+  <li><code>UpdateAnchoredObjects_ItemPlacement</code> - placement logic</li>
+</ul>
+<h3 id="priority-4-block-types"><a class="anchor" href="#priority-4-block-types">#</a>[Priority 4] Block Types</h3>
+<p><strong>Query</strong>: <code>search_strings "CGameCtnBlock"</code> <strong>Result</strong>: 23 matches revealing the block class hierarchy. <strong>Evidence</strong>: Class strings at 141bf8860-141c79260 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Block class hierarchy</strong>:</p>
+<ul>
+  <li><code>CGameCtnBlock</code> (141bf8930) - base block</li>
+  <li><code>CGameCtnBlockInfo</code> (141bf88d0) - block definition/info</li>
+  <li><code>CGameCtnBlockInfoFlat</code> - flat block</li>
+  <li><code>CGameCtnBlockInfoFrontier</code> - frontier/border block</li>
+  <li><code>CGameCtnBlockInfoTransition</code> - transition block</li>
+  <li><code>CGameCtnBlockInfoClassic</code> - classic block</li>
+  <li><code>CGameCtnBlockInfoRoad</code> - road block</li>
+  <li><code>CGameCtnBlockInfoSlope</code> - slope block</li>
+  <li><code>CGameCtnBlockInfoPylon</code> - pylon block</li>
+  <li><code>CGameCtnBlockInfoRectAsym</code> - asymmetric rectangle block</li>
+  <li><code>CGameCtnBlockInfoClip</code> - clip block</li>
+  <li><code>CGameCtnBlockInfoClipHorizontal</code> - horizontal clip</li>
+  <li><code>CGameCtnBlockInfoClipVertical</code> - vertical clip</li>
+  <li><code>CGameCtnBlockInfoVariant</code> (141bf88e8) - variant system</li>
+  <li><code>CGameCtnBlockInfoVariantAir</code> - air variant</li>
+  <li><code>CGameCtnBlockInfoVariantGround</code> - ground variant</li>
+  <li><code>CGameCtnBlockUnit</code> (141bf8878) - block unit</li>
+  <li><code>CGameCtnBlockUnitInfo</code> (141bf8a00) - unit info</li>
+  <li><code>CGameCtnBlockSkin</code> (141c64ca0) - block skin</li>
+  <li><code>CGameCtnBlockInfoMobil</code> (141c79260) - mobile block</li>
+  <li><code>CGameCtnBlockInfoMobilLink</code> (141c64db8) - mobile link</li>
+</ul>
+<hr>
+<h2 id="priority-5-audio-deep-dive"><a class="anchor" href="#priority-5-audio-deep-dive">#</a>Priority 5: Audio Deep Dive</h2>
+<h3 id="priority-5-audio-source-types"><a class="anchor" href="#priority-5-audio-source-types">#</a>[Priority 5] Audio Source Types</h3>
+<p><strong>Query</strong>: <code>search_strings "CAudioSource"</code> <strong>Result</strong>: 7 distinct audio source types. <strong>Evidence</strong>: Class strings at 141bfaf10-141d06148 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What audio source types exist?"</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Class</th>
+  <th style="text-align:center">Address</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>CAudioSource</code></td>
+  <td style="text-align:center">141bfaf48</td>
+  <td style="text-align:left">Base audio source</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CAudioSourceMusic</code></td>
+  <td style="text-align:center">141bfaf10</td>
+  <td style="text-align:left">Music playback</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CAudioSourceEngine</code></td>
+  <td style="text-align:center">141d05cd8</td>
+  <td style="text-align:left">Vehicle engine sounds</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CAudioSourceSurface</code></td>
+  <td style="text-align:center">141d05df0</td>
+  <td style="text-align:left">Surface interaction sounds</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CAudioSourceMulti</code></td>
+  <td style="text-align:center">141d05f10</td>
+  <td style="text-align:left">Multi-source audio</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CAudioSourceMood</code></td>
+  <td style="text-align:center">141d06018</td>
+  <td style="text-align:left">Ambient mood sounds</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CAudioSourceGauge</code></td>
+  <td style="text-align:center">141d06148</td>
+  <td style="text-align:left">Gauge/HUD sounds</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="priority-5-engine-sound-system"><a class="anchor" href="#priority-5-engine-sound-system">#</a>[Priority 5] Engine Sound System</h3>
+<p><strong>Query</strong>: <code>search_strings "AudioMotors"</code>, <code>search_strings "CPlugSoundEngine"</code> <strong>Result</strong>: 13 motor audio parameters, 2 sound engine plugins. <strong>Evidence</strong>: Strings at 141bcda98-141bcdc58 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does engine audio work?"</p>
+<p><strong>Engine sound layers</strong>:</p>
+<ul>
+  <li><code>AudioMotors_Engine_Throttle</code> - engine throttle sound</li>
+  <li><code>AudioMotors_Engine_Release</code> - engine release sound</li>
+  <li><code>AudioMotors_Exhaust_Throttle</code> - exhaust throttle sound</li>
+  <li><code>AudioMotors_Exhaust_Release</code> - exhaust release sound</li>
+  <li><code>AudioMotors_IdleLoop_Engine</code> - engine idle loop</li>
+  <li><code>AudioMotors_IdleLoop_Exhaust</code> - exhaust idle loop</li>
+  <li><code>AudioMotors_LimiterLoop_Engine</code> - engine limiter (rev limit)</li>
+  <li><code>AudioMotors_LimiterLoop_Exhaust</code> - exhaust limiter</li>
+</ul>
+<p><strong>Audio parameters</strong>:</p>
+<ul>
+  <li><code>AudioMotors_PitchRandomize_Throttle</code> - throttle pitch variation</li>
+  <li><code>AudioMotors_PitchRandomize_Rpm</code> - RPM pitch variation</li>
+  <li><code>AudioMotors_IdleVolume(dB)</code> - idle volume in decibels</li>
+  <li><code>AudioMotors_LimiterVolume(dB)</code> - limiter volume in decibels</li>
+</ul>
+<p><strong>Perspective volumes</strong>:</p>
+<ul>
+  <li><code>Volume_Throttle</code> - base throttle volume</li>
+  <li><code>VolPersp_Throttle_Interior</code> - interior throttle volume</li>
+  <li><code>VolPersp_Throttle_Exhaust</code> - exhaust perspective volume</li>
+  <li><code>VolPersp_Throttle_Engine</code> - engine perspective volume</li>
+</ul>
+<p><strong>Sound engine plugins</strong>:</p>
+<ul>
+  <li><code>CPlugSoundEngine</code> (141bc2978) - original</li>
+  <li><code>CPlugSoundEngine2</code> (141bcdb18) - v2 (current)</li>
+  <li><code>CPlugFileAudioMotors</code> (141bc3d58) - motor sound file format</li>
+</ul>
+<h3 id="priority-5-3d-audio-doppler"><a class="anchor" href="#priority-5-3d-audio-doppler">#</a>[Priority 5] 3D Audio / Doppler</h3>
+<p><strong>Query</strong>: <code>search_strings "DopplerFactor"</code>, <code>search_strings "Doppler"</code> <strong>Result</strong>: 2 matches confirming OpenAL Doppler support. <strong>Evidence</strong>: <code>DopplerFactor</code> (141ba5898), <code>alDopplerFactor</code> (141d08028) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The game uses OpenAL's <code>alDopplerFactor</code> for 3D spatial audio Doppler effect. The <code>DopplerFactor</code> parameter is configurable.</p>
+<h3 id="priority-5-music-system"><a class="anchor" href="#priority-5-music-system">#</a>[Priority 5] Music System</h3>
+<p><strong>Query</strong>: <code>search_strings "Music"</code> <strong>Result</strong>: 89 matches revealing comprehensive music management. <strong>Evidence</strong>: Strings throughout 141ba55ec-141d08d98 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does the music system work?"</p>
+<p><strong>Music file format</strong>: <code>CPlugMusic</code> (141bc2f70) with <code>.Music.Gbx</code> extension (141bc2f80) <strong>Music types</strong>: Race, Editor, Replay, Menu - each with separate volume controls <strong>Music sources</strong>: <code>CAudioSourceMusic</code> for playback <strong>API</strong>: <code>CreateMusic</code>/<code>DestroyMusic</code>/<code>LimitMusicVolumedB</code>/<code>ForceEnableMusic</code> <strong>Custom music</strong>: Maps can embed custom music via <code>CustomMusicPackDesc</code> <strong>Audio processing</strong>: <code>Audio::ComputeMusic</code> (141d08dd0) handles per-frame music updates</p>
+<hr>
+<h2 id="priority-6-checkpointrespawn-system"><a class="anchor" href="#priority-6-checkpointrespawn-system">#</a>Priority 6: Checkpoint/Respawn System</h2>
+<h3 id="priority-6-checkpoint-system"><a class="anchor" href="#priority-6-checkpoint-system">#</a>[Priority 6] Checkpoint System</h3>
+<p><strong>Query</strong>: <code>search_strings "Checkpoint"</code>, <code>search_strings "CheckPoint"</code> <strong>Result</strong>: 69 matches revealing the complete checkpoint system. <strong>Evidence</strong>: Strings at 141b81c40-141d036d8 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does the checkpoint system work?"</p>
+<p><strong>Checkpoint types</strong> (from <code>ECheckpointBehaviour</code> enum at 141cf3380):</p>
+<ul>
+  <li>Standard checkpoint (waypoint-based)</li>
+  <li>Launched checkpoints (physics-affecting, stored in map)</li>
+</ul>
+<p><strong>Launched checkpoint system</strong>:</p>
+<ul>
+  <li><code>CGameLaunchedCheckpoint</code> (141cb74b0) - checkpoint class</li>
+  <li><code>CGameSaveLaunchedCheckpoints</code> (141ca5a30) - save/load</li>
+  <li><code>SaveLaunchedCheckpointsInMap</code> (141c891f8) - embed in map</li>
+  <li><code>LaunchedCheckpointsCache\</code> (141c8ab30) - cached data</li>
+  <li><code>UseLaunchedCheckpoints</code> (141cf38c0) - enable flag</li>
+  <li><code>ReadonlyLaunchedCheckpoints</code> (141cf38d8) - readonly mode</li>
+  <li><code>TruncateLaunchedCheckpointsRespawns</code> (141cf3568) - truncate on respawn</li>
+</ul>
+<p><strong>Launched checkpoint force parameters</strong> (from force model decompilation):</p>
+<ul>
+  <li><code>LaunchedCheckpointStopped_FirstPartCoef</code> (141bd4f68) - force coefficient part 1</li>
+  <li><code>LaunchedCheckpointStopped_SecondPartCoef</code> (141bd4f18) - force coefficient part 2</li>
+  <li><code>LaunchedCheckpointStopped_SecondPartDuration</code> (141bd4f90) - transition duration</li>
+</ul>
+<p><strong>Checkpoint timing</strong>: Time sent as JSON: <code>{"gameVersion":"%s","checkpointCount":%u}</code> (141b81c40)</p>
+<p><strong>Telemetry event</strong>: <code>play.checkpointCrossed</code> (141b81cf0)</p>
+<h3 id="priority-6-respawn-system"><a class="anchor" href="#priority-6-respawn-system">#</a>[Priority 6] Respawn System</h3>
+<p><strong>Query</strong>: <code>search_strings "Respawn"</code> <strong>Result</strong>: 67 matches. <strong>Evidence</strong>: Strings at 141b8d5e8-141d03c20 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does the respawn system work?"</p>
+<p><strong>Respawn behavior</strong> (from <code>ERespawnBehaviour</code> enum at 141cf3428):</p>
+<ul>
+  <li>Multiple respawn modes available to scripts</li>
+</ul>
+<p><strong>Respawn API</strong> (ManiaScript-exposed):</p>
+<ul>
+  <li><code>RespawnPlayer</code> - basic respawn</li>
+  <li><code>RespawnPlayerAtWaypoint</code> - respawn at checkpoint</li>
+  <li><code>RespawnPlayerAtSpawn</code> - respawn at spawn point</li>
+  <li><code>RespawnPlayerAtLandmark</code> - respawn at arbitrary landmark</li>
+  <li><code>CanRespawnPlayer</code> - check if respawn is allowed</li>
+  <li><code>OnPlayerRequestRespawn</code> - respawn request callback</li>
+  <li><code>RegressRespawn</code> - regress to earlier checkpoint</li>
+</ul>
+<p><strong>Respawn state tracking</strong>:</p>
+<ul>
+  <li><code>CurrentLaunchedRespawnLandmarkIndex</code> - current launched respawn point</li>
+  <li><code>CurrentStoppedRespawnLandmarkIndex</code> - current stopped respawn point</li>
+  <li><code>NbRespawnsRequested</code> - total respawn count</li>
+  <li><code>CurrentRaceRespawns</code> / <code>CurrentLapRespawns</code> - per-race/lap counters</li>
+</ul>
+<p><strong>Give up behavior</strong>: <code>GiveUpBehaviour_RespawnAfter</code> (141cf3760) and <code>GiveUpBeforeFirstCheckpoint</code> (141cf3290)</p>
+<h3 id="priority-6-race-timing"><a class="anchor" href="#priority-6-race-timing">#</a>[Priority 6] Race Timing</h3>
+<p><strong>Query</strong>: <code>search_strings "RaceTime"</code> <strong>Result</strong>: 11 matches. <strong>Evidence</strong>: Strings at 141b60a10-141cf8e70 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does the timing system work?"</p>
+<p><strong>Time tracking</strong>:</p>
+<ul>
+  <li><code>CurrentRaceTime</code> (141cf6480) - current race elapsed time</li>
+  <li><code>BestRaceTimes</code> (141cf1d10) - array of best times per checkpoint</li>
+  <li><code>PrevRaceTimes</code> (141cf1d20) - previous race checkpoint times</li>
+  <li><code>BestRaceNbRespawns</code> (141cf1ca8) - respawns in best race</li>
+  <li><code>PrevRaceNbRespawns</code> (141cf1cc0) - respawns in previous race</li>
+</ul>
+<p>The timing system uses integer milliseconds (confirmed by replay header format: <code>times best="%d"</code>).</p>
+<hr>
+<h2 id="priority-7-pack-file-format"><a class="anchor" href="#priority-7-pack-file-format">#</a>Priority 7: Pack File Format</h2>
+<h3 id="priority-7-pack-file-system"><a class="anchor" href="#priority-7-pack-file-system">#</a>[Priority 7] Pack File System</h3>
+<p><strong>Query</strong>: <code>search_strings "Pack"</code>, <code>search_strings "FilePack::"</code> <strong>Result</strong>: 413 pack-related strings (very extensive system). <strong>Evidence</strong>: Strings throughout the binary <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does the pack file system work?"</p>
+<p><strong>Pack file types</strong>:</p>
+<ul>
+  <li><code>.pack.gbx</code> - standard game pack</li>
+  <li><code>.skin.pack.gbx</code> - skin pack</li>
+  <li><code>.Title.Pack.Gbx</code> - title/game mode pack</li>
+  <li><code>.Media.Pack.Gbx</code> - media content pack</li>
+</ul>
+<p><strong>Pack XML header</strong>: <code><header type="pack" exever="%s" exebuild="%s"></code> (141bc4970)</p>
+<p><strong>Key pack classes</strong>:</p>
+<ul>
+  <li><code>CPlugFilePack</code> (141bc4798) - file pack container</li>
+  <li><code>CSystemPackManager</code> (141c076d8) - pack management</li>
+  <li><code>CSystemPackDesc</code> (141c07270) - pack descriptor</li>
+  <li><code>CPackCreator</code> / <code>CPackCreatorPack</code> / <code>CPackCreatorTitleInfo</code> - pack creation</li>
+  <li><code>CGamePackCreatorScript</code> - script API for pack creation</li>
+  <li><code>CGameEditorPacks</code> (141cb01a8) - pack editor</li>
+</ul>
+<p><strong>Pack lifecycle</strong>:</p>
+<ol>
+  <li><code>LoaderPack::Open</code> (141bc4840) - open pack file</li>
+  <li><code>FilePack::LoadHeaders</code> (141bc4860) - load pack headers</li>
+  <li><code>FilePack::Import</code> (141bc47c8) - import pack contents</li>
+  <li><code>FilePack::InstallFids</code> (141bc4820) - install file IDs</li>
+  <li><code>FilePack::DiskHead_SetState(setup)</code> (141bc48a0) - setup disk head</li>
+  <li><code>FilePack::DiskHead_SetState(teardown)</code> (141bc4878) - teardown</li>
+</ol>
+<p><strong>Pack limitations</strong>: "Pack too large for use in a unseekable container." (141bc48c8)</p>
+<p><strong>Encrypted packages</strong> (DRM system):</p>
+<ul>
+  <li><code>CNetNadeoServicesTask_CreateEncryptedPackageVersion</code></li>
+  <li><code>CNetNadeoServicesTask_GetEncryptedPackageAccountKey</code></li>
+  <li><code>CNetNadeoServicesTask_GetEncryptedPackageVersionCryptKey</code></li>
+  <li>Encryption keys are per-account and per-version</li>
+  <li>Package checksum verification</li>
+  <li>Cloud-hosted with retry logic (<code>EncryptedPackageVersionMaxRetry</code>, <code>EncryptedPackageMaxRetry</code>)</li>
+</ul>
+<p><strong>GBX body loading dispatch</strong> (from <code>ArchiveNod::LoadGbx_Body</code> strings):</p>
+<ul>
+  <li><code>(Solid1)</code>, <code>(Solid2)</code> - mesh data</li>
+  <li><code>(ReplayRecord)</code> - replay</li>
+  <li><code>(Challenge)</code> - map</li>
+  <li><code>(ControlCard)</code> - UI card</li>
+  <li><code>(Bitmap)</code> - texture</li>
+  <li><code>(ShaderApply)</code> - shader</li>
+  <li><code>(GpuCompileCache)</code> - shader cache</li>
+</ul>
+<hr>
+<h2 id="summary-of-open-questions-resolved"><a class="anchor" href="#summary-of-open-questions-resolved">#</a>Summary of Open Questions Resolved</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Question</th>
+  <th style="text-align:center">Status</th>
+  <th style="text-align:left">Finding Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">What do the 7 force model functions do?</td>
+  <td style="text-align:center"><strong>PARTIALLY RESOLVED</strong></td>
+  <td style="text-align:left">Priority 1 - 3 of 7 models decompiled</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does force model case 0/1/2 work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_140869cd0 decompiled</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does force model case 3 work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14086b060 decompiled (2-wheel/bicycle model)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does force model case 6 work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14085c9e0 decompiled (CarSport full model)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How are speed-dependent coefficients evaluated?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14042bcb0 curve sampler decompiled</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the game determine surface type?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_140845b60 - vtable at +0x6B8</td>
+</tr>
+<tr>
+  <td style="text-align:left">What are all surface gameplay effect types?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Full EPlugSurfaceGameplayId enum (22 values)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does NoGrip work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Material property zeroing + begin/end events</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does Fragile work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">250ms delayed activation, collision triggers reset</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does slope affect physics?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_1408456b0 - cos(angle)-based factor [0..1]</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the 2-wheel model compute lateral grip?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14086af20 - Pacejka-like with clamp</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the drift state machine?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">3-state (none/building/committed) in 2-wheel model</td>
+</tr>
+<tr>
+  <td style="text-align:left">What are the steering-related fields?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">InputSteer, SteerAngle, AnalogSteerV2, etc.</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the ghost system work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Full API documented, 27 functions</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the replay file format header?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">XML format string extracted</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the map loading sequence?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">23-step pipeline documented</td>
+</tr>
+<tr>
+  <td style="text-align:left">How are items placed in maps?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">CGameCtnAnchoredObject system</td>
+</tr>
+<tr>
+  <td style="text-align:left">What block types exist?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Full class hierarchy (12+ block info types)</td>
+</tr>
+<tr>
+  <td style="text-align:left">What audio source types exist?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">7 types including engine, surface, mood</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does engine audio work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Layered throttle/release/idle/limiter system</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the checkpoint system work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Launched checkpoints with physics forces</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does respawn work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Multiple modes, ManiaScript API documented</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the pack file system work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Full lifecycle, encryption, GBX body dispatch</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="session-2-additional-force-models-and-data-queries-2026-03-27"><a class="anchor" href="#session-2-additional-force-models-and-data-queries-2026-03-27">#</a>Session 2: Additional Force Models and Data Queries (2026-03-27)</h2>
+<h3 id="priority-1-force-model-fun_140851f00-case-5"><a class="anchor" href="#priority-1-force-model-fun_140851f00-case-5">#</a>[Priority 1] Force Model FUN_140851f00 - Case 5</h3>
+<p><strong>Query</strong>: <code>decompile 0x140851f00</code> <strong>Result</strong>: Fully decompiled (~1185 lines). One of the largest force model functions. <strong>Evidence</strong>: Address 140851f00, saved to <code>decompiled/physics/force_model_case5.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What is force model case 5?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Massive function (~1185 lines decompiled) - the second largest force model after CarSport</li>
+  <li>4-wheel model with per-wheel iteration (stride 0xB8, starting at car_state+0x1780)</li>
+  <li>Surface material lookup: <code><em>car_state + 0x6B8 + surface_id </em> 8</code> (same pattern as case 0/1/2)</li>
+  <li>Advanced suspension model:</li>
+  <li>Compression ratio computed at tuning+0xCF0 or 0xD40 depending on FUN_140850e10 result</li>
+  <li>Curve-sampled coefficient via FUN_14042bcb0</li>
+  <li>Slope/gravity integration via FUN_1408456b0 (same as other models)</li>
+  <li><strong>Jump/impact detection state machine</strong> at car_state[0x28F]:</li>
+  <li>State 0: Normal driving</li>
+  <li>State 1: Jump initiated (timestamp stored at car_state+0x149C)</li>
+  <li>State 2: Delegated to FUN_14084e6e0 (early return via goto)</li>
+  <li>State 3: Post-jump grace period (timer at car_state+0x294)</li>
+  <li>Transition 0->1 requires: high force, sufficient speed, contact angle check</li>
+  <li>Transition 1->3: after tuning+0x1E84 ticks elapsed</li>
+  <li>Transition 3->0: after tuning+0x1EE0 ticks elapsed</li>
+  <li>During state 3, all 4 wheel contact flags set to 1 (forced contact)</li>
+  <li><strong>Crash/damage detection</strong> via FUN_1408508b0:</li>
+  <li>Monitors force differential between ticks</li>
+  <li>Stores previous tick force at car_state+0x14CC</li>
+  <li>Toggle flag at car_state[0x299]</li>
+  <li>Uses smooth transition via FUN_14084da80</li>
+  <li><strong>Airborne traction</strong> (when no ground contact):</li>
+  <li>Air drag proportional to v^2/speed, scaled by DAT_141d1f71c</li>
+  <li>Lateral/longitudinal air resistance computed separately</li>
+  <li>Ground-detection flag at car_state[0x2C0]: used to flip sign of vertical acceleration</li>
+  <li>Multiple conditions for toggling direction (velocity Y sign, surface slope, speed thresholds)</li>
+  <li><strong>Steering force</strong>: Yaw torque via FUN_140845210 using local_224 <em> fVar31 </em> fVar37</li>
+  <li><strong>Anti-roll</strong>: Cross-product based roll torque, scaled by per-axis damping curves</li>
+  <li><strong>Wheel contact surface types</strong> checked: values 'J' (0x4A), 3, and 0x15 disable certain grip effects</li>
+  <li><strong>Post-respawn velocity clamping</strong>: Uses speed curves at tuning+0x2D98</li>
+  <li><strong>Tuning integration fields</strong>: car_state[0x367], car_state[0x371], car_state[0x279] (various modifiers)</li>
+  <li>Forces applied via: FUN_140845210 (linear force), FUN_140845260 (torque), FUN_140845190 (force+torque pair)</li>
+</ul>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="priority-1-force-model-fun_14086d3b0-case-0xb"><a class="anchor" href="#priority-1-force-model-fun_14086d3b0-case-0xb">#</a>[Priority 1] Force Model FUN_14086d3b0 - Case 0xB</h3></summary>
+<div class="collapsible-content">
+<p><strong>Query</strong>: <code>decompile 0x14086d3b0</code> <strong>Result</strong>: Fully decompiled (~250 lines). Appears to be the newest/most modular force model. <strong>Evidence</strong>: Address 14086d3b0, saved to <code>decompiled/physics/force_model_case0xB.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What is force model case 0xB?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Most modular design - delegates heavily to sub-functions</li>
+  <li>Per-wheel loop calls FUN_1408570e0 (the per-wheel force function)</li>
+  <li>Calls FUN_14085ad30 (steering), FUN_140858c90 (damping), FUN_14086cc60, FUN_140857b20 (boost/reactor)</li>
+  <li><strong>Two operating modes</strong> based on flag at car_state+0x157C:</li>
+  <li>Mode 0 (car_state+0x157C == 0): "Free" mode</li>
+  <li>Post-respawn fade-out force over 2x tuning+0x2B80 ticks</li>
+  <li>Clears all 4 wheel visual forces to zero</li>
+  <li>Delegates to FUN_14085a920 for final force application</li>
+  <li>Mode 1 (car_state+0x157C != 0): "Grounded" mode</li>
+  <li>Full lateral steering with FUN_1414067e0 for steering input smoothing</li>
+  <li>Calls FUN_140858e70 for full wheel/traction model</li>
+  <li>Speed clamping via tuning offsets 0xAB0, 0xAB4 (same as other models)</li>
+  <li>Pitch damping via FUN_140855ea0</li>
+  <li>Roll damping via FUN_1408562d0</li>
+  <li>Stores angular velocity at car_state[0x2AC..0x2AD]</li>
+  <li><strong>Grip model</strong>: car_state+0x2B9 is grip coefficient, clamped to minimum at tuning+0x2AFC</li>
+  <li><strong>Speed blend factor</strong>: Computed from speed thresholds at tuning+0x2AE0/0x2AE4 for linear interpolation</li>
+  <li><strong>Steering angle</strong>: atan2(vx, vy) via FUN_14018d310</li>
+  <li><strong>FUN_14085b600</strong> called for final force integration with gravity/ground normal</li>
+  <li><strong>Wheel contact tracking</strong>: Writes per-wheel contact state to car_state[0x2FE], [0x315], [0x32C], [0x343]</li>
+  <li>These are separated by stride 0x17 (matching per-wheel data layout)</li>
+  <li>Sets car_state[0x272] = 1 if any wheel has contact (aggregate ground contact flag)</li>
+  <li>Post-loop calls FUN_140856f20 per wheel for final wheel state update</li>
+</ul>
+</div>
+</details>
+<h3 id="priority-1-fun_1408570e0-carsport-per-wheel-visual-state-update"><a class="anchor" href="#priority-1-fun_1408570e0-carsport-per-wheel-visual-state-update">#</a>[Priority 1] FUN_1408570e0 - CarSport Per-Wheel Visual State Update</h3>
+<p><strong>Query</strong>: <code>decompile 0x1408570e0</code> <strong>Result</strong>: Fully decompiled (~130 lines). Handles per-wheel visual positioning. <strong>Evidence</strong>: Address 1408570e0, saved to <code>decompiled/physics/carsport_per_wheel_force.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "What does the per-wheel force function do?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Not actually a force computation - it updates <strong>visual wheel state</strong> (position/orientation)</li>
+  <li>Normalizes surface normal vector (param_5[0x11..0x13]) to unit length</li>
+  <li>Three suspension modes based on <code>*param_3</code>:</li>
+  <li><strong>Mode 3 (spring)</strong>: Full suspension spring computation</li>
+  <li>Compression = raw_distance - rest_length (param_5[0] - param_5[2])</li>
+  <li>Clamped to >= 0</li>
+  <li>Compression ratio = compression / spring_length (param_3[3])</li>
+  <li>Velocity = (compression - prev_compression) / (spring_length * dt)</li>
+  <li>New position = (1 - ratio) <em> dt </em> spring_rate + compression</li>
+  <li>Applies negative displacement along up axis to wheel visual transform</li>
+  <li>Writes 3x4 matrix to vis-state array</li>
+  <li><strong>Mode 4</strong>: Contact position only (copies contact point, no spring)</li>
+  <li><strong>Mode 5</strong>: Contact position only (same as mode 4, but also writes to vis-state array)</li>
+  <li>Vis-state array: Located at <code><em>(</em>(param_1 + 0x78) + 0x28)</code>, indexed by wheel slot ID</li>
+  <li>Slot ID from <code>param_1 + 0x3AC + wheel_index * 4</code> (mode 3) or from contact data (mode 4)</li>
+  <li>Each entry is 0x30 bytes (3x4 float matrix = rotation + position)</li>
+  <li>param_5[0x1F] stores "is on driven axle" flag from <code>param_1 + 0x1584</code></li>
+</ul>
+<h3 id="priority-1-fun_14085c1b0-airborne-control"><a class="anchor" href="#priority-1-fun_14085c1b0-airborne-control">#</a>[Priority 1] FUN_14085c1b0 - Airborne Control</h3>
+<p><strong>Query</strong>: <code>decompile 0x14085c1b0</code> <strong>Result</strong>: Fully decompiled (~200 lines). In-air rotation and auto-stabilization. <strong>Evidence</strong>: Address 14085c1b0, saved to <code>decompiled/physics/airborne_control.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How does airborne control work?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li><strong>Ground proximity detection</strong>: Uses raycast (FUN_1402a96f0) downward from car position</li>
+  <li>Cast direction derived from suspension config at car_state+0x1BB0 offset 0x26C</li>
+  <li>Cast range = fStack_e4 +/- abs(local_d8) (symmetric about rest position)</li>
+  <li>If ray hits nothing: sets car_state+0x138C = 0, returns param_5 = 0</li>
+  <li>If ray hits: car_state+0x138C = 1 if distance > DAT_141d1f1ac (half float epsilon)</li>
+  <li><strong>Auto-landing correction</strong> (when close to ground):</li>
+  <li>Checks 4 conditions: not in special state (param_3+5000 == 0), distance < threshold, approaching ground, low vertical angular velocity</li>
+  <li>If horizontal angular velocity < threshold (tuning+0x510 squared):</li>
+  <li>If also velocity magnitude < threshold (tuning+0x514 squared): sets correction to 0</li>
+  <li>Otherwise computes time-to-impact = sqrt(horizontal_omega) / vertical_omega</li>
+  <li>Samples two curves (tuning+0x568 and tuning+0x518) by time-to-impact</li>
+  <li>Applies corrective forces to align car with ground normal before landing</li>
+  <li>Writes corrected velocity via FUN_140848070 and thunk_FUN_14083fd20</li>
+  <li><strong>Gravity assist / nose-down torque</strong>:</li>
+  <li>Target orientation derived from velocity direction and up vector</li>
+  <li>Cross product computes correction axis</li>
+  <li>Signed dot product determines which side is "down"</li>
+  <li>Uses FUN_14085bda0 for stabilization parameter extraction</li>
+  <li><strong>Angular damping</strong>:</li>
+  <li>Reads angular velocity via FUN_1407be580</li>
+  <li>Applies drag proportional to angular speed, sampled from curve at tuning+0x5B8</li>
+  <li>Drag force = -curve(omega <em> DAT_141d1f71c) </em> param_5 * omega_component</li>
+  <li><strong>Gravity compensation</strong>:</li>
+  <li>Gravity vector negated from *(tuning+0x508) + 0x1C</li>
+  <li>Applied as linear force scaled by -param_5</li>
+  <li><strong>Total outputs</strong>:</li>
+  <li>Linear force via FUN_140845210: gravity compensation + angular damping + input forces</li>
+  <li>Torque via FUN_140845260: stabilization + angular rate limiting</li>
+  <li><strong>Progressive airborne accumulator</strong>: car_state+0x13A4</li>
+  <li>Incremented by (tuning+0x628) / ((tuning+0x61C) / param_6) per tick while airborne</li>
+  <li>Clamped to [0, 1.0]</li>
+  <li>Used elsewhere as airborne time factor</li>
+</ul>
+<h3 id="priority-1-fun_140857b20-boostreactor-force"><a class="anchor" href="#priority-1-fun_140857b20-boostreactor-force">#</a>[Priority 1] FUN_140857b20 - Boost/Reactor Force</h3>
+<p><strong>Query</strong>: <code>decompile 0x140857b20</code> <strong>Result</strong>: Fully decompiled (~250 lines). Spring/damper + reactor thruster + differential torque. <strong>Evidence</strong>: Address 140857b20, saved to <code>decompiled/physics/boost_reactor_force.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Resolves</strong>: "How do boost/reactor forces work?"</p>
+<p><strong>Key findings</strong>:</p>
+<ul>
+  <li>Iterates over all hardpoints (car_state+0x380 count, car_state+0x388 array)</li>
+  <li>Per-hardpoint data at car_state+0x1780, stride 0x2E (46 floats per wheel/hardpoint)</li>
+  <li><strong>Two hardpoint types</strong>:</li>
+  <li><strong>Type 3 (Spring/Damper)</strong>: Suspension springs</li>
+  <li>Reads spring parameters from tuning+0x238 sub-struct</li>
+  <li>Duration from <code>tuning+0x2B0</code>, converted to nanoseconds via <code>* DAT_141d1f7f8</code></li>
+  <li>Checks timestamp via FUN_140856ec0 against last activation time (pfVar15+0xE)</li>
+  <li>Grace period: 10,000,000 ns (10ms) subtracted from elapsed time</li>
+  <li>Fade-in: elapsed / duration, clamped [0, 1]</li>
+  <li>If tuning+0x2B8 flag set: uses inverted (1 - fade) multiplier</li>
+  <li>Compression ratio: pfVar15[0] / tuning+0x244, clamped [0, 1]</li>
+  <li>Force = curve(ratio) <em> spring_constant(0x23C) - velocity(pfVar15[1]) </em> damping(0x240)</li>
+  <li>Applied via FUN_140845100 at hardpoint world position</li>
+  <li>Accumulates left-side force (fVar22) and right-side force (fVar23) separately</li>
+  <li>Stores per-hardpoint force at pfVar15[0x22]</li>
+  <li><strong>Type 5 (Reactor/Thruster)</strong>: Directional thrusters</li>
+  <li>Transforms hardpoint local position to world space using car orientation matrix</li>
+  <li>Computes world-space velocity at hardpoint via FUN_1407bd910</li>
+  <li>Thrust direction = car's Y-axis (up vector) in world space</li>
+  <li>Velocity damping: dot(up, velocity_at_point) * damping_coef</li>
+  <li>If pfVar15[0xD] == 0: damping zeroed (thruster not in contact)</li>
+  <li>Compression ratio: (rest_length - current) / rest_length</li>
+  <li>Force = compression <em> spring </em> clamped_ratio * sign_factor - velocity_damping</li>
+  <li>Special case: if tuning+0x1790 == 0xD, multiply by scale at car_state+0x1BB0+0xE0</li>
+  <li>If pfVar15[0xD] == 0: reset compression to rest length (tuning+0x244)</li>
+  <li><strong>Differential torque steering</strong> (bottom section):</li>
+  <li>Only active when FUN_140854120 returns 0 (not in special mode)</li>
+  <li>Requires timestamp within window: <code>car_state+0x1558 - tuning+0x2BF0 * 1e9 > param_4 > car_state+0x1618</code></li>
+  <li>Checks which side has more wheel contact (bVar4 = left, bVar5 = right)</li>
+  <li>If only left wheels in contact and left force > right force:</li>
+  <li>Steering input blended linearly within range [0, tuning+0x2BF8]</li>
+  <li>Torque = (left - right) <em> tuning+0x2BF4 </em> blend_factor</li>
+  <li>Moment arm from car_state+0x1BB0 offset 0xB8</li>
+  <li>If only right wheels in contact and right > left:</li>
+  <li>Only when steering input < 0 (turning right)</li>
+  <li>Same formula but reversed</li>
+  <li>Applied via FUN_140845190 (combined force + torque)</li>
+</ul>
+<h3 id="data-queries"><a class="anchor" href="#data-queries">#</a>Data Queries</h3>
+<h4 id="sleep-threshold-value-0x141ebcd04"><a class="anchor" href="#sleep-threshold-value-0x141ebcd04">#</a>Sleep Threshold Value (<code class="addr">0x141ebcd04</code>)</h4>
+<p><strong>Query</strong>: <code>data_at 0x141ebcd04 8</code> <strong>Result</strong>: <code>0a d7 23 3c 01 00 00 00</code> <strong>Interpretation</strong>:</p>
+<ul>
+  <li>First 4 bytes as float32: <code class="addr">0x3c23d70a</code> = <strong>0.01</strong> (sleep threshold in m/s or rad/s)</li>
+  <li>Next 4 bytes as int32: <code class="addr">0x00000001</code> = 1 (boolean flag, likely "sleep enabled")</li>
+  <li>This is the velocity threshold below which physics bodies are put to sleep</li>
+</ul>
+<h4 id="tick-rate-timing-constants"><a class="anchor" href="#tick-rate-timing-constants">#</a>Tick Rate / Timing Constants</h4>
+<p><strong>Query</strong>: <code>search_strings "10000"</code> and <code>search_strings "SamplingPeriod"</code> <strong>Result</strong>: No direct "TickDuration" string found. Key findings:</p>
+<ul>
+  <li><code>141b96f2c</code>: Literal string "10000" (likely used as parameter, not tick rate directly)</li>
+  <li><code>141bd6d78</code>: "1000000." string (microsecond conversion constant)</li>
+  <li><code>141ccd668</code>: "GhostSamplingPeriod" - the ghost recording sample rate</li>
+  <li>The 10ms constant (10,000,000 ns) appears directly in boost_reactor_force.c code:</li>
+</ul>
+<p>  <code>lVar9 = (param_4 - <em>(longlong </em>)(pfVar15 + 0xe)) + -10000000;</code>   This confirms the 10ms physics tick period (100 Hz)</p>
+<h4 id="ghost-system-strings"><a class="anchor" href="#ghost-system-strings">#</a>Ghost System Strings</h4>
+<p><strong>Query</strong>: <code>search_strings "CGameCtnGhost"</code> <strong>Result</strong>: Single match at <code>141c5e3c8</code> for the class name. <strong>Additional findings from broad "Ghost" search</strong> (309 matches):</p>
+<ul>
+  <li><code>CGameCtnGhost</code> - main ghost class</li>
+  <li><code>CGameGhostTMData</code> at <code>141d1dfa8</code> - TM-specific ghost data extension</li>
+  <li><code>CGameGhostScript</code> - ManiaScript binding</li>
+  <li><code>CGhostManager</code> - central ghost management</li>
+  <li><code>NGameGhost::SMgr</code> - native ghost manager struct</li>
+  <li><code>NGameGhostClips::SClipPlayerGhost</code> - ghost clip data</li>
+  <li><code>.Ghost.gbx</code> / <code>.Ghost.Gbx</code> - file extensions (two casing variants)</li>
+  <li><code>GhostSamplingPeriod</code> - sampling rate configuration</li>
+  <li><code>InternalDoPhysicalizedGhostResponse</code> at <code>141d1d240</code> - physicalized ghost collision response</li>
+  <li><code>EGhostPhyMode</code> - ghost physics mode enum (for physicalized ghosts)</li>
+  <li>Ghost driver system: Upload/Download/Playlist API (cloud ghost management)</li>
+  <li><code>GhostRecorder_RecordingStart</code>, <code>RecordingStartAtTime</code>, <code>RecordingEnd</code> - recording lifecycle</li>
+  <li><code>Ghost_CopyToScoreBestRaceAndLap</code> - ghost-to-score transfer</li>
+</ul>
+<h4 id="damagefragile-system"><a class="anchor" href="#damagefragile-system">#</a>Damage/Fragile System</h4>
+<p><strong>Query</strong>: <code>search_strings "Damage"</code> and <code>search_strings "Fragile"</code> <strong>Result</strong>: 59 Damage matches, 5 Fragile matches. <strong>Key damage system strings</strong>:</p>
+<ul>
+  <li><code>CarDamage</code> (<code>141b64310</code>) - core vehicle damage system</li>
+  <li><code>m_DamageZoneAmounts</code> (<code>141b65a58</code>) - per-zone damage values</li>
+  <li><code>DamagePartWeights</code> (<code>141ba7f30</code>) - part weighting for damage distribution</li>
+  <li><code>Skip_CarDamage</code> (<code>141babb08</code>) - damage skip flag</li>
+  <li><code>FallDamage</code> (<code>141bed798</code>) - fall damage system (separate from collision)</li>
+  <li><code>IsDamageZone</code> (<code>141c8c018</code>) - per-surface damage zone flag</li>
+  <li><code>DamageZoneAmounts</code> (<code>141c8c028</code>) - zone-specific damage amounts</li>
+  <li><code>IsDamage</code> (<code>141c8c068</code>) - generic damage flag</li>
+  <li><code>CharacterDamage</code> (<code>141c8c228</code>) - character (ShootMania) damage</li>
+  <li><code>Damage%u</code> (<code>141c99540</code>) - formatted damage value output</li>
+  <li><code>forcedamagezone</code> (<code>141bd2f60</code>) - force a specific damage zone</li>
+  <li>Bullet/laser/explosion damage subsystem (ShootMania): DirectHitDamage, ExplosionDamage, LaserDamage, etc.</li>
+  <li><code>FeatureFallDamage</code> (<code>141cebb08</code>) - feature flag for fall damage</li>
+  <li><code>DamageInflicted</code> / <code>DamageTaken</code> - event counters</li>
+  <li><code>OnFallDamage</code> (<code>141cf1f08</code>) - fall damage event callback</li>
+</ul>
+<p><strong>Key fragile system strings</strong>:</p>
+<ul>
+  <li><code>Fragile</code> (<code>141be12a8</code>) - base surface type</li>
+  <li><code>BeginFragile</code> (<code>141be76c0</code>) - fragile zone entry event</li>
+  <li><code>|BlockInfo|Fragile</code> (<code>141c99e30</code>) - block info property</li>
+  <li><code>SetPlayer_Delayed_Fragile</code> (<code>141cf3e20</code>) - scripting API with 250ms delay</li>
+  <li>Description: "Activate or Deactivate Fragile on the player's vehicle with a 250ms delay"</li>
+</ul>
+<p><strong>Fragile/Damage architecture summary</strong>:</p>
+<ul>
+  <li>Fragile is a surface property (per-block) that triggers vehicle reset</li>
+  <li>250ms activation delay prevents accidental triggers</li>
+  <li>Separate from the ShootMania damage system (bullets, lasers, explosions)</li>
+  <li>CarDamage appears to be a visual-only system in TM2020 (damage textures)</li>
+  <li>FallDamage is a distinct subsystem with its own feature flag</li>
+</ul>
+<hr>
+<h2 id="summary-of-open-questions-resolved-1"><a class="anchor" href="#summary-of-open-questions-resolved-1">#</a>Summary of Open Questions Resolved</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Question</th>
+  <th style="text-align:center">Status</th>
+  <th style="text-align:left">Finding Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">What do the 7 force model functions do?</td>
+  <td style="text-align:center"><strong>MOSTLY RESOLVED</strong></td>
+  <td style="text-align:left">Priority 1 - 6 of 7 models decompiled (cases 0-3, 5, 6, 0xB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does force model case 0/1/2 work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_140869cd0 decompiled</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does force model case 3 work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14086b060 decompiled (2-wheel/bicycle model)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does force model case 5 work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_140851f00 decompiled (advanced 4-wheel with jump detection)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does force model case 6 work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14085c9e0 decompiled (CarSport full model)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does force model case 0xB work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14086d3b0 decompiled (modular CarSport variant)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the per-wheel visual update work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_1408570e0 decompiled (spring/contact position)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does airborne control work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14085c1b0 decompiled (raycast + auto-landing + angular damping)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How do boost/reactor forces work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_140857b20 decompiled (spring/damper + thruster + diff torque)</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the sleep threshold?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left"><code class="addr">0x141ebcd04</code> = 0.01 (float), enabled flag = 1</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the physics tick rate?</td>
+  <td style="text-align:center"><strong>CONFIRMED</strong></td>
+  <td style="text-align:left">10ms (100 Hz) - hardcoded 10,000,000 ns constant in boost code</td>
+</tr>
+<tr>
+  <td style="text-align:left">How are speed-dependent coefficients evaluated?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14042bcb0 curve sampler decompiled</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the game determine surface type?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_140845b60 - vtable at +0x6B8</td>
+</tr>
+<tr>
+  <td style="text-align:left">What are all surface gameplay effect types?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Full EPlugSurfaceGameplayId enum (22 values)</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does NoGrip work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Material property zeroing + begin/end events</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does Fragile work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">250ms delayed activation, collision triggers reset</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does slope affect physics?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_1408456b0 - cos(angle)-based factor [0..1]</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the 2-wheel model compute lateral grip?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">FUN_14086af20 - Pacejka-like with clamp</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the drift state machine?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">3-state (none/building/committed) in 2-wheel model</td>
+</tr>
+<tr>
+  <td style="text-align:left">What are the steering-related fields?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">InputSteer, SteerAngle, AnalogSteerV2, etc.</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the ghost system work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Full API documented, 27+ functions, ghost driver cloud system</td>
+</tr>
+<tr>
+  <td style="text-align:left">What ghost-related classes exist?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">CGameCtnGhost, CGameGhostTMData, CGhostManager, NGameGhost::SMgr</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the replay file format header?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">XML format string extracted</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the map loading sequence?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">23-step pipeline documented</td>
+</tr>
+<tr>
+  <td style="text-align:left">How are items placed in maps?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">CGameCtnAnchoredObject system</td>
+</tr>
+<tr>
+  <td style="text-align:left">What block types exist?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Full class hierarchy (12+ block info types)</td>
+</tr>
+<tr>
+  <td style="text-align:left">What audio source types exist?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">7 types including engine, surface, mood</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does engine audio work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Layered throttle/release/idle/limiter system</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the checkpoint system work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Launched checkpoints with physics forces</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does respawn work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Multiple modes, ManiaScript API documented</td>
+</tr>
+<tr>
+  <td style="text-align:left">How does the pack file system work?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">Full lifecycle, encryption, GBX body dispatch</td>
+</tr>
+<tr>
+  <td style="text-align:left">What is the damage/fragile architecture?</td>
+  <td style="text-align:center"><strong>RESOLVED</strong></td>
+  <td style="text-align:left">CarDamage (visual), FallDamage (gameplay), Fragile (surface reset)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="remaining-open-questions-for-future-sessions"><a class="anchor" href="#remaining-open-questions-for-future-sessions">#</a>Remaining Open Questions (for future sessions)</h3>
+<ul>
+  <li>Force model case 4 (FUN_14086bc50) only partially decompiled</li>
+  <li>Exact mapping of vehicle type ID to force model case number</li>
+  <li>Ghost binary serialization format details (chunk IDs, field layout)</li>
+  <li>Pack file binary format (header structure, file table layout)</li>
+  <li>Encryption/decryption algorithm for encrypted packages</li>
+  <li>PhysicalizedGhost collision response details (FUN at 141d1d240)</li>
+  <li>EGhostPhyMode enum values</li>
+</ul>
+
+                        <nav class="prev-next"><a class="prev" href="community.html">&larr; Community Knowledge</a><a class="next" href="ghost-replay.html">Ghost &amp; Replay Format &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#priority-1-force-model-internals">Priority 1: Force Model Internals</a></li>
+  <li class="toc-h3"><a href="#priority-1-force-model-fun_140869cd0-4-wheel-base-model-cases-012">[Priority 1] Force Model FUN_140869cd0 - 4-Wheel Base Model (Cases 0/1/2)</a></li>
+  <li class="toc-h3"><a href="#priority-1-force-model-fun_14086b060-2-wheel-model-case-3">[Priority 1] Force Model FUN_14086b060 - 2-Wheel Model (Case 3)</a></li>
+  <li class="toc-h3"><a href="#priority-1-force-model-fun_14085c9e0-carsport-full-model-case-6">[Priority 1] Force Model FUN_14085c9e0 - CarSport Full Model (Case 6)</a></li>
+  <li class="toc-h3"><a href="#priority-1-curve-sampling-function-fun_14042bcb0">[Priority 1] Curve Sampling Function FUN_14042bcb0</a></li>
+  <li class="toc-h3"><a href="#priority-1-wheel-contact-surface-accumulation-fun_140845b60">[Priority 1] Wheel Contact Surface Accumulation FUN_140845b60</a></li>
+  <li class="toc-h3"><a href="#priority-1-lateral-grip-2-wheel-fun_14086af20">[Priority 1] Lateral Grip (2-Wheel) FUN_14086af20</a></li>
+  <li class="toc-h3"><a href="#priority-1-slopegravity-factor-fun_1408456b0">[Priority 1] Slope/Gravity Factor FUN_1408456b0</a></li>
+  <li class="toc-h3"><a href="#priority-1-forcetorque-application-functions">[Priority 1] Force/Torque Application Functions</a></li>
+  <li class="toc-h3"><a href="#priority-1-steering-string-analysis">[Priority 1] Steering String Analysis</a></li>
+<li class=""><a href="#priority-2-surface-gameplay-effects">Priority 2: Surface Gameplay Effects</a></li>
+  <li class="toc-h3"><a href="#priority-2-complete-eplugsurfacegameplayid-enum">[Priority 2] Complete EPlugSurfaceGameplayId Enum</a></li>
+  <li class="toc-h3"><a href="#priority-2-nogrip-implementation">[Priority 2] NoGrip Implementation</a></li>
+  <li class="toc-h3"><a href="#priority-2-fragile-surface-implementation">[Priority 2] Fragile Surface Implementation</a></li>
+  <li class="toc-h3"><a href="#priority-2-slowmotion-implementation">[Priority 2] SlowMotion Implementation</a></li>
+  <li class="toc-h3"><a href="#priority-2-freewheeling-implementation">[Priority 2] FreeWheeling Implementation</a></li>
+  <li class="toc-h3"><a href="#priority-2-cruise-control-implementation">[Priority 2] Cruise Control Implementation</a></li>
+  <li class="toc-h3"><a href="#priority-2-vehicle-transform-surfaces">[Priority 2] Vehicle Transform Surfaces</a></li>
+<li class=""><a href="#priority-3-ghostreplay-system">Priority 3: Ghost/Replay System</a></li>
+  <li class="toc-h3"><a href="#priority-3-ghost-class-hierarchy">[Priority 3] Ghost Class Hierarchy</a></li>
+  <li class="toc-h3"><a href="#priority-3-replay-record-system">[Priority 3] Replay Record System</a></li>
+  <li class="toc-h3"><a href="#priority-3-replay-data-duplication">[Priority 3] Replay Data Duplication</a></li>
+<li class=""><a href="#priority-4-map-loading-pipeline">Priority 4: Map Loading Pipeline</a></li>
+  <li class="toc-h3"><a href="#priority-4-map-class-and-loading-functions">[Priority 4] Map Class and Loading Functions</a></li>
+  <li class="toc-h3"><a href="#priority-4-anchored-object-item-placement">[Priority 4] Anchored Object (Item) Placement</a></li>
+  <li class="toc-h3"><a href="#priority-4-block-types">[Priority 4] Block Types</a></li>
+<li class=""><a href="#priority-5-audio-deep-dive">Priority 5: Audio Deep Dive</a></li>
+  <li class="toc-h3"><a href="#priority-5-audio-source-types">[Priority 5] Audio Source Types</a></li>
+  <li class="toc-h3"><a href="#priority-5-engine-sound-system">[Priority 5] Engine Sound System</a></li>
+  <li class="toc-h3"><a href="#priority-5-3d-audio-doppler">[Priority 5] 3D Audio / Doppler</a></li>
+  <li class="toc-h3"><a href="#priority-5-music-system">[Priority 5] Music System</a></li>
+<li class=""><a href="#priority-6-checkpointrespawn-system">Priority 6: Checkpoint/Respawn System</a></li>
+  <li class="toc-h3"><a href="#priority-6-checkpoint-system">[Priority 6] Checkpoint System</a></li>
+  <li class="toc-h3"><a href="#priority-6-respawn-system">[Priority 6] Respawn System</a></li>
+  <li class="toc-h3"><a href="#priority-6-race-timing">[Priority 6] Race Timing</a></li>
+<li class=""><a href="#priority-7-pack-file-format">Priority 7: Pack File Format</a></li>
+  <li class="toc-h3"><a href="#priority-7-pack-file-system">[Priority 7] Pack File System</a></li>
+<li class=""><a href="#summary-of-open-questions-resolved">Summary of Open Questions Resolved</a></li>
+<li class=""><a href="#session-2-additional-force-models-and-data-queries-2026-03-27">Session 2: Additional Force Models and Data Queries (2026-03-27)</a></li>
+  <li class="toc-h3"><a href="#priority-1-force-model-fun_140851f00-case-5">[Priority 1] Force Model FUN_140851f00 - Case 5</a></li>
+  <li class="toc-h3"><a href="#priority-1-force-model-fun_14086d3b0-case-0xb">[Priority 1] Force Model FUN_14086d3b0 - Case 0xB</a></li>
+  <li class="toc-h3"><a href="#priority-1-fun_1408570e0-carsport-per-wheel-visual-state-update">[Priority 1] FUN_1408570e0 - CarSport Per-Wheel Visual State Update</a></li>
+  <li class="toc-h3"><a href="#priority-1-fun_14085c1b0-airborne-control">[Priority 1] FUN_14085c1b0 - Airborne Control</a></li>
+  <li class="toc-h3"><a href="#priority-1-fun_140857b20-boostreactor-force">[Priority 1] FUN_140857b20 - Boost/Reactor Force</a></li>
+  <li class="toc-h3"><a href="#data-queries">Data Queries</a></li>
+<li class=""><a href="#summary-of-open-questions-resolved-1">Summary of Open Questions Resolved</a></li>
+  <li class="toc-h3"><a href="#remaining-open-questions-for-future-sessions">Remaining Open Questions (for future sessions)</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

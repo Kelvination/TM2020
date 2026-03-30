@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Mesh Research - Trackmania 2020 Planning</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item active" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Block Mesh Research</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        
+                        <h1 id="05-block-mesh-extraction-research"><a class="anchor" href="#05-block-mesh-extraction-research">#</a>05 - Block Mesh Extraction Research</h1>
+<p>> Comprehensive analysis of every known approach for extracting TM2020 block geometry > for browser rendering. > > <strong>Date</strong>: 2026-03-27 > <strong>Status</strong>: Research complete, recommended path identified</p>
+<hr>
+<h2 id="executive-summary"><a class="anchor" href="#executive-summary">#</a>Executive Summary</h2>
+<p>There are <strong>7 viable approaches</strong> to obtaining TM2020 block geometry. The recommended strategy combines <strong>two approaches in sequence</strong>: first use the GBX.NET + PAK extraction pipeline (Approach 1) for exact, authoritative geometry, falling back to Ninja Ripper (Approach 4) for validation. The Blender Gbx Tools plugin (Approach 3) can then import the extracted meshes for inspection and conversion.</p>
+<p><strong>Critical finding</strong>: The pack files are encrypted with Blowfish CBC using keys derived from server-sent sub-keys. GBX.NET.PAK already implements this decryption. Once extracted, GBX.NET can parse CPlugSolid2Model (Mesh.Gbx) files to obtain exact vertex positions, normals, UVs, and triangle indices. This is the only path that yields pixel-perfect geometry matching the actual game.</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#approach-1-gbxnet--pak-extraction-pipeline">Approach 1: GBX.NET + PAK Extraction Pipeline</a></li>
+  <li><a href="#approach-2-openplanet-fid-extraction">Approach 2: Openplanet Fid Extraction</a></li>
+  <li><a href="#approach-3-blender-gbx-tools-import">Approach 3: Blender Gbx Tools Import</a></li>
+  <li><a href="#approach-4-ninja-ripper-d3d11-capture">Approach 4: Ninja Ripper D3D11 Capture</a></li>
+  <li><a href="#approach-5-renderdoc-frame-capture">Approach 5: RenderDoc Frame Capture</a></li>
+  <li><a href="#approach-6-nadeoimporter-reverse-path">Approach 6: NadeoImporter Reverse Path</a></li>
+  <li><a href="#approach-7-procedural-geometry-generation">Approach 7: Procedural Geometry Generation</a></li>
+  <li><a href="#pack-file-format-details">Pack File Format Details</a></li>
+  <li><a href="#mesh-data-format-details">Mesh Data Format Details</a></li>
+  <li><a href="#recommended-strategy">Recommended Strategy</a></li>
+</ol>
+<hr>
+<h2 id="approach-1-gbxnet-pak-extraction-pipeline"><a class="anchor" href="#approach-1-gbxnet-pak-extraction-pipeline">#</a>Approach 1: GBX.NET + PAK Extraction Pipeline</h2>
+<h3 id="what-it-is"><a class="anchor" href="#what-it-is">#</a>What It Is</h3>
+<p>Use BigBang1112's GBX.NET library (C#/.NET) with the GBX.NET.PAK extension to:</p>
+<ol>
+  <li>Decrypt and decompress Stadium.pak (and other .pak files)</li>
+  <li>Extract individual GBX files (Solid.Gbx, Mesh.Gbx, Material.Gbx, etc.)</li>
+  <li>Parse CPlugSolid2Model to extract vertex positions, normals, UVs, indices</li>
+  <li>Export to a browser-friendly format (glTF, OBJ, or custom binary)</li>
+</ol>
+<h3 id="evidence"><a class="anchor" href="#evidence">#</a>Evidence</h3>
+<ul>
+  <li><strong>GBX.NET</strong> supports 400+ GBX classes including CPlugSolid2Model (Mesh.Gbx) with</li>
+</ul>
+<p>  full read/write support, CPlugSolid (Solid.Gbx), and CPlugSurface (Shape.Gbx).   Repository: https://github.com/BigBang1112/gbx-net</p>
+<ul>
+  <li><strong>GBX.NET.PAK</strong> (NuGet package) implements NadeoPak decryption including the</li>
+</ul>
+<p>  non-standard CBC variant with ivXor handling. It "uses a different zlib solution   due to very specific patterns to follow during decryption + decompression."</p>
+<ul>
+  <li><strong>Nations Converter 2</strong> (https://nc.gbx.tools/) is a working proof-of-concept:</li>
+</ul>
+<p>  it extracts "direct mesh data from Solid.Gbx files" from pack files and converts   them into Item.Gbx files for TM2020. The project "abandoned mesh ripping" in   favor of direct Solid.Gbx extraction since 2024.</p>
+<ul>
+  <li>The Blender Gbx Tools plugin (https://3d.gbx.tools/blender) can import Mesh.Gbx,</li>
+</ul>
+<p>  Solid.Gbx, Prefab.Gbx, Shape.Gbx, and Item.Gbx with collision models and   materials, proving the data is fully parseable.</p>
+<h3 id="key-challenge-pak-encryption-keys"><a class="anchor" href="#key-challenge-pak-encryption-keys">#</a>Key Challenge: PAK Encryption Keys</h3>
+<p>TM2020's .pak files use <strong>version 18</strong> of the NadeoPak format (confirmed: all paks show <code class="addr">0x00000012</code> at offset 0x08). The encryption uses Blowfish CBC with 16-byte keys.</p>
+<p>For TM2020/ManiaPlanet era:</p>
+<ul>
+  <li>Keys are <strong>not</strong> in packlist.dat (that file does not exist for ManiaPlanet+)</li>
+  <li>Keys are sent from Nadeo's master server as "sub-keys" during authentication</li>
+  <li>Sub-keys are stored in the user's Profile.Gbx for offline use</li>
+  <li>Two paks (ManiaPlanet.pak, Resource.pak) have sub-keys hardcoded in the executable</li>
+  <li>The final key = md5(sub-key + additional_material) (exact formula differs from legacy)</li>
+  <li>GBX.NET.PAK already implements this key derivation</li>
+</ul>
+<p><strong>How to obtain keys</strong>: Run the game, authenticate, then either:</p>
+<ul>
+  <li>Extract sub-keys from Profile.Gbx (GBX.NET can parse these)</li>
+  <li>Use GBX.NET.PAK's built-in key handling</li>
+  <li>Hook the decryption in Trackmania.exe via Ghidra RE (we have the decompiled binary)</li>
+</ul>
+<h3 id="feasibility-yes"><a class="anchor" href="#feasibility-yes">#</a>Feasibility: YES</h3>
+<h3 id="effort-1-2-weeks"><a class="anchor" href="#effort-1-2-weeks">#</a>Effort: 1-2 weeks</h3>
+<h3 id="quality-exact-pixel-perfect-authoritative-game-geometry"><a class="anchor" href="#quality-exact-pixel-perfect-authoritative-game-geometry">#</a>Quality: EXACT (pixel-perfect, authoritative game geometry)</h3>
+<h3 id="recommendation-primary-approach-use-this"><a class="anchor" href="#recommendation-primary-approach-use-this">#</a>Recommendation: <strong>PRIMARY APPROACH -- Use this</strong></h3>
+<p>The pipeline would be:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Stadium.pak --[GBX.NET.PAK decrypt]--&gt; Solid.Gbx files
+           --[GBX.NET parse]--&gt; CPlugSolid2Model (vertices, indices, UVs)
+           --[custom exporter]--&gt; glTF/custom binary for browser</code></pre></div>
+<hr>
+<h2 id="approach-2-openplanet-fid-extraction"><a class="anchor" href="#approach-2-openplanet-fid-extraction">#</a>Approach 2: Openplanet Fid Extraction</h2>
+<h3 id="what-it-is-1"><a class="anchor" href="#what-it-is-1">#</a>What It Is</h3>
+<p>Use Openplanet's built-in Fid Explorer / Pack Explorer to browse and extract files directly from mounted .pak files while the game is running. Alternatively, use the Fid Loader plugin to extract specific files by path.</p>
+<h3 id="evidence-1"><a class="anchor" href="#evidence-1">#</a>Evidence</h3>
+<ul>
+  <li><strong>Already partially working on this machine</strong>: Openplanet has extracted files to:</li>
+</ul>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  .../OpenplanetNext/Extract/GameData/Stadium/Items/*.Item.Gbx  (35+ tree/scenery items)
+  .../OpenplanetNext/Extract/GameData/Stadium/Media/Texture/Image/*.dds  (textures)</code></pre></div>
+<p>  These include PalmTreeSmall.Item.Gbx (3,174 bytes, class <code class="addr">0x2E002000</code>, BUUR format),   textures like RoadTech_D.dds, PlatformTech_D.dds, etc.</p>
+<ul>
+  <li><strong>Fid Explorer</strong> (built into Openplanet): Browse System -> Drives/Folders to see</li>
+</ul>
+<p>  mounted pack file contents. Can extract individual files.</p>
+<ul>
+  <li><strong>Fid Loader plugin</strong> (https://openplanet.dev/plugin/fidloader): Extracts files by</li>
+</ul>
+<p>  exact path. Works with hashed filenames. Supports batch extraction.</p>
+<ul>
+  <li><strong>Pack files use hashed filenames</strong>: Most files in .pak have their filenames replaced</li>
+</ul>
+<p>  with hashes. Openplanet resolves these at runtime since the game mounts them.</p>
+<h3 id="key-challenge"><a class="anchor" href="#key-challenge">#</a>Key Challenge</h3>
+<p>Openplanet can extract individual GBX files, but:</p>
+<ol>
+  <li>You must know or discover the file paths (hashed in the pack)</li>
+  <li>Extraction is manual/semi-manual (need the game running)</li>
+  <li>Block geometry (Solid.Gbx / Mesh.Gbx for vanilla blocks) may not be directly</li>
+</ol>
+<p>   accessible as separate files -- they may be embedded inside CGameCtnBlockInfo    nodes within the pack's GBX tree</p>
+<ol>
+  <li>Need to figure out the exact file paths for each block's mesh data</li>
+</ol>
+<h3 id="what-openplanet-exposes-via-api"><a class="anchor" href="#what-openplanet-exposes-via-api">#</a>What Openplanet Exposes via API</h3>
+<p>The Openplanet AngelScript API exposes:</p>
+<ul>
+  <li><code>CGameCtnBlockInfo</code>: Has <code>VariantBaseGround</code> and <code>VariantBaseAir</code> properties</li>
+  <li><code>CGameCtnBlockInfoVariant</code>: Has <code>HelperSolidFid</code> (CPlugSolid@) and</li>
+</ul>
+<p>  <code>FacultativeHelperSolidFid</code> (CPlugSolid@), plus <code>WaypointTriggerShape</code> (CPlugSurface@)</p>
+<ul>
+  <li><code>CPlugSolid</code>: Only exposes <code>IdName</code> and <code>Id</code> (NO mesh data accessible via API)</li>
+  <li><code>CPlugSolid2Model</code>: Only exposes <code>IdName</code> and <code>Id</code> (NO vertices/faces via API)</li>
+</ul>
+<p><strong>The Openplanet API does NOT expose vertex/face data.</strong> It can give you references to the solid objects, but not their actual geometry. The geometry is only accessible by extracting the raw GBX files and parsing them externally.</p>
+<h3 id="feasibility-maybe-for-file-extraction-not-direct-mesh-access"><a class="anchor" href="#feasibility-maybe-for-file-extraction-not-direct-mesh-access">#</a>Feasibility: MAYBE (for file extraction, not direct mesh access)</h3>
+<h3 id="effort-days-to-extract-all-block-files-need-game-running"><a class="anchor" href="#effort-days-to-extract-all-block-files-need-game-running">#</a>Effort: Days (to extract all block files, need game running)</h3>
+<h3 id="quality-exact-files-are-the-real-game-data"><a class="anchor" href="#quality-exact-files-are-the-real-game-data">#</a>Quality: EXACT (files are the real game data)</h3>
+<h3 id="recommendation-use-as-supplement-to-approach-1"><a class="anchor" href="#recommendation-use-as-supplement-to-approach-1">#</a>Recommendation: <strong>Use as supplement to Approach 1</strong></h3>
+<p>Use Openplanet Fid Explorer to:</p>
+<ul>
+  <li>Discover file paths within the pack (then feed to GBX.NET)</li>
+  <li>Extract individual GBX files for testing/validation</li>
+  <li>Extract textures (.dds files)</li>
+</ul>
+<hr>
+<h2 id="approach-3-blender-gbx-tools-import"><a class="anchor" href="#approach-3-blender-gbx-tools-import">#</a>Approach 3: Blender Gbx Tools Import</h2>
+<h3 id="what-it-is-2"><a class="anchor" href="#what-it-is-2">#</a>What It Is</h3>
+<p>BigBang1112's Blender plugin (https://3d.gbx.tools/blender) imports Mesh.Gbx, Solid.Gbx, Prefab.Gbx, Shape.Gbx, and Item.Gbx files directly into Blender with collision models and complex materials.</p>
+<h3 id="evidence-2"><a class="anchor" href="#evidence-2">#</a>Evidence</h3>
+<ul>
+  <li>Actively maintained (copyright 2025-2026, v0.1.1 released March 2026)</li>
+  <li>Open source: https://github.com/BigBang1112/blender-gbx-tools</li>
+  <li>Can resolve mesh variants from block info files (EDClassic.Gbx, etc.)</li>
+  <li>Supports display of collision models and complex materials</li>
+  <li>Available through Blender's extension repository</li>
+</ul>
+<h3 id="key-limitation"><a class="anchor" href="#key-limitation">#</a>Key Limitation</h3>
+<p><strong>Cannot import directly from .pak files yet.</strong> You must first extract the GBX files using another method (Approach 1 or 2), then import them into Blender.</p>
+<h3 id="feasibility-yes-given-extracted-files"><a class="anchor" href="#feasibility-yes-given-extracted-files">#</a>Feasibility: YES (given extracted files)</h3>
+<h3 id="effort-hours-once-files-are-extracted"><a class="anchor" href="#effort-hours-once-files-are-extracted">#</a>Effort: Hours (once files are extracted)</h3>
+<h3 id="quality-exact-reads-native-gbx-mesh-data"><a class="anchor" href="#quality-exact-reads-native-gbx-mesh-data">#</a>Quality: EXACT (reads native GBX mesh data)</h3>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="recommendation-use-for-visual-validation-and-manual-inspection"><a class="anchor" href="#recommendation-use-for-visual-validation-and-manual-inspection">#</a>Recommendation: <strong>Use for visual validation and manual inspection</strong></h3></summary>
+<div class="collapsible-content">
+<p>Use this to verify extracted meshes look correct before building the browser pipeline. Also useful for one-off exports to glTF/OBJ from Blender.</p>
+<hr>
+</div>
+</details>
+<h2 id="approach-4-ninja-ripper-d3d11-capture"><a class="anchor" href="#approach-4-ninja-ripper-d3d11-capture">#</a>Approach 4: Ninja Ripper D3D11 Capture</h2>
+<h3 id="what-it-is-3"><a class="anchor" href="#what-it-is-3">#</a>What It Is</h3>
+<p>Ninja Ripper (https://www.ninjaripper.com/) hooks D3D11 to capture all geometry rendered in a frame. For TM2020, this captures the actual GPU vertex/index buffers as the game renders them.</p>
+<h3 id="evidence-3"><a class="anchor" href="#evidence-3">#</a>Evidence</h3>
+<ul>
+  <li>Documented workflow on Trackmania Wiki:</li>
+</ul>
+<p>  https://wiki.trackmania.io/en/content-creation/nadeo-importer/ninja-ripper</p>
+<ul>
+  <li>Used by the community for getting vanilla blocks into Blender</li>
+  <li>Supports D3D11 (TM2020's graphics API)</li>
+  <li>Captures vertices, UVs, normals, and textures per draw call</li>
+</ul>
+<h3 id="workflow"><a class="anchor" href="#workflow">#</a>Workflow</h3>
+<ol>
+  <li>Launch TM2020 through Ninja Ripper with D3D11 wrapper</li>
+  <li>Load a map containing the blocks you want</li>
+  <li>Press capture hotkey to rip the current frame</li>
+  <li>Import .rip files into Blender using Ninja Ripper's Blender addon</li>
+</ol>
+<h3 id="critical-lod-problem"><a class="anchor" href="#critical-lod-problem">#</a>Critical LOD Problem</h3>
+<p>Ninja Ripper captures whatever LOD is currently on screen. Distant blocks use low-poly LODs. The community workaround:</p>
+<ol>
+  <li>Place desired vanilla blocks in a map</li>
+  <li>Use Mesh Modeler to convert each vanilla block to a custom item</li>
+  <li>Custom items lose LOD system (always render highest quality)</li>
+  <li>Re-place the custom items and capture with Ninja Ripper</li>
+</ol>
+<p>This is tedious but produces high-quality meshes.</p>
+<h3 id="limitations"><a class="anchor" href="#limitations">#</a>Limitations</h3>
+<ul>
+  <li><strong>No material names</strong>: Textures come as separate images, not linked to TM material names</li>
+  <li><strong>Scene-at-a-time</strong>: Must capture per-frame, one camera angle</li>
+  <li><strong>LOD artifacts</strong>: Without the Mesh Modeler workaround, meshes are mixed quality</li>
+  <li><strong>Manual process</strong>: Each block type needs to be placed, converted, and captured</li>
+  <li><strong>UV mapping may differ</strong>: Capture UVs are from the GPU, which may have been</li>
+</ul>
+<p>  transformed by vertex shaders</p>
+<ul>
+  <li><strong>Normals may be in world space</strong>: Need to transform back to object space</li>
+  <li><strong>No physics/collision data</strong>: Only visual meshes are captured</li>
+</ul>
+<h3 id="feasibility-yes-1"><a class="anchor" href="#feasibility-yes-1">#</a>Feasibility: YES</h3>
+<h3 id="effort-1-2-weeks-for-all-200-block-types-with-the-lod-workaround"><a class="anchor" href="#effort-1-2-weeks-for-all-200-block-types-with-the-lod-workaround">#</a>Effort: 1-2 weeks (for all ~200+ block types with the LOD workaround)</h3>
+<h3 id="quality-approximate-high-visual-fidelity-but-uvnormal-artifacts-possible"><a class="anchor" href="#quality-approximate-high-visual-fidelity-but-uvnormal-artifacts-possible">#</a>Quality: APPROXIMATE (high visual fidelity, but UV/normal artifacts possible)</h3>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="recommendation-use-as-validationfallback-for-approach-1"><a class="anchor" href="#recommendation-use-as-validationfallback-for-approach-1">#</a>Recommendation: <strong>Use as validation/fallback for Approach 1</strong></h3></summary>
+<div class="collapsible-content">
+<hr>
+</div>
+</details>
+<h2 id="approach-5-renderdoc-frame-capture"><a class="anchor" href="#approach-5-renderdoc-frame-capture">#</a>Approach 5: RenderDoc Frame Capture</h2>
+<h3 id="what-it-is-4"><a class="anchor" href="#what-it-is-4">#</a>What It Is</h3>
+<p>RenderDoc (https://renderdoc.org/) is a professional GPU debugger that captures D3D11 frames with full pipeline state inspection. Unlike Ninja Ripper, it captures the complete pipeline state (shaders, constant buffers, render targets) not just geometry.</p>
+<h3 id="evidence-4"><a class="anchor" href="#evidence-4">#</a>Evidence</h3>
+<ul>
+  <li>Supports D3D11 up to D3D11.4 on Windows</li>
+  <li>Mesh viewer with per-draw-call vertex inspection</li>
+  <li>Can export vertex data to CSV, which can be converted to OBJ</li>
+  <li>Python API for programmatic mesh extraction (renderdoc.org/docs/python_api/)</li>
+  <li>Can inspect vertex/index buffers, shader inputs/outputs at every pipeline stage</li>
+</ul>
+<h3 id="advantages-over-ninja-ripper"><a class="anchor" href="#advantages-over-ninja-ripper">#</a>Advantages Over Ninja Ripper</h3>
+<ul>
+  <li>See the exact vertex shader transformations applied</li>
+  <li>Inspect material bindings (textures, constant buffers)</li>
+  <li>Programmatic extraction via Python API (could automate)</li>
+  <li>Full pipeline state (useful for understanding the rendering approach)</li>
+</ul>
+<h3 id="disadvantages"><a class="anchor" href="#disadvantages">#</a>Disadvantages</h3>
+<ul>
+  <li>Same LOD problem as Ninja Ripper</li>
+  <li>Must run on Windows (or Wine/CrossOver -- uncertain compatibility)</li>
+  <li>Frame capture may be blocked by anti-cheat or DRM</li>
+  <li>Requires more technical expertise to extract mesh data</li>
+</ul>
+<h3 id="feasibility-maybe"><a class="anchor" href="#feasibility-maybe">#</a>Feasibility: MAYBE</h3>
+<h3 id="effort-1-2-weeks-similar-to-ninja-ripper-plus-automation-work"><a class="anchor" href="#effort-1-2-weeks-similar-to-ninja-ripper-plus-automation-work">#</a>Effort: 1-2 weeks (similar to Ninja Ripper, plus automation work)</h3>
+<h3 id="quality-approximate-same-as-ninja-ripper-but-with-more-metadata"><a class="anchor" href="#quality-approximate-same-as-ninja-ripper-but-with-more-metadata">#</a>Quality: APPROXIMATE (same as Ninja Ripper, but with more metadata)</h3>
+<h3 id="recommendation-investigate-further-only-if-approach-1-fails"><a class="anchor" href="#recommendation-investigate-further-only-if-approach-1-fails">#</a>Recommendation: <strong>Investigate further only if Approach 1 fails</strong></h3>
+<hr>
+<h2 id="approach-6-nadeoimporter-reverse-path"><a class="anchor" href="#approach-6-nadeoimporter-reverse-path">#</a>Approach 6: NadeoImporter Reverse Path</h2>
+<h3 id="what-it-is-5"><a class="anchor" href="#what-it-is-5">#</a>What It Is</h3>
+<p>NadeoImporter converts FBX -> Item.Gbx (one-way). The question: can we reverse it?</p>
+<h3 id="evidence-5"><a class="anchor" href="#evidence-5">#</a>Evidence</h3>
+<ul>
+  <li>NadeoImporter.exe strings reveal rich internal knowledge:</li>
+</ul>
+<p>  <code>Vertex</code>, <code>Normal</code>, <code>Position</code>, <code>CPlugBitmapRenderSolid</code>, <code>Solid</code>, <code>Solids</code>,   <code>TriggerSolid</code>, <code>VertexShader</code>, <code>VertexTextures</code>, <code>ShaderMeshPaintLayer</code>, etc.</p>
+<ul>
+  <li>It uses libfbxsdk.dll (Autodesk FBX SDK 2018) for importing FBX files</li>
+  <li>The conversion is definitively ONE-WAY: FBX -> GBX only</li>
+  <li>No reverse tool exists in the Nadeo ecosystem</li>
+  <li>NadeoImporter does not read .pak files -- it only processes user-provided FBX files</li>
+</ul>
+<h3 id="the-real-reverse-path"><a class="anchor" href="#the-real-reverse-path">#</a>The Real Reverse Path</h3>
+<p>The "reverse" is not NadeoImporter itself but GBX.NET:</p>
+<ul>
+  <li>GBX.NET CPlugSolid2Model has full read support</li>
+  <li>It can deserialize the exact same data NadeoImporter writes</li>
+  <li>This IS the reverse path, just using a different tool</li>
+</ul>
+<h3 id="feasibility-no-for-nadeoimporter-itself-yes-via-gbxnet"><a class="anchor" href="#feasibility-no-for-nadeoimporter-itself-yes-via-gbxnet">#</a>Feasibility: NO (for NadeoImporter itself; YES via GBX.NET)</h3>
+<h3 id="effort-na"><a class="anchor" href="#effort-na">#</a>Effort: N/A</h3>
+<h3 id="quality-na"><a class="anchor" href="#quality-na">#</a>Quality: N/A</h3>
+<h3 id="recommendation-skip-gbxnet-approach-1-is-the-reverse-path"><a class="anchor" href="#recommendation-skip-gbxnet-approach-1-is-the-reverse-path">#</a>Recommendation: <strong>Skip -- GBX.NET (Approach 1) IS the reverse path</strong></h3>
+<hr>
+<h2 id="approach-7-procedural-geometry-generation"><a class="anchor" href="#approach-7-procedural-geometry-generation">#</a>Approach 7: Procedural Geometry Generation</h2>
+<h3 id="what-it-is-6"><a class="anchor" href="#what-it-is-6">#</a>What It Is</h3>
+<p>Instead of extracting geometry, generate it programmatically based on known block dimensions and types. TM2020 Stadium blocks use a 32x8x32 meter grid.</p>
+<h3 id="evidence-6"><a class="anchor" href="#evidence-6">#</a>Evidence</h3>
+<ul>
+  <li>Block grid is well-documented: each block occupies a 32x8x32m cell</li>
+  <li>Block types are enumerable from map files (CGameCtnChallenge)</li>
+  <li>The Trackmania Blocks Generator Blender addon (https://github.com/frolad/Trackmania-Blocks-Generator)</li>
+</ul>
+<p>  uses a template-based system with pre-built components to assemble blocks</p>
+<ul>
+  <li>That addon has generated "nearly 18k blocks including all extensions"</li>
+  <li>Road surfaces are essentially extruded paths along the grid</li>
+  <li>Platform surfaces are flat quads with edge treatments</li>
+  <li>Terrain is a heightmap-based system</li>
+</ul>
+<h3 id="critical-limitation"><a class="anchor" href="#critical-limitation">#</a>Critical Limitation</h3>
+<p>While simple blocks (flat road, flat platform) could be procedurally generated, the visual detail is far more complex:</p>
+<ul>
+  <li>Curved block surfaces (banked turns, slopes) have non-trivial geometry</li>
+  <li>Deco elements (railings, barriers, pylons, lights) have intricate meshes</li>
+  <li>Edge treatments where blocks meet grass/dirt are detailed</li>
+  <li>Material transitions require careful UV mapping</li>
+  <li>There are 200+ block types, many with complex visual geometry</li>
+  <li>The Trackmania Wiki documents the full block catalog</li>
+</ul>
+<h3 id="feasibility-maybe-for-physics-only-no-for-visual-fidelity"><a class="anchor" href="#feasibility-maybe-for-physics-only-no-for-visual-fidelity">#</a>Feasibility: MAYBE (for physics-only; NO for visual fidelity)</h3>
+<h3 id="effort-months-for-a-visually-complete-set"><a class="anchor" href="#effort-months-for-a-visually-complete-set">#</a>Effort: Months (for a visually complete set)</h3>
+<h3 id="quality-placeholder-physics-could-be-exact-visuals-would-be-approximate"><a class="anchor" href="#quality-placeholder-physics-could-be-exact-visuals-would-be-approximate">#</a>Quality: PLACEHOLDER (physics could be exact; visuals would be approximate)</h3>
+<h3 id="recommendation-use-as-phase-1-placeholder-replace-with-extracted-meshes-later"><a class="anchor" href="#recommendation-use-as-phase-1-placeholder-replace-with-extracted-meshes-later">#</a>Recommendation: <strong>Use as Phase 1 placeholder, replace with extracted meshes later</strong></h3>
+<p>For an MVP, could use simple box/extruded geometry with correct dimensions and materials while working on the real extraction pipeline. The collision/physics shapes are simpler than the visual meshes.</p>
+<hr>
+<h2 id="pack-file-format-details"><a class="anchor" href="#pack-file-format-details">#</a>Pack File Format Details</h2>
+<h3 id="nadeopak-v18-tm2020"><a class="anchor" href="#nadeopak-v18-tm2020">#</a>NadeoPak v18 (TM2020)</h3>
+<p>All TM2020 .pak files use NadeoPak version 18:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Size   Field                    All TM2020 Paks
+------  ----   -----                    ---------------
+0x00    8      magic                    &quot;NadeoPak&quot;
+0x08    4      version                  18 (0x12)
+0x0C    32     SHA-256 ContentsChecksum (unique per pak, plaintext)
+0x2C    4      header_flags             0x07 (IsHeaderPrivate | UseDefaultHeaderKey | IsDataPrivate)
+0x30    4      block_alignment          0x3000 or 0x4000
+0x34    var    (zeros + title + timestamp + encrypted content tree)</code></pre></div>
+<h3 id="key-packs-and-their-contents"><a class="anchor" href="#key-packs-and-their-contents">#</a>Key Packs and Their Contents</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Pack File</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Title</th>
+  <th style="text-align:left">Likely Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Stadium.pak</td>
+  <td style="text-align:left">1.67 GB</td>
+  <td style="text-align:left">TMStadium</td>
+  <td style="text-align:left"><strong>Block meshes, materials, shaders</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet.pak</td>
+  <td style="text-align:left">169 MB</td>
+  <td style="text-align:left">ManiaPlanet</td>
+  <td style="text-align:left">Core engine resources</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_Core.pak</td>
+  <td style="text-align:left">34 MB</td>
+  <td style="text-align:left">ManiaPlanet</td>
+  <td style="text-align:left">Core game data</td>
+</tr>
+<tr>
+  <td style="text-align:left">Maniaplanet_ModelsSport.pak</td>
+  <td style="text-align:left">123 MB</td>
+  <td style="text-align:left">--</td>
+  <td style="text-align:left">Player/car models</td>
+</tr>
+<tr>
+  <td style="text-align:left">Skins_Stadium.pak</td>
+  <td style="text-align:left">264 MB</td>
+  <td style="text-align:left">--</td>
+  <td style="text-align:left">Car skins</td>
+</tr>
+<tr>
+  <td style="text-align:left">BlueBay.pak</td>
+  <td style="text-align:left">530 MB</td>
+  <td style="text-align:left">TMStadium</td>
+  <td style="text-align:left">BlueBay environment</td>
+</tr>
+<tr>
+  <td style="text-align:left">GreenCoast.pak</td>
+  <td style="text-align:left">570 MB</td>
+  <td style="text-align:left">TMStadium</td>
+  <td style="text-align:left">GreenCoast environment</td>
+</tr>
+<tr>
+  <td style="text-align:left">RedIsland.pak</td>
+  <td style="text-align:left">776 MB</td>
+  <td style="text-align:left">TMStadium</td>
+  <td style="text-align:left">RedIsland environment</td>
+</tr>
+<tr>
+  <td style="text-align:left">WhiteShore.pak</td>
+  <td style="text-align:left">411 MB</td>
+  <td style="text-align:left">TMStadium</td>
+  <td style="text-align:left">WhiteShore environment</td>
+</tr>
+<tr>
+  <td style="text-align:left">Resource.pak</td>
+  <td style="text-align:left">178 KB</td>
+  <td style="text-align:left">--</td>
+  <td style="text-align:left">Minimal resource index</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="strings-found-in-stadiumpak"><a class="anchor" href="#strings-found-in-stadiumpak">#</a>Strings Found in Stadium.pak</h3>
+<p>The encrypted content still leaks partial strings:</p>
+<ul>
+  <li>Block names: <code>DecoPlatform</code>, <code>RoadEndSlope2StraightR</code>, <code>RoadSlope2UBottom_Air</code>,</li>
+</ul>
+<p>  <code>GameCtnBlockInfo</code>, paths like <code>\\storage.nadeo.org\graphical_data\Stadium\3D\...</code></p>
+<ul>
+  <li>Material references: <code>Tech3 Block DecalGeom.Material.gbx</code>,</li>
+</ul>
+<p>  <code>Tech3 Block PyPxz_Hue.Material.gbx</code>, <code>Tech3 Block TAdd.Material.gbx</code>,   <code>Tech3_Block_TDSN_CubeOut.Material.gbx</code>, <code>GlassBasic.Material.gbx</code></p>
+<ul>
+  <li>Texture files: <code>EnvLayerDirt_D.dds</code>, <code>DecalSponsor1x1BigA_D.dds</code>,</li>
+</ul>
+<p>  <code>WarpRace155_pz1.dds</code></p>
+<ul>
+  <li>File extensions: <code>.Material.Gbx</code>, <code>.dds</code>, <code>.Gbx</code></li>
+</ul>
+<p>This confirms the pack contains the actual block geometry, material definitions, and textures we need.</p>
+<h3 id="encryption"><a class="anchor" href="#encryption">#</a>Encryption</h3>
+<ul>
+  <li>Algorithm: Blowfish CBC with 16-byte key</li>
+  <li>Non-standard CBC: ivXor applied every 256 bytes and on first read</li>
+  <li>Key source: Master server sub-keys (stored in Profile.Gbx for offline)</li>
+  <li>ManiaPlanet.pak and Resource.pak have hardcoded sub-keys in the executable</li>
+  <li>Compression: LZ4 with dictionary (since NadeoPak v18)</li>
+  <li>ivXor calculation: derived from folder names and class IDs in the header</li>
+</ul>
+<hr>
+<h2 id="mesh-data-format-details"><a class="anchor" href="#mesh-data-format-details">#</a>Mesh Data Format Details</h2>
+<h3 id="cplugsolid2model-meshgbx"><a class="anchor" href="#cplugsolid2model-meshgbx">#</a>CPlugSolid2Model (Mesh.Gbx)</h3>
+<p>This is the primary mesh container class. GBX.NET supports full read/write.</p>
+<p>The NadeoImporter produces Item.Gbx files that embed CPlugSolid2Model containing:</p>
+<ul>
+  <li>Vertex positions (float3)</li>
+  <li>Vertex normals (float3)</li>
+  <li>UV coordinates (float2, up to 2 layers: BaseMaterial + Lightmap)</li>
+  <li>Triangle indices (uint16 or uint32)</li>
+  <li>Material references (by name, linking to the material library)</li>
+  <li>LOD levels (multiple mesh variants at different detail levels)</li>
+  <li>Bounding box / bounding sphere</li>
+</ul>
+<h3 id="material-system"><a class="anchor" href="#material-system">#</a>Material System</h3>
+<p>Materials are defined in <code>NadeoImporterMaterialLib.txt</code> (1,375 lines) with:</p>
+<ul>
+  <li>24 surface physics types (Asphalt, Dirt, Ice, Metal, Wood, Grass, etc.)</li>
+  <li>3 UV layer patterns (Standard Opaque, Decal, Lightmap-only)</li>
+  <li>Complete texture naming convention: <code>{Name}_D.dds</code> (diffuse), <code>_N.dds</code> (normal),</li>
+</ul>
+<p>  <code>_R.dds</code> (roughness/specular), <code>_H.dds</code> (height), <code>_L.dds</code> (lightmap mask)</p>
+<ul>
+  <li>All gameplay IDs are <code>None</code> -- gameplay effects come from the block system</li>
+</ul>
+<h3 id="itemgbx-structure-already-extracted"><a class="anchor" href="#itemgbx-structure-already-extracted">#</a>Item.Gbx Structure (Already Extracted)</h3>
+<p>The Openplanet-extracted Item.Gbx files on this machine use class ID <code class="addr">0x2E002000</code> (CGameCtnBlockInfo/CGameItemModel) with BUUR format (fully uncompressed). Example:</p>
+<ul>
+  <li>PalmTreeSmall.Item.Gbx: 3,174 bytes, contains embedded RIFF data (WebP texture)</li>
+  <li>Contains author "Nadeo", collection "Items"</li>
+  <li>Self-contained (no external .Mesh.Gbx/.Shape.Gbx dependencies)</li>
+</ul>
+<hr>
+<h2 id="recommended-strategy"><a class="anchor" href="#recommended-strategy">#</a>Recommended Strategy</h2>
+<h3 id="phase-1-get-the-pipeline-working-week-1"><a class="anchor" href="#phase-1-get-the-pipeline-working-week-1">#</a>Phase 1: Get the Pipeline Working (Week 1)</h3>
+<ol>
+  <li><strong>Set up GBX.NET.PAK</strong> in a C# project</li>
+  <li><strong>Obtain encryption keys</strong>: Either from Profile.Gbx or by RE of Trackmania.exe</li>
+</ol>
+<p>   (we already have Ghidra project with decompiled functions)</p>
+<ol>
+  <li><strong>Decrypt and list</strong> Stadium.pak contents -- enumerate all files</li>
+  <li><strong>Extract a single block's Solid.Gbx</strong> -- parse with GBX.NET CPlugSolid2Model</li>
+  <li><strong>Validate</strong>: Export vertices to OBJ, view in Blender, compare to game</li>
+</ol>
+<h3 id="phase-2-bulk-extraction-week-2"><a class="anchor" href="#phase-2-bulk-extraction-week-2">#</a>Phase 2: Bulk Extraction (Week 2)</h3>
+<ol>
+  <li><strong>Extract all block meshes</strong> from Stadium.pak</li>
+  <li><strong>Extract all textures</strong> (.dds files)</li>
+  <li><strong>Build a conversion pipeline</strong>: CPlugSolid2Model -> glTF binary</li>
+  <li><strong>Validate with Ninja Ripper</strong>: Capture a few blocks in-game, compare to extracted</li>
+</ol>
+<h3 id="phase-3-browser-integration-week-3"><a class="anchor" href="#phase-3-browser-integration-week-3">#</a>Phase 3: Browser Integration (Week 3+)</h3>
+<ol>
+  <li><strong>Load glTF/custom binary</strong> into the Three.js/WebGPU renderer</li>
+  <li><strong>Material mapping</strong>: Link extracted materials to browser shader system</li>
+  <li><strong>LOD system</strong>: Use the LOD data from CPlugSolid2Model</li>
+  <li><strong>Texture conversion</strong>: DDS -> WebP/KTX2 for browser</li>
+</ol>
+<h3 id="fallback-plan"><a class="anchor" href="#fallback-plan">#</a>Fallback Plan</h3>
+<p>If PAK decryption keys cannot be obtained:</p>
+<ul>
+  <li>Use <strong>Openplanet Fid Explorer</strong> to extract files while the game runs</li>
+  <li>Use <strong>Ninja Ripper</strong> for visual meshes (approximate quality)</li>
+  <li>Use <strong>procedural geometry</strong> for physics-only collision shapes</li>
+  <li>Use <strong>Blender Gbx Tools</strong> to import any files Openplanet extracts</li>
+</ul>
+<h3 id="what-not-to-do"><a class="anchor" href="#what-not-to-do">#</a>What NOT To Do</h3>
+<ul>
+  <li>Do NOT try to reverse NadeoImporter (it is one-way by design)</li>
+  <li>Do NOT try to brute-force PAK encryption keys (Blowfish with 16-byte key is infeasible)</li>
+  <li>Do NOT try to read mesh data from Openplanet's AngelScript API (it only exposes</li>
+</ul>
+<p>  IdName, not vertices/faces)</p>
+<ul>
+  <li>Do NOT invest months in procedural generation when extraction tools already exist</li>
+</ul>
+<hr>
+<h2 id="approach-comparison-table"><a class="anchor" href="#approach-comparison-table">#</a>Approach Comparison Table</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">#</th>
+  <th style="text-align:left">Approach</th>
+  <th style="text-align:left">Feasibility</th>
+  <th style="text-align:left">Effort</th>
+  <th style="text-align:left">Quality</th>
+  <th style="text-align:left">Use For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">GBX.NET + PAK</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">1-2 weeks</td>
+  <td style="text-align:left">EXACT</td>
+  <td style="text-align:left"><strong>Primary extraction</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Openplanet Fid</td>
+  <td style="text-align:left">MAYBE</td>
+  <td style="text-align:left">Days</td>
+  <td style="text-align:left">EXACT</td>
+  <td style="text-align:left">File discovery, texture extraction</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">Blender Gbx Tools</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">Hours</td>
+  <td style="text-align:left">EXACT</td>
+  <td style="text-align:left">Validation, visual inspection</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Ninja Ripper</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left">1-2 weeks</td>
+  <td style="text-align:left">APPROXIMATE</td>
+  <td style="text-align:left">Validation, fallback</td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">RenderDoc</td>
+  <td style="text-align:left">MAYBE</td>
+  <td style="text-align:left">1-2 weeks</td>
+  <td style="text-align:left">APPROXIMATE</td>
+  <td style="text-align:left">Only if Approach 1 fails</td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">NadeoImporter Reverse</td>
+  <td style="text-align:left">NO</td>
+  <td style="text-align:left">N/A</td>
+  <td style="text-align:left">N/A</td>
+  <td style="text-align:left">Skip (GBX.NET IS the reverse)</td>
+</tr>
+<tr>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">Procedural Generation</td>
+  <td style="text-align:left">MAYBE</td>
+  <td style="text-align:left">Months</td>
+  <td style="text-align:left">PLACEHOLDER</td>
+  <td style="text-align:left">Phase 1 MVP placeholder only</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="key-resources"><a class="anchor" href="#key-resources">#</a>Key Resources</h2>
+<ul>
+  <li><strong>GBX.NET</strong>: https://github.com/BigBang1112/gbx-net (C# library, 400+ GBX classes)</li>
+  <li><strong>GBX.NET.PAK</strong>: NuGet package for NadeoPak decryption</li>
+  <li><strong>Blender Gbx Tools</strong>: https://github.com/BigBang1112/blender-gbx-tools</li>
+  <li><strong>Nations Converter 2</strong>: https://nc.gbx.tools/ (proof that Solid.Gbx extraction works)</li>
+  <li><strong>Ninja Ripper</strong>: https://www.ninjaripper.com/ (D3D11 mesh capture)</li>
+  <li><strong>Fid Loader</strong>: https://openplanet.dev/plugin/fidloader (Openplanet file extraction)</li>
+  <li><strong>PAK Format Spec</strong>: https://wiki.xaseco.org/wiki/PAK</li>
+  <li><strong>GBX Format Spec</strong>: https://wiki.xaseco.org/wiki/GBX</li>
+  <li><strong>Trackmania Block Generator</strong>: https://github.com/frolad/Trackmania-Blocks-Generator</li>
+  <li><strong>Material Library</strong>: NadeoImporterMaterialLib.txt (in game install directory)</li>
+</ul>
+<hr>
+<h2 id="files-already-available-on-this-machine"><a class="anchor" href="#files-already-available-on-this-machine">#</a>Files Already Available on This Machine</h2>
+<h3 id="extracted-by-openplanet"><a class="anchor" href="#extracted-by-openplanet">#</a>Extracted by Openplanet</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>.../OpenplanetNext/Extract/GameData/Stadium/Items/     -- 35+ Item.Gbx (trees, scenery)
+.../OpenplanetNext/Extract/GameData/Stadium/Media/Texture/Image/  -- DDS textures
+    RoadTech_D.dds, RoadTech_N.dds, RoadTech_R.dds
+    PlatformTech_D.dds
+    LightCells3_D/H/N/R/L.dds
+    TrackBorders_D.dds, TrackBorders_D_HueMask.dds
+    Ad1x1Screen.dds</code></pre></div>
+<h3 id="game-pack-files"><a class="anchor" href="#game-pack-files">#</a>Game Pack Files</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>.../Packs/Stadium.pak        -- 1.67 GB (block meshes, materials, shaders)
+.../Packs/Maniaplanet.pak    -- 169 MB (core engine resources)
+.../Packs/Resource.pak       -- 178 KB (minimal, has hardcoded key)</code></pre></div>
+<h3 id="user-block-files"><a class="anchor" href="#user-block-files">#</a>User Block Files</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>.../OpenplanetNext/IX/zzz_ImportedItems/  -- Community items (fences, scenery, tents)</code></pre></div>
+
+                        <nav class="prev-next"><a class="prev" href="plan-assets.html">&larr; Asset Pipeline</a><a class="next" href="plan-determinism.html">Determinism Analysis &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#executive-summary">Executive Summary</a></li>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#approach-1-gbxnet-pak-extraction-pipeline">Approach 1: GBX.NET + PAK Extraction Pipeline</a></li>
+  <li class="toc-h3"><a href="#what-it-is">What It Is</a></li>
+  <li class="toc-h3"><a href="#evidence">Evidence</a></li>
+  <li class="toc-h3"><a href="#key-challenge-pak-encryption-keys">Key Challenge: PAK Encryption Keys</a></li>
+  <li class="toc-h3"><a href="#feasibility-yes">Feasibility: YES</a></li>
+  <li class="toc-h3"><a href="#effort-1-2-weeks">Effort: 1-2 weeks</a></li>
+  <li class="toc-h3"><a href="#quality-exact-pixel-perfect-authoritative-game-geometry">Quality: EXACT (pixel-perfect, authoritative game geometry)</a></li>
+  <li class="toc-h3"><a href="#recommendation-primary-approach-use-this">Recommendation: **PRIMARY APPROACH -- Use this**</a></li>
+<li class=""><a href="#approach-2-openplanet-fid-extraction">Approach 2: Openplanet Fid Extraction</a></li>
+  <li class="toc-h3"><a href="#what-it-is-1">What It Is</a></li>
+  <li class="toc-h3"><a href="#evidence-1">Evidence</a></li>
+  <li class="toc-h3"><a href="#key-challenge">Key Challenge</a></li>
+  <li class="toc-h3"><a href="#what-openplanet-exposes-via-api">What Openplanet Exposes via API</a></li>
+  <li class="toc-h3"><a href="#feasibility-maybe-for-file-extraction-not-direct-mesh-access">Feasibility: MAYBE (for file extraction, not direct mesh access)</a></li>
+  <li class="toc-h3"><a href="#effort-days-to-extract-all-block-files-need-game-running">Effort: Days (to extract all block files, need game running)</a></li>
+  <li class="toc-h3"><a href="#quality-exact-files-are-the-real-game-data">Quality: EXACT (files are the real game data)</a></li>
+  <li class="toc-h3"><a href="#recommendation-use-as-supplement-to-approach-1">Recommendation: **Use as supplement to Approach 1**</a></li>
+<li class=""><a href="#approach-3-blender-gbx-tools-import">Approach 3: Blender Gbx Tools Import</a></li>
+  <li class="toc-h3"><a href="#what-it-is-2">What It Is</a></li>
+  <li class="toc-h3"><a href="#evidence-2">Evidence</a></li>
+  <li class="toc-h3"><a href="#key-limitation">Key Limitation</a></li>
+  <li class="toc-h3"><a href="#feasibility-yes-given-extracted-files">Feasibility: YES (given extracted files)</a></li>
+  <li class="toc-h3"><a href="#effort-hours-once-files-are-extracted">Effort: Hours (once files are extracted)</a></li>
+  <li class="toc-h3"><a href="#quality-exact-reads-native-gbx-mesh-data">Quality: EXACT (reads native GBX mesh data)</a></li>
+  <li class="toc-h3"><a href="#recommendation-use-for-visual-validation-and-manual-inspection">Recommendation: **Use for visual validation and manual inspection**</a></li>
+<li class=""><a href="#approach-4-ninja-ripper-d3d11-capture">Approach 4: Ninja Ripper D3D11 Capture</a></li>
+  <li class="toc-h3"><a href="#what-it-is-3">What It Is</a></li>
+  <li class="toc-h3"><a href="#evidence-3">Evidence</a></li>
+  <li class="toc-h3"><a href="#workflow">Workflow</a></li>
+  <li class="toc-h3"><a href="#critical-lod-problem">Critical LOD Problem</a></li>
+  <li class="toc-h3"><a href="#limitations">Limitations</a></li>
+  <li class="toc-h3"><a href="#feasibility-yes-1">Feasibility: YES</a></li>
+  <li class="toc-h3"><a href="#effort-1-2-weeks-for-all-200-block-types-with-the-lod-workaround">Effort: 1-2 weeks (for all ~200+ block types with the LOD workaround)</a></li>
+  <li class="toc-h3"><a href="#quality-approximate-high-visual-fidelity-but-uvnormal-artifacts-possible">Quality: APPROXIMATE (high visual fidelity, but UV/normal artifacts possible)</a></li>
+  <li class="toc-h3"><a href="#recommendation-use-as-validationfallback-for-approach-1">Recommendation: **Use as validation/fallback for Approach 1**</a></li>
+<li class=""><a href="#approach-5-renderdoc-frame-capture">Approach 5: RenderDoc Frame Capture</a></li>
+  <li class="toc-h3"><a href="#what-it-is-4">What It Is</a></li>
+  <li class="toc-h3"><a href="#evidence-4">Evidence</a></li>
+  <li class="toc-h3"><a href="#advantages-over-ninja-ripper">Advantages Over Ninja Ripper</a></li>
+  <li class="toc-h3"><a href="#disadvantages">Disadvantages</a></li>
+  <li class="toc-h3"><a href="#feasibility-maybe">Feasibility: MAYBE</a></li>
+  <li class="toc-h3"><a href="#effort-1-2-weeks-similar-to-ninja-ripper-plus-automation-work">Effort: 1-2 weeks (similar to Ninja Ripper, plus automation work)</a></li>
+  <li class="toc-h3"><a href="#quality-approximate-same-as-ninja-ripper-but-with-more-metadata">Quality: APPROXIMATE (same as Ninja Ripper, but with more metadata)</a></li>
+  <li class="toc-h3"><a href="#recommendation-investigate-further-only-if-approach-1-fails">Recommendation: **Investigate further only if Approach 1 fails**</a></li>
+<li class=""><a href="#approach-6-nadeoimporter-reverse-path">Approach 6: NadeoImporter Reverse Path</a></li>
+  <li class="toc-h3"><a href="#what-it-is-5">What It Is</a></li>
+  <li class="toc-h3"><a href="#evidence-5">Evidence</a></li>
+  <li class="toc-h3"><a href="#the-real-reverse-path">The Real Reverse Path</a></li>
+  <li class="toc-h3"><a href="#feasibility-no-for-nadeoimporter-itself-yes-via-gbxnet">Feasibility: NO (for NadeoImporter itself; YES via GBX.NET)</a></li>
+  <li class="toc-h3"><a href="#effort-na">Effort: N/A</a></li>
+  <li class="toc-h3"><a href="#quality-na">Quality: N/A</a></li>
+  <li class="toc-h3"><a href="#recommendation-skip-gbxnet-approach-1-is-the-reverse-path">Recommendation: **Skip -- GBX.NET (Approach 1) IS the reverse path**</a></li>
+<li class=""><a href="#approach-7-procedural-geometry-generation">Approach 7: Procedural Geometry Generation</a></li>
+  <li class="toc-h3"><a href="#what-it-is-6">What It Is</a></li>
+  <li class="toc-h3"><a href="#evidence-6">Evidence</a></li>
+  <li class="toc-h3"><a href="#critical-limitation">Critical Limitation</a></li>
+  <li class="toc-h3"><a href="#feasibility-maybe-for-physics-only-no-for-visual-fidelity">Feasibility: MAYBE (for physics-only; NO for visual fidelity)</a></li>
+  <li class="toc-h3"><a href="#effort-months-for-a-visually-complete-set">Effort: Months (for a visually complete set)</a></li>
+  <li class="toc-h3"><a href="#quality-placeholder-physics-could-be-exact-visuals-would-be-approximate">Quality: PLACEHOLDER (physics could be exact; visuals would be approximate)</a></li>
+  <li class="toc-h3"><a href="#recommendation-use-as-phase-1-placeholder-replace-with-extracted-meshes-later">Recommendation: **Use as Phase 1 placeholder, replace with extracted meshes later**</a></li>
+<li class=""><a href="#pack-file-format-details">Pack File Format Details</a></li>
+  <li class="toc-h3"><a href="#nadeopak-v18-tm2020">NadeoPak v18 (TM2020)</a></li>
+  <li class="toc-h3"><a href="#key-packs-and-their-contents">Key Packs and Their Contents</a></li>
+  <li class="toc-h3"><a href="#strings-found-in-stadiumpak">Strings Found in Stadium.pak</a></li>
+  <li class="toc-h3"><a href="#encryption">Encryption</a></li>
+<li class=""><a href="#mesh-data-format-details">Mesh Data Format Details</a></li>
+  <li class="toc-h3"><a href="#cplugsolid2model-meshgbx">CPlugSolid2Model (Mesh.Gbx)</a></li>
+  <li class="toc-h3"><a href="#material-system">Material System</a></li>
+  <li class="toc-h3"><a href="#itemgbx-structure-already-extracted">Item.Gbx Structure (Already Extracted)</a></li>
+<li class=""><a href="#recommended-strategy">Recommended Strategy</a></li>
+  <li class="toc-h3"><a href="#phase-1-get-the-pipeline-working-week-1">Phase 1: Get the Pipeline Working (Week 1)</a></li>
+  <li class="toc-h3"><a href="#phase-2-bulk-extraction-week-2">Phase 2: Bulk Extraction (Week 2)</a></li>
+  <li class="toc-h3"><a href="#phase-3-browser-integration-week-3">Phase 3: Browser Integration (Week 3+)</a></li>
+  <li class="toc-h3"><a href="#fallback-plan">Fallback Plan</a></li>
+  <li class="toc-h3"><a href="#what-not-to-do">What NOT To Do</a></li>
+<li class=""><a href="#approach-comparison-table">Approach Comparison Table</a></li>
+<li class=""><a href="#key-resources">Key Resources</a></li>
+<li class=""><a href="#files-already-available-on-this-machine">Files Already Available on This Machine</a></li>
+  <li class="toc-h3"><a href="#extracted-by-openplanet">Extracted by Openplanet</a></li>
+  <li class="toc-h3"><a href="#game-pack-files">Game Pack Files</a></li>
+  <li class="toc-h3"><a href="#user-block-files">User Block Files</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

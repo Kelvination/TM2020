@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuning Loading Analysis - Trackmania 2020 Planning</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item active" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Tuning Loading Analysis</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        
+                        <h1 id="tuning-loading-analysis-how-vehicle-physics-parameters-flow-from-gbx-to-runtime"><a class="anchor" href="#tuning-loading-analysis-how-vehicle-physics-parameters-flow-from-gbx-to-runtime">#</a>Tuning Loading Analysis - How Vehicle Physics Parameters Flow from GBX to Runtime</h1>
+<h2 id="executive-summary"><a class="anchor" href="#executive-summary">#</a>Executive Summary</h2>
+<p>Vehicle tuning in Trackmania 2020 is <strong>entirely data-driven via GBX files</strong>. There are no hardcoded tuning tables. The game loads physics parameters through the GBX class system, where each class has a registered Archive (serialize/deserialize) function that reads/writes specific fields at known struct offsets. At runtime, these deserialized structs are referenced by pointer from the vehicle entity state, and physics computation functions read values directly from these loaded model data structures.</p>
+<p>This document traces the complete data flow: GBX file -> Archive deserialization -> runtime struct -> physics force computation.</p>
+<hr>
+<h2 id="1-gbx-class-system-architecture"><a class="anchor" href="#1-gbx-class-system-architecture">#</a>1. GBX Class System Architecture</h2>
+<h3 id="11-class-registration-pattern"><a class="anchor" href="#11-class-registration-pattern">#</a>1.1 Class Registration Pattern</h3>
+<p>Every physics-related GBX class follows the same registration pattern (function <code>FUN_1402EA9E0</code>):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">RegisterClass(class_id, &quot;ClassName&quot;, struct_size, flags, parent_class, 0, 0);
+RegisterConstructor(constructor_func);
+RegisterArchiveFunction(archive_func, secondary_func);
+RegisterFileExtension(&quot;ShortName&quot;, &quot;ShortName.Gbx&quot;);
+// Register individual fields for editor/ManiaScript access
+RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div>
+<h3 id="12-archive-serialization-pattern"><a class="anchor" href="#12-archive-serialization-pattern">#</a>1.2 Archive (Serialization) Pattern</h3>
+<p>Every class has an Archive function that handles both reading and writing:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">void Archive(longlong this_ptr, longlong archive_stream, int chunk_id) {
+    if (chunk_id == MY_CLASS_CHUNK_ID) {
+        int version = MAX_VERSION;
+        ReadChunkVersion(this_ptr, archive_stream, chunk_id, &amp;version);
+        // Read/write fields based on version
+        ArchiveFloat(archive_stream, this_ptr + FIELD_OFFSET);
+        // Version-gated fields
+        if (version &gt; 2) {
+            ArchiveFloat(archive_stream, this_ptr + NEW_FIELD_OFFSET);
+        }
+    }
+}</code></pre></div>
+<p>The <code>ArchiveFloat</code> function (<code>FUN_14012C310</code>) checks a mode flag:</p>
+<ul>
+  <li><strong>Mode 0 (read)</strong>: Calls <code>FUN_14012B9D0</code> to read 4 bytes from the stream into the target address</li>
+  <li><strong>Mode != 0 (write)</strong>: Calls <code>FUN_14012B790</code> to write 4 bytes from the target address to the stream</li>
+</ul>
+<h3 id="13-gbx-loading-pipeline"><a class="anchor" href="#13-gbx-loading-pipeline">#</a>1.3 GBX Loading Pipeline</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ArchiveNod::LoadGbx (FUN_140904730)
+  -&gt; Opens file stream
+  -&gt; Reads GBX header (magic &quot;GBX&quot;, version, class ID)
+  -&gt; Creates class instance via registered constructor
+  -&gt; FUN_140903D30 (body loader)
+    -&gt; FUN_140902530 (header chunks)
+    -&gt; FUN_1409031D0 (body chunks)
+      -&gt; For each chunk: calls Archive function with chunk ID
+      -&gt; Resolves internal node references to other GBX objects</code></pre></div>
+<p>The body loader (<code>FUN_1409031D0</code>) handles compressed data (LZO decompression at chunk level), internal cross-references between nodes, and version compatibility via the chunk version system.</p>
+<hr>
+<h2 id="2-vehicle-physics-class-hierarchy"><a class="anchor" href="#2-vehicle-physics-class-hierarchy">#</a>2. Vehicle Physics Class Hierarchy</h2>
+<h3 id="21-cgameitemmodel-top-level"><a class="anchor" href="#21-cgameitemmodel-top-level">#</a>2.1 CGameItemModel (Top Level)</h3>
+<p><strong>Address</strong>: Registration at <code class="addr">0x140057760</code> <strong>Class ID</strong>: <code class="addr">0x2E002000</code> <strong>Size</strong>: <code>0x2C0</code> bytes</p>
+<p>This is the root item container. For vehicles, key offsets:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0x120</td>
+  <td style="text-align:left">PhyModelCustom</td>
+  <td style="text-align:left"><code>CPlugVehiclePhyModelCustom*</code> - runtime tuning modifiers</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x128</td>
+  <td style="text-align:left">VisModelCustom</td>
+  <td style="text-align:left">Visual model customization</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x148</td>
+  <td style="text-align:left">MaterialModifier</td>
+  <td style="text-align:left">Material override</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x158</td>
+  <td style="text-align:left">Camera array</td>
+  <td style="text-align:left">Camera definitions</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x168</td>
+  <td style="text-align:left">DefaultCam</td>
+  <td style="text-align:left">Default camera selection</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x180</td>
+  <td style="text-align:left">WaypointType</td>
+  <td style="text-align:left">Start/Checkpoint/Finish</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1B8</td>
+  <td style="text-align:left">GroundPoint</td>
+  <td style="text-align:left">Ground contact reference</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xF8</td>
+  <td style="text-align:left">ArchetypeRef</td>
+  <td style="text-align:left">Base archetype reference</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22-cplugvehiclephymodelcustom-tuning-modifiers"><a class="anchor" href="#22-cplugvehiclephymodelcustom-tuning-modifiers">#</a>2.2 CPlugVehiclePhyModelCustom (Tuning Modifiers)</h3>
+<p><strong>Address</strong>: Registration at <code class="addr">0x14061ABB0</code>, Archive at <code class="addr">0x14061AAE0</code> <strong>Class ID</strong>: <code class="addr">0x0911E000</code> <strong>Size</strong>: <code>0x38</code> bytes <strong>GBX file</strong>: <code>VehiclePhyModelCustom.Gbx</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Default</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0x18</td>
+  <td style="text-align:left">AccelCoef</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">1.0</td>
+  <td style="text-align:left">Acceleration multiplier</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1C</td>
+  <td style="text-align:left">ControlCoef</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">1.0</td>
+  <td style="text-align:left">Steering/control multiplier</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x20</td>
+  <td style="text-align:left">GravityCoef</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">1.0</td>
+  <td style="text-align:left">Gravity multiplier</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are the three primary tuning coefficients that modify vehicle physics behavior. They're exposed as <code>Modifiers.AccelCoef</code>, <code>Modifiers.ControlCoef</code>, <code>Modifiers.GravityCoef</code> to the engine.</p>
+<h3 id="23-cplugvehiclecarphyshape-car-physics-shape"><a class="anchor" href="#23-cplugvehiclecarphyshape-car-physics-shape">#</a>2.3 CPlugVehicleCarPhyShape (Car Physics Shape)</h3>
+<p><strong>Address</strong>: Registration at <code class="addr">0x140619210</code>, Archive at <code class="addr">0x140618A60</code> <strong>Class ID</strong>: <code class="addr">0x0910E000</code> <strong>Size</strong>: <code>400</code> bytes <strong>Archive version</strong>: Up to 6</p>
+<p>This is the richest tuning data class, containing suspension geometry, collision shape, mass distribution, and physics curves. Key deserialized fields:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Default</th>
+  <th style="text-align:left">Likely Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0x18</td>
+  <td style="text-align:left">Curve</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Main physics curve (accel/brake response?)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x24</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-1.0</td>
+  <td style="text-align:left">Unknown (axis?)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x28</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-1.0</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2C</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-1.0</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x30-0x44</td>
+  <td style="text-align:left">6 floats</td>
+  <td style="text-align:left">various</td>
+  <td style="text-align:left">Shape geometry parameters</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x38</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">1.0</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x3C</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-1.0</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x40</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">1.0</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x44</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">1.0</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x48</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Shape parameter</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x4C-0x58</td>
+  <td style="text-align:left">4 floats</td>
+  <td style="text-align:left">0.5 each</td>
+  <td style="text-align:left">Inertia/mass distribution?</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x60</td>
+  <td style="text-align:left">NodeRef</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Solid collision mesh</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x70, 0x78</td>
+  <td style="text-align:left">NodeRef</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Additional collision meshes (v6+)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x80, 0x88</td>
+  <td style="text-align:left">Data</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Mesh collision data (v3+)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x98</td>
+  <td style="text-align:left">NodeRef</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Solid2 reference (v5+)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xA0</td>
+  <td style="text-align:left">Curve</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Secondary physics curve</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xA4</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0.6</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xA8</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0.1</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xB0</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0.6</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xB4</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">2.1</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xC0</td>
+  <td style="text-align:left">SubStruct</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Unknown sub-structure</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xD0</td>
+  <td style="text-align:left">Array</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Dynamic array of {float, float, subdata} elements</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xE0-0x124</td>
+  <td style="text-align:left">14 floats</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Extended shape properties</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x148+</td>
+  <td style="text-align:left">float[6][3]</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">6-element 3D data (v4+, likely contact points)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="24-cplugvehiclegearbox"><a class="anchor" href="#24-cplugvehiclegearbox">#</a>2.4 CPlugVehicleGearBox</h3>
+<p><strong>Address</strong>: Registration at <code class="addr">0x1405B58A0</code>, Constructor at <code class="addr">0x1405B55A0</code> <strong>Class ID</strong>: <code class="addr">0x09094000</code> <strong>Size</strong>: <code>0x58</code> bytes</p>
+<p>Default gear speed thresholds (7 gears, km/h):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Gear</th>
+  <th style="text-align:left">Speed (km/h)</th>
+  <th style="text-align:left">Hex</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">56.0</td>
+  <td style="text-align:left"><code class="addr">0x42600000</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">84.0</td>
+  <td style="text-align:left"><code class="addr">0x42A80000</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">100.0</td>
+  <td style="text-align:left"><code class="addr">0x42C80000</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">143.0</td>
+  <td style="text-align:left"><code class="addr">0x430F0000</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">207.0</td>
+  <td style="text-align:left"><code class="addr">0x434F0000</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">297.0</td>
+  <td style="text-align:left"><code class="addr">0x43948000</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">338.0</td>
+  <td style="text-align:left"><code class="addr">0x43A90000</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Other defaults: Max RPM = 7000, Shift RPM = 6500.</p>
+<h3 id="25-cplugvehiclewheelphymodel"><a class="anchor" href="#25-cplugvehiclewheelphymodel">#</a>2.5 CPlugVehicleWheelPhyModel</h3>
+<p><strong>Address</strong>: Registration at <code class="addr">0x1406190C0</code> <strong>Size</strong>: <code>0x0C</code> bytes</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0x00</td>
+  <td style="text-align:left">(unnamed)</td>
+  <td style="text-align:left">NodeRef</td>
+  <td style="text-align:left">Wheel physics data</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x04</td>
+  <td style="text-align:left">IsDriving</td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Whether this wheel provides drive</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x08</td>
+  <td style="text-align:left">IsSteering</td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Whether this wheel steers</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="26-cplugspawnmodel"><a class="anchor" href="#26-cplugspawnmodel">#</a>2.6 CPlugSpawnModel</h3>
+<p><strong>Address</strong>: Registration at <code class="addr">0x1406219A0</code> <strong>Size</strong>: <code>0x60</code> bytes <strong>GBX file</strong>: <code>Spawn.gbx</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Default</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0x18</td>
+  <td style="text-align:left">(unnamed)</td>
+  <td style="text-align:left">NodeRef</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Spawn position reference</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x4C</td>
+  <td style="text-align:left">TorqueX</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0.0</td>
+  <td style="text-align:left">Spawn torque X component</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x50</td>
+  <td style="text-align:left">TorqueDuration</td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">Duration of spawn torque</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x54</td>
+  <td style="text-align:left">DefaultGravitySpawn</td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left">(0, -1.0, 0)</td>
+  <td style="text-align:left">Gravity direction at spawn</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="3-runtime-vehicle-entity-layout"><a class="anchor" href="#3-runtime-vehicle-entity-layout">#</a>3. Runtime Vehicle Entity Layout</h2>
+<p>When a vehicle is spawned, a large runtime entity struct (~0x1C90+ bytes) is created. Key offsets observed in <code>ComputeForces</code> and <code>PhysicsStep_TM</code>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0x10</td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Vehicle sub-ID</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x88</td>
+  <td style="text-align:left">ptr</td>
+  <td style="text-align:left">Vehicle config/state data pointer</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x90-0x100</td>
+  <td style="text-align:left">matrix</td>
+  <td style="text-align:left">Current position/rotation state (13 floats + extras)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x104-0x174</td>
+  <td style="text-align:left">matrix</td>
+  <td style="text-align:left">Previous frame state (copied at end of step)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1280</td>
+  <td style="text-align:left">struct</td>
+  <td style="text-align:left">Friction/physics coefficients area</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x128C</td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Vehicle state flags (& 0xF = state enum)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1338</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Current force multiplier (set by FUN_140845220)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1348-0x135C</td>
+  <td style="text-align:left">vec3+vec3</td>
+  <td style="text-align:left">Position delta components</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1534-0x153C</td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left">Alternative state vector (for type >= 6)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x158C</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Some coefficient value</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x175C</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Custom gravity override (0 = use default)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1790+</td>
+  <td style="text-align:left">per-wheel</td>
+  <td style="text-align:left">Per-wheel force accumulation data</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1B74-0x1B9C</td>
+  <td style="text-align:left">struct</td>
+  <td style="text-align:left">Modifier state 1</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1B8C-0x1B9C</td>
+  <td style="text-align:left">struct</td>
+  <td style="text-align:left">Modifier state 2</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1BB0</td>
+  <td style="text-align:left">ptr</td>
+  <td style="text-align:left"><strong>Physics model data pointer</strong> (the loaded GBX model)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1C7C</td>
+  <td style="text-align:left">uint</td>
+  <td style="text-align:left">Per-tick flags</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1C78</td>
+  <td style="text-align:left">char</td>
+  <td style="text-align:left">Some state byte</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1C8C</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Speed or similar</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1C90</td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Entity physics mode (0=active, 2=frozen, 3=active-alt)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2E8+</td>
+  <td style="text-align:left">array</td>
+  <td style="text-align:left"><strong>Delayed modification queue</strong> (16 bytes per entry)</td>
+</tr>
+</tbody>
+</table></div>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="31-physics-model-data-at-entity-0x1bb0"><a class="anchor" href="#31-physics-model-data-at-entity-0x1bb0">#</a>3.1 Physics Model Data (at entity + 0x1BB0)</h3></summary>
+<div class="collapsible-content">
+<p>This pointer references the <strong>loaded GBX physics model data</strong>. Key offsets observed:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0x88</td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Some physics type/mode</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x238</td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Vehicle type selector (-5 = check)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x278</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Some threshold (checked < 0)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2AE0</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Speed threshold low</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2AE4</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Speed threshold high</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2AFC</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Minimum grip coefficient</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2B0</td>
+  <td style="text-align:left">ptr</td>
+  <td style="text-align:left">Dynamics curves object</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2B14</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Lateral force multiplier</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2B30</td>
+  <td style="text-align:left">Curve</td>
+  <td style="text-align:left">Speed-dependent curve</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2B80</td>
+  <td style="text-align:left">uint</td>
+  <td style="text-align:left">Recovery time (ticks)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x2C1C</td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Mode flag</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x308</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Anti-roll force</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x310/314</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Max lateral/longitudinal force</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xAB0/AB4</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Pitch force thresholds</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xC48</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Yaw threshold</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xCD4</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Speed normalization factor</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xD40</td>
+  <td style="text-align:left">Curve</td>
+  <td style="text-align:left">Speed-dependent curve</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xE0</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Engine power coefficient (accessed via entity+0x1BB0+0xE0)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1298</td>
+  <td style="text-align:left">struct</td>
+  <td style="text-align:left">Contact point data</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x1790</td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left"><strong>Vehicle type enum</strong> (0-6, 0xB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x15A8</td>
+  <td style="text-align:left">struct</td>
+  <td style="text-align:left">Reactor boost state</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+</div>
+</details>
+<h2 id="4-force-computation-pipeline"><a class="anchor" href="#4-force-computation-pipeline">#</a>4. Force Computation Pipeline</h2>
+<h3 id="41-call-chain"><a class="anchor" href="#41-call-chain">#</a>4.1 Call Chain</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>PhysicsStep_TM (0x141501800)
+  -&gt; For each vehicle entity:
+    -&gt; Calculate sub-step count based on velocity
+    -&gt; For each sub-step:
+      -&gt; NSceneVehiclePhy::ComputeForces (0x1408427D0)
+        -&gt; Speed clamping
+        -&gt; switch (model_data + 0x1790):
+          -&gt; case 6: FUN_14085C9E0 (TM2020 car)
+            -&gt; FUN_14083D8E0 (contact force setup)
+            -&gt; FUN_140858660 (tire force computation)
+            -&gt; FUN_1408581D0 (engine force)
+            -&gt; FUN_1408570E0 (per-wheel force loop)
+            -&gt; FUN_14085AD30 (aerodynamic forces)
+            -&gt; FUN_14085A0D0 (some additional forces)
+            -&gt; FUN_14085BA50 (unknown)
+            -&gt; FUN_140858C90 (wheel state update)
+            -&gt; FUN_140857380 (steering response)
+            -&gt; FUN_140857B20 (stability?)
+            -&gt; FUN_14085C1B0 (final integration)
+            -&gt; FUN_140858E70 (airborne physics)
+            -&gt; FUN_140855EA0 (reactor/boost)
+            -&gt; FUN_1408562D0 (ground effect)</code></pre></div>
+<h3 id="42-vehicle-type-dispatch"><a class="anchor" href="#42-vehicle-type-dispatch">#</a>4.2 Vehicle Type Dispatch</h3>
+<p>The <code>model_data + 0x1790</code> value selects which force model to use:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Handler</th>
+  <th style="text-align:left">Likely Vehicle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0,1,2</td>
+  <td style="text-align:left">FUN_140869CD0</td>
+  <td style="text-align:left">Legacy/ShootMania</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">FUN_14086B060</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">FUN_14086BC50</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">FUN_140851F00</td>
+  <td style="text-align:left">TM2/TurboMania</td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">FUN_14085C9E0</td>
+  <td style="text-align:left"><strong>TM2020 car</strong> (CarSport, CarSnow, CarRally, CarDesert)</td>
+</tr>
+<tr>
+  <td style="text-align:left">11</td>
+  <td style="text-align:left">FUN_14086D3B0</td>
+  <td style="text-align:left">Unknown</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="43-how-tuning-modifiers-are-applied"><a class="anchor" href="#43-how-tuning-modifiers-are-applied">#</a>4.3 How Tuning Modifiers Are Applied</h3>
+<p>In the case 6 force computation (<code>FUN_14085C9E0</code>):</p>
+<ol>
+  <li><strong>AccelCoef</strong> is read from the loaded model at <code>model + 0xA54</code> (via <code>*plVar1[0] + 0xA54</code>) and multiplied with the dynamic accel state at <code>plVar1 + 0x2EB</code></li>
+  <li>The combined coefficient is clamped to [0, 1]</li>
+  <li>If modifier state 1 is active (<code>entity + 0x1B8C != 0</code>), it's further multiplied by <code>entity + 0x1B9C</code></li>
+  <li>If modifier state 2 is active (<code>entity + 0x1B74 != 0</code>), it's further multiplied by <code>entity + 0x1B7C</code></li>
+  <li>The final value is passed to the wheel force computation</li>
+</ol>
+<p>The <strong>GravityCoef</strong> flows through the spawn model's <code>DefaultGravitySpawn</code> (offset 0x54) and the gravity override at <code>entity + 0x175C</code>.</p>
+<hr>
+<h2 id="5-maniascript-runtime-tuning-interface"><a class="anchor" href="#5-maniascript-runtime-tuning-interface">#</a>5. ManiaScript Runtime Tuning Interface</h2>
+<h3 id="51-ngameslotphysmgr-tuning-parameters"><a class="anchor" href="#51-ngameslotphysmgr-tuning-parameters">#</a>5.1 NGameSlotPhy::SMgr Tuning Parameters</h3>
+<p><strong>Registration</strong>: <code class="addr">0x141071B20</code> <strong>Size</strong>: <code>0x90</code> bytes</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Offset</th>
+  <th style="text-align:left">ManiaScript Name</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0x58</td>
+  <td style="text-align:left">Tunings.CoefFriction</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Global friction coefficient</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x5C</td>
+  <td style="text-align:left">Tunings.CoefAcceleration</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Global acceleration coefficient</td>
+</tr>
+<tr>
+  <td style="text-align:left">0x60</td>
+  <td style="text-align:left">Tunings.Sensibility</td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Steering sensitivity</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52-delayed-modification-system"><a class="anchor" href="#52-delayed-modification-system">#</a>5.2 Delayed Modification System</h3>
+<p>ManiaScript modifies vehicle physics via <code>SetPlayer_Delayed_*</code> functions. These queue modifications that take effect after a delay (approximately +600 ticks).</p>
+<p>The queue lives at <code>entity + 0x2E8</code>, each entry being 16 bytes:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">struct DelayedModification {
+    int apply_tick;        // +0x00: When to apply (current_tick + 600)
+    int type;              // +0x04: What to modify
+    float value;           // +0x08: New value
+    short duration;        // +0x0C: Duration
+    byte sub_type;         // +0x0E: Sub-type flag
+    int extra;             // +0x10: Extra data
+};</code></pre></div>
+<p>Available modifications:</p>
+<ul>
+  <li><strong>NoBrakes</strong> / <strong>NoSteer</strong> / <strong>NoEngine</strong> / <strong>ForceEngine</strong> - binary toggles</li>
+  <li><strong>AccelCoef</strong> (type 0xD) - acceleration multiplier [0..1]</li>
+  <li><strong>ControlCoef</strong> - steering multiplier [0..1]</li>
+  <li><strong>GravityCoef</strong> - gravity multiplier [0..1]</li>
+  <li><strong>AdherenceCoef</strong> - friction/grip multiplier [0..1]</li>
+  <li><strong>BoostUp/BoostDown/Boost2Up/Boost2Down</strong> - boost state changes</li>
+  <li><strong>TireWear</strong> - tire degradation</li>
+  <li><strong>Cruise</strong> - cruise control mode</li>
+  <li><strong>Fragile</strong> - fragile mode (car breaks easily)</li>
+  <li><strong>SlowMotion</strong> - slow motion effect</li>
+  <li><strong>VehicleTransform</strong> - vehicle transformation</li>
+  <li><strong>Reset</strong> - full vehicle reset</li>
+</ul>
+<h3 id="53-deprecation-notes"><a class="anchor" href="#53-deprecation-notes">#</a>5.3 Deprecation Notes</h3>
+<p>Several older ManiaScript functions are deprecated with messages pointing to <code>SetPlayer_Delayed_AccelCoef</code>:</p>
+<ul>
+  <li>"This way of setting GravityCoef is deprecated..."</li>
+  <li>"This way of setting AdherenceCoef is deprecated..."</li>
+  <li>"This way of setting AccelCoef is deprecated..."</li>
+  <li>"This way of setting ControlCoef is deprecated..."</li>
+</ul>
+<p>This suggests the delayed modification system is the newer, preferred API.</p>
+<hr>
+<h2 id="6-vehicle-type-registry"><a class="anchor" href="#6-vehicle-type-registry">#</a>6. Vehicle Type Registry</h2>
+<p>The game maintains a static registry of all vehicle types at <code class="addr">0x141F75540</code>, initialized by <code>FUN_140CD5590</code>:</p>
+<h3 id="tm2020-vehicles-items"><a class="anchor" href="#tm2020-vehicles-items">#</a>TM2020 Vehicles (Items)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Name</th>
+  <th style="text-align:left">GBX Path</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Flags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">CarSport</td>
+  <td style="text-align:left">\Vehicles\Items\CarSport.Item.gbx</td>
+  <td style="text-align:left">0x10</td>
+  <td style="text-align:left">0x21</td>
+</tr>
+<tr>
+  <td style="text-align:left">CarSnow</td>
+  <td style="text-align:left">\Vehicles\Items\CarSnow.Item.gbx</td>
+  <td style="text-align:left">0x10</td>
+  <td style="text-align:left">0x20</td>
+</tr>
+<tr>
+  <td style="text-align:left">CarRally</td>
+  <td style="text-align:left">\Vehicles\Items\CarRally.Item.gbx</td>
+  <td style="text-align:left">0x10</td>
+  <td style="text-align:left">0x21</td>
+</tr>
+<tr>
+  <td style="text-align:left">CarDesert</td>
+  <td style="text-align:left">\Vehicles\Items\CarDesert.Item.gbx</td>
+  <td style="text-align:left">0x10</td>
+  <td style="text-align:left">0x22</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="legacy-tm-vehicles-objectinfo"><a class="anchor" href="#legacy-tm-vehicles-objectinfo">#</a>Legacy TM Vehicles (ObjectInfo)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Name</th>
+  <th style="text-align:left">GBX Path</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Flags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">CanyonCar</td>
+  <td style="text-align:left">\Trackmania\Items\Vehicles\CanyonCar.ObjectInfo.Gbx</td>
+  <td style="text-align:left">0x0F</td>
+  <td style="text-align:left">0x33</td>
+</tr>
+<tr>
+  <td style="text-align:left">StadiumCar</td>
+  <td style="text-align:left">\Trackmania\Items\Vehicles\StadiumCar.ObjectInfo.Gbx</td>
+  <td style="text-align:left">0x0F</td>
+  <td style="text-align:left">0x34</td>
+</tr>
+<tr>
+  <td style="text-align:left">ValleyCar</td>
+  <td style="text-align:left">\Trackmania\Items\Vehicles\ValleyCar.ObjectInfo.Gbx</td>
+  <td style="text-align:left">0x0F</td>
+  <td style="text-align:left">0x33</td>
+</tr>
+<tr>
+  <td style="text-align:left">LagoonCar</td>
+  <td style="text-align:left">\Trackmania\Items\Vehicles\LagoonCar.ObjectInfo.Gbx</td>
+  <td style="text-align:left">0x0F</td>
+  <td style="text-align:left">0x33</td>
+</tr>
+<tr>
+  <td style="text-align:left">(and more...)</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary><h2 id="7-key-function-addresses"><a class="anchor" href="#7-key-function-addresses">#</a>7. Key Function Addresses</h2></summary>
+<div class="collapsible-content">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Address</th>
+  <th style="text-align:left">Function</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141501800</code></td>
+  <td style="text-align:left">PhysicsStep_TM</td>
+  <td style="text-align:left">Main physics tick</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1408427D0</code></td>
+  <td style="text-align:left">ComputeForces</td>
+  <td style="text-align:left">Force dispatcher</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14085C9E0</code></td>
+  <td style="text-align:left">Case6_ComputeForces</td>
+  <td style="text-align:left">TM2020 car forces</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14061ABB0</code></td>
+  <td style="text-align:left">CPlugVehiclePhyModelCustom::Register</td>
+  <td style="text-align:left">Tuning class registration</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14061AAE0</code></td>
+  <td style="text-align:left">CPlugVehiclePhyModelCustom::Archive</td>
+  <td style="text-align:left">Tuning deserialization</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140618A60</code></td>
+  <td style="text-align:left">CPlugVehicleCarPhyShape::Archive</td>
+  <td style="text-align:left">Car shape deserialization</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1405B58A0</code></td>
+  <td style="text-align:left">CPlugVehicleGearBox::Register</td>
+  <td style="text-align:left">Gearbox registration</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1406219A0</code></td>
+  <td style="text-align:left">CPlugSpawnModel::Register</td>
+  <td style="text-align:left">Spawn model registration</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1406190C0</code></td>
+  <td style="text-align:left">CPlugVehicleWheelPhyModel::Register</td>
+  <td style="text-align:left">Wheel model registration</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140CD5590</code></td>
+  <td style="text-align:left">VehicleRegistry::Init</td>
+  <td style="text-align:left">Vehicle type registry</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141071B20</code></td>
+  <td style="text-align:left">NGameSlotPhy::Register</td>
+  <td style="text-align:left">ManiaScript tuning</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141342950</code></td>
+  <td style="text-align:left">SetDelayed_AccelCoef</td>
+  <td style="text-align:left">ManiaScript AccelCoef handler</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141342450</code></td>
+  <td style="text-align:left">QueueDelayedModification</td>
+  <td style="text-align:left">Modification queue</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140904730</code></td>
+  <td style="text-align:left">ArchiveNod::LoadGbx</td>
+  <td style="text-align:left">GBX body loader</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140903D30</code></td>
+  <td style="text-align:left">ArchiveNod::LoadBody</td>
+  <td style="text-align:left">GBX body parser</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1409031D0</code></td>
+  <td style="text-align:left">ArchiveNod::ReadChunks</td>
+  <td style="text-align:left">Chunk iteration</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1402D0D70</code></td>
+  <td style="text-align:left">ReadChunkVersion</td>
+  <td style="text-align:left">Version negotiation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14012C310</code></td>
+  <td style="text-align:left">ArchiveFloat</td>
+  <td style="text-align:left">Float serialize/deserialize</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140ABCE80</code></td>
+  <td style="text-align:left">CGameObjectPhyModel::LoadData</td>
+  <td style="text-align:left">Physics model assembly</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+</div>
+</details>
+<h2 id="8-implications-for-physics-recreation"><a class="anchor" href="#8-implications-for-physics-recreation">#</a>8. Implications for Physics Recreation</h2>
+<h3 id="81-what-this-means"><a class="anchor" href="#81-what-this-means">#</a>8.1 What This Means</h3>
+<ol>
+  <li><strong>ALL tuning parameters are in GBX files</strong> - There are no hardcoded tuning tables in the executable. The CarSport's acceleration curve, grip model, suspension geometry, etc. are all loaded from <code>CarSport.Item.gbx</code> and its referenced sub-GBX files.</li>
+</ol>
+<ol>
+  <li><strong>The physics model pointer chain is</strong>: <code>CGameItemModel -> PhyModelCustom (offset 0x120) -> CPlugVehiclePhyModelCustom</code> for the high-level modifiers, and <code>CGameObjectPhyModel -> LoadData -> sub-GBX references</code> for the full physics model.</li>
+</ol>
+<ol>
+  <li><strong>Runtime access is direct pointer dereference</strong> - The physics code reads tuning values directly from the loaded GBX struct memory. No intermediate processing or caching layer exists.</li>
+</ol>
+<ol>
+  <li><strong>Vehicle type dispatch at offset 0x1790</strong> determines which force model runs. TM2020 cars use type 6.</li>
+</ol>
+<h3 id="82-to-extract-all-tuning-data"><a class="anchor" href="#82-to-extract-all-tuning-data">#</a>8.2 To Extract All Tuning Data</h3>
+<ol>
+  <li>Parse <code>CarSport.Item.gbx</code> using GBX.NET to extract the <code>CPlugVehiclePhyModelCustom</code> reference</li>
+  <li>Follow all sub-node references to find <code>CPlugVehicleCarPhyShape</code>, <code>CPlugVehicleGearBox</code>, <code>CPlugSpawnModel</code>, <code>CPlugVehicleWheelPhyModel</code></li>
+  <li>The Archive functions documented here tell you exactly which bytes at which offsets correspond to which parameters</li>
+  <li>The default values from constructors provide fallback values when GBX data doesn't specify them</li>
+</ol>
+<h3 id="83-missing-pieces"><a class="anchor" href="#83-missing-pieces">#</a>8.3 Missing Pieces</h3>
+<ul>
+  <li>The large physics model struct referenced at <code>entity + 0x1BB0</code> with offsets up to 0x2C1C+ is NOT directly a single GBX class - it appears to be a runtime-assembled composite from multiple loaded GBX nodes</li>
+  <li>The exact mapping of CarPhyShape fields (0x30-0x44, 0xE0-0x124, etc.) to named physics parameters requires either: (a) finding additional registration functions that name them, or (b) systematic float extraction from known GBX files and correlation with observed behavior</li>
+  <li>The per-wheel force computation functions (FUN_1408570E0, FUN_140858660, etc.) need deeper analysis to understand the exact force model</li>
+</ul>
+<hr>
+<h2 id="9-decompiled-functions"><a class="anchor" href="#9-decompiled-functions">#</a>9. Decompiled Functions</h2>
+<p>All decompiled functions are saved to: <code>decompiled/tuning/</code></p>
+<ul>
+  <li><code>CPlugVehiclePhyModelCustom_Archive.c</code> - Tuning modifier serialization</li>
+  <li><code>CPlugVehicleCarPhyShape_Archive.c</code> - Car shape serialization (richest data class)</li>
+  <li><code>CPlugVehicleGearBox_Constructor.c</code> - Default gear ratios</li>
+  <li><code>CPlugSpawnModel_Registration.c</code> - Spawn physics data</li>
+  <li><code>NSceneVehiclePhy_ComputeForces.c</code> - Force computation dispatcher</li>
+  <li><code>PhysicsStep_TM.c</code> - Main physics tick</li>
+  <li><code>ManiaScript_Tuning_Registration.c</code> - Runtime tuning parameters</li>
+  <li><code>SetPlayer_Delayed_AccelCoef.c</code> - ManiaScript modification handler</li>
+  <li><code>VehicleRegistry.c</code> - All registered vehicle types</li>
+</ul>
+
+                        <nav class="prev-next"><a class="prev" href="plan-tuning.html">&larr; Tuning Data Extraction</a><a class="next" href="seminar-alex.html">Alex: Physics Notes &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#executive-summary">Executive Summary</a></li>
+<li class=""><a href="#1-gbx-class-system-architecture">1. GBX Class System Architecture</a></li>
+  <li class="toc-h3"><a href="#11-class-registration-pattern">1.1 Class Registration Pattern</a></li>
+  <li class="toc-h3"><a href="#12-archive-serialization-pattern">1.2 Archive (Serialization) Pattern</a></li>
+  <li class="toc-h3"><a href="#13-gbx-loading-pipeline">1.3 GBX Loading Pipeline</a></li>
+<li class=""><a href="#2-vehicle-physics-class-hierarchy">2. Vehicle Physics Class Hierarchy</a></li>
+  <li class="toc-h3"><a href="#21-cgameitemmodel-top-level">2.1 CGameItemModel (Top Level)</a></li>
+  <li class="toc-h3"><a href="#22-cplugvehiclephymodelcustom-tuning-modifiers">2.2 CPlugVehiclePhyModelCustom (Tuning Modifiers)</a></li>
+  <li class="toc-h3"><a href="#23-cplugvehiclecarphyshape-car-physics-shape">2.3 CPlugVehicleCarPhyShape (Car Physics Shape)</a></li>
+  <li class="toc-h3"><a href="#24-cplugvehiclegearbox">2.4 CPlugVehicleGearBox</a></li>
+  <li class="toc-h3"><a href="#25-cplugvehiclewheelphymodel">2.5 CPlugVehicleWheelPhyModel</a></li>
+  <li class="toc-h3"><a href="#26-cplugspawnmodel">2.6 CPlugSpawnModel</a></li>
+<li class=""><a href="#3-runtime-vehicle-entity-layout">3. Runtime Vehicle Entity Layout</a></li>
+  <li class="toc-h3"><a href="#31-physics-model-data-at-entity-0x1bb0">3.1 Physics Model Data (at entity + 0x1BB0)</a></li>
+<li class=""><a href="#4-force-computation-pipeline">4. Force Computation Pipeline</a></li>
+  <li class="toc-h3"><a href="#41-call-chain">4.1 Call Chain</a></li>
+  <li class="toc-h3"><a href="#42-vehicle-type-dispatch">4.2 Vehicle Type Dispatch</a></li>
+  <li class="toc-h3"><a href="#43-how-tuning-modifiers-are-applied">4.3 How Tuning Modifiers Are Applied</a></li>
+<li class=""><a href="#5-maniascript-runtime-tuning-interface">5. ManiaScript Runtime Tuning Interface</a></li>
+  <li class="toc-h3"><a href="#51-ngameslotphysmgr-tuning-parameters">5.1 NGameSlotPhy::SMgr Tuning Parameters</a></li>
+  <li class="toc-h3"><a href="#52-delayed-modification-system">5.2 Delayed Modification System</a></li>
+  <li class="toc-h3"><a href="#53-deprecation-notes">5.3 Deprecation Notes</a></li>
+<li class=""><a href="#6-vehicle-type-registry">6. Vehicle Type Registry</a></li>
+  <li class="toc-h3"><a href="#tm2020-vehicles-items">TM2020 Vehicles (Items)</a></li>
+  <li class="toc-h3"><a href="#legacy-tm-vehicles-objectinfo">Legacy TM Vehicles (ObjectInfo)</a></li>
+<li class=""><a href="#7-key-function-addresses">7. Key Function Addresses</a></li>
+<li class=""><a href="#8-implications-for-physics-recreation">8. Implications for Physics Recreation</a></li>
+  <li class="toc-h3"><a href="#81-what-this-means">8.1 What This Means</a></li>
+  <li class="toc-h3"><a href="#82-to-extract-all-tuning-data">8.2 To Extract All Tuning Data</a></li>
+  <li class="toc-h3"><a href="#83-missing-pieces">8.3 Missing Pieces</a></li>
+<li class=""><a href="#9-decompiled-functions">9. Decompiled Functions</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

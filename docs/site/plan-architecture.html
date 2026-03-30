@@ -1,0 +1,2246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture - Trackmania 2020 Planning</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item active" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>System Architecture</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        
+                        <h1 id="opentm-system-architecture"><a class="anchor" href="#opentm-system-architecture">#</a>OpenTM System Architecture</h1>
+<p><strong>Version</strong>: 1.0 <strong>Date</strong>: 2026-03-27 <strong>Status</strong>: Design (pre-implementation) <strong>Scope</strong>: Complete technical architecture for a browser-based Trackmania 2020 recreation using WASM <strong>Source Evidence</strong>: All references cite RE documents 00-20 plus community tools analysis</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-module-dependency-graph">Module Dependency Graph</a></li>
+  <li><a href="#2-data-flow-architecture">Data Flow Architecture</a></li>
+  <li><a href="#3-threading-model">Threading Model</a></li>
+  <li><a href="#4-state-machine">State Machine</a></li>
+  <li><a href="#5-build-system">Build System</a></li>
+  <li><a href="#6-performance-budget">Performance Budget</a></li>
+  <li><a href="#7-critical-unknowns-that-block-architecture">Critical Unknowns That Block Architecture</a></li>
+</ol>
+<hr>
+<h2 id="1-module-dependency-graph"><a class="anchor" href="#1-module-dependency-graph">#</a>1. Module Dependency Graph</h2>
+<h3 id="11-module-definitions"><a class="anchor" href="#11-module-definitions">#</a>1.1 Module Definitions</h3>
+<p>Every module is an npm workspace package under <code>packages/</code>. Rust/WASM modules are compiled via wasm-pack and published as npm packages within the monorepo.</p>
+<h4 id="opentmcore"><a class="anchor" href="#opentmcore">#</a><code>@opentm/core</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: Foundational math types (Vec3, Quat, Mat4, Iso4), time utilities, constants, event bus, typed IDs</li>
+  <li><strong>Depends on</strong>: Nothing (zero dependencies -- this is the leaf)</li>
+  <li><strong>Depended on by</strong>: Every other module</li>
+  <li><strong>Approximate size</strong>: ~2,500 LOC</li>
+  <li><strong>Reason</strong>: TM2020 uses a left-handed Y-up coordinate system with Iso4 (3x3 rotation + vec3 position, 48 bytes) as the fundamental transform [doc 19 Section 9, <span class="badge badge-verified">VERIFIED</span>]. Every module needs these types. Centralizing them avoids circular dependencies and ensures consistent coordinate conventions.</li>
+</ul>
+<p><strong>Key types</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">// Iso4: 3x3 rotation matrix (row-major) + position. 48 bytes.
+// Source: doc 19 Section 9. CERTAIN.
+export interface Iso4 {
+  xx: number; xy: number; xz: number;
+  yx: number; yy: number; yz: number;
+  zx: number; zy: number; zz: number;
+  tx: number; ty: number; tz: number;
+}
+
+export interface Vec3 { x: number; y: number; z: number; }
+export interface Vec2 { x: number; y: number; }
+export interface Quat { x: number; y: number; z: number; w: number; }
+
+// Mat4: 4x4 column-major matrix (WebGPU convention).
+export type Mat4 = Float32Array; // 16 elements
+
+// Time: microsecond internal units. Source: doc 10 Section 1.3. CERTAIN.
+export const TICK_RATE = 100;       // Hz. PLAUSIBLE (community-established).
+export const TICK_DT = 0.01;        // 10ms
+export const TICK_DT_MICROS = 10_000_000;
+export const BLOCK_SIZE = 32.0;     // meters per block unit. CERTAIN (doc 19 Section 8).</code></pre></div>
+<h4 id="opentmgbx-parser"><a class="anchor" href="#opentmgbx-parser">#</a><code>@opentm/gbx-parser</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: GBX file reading, LZO decompression, class registry, chunk dispatch, LookbackString handling</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code></li>
+  <li><strong>Depended on by</strong>: <code>@opentm/map</code>, <code>@opentm/ghost</code>, <code>@opentm/assets</code>, <code>@opentm/editor</code></li>
+  <li><strong>Approximate size</strong>: ~8,000 LOC</li>
+  <li><strong>Reason</strong>: GBX is the universal container format for maps, items, ghosts, replays, materials, and meshes [doc 16, <span class="badge badge-verified">VERIFIED</span> from 5 real files in doc 26]. Everything loads through GBX. The parser must handle: magic/version/flags header, header chunks with index table, LookbackString system (4 flag modes), reference table (max 49,999 external refs), LZO1X body decompression (confirmed from real files in doc 26, NOT zlib for body), <code class="addr">0xFACADE01</code> sentinel, 200+ class ID remappings [doc 16 Section 11], and a chunk handler registry dispatching by (classId | chunkIndex).</li>
+</ul>
+<p><strong>Key interfaces</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">export interface GbxFile {
+  version: number;              // 3-6, TM2020 = 6. CERTAIN.
+  formatFlags: GbxFormatFlags;  // BUCR/BUCE. CERTAIN.
+  classId: number;              // MwClassId of root node
+  headerChunks: HeaderChunk[];
+  references: ExternalReference[];
+  bodyChunks: BodyChunk[];
+}
+
+export interface ChunkRegistry {
+  register(chunkId: number, handler: ChunkHandler): void;
+  parse(chunkId: number, reader: BinaryReader, lookback: LookbackStringTable): unknown;
+}</code></pre></div>
+<p><strong>Critical correction from doc 26</strong>: GBX body compression uses <strong>LZO1X</strong>, not zlib. The original doc 15 said zlib but real file analysis (doc 26 Section 2) confirmed LZO. The parser must bundle an LZO decompressor (lzo1x.js or WASM port). zlib IS used for other data (lightmaps, ghosts).</p>
+<h4 id="opentmphysics"><a class="anchor" href="#opentmphysics">#</a><code>@opentm/physics</code></h4>
+<ul>
+  <li><strong>Language</strong>: Rust compiled to WASM via wasm-pack</li>
+  <li><strong>Purpose</strong>: Vehicle simulation, collision detection, force models, integration, surface effects</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code> (type definitions shared via a generated TypeScript interface layer)</li>
+  <li><strong>Depended on by</strong>: <code>@opentm/ghost</code> (for deterministic replay), <code>@opentm/camera</code> (for vehicle state)</li>
+  <li><strong>Approximate size</strong>: ~12,000 LOC Rust + ~1,500 LOC TypeScript bindings</li>
+  <li><strong>Reason</strong>: Physics MUST run in WASM for two reasons: (1) performance -- adaptive sub-stepping with up to 1000 sub-steps per 10ms tick [doc 10, CERTAIN] requires tight loops that JIT-compiled JS cannot reliably optimize; (2) determinism -- replay validation requires bit-exact floating-point results, and Rust WASM with <code>#[deny(clippy::float_arithmetic)]</code> guards plus explicit f32 operations gives predictable IEEE 754 behavior that JS's JIT-optimized doubles cannot guarantee.</li>
+</ul>
+<p><strong>Pipeline</strong> (from doc 10 Section 1, <span class="badge badge-verified">VERIFIED</span>):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>physicsStep(vehicles, tick, collisionWorld)
+  for each vehicle:
+    computeSubstepCount(velocity)    // velocity-dependent, cap 1000
+    for substep in 0..count:
+      detectContacts()               // broadphase BVH + narrowphase GJK
+      computeForces(model_type)      // switch on vehicle_model+0x1790 (7 cases)
+      applyTurboForce()              // linear ramp: (elapsed/duration) * strength
+      clampSpeed()                   // vehicle_model+0x2F0 max speed
+      integrateEuler(dt)             // Forward Euler. CERTAIN (doc 14 cross-ref).
+      resolveCollisions()            // iterative friction solver
+    copyTransformToPrevious()</code></pre></div>
+<p><strong>Force model dispatch</strong> (doc 10 Section 2.1, doc 22, <span class="badge badge-verified">VERIFIED</span>):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Case</th>
+  <th style="text-align:left">Model</th>
+  <th style="text-align:left">Vehicle(s)</th>
+  <th style="text-align:left">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0/1/2</td>
+  <td style="text-align:left">Base 4-wheel (300+ LOC decompiled)</td>
+  <td style="text-align:left">Legacy</td>
+  <td style="text-align:left">DECOMPILED (doc 22)</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">2-wheel bicycle (250+ LOC, Pacejka-like)</td>
+  <td style="text-align:left">Unknown legacy</td>
+  <td style="text-align:left">DECOMPILED (doc 22)</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">TMNF-era</td>
+  <td style="text-align:left">Unknown</td>
+  <td style="text-align:left">NOT decompiled</td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">CarSport/Stadium (350+ LOC, 9 sub-functions)</td>
+  <td style="text-align:left">CarSport</td>
+  <td style="text-align:left">DECOMPILED (doc 22)</td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Snow/Rally</td>
+  <td style="text-align:left">CarSnow, CarRally</td>
+  <td style="text-align:left">NOT decompiled</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xB/11</td>
+  <td style="text-align:left">Desert</td>
+  <td style="text-align:left">CarDesert</td>
+  <td style="text-align:left">NOT decompiled</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Rust WASM interface</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">#[wasm_bindgen]
+pub struct PhysicsWorld {
+    vehicles: Vec&lt;VehicleState&gt;,
+    collision: CollisionWorld,  // wraps rapier3d
+    tick: u64,
+}
+
+#[wasm_bindgen]
+impl PhysicsWorld {
+    pub fn step(&amp;mut self, input_buffer: &amp;[u8]) -&gt; Box&lt;[u8]&gt;;
+    pub fn add_collision_mesh(&amp;mut self, vertices: &amp;[f32], indices: &amp;[u32], surface_id: u16);
+    pub fn reset_vehicle(&amp;mut self, id: u32, position: &amp;[f32], rotation: &amp;[f32]);
+    pub fn get_vehicle_state(&amp;self, id: u32) -&gt; Box&lt;[u8]&gt;;
+}</code></pre></div>
+<p>The <code>step()</code> and <code>get_vehicle_state()</code> functions communicate via serialized byte buffers to avoid WASM/JS boundary overhead on the hot path. The exact layout is defined in Section 3 (Threading Model).</p>
+<h4 id="opentmrenderer"><a class="anchor" href="#opentmrenderer">#</a><code>@opentm/renderer</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript + WGSL</li>
+  <li><strong>Purpose</strong>: WebGPU deferred rendering pipeline, G-buffer management, shadow mapping, post-processing, mesh/material/texture GPU resource management</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code>, <code>@opentm/assets</code> (for loaded textures/meshes)</li>
+  <li><strong>Depended on by</strong>: <code>@opentm/ui</code> (for overlay compositing), <code>@opentm/editor</code> (for editor viewport)</li>
+  <li><strong>Approximate size</strong>: ~15,000 LOC TypeScript + ~3,000 LOC WGSL</li>
+  <li><strong>Reason</strong>: TM2020 uses a 19-pass deferred pipeline [doc 15 Section 7, doc 11, <span class="badge badge-verified">VERIFIED</span>]. The browser recreation starts with a simplified pipeline and progressively adds passes.</li>
+</ul>
+<p><strong>MVP pipeline</strong> (4 passes):</p>
+<ol>
+  <li>Shadow pass (PSSM, 2 cascades initially, upgrade to 4)</li>
+  <li>G-buffer fill (DeferredWrite -- 4 MRT: diffuse, specular, normal, lightMask + depth24plus-stencil8)</li>
+  <li>Deferred lighting (full-screen triangle, PBR GGX, directional sun + ambient)</li>
+  <li>Post-process (tone mapping + FXAA)</li>
+</ol>
+<p><strong>Full pipeline</strong> target (matches doc 11 Section 3, 19 passes): DipCulling -> DeferredWrite -> DeferredWriteFNormal -> DeferredWriteVNormal -> DeferredDecals -> DeferredBurn -> DeferredShadow (PSSM 4-cascade) -> DeferredAmbientOcc (SSAO) -> DeferredFakeOcc -> CameraMotion -> DeferredRead -> DeferredReadFull -> Reflects_CullObjects -> DeferredLighting -> CustomEnding -> DeferredFogVolumes -> DeferredFog -> LensFlares -> FxTXAA</p>
+<p><strong>Vertex formats</strong> (doc 11 Section 1, <span class="badge badge-verified">VERIFIED</span> from DXVK log):</p>
+<ul>
+  <li>Block: stride 56, 7 attributes (pos float32x3, normal snorm16x4, color unorm8x4-bgra, uv0 float32x2, uv1 float32x2, tangent snorm16x4, bitangent snorm16x4)</li>
+  <li>Simple: stride 28, 3 attributes</li>
+  <li>Lightmapped: stride 52, 6 attributes</li>
+</ul>
+<h4 id="opentmaudio"><a class="anchor" href="#opentmaudio">#</a><code>@opentm/audio</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: Engine sound synthesis (RPM-based crossfade), spatial 3D SFX, music playback, surface sounds</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code></li>
+  <li><strong>Depended on by</strong>: Nothing directly (event-driven; listens to game events)</li>
+  <li><strong>Approximate size</strong>: ~3,000 LOC</li>
+  <li><strong>Reason</strong>: TM2020 uses OpenAL with a 3-layer stack (CAudioManager -> CAudioPort -> COalAudioPort) [doc 15 Section 1, doc 24, <span class="badge badge-verified">VERIFIED</span>]. Web Audio API maps directly: AudioContext = alcCreateContext, PannerNode = AL source with 3D position, GainNode = AL gain. Engine sound uses CPlugSoundEngine2 with layered throttle/release/idle/limiter samples crossfaded by RPM [doc 22, doc 24 Section 4].</li>
+</ul>
+<p><strong>Architecture</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>AudioManager
+  ├── EngineSound (AudioWorklet for low-latency synthesis)
+  │     └── 4 sample layers: idle, low, mid, high RPM
+  │     └── playbackRate + crossfade gains driven by RPM (0-11000)
+  ├── SoundPool (32 spatial sources, PannerNode HRTF)
+  │     └── tire screech, impacts, checkpoint, turbo
+  ├── MusicPlayer (streaming via fetch + decodeAudioData)
+  │     └── crossfade between tracks
+  └── MasterGain -&gt; AudioContext.destination</code></pre></div>
+<h4 id="opentminput"><a class="anchor" href="#opentminput">#</a><code>@opentm/input</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: Keyboard and gamepad handling, input recording for ghosts, action mapping</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code></li>
+  <li><strong>Depended on by</strong>: <code>@opentm/physics</code> (receives input per tick), <code>@opentm/ghost</code> (records input history), <code>@opentm/ui</code> (menu navigation)</li>
+  <li><strong>Approximate size</strong>: ~1,500 LOC</li>
+  <li><strong>Reason</strong>: TM2020 uses DirectInput 8 for keyboard/mouse and XInput 9.1.0 for gamepads [doc 15 Section 2, <span class="badge badge-verified">VERIFIED</span>]. Input values are: steer (-1 to 1), gas (0-1), brake (0-1), isBraking (bool), vertical (float) [doc 19 Section 1, CERTAIN]. The Gamepad API polling model matches XInput's design. Input must be recorded per-tick for ghost replay.</li>
+</ul>
+<p><strong>Interface</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">export interface InputState {
+  steer: number;       // -1.0 to 1.0
+  gas: number;         // 0.0 to 1.0
+  brake: number;       // 0.0 to 1.0
+  isBraking: boolean;
+  vertical: number;    // reactor input
+  respawn: boolean;
+  horn: boolean;
+}
+
+export interface InputManager {
+  sampleForTick(tick: number): InputState;
+  getHistory(): InputSample[];
+  resetHistory(): void;
+}</code></pre></div>
+<h4 id="opentmcamera"><a class="anchor" href="#opentmcamera">#</a><code>@opentm/camera</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: Camera controllers (race chase, orbital, free-fly, first-person, replay)</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code>, <code>@opentm/physics</code> (reads vehicle state for chase cam target)</li>
+  <li><strong>Depended on by</strong>: <code>@opentm/renderer</code> (provides view/projection matrices)</li>
+  <li><strong>Approximate size</strong>: ~2,500 LOC</li>
+  <li><strong>Reason</strong>: TM2020 has 12 camera controller classes [doc 15 Section 3, <span class="badge badge-verified">VERIFIED</span>]. The orbital camera math is fully documented [doc 19 Section 7]: <code>h = (HAngle + PI/2) <em> -1; v = VAngle; axis = vec4(1,0,0,0) rotated by v around Z then h around Y; cameraPos = targetPos + axis.xyz </em> distance</code>. Chase camera parameters (follow distance, height, spring stiffness) are stored in VehicleCameraRace2Model.gbx / Race3Model.gbx files -- format unknown, so these will need tuning.</li>
+</ul>
+<p><strong>Controllers</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Controller</th>
+  <th style="text-align:left">TM2020 Equivalent</th>
+  <th style="text-align:left">Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">ChaseCamera</td>
+  <td style="text-align:left">Race2/Race3</td>
+  <td style="text-align:left">MVP</td>
+</tr>
+<tr>
+  <td style="text-align:left">OrbitalCamera</td>
+  <td style="text-align:left">EditorOrbital</td>
+  <td style="text-align:left">MVP (editor)</td>
+</tr>
+<tr>
+  <td style="text-align:left">FreeCamera</td>
+  <td style="text-align:left">Free</td>
+  <td style="text-align:left">MVP (debug)</td>
+</tr>
+<tr>
+  <td style="text-align:left">FirstPersonCamera</td>
+  <td style="text-align:left">VehicleInternal</td>
+  <td style="text-align:left">Post-MVP</td>
+</tr>
+<tr>
+  <td style="text-align:left">ReplayCamera</td>
+  <td style="text-align:left">Replay (spectator type 0)</td>
+  <td style="text-align:left">Post-MVP</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="opentmnetwork"><a class="anchor" href="#opentmnetwork">#</a><code>@opentm/network</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: Nadeo API client (auth, map download, leaderboards, ghost download), WebSocket/WebRTC for future multiplayer</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code></li>
+  <li><strong>Depended on by</strong>: <code>@opentm/ghost</code> (ghost download), <code>@opentm/map</code> (map download), <code>@opentm/ui</code> (leaderboard display)</li>
+  <li><strong>Approximate size</strong>: ~4,000 LOC</li>
+  <li><strong>Reason</strong>: TM2020 authentication is a 3-step flow: UPC ticket -> UbiServices session -> Nadeo token exchange [doc 17 Section 2, doc 19 Section 6, <span class="badge badge-verified">VERIFIED</span>]. API uses <code>Authorization: nadeo_v1 t=<token></code> header format [CERTAIN]. Three API domains: Core (prod.trackmania.core.nadeo.online), Live (live-services.trackmania.nadeo.live), Meet (meet.trackmania.nadeo.club) [CERTAIN]. 80+ endpoints documented from community sources [doc 29 Section 4].</li>
+</ul>
+<p><strong>Browser auth limitation</strong>: UPC SDK is a Windows DLL. The browser client needs a backend proxy server for the initial auth step, or uses the community "dedicated server" credential approach. Post-auth, all API calls work via standard <code>fetch()</code>.</p>
+<p><strong>Future multiplayer</strong>: NOT replicating Nadeo's proprietary UDP protocol (undocumented). Instead: custom protocol over WebSocket (reliable channel for game state) + WebRTC DataChannel (unreliable channel for real-time position updates). Deterministic physics means clients only send inputs and verify periodically.</p>
+<h4 id="opentmscripting"><a class="anchor" href="#opentmscripting">#</a><code>@opentm/scripting</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: ManiaScript interpreter (lexer, parser, tree-walking evaluator, coroutine scheduler, engine bindings)</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code></li>
+  <li><strong>Depended on by</strong>: <code>@opentm/ui</code> (ManiaLink event handlers), <code>@opentm/map</code> (game mode rules)</li>
+  <li><strong>Approximate size</strong>: ~10,000 LOC (if built)</li>
+  <li><strong>Reason</strong>: ManiaScript drives game mode rules, custom HUD, and ManiaLink interactivity. The lexer token table is fully documented: 12 data types, 7 directives, 50+ tokens [doc 15 Section 10, <span class="badge badge-verified">VERIFIED</span>]. Runtime semantics (sleep/yield/wait/meanwhile scheduling model) are <span class="badge badge-unknown">UNKNOWN</span>. For MVP, this module is <strong>SKIPPED</strong> -- standard race mode is hardcoded. When needed, the coroutine model maps to JavaScript async generators.</li>
+</ul>
+<p><strong>MVP strategy</strong>: Skip entirely. Hardcode TimeAttack race rules (start timer on first input, record checkpoints, stop on finish). This covers 90% of single-player use.</p>
+<h4 id="opentmui"><a class="anchor" href="#opentmui">#</a><code>@opentm/ui</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript + Svelte</li>
+  <li><strong>Purpose</strong>: HUD (speedometer, race timer, checkpoint splits), menus (main menu, map select, settings, results), ManiaLink renderer (post-MVP)</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code>, <code>@opentm/network</code> (for leaderboard data)</li>
+  <li><strong>Depended on by</strong>: Nothing (leaf node; renders HTML/CSS overlay)</li>
+  <li><strong>Approximate size</strong>: ~6,000 LOC</li>
+  <li><strong>Reason</strong>: TM2020 uses CControlEngine with ManiaLink XML markup [doc 13 Section 4]. The browser has a massive advantage: HTML/CSS is the most mature UI technology available [doc 20 Section 12 recommendation]. DO NOT replicate ManiaLink for the UI layer. Build native web UI with Svelte for minimal bundle size and fast reactivity. ManiaLink rendering (for loading community content) is a separate post-MVP concern.</li>
+</ul>
+<h4 id="opentmeditor"><a class="anchor" href="#opentmeditor">#</a><code>@opentm/editor</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript + Svelte</li>
+  <li><strong>Purpose</strong>: Map editor (block palette, grid placement, orbital camera, undo/redo, map validation, save/export)</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code>, <code>@opentm/map</code>, <code>@opentm/renderer</code>, <code>@opentm/camera</code>, <code>@opentm/gbx-parser</code></li>
+  <li><strong>Depended on by</strong>: Nothing</li>
+  <li><strong>Approximate size</strong>: ~8,000 LOC</li>
+  <li><strong>Reason</strong>: TM2020 has 15+ editor types with the map editor at state 0xDE5 calling FUN_140b827b0 [doc 12 Section 1.3]. Block placement uses a 32m grid on X/Z with 8m Y sub-unit; items use free Vec3 [doc 28 Section 1, <span class="badge badge-verified">VERIFIED</span>]. Block placement validation rules (connectivity, adjacency) are NOT documented and represent the hardest unknow for this module.</li>
+</ul>
+<p><strong>MVP scope</strong>: Basic block placement on grid. No validation. Orbital camera with documented math. Command-pattern undo/redo. Export as .Map.Gbx via gbx-ts serialization (if supported) or custom JSON format.</p>
+<h4 id="opentmghost"><a class="anchor" href="#opentmghost">#</a><code>@opentm/ghost</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: Ghost recording (input state per tick), ghost playback (feed inputs to physics), ghost interpolation for rendering, ghost serialization/compression, official ghost import (post-MVP)</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code>, <code>@opentm/physics</code> (deterministic replay), <code>@opentm/input</code> (input history), <code>@opentm/network</code> (ghost download)</li>
+  <li><strong>Depended on by</strong>: <code>@opentm/renderer</code> (semi-transparent ghost car rendering)</li>
+  <li><strong>Approximate size</strong>: ~3,000 LOC</li>
+  <li><strong>Reason</strong>: Ghosts are the core competitive feature. TM2020 records inputs and replays them through deterministic physics [doc 19 Section 1]. The binary ghost format uses int16/int8 encoding for position/rotation/speed [doc 29 Section 6.2], but for OpenTM we use our own format: JSON array of <code>{tick, steer, gas, brake, vertical}</code> compressed with LZ4 for storage. Official TM2020 ghost loading requires further RE of the binary format.</li>
+</ul>
+<p><strong>Custom ghost format</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">interface GhostFile {
+  version: 1;
+  mapUid: string;
+  playerName: string;
+  vehicleType: number;
+  finishTime: number;          // ms
+  checkpointTimes: number[];   // ms per CP
+  samples: GhostSample[];     // one per physics tick
+}
+
+interface GhostSample {
+  tick: number;
+  steer: number;   // quantized to int16 (-32768..32767) for compression
+  gas: number;     // quantized to uint8 (0..255)
+  brake: number;   // quantized to uint8 (0..255)
+  vertical: number; // quantized to int8 (-128..127)
+}</code></pre></div>
+<h4 id="opentmmap"><a class="anchor" href="#opentmmap">#</a><code>@opentm/map</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: Map data model (block grid, item placements, waypoint graph, surface table), map loading orchestration (GBX parse -> block instantiation -> collision mesh generation -> scene graph), block/item management</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code>, <code>@opentm/gbx-parser</code>, <code>@opentm/assets</code></li>
+  <li><strong>Depended on by</strong>: <code>@opentm/physics</code> (collision meshes), <code>@opentm/renderer</code> (scene graph), <code>@opentm/editor</code>, <code>@opentm/ghost</code> (map validation)</li>
+  <li><strong>Approximate size</strong>: ~6,000 LOC</li>
+  <li><strong>Reason</strong>: Maps are CGameCtnChallenge (class <code class="addr">0x03043000</code>) with a 23-stage loading pipeline [doc 22, doc 28]. The block system uses 32m units with blocks identified by name + variant + position + rotation [doc 19 Section 8]. Materials map to 19 surface types that determine physics friction [doc 19 Section 10, 208 materials catalogued]. Waypoint blocks (start, finish, checkpoint) must be identified for race logic.</li>
+</ul>
+<p><strong>Loading pipeline</strong> (browser version of TM2020's 23-stage pipeline):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. fetch(mapUrl) -&gt; ArrayBuffer
+2. GbxParser.parse(buffer) -&gt; GbxFile
+3. Extract header chunks: map info, common header, thumbnail
+4. Parse body chunks: block list, item list, embedded objects
+5. For each block:
+   a. Resolve block name -&gt; mesh asset (from pre-extracted block library)
+   b. Compute world transform: gridPos * 32m + rotation
+   c. Tag waypoint blocks (start/finish/checkpoint)
+   d. Look up surface IDs from block materials
+6. For each item:
+   a. Resolve item name -&gt; mesh asset
+   b. Use embedded position/rotation (free Vec3, not grid-snapped)
+7. Generate collision mesh (aggregate all block collision geometry)
+8. Build scene graph (spatial hierarchy for frustum culling)
+9. Build waypoint graph (ordered checkpoint sequence)</code></pre></div>
+<h4 id="opentmassets"><a class="anchor" href="#opentmassets">#</a><code>@opentm/assets</code></h4>
+<ul>
+  <li><strong>Language</strong>: TypeScript</li>
+  <li><strong>Purpose</strong>: Asset loading and caching (HTTP fetch with IndexedDB cache), texture decoding (DDS, WebP, PNG), mesh loading (pre-extracted glTF/GLB block meshes), material creation, asset manifest management</li>
+  <li><strong>Depends on</strong>: <code>@opentm/core</code></li>
+  <li><strong>Depended on by</strong>: <code>@opentm/map</code>, <code>@opentm/renderer</code>, <code>@opentm/editor</code></li>
+  <li><strong>Approximate size</strong>: ~4,000 LOC</li>
+  <li><strong>Reason</strong>: Block meshes live inside NadeoPak files (.pak) which use a proprietary "NadeoPak" header format [doc 26 Section 10] -- NOT GBX format. Parsing these at runtime in the browser is not feasible (encrypted with per-account keys [doc 22]). Instead, meshes are <strong>pre-extracted offline</strong> using NadeoImporter or community tools and served as static glTF/GLB assets from a CDN. The asset module manages fetching, caching (IndexedDB for offline capability), and GPU upload.</li>
+</ul>
+<p><strong>Asset pipeline</strong> (offline, runs during build):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. NadeoImporter or gbx-net: extract block meshes from .pak files
+2. Convert to glTF 2.0 (preserving UVs, normals, tangents, material refs)
+3. Extract textures (DDS -&gt; PNG/WebP transcoding, or KTX2 for GPU compression)
+4. Generate asset manifest JSON (block_name -&gt; mesh_url, texture_url)
+5. Upload to CDN / serve from static directory</code></pre></div>
+<p><strong>Runtime asset loading</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">interface AssetManager {
+  loadBlockMesh(blockName: string): Promise&lt;MeshData&gt;;
+  loadTexture(texturePath: string): Promise&lt;GPUTexture&gt;;
+  loadMaterial(materialName: string): Promise&lt;MaterialData&gt;;
+  getManifest(): AssetManifest;
+  getCacheStats(): { cached: number; total: number; sizeBytes: number };
+}</code></pre></div>
+<h3 id="12-dependency-graph"><a class="anchor" href="#12-dependency-graph">#</a>1.2 Dependency Graph</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>                           @opentm/core
+                               |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+        gbx  phy  ren  aud  inp  cam  net  scr  ui
+        par  sics der  io   ut   era  wrk  ipt  (svelte)
+        ser             |         |         ing
+          |    |    |   |    |    |    |         |
+          +----+----+--assets    |    |         |
+          |              |       |    |         |
+         map----------+  |       |    |         |
+          |            |  |       |    |         |
+        ghost---------+  +-------+    |         |
+          |                           |         |
+        editor-----------------------+----------+
+
+Legend:
+  phy = @opentm/physics (Rust/WASM)
+  scr = @opentm/scripting (deferred)
+  All others = TypeScript</code></pre></div>
+<p><strong>Arrows indicate "depends on"</strong>. Reading top-to-bottom:</p>
+<ul>
+  <li><code>core</code> has zero dependencies</li>
+  <li><code>gbx-parser</code>, <code>physics</code>, <code>renderer</code>, <code>audio</code>, <code>input</code>, <code>camera</code>, <code>network</code>, <code>scripting</code>, <code>ui</code> all depend on <code>core</code></li>
+  <li><code>assets</code> depends on <code>core</code> only</li>
+  <li><code>map</code> depends on <code>core</code>, <code>gbx-parser</code>, <code>assets</code></li>
+  <li><code>ghost</code> depends on <code>core</code>, <code>physics</code>, <code>input</code>, <code>network</code></li>
+  <li><code>camera</code> depends on <code>core</code>, reads vehicle state from <code>physics</code> (via shared state, not npm dependency)</li>
+  <li><code>renderer</code> depends on <code>core</code>, <code>assets</code></li>
+  <li><code>editor</code> depends on <code>core</code>, <code>map</code>, <code>renderer</code>, <code>camera</code>, <code>gbx-parser</code></li>
+  <li><code>ui</code> depends on <code>core</code>, <code>network</code></li>
+</ul>
+<h3 id="13-module-size-summary"><a class="anchor" href="#13-module-size-summary">#</a>1.3 Module Size Summary</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Module</th>
+  <th style="text-align:left">Language</th>
+  <th style="text-align:left">Est. LOC</th>
+  <th style="text-align:left">MVP?</th>
+  <th style="text-align:left">Build Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">core</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">2,500</td>
+  <td style="text-align:left">Yes</td>
+  <td style="text-align:left">1</td>
+</tr>
+<tr>
+  <td style="text-align:left">gbx-parser</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">8,000</td>
+  <td style="text-align:left">Yes</td>
+  <td style="text-align:left">1</td>
+</tr>
+<tr>
+  <td style="text-align:left">physics</td>
+  <td style="text-align:left">Rust/WASM + TS bindings</td>
+  <td style="text-align:left">13,500</td>
+  <td style="text-align:left">Yes (TS prototype first)</td>
+  <td style="text-align:left">2-3</td>
+</tr>
+<tr>
+  <td style="text-align:left">renderer</td>
+  <td style="text-align:left">TS + WGSL</td>
+  <td style="text-align:left">18,000</td>
+  <td style="text-align:left">Yes (forward first)</td>
+  <td style="text-align:left">1-2</td>
+</tr>
+<tr>
+  <td style="text-align:left">audio</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">3,000</td>
+  <td style="text-align:left">No</td>
+  <td style="text-align:left">4</td>
+</tr>
+<tr>
+  <td style="text-align:left">input</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">1,500</td>
+  <td style="text-align:left">Yes</td>
+  <td style="text-align:left">2</td>
+</tr>
+<tr>
+  <td style="text-align:left">camera</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">2,500</td>
+  <td style="text-align:left">Yes</td>
+  <td style="text-align:left">2</td>
+</tr>
+<tr>
+  <td style="text-align:left">network</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">4,000</td>
+  <td style="text-align:left">No (MVP is offline)</td>
+  <td style="text-align:left">5</td>
+</tr>
+<tr>
+  <td style="text-align:left">scripting</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">10,000</td>
+  <td style="text-align:left">No (skipped for MVP)</td>
+  <td style="text-align:left">5+</td>
+</tr>
+<tr>
+  <td style="text-align:left">ui</td>
+  <td style="text-align:left">TS + Svelte</td>
+  <td style="text-align:left">6,000</td>
+  <td style="text-align:left">Yes (minimal HUD)</td>
+  <td style="text-align:left">3</td>
+</tr>
+<tr>
+  <td style="text-align:left">editor</td>
+  <td style="text-align:left">TS + Svelte</td>
+  <td style="text-align:left">8,000</td>
+  <td style="text-align:left">No</td>
+  <td style="text-align:left">5+</td>
+</tr>
+<tr>
+  <td style="text-align:left">ghost</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">3,000</td>
+  <td style="text-align:left">Yes (recording only)</td>
+  <td style="text-align:left">3</td>
+</tr>
+<tr>
+  <td style="text-align:left">map</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">6,000</td>
+  <td style="text-align:left">Yes</td>
+  <td style="text-align:left">1-2</td>
+</tr>
+<tr>
+  <td style="text-align:left">assets</td>
+  <td style="text-align:left">TS</td>
+  <td style="text-align:left">4,000</td>
+  <td style="text-align:left">Yes</td>
+  <td style="text-align:left">1</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Total</strong></td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"><strong>~90,000</strong></td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="2-data-flow-architecture"><a class="anchor" href="#2-data-flow-architecture">#</a>2. Data Flow Architecture</h2>
+<h3 id="21-load-a-map"><a class="anchor" href="#21-load-a-map">#</a>2.1 Load a Map</h3>
+<p>Trace from URL to rendered scene:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>User provides URL or selects map
+         |
+         v
+[1] fetch(url) -&gt; ArrayBuffer
+    Module: @opentm/network or browser fetch
+    Format: Raw bytes (typically 50KB-2MB compressed)
+         |
+         v
+[2] GbxParser.parse(buffer) -&gt; GbxFile
+    Module: @opentm/gbx-parser
+    Steps:
+      a. Validate magic &quot;GBX&quot; (3 bytes)
+      b. Read version (uint16, expect 6 for TM2020)
+      c. Read format flags (BUCR = Binary, Uncompressed header, Compressed body, References)
+      d. Read classId (uint32), expect 0x03043000 for CGameCtnChallenge
+      e. Parse header chunk index table (chunkId uint32, size uint32 with bit31 = heavy flag)
+      f. Parse header chunk data (concatenated payloads)
+      g. Read node count, parse reference table (external .Gbx dependencies)
+      h. Read compressed body: uncompressed_size (uint32), compressed_size (uint32),
+         LZO1X decompress -&gt; body bytes
+      i. Parse body chunk stream until 0xFACADE01 sentinel
+      j. For each chunk: check SKIP marker, dispatch to registered ChunkHandler
+    Output: Structured GbxFile with typed chunk data
+         |
+         v
+[3] MapLoader.load(gbxFile) -&gt; MapData
+    Module: @opentm/map
+    Steps:
+      a. Extract metadata from header chunk 0x03043003 (mapUid, environment, author, name)
+      b. Parse block list from body chunks:
+         - Each block: blockName (string), coord (Nat3: gridX, gridY, gridZ),
+           direction (0-3 = N/E/S/W), flags (bit 0 = ground, bit 12-14 = color variant)
+         - Grid position -&gt; world position: x = gridX * 32m, y = (gridY-8) * 8m, z = gridZ * 32m
+           [doc 28 Section 1, VERIFIED; Y has a -8 offset for maps with grid origin at y=8]
+      c. Parse free item placements from body chunks:
+         - Each item: itemPath (string), position (Vec3), rotation (Vec3 euler or Quat),
+           pivotPosition (Vec3)
+      d. Build block instances: for each block in list,
+         - Resolve blockName -&gt; BlockDefinition from block library
+         - Compute world transform (Iso4) from grid coord + direction
+         - Tag waypoint type: Start, Finish, Checkpoint, StartFinish, None
+         - Record surface IDs from block materials
+      e. Build waypoint sequence (ordered list of checkpoint blocks for race logic)
+    Output: MapData { blocks[], items[], waypoints[], metadata }
+         |
+         v
+[4] AssetManager.loadBlockMeshes(mapData.blocks) -&gt; MeshData[]
+    Module: @opentm/assets
+    Steps:
+      a. Collect unique block names from map
+      b. For each unique block: check IndexedDB cache
+      c. Cache miss: fetch glTF/GLB from CDN (e.g., /assets/blocks/StadiumRoadMainStraight.glb)
+      d. Parse glTF: extract vertex buffers (stride 56 for blocks), index buffers,
+         material references, bounding boxes
+      e. Cache in IndexedDB for future loads
+    Output: Map&lt;blockName, MeshData&gt; (CPU-side mesh data)
+         |
+         v
+[5] Renderer.uploadMeshes(meshDataMap) -&gt; GPUMeshes
+    Module: @opentm/renderer
+    Steps:
+      a. For each unique mesh: create GPUBuffer for vertices (vertex layout stride 56)
+      b. Create GPUBuffer for indices (uint16 or uint32)
+      c. Load and upload textures: diffuse (rgba8unorm-srgb), normal map (rgba8unorm)
+      d. Create GPUBindGroups for materials
+    Output: GPU resources ready for drawing
+         |
+         v
+[6] SceneGraph.build(mapData, gpuMeshes) -&gt; SceneGraph
+    Module: @opentm/renderer
+    Steps:
+      a. For each block instance: create SceneNode { worldTransform: Mat4, meshRef, materialRef }
+      b. For each item instance: same
+      c. Build BVH spatial index for frustum culling
+      d. Identify shadow-casting geometry (all opaque blocks)
+    Output: SceneGraph ready for render loop
+         |
+         v
+[7] CollisionMeshGenerator.build(mapData, meshDataMap) -&gt; CollisionMesh
+    Module: @opentm/map -&gt; @opentm/physics
+    Steps:
+      a. For each block: transform mesh vertices to world space
+      b. Tag each triangle with surface ID (from material -&gt; surface lookup table)
+      c. Aggregate into single collision mesh
+      d. Upload to physics world: PhysicsWorld.add_collision_mesh(vertices, indices, surfaceIds)
+    Output: rapier3d collision world with trimesh colliders
+         |
+         v
+[8] Renderer begins rendering scene each frame
+    Module: @opentm/renderer
+    Per frame: cull visible nodes, draw shadow pass, draw G-buffer, deferred lighting, post-process</code></pre></div>
+<p><strong>Total latency budget for map load</strong>: Target < 5 seconds on 100 Mbps connection with warm cache, < 15 seconds cold. The bottleneck is asset fetching (step 4). Mitigate with: (a) aggressive IndexedDB caching, (b) parallel fetch of block meshes, (c) progressive loading (render blocks as they arrive), (d) texture streaming (load low-res first, swap to high-res).</p>
+<h3 id="22-one-physics-frame"><a class="anchor" href="#22-one-physics-frame">#</a>2.2 One Physics Frame</h3>
+<p>Trace from input to vehicle state output:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>requestAnimationFrame callback fires
+         |
+         v
+[1] FixedTimestepAccumulator: accumulate elapsed wall-clock time
+    If accumulated &gt;= TICK_DT (10ms):
+      consume one tick, decrement accumulator
+      (Multiple ticks possible if frame took &gt; 10ms)
+         |
+         v
+[2] InputManager.sampleForTick(tickNumber) -&gt; InputState
+    Module: @opentm/input (main thread)
+    Steps:
+      a. Poll gamepad (navigator.getGamepads()[0])
+      b. Read keyboard key set
+      c. Merge: gamepad analog overrides keyboard digital if gamepad connected
+      d. Clamp: steer [-1,1], gas [0,1], brake [0,1]
+      e. Record to input history: { tick, steer, gas, brake, vertical }
+    Output: InputState { steer, gas, brake, isBraking, vertical, respawn }
+         |
+         v
+[3] Serialize InputState to SharedArrayBuffer input region
+    (See Section 3 for SAB layout)
+    Write: steer(f32), gas(f32), brake(f32), vertical(f32), flags(u32)
+    Signal physics worker via Atomics.notify()
+         |
+         v
+[4] Physics Worker receives input, runs PhysicsWorld.step()
+    Module: @opentm/physics (Web Worker, WASM)
+    Steps (inside Rust WASM):
+
+      a. Read input from shared buffer
+      b. For the active vehicle:
+         i.   Compute substep count from velocity magnitude:
+              substeps = max(1, ceil(|velocity| * TICK_DT / COLLISION_MARGIN))
+              capped at 1000. [doc 10 Section 7, CERTAIN]
+         ii.  sub_dt = TICK_DT / substeps
+         iii. For each substep:
+              - Collision broadphase: query BVH for nearby trimesh triangles
+                (rapier3d handles this internally)
+              - Collision narrowphase: compute contact points, normals, depths
+              - Per-wheel ground contact: 4 raycasts downward from wheel positions
+                Length = suspension rest length (0.15m APPROXIMATE)
+                Hit: record surface ID, contact normal, penetration depth
+                Miss: wheel is airborne
+              - Compute forces via force model dispatch:
+                switch(vehicle.force_model_type):
+                  case 5 (CarSport): [doc 22, DECOMPILED]
+                    - Per-wheel suspension: spring_force = K * compression + C * velocity
+                    - Per-wheel lateral grip: Pacejka-like model
+                      lateral_force = -slip * linear_coef - slip*|slip| * quadratic_coef
+                    - Engine torque: throttle * max_torque * gear_ratio
+                    - Brake torque: brake * max_brake
+                    - Anti-roll bar: transfers load between left/right wheels
+                    - Aerodynamic drag: drag_coef * |v|^2 * v_hat
+                    - Downforce: downforce_coef * |v|^2 (added to Y force)
+                    - Drift state machine: none(0) -&gt; building(1) -&gt; committed(2)
+                      Drift accumulates: lateral_slip * drift_rate * dt
+                    - Steering: steer_angle = input_steer * max_steer_angle * speed_factor
+              - Apply turbo force if active:
+                t = elapsed_ticks / duration_ticks
+                force = t * strength * model_scale * forward_direction
+                [doc 10 Section 4.3: linear ramp UP, CERTAIN but counterintuitive]
+              - Apply gravity: force.y += mass * GRAVITY * gravity_coef
+              - Clamp speed: if |vel| &gt; max_speed, normalize and scale
+              - Forward Euler integration:
+                vel += (total_force / mass) * sub_dt
+                pos += vel * sub_dt
+                angular_vel += (total_torque / inertia) * sub_dt
+                rotation = update_rotation(rotation, angular_vel, sub_dt)
+                orthogonalize rotation (Gram-Schmidt) for numeric stability
+              - Collision response:
+                For each contact with depth &gt; 0:
+                  Push out along normal * depth
+                  Reflect velocity: v -= (1 + restitution) * (v . n) * n
+                  Apply friction impulse (iterative solver,
+                    separate static/dynamic iteration counts [doc 10 Section 5])
+
+      c. Update derived state:
+         frontSpeed = dot(worldVel, forwardDir)    // m/s
+         sideSpeed = dot(worldVel, rightDir)       // m/s
+         isGroundContact = any wheel has contact
+         Update RPM from wheel rotation speed + gear ratio
+         Update turbo timer (decrement)
+         Copy current transform to previousTransform
+
+      d. Write output vehicle state to SharedArrayBuffer output region:
+         position (3 x f32), rotation (9 x f32, iso4 rotation part),
+         velocity (3 x f32), frontSpeed (f32), rpm (f32),
+         wheel states (4 x {damperLen, steerAngle, wheelRot} = 4 x 3 x f32),
+         turbo flags (u32), gear (u32)
+
+      e. Atomics.notify() main thread that output is ready
+         |
+         v
+[5] Main thread reads vehicle state from SAB output region
+    Interpolate between previous and current state for smooth rendering:
+      alpha = accumulator / TICK_DT  (fractional tick remaining)
+      renderPosition = lerp(prevPos, currPos, alpha)
+      renderRotation = slerp(prevRot, currRot, alpha)
+         |
+         v
+[6] Camera updates target to interpolated vehicle position
+    Chase camera: spring-damper tracks vehicle with lag
+         |
+         v
+[7] Renderer draws vehicle at interpolated position</code></pre></div>
+<h3 id="23-one-render-frame"><a class="anchor" href="#23-one-render-frame">#</a>2.3 One Render Frame</h3>
+<p>Trace from scene graph to presented pixels:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>requestAnimationFrame fires
+         |
+         v
+[1] Read interpolated vehicle state (from physics, Section 2.2 step 5)
+    Update camera matrices (view + projection)
+    Compute sun direction from map mood/time-of-day
+         |
+         v
+[2] Frustum Culling (DipCulling equivalent)
+    Module: @opentm/renderer
+    Steps:
+      a. Extract 6 frustum planes from viewProjection matrix
+      b. Walk BVH: test each node&#x27;s AABB against frustum
+      c. Output: visible SceneNode[] (typically 30-60% of total nodes)
+      d. Sort opaques front-to-back (minimizes overdraw in G-buffer fill)
+      e. Sort transparents back-to-front (correct alpha blending)
+    Budget: &lt; 0.5ms for 5000 nodes
+         |
+         v
+[3] Shadow Pass (DeferredShadow equivalent, PSSM)
+    Module: @opentm/renderer
+    Steps:
+      a. Compute cascade split distances:
+         splits = logarithmic distribution over [near, far] with 4 cascades
+         [doc 11 Section 4: MapShadowSplit0-3, CERTAIN]
+      b. For each cascade (0..3):
+         - Compute tight light-space frustum enclosing the cascade slice
+         - Render all shadow-casting geometry into depth-only pass
+         - Output: depth texture layer in shadow map array
+      c. Shadow map: 2048x2048 per cascade (configurable), depth32float format
+    Budget: &lt; 2ms for 4 cascades
+         |
+         v
+[4] G-Buffer Fill (DeferredWrite)
+    Module: @opentm/renderer
+    Steps:
+      a. Begin render pass with 4 color attachments + depth:
+         RT0: diffuse (rgba8unorm-srgb) -- albedo * vertex color
+         RT1: specular (rgba8unorm) -- F0, roughness, metallic
+         RT2: normal (rgba16float) -- camera-space normal from TBN * normal map
+         RT3: lightMask (rgba8unorm) -- lighting flags
+         Depth: depth24plus-stencil8
+      b. For each visible opaque SceneNode:
+         - Bind model uniform (world transform, normal matrix)
+         - Bind material textures (diffuse, normal map)
+         - Draw indexed (vertex buffer stride 56)
+      c. End render pass
+    Budget: &lt; 3ms for 2000 draw calls (batched by material)
+         |
+         v
+[5] Deferred Lighting (DeferredRead + DeferredLighting)
+    Module: @opentm/renderer
+    Steps:
+      a. Bind G-buffer textures + shadow map as inputs
+      b. Full-screen triangle (3 vertices, no VB needed)
+      c. Fragment shader:
+         - Read albedo, specular params, normal, depth from G-buffer
+         - Reconstruct world position from depth + inverse view-projection
+         - For directional sun light:
+           PBR GGX BRDF: diffuse (Lambert) + specular (Cook-Torrance)
+           NdotL attenuation, shadow lookup (PSSM cascade selection + PCF)
+         - Ambient: hemisphere ambient (sky color top, ground color bottom)
+         - For each point/spot light (if any):
+           Same BRDF, distance attenuation, shadow (optional)
+      d. Output: HDR color (rgba16float intermediate)
+    Budget: &lt; 1.5ms
+         |
+         v
+[6] Forward Transparent Pass (Alpha01 + AlphaBlend)
+    Module: @opentm/renderer
+    Steps:
+      a. Render alpha-tested geometry (glass, grates) with depth test, no depth write
+      b. Render alpha-blended geometry (particles, ghost car) back-to-front
+      c. Uses the same depth buffer from G-buffer pass for depth testing
+    Budget: &lt; 1ms
+         |
+         v
+[7] Post-Processing Pipeline
+    Module: @opentm/renderer
+    Steps (compute shader passes):
+      a. SSAO (optional): screen-space ambient occlusion
+         Input: depth + normals. Output: AO texture.
+         Budget: 0.5ms (half-resolution)
+      b. Bloom: downsample chain (6 levels, 13-tap filter) + upsample chain (additive blend)
+         Input: HDR color. Output: bloom texture.
+         Budget: 0.5ms
+      c. Composite: combine HDR color + bloom + AO
+      d. Tone mapping: filmic curve (Uncharted 2 or ACES)
+         Input: HDR composite. Output: LDR sRGB.
+      e. FXAA (MVP) or TAA (full):
+         Input: LDR color. Output: anti-aliased final color.
+         Budget: 0.3ms (FXAA)
+    Total post-process budget: &lt; 1.5ms
+         |
+         v
+[8] Present
+    Module: @opentm/renderer
+    Steps:
+      a. Copy final color to swap chain texture
+      b. device.queue.submit()
+      c. Browser composites with HTML overlay (HUD, menus)</code></pre></div>
+<h3 id="24-record-a-ghost"><a class="anchor" href="#24-record-a-ghost">#</a>2.4 Record a Ghost</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Race begins (first gas input detected)
+         |
+         v
+[1] InputManager starts recording
+    Module: @opentm/input
+    Every physics tick: push { tick, steer, gas, brake, vertical } to inputHistory[]
+    Memory: ~20 bytes per tick * 100 ticks/s * 300s race = ~600KB uncompressed
+         |
+         v
+[2] Race state tracks checkpoints
+    Module: @opentm/map (waypoint detection)
+    On checkpoint hit: record { cpIndex, tick, raceTimeMs }
+    On finish: record finishTimeMs, stop recording
+         |
+         v
+[3] Serialize ghost
+    Module: @opentm/ghost
+    Steps:
+      a. Build GhostFile header: { version, mapUid, playerName, vehicleType, finishTime, cpTimes }
+      b. Quantize input samples:
+         steer: f32 -&gt; int16 (* 32767)
+         gas: f32 -&gt; uint8 (* 255)
+         brake: f32 -&gt; uint8 (* 255)
+         vertical: f32 -&gt; int8 (* 127)
+      c. Delta-encode: store difference from previous sample (most frames have no input change)
+      d. Output: Uint8Array (header + samples)
+    Output size: ~100-200KB for a 3-minute run
+         |
+         v
+[4] Compress
+    Module: @opentm/ghost
+    Algorithm: LZ4 (fast compression, good for delta-encoded data with many zeros)
+    Compressed size: ~20-50KB typical
+         |
+         v
+[5] Upload (post-MVP)
+    Module: @opentm/network
+    Steps:
+      a. Authenticate with Nadeo API (or custom OpenTM backend)
+      b. POST compressed ghost to leaderboard endpoint
+      c. Server validates: re-runs physics simulation with recorded inputs,
+         checks that finish time matches claimed time (anti-cheat)</code></pre></div>
+<h3 id="25-play-a-ghost"><a class="anchor" href="#25-play-a-ghost">#</a>2.5 Play a Ghost</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>User requests ghost playback (own ghost or downloaded)
+         |
+         v
+[1] Fetch ghost data
+    Module: @opentm/network (for remote) or local storage
+    If remote: GET from API endpoint or CDN
+    If local: read from in-memory buffer or IndexedDB
+    Output: compressed Uint8Array
+         |
+         v
+[2] Decompress
+    Module: @opentm/ghost
+    Algorithm: LZ4 decompress
+    Output: raw Uint8Array
+         |
+         v
+[3] Deserialize
+    Module: @opentm/ghost
+    Steps:
+      a. Read header: version, mapUid, playerName, vehicleType, finishTime, cpTimes
+      b. Validate mapUid matches currently loaded map (reject if mismatch)
+      c. Reverse delta encoding: accumulate deltas to reconstruct absolute values
+      d. Dequantize: int16/uint8/int8 -&gt; f32
+      e. Build GhostSample[] array indexed by tick number
+    Output: GhostPlayback { header, samples: Map&lt;tick, InputState&gt; }
+         |
+         v
+[4] Feed to physics simulation each tick
+    Module: @opentm/physics
+    Steps:
+      a. Create a &quot;ghost vehicle&quot; in the physics world (separate from player vehicle)
+      b. Each tick: look up GhostPlayback.samples[currentTick]
+         If sample exists: use those inputs
+         If gap: hold last known input (rare with per-tick recording)
+      c. Run physics step for ghost vehicle with those inputs
+         (Same force model, same collision world, same timestep)
+      d. Ghost vehicle follows deterministic path
+         (If physics is perfectly deterministic, ghost reaches finish at exactly finishTime)
+    Output: ghost vehicle state per tick (position, rotation, speed)
+         |
+         v
+[5] Interpolate for rendering
+    Module: @opentm/ghost
+    Steps:
+      a. Same alpha-interpolation as player vehicle (Section 2.2 step 5)
+      b. Smooth between physics ticks for 60fps rendering from 100Hz simulation
+    Output: interpolated ghost transform
+         |
+         v
+[6] Render ghost
+    Module: @opentm/renderer
+    Steps:
+      a. Draw ghost car mesh at interpolated position/rotation
+      b. Apply semi-transparent material (alpha = 0.5)
+      c. Draw in forward transparent pass (after G-buffer, before post-process)
+      d. Optional: tint by relative speed (green = faster, red = slower)
+    Visual: translucent car visible alongside player&#x27;s car</code></pre></div>
+<hr>
+<h2 id="3-threading-model"><a class="anchor" href="#3-threading-model">#</a>3. Threading Model</h2>
+<h3 id="31-thread-allocation"><a class="anchor" href="#31-thread-allocation">#</a>3.1 Thread Allocation</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>┌─────────────────────────────────────────────────────────┐
+│ Main Thread                                              │
+│                                                          │
+│  requestAnimationFrame loop:                             │
+│    1. Input sampling (keyboard/gamepad poll)              │
+│    2. Write input to SAB, notify physics worker           │
+│    3. Read physics output from SAB (if ready)             │
+│    4. Camera update                                       │
+│    5. Frustum culling                                     │
+│    6. WebGPU command encoding + submit                    │
+│    7. UI update (Svelte reactive updates)                 │
+│    8. Audio parameter updates (rpm, position)             │
+│                                                          │
+│  NOT on main thread: physics simulation, GBX parsing,    │
+│    texture decoding, LZO decompression                   │
+└──────────────────────────┬──────────────────────────────┘
+                           │ SharedArrayBuffer
+                           │ Atomics.wait/notify
+┌──────────────────────────┴──────────────────────────────┐
+│ Physics Worker (dedicated Web Worker)                     │
+│                                                          │
+│  Tight loop:                                              │
+│    1. Atomics.wait() for input signal from main thread    │
+│    2. Read input from SAB                                 │
+│    3. PhysicsWorld.step() (WASM)                          │
+│    4. Write output vehicle state to SAB                   │
+│    5. Atomics.store() output-ready flag                   │
+│    6. Atomics.notify() main thread                        │
+│                                                          │
+│  Runs at 100Hz (one step per notify, accumulator on main) │
+│  WASM module loaded once at worker init                   │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│ Asset Worker(s) (1-2 dedicated Web Workers)               │
+│                                                          │
+│  Message-passing (postMessage, NOT SharedArrayBuffer):    │
+│    1. Receive: { type: &#x27;parse-gbx&#x27;, buffer: ArrayBuffer } │
+│    2. Run GBX header + body parsing                       │
+│    3. Run LZO decompression                               │
+│    4. Parse chunk stream, extract block lists              │
+│    5. Respond: { type: &#x27;gbx-result&#x27;, mapData: ... }       │
+│                                                          │
+│    1. Receive: { type: &#x27;decode-texture&#x27;, buffer, format }  │
+│    2. Decode DDS/KTX2 to raw RGBA pixels                  │
+│    3. Respond: { type: &#x27;texture-result&#x27;, pixels, w, h }   │
+│                                                          │
+│  These are fire-and-forget tasks, no shared state needed  │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│ Audio Worklet (AudioWorkletProcessor)                     │
+│                                                          │
+│  Runs on audio rendering thread (128 samples @ 44.1kHz):  │
+│    - Engine sound synthesis if needed                     │
+│    - Low-latency audio generation                         │
+│    - Reads RPM/throttle from SharedArrayBuffer             │
+│                                                          │
+│  For MVP: skip worklet, use standard AudioBufferSource    │
+│  with playbackRate modulation (higher latency, simpler)   │
+└─────────────────────────────────────────────────────────┘</code></pre></div>
+<h3 id="32-sharedarraybuffer-layout-for-physics-main-thread"><a class="anchor" href="#32-sharedarraybuffer-layout-for-physics-main-thread">#</a>3.2 SharedArrayBuffer Layout for Physics <-> Main Thread</h3>
+<p>The SAB is the critical shared memory between the main thread and physics worker. It must be allocated once at startup with <code>new SharedArrayBuffer(TOTAL_SIZE)</code>. Both threads access it through typed array views.</p>
+<p><strong>Why SharedArrayBuffer instead of postMessage</strong>: At 100Hz physics, postMessage would need to copy vehicle state (hundreds of bytes) every 10ms. The structured clone overhead (~0.1ms) plus GC pressure would consume ~10% of the frame budget. SAB with Atomics has near-zero overhead: the main thread writes input and reads output in-place.</p>
+<p><strong>Requirement</strong>: <code>Cross-Origin-Opener-Policy: same-origin</code> and <code>Cross-Origin-Embedder-Policy: require-corp</code> headers must be set for SharedArrayBuffer to be available.</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SharedArrayBuffer total size: 4096 bytes (generous, supports up to 4 vehicles)
+
+Offset (bytes)  | Size  | Name                  | Type      | Direction
+─────────────────────────────────────────────────────────────────────────
+CONTROL REGION (64 bytes)
+0x0000          | 4     | inputReady            | Int32     | main -&gt; physics (Atomics.notify)
+0x0004          | 4     | outputReady           | Int32     | physics -&gt; main (Atomics.notify)
+0x0008          | 4     | currentTick           | Uint32    | main -&gt; physics
+0x000C          | 4     | vehicleCount          | Uint32    | main -&gt; physics
+0x0010          | 4     | resetFlag             | Uint32    | main -&gt; physics (1 = reset to CP)
+0x0014          | 12    | resetPosition         | 3xFloat32 | main -&gt; physics
+0x0020          | 36    | resetRotation         | 9xFloat32 | main -&gt; physics (Iso4 rotation)
+0x0044          | 28    | [padding to 64]       | -         | -
+
+INPUT REGION (per vehicle, 32 bytes each, max 4 vehicles = 128 bytes)
+0x0040          | 4     | steer                 | Float32   | main -&gt; physics
+0x0044          | 4     | gas                   | Float32   | main -&gt; physics
+0x0048          | 4     | brake                 | Float32   | main -&gt; physics
+0x004C          | 4     | vertical              | Float32   | main -&gt; physics
+0x0050          | 4     | flags                 | Uint32    | main -&gt; physics (bit0=braking, bit1=respawn)
+0x0054          | 12    | [padding to 32]       | -         | -
+(Vehicle 1 at 0x0060, Vehicle 2 at 0x0080, Vehicle 3 at 0x00A0)
+
+OUTPUT REGION (per vehicle, 256 bytes each, max 4 vehicles = 1024 bytes)
+0x0100          | 12    | position              | 3xFloat32 | physics -&gt; main
+0x010C          | 12    | prevPosition          | 3xFloat32 | physics -&gt; main (for interpolation)
+0x0118          | 36    | rotation              | 9xFloat32 | physics -&gt; main (Iso4 rotation)
+0x013C          | 36    | prevRotation          | 9xFloat32 | physics -&gt; main
+0x0160          | 12    | velocity              | 3xFloat32 | physics -&gt; main
+0x016C          | 4     | frontSpeed            | Float32   | physics -&gt; main (m/s)
+0x0170          | 4     | sideSpeed             | Float32   | physics -&gt; main
+0x0174          | 4     | rpm                   | Float32   | physics -&gt; main (0-11000)
+0x0178          | 4     | gear                  | Uint32    | physics -&gt; main (0-7)
+0x017C          | 4     | turboFlags            | Uint32    | physics -&gt; main
+0x0180          | 4     | turboTime             | Float32   | physics -&gt; main (0-1 normalized)
+0x0184          | 4     | isGroundContact       | Uint32    | physics -&gt; main (bool)
+0x0188          | 4     | groundDist            | Float32   | physics -&gt; main
+0x018C          | 48    | wheelStates           | 4x{damperLen f32, steerAngle f32, wheelRot f32} | physics -&gt; main
+0x01BC          | 16    | wheelContact          | 4xUint32  | physics -&gt; main (surfaceId per wheel)
+0x01CC          | 4     | discontinuityCount    | Uint32    | physics -&gt; main
+0x01D0          | 48    | [padding to 256]      | -         | -
+(Vehicle 1 at 0x0200, Vehicle 2 at 0x0300, Vehicle 3 at 0x0400)
+
+COLLISION EVENT REGION (512 bytes, circular buffer)
+0x0500          | 4     | eventWriteIndex       | Uint32    | physics -&gt; main (Atomics)
+0x0504          | 4     | eventReadIndex        | Uint32    | main -&gt; physics (Atomics)
+0x0508          | 504   | events[63]            | 8 bytes each | physics -&gt; main
+                                                  Format: { type: u8, surfaceId: u8, speed: f16, padding: u32 }
+                                                  Types: 0=checkpoint, 1=finish, 2=turbo_pad, 3=wall_hit, 4=respawn_trigger
+
+TOTAL: 0x0700 = 1792 bytes (fits in 4096 allocation with room for expansion)</code></pre></div>
+<p><strong>Synchronization protocol</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Main thread (per frame, possibly multiple ticks):
+  1. Write input values to INPUT REGION
+  2. Write currentTick to CONTROL REGION
+  3. Atomics.store(sab_i32, INPUT_READY_OFFSET/4, 1)
+  4. Atomics.notify(sab_i32, INPUT_READY_OFFSET/4, 1)
+  5. Continue rendering using PREVIOUS frame&#x27;s output (no blocking)
+  6. On next frame: check Atomics.load(sab_i32, OUTPUT_READY_OFFSET/4)
+     If 1: read output, Atomics.store(..., 0) to acknowledge
+
+Physics worker (loop):
+  1. Atomics.wait(sab_i32, INPUT_READY_OFFSET/4, 0)  // blocks until != 0
+  2. Atomics.store(sab_i32, INPUT_READY_OFFSET/4, 0)  // acknowledge
+  3. Read input + tick from SAB
+  4. Run physics step
+  5. Write output to OUTPUT REGION
+  6. Atomics.store(sab_i32, OUTPUT_READY_OFFSET/4, 1)
+  7. Atomics.notify(sab_i32, OUTPUT_READY_OFFSET/4, 1)
+  8. goto 1</code></pre></div>
+<p><strong>Critical design decision</strong>: The main thread NEVER blocks waiting for physics output. It always renders using the most recently available physics state, interpolated with the fractional tick alpha. This means rendering can run at 60fps even if physics runs at 100Hz -- the two loops are decoupled. If physics falls behind (> 10ms for a step), the main thread continues rendering the stale state and catches up next frame.</p>
+<h3 id="33-worker-initialization"><a class="anchor" href="#33-worker-initialization">#</a>3.3 Worker Initialization</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">// main.ts
+const sab = new SharedArrayBuffer(4096);
+
+// Physics worker
+const physicsWorker = new Worker(new URL(&#x27;./workers/physics.ts&#x27;, import.meta.url), { type: &#x27;module&#x27; });
+physicsWorker.postMessage({ type: &#x27;init&#x27;, sab, mapCollisionData: collisionMeshArrayBuffer });
+// Worker loads WASM module, initializes rapier, builds collision world
+// Subsequent communication is ONLY through SAB + Atomics
+
+// Asset workers (2, for parallel GBX parsing + texture decoding)
+const assetWorker1 = new Worker(new URL(&#x27;./workers/asset.ts&#x27;, import.meta.url), { type: &#x27;module&#x27; });
+const assetWorker2 = new Worker(new URL(&#x27;./workers/asset.ts&#x27;, import.meta.url), { type: &#x27;module&#x27; });
+// These use postMessage (Transferable ArrayBuffers for zero-copy)</code></pre></div>
+<hr>
+<h2 id="4-state-machine"><a class="anchor" href="#4-state-machine">#</a>4. State Machine</h2>
+<h3 id="41-browser-state-machine"><a class="anchor" href="#41-browser-state-machine">#</a>4.1 Browser State Machine</h3>
+<p>TM2020 has 60+ states in a coroutine-based state machine within <code>CGameCtnApp::UpdateGame</code> (216KB function) [doc 12 Section 1, <span class="badge badge-verified">VERIFIED</span>]. The browser recreation maps these to a simplified state machine using TypeScript async generators (matching the fiber/coroutine pattern documented in doc 12 Section 4.3).</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>States (browser):
+
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│  [Boot] ──&gt; [Loading] ──&gt; [MainMenu] ──┬──&gt; [MapLoading]   │
+│               │                        │       │            │
+│               │                        │       v            │
+│               │                        │  [Countdown]       │
+│               │                        │       │            │
+│               │                        │       v            │
+│               │                        │   [Racing]         │
+│               │                        │       │            │
+│               │                        │    ┌──┴──┐         │
+│               │                        │    │     │         │
+│               │                        │    v     v         │
+│               │                        │ [Paused] [Finished]│
+│               │                        │    │     │         │
+│               │                        │    │     v         │
+│               │                        │    │  [Results]    │
+│               │                        │    │     │         │
+│               │                        │    └──┬──┘         │
+│               │                        │       │            │
+│               │                        │       v            │
+│               │                        ├── [Replay]         │
+│               │                        │       │            │
+│               │                        │&lt;──────┘            │
+│               │                        │                    │
+│               │                        ├──&gt; [Editor]        │
+│               │                        │       │            │
+│               │                        │&lt;──────┘            │
+│               │                        │                    │
+│               │                        └──&gt; [Settings]      │
+│               │                               │             │
+│               │                        &lt;──────┘             │
+└─────────────────────────────────────────────────────────────┘</code></pre></div>
+<h3 id="42-state-definitions"><a class="anchor" href="#42-state-definitions">#</a>4.2 State Definitions</h3>
+<h4 id="boot"><a class="anchor" href="#boot">#</a>Boot</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: States 0x000 (Game Init) through 0x3E7 (Init Complete) [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: Application start</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>WebGPU device + adapter negotiation</li>
+  <li>SharedArrayBuffer allocation</li>
+  <li>Physics worker spawn + WASM load</li>
+  <li>Asset worker(s) spawn</li>
+  <li>AudioContext creation (suspended, awaiting user gesture)</li>
+  <li>Input manager construction (keyboard + gamepad listeners)</li>
+  <li>Asset manifest fetch</li>
+  <li><strong>Destroys</strong>: Nothing (first state)</li>
+  <li><strong>Transitions</strong>: -> Loading (all subsystems initialized) | -> Error (WebGPU not supported)</li>
+  <li><strong>Duration</strong>: < 2s target</li>
+</ul>
+<h4 id="loading"><a class="anchor" href="#loading">#</a>Loading</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: States 0x402-0x4F9 (Startup Sequence, Login, Network Validation) [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: Boot complete</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Core block mesh library (pre-fetch most common 50 blocks)</li>
+  <li>Authentication (if online mode): proxy to Nadeo API</li>
+  <li>Block definition registry (name -> mesh URL, material, surface ID)</li>
+  <li>Car model mesh load</li>
+  <li><strong>Destroys</strong>: Boot loading screen</li>
+  <li><strong>Transitions</strong>: -> MainMenu (essential assets loaded) | -> Error (network failure, asset fetch failure)</li>
+  <li><strong>Duration</strong>: < 5s warm cache, < 15s cold</li>
+  <li><strong>Shows</strong>: Progress bar with asset counts</li>
+</ul>
+<h4 id="mainmenu"><a class="anchor" href="#mainmenu">#</a>MainMenu</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: Phase 5 state (0xCDCC label, game phase = 2) [doc 12 Section 1.3, <code>FUN_140b54b90(param_1, 2)</code>]</li>
+  <li><strong>Trigger</strong>: Loading complete, or exit from any gameplay state</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Menu UI (Svelte components mounted to DOM overlay)</li>
+  <li>Background scene (if desired: slowly rotating map render)</li>
+  <li>Resume AudioContext on first user interaction</li>
+  <li><strong>Destroys</strong>: Any active race/editor/replay state, physics collision world (but keep worker alive)</li>
+  <li><strong>Transitions</strong>:</li>
+  <li>-> MapLoading (user selects "Play" with map) -- equivalent to TM2020 menu result 0x09 [doc 12]</li>
+  <li>-> Editor (user selects "Editor") -- equivalent to menu result 0x11 [doc 12]</li>
+  <li>-> Settings (user opens settings)</li>
+  <li><strong>UI elements</strong>: Play button, Map browser, Editor button, Settings, Quit</li>
+</ul>
+<h4 id="maploading"><a class="anchor" href="#maploading">#</a>MapLoading</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: States 0xBF6-0xC22 (Load Map for Gameplay, Map Load for Play, Wait for Play Ready) [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: Map selected from menu or direct URL</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Execute full map loading pipeline (Section 2.1, steps 1-7)</li>
+  <li>Send collision mesh to physics worker</li>
+  <li>Build scene graph</li>
+  <li>Spawn player vehicle in physics world at start block position</li>
+  <li>Initialize ghost vehicle(s) if ghost data available</li>
+  <li>Set up race state (timer, checkpoint tracker)</li>
+  <li><strong>Destroys</strong>: Previous map data (if any), previous collision world in physics</li>
+  <li><strong>Transitions</strong>: -> Countdown (map fully loaded) | -> MainMenu (cancel/error)</li>
+  <li><strong>Duration</strong>: < 5s for standard map</li>
+  <li><strong>Shows</strong>: Loading screen with map thumbnail (from GBX header chunk <code class="addr">0x03043007</code>)</li>
+</ul>
+<h4 id="countdown"><a class="anchor" href="#countdown">#</a>Countdown</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: Part of gameplay preparation (state 0xB43) [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: Map loading complete</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Place vehicle at start position (facing correct direction)</li>
+  <li>Lock input (ignore gas/steer during countdown)</li>
+  <li>Start countdown animation (3, 2, 1, GO)</li>
+  <li>Start ghost playback (ghost begins from tick 0)</li>
+  <li><strong>Destroys</strong>: Loading screen</li>
+  <li><strong>Transitions</strong>: -> Racing (countdown reaches 0) | -> MainMenu (user presses Escape)</li>
+  <li><strong>Duration</strong>: 3 seconds (fixed)</li>
+</ul>
+<h4 id="racing"><a class="anchor" href="#racing">#</a>Racing</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: States 0xD2D-0xD45 (Gameplay Start, Gameplay Active) [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: Countdown complete</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Unlock input</li>
+  <li>Start race timer (from tick 0)</li>
+  <li>Begin input recording for ghost</li>
+  <li>Enable HUD (speedometer, timer, checkpoint splits)</li>
+  <li><strong>Destroys</strong>: Countdown overlay</li>
+  <li><strong>Transitions</strong>:</li>
+  <li>-> Finished (vehicle crosses finish line -- detected by waypoint intersection in physics)</li>
+  <li>-> Paused (user presses Escape)</li>
+  <li>-> Racing (respawn: user presses respawn key, vehicle teleports to last checkpoint,</li>
+</ul>
+<p>    discontinuityCount++ [doc 19 Section 1])</p>
+<ul>
+  <li><strong>Per-tick actions</strong>:</li>
+  <li>Sample input</li>
+  <li>Physics step</li>
+  <li>Check waypoint intersections (checkpoint/finish)</li>
+  <li>Update HUD</li>
+  <li>Record ghost sample</li>
+</ul>
+<h4 id="paused"><a class="anchor" href="#paused">#</a>Paused</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: Menu result 0x1F (Pause Menu) [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: Escape key during Racing</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Pause overlay (resume, restart, quit to menu)</li>
+  <li>Pause physics (stop sending ticks to physics worker)</li>
+  <li>Pause race timer</li>
+  <li>Pause ghost playback</li>
+  <li><strong>Destroys</strong>: Nothing (race state preserved)</li>
+  <li><strong>Transitions</strong>:</li>
+  <li>-> Racing (resume)</li>
+  <li>-> Countdown (restart: reset vehicle, timer, ghost, input history)</li>
+  <li>-> MainMenu (quit)</li>
+</ul>
+<h4 id="finished"><a class="anchor" href="#finished">#</a>Finished</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: Part of gameplay state flow leading to podium/replay states [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: Vehicle crosses finish line</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Stop race timer, record finish time</li>
+  <li>Stop input recording</li>
+  <li>Finalize ghost data</li>
+  <li>Calculate medal (if thresholds known)</li>
+  <li>Show results overlay</li>
+  <li><strong>Destroys</strong>: Nothing (keep race state for replay)</li>
+  <li><strong>Transitions</strong>:</li>
+  <li>-> Results (immediate, overlaid)</li>
+  <li>-> Replay (user clicks "Watch Replay")</li>
+  <li>-> Racing (user clicks "Retry" -> resets to Countdown)</li>
+  <li>-> MainMenu (user clicks "Menu")</li>
+</ul>
+<h4 id="results"><a class="anchor" href="#results">#</a>Results</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: Post-race state with score display</li>
+  <li><strong>Trigger</strong>: Race finished</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Results overlay: finish time, checkpoint splits, comparison to best/ghost</li>
+  <li>Ghost save prompt (save locally or upload)</li>
+  <li>Medal display</li>
+  <li><strong>Destroys</strong>: Racing HUD</li>
+  <li><strong>Transitions</strong>:</li>
+  <li>-> Replay (watch replay)</li>
+  <li>-> Countdown (retry)</li>
+  <li>-> MainMenu (quit)</li>
+</ul>
+<h4 id="replay"><a class="anchor" href="#replay">#</a>Replay</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: States 0xC74 (Replay Validation), 0xCEF-0xCF0 (Load Replay), 0xE14 (Replay Playback) [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: User selects replay from results or menu</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Load ghost data (just-recorded or from file)</li>
+  <li>Create replay vehicle in physics</li>
+  <li>Switch camera to replay mode (can orbit, free-fly, follow)</li>
+  <li>Timeline scrubber UI</li>
+  <li>Playback controls (play, pause, speed up, slow down, seek)</li>
+  <li><strong>Destroys</strong>: Racing state input recording</li>
+  <li><strong>Transitions</strong>:</li>
+  <li>-> MainMenu (exit)</li>
+  <li>-> Countdown (retry the map)</li>
+</ul>
+<h4 id="editor"><a class="anchor" href="#editor">#</a>Editor</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: State 0xDE5 (Editor Session) calling FUN_140b827b0 [doc 12 Section 1.3]</li>
+  <li><strong>Trigger</strong>: User selects Editor from menu</li>
+  <li><strong>Initializes</strong>:</li>
+  <li>Editor state machine (block palette, grid cursor, orbital camera)</li>
+  <li>Block library browser (HTML panel)</li>
+  <li>Editor toolbar (place, erase, select, rotate)</li>
+  <li>Empty map or load existing</li>
+  <li>Undo/redo history (command pattern)</li>
+  <li><strong>Destroys</strong>: Previous map/race state</li>
+  <li><strong>Transitions</strong>:</li>
+  <li>-> MapLoading (test play the map being edited)</li>
+  <li>-> MainMenu (exit editor)</li>
+</ul>
+<h4 id="settings"><a class="anchor" href="#settings">#</a>Settings</h4>
+<ul>
+  <li><strong>TM2020 equivalent</strong>: Menu result 0x27 (Settings) [doc 12]</li>
+  <li><strong>Trigger</strong>: Settings button from menu</li>
+  <li><strong>Initializes</strong>: Settings panels (graphics quality, keybinds, audio volume, account)</li>
+  <li><strong>Destroys</strong>: Nothing</li>
+  <li><strong>Transitions</strong>: -> MainMenu (back)</li>
+</ul>
+<h3 id="43-state-machine-implementation"><a class="anchor" href="#43-state-machine-implementation">#</a>4.3 State Machine Implementation</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">type GameState =
+  | &#x27;boot&#x27; | &#x27;loading&#x27; | &#x27;mainMenu&#x27; | &#x27;mapLoading&#x27; | &#x27;countdown&#x27;
+  | &#x27;racing&#x27; | &#x27;paused&#x27; | &#x27;finished&#x27; | &#x27;results&#x27; | &#x27;replay&#x27;
+  | &#x27;editor&#x27; | &#x27;settings&#x27; | &#x27;error&#x27;;
+
+interface StateTransition {
+  from: GameState;
+  to: GameState;
+  condition: string;  // human-readable trigger
+}
+
+// Implemented as an async generator matching TM2020&#x27;s fiber pattern (doc 12 Section 4):
+async function* gameStateMachine(ctx: GameContext): AsyncGenerator&lt;GameState&gt; {
+  yield &#x27;boot&#x27;;
+  await initializeSubsystems(ctx);
+
+  yield &#x27;loading&#x27;;
+  await loadCoreAssets(ctx);
+
+  while (true) {
+    yield &#x27;mainMenu&#x27;;
+    const action = await waitForMenuAction(ctx);
+
+    switch (action.type) {
+      case &#x27;play&#x27;:
+        yield &#x27;mapLoading&#x27;;
+        await loadMap(ctx, action.mapUrl);
+
+        let playing = true;
+        while (playing) {
+          yield &#x27;countdown&#x27;;
+          await runCountdown(ctx);
+
+          yield &#x27;racing&#x27;;
+          const raceResult = await runRace(ctx);
+
+          if (raceResult === &#x27;finished&#x27;) {
+            yield &#x27;finished&#x27;;
+            yield &#x27;results&#x27;;
+            const resultAction = await waitForResultAction(ctx);
+            if (resultAction === &#x27;retry&#x27;) continue;
+            if (resultAction === &#x27;replay&#x27;) {
+              yield &#x27;replay&#x27;;
+              await runReplay(ctx);
+            }
+            playing = false;
+          } else if (raceResult === &#x27;quit&#x27;) {
+            playing = false;
+          }
+        }
+        break;
+
+      case &#x27;editor&#x27;:
+        yield &#x27;editor&#x27;;
+        await runEditor(ctx);
+        break;
+
+      case &#x27;settings&#x27;:
+        yield &#x27;settings&#x27;;
+        await runSettings(ctx);
+        break;
+    }
+  }
+}</code></pre></div>
+<hr>
+<h2 id="5-build-system"><a class="anchor" href="#5-build-system">#</a>5. Build System</h2>
+<h3 id="51-monorepo-structure"><a class="anchor" href="#51-monorepo-structure">#</a>5.1 Monorepo Structure</h3>
+<p><strong>Tool</strong>: Turborepo (chosen over Nx for simplicity and speed)</p>
+<p><strong>Reason</strong>: Turborepo provides task-level caching and parallel execution with minimal configuration. The project has ~14 packages with clear dependency boundaries. Nx would be overkill for this size. pnpm workspaces provide the package linking.</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>opentm/
+  package.json              # Root: pnpm workspace + turborepo
+  pnpm-workspace.yaml       # Workspace definition
+  turbo.json                # Pipeline configuration
+  tsconfig.base.json        # Shared TS config
+  .github/
+    workflows/
+      ci.yml                # GitHub Actions: lint, test, build, deploy
+      physics-validation.yml # Nightly: run physics against TMInterface data
+
+  packages/
+    core/                   # @opentm/core
+      src/
+      package.json
+      tsconfig.json
+      vitest.config.ts
+
+    gbx-parser/             # @opentm/gbx-parser
+      src/
+      tests/
+        fixtures/           # Real .Gbx files for integration tests
+      package.json
+
+    physics/                # @opentm/physics (Rust + TS)
+      rust/
+        src/
+          lib.rs
+          vehicle.rs
+          forces/
+            car_sport.rs    # Decompiled CarSport model (doc 22)
+            car_base.rs     # Base 4-wheel model (doc 22)
+          collision.rs
+          integration.rs
+        Cargo.toml
+        wasm-pack.toml
+      ts/
+        src/
+          index.ts          # TS bindings for WASM
+          worker.ts         # Physics Web Worker entry point
+      package.json
+
+    renderer/               # @opentm/renderer
+      src/
+        shaders/            # .wgsl files
+      package.json
+
+    audio/                  # @opentm/audio
+    input/                  # @opentm/input
+    camera/                 # @opentm/camera
+    network/                # @opentm/network
+    scripting/              # @opentm/scripting (placeholder)
+    ui/                     # @opentm/ui (Svelte)
+    editor/                 # @opentm/editor
+    ghost/                  # @opentm/ghost
+    map/                    # @opentm/map
+    assets/                 # @opentm/assets
+
+  apps/
+    web/                    # Main web application
+      src/
+        main.ts             # Entry point: state machine, game loop
+        workers/
+          physics.ts        # Physics worker entry
+          asset.ts          # Asset worker entry
+      index.html
+      vite.config.ts
+      package.json
+
+    tools/                  # Offline tooling (Node.js scripts)
+      extract-blocks/       # Extract block meshes from .pak files
+      convert-textures/     # DDS -&gt; WebP/PNG conversion
+      generate-manifest/    # Build asset manifest JSON
+      validate-physics/     # Run physics against TMInterface replay data
+      package.json</code></pre></div>
+<h3 id="52-rust-wasm-compilation"><a class="anchor" href="#52-rust-wasm-compilation">#</a>5.2 Rust WASM Compilation</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-toml"># packages/physics/rust/Cargo.toml
+[package]
+name = &quot;opentm-physics&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2021&quot;
+
+[lib]
+crate-type = [&quot;cdylib&quot;]
+
+[dependencies]
+wasm-bindgen = &quot;0.2&quot;
+rapier3d = { version = &quot;0.22&quot;, features = [&quot;wasm-bindgen&quot;] }
+# No serde -- manual byte serialization for SAB interop
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1     # Max optimization
+strip = true          # Minimize WASM size</code></pre></div>
+<p><strong>Build command</strong> (in turbo pipeline):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-bash">cd packages/physics/rust &amp;&amp; wasm-pack build --target web --release --out-dir ../ts/src/wasm</code></pre></div>
+<p><strong>WASM size budget</strong>: < 500KB gzipped (rapier3d contributes ~300KB, custom physics ~100KB, overhead ~100KB). Total page load budget: < 2MB gzipped including all JS + WASM.</p>
+<p><strong>Determinism</strong>: Rust on WASM uses IEEE 754 single-precision for <code>f32</code> operations. The WASM spec mandates deterministic floating-point for non-NaN values. We use <code>f32</code> exclusively (never <code>f64</code>) in the physics module and avoid non-deterministic operations (<code>f32::sqrt</code> is deterministic in WASM, but <code>f32::sin</code>/<code>cos</code> may vary -- use a lookup table or Taylor series for trigonometric functions in the physics path).</p>
+<h3 id="53-typescript-bundling"><a class="anchor" href="#53-typescript-bundling">#</a>5.3 TypeScript Bundling</h3>
+<p><strong>Tool</strong>: Vite 6+ with the following plugins:</p>
+<ul>
+  <li><code>vite-plugin-wasm</code>: load .wasm files as ES modules</li>
+  <li><code>@sveltejs/vite-plugin-svelte</code>: Svelte component compilation</li>
+  <li><code>vite-plugin-top-level-await</code>: for WASM async initialization</li>
+</ul>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">// apps/web/vite.config.ts
+import { defineConfig } from &#x27;vite&#x27;;
+import { svelte } from &#x27;@sveltejs/vite-plugin-svelte&#x27;;
+import wasm from &#x27;vite-plugin-wasm&#x27;;
+import topLevelAwait from &#x27;vite-plugin-top-level-await&#x27;;
+
+export default defineConfig({
+  plugins: [svelte(), wasm(), topLevelAwait()],
+  build: {
+    target: &#x27;esnext&#x27;,         // WebGPU requires modern browsers
+    minify: &#x27;terser&#x27;,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          physics: [&#x27;@opentm/physics&#x27;],
+          renderer: [&#x27;@opentm/renderer&#x27;],
+          gbx: [&#x27;@opentm/gbx-parser&#x27;],
+        },
+      },
+    },
+  },
+  server: {
+    headers: {
+      // Required for SharedArrayBuffer
+      &#x27;Cross-Origin-Opener-Policy&#x27;: &#x27;same-origin&#x27;,
+      &#x27;Cross-Origin-Embedder-Policy&#x27;: &#x27;require-corp&#x27;,
+    },
+  },
+  worker: {
+    format: &#x27;es&#x27;,
+    plugins: () =&gt; [wasm(), topLevelAwait()],
+  },
+});</code></pre></div>
+<h3 id="54-turborepo-pipeline"><a class="anchor" href="#54-turborepo-pipeline">#</a>5.4 Turborepo Pipeline</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-jsonc">// turbo.json
+{
+  &quot;$schema&quot;: &quot;https://turbo.build/schema.json&quot;,
+  &quot;pipeline&quot;: {
+    &quot;build&quot;: {
+      &quot;dependsOn&quot;: [&quot;^build&quot;],
+      &quot;outputs&quot;: [&quot;dist/**&quot;, &quot;ts/src/wasm/**&quot;]
+    },
+    &quot;build:wasm&quot;: {
+      &quot;cache&quot;: true,
+      &quot;outputs&quot;: [&quot;ts/src/wasm/**&quot;],
+      &quot;inputs&quot;: [&quot;rust/src/**&quot;, &quot;rust/Cargo.toml&quot;]
+    },
+    &quot;test&quot;: {
+      &quot;dependsOn&quot;: [&quot;build&quot;],
+      &quot;outputs&quot;: []
+    },
+    &quot;test:physics-validation&quot;: {
+      &quot;dependsOn&quot;: [&quot;build&quot;],
+      &quot;outputs&quot;: [&quot;test-results/**&quot;],
+      &quot;cache&quot;: false  // always run fresh against latest TMInterface data
+    },
+    &quot;lint&quot;: {
+      &quot;outputs&quot;: []
+    },
+    &quot;typecheck&quot;: {
+      &quot;dependsOn&quot;: [&quot;^build&quot;],
+      &quot;outputs&quot;: []
+    }
+  }
+}</code></pre></div>
+<h3 id="55-testing-strategy-per-module"><a class="anchor" href="#55-testing-strategy-per-module">#</a>5.5 Testing Strategy Per Module</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Module</th>
+  <th style="text-align:left">Test Type</th>
+  <th style="text-align:left">Tool</th>
+  <th style="text-align:left">What is Tested</th>
+  <th style="text-align:left">Data Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">core</td>
+  <td style="text-align:left">Unit</td>
+  <td style="text-align:left">Vitest</td>
+  <td style="text-align:left">Math operations (Vec3 dot/cross, Iso4 multiply, Quat slerp)</td>
+  <td style="text-align:left">Hand-computed values</td>
+</tr>
+<tr>
+  <td style="text-align:left">gbx-parser</td>
+  <td style="text-align:left">Unit + Integration</td>
+  <td style="text-align:left">Vitest</td>
+  <td style="text-align:left">Header parsing, LookbackString, chunk dispatch. Integration: parse real .Gbx files and verify extracted data</td>
+  <td style="text-align:left">10+ real .Map.Gbx files as fixtures (doc 26 validated 5 files byte-exact)</td>
+</tr>
+<tr>
+  <td style="text-align:left">physics</td>
+  <td style="text-align:left">Unit + Validation</td>
+  <td style="text-align:left">Vitest (TS) + cargo test (Rust)</td>
+  <td style="text-align:left">Unit: force model outputs for known inputs. Validation: replay TMInterface recordings and compare positions at each tick</td>
+  <td style="text-align:left">TMInterface replay data: 20+ replays with input+position pairs</td>
+</tr>
+<tr>
+  <td style="text-align:left">renderer</td>
+  <td style="text-align:left">Visual regression</td>
+  <td style="text-align:left">Playwright screenshot comparison</td>
+  <td style="text-align:left">Render known scenes, compare against reference screenshots. Catch shader regressions.</td>
+  <td style="text-align:left">Reference screenshots from known camera positions</td>
+</tr>
+<tr>
+  <td style="text-align:left">audio</td>
+  <td style="text-align:left">Manual</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Audio is subjective; manual testing only</td>
+  <td style="text-align:left">-</td>
+</tr>
+<tr>
+  <td style="text-align:left">input</td>
+  <td style="text-align:left">Unit</td>
+  <td style="text-align:left">Vitest</td>
+  <td style="text-align:left">Mock keyboard/gamepad events, verify InputState output</td>
+  <td style="text-align:left">Synthetic events</td>
+</tr>
+<tr>
+  <td style="text-align:left">camera</td>
+  <td style="text-align:left">Unit</td>
+  <td style="text-align:left">Vitest</td>
+  <td style="text-align:left">Camera matrix computation for known inputs. Chase camera tracking.</td>
+  <td style="text-align:left">Known vehicle positions -> expected camera matrices</td>
+</tr>
+<tr>
+  <td style="text-align:left">network</td>
+  <td style="text-align:left">Integration</td>
+  <td style="text-align:left">Vitest + MSW</td>
+  <td style="text-align:left">Mock Nadeo API responses, verify auth flow, token refresh, error handling</td>
+  <td style="text-align:left">Mock HTTP responses matching documented API format</td>
+</tr>
+<tr>
+  <td style="text-align:left">map</td>
+  <td style="text-align:left">Integration</td>
+  <td style="text-align:left">Vitest</td>
+  <td style="text-align:left">Load real .Map.Gbx, verify block counts, positions, waypoint detection</td>
+  <td style="text-align:left">Real map files with known block layouts</td>
+</tr>
+<tr>
+  <td style="text-align:left">ghost</td>
+  <td style="text-align:left">Unit + Roundtrip</td>
+  <td style="text-align:left">Vitest</td>
+  <td style="text-align:left">Record inputs, serialize, compress, decompress, deserialize, compare to original</td>
+  <td style="text-align:left">Generated input sequences</td>
+</tr>
+<tr>
+  <td style="text-align:left">assets</td>
+  <td style="text-align:left">Integration</td>
+  <td style="text-align:left">Vitest</td>
+  <td style="text-align:left">Asset manifest loading, cache hit/miss behavior</td>
+  <td style="text-align:left">Mock manifest + mock HTTP responses</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>CI pipeline</strong> (GitHub Actions):</p>
+<ol>
+  <li><code>pnpm install</code> (frozen lockfile)</li>
+  <li><code>turbo run lint typecheck</code> (parallel)</li>
+  <li><code>turbo run build</code> (respects dependency order)</li>
+  <li><code>turbo run test</code> (all unit + integration tests)</li>
+  <li><strong>Nightly</strong> (separate workflow): <code>turbo run test:physics-validation</code> (30-minute run comparing against TMInterface data)</li>
+</ol>
+<hr>
+<h2 id="6-performance-budget"><a class="anchor" href="#6-performance-budget">#</a>6. Performance Budget</h2>
+<h3 id="61-frame-budget-allocation-60-fps-target"><a class="anchor" href="#61-frame-budget-allocation-60-fps-target">#</a>6.1 Frame Budget Allocation (60 FPS Target)</h3>
+<p>Total budget: <strong>16.67ms</strong> per frame.</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>┌──────────────────────────────────────────────────────────────┐
+│ Budget Allocation (16.67ms total for 60 FPS)                  │
+│                                                              │
+│ ┌─────────┐ ┌──────────────────────┐ ┌────────┐ ┌─────────┐ │
+│ │ Input   │ │ Rendering (GPU)       │ │ Audio  │ │ UI +    │ │
+│ │ + Logic │ │                       │ │        │ │ Other   │ │
+│ │         │ │                       │ │        │ │         │ │
+│ │ 1.5ms   │ │ 8ms                   │ │ 0.5ms  │ │ 2.67ms  │ │
+│ └─────────┘ └──────────────────────┘ └────────┘ └─────────┘ │
+│                                                              │
+│ Physics runs on SEPARATE THREAD: up to 10ms per tick,         │
+│ does NOT consume main thread budget.                          │
+│                                                              │
+│ Physics Worker Budget: 4ms target, 10ms hard max per tick     │
+└──────────────────────────────────────────────────────────────┘</code></pre></div>
+<p><strong>Detailed breakdown (main thread)</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Phase</th>
+  <th style="text-align:left">Budget</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Input sampling</td>
+  <td style="text-align:left">0.1ms</td>
+  <td style="text-align:left">Poll gamepad, read keyboard state, write to SAB</td>
+</tr>
+<tr>
+  <td style="text-align:left">Read physics output</td>
+  <td style="text-align:left">0.1ms</td>
+  <td style="text-align:left">Read vehicle state from SAB, interpolate</td>
+</tr>
+<tr>
+  <td style="text-align:left">Camera update</td>
+  <td style="text-align:left">0.2ms</td>
+  <td style="text-align:left">Spring-damper computation, matrix generation</td>
+</tr>
+<tr>
+  <td style="text-align:left">Frustum culling</td>
+  <td style="text-align:left">0.5ms</td>
+  <td style="text-align:left">BVH traversal, AABB-frustum test for ~5000 nodes</td>
+</tr>
+<tr>
+  <td style="text-align:left">Scene sorting</td>
+  <td style="text-align:left">0.3ms</td>
+  <td style="text-align:left">Sort opaques front-to-back, transparents back-to-front</td>
+</tr>
+<tr>
+  <td style="text-align:left">Command encoding</td>
+  <td style="text-align:left">0.3ms</td>
+  <td style="text-align:left">Build WebGPU command buffers</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>GPU: Shadow pass</strong></td>
+  <td style="text-align:left"><strong>2.0ms</strong></td>
+  <td style="text-align:left">4 cascades x 500 draw calls each (instanced)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>GPU: G-buffer fill</strong></td>
+  <td style="text-align:left"><strong>3.0ms</strong></td>
+  <td style="text-align:left">~2000 draw calls, 4 MRT output</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>GPU: Deferred lighting</strong></td>
+  <td style="text-align:left"><strong>1.5ms</strong></td>
+  <td style="text-align:left">Full-screen pass, PBR computation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>GPU: Forward transparent</strong></td>
+  <td style="text-align:left"><strong>0.5ms</strong></td>
+  <td style="text-align:left">Ghost car, glass, particles</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>GPU: Post-process</strong></td>
+  <td style="text-align:left"><strong>1.0ms</strong></td>
+  <td style="text-align:left">Bloom (0.5ms) + tone map (0.2ms) + FXAA (0.3ms)</td>
+</tr>
+<tr>
+  <td style="text-align:left">UI update</td>
+  <td style="text-align:left">0.5ms</td>
+  <td style="text-align:left">Svelte reactive updates, DOM reconciliation</td>
+</tr>
+<tr>
+  <td style="text-align:left">Audio parameter update</td>
+  <td style="text-align:left">0.2ms</td>
+  <td style="text-align:left">Set RPM, position, play/stop sounds</td>
+</tr>
+<tr>
+  <td style="text-align:left">WebGPU submit + present</td>
+  <td style="text-align:left">0.5ms</td>
+  <td style="text-align:left">Submit command buffer, browser compositing</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Headroom</strong></td>
+  <td style="text-align:left"><strong>5.97ms</strong></td>
+  <td style="text-align:left">Buffer for GC pauses, OS interrupts, variance</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Physics worker budget</strong> (separate thread, per tick):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Phase</th>
+  <th style="text-align:left">Budget</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Input read from SAB</td>
+  <td style="text-align:left">0.01ms</td>
+  <td style="text-align:left">Atomic read</td>
+</tr>
+<tr>
+  <td style="text-align:left">Substep loop (1-10 typical)</td>
+  <td style="text-align:left">2.5ms</td>
+  <td style="text-align:left">Force computation + integration per substep</td>
+</tr>
+<tr>
+  <td style="text-align:left">Collision broadphase</td>
+  <td style="text-align:left">0.5ms</td>
+  <td style="text-align:left">rapier BVH query</td>
+</tr>
+<tr>
+  <td style="text-align:left">Collision narrowphase</td>
+  <td style="text-align:left">0.5ms</td>
+  <td style="text-align:left">GJK/EPA for contacts</td>
+</tr>
+<tr>
+  <td style="text-align:left">Collision response</td>
+  <td style="text-align:left">0.3ms</td>
+  <td style="text-align:left">Iterative friction solver</td>
+</tr>
+<tr>
+  <td style="text-align:left">Output write to SAB</td>
+  <td style="text-align:left">0.01ms</td>
+  <td style="text-align:left">Atomic write</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Total typical</strong></td>
+  <td style="text-align:left"><strong>~3.8ms</strong></td>
+  <td style="text-align:left">Well within 10ms tick budget</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Worst case (max substeps ~50)</strong></td>
+  <td style="text-align:left"><strong>~8ms</strong></td>
+  <td style="text-align:left">High speed, many contacts</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="62-what-happens-when-budget-is-exceeded"><a class="anchor" href="#62-what-happens-when-budget-is-exceeded">#</a>6.2 What Happens When Budget is Exceeded</h3>
+<p><strong>Scenario 1: Main thread rendering exceeds 16.67ms</strong> (dropped to < 60 FPS)</p>
+<p>Adaptive quality system:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">class AdaptiveQuality {
+  private frameTimeHistory: number[] = [];  // rolling window of 30 frames
+  private currentLevel: QualityLevel = &#x27;high&#x27;;
+
+  onFrameEnd(frameTimeMs: number): void {
+    this.frameTimeHistory.push(frameTimeMs);
+    if (this.frameTimeHistory.length &gt; 30) this.frameTimeHistory.shift();
+
+    const avgFrameTime = average(this.frameTimeHistory);
+
+    // Downgrade if consistently over budget
+    if (avgFrameTime &gt; 18.0 &amp;&amp; this.currentLevel === &#x27;high&#x27;) {
+      this.currentLevel = &#x27;medium&#x27;;
+      this.applySetting(&#x27;medium&#x27;);
+    } else if (avgFrameTime &gt; 20.0 &amp;&amp; this.currentLevel === &#x27;medium&#x27;) {
+      this.currentLevel = &#x27;low&#x27;;
+      this.applySetting(&#x27;low&#x27;);
+    }
+    // Upgrade if consistently under budget (with headroom)
+    else if (avgFrameTime &lt; 12.0 &amp;&amp; this.currentLevel !== &#x27;high&#x27;) {
+      this.currentLevel = this.currentLevel === &#x27;low&#x27; ? &#x27;medium&#x27; : &#x27;high&#x27;;
+      this.applySetting(this.currentLevel);
+    }
+  }
+}</code></pre></div>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Setting</th>
+  <th style="text-align:left">High</th>
+  <th style="text-align:left">Medium</th>
+  <th style="text-align:left">Low</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Shadow cascades</td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">1</td>
+</tr>
+<tr>
+  <td style="text-align:left">Shadow resolution</td>
+  <td style="text-align:left">2048</td>
+  <td style="text-align:left">1024</td>
+  <td style="text-align:left">512</td>
+</tr>
+<tr>
+  <td style="text-align:left">SSAO</td>
+  <td style="text-align:left">Enabled</td>
+  <td style="text-align:left">Half-res</td>
+  <td style="text-align:left">Disabled</td>
+</tr>
+<tr>
+  <td style="text-align:left">Bloom</td>
+  <td style="text-align:left">Enabled</td>
+  <td style="text-align:left">Enabled</td>
+  <td style="text-align:left">Disabled</td>
+</tr>
+<tr>
+  <td style="text-align:left">AA</td>
+  <td style="text-align:left">TAA</td>
+  <td style="text-align:left">FXAA</td>
+  <td style="text-align:left">None</td>
+</tr>
+<tr>
+  <td style="text-align:left">Draw distance</td>
+  <td style="text-align:left">1000m</td>
+  <td style="text-align:left">500m</td>
+  <td style="text-align:left">300m</td>
+</tr>
+<tr>
+  <td style="text-align:left">Render resolution</td>
+  <td style="text-align:left">100%</td>
+  <td style="text-align:left">85%</td>
+  <td style="text-align:left">70%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Scenario 2: Physics worker exceeds 10ms tick budget</strong></p>
+<p>This is critical because physics must maintain 100Hz for determinism. If a tick takes > 10ms:</p>
+<ol>
+  <li>The physics worker simply takes longer. The main thread does NOT wait -- it renders with the last known state.</li>
+  <li>On the next frame, the main thread sends 2 (or more) ticks to catch up. The physics worker processes them sequentially.</li>
+  <li>If physics falls behind by > 3 ticks (30ms), log a warning and cap the catch-up to 3 ticks per frame. This prevents death spirals where trying to catch up causes more missed deadlines.</li>
+  <li>For the player, this manifests as brief physics jitter -- the car appears to teleport slightly. Acceptable at < 1% of frames.</li>
+</ol>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">// Main thread tick accumulation with catch-up cap
+const MAX_TICKS_PER_FRAME = 3;
+let tickAccumulator = 0;
+
+function onFrame(deltaMs: number) {
+  tickAccumulator += deltaMs;
+  let ticksThisFrame = 0;
+
+  while (tickAccumulator &gt;= TICK_DT_MS &amp;&amp; ticksThisFrame &lt; MAX_TICKS_PER_FRAME) {
+    sendTickToPhysicsWorker(currentTick);
+    currentTick++;
+    tickAccumulator -= TICK_DT_MS;
+    ticksThisFrame++;
+  }
+
+  // If we hit the cap, discard excess accumulated time (prevents spiral)
+  if (ticksThisFrame === MAX_TICKS_PER_FRAME &amp;&amp; tickAccumulator &gt; TICK_DT_MS) {
+    console.warn(`Physics falling behind: ${tickAccumulator.toFixed(1)}ms excess discarded`);
+    tickAccumulator = 0; // Reset to prevent growing debt
+  }
+}</code></pre></div>
+<p><strong>Scenario 3: Complex maps with 10,000+ blocks</strong></p>
+<ul>
+  <li>Frustum culling with BVH should handle 50,000 nodes in < 1ms</li>
+  <li>Draw call batching: group blocks by material (same mesh + texture = one instanced draw call). Target < 200 unique draw calls after batching.</li>
+  <li>LOD: blocks beyond 500m use simplified meshes (50% triangle count). Beyond 1000m, use impostor billboards or skip.</li>
+</ul>
+<h3 id="63-memory-budget"><a class="anchor" href="#63-memory-budget">#</a>6.3 Memory Budget</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Resource</th>
+  <th style="text-align:left">Budget</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">WASM heap (physics)</td>
+  <td style="text-align:left">32MB</td>
+  <td style="text-align:left">rapier collision world + vehicle states</td>
+</tr>
+<tr>
+  <td style="text-align:left">GPU VRAM (textures)</td>
+  <td style="text-align:left">256MB</td>
+  <td style="text-align:left">Block textures, shadow maps, G-buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left">GPU VRAM (geometry)</td>
+  <td style="text-align:left">64MB</td>
+  <td style="text-align:left">Vertex + index buffers for all loaded blocks</td>
+</tr>
+<tr>
+  <td style="text-align:left">JS heap</td>
+  <td style="text-align:left">128MB</td>
+  <td style="text-align:left">GBX parse results, scene graph, UI state, ghost data</td>
+</tr>
+<tr>
+  <td style="text-align:left">Audio buffers</td>
+  <td style="text-align:left">16MB</td>
+  <td style="text-align:left">Decoded engine samples, SFX, music</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Total</strong></td>
+  <td style="text-align:left"><strong>~500MB</strong></td>
+  <td style="text-align:left">Fits comfortably on mid-range hardware (4GB+ GPU, 8GB+ RAM)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="7-critical-unknowns-that-block-architecture"><a class="anchor" href="#7-critical-unknowns-that-block-architecture">#</a>7. Critical Unknowns That Block Architecture</h2>
+<h3 id="71-block-mesh-extraction-pipeline"><a class="anchor" href="#71-block-mesh-extraction-pipeline">#</a>7.1 Block Mesh Extraction Pipeline</h3>
+<ul>
+  <li><strong>What we assume</strong>: Block meshes can be extracted from .pak files using NadeoImporter or community tools and served as pre-converted glTF assets from a CDN.</li>
+  <li><strong>Evidence</strong>: NadeoImporter is an official Nadeo tool that exports meshes. gbx-net has partial .pak parsing. Community has extracted individual blocks manually. NadeoPak files confirmed to use "NadeoPak" magic header, not GBX [doc 26 Section 10].</li>
+  <li><strong>What breaks if wrong</strong>: If pack files are encrypted per-account with no offline extraction path, we cannot get block meshes AT ALL. The entire renderer has nothing to display.</li>
+  <li><strong>Likelihood of being wrong</strong>: LOW. The community HAS extracted blocks; the question is whether it can be automated for ALL ~500 block types.</li>
+  <li><strong>Validation</strong>: Before any code: write a Node.js script that extracts 10 Stadium road blocks to glTF using gbx-net. If this works, the pipeline is viable. Estimated effort: 2-3 days.</li>
+</ul>
+<h3 id="72-gbx-body-compression-is-lzo-not-zlib"><a class="anchor" href="#72-gbx-body-compression-is-lzo-not-zlib">#</a>7.2 GBX Body Compression is LZO, Not zlib</h3>
+<ul>
+  <li><strong>What we assume</strong>: GBX body compression uses LZO1X (confirmed by doc 26), and we need an LZO decompressor in the browser.</li>
+  <li><strong>Evidence</strong>: Doc 26 (real file analysis) byte-matched 5 GBX files and confirmed LZO body compression. Doc 15 found zlib strings in the binary, but doc 26 proved LZO is used for GBX bodies. zlib is used elsewhere (lightmaps, possibly ghosts).</li>
+  <li><strong>What breaks if wrong</strong>: If some files use zlib and others use LZO (or if there is a third compression), the parser will fail on certain files.</li>
+  <li><strong>Likelihood of being wrong</strong>: LOW for body compression being LZO. Medium for there being mixed compression across different file types.</li>
+  <li><strong>Validation</strong>: Parse 100 diverse .Gbx files (maps, items, ghosts) and verify each decompresses successfully with LZO. Test zlib fallback for any that fail. Effort: 1 day.</li>
+</ul>
+<h3 id="73-physics-force-model-accuracy"><a class="anchor" href="#73-physics-force-model-accuracy">#</a>7.3 Physics Force Model Accuracy</h3>
+<ul>
+  <li><strong>What we assume</strong>: The decompiled CarSport force model (doc 22, case 5, 350+ LOC) can be ported to Rust and will produce physics that "feel right" after parameter tuning against TMInterface data.</li>
+  <li><strong>Evidence</strong>: Three force models are decompiled with actual code: cases 0/1/2 (base 4-wheel), case 3 (2-wheel bicycle), case 5 (CarSport with 9 sub-functions) [doc 22]. Pacejka-like tire model documented. Drift state machine documented (3 states). However, the per-wheel sub-function FUN_1408570e0 is NOT decompiled, nor are the airborne control model (FUN_14085c1b0) or boost model (FUN_140857b20).</li>
+  <li><strong>What breaks if wrong</strong>: If the decompiled code has critical errors (decompiler artifacts, wrong register assignments, missing functions), the physics will feel fundamentally wrong. Iterative tuning can only compensate for parameter errors, not structural errors.</li>
+  <li><strong>Likelihood of being wrong</strong>: MEDIUM. Ghidra decompilation of complex math code frequently has errors in operator precedence, sign handling, and type casting. The Pacejka-like formula <code>lateral_force = -slip <em> linear_coef - slip</em>|slip| * quadratic_coef</code> is plausible but could be subtly wrong.</li>
+  <li><strong>Validation</strong>: CRITICAL FIRST STEP. Before porting to Rust:</li>
+  <li>Record 20 TMInterface replays (simple straight, turns, jumps, turbo, drift) with input + position at every tick.</li>
+  <li>Implement the decompiled CarSport model in TypeScript (faster iteration).</li>
+  <li>Feed the same inputs and compare positions. If position divergence exceeds 1m after 100 ticks, there is a structural error that needs re-decompilation.</li>
+  <li>Effort: 2 weeks (this is the single most important validation).</li>
+</ul>
+<h3 id="74-webgpu-availability-and-capability"><a class="anchor" href="#74-webgpu-availability-and-capability">#</a>7.4 WebGPU Availability and Capability</h3>
+<ul>
+  <li><strong>What we assume</strong>: WebGPU is available in all target browsers (Chrome, Firefox, Safari) with support for: 4+ MRT (color attachments), compute shaders, depth textures as shader input, 2D array textures (for shadow cascades).</li>
+  <li><strong>Evidence</strong>: WebGPU is production-ready in Chrome (since 113), Firefox (since 132), and Safari (since 18). The spec mandates up to 8 color attachments (we need 4). Compute shaders, depth texture binding, and array textures are all in the core spec.</li>
+  <li><strong>What breaks if wrong</strong>: If a target browser has a bug or limitation in MRT or compute shaders, the deferred pipeline fails. Fallback to forward rendering loses the ability to handle many lights efficiently.</li>
+  <li><strong>Likelihood of being wrong</strong>: LOW for the features listed. WebGPU has been stable for years by 2026.</li>
+  <li><strong>Validation</strong>: Run the WebGPU conformance tests (webgpu:*) in Chrome, Firefox, and Safari. Create a minimal test that renders to 4 MRT + depth and reads back results. Effort: 1 day.</li>
+</ul>
+<h3 id="75-sharedarraybuffer-availability"><a class="anchor" href="#75-sharedarraybuffer-availability">#</a>7.5 SharedArrayBuffer Availability</h3>
+<ul>
+  <li><strong>What we assume</strong>: SharedArrayBuffer is available with correct COOP/COEP headers, enabling zero-copy physics-to-render communication.</li>
+  <li><strong>Evidence</strong>: SAB has been available since Chrome 68, Firefox 79, Safari 15 -- with the COOP/COEP header requirement since the Spectre mitigations. This is a mature API.</li>
+  <li><strong>What breaks if wrong</strong>: If SAB is unavailable (e.g., iframe embedding without proper headers, or mobile browser limitations), the physics-render pipeline falls back to postMessage, consuming ~0.1-0.2ms per tick in serialization overhead.</li>
+  <li><strong>Likelihood of being wrong</strong>: LOW if we control the hosting environment. HIGH if embedded in third-party iframes.</li>
+  <li><strong>Validation</strong>: Set COOP/COEP headers in Vite dev server config (already specified in Section 5.3). Test SAB allocation in all target browsers. Effort: 1 hour.</li>
+</ul>
+<h3 id="76-deterministic-physics-across-browsers"><a class="anchor" href="#76-deterministic-physics-across-browsers">#</a>7.6 Deterministic Physics Across Browsers</h3>
+<ul>
+  <li><strong>What we assume</strong>: Rust compiled to WASM produces bit-exact floating-point results across Chrome, Firefox, and Safari, enabling cross-browser ghost validation.</li>
+  <li><strong>Evidence</strong>: The WASM spec (IEEE 754-2019 compliance) guarantees deterministic results for basic arithmetic (+, -, *, /) and <code>sqrt</code>. However, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>exp</code>, <code>log</code> are NOT required to be deterministic across implementations. TM2020 likely achieves determinism by using only basic arithmetic in the physics hot path (Forward Euler with no trig in the integration loop).</li>
+  <li><strong>What breaks if wrong</strong>: If any trig or transcendental function produces different results across browsers, ghost replays will diverge. A ghost recorded in Chrome will not validate in Firefox.</li>
+  <li><strong>Likelihood of being wrong</strong>: MEDIUM. The force model likely uses <code>atan2</code> for slip angle computation and <code>sin</code>/<code>cos</code> for rotation updates. If these differ by even 1 ULP, the error will compound over thousands of ticks.</li>
+  <li><strong>Validation</strong>: Create a WASM test module that runs 10,000 iterations of the physics step with known inputs. Compare output across Chrome, Firefox, Safari byte-by-byte. If any difference: replace non-deterministic operations with lookup tables or Taylor series polynomial approximations compiled into the WASM. Effort: 3 days.</li>
+</ul>
+<h3 id="77-turbo-ramp-direction"><a class="anchor" href="#77-turbo-ramp-direction">#</a>7.7 Turbo Ramp Direction</h3>
+<ul>
+  <li><strong>What we assume</strong>: Turbo boost force ramps linearly from 0 to max over its duration (i.e., ramp UP), as decompiled in doc 10 Section 4.3: <code>force = (elapsed/duration) <em> strength </em> modelScale</code>.</li>
+  <li><strong>Evidence</strong>: Decompiled code clearly shows <code>elapsed/duration</code> which starts at 0 and increases to 1. However, doc 18 (validation review) Issue 6 flagged this as counterintuitive and potentially a decompilation error, because TMNF turbo decays (ramp DOWN) per doc 14.</li>
+  <li><strong>What breaks if wrong</strong>: If turbo actually decays (ramp DOWN), the acceleration curve at turbo pads will feel completely wrong -- players will get a burst at the start instead of at the end.</li>
+  <li><strong>Likelihood of being wrong</strong>: MEDIUM. Ramp-UP makes sense physically (the surface continues to push the car while on it) but contradicts TMNF community documentation.</li>
+  <li><strong>Validation</strong>: Use TMInterface to capture speed data while driving over a turbo pad. Plot speed vs time. The curve shape will unambiguously show ramp-up vs ramp-down. Effort: 2 hours.</li>
+</ul>
+<h3 id="78-surface-friction-coefficients"><a class="anchor" href="#78-surface-friction-coefficients">#</a>7.8 Surface Friction Coefficients</h3>
+<ul>
+  <li><strong>What we assume</strong>: Each of the 19 surface types has distinct friction coefficients that affect vehicle handling. We approximate these values (Section 19.2 of doc 20) because the actual values are not decompiled.</li>
+  <li><strong>Evidence</strong>: 208 materials are catalogued with surface IDs [doc 19 Section 10]. The surface ID determines physics behavior, confirmed by distinct handling on ice vs asphalt in gameplay. The decompiled force models reference surface ID per wheel contact [doc 22].</li>
+  <li><strong>What breaks if wrong</strong>: If friction values are significantly off, driving on grass/ice/dirt will feel wrong. Players will notice immediately because surface feel is a core TM mechanic.</li>
+  <li><strong>Likelihood of being wrong</strong>: HIGH for exact values (we have no decompiled coefficients). Low for relative ordering (ice < grass < dirt < asphalt is obvious from gameplay).</li>
+  <li><strong>Validation</strong>: Use Openplanet to measure deceleration rate on each surface type (drive at known speed, release throttle, measure time to stop). Derive friction coefficient from deceleration. Effort: 4 hours for all 19 surface types.</li>
+</ul>
+<h3 id="79-tick-rate-confirmation"><a class="anchor" href="#79-tick-rate-confirmation">#</a>7.9 Tick Rate Confirmation</h3>
+<ul>
+  <li><strong>What we assume</strong>: Physics tick rate is 100Hz (10ms per tick).</li>
+  <li><strong>Evidence</strong>: 100Hz is community-established across TMNF and TM2020. TMInterface operates at this rate. However, doc 18 (validation review) Issue 25 notes this was never confirmed from a decompiled constant.</li>
+  <li><strong>What breaks if wrong</strong>: If the tick rate is 200Hz or 50Hz, all physics tuning will be wrong by a factor of 2-4x. Ghost replays will not validate.</li>
+  <li><strong>Likelihood of being wrong</strong>: VERY LOW. The entire TM community, TMInterface, and all replay tools assume 100Hz. If it were different, the community would have noticed.</li>
+  <li><strong>Validation</strong>: Use TMInterface to record a replay at maximum resolution. Count the number of state samples per second of game time. Effort: 30 minutes.</li>
+</ul>
+<h3 id="710-ghost-binary-format-for-official-ghosts"><a class="anchor" href="#710-ghost-binary-format-for-official-ghosts">#</a>7.10 Ghost Binary Format for Official Ghosts</h3>
+<ul>
+  <li><strong>What we assume</strong>: We use our own ghost format (JSON + LZ4) for the MVP. Loading official TM2020 ghosts is deferred.</li>
+  <li><strong>Evidence</strong>: The ghost binary format uses int16/int8 encoding for position/rotation/speed [doc 29 Section 6.2] but the full format is not documented. gbx-net has partial ghost parsing.</li>
+  <li><strong>What breaks if wrong</strong>: If users expect to load their existing TM2020 ghosts, they cannot. This limits the competitive value of the tool.</li>
+  <li><strong>Likelihood of being wrong</strong>: N/A -- this is a scope decision, not an assumption. We explicitly defer official ghost loading.</li>
+  <li><strong>Validation</strong>: When ready to implement: use gbx-net's ghost parser as reference. Test with 50+ downloaded ghosts from TMX. Effort: 2-3 weeks.</li>
+</ul>
+<h3 id="711-map-block-naming-convention-stability"><a class="anchor" href="#711-map-block-naming-convention-stability">#</a>7.11 Map Block Naming Convention Stability</h3>
+<ul>
+  <li><strong>What we assume</strong>: Block names in .Map.Gbx files (e.g., "StadiumRoadMainStraight") are stable across game versions and can be used as lookup keys into our pre-extracted mesh library.</li>
+  <li><strong>Evidence</strong>: gbx-net and gbx-ts use block names for identification. The community map editor (tm-editor-route) relies on block names. Block names appear in GBX body chunks as LookbackStrings.</li>
+  <li><strong>What breaks if wrong</strong>: If Nadeo changes block names in an update, maps using old names will fail to load. Our mesh library keys become invalid.</li>
+  <li><strong>Likelihood of being wrong</strong>: LOW. Block names have been stable across 6+ years of TM2020 updates. New blocks are added, old blocks are not renamed.</li>
+  <li><strong>Validation</strong>: Parse 100 maps from different TM2020 versions (2020-2026). Verify block names are consistent. Effort: 2 hours.</li>
+</ul>
+
+                        <nav class="prev-next"><a class="prev" href="plan-overview.html">&larr; Executive Summary</a><a class="next" href="plan-physics.html">Physics Engine Design &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-module-dependency-graph">1. Module Dependency Graph</a></li>
+  <li class="toc-h3"><a href="#11-module-definitions">1.1 Module Definitions</a></li>
+  <li class="toc-h3"><a href="#12-dependency-graph">1.2 Dependency Graph</a></li>
+  <li class="toc-h3"><a href="#13-module-size-summary">1.3 Module Size Summary</a></li>
+<li class=""><a href="#2-data-flow-architecture">2. Data Flow Architecture</a></li>
+  <li class="toc-h3"><a href="#21-load-a-map">2.1 Load a Map</a></li>
+  <li class="toc-h3"><a href="#22-one-physics-frame">2.2 One Physics Frame</a></li>
+  <li class="toc-h3"><a href="#23-one-render-frame">2.3 One Render Frame</a></li>
+  <li class="toc-h3"><a href="#24-record-a-ghost">2.4 Record a Ghost</a></li>
+  <li class="toc-h3"><a href="#25-play-a-ghost">2.5 Play a Ghost</a></li>
+<li class=""><a href="#3-threading-model">3. Threading Model</a></li>
+  <li class="toc-h3"><a href="#31-thread-allocation">3.1 Thread Allocation</a></li>
+  <li class="toc-h3"><a href="#32-sharedarraybuffer-layout-for-physics-main-thread">3.2 SharedArrayBuffer Layout for Physics &lt;-&gt; Main Thread</a></li>
+  <li class="toc-h3"><a href="#33-worker-initialization">3.3 Worker Initialization</a></li>
+<li class=""><a href="#4-state-machine">4. State Machine</a></li>
+  <li class="toc-h3"><a href="#41-browser-state-machine">4.1 Browser State Machine</a></li>
+  <li class="toc-h3"><a href="#42-state-definitions">4.2 State Definitions</a></li>
+  <li class="toc-h3"><a href="#43-state-machine-implementation">4.3 State Machine Implementation</a></li>
+<li class=""><a href="#5-build-system">5. Build System</a></li>
+  <li class="toc-h3"><a href="#51-monorepo-structure">5.1 Monorepo Structure</a></li>
+  <li class="toc-h3"><a href="#52-rust-wasm-compilation">5.2 Rust WASM Compilation</a></li>
+  <li class="toc-h3"><a href="#53-typescript-bundling">5.3 TypeScript Bundling</a></li>
+  <li class="toc-h3"><a href="#54-turborepo-pipeline">5.4 Turborepo Pipeline</a></li>
+  <li class="toc-h3"><a href="#55-testing-strategy-per-module">5.5 Testing Strategy Per Module</a></li>
+<li class=""><a href="#6-performance-budget">6. Performance Budget</a></li>
+  <li class="toc-h3"><a href="#61-frame-budget-allocation-60-fps-target">6.1 Frame Budget Allocation (60 FPS Target)</a></li>
+  <li class="toc-h3"><a href="#62-what-happens-when-budget-is-exceeded">6.2 What Happens When Budget is Exceeded</a></li>
+  <li class="toc-h3"><a href="#63-memory-budget">6.3 Memory Budget</a></li>
+<li class=""><a href="#7-critical-unknowns-that-block-architecture">7. Critical Unknowns That Block Architecture</a></li>
+  <li class="toc-h3"><a href="#71-block-mesh-extraction-pipeline">7.1 Block Mesh Extraction Pipeline</a></li>
+  <li class="toc-h3"><a href="#72-gbx-body-compression-is-lzo-not-zlib">7.2 GBX Body Compression is LZO, Not zlib</a></li>
+  <li class="toc-h3"><a href="#73-physics-force-model-accuracy">7.3 Physics Force Model Accuracy</a></li>
+  <li class="toc-h3"><a href="#74-webgpu-availability-and-capability">7.4 WebGPU Availability and Capability</a></li>
+  <li class="toc-h3"><a href="#75-sharedarraybuffer-availability">7.5 SharedArrayBuffer Availability</a></li>
+  <li class="toc-h3"><a href="#76-deterministic-physics-across-browsers">7.6 Deterministic Physics Across Browsers</a></li>
+  <li class="toc-h3"><a href="#77-turbo-ramp-direction">7.7 Turbo Ramp Direction</a></li>
+  <li class="toc-h3"><a href="#78-surface-friction-coefficients">7.8 Surface Friction Coefficients</a></li>
+  <li class="toc-h3"><a href="#79-tick-rate-confirmation">7.9 Tick Rate Confirmation</a></li>
+  <li class="toc-h3"><a href="#710-ghost-binary-format-for-official-ghosts">7.10 Ghost Binary Format for Official Ghosts</a></li>
+  <li class="toc-h3"><a href="#711-map-block-naming-convention-stability">7.11 Map Block Naming Convention Stability</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

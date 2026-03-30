@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof. Chen: Physics Lectures - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item active" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Prof. Chen: Physics Lectures</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="professor-chens-lecture-series-trackmania-2020-physics-engine"><a class="anchor" href="#professor-chens-lecture-series-trackmania-2020-physics-engine">#</a>Professor Chen's Lecture Series: Trackmania 2020 Physics Engine</h1>
+<h1 id="from-decompiled-code-to-understanding"><a class="anchor" href="#from-decompiled-code-to-understanding">#</a>From Decompiled Code to Understanding</h1>
+<p><strong>Lecturer</strong>: Professor Chen, Vehicle Dynamics Simulation Laboratory <strong>Course</strong>: Advanced Game Physics -- Reverse Engineering a Commercial Racing Engine <strong>Binary</strong>: Trackmania.exe (Trackmania 2020, Nadeo/Ubisoft) <strong>Tools</strong>: Ghidra 12.0.4 via PyGhidra <strong>Primary Sources</strong>: 40 decompiled C files, Openplanet live memory readings, hex-verified file analysis <strong>Date</strong>: 2026-03-27</p>
+<p><strong>Cardinal Rule</strong>: Every fact has a citation. Speculation is labeled. "I don't know" is an acceptable answer.</p>
+<hr>
+<h2 id="lecture-1-what-we-know-vs-what-we-think-we-know"><a class="anchor" href="#lecture-1-what-we-know-vs-what-we-think-we-know">#</a>Lecture 1: What We KNOW vs What We THINK We Know</h2>
+<h3 id="10-opening-remarks"><a class="anchor" href="#10-opening-remarks">#</a>1.0 Opening Remarks</h3>
+<p>Students, before we dive into any equations or diagrams, we must do something that most textbooks skip: we must audit our own sources. We have two categories of documentation about Trackmania 2020's physics -- the analysis documents (docs 10 and 22), and the actual decompiled C code. Where these disagree, the code wins. Where we cannot verify a claim, we say so.</p>
+<p>I have read every one of the 40 decompiled source files in our repository. I have cross-referenced every major claim in the documentation against those files. Here is what I found.</p>
+<h3 id="11-verification-audit-table"><a class="anchor" href="#11-verification-audit-table">#</a>1.1 Verification Audit Table</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">#</th>
+  <th style="text-align:left">Claim (from docs 10/22)</th>
+  <th style="text-align:left">Source Doc</th>
+  <th style="text-align:left">Verified?</th>
+  <th style="text-align:left">Evidence</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Physics runs at fixed 100Hz tick rate</td>
+  <td style="text-align:left">Doc 10 S1.2, Doc 21 S1.1</td>
+  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
+  <td style="text-align:left"><code>PhysicsStep_TM.c:63</code> shows <code>tick * 1000000</code> (integer microsecond conversion). No explicit "100Hz" constant found in decompiled code. TMNF precedent and <code>SmMaxPlayerResimStepPerFrame=100</code> in Default.json provide converging evidence.</td>
+  <td style="text-align:left">Cannot VERIFY from code alone. The 10ms period is inferred, not stated.</td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Internal timing uses microseconds</td>
+  <td style="text-align:left">Doc 10 S1.3</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>PhysicsStep_TM.c:63</code>: <code>lVar18 = (ulonglong)<em>param_4 </em> 1000000;</code> and <code>NSceneDyna__PhysicsStep.c:15</code>: <code>FUN_140801e20(param_1, (ulonglong)<em>param_2 </em> 1000000);</code></td>
+  <td style="text-align:left">Both convert integer ticks to microseconds via integer multiplication.</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">Force model dispatch is a switch on offset +0x1790</td>
+  <td style="text-align:left">Doc 10 S2.1</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c:142</code>: <code>switch(<em>(undefined4 </em>)(local_118 + 0x1790))</code></td>
+  <td style="text-align:left">Exact code visible at that line.</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">There are 7 force model cases (0,1,2,3,4,5,6,0xB)</td>
+  <td style="text-align:left">Doc 10 S2.1</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c:143-162</code> lists cases 0/1/2, 3, 4, 5, 6, 0xB</td>
+  <td style="text-align:left">Exactly as documented.</td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">Cases 0/1/2 share the same function (FUN_140869cd0)</td>
+  <td style="text-align:left">Doc 10 S2.1</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c:143-147</code>: <code>case 0: case 1: case 2: FUN_140869cd0(...)</code></td>
+  <td style="text-align:left">Fall-through switch.</td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Models 5, 6, 0xB take 3 params (extra timestamp)</td>
+  <td style="text-align:left">Doc 10 S2.3</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c:155-161</code>: cases 5/6/0xB pass <code>param_3, param_4, &local_158</code> while cases 0-4 pass only <code>param_3, &local_158</code></td>
+  <td style="text-align:left">The extra param_4 is the simulation timestamp.</td>
+</tr>
+<tr>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">Model 5 = StadiumCar/CarSport</td>
+  <td style="text-align:left">Doc 10 S2.6</td>
+  <td style="text-align:left"><span class="badge badge-speculative">SPECULATIVE</span></td>
+  <td style="text-align:left">Doc 10 labels this as "M6/Steer06 from TMNF" but provides no decompiled proof linking it to a specific vehicle file.</td>
+  <td style="text-align:left">I cannot confirm this mapping from the code alone.</td>
+</tr>
+<tr>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">Model 6 = CarSport (the header of <code>force_model_carsport_FUN_14085c9e0.c</code>)</td>
+  <td style="text-align:left">Doc 22 header</td>
+  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
+  <td style="text-align:left">The file header says "CarSport (Stadium)" but this is a researcher's annotation, not from the binary. The function IS the most complex model with per-wheel forces, steering, suspension, anti-roll, damping, drift, boost, and airborne control.</td>
+  <td style="text-align:left">The complexity matches what we would expect for the primary car, but the mapping is INFERENCE.</td>
+</tr>
+<tr>
+  <td style="text-align:left">9</td>
+  <td style="text-align:left">Case 3 = 2-wheel/bicycle model</td>
+  <td style="text-align:left">Doc 22 P1</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong> (structurally)</td>
+  <td style="text-align:left"><code>force_model_2wheel_FUN_14086b060.c</code> header documents: single front/rear force pair, atan2 steering, drift state machine with 3 states, lateral grip via FUN_14086af20. The code confirms 2-axle force decomposition.</td>
+  <td style="text-align:left">The "2-wheel" label is <span class="badge badge-verified">VERIFIED</span> from the code structure. Which vehicle uses it is <span class="badge badge-unknown">UNKNOWN</span>.</td>
+</tr>
+<tr>
+  <td style="text-align:left">10</td>
+  <td style="text-align:left">Case 4 = enhanced 4-wheel with sliding detection</td>
+  <td style="text-align:left">Doc 22 header</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>force_model_case4_FUN_14086bc50.c</code> is fully decompiled (598 lines). Shows per-wheel iteration, surface material lookup at <code><em>car_state + 0x6B8 + surfaceId </em> 8</code>, sliding detection comparing force against grip curve at <code>tuning+0x18D8</code>, and traction control loop.</td>
+  <td style="text-align:left">The code confirms sliding detection and traction modulation.</td>
+</tr>
+<tr>
+  <td style="text-align:left">11</td>
+  <td style="text-align:left">Boost force RAMPS UP (not decays) in TM2020</td>
+  <td style="text-align:left">Doc 10 S11.2</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c:105-106</code>: <code>force = ((float)(param_5 - uVar2) / (float)<em>(uint </em>)(lVar6 + 0x16e0)) <em> </em>(float <em>)(lVar6 + 0x16e4) </em> <em>(float </em>)(model + 0xe0)</code></td>
+  <td style="text-align:left"><code>(current_tick - start_tick) / duration</code> produces a value from 0 to 1. Force increases linearly. This is OPPOSITE to TMNF's decay.</td>
+</tr>
+<tr>
+  <td style="text-align:left">12</td>
+  <td style="text-align:left">Max substeps = 1000</td>
+  <td style="text-align:left">Doc 10 S7.4</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>PhysicsStep_TM.c:126,131</code>: <code>if (uVar16 < 0x3e9)</code> then proceed, else <code>uVar17 = 999; fVar26 = (float)param_4[2] / DAT_141d1fa9c;</code></td>
+  <td style="text-align:left">0x3E9 = 1001, so the guard is <code>num_substeps < 1001</code>, capping at 999 iterations in the loop plus 1 final step = 1000 total.</td>
+</tr>
+<tr>
+  <td style="text-align:left">13</td>
+  <td style="text-align:left">Speed clamping uses model offset +0x2F0</td>
+  <td style="text-align:left">Doc 10 S4.4</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c:112-126</code>: <code>fVar9 = <em>(float </em>)(local_118 + 0x2f0);</code> then <code>if (fVar9 * fVar9 < fVar8) ... clamp velocity</code></td>
+  <td style="text-align:left">Exact code as documented.</td>
+</tr>
+<tr>
+  <td style="text-align:left">14</td>
+  <td style="text-align:left">Vehicle state struct is ~7,328 bytes (0x1CA0)</td>
+  <td style="text-align:left">Doc 10 S3.1</td>
+  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
+  <td style="text-align:left">The highest confirmed offset is <code>+0x1C98</code> (ReplayDataPtr, 8 bytes), so minimum size >= 0x1CA0. But actual size could be larger -- we simply haven't observed higher offsets.</td>
+  <td style="text-align:left">Size is a lower bound, not exact.</td>
+</tr>
+<tr>
+  <td style="text-align:left">15</td>
+  <td style="text-align:left">Curve sampling uses smoothstep 3t^2 - 2t^3</td>
+  <td style="text-align:left">Doc 22 P1</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>curve_sample_FUN_14042bcb0.c:64</code>: <code>t = 3<em>t</em>t - 2<em>t</em>t*t;</code> (when bit 1 set in flags)</td>
+  <td style="text-align:left">Exact formula in the pseudocode.</td>
+</tr>
+<tr>
+  <td style="text-align:left">16</td>
+  <td style="text-align:left">Tire grip state machine has 3 states (0,1,2)</td>
+  <td style="text-align:left">Doc 22 header for tire_grip</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>tire_grip_state_machine_FUN_140842310.c:52-66</code> shows states 0 (idle), 1 (building), 2 (decaying) with explicit transitions based on surface contact and speed.</td>
+  <td style="text-align:left">Full state machine visible in code.</td>
+</tr>
+<tr>
+  <td style="text-align:left">17</td>
+  <td style="text-align:left">Grip builds at rate from tuning+0xCDC, decays from +0xCE0/CE4/CE8</td>
+  <td style="text-align:left">Tire grip file header</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>tire_grip_state_machine_FUN_140842310.c:74,82-84,91</code>: reads <code><em>(uint </em>)(param_4 + 0xcdc)</code> for buildup, <code><em>(uint </em>)(param_4 + 0xce0)</code> for grounded decay, <code><em>(uint </em>)(param_4 + 0xce4)</code> for uncontacted decay, <code><em>(uint </em>)(param_4 + 0xce8)</code> for airborne decay.</td>
+  <td style="text-align:left">All four rate constants verified.</td>
+</tr>
+<tr>
+  <td style="text-align:left">18</td>
+  <td style="text-align:left">Slope factor uses cosine interpolation</td>
+  <td style="text-align:left">Doc 22 P1</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>slope_gravity_factor_FUN_1408456b0.c</code> shows: `cos(slope_angle) = abs(velocity.y /</td>
+  <td style="text-align:left">velocity</td>
+  <td style="text-align:left">)<code>, then smooth S-curve via </code>FUN_14018ce30` (sincos) between thresholds at tuning offsets 0x19E4/0x19E8 (accel) and 0x19EC/0x19F0 (friction).</td>
+  <td style="text-align:left">Algorithm matches documentation.</td>
+</tr>
+<tr>
+  <td style="text-align:left">19</td>
+  <td style="text-align:left">Solver uses sequential impulse / Gauss-Seidel</td>
+  <td style="text-align:left">Doc 10 S5.4</td>
+  <td style="text-align:left">INFERENCE</td>
+  <td style="text-align:left"><code>SSolverParams_FUN_1407f3fc0.c</code> registers separate iteration counts: <code>FrictionStaticIterCount</code>, <code>FrictionDynaIterCount</code>, <code>VelocityIterCount</code>, <code>PositionIterCount</code>. The pattern of separate friction/velocity/position iterations is characteristic of sequential-impulse solvers.</td>
+  <td style="text-align:left">The solver TYPE is inferred from parameter structure, not from seeing the solver loop itself.</td>
+</tr>
+<tr>
+  <td style="text-align:left">20</td>
+  <td style="text-align:left">Lateral grip (2-wheel) uses Pacejka-like model</td>
+  <td style="text-align:left">Doc 22 P1</td>
+  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
+  <td style="text-align:left"><code>lateral_grip_2wheel_FUN_14086af20.c</code> describes `force = -slip <em> linear_coef - slip</em></td>
+  <td style="text-align:left">slip</td>
+  <td style="text-align:left">* quadratic_coef` with a grip limit from speed-dependent curve. This is a simplified Pacejka approximation (linear + quadratic terms), not a full Magic Formula.</td>
+  <td style="text-align:left">"Pacejka-like" is a reasonable label but the actual Pacejka Magic Formula has sin/atan/cos terms. This is simpler.</td>
+</tr>
+<tr>
+  <td style="text-align:left">21</td>
+  <td style="text-align:left">SSolverParams is 44 bytes (0x2C)</td>
+  <td style="text-align:left">Doc 10 S9.3</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>SSolverParams_FUN_1407f3fc0.c:9</code>: <code>FUN_1402ea9e0(..., "NSceneDyna::SSolverParams", 0x2c, 0, 0, 0, 0);</code></td>
+  <td style="text-align:left">Registration call specifies 0x2C.</td>
+</tr>
+<tr>
+  <td style="text-align:left">22</td>
+  <td style="text-align:left">SSleepingParams is 16 bytes (0x10)</td>
+  <td style="text-align:left">SSleepingParams file</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>SSleepingParams_FUN_1407f4430.c:9</code>: <code>FUN_1402ea9e0(..., "NSceneDyna::SSleepingParams", 0x10, 0, 0, 0, 0);</code></td>
+  <td style="text-align:left">Two float fields: SleepingVel at +0x00, SleepingAngVel at +0x04.</td>
+</tr>
+<tr>
+  <td style="text-align:left">23</td>
+  <td style="text-align:left">CPlugVehiclePhyModelCustom has AccelCoef, ControlCoef, GravityCoef</td>
+  <td style="text-align:left">Tuning files</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>CPlugVehiclePhyModelCustom_FUN_14061abb0.c:24-35</code> and <code>CPlugVehiclePhyModelCustom_Archive.c:24-26</code>: fields at offsets +0x18, +0x1C, +0x20.</td>
+  <td style="text-align:left">Confirmed by both registration and archive serialization.</td>
+</tr>
+<tr>
+  <td style="text-align:left">24</td>
+  <td style="text-align:left">Wheel stride is 0xB8 (184 bytes) per wheel</td>
+  <td style="text-align:left">Doc 10 S3.1</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>force_model_case4_FUN_14086bc50.c:245</code>: <code>pfVar15 = pfVar15 + 0x2e;</code> where pfVar15 is a float pointer. 0x2E * 4 = 0xB8 bytes. Also <code>force_model_case4_FUN_14086bc50.c:155</code>: wheel data starts at <code>plVar2 + 0x17CC</code> (= car_state + 0x17CC).</td>
+  <td style="text-align:left">Stride confirmed by pointer arithmetic.</td>
+</tr>
+<tr>
+  <td style="text-align:left">25</td>
+  <td style="text-align:left">Surface material lookup: <code><em>car_state + 0x6B8 + surfaceId </em> 8</code></td>
+  <td style="text-align:left">Doc 22 P2</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>force_model_case4_FUN_14086bc50.c:165</code>: <code>lVar12 = <em>(longlong </em>)(<em>plVar2 + 0x6b8 + (ulonglong)bVar4 </em> 8);</code></td>
+  <td style="text-align:left">Exact expression in decompiled code.</td>
+</tr>
+<tr>
+  <td style="text-align:left">26</td>
+  <td style="text-align:left">Vehicle types: CarSport, CarSnow, CarRally, CarDesert</td>
+  <td style="text-align:left">VehicleRegistry.c</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>VehicleRegistry.c:8-11</code> lists all four with paths to their <code>.Item.gbx</code> files.</td>
+  <td style="text-align:left">Names and file paths confirmed.</td>
+</tr>
+<tr>
+  <td style="text-align:left">27</td>
+  <td style="text-align:left">CSceneVehicleVisState is 0x360 bytes (864 bytes)</td>
+  <td style="text-align:left">VisState file</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>CSceneVehicleVisState_FUN_140726440.c:12</code>: <code>FUN_1402ea9e0(..., "CSceneVehicleVisState", 0x360, ...)</code></td>
+  <td style="text-align:left">Registration specifies 0x360.</td>
+</tr>
+<tr>
+  <td style="text-align:left">28</td>
+  <td style="text-align:left">Wheel order: FL(0), FR(1), RR(2), RL(3) (clockwise)</td>
+  <td style="text-align:left">Openplanet doc S3</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong> (from Openplanet live readings)</td>
+  <td style="text-align:left"><code>19-openplanet-intelligence.md</code> S3 states the memory layout is FL, FR, RR, RL. Openplanet plugins swap the last two for their API.</td>
+  <td style="text-align:left">Live memory readings confirm this ordering.</td>
+</tr>
+<tr>
+  <td style="text-align:left">29</td>
+  <td style="text-align:left">Air resistance is proportional to v^2</td>
+  <td style="text-align:left">Doc 22 header for 4-wheel model</td>
+  <td style="text-align:left">INFERENCE</td>
+  <td style="text-align:left"><code>force_model_case4_FUN_14086bc50.c:569-570</code>: <code>((float)(<em>(uint </em>)(param_2[8] + 0x17b0) ^ uVar31) <em> </em>(float <em>)((longlong)param_2 + 0x24)) / (fVar24 </em> <em>(float </em>)(param_2[8] + 0x310))</code> This divides a tuning constant times delta_time by (friction * another constant). It is NOT a simple v^2 drag -- it is a force that depends on friction and tuning parameters.</td>
+  <td style="text-align:left">The "v^2" claim from the header annotation is NOT directly visible in the case 4 code. The actual formula is more complex. <strong>ERRATA</strong> item.</td>
+</tr>
+<tr>
+  <td style="text-align:left">30</td>
+  <td style="text-align:left">Turbo force is "linear ramp-up"</td>
+  <td style="text-align:left">Doc 10 S6.2</td>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c:105</code>: <code>((float)(param_5 - uVar2) / (float)<em>(uint </em>)(lVar6 + 0x16e0)) <em> strength </em> scale</code></td>
+  <td style="text-align:left">The formula <code>(elapsed / duration) * strength</code> is definitionally linear.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="12-errata-documentation-errors-found"><a class="anchor" href="#12-errata-documentation-errors-found">#</a>1.2 Errata: Documentation Errors Found</h3>
+<p>Students, here are the cases where the documentation says one thing and the code says another, or where the documentation overstates its confidence.</p>
+<h4 id="erratum-1-air-resistance-is-not-simply-v2"><a class="anchor" href="#erratum-1-air-resistance-is-not-simply-v2">#</a>ERRATUM 1: Air Resistance Is NOT Simply v^2</h4>
+<p><strong>Doc 22 header for <code>force_model_4wheel_FUN_140869cd0.c</code></strong> states: "Air resistance force (proportional to v^2)."</p>
+<p><strong>What the code actually shows</strong> (<code>force_model_case4_FUN_14086bc50.c:567-570</code>):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">local_168 = ((float)(*(uint *)(param_2[8] + 0x17b0) ^ uVar31) *
+            *(float *)((longlong)param_2 + 0x24)) / (fVar24 * *(float *)(param_2[8] + 0x310));</code></pre></div>
+<p>This is a force computed from: <code>(-tuning_0x17B0 <em> delta_time) / (friction_coef </em> tuning_0x310)</code>. There is no velocity-squared term visible here. The force appears to be a constant retarding force scaled by friction, not an aerodynamic drag proportional to v^2.</p>
+<p><strong>Correction</strong>: The "air resistance" in the case 4 model is better described as a <strong>constant retarding force inversely proportional to friction</strong>. Whether a separate v^2 drag exists in one of the sub-functions called earlier is <span class="badge badge-unknown">UNKNOWN</span>.</p>
+<h4 id="erratum-2-vehicle-to-model-mapping-is-speculative"><a class="anchor" href="#erratum-2-vehicle-to-model-mapping-is-speculative">#</a>ERRATUM 2: Vehicle-to-Model Mapping Is Speculative</h4>
+<p><strong>Doc 10 S2.6</strong> presents a table mapping vehicles to force models (e.g., "CarSport = model 5", "RallyCar = model 6"). This table is labeled <span class="badge badge-speculative">SPECULATIVE</span> in the doc, but the file headers in the decompiled directory use definitive names like "CarSport Full Model" for case 6.</p>
+<p><strong>What we can actually verify</strong>: The <code>VehicleRegistry.c</code> file confirms the four vehicle names and their GBX paths. The force model switch confirms seven model types. <strong>But no decompiled code links a specific vehicle name to a specific switch case value.</strong> The mapping would require either:</p>
+<ul>
+  <li>Reading the <code>+0x1790</code> value from a loaded vehicle's GBX data at runtime (Openplanet could do this)</li>
+  <li>Finding the GBX loader that writes to offset <code>+0x1790</code></li>
+</ul>
+<p>Until then, all vehicle-to-model mappings are INFERENCE.</p>
+<h4 id="erratum-3-the-2-wheel-model-may-have-4-visual-wheels"><a class="anchor" href="#erratum-3-the-2-wheel-model-may-have-4-visual-wheels">#</a>ERRATUM 3: The "2-Wheel Model" May Have 4 Visual Wheels</h4>
+<p><strong>Doc 22</strong> labels FUN_14086b060 as a "2-wheel model" and states it uses "a single front/rear contact pair instead of 4 independent wheels."</p>
+<p><strong>What the code header says</strong> (<code>force_model_2wheel_FUN_14086b060.c:54</code>): "Update wheel slip states for all 4 visual wheels."</p>
+<p>This suggests the model uses 2-point force calculation (front/rear axle) but still updates 4 visual wheel states. The "2-wheel" label describes the physics model, not the visual representation. This distinction matters for students building their own implementations.</p>
+<h4 id="erratum-4-boost-event-magic-number"><a class="anchor" href="#erratum-4-boost-event-magic-number">#</a>ERRATUM 4: Boost Event Magic Number</h4>
+<p><strong>Doc 10 S12</strong> describes a "magic float 1.12104e-44" in the boost event dispatch as "likely a type indicator, possibly IEEE representation of an integer."</p>
+<p><strong>Verification</strong> (<code>NSceneVehiclePhy__ComputeForces.c:95</code>): <code>local_b8 = 1.12104e-44;</code></p>
+<p>The IEEE 754 representation of 1.12104e-44 as a 32-bit float is approximately <code class="addr">0x00000008</code>. As a reinterpreted integer, this is 8. This is likely an event type code (8 = boost event), passed via a float parameter for ABI reasons. <strong>Confidence: <span class="badge badge-plausible">PLAUSIBLE</span></strong> -- the integer reinterpretation is consistent but unverified.</p>
+<h3 id="13-what-i-am-confident-teaching-you"><a class="anchor" href="#13-what-i-am-confident-teaching-you">#</a>1.3 What I Am Confident Teaching You</h3>
+<p>Based on this audit, here is what I will teach as verified fact:</p>
+<ol>
+  <li>The simulation pipeline: PhysicsStep_TM iterates vehicles, performs adaptive sub-stepping, calls ComputeForces per sub-step</li>
+  <li>The force model dispatch mechanism (switch on +0x1790)</li>
+  <li>The 7 model types and their function signatures</li>
+  <li>The curve sampling system (linear, smoothstep, spline interpolation)</li>
+  <li>The tire grip state machine (3 states, 4 rate constants)</li>
+  <li>The slope factor computation (cosine interpolation between thresholds)</li>
+  <li>The boost/turbo system (linear ramp-up, duration-based)</li>
+  <li>The constraint solver parameter structure (SSolverParams, 44 bytes)</li>
+  <li>The per-wheel data stride (0xB8 bytes)</li>
+  <li>The surface material lookup mechanism</li>
+  <li>Speed clamping via model +0x2F0</li>
+  <li>The transform copy pattern (112 bytes, current-to-previous)</li>
+  <li>Integer-based timing for determinism</li>
+</ol>
+<h3 id="14-what-i-am-not-confident-teaching"><a class="anchor" href="#14-what-i-am-not-confident-teaching">#</a>1.4 What I Am NOT Confident Teaching</h3>
+<ol>
+  <li>Which vehicle uses which force model number</li>
+  <li>The exact values of any tuning constants (they are loaded from GBX data files)</li>
+  <li>The full behavior of any un-decompiled sub-function</li>
+  <li>Whether the simulation is truly 100Hz (highly likely but not code-proven)</li>
+  <li>The complete behavior of the airborne control model (partially decompiled)</li>
+  <li>How the constraint solver actually iterates (we have parameters but not the loop)</li>
+</ol>
+<hr>
+<h2 id="lecture-2-the-physics-tick-verified-only"><a class="anchor" href="#lecture-2-the-physics-tick-verified-only">#</a>Lecture 2: The Physics Tick (<span class="badge badge-verified">VERIFIED</span> ONLY)</h2>
+<h3 id="20-scope"><a class="anchor" href="#20-scope">#</a>2.0 Scope</h3>
+<p>We will walk through <code>PhysicsStep_TM.c</code> (FUN_141501800, 224 lines) line by line. I will only state facts visible in the code.</p>
+<h3 id="21-function-signature"><a class="anchor" href="#21-function-signature">#</a>2.1 Function Signature</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:7</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">void FUN_141501800(undefined8 *param_1, undefined8 *param_2, undefined8 *param_3, uint *param_4)</code></pre></div>
+<p>Four parameters. From usage analysis:</p>
+<ul>
+  <li><code>param_1</code>: Arena physics context (8-byte pointer array). Used at lines 141, 161-162, 189-190, 194. Offsets accessed: <code>param_1[0x3f]</code>, <code>param_1[0x40]</code>, <code>param_1[1]</code>. <strong><span class="badge badge-verified">VERIFIED</span></strong> from code.</li>
+  <li><code>param_2</code>: Physics manager (NSceneVehiclePhy). Confirmed by calls to <code>FUN_1407bea40</code> (entity lookup) and <code>FUN_1407be690</code> (slot lookup). <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+  <li><code>param_3</code>: Vehicle entity list. <code><em>param_3</code> = array of entity pointers, <code></em>(uint*)(param_3 + 1)</code> = count. <strong><span class="badge badge-verified">VERIFIED</span></strong> from lines 62, 65-67.</li>
+  <li><code>param_4</code>: Tick parameters. <code>*param_4</code> = tick number (line 63), <code>param_4[2]</code> = delta time in some unit (line 73). <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+</ul>
+<h3 id="22-profiling-and-initialization"><a class="anchor" href="#22-profiling-and-initialization">#</a>2.2 Profiling and Initialization</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:58-63</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">local_f8 = 0;
+FUN_140117690(local_108, &quot;PhysicsStep_TM&quot;);     // Profile scope begin
+uVar8 = *param_2;                                // Cache manager state
+uVar14 = FUN_1407baac0(param_2);                  // Initialize step handle
+local_148 = (ulonglong)*(uint *)(param_3 + 1);   // Entity count
+lVar18 = (ulonglong)*param_4 * 1000000;           // Tick -&gt; microseconds</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: The string "PhysicsStep_TM" at line 59 confirms this function's identity. The microsecond conversion at line 63 uses integer multiplication. <strong>No floating-point drift</strong> in the timestamp.</p>
+<h3 id="23-vehicle-iteration-loop"><a class="anchor" href="#23-vehicle-iteration-loop">#</a>2.3 Vehicle Iteration Loop</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:64-220</code></p>
+<p>The outer loop iterates all vehicle entities:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (*(uint *)(param_3 + 1) != 0) {       // if entity count &gt; 0
+    plVar19 = (longlong *)*param_3;       // entity array pointer
+    do {
+        lVar9 = *plVar19;                // current entity
+        // ... per-entity logic ...
+        plVar19 = plVar19 + 1;           // next entity (8-byte stride)
+        local_148 = local_148 - 1;       // decrement counter
+    } while (local_148 != 0);
+}</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: Sequential iteration, no parallelism. Entities processed in array order. This is critical for determinism.</p>
+<h3 id="24-entity-state-filter"><a class="anchor" href="#24-entity-state-filter">#</a>2.4 Entity State Filter</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:68-70</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (((byte)*(undefined4 *)(lVar9 + 0x128c) &amp; 0xf) != 2) {
+    *(uint *)(lVar9 + 0x1c7c) = *(uint *)(lVar9 + 0x1c7c) &amp; 0xfffff5ff;
+    if ((*(int *)(lVar9 + 0x1c90) == 0) || (*(int *)(lVar9 + 0x1c90) == 3)) {</code></pre></div>
+<p>Three checks before physics runs:</p>
+<ol>
+  <li><strong>Status nibble at +0x128C</strong>: The low 4 bits must NOT equal 2. State 2 = "excluded" -- these entities skip straight to the transform copy (lines 199-215). <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+</ol>
+<ol>
+  <li><strong>Flag clearing at +0x1C7C</strong>: Bits 9 and 10 are cleared (<code>& 0xFFFFF5FF</code>). These are per-tick physics flags reset at the start of each step. <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+</ol>
+<ol>
+  <li><strong>Simulation mode at +0x1C90</strong>: Must be 0 or 3. Mode 0 = normal simulation, mode 3 = "normal-alt" (exact semantics unknown). Modes 1 and 2 (likely replay and spectator) skip physics entirely. <strong><span class="badge badge-verified">VERIFIED</span></strong> for the check; <strong>INFERENCE</strong> for mode meanings.</li>
+</ol>
+<h3 id="25-the-friction-coefficient-and-delta-time"><a class="anchor" href="#25-the-friction-coefficient-and-delta-time">#</a>2.5 The Friction Coefficient and Delta Time</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:71-73</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">fVar21 = (float)FUN_14083dca0(lVar9 + 0x1280, *(undefined8 *)(lVar9 + 0x88));
+iVar7 = *(int *)(lVar9 + 0x10);
+fVar25 = fVar21 * (float)param_4[2];</code></pre></div>
+<ul>
+  <li><code>FUN_14083dca0</code>: Takes entity+0x1280 (vehicle unique ID area) and entity+0x88 (physics model pointer). Returns a float. From context in the tuning system (<code>Tunings_CoefFriction_CoefAcceleration.c</code>), this likely returns the friction coefficient. <strong>INFERENCE</strong> -- the function is not decompiled.</li>
+  <li><code>iVar7</code>: The dynamics body ID from entity+0x10. Compared to -1 at line 74 (invalid body check). <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+  <li><code>fVar25</code>: Product of the friction coefficient and the delta time. This is the "scaled timestep" used throughout the sub-stepping computation. <strong><span class="badge badge-verified">VERIFIED</span></strong> from arithmetic.</li>
+</ul>
+<h3 id="26-adaptive-sub-stepping-computation"><a class="anchor" href="#26-adaptive-sub-stepping-computation">#</a>2.6 Adaptive Sub-Stepping Computation</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:74-128</code></p>
+<p>This is the most complex part. The code computes how many sub-steps to use based on the vehicle's current velocity:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Get dynamics slot curves (line 75)
+plVar10 = *(longlong **)(*(longlong *)(lVar9 + 0x1bb0) + 0x2b0);
+(**(code **)(*plVar10 + 0x28))(plVar10, local_f0);  // virtual call to get curves
+
+// Get physics slot data (line 77)
+lVar15 = FUN_1407be690(param_2, iVar7);</code></pre></div>
+<p>Then four velocity magnitudes are computed (lines 78-116):</p>
+<ol>
+  <li>Body linear velocity from <code>lVar15 + 0x40..0x48</code> (3 floats)</li>
+  <li>Body angular velocity from <code>lVar15 + 0x4C..0x54</code> (3 floats)</li>
+  <li>Vehicle velocity 1 from entity <code>+0x1348..0x1350</code> (3 floats)</li>
+  <li>Vehicle velocity 2 from entity <code>+0x1354..0x135C</code> (3 floats)</li>
+</ol>
+<p>Each magnitude is computed as: <code>sqrt(x<em>x + y</em>y + z*z)</code> with a negative-guard:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (fVar24 &lt; 0.0) {
+    fVar24 = (float)FUN_14195dd00(fVar24);  // safe sqrt for negative
+} else {
+    fVar24 = SQRT(fVar24);                   // standard SSE sqrtss
+}</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong> from lines 86-116. Every sqrt in the codebase uses this pattern.</p>
+<p><strong>Sub-step count formula</strong> (lines 121-128):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">uVar17 = (uint)(longlong)(((fVar24 + fVar27 + fVar28 + fVar26) * fVar25) /
+         *(float *)(lVar15 + 0x54));
+uVar16 = uVar17 + 1;
+
+if (uVar16 &lt; 0x3e9) {
+    // Normal case: use computed substep count
+    if ((1 &lt; uVar16) &amp;&amp; (...))
+        goto sub_step_loop;
+} else {
+    uVar17 = 999;  // Cap at 999 loop iterations
+    fVar26 = (float)param_4[2] / DAT_141d1fa9c;  // delta / 1000.0
+}</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: The formula is <code>num_substeps = floor(total_speed * scaled_dt / step_size_param) + 1</code>, clamped to maximum 1000. The divisor at <code>lVar15 + 0x54</code> is a <strong>data-loaded constant</strong>, not hardcoded. <strong><span class="badge badge-unknown">UNKNOWN</span></strong>: Its actual value.</p>
+<h3 id="27-the-sub-step-loop"><a class="anchor" href="#27-the-sub-step-loop">#</a>2.7 The Sub-Step Loop</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:137-167</code></p>
+<p>Each sub-step executes these operations in order:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">do {
+    // 1. Refresh dynamics slot data
+    FUN_1407be690(param_2, iVar7);                          // line 140
+
+    // 2. Accumulate remaining time
+    fVar25 = fVar25 - fVar21;                               // line 142
+
+    // 3. Ground collision check
+    bVar12 = FUN_141501090(&amp;local_138, local_f0);           // line 151
+    *(uint *)(lVar9 + 0x1c7c) |= (bVar12 &amp; 1) &lt;&lt; 0x10;    // store result in bit 16
+
+    // 4. Set dynamics time
+    uVar22 = FUN_140801e20(param_2, lVar15);                // line 153
+
+    // 5. Compute forces (THE KEY CALL)
+    FUN_1414ffee0(uVar22, param_2, uVar14, lVar9, lVar15,  // line 155
+                  uVar29, CONCAT44(uVar31, *param_4));
+
+    // 6. Post-force update
+    FUN_1414ff9d0(param_2, lVar9, fVar21);                  // line 157
+
+    // 7. Physics step dispatch
+    FUN_1415009d0(param_2, uVar8, param_4, uVar23, lVar15,  // line 159
+                  CONCAT44(uVar22, fVar21), lVar9, *param_1);
+
+    // 8. Integration
+    FUN_14083df50(param_1, param_2, lVar9, *param_4,        // line 162
+                  fVar21, in_stack_fffffffffffffe90);
+
+    // 9. Advance time
+    lVar15 = lVar15 - (longlong)dVar11;                     // line 165
+    uVar20 = uVar20 - 1;                                    // line 166
+} while (uVar20 != 0);                                      // line 167</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: Each sub-step follows the sequence: collision check, set time, compute forces, post-update, step, integrate, advance timestamp. The loop runs <code>uVar17</code> times (N-1 iterations), then a final step with the remainder runs after the loop (lines 169-195).</p>
+<h3 id="28-the-final-step-remainder"><a class="anchor" href="#28-the-final-step-remainder">#</a>2.8 The Final Step (Remainder)</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:169-195</code></p>
+<p>After the sub-step loop, one final step processes the accumulated remainder <code>fVar25</code>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">FUN_1407be690(param_2, iVar7);
+bVar12 = FUN_141501090(&amp;local_138, local_f0);
+*(uint *)(lVar9 + 0x1c7c) |= (bVar12 &amp; 1) &lt;&lt; 0x10;
+FUN_140801e20(param_2, lVar15);
+FUN_1414ffee0(..., fVar25, ...);     // Uses remaining dt
+FUN_1414ff9d0(param_2, lVar9, fVar25);
+FUN_1415009d0(..., fVar25, ...);
+FUN_14083df50(..., fVar25, ...);</code></pre></div>
+<p>This ensures the total simulated time exactly equals the tick period: <code>(N-1) * sub_dt + remainder = total_dt</code>. <strong><span class="badge badge-verified">VERIFIED</span></strong>.</p>
+<h3 id="29-fragile-check-and-stunt-detection"><a class="anchor" href="#29-fragile-check-and-stunt-detection">#</a>2.9 Fragile Check and Stunt Detection</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:191-195</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (((*(uint *)(lVar9 + 0x1c7c) &amp; 0x1800) == 0x1800) &amp;&amp;
+    (DAT_141d1ef7c &lt; *(float *)(lVar9 + 0x1c8c)) &amp;&amp;
+    (1 &lt; (*(uint *)(lVar9 + 0x128c) &amp; 0xf) - 2)) {
+    FUN_1407d2870(param_1, lVar9, *param_4);
+}</code></pre></div>
+<p>Three conditions for fragile crash:</p>
+<ol>
+  <li>Both bits 11 and 12 of +0x1C7C must be set (0x1800)</li>
+  <li>Float at +0x1C8C must exceed threshold <code>DAT_141d1ef7c</code></li>
+  <li>Status nibble minus 2, as unsigned, must be > 1</li>
+</ol>
+<p>The unsigned arithmetic means nibble values 2 and 3 evaluate to 0 and 1 respectively (<code>1 < 0</code> is false, <code>1 < 1</code> is false), so they are EXCLUDED from fragile. Values 0 and 1 wrap to large unsigned numbers and pass. Values 4+ also pass. <strong><span class="badge badge-verified">VERIFIED</span></strong>.</p>
+<h3 id="210-state-2-entity-path-transform-copy-only"><a class="anchor" href="#210-state-2-entity-path-transform-copy-only">#</a>2.10 State 2 Entity Path (Transform Copy Only)</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:198-216</code></p>
+<p>Entities in state 2 skip all physics and just copy their current transform to the previous transform slot:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// 28 values copied (112 bytes): entity+0x90..0x100 -&gt; entity+0x104..0x174
+*(undefined8 *)(lVar9 + 0x104) = *(undefined8 *)(lVar9 + 0x90);
+*(undefined8 *)(lVar9 + 0x10c) = *(undefined8 *)(lVar9 + 0x98);
+// ... (12 more 8-byte copies + final 4-byte copies)
+*(undefined4 *)(lVar9 + 0x174) = *(undefined4 *)(lVar9 + 0x100);</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: 112 bytes copied. This represents the vehicle's world transform (likely a 3x4 matrix plus additional state). The copy preserves the "previous frame" state for rendering interpolation.</p>
+<h3 id="211-function-epilogue"><a class="anchor" href="#211-function-epilogue">#</a>2.11 Function Epilogue</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:222-223</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">FUN_1401176a0(local_108, local_f8);  // Profile scope end
+return;</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: Clean exit with profiling scope closure.</p>
+<h3 id="212-summary-what-is-hardcoded-vs-data-loaded"><a class="anchor" href="#212-summary-what-is-hardcoded-vs-data-loaded">#</a>2.12 Summary: What Is Hardcoded vs Data-Loaded</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Item</th>
+  <th style="text-align:left">Hardcoded</th>
+  <th style="text-align:left">Data-Loaded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Microsecond conversion factor (1,000,000)</td>
+  <td style="text-align:left">YES (line 63)</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left">Max substep count (1000)</td>
+  <td style="text-align:left">YES (0x3E9, line 126)</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left">Flag clear masks (<code class="addr">0xFFFFF5FF</code>, 0x1800)</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left">Status nibble extraction (0xF)</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left">Tick-to-time divisor (DAT_141d1fa9c)</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">YES (from global)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Friction coefficient</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">YES (from FUN_14083dca0)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Sub-step size divisor</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">YES (from lVar15+0x54)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Fragile threshold (DAT_141d1ef7c)</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">YES (from global)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Transform copy offsets (+0x90, +0x104)</td>
+  <td style="text-align:left">YES</td>
+  <td style="text-align:left"></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="lecture-3-force-model-dispatch-verified-only"><a class="anchor" href="#lecture-3-force-model-dispatch-verified-only">#</a>Lecture 3: Force Model Dispatch (<span class="badge badge-verified">VERIFIED</span> ONLY)</h2>
+<h3 id="30-scope"><a class="anchor" href="#30-scope">#</a>3.0 Scope</h3>
+<p>We will walk through <code>NSceneVehiclePhy__ComputeForces.c</code> (FUN_1408427d0, 235 lines). This is the function that dispatches to the specific force model for each vehicle type.</p>
+<h3 id="31-function-signature-and-profiling"><a class="anchor" href="#31-function-signature-and-profiling">#</a>3.1 Function Signature and Profiling</h3>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:7-8,50</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">void FUN_1408427d0(longlong param_1, undefined4 param_2, undefined8 param_3,
+                   undefined4 param_4, uint param_5)</code></pre></div>
+<ul>
+  <li><code>param_1</code>: Physics context (longlong). Offset +0x110 gives the physics manager, offset +8 gives the arena event system, offset +0x120 is checked for non-null to enable thread-local profiling. <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+  <li><code>param_2</code>: Vehicle ID (undefined4). Passed to entity lookup at line 52. <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+  <li><code>param_3</code>: Dynamics state/context. Passed directly to force model functions. <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+  <li><code>param_4</code>: Tick/time parameter. Passed to models 5, 6, and 0xB. <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+  <li><code>param_5</code>: Current tick number. Used for boost timing and grip state updates. <strong><span class="badge badge-verified">VERIFIED</span></strong>.</li>
+</ul>
+<p>Profiling string: <code>"NSceneVehiclePhy::ComputeForces"</code> (line 50). <strong><span class="badge badge-verified">VERIFIED</span></strong>.</p>
+<h3 id="32-entity-resolution"><a class="anchor" href="#32-entity-resolution">#</a>3.2 Entity Resolution</h3>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:51-59</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">uVar3 = *(undefined8 *)(param_1 + 0x110);                    // physics manager
+lVar6 = FUN_1407bea40(local_c8, uVar3, param_2);             // entity lookup
+lVar6 = *(longlong *)(lVar6 + 8);                            // dereference to entity
+local_110 = *(undefined8 *)(lVar6 + 0x1bb0);                 // vehicle model class ptr
+local_118 = *(longlong *)(lVar6 + 0x88);                     // physics model data ptr
+local_108 = *(undefined8 *)(param_1 + 8);                    // arena event system
+local_148 = *(undefined4 *)(lVar6 + 0x10);                   // body ID</code></pre></div>
+<p>Key struct pointers established:</p>
+<ul>
+  <li><code>lVar6</code>: The vehicle entity (~7300+ bytes)</li>
+  <li><code>local_110</code> (entity+0x1BB0): Vehicle model class data (contains visual/model parameters)</li>
+  <li><code>local_118</code> (entity+0x88): Physics model data (contains all tuning curves and offsets)</li>
+</ul>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: Every pointer dereference matches the offset table in doc 10 S3.1.</p>
+<h3 id="33-velocity-retrieval-and-speed-clamping"><a class="anchor" href="#33-velocity-retrieval-and-speed-clamping">#</a>3.3 Velocity Retrieval and Speed Clamping</h3>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:60-126</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Get velocity vector
+uVar7 = FUN_1407be430(uVar3, local_148, &amp;local_130);    // vel.x, vel.y, vel.z
+
+// Also get angular velocity and body state
+uVar7 = FUN_1407be580(uVar7, local_148, local_124);
+FUN_1407bddd0(uVar7, local_148, local_13c);
+
+// Speed clamping check
+fVar9 = *(float *)(local_118 + 0x2f0);                  // max speed from model
+fVar8 = local_130*local_130 + local_12c*local_12c + local_128*local_128;  // |v|^2
+
+if ((fVar9 * fVar9 &lt; fVar8) &amp;&amp; (DAT_141d1ed34 &lt; fVar9)) {
+    fVar8 = SQRT(fVar8);
+    fVar9 = fVar9 / fVar8;          // scale factor = max_speed / actual_speed
+    local_130 *= fVar9;             // clamp x
+    local_12c *= fVar9;             // clamp y
+    local_128 *= fVar9;             // clamp z
+    FUN_140845270(uVar3, lVar6, &amp;local_130);  // write back clamped velocity
+}</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: Speed is clamped to max_speed from model+0x2F0. The clamping preserves velocity direction (scales all three components equally). The threshold check <code>DAT_141d1ed34 < fVar9</code> prevents clamping when max_speed is near-zero (avoids division issues).</p>
+<h3 id="34-state-1-early-exit-force-zeroing"><a class="anchor" href="#34-state-1-early-exit-force-zeroing">#</a>3.4 State 1 Early Exit (Force Zeroing)</h3>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:65-87</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if ((((byte)*(undefined4 *)(lVar6 + 0x128c) &amp; 0xf) == 1) ||
+    (pfVar1 = (float *)(*(longlong *)(lVar6 + 0x1bb0) + 0x278),
+     *pfVar1 &lt;= 0.0 &amp;&amp; *pfVar1 != 0.0)) {
+    // Zero out all forces and torques
+    FUN_1407be380(uVar3, uVar7, &amp;zero_vec);   // clear force
+    FUN_1407be4d0(uVar3, uVar7, &amp;zero_vec);   // clear torque
+    FUN_1407bdc60(uVar3, uVar7, &amp;zero_vec);   // clear force 2
+    FUN_1407bde90(uVar3, uVar7, &amp;zero_vec);   // clear torque 2
+    *(undefined8 *)(lVar6 + 0x1584) = 0;      // clear reset force
+    *(undefined8 *)(lVar6 + 0x158c) = 0;
+    goto epilogue;
+}</code></pre></div>
+<p>Two conditions trigger force zeroing:</p>
+<ol>
+  <li>Status nibble == 1 (inactive/reset state)</li>
+  <li>Model class field at +0x278 is strictly negative (not zero, not positive)</li>
+</ol>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: Four force/torque vectors are zeroed. This is the "dead vehicle" path.</p>
+<h3 id="35-boost-force-system"><a class="anchor" href="#35-boost-force-system">#</a>3.5 Boost Force System</h3>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:89-111</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (*(int *)(lVar6 + 0x16e8) == -1) {       // boost not started yet
+    *(uint *)(lVar6 + 0x16e8) = param_5;     // record start tick
+
+    // Dispatch boost event if conditions met
+    if (*(longlong *)(param_1 + 8) != 0 &amp;&amp;
+        (*(byte *)(lVar6 + 0x1c7c) &amp; 4) == 0 &amp;&amp;
+        *(char *)(lVar6 + 0x1c78) != -1) {
+        FUN_1407d6200();  // send event
+    }
+}
+
+// Apply boost force if within duration window
+uVar2 = *(uint *)(lVar6 + 0x16e8);           // start tick
+if (uVar2 &lt;= param_5 &amp;&amp; param_5 &lt;= uVar2 + *(uint *)(lVar6 + 0x16e0)) {
+    float t = (param_5 - uVar2) / *(uint *)(lVar6 + 0x16e0);  // 0..1 normalized
+    float force = t * *(float *)(lVar6 + 0x16e4)               // strength
+                    * *(float *)(*(longlong *)(lVar6 + 0x1bb0) + 0xe0); // model scale
+    FUN_1407bdf40(uVar3, entity_id, &amp;force_vec);
+}</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: The boost force is:</p>
+<ul>
+  <li><strong>Linear ramp-up</strong>: <code>force = (elapsed_ticks / total_duration) <em> strength </em> model_scale</code></li>
+  <li>NOT a decay. NOT a ramp-down. The force starts at 0 and increases to maximum at the end of the boost period.</li>
+  <li>Applied as a torque (via FUN_1407bdf40), not a linear force.</li>
+</ul>
+<p>This is confirmed by the formula: <code>(param_5 - uVar2)</code> is elapsed time, divided by duration <code><em>(lVar6 + 0x16e0)</code>, multiplied by strength <code></em>(lVar6 + 0x16e4)</code>.</p>
+<h3 id="36-pre-dispatch-setup"><a class="anchor" href="#36-pre-dispatch-setup">#</a>3.6 Pre-Dispatch Setup</h3>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:127-141</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Surface/contact initialization
+FUN_140841ca0(uVar3, lVar6, local_118 + 0x30d8, param_5);
+
+// Select force accumulator based on model type
+if (*(int *)(local_118 + 0x1790) &lt; 6) {
+    // Models 0-5: read 12 bytes from entity+0x144C
+    local_b8 = *(lVar6 + 0x144c);
+    uStack_b4 = *(lVar6 + 0x1450);
+    uStack_b0 = *(lVar6 + 0x1454);
+} else {
+    // Models 6+: read 12 bytes from entity+0x1534
+    local_b8 = *(lVar6 + 0x1534);
+    uStack_b4 = *(lVar6 + 0x1538);
+    uStack_b0 = *(lVar6 + 0x153c);
+}
+
+// Additional setup
+FUN_140841f40(param_1, uVar3, lVar6, &amp;local_b8);    // suspension pre-computation
+FUN_1408426e0(lVar6, param_5);                        // wheel state update</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: Models 0-5 use force accumulator at entity+0x144C. Models 6+ use entity+0x1534. The 0xE8-byte gap (232 bytes) between these locations suggests entirely different internal layouts for the newer models.</p>
+<h3 id="37-the-switch-statement"><a class="anchor" href="#37-the-switch-statement">#</a>3.7 The Switch Statement</h3>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:142-162</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">switch(*(undefined4 *)(local_118 + 0x1790)) {
+case 0:
+case 1:
+case 2:
+    FUN_140869cd0(param_3, &amp;local_158);                      // 4-wheel base
+    break;
+case 3:
+    FUN_14086b060(param_3, &amp;local_158);                      // 2-axle model
+    break;
+case 4:
+    FUN_14086bc50(param_3, &amp;local_158);                      // 4-wheel with traction control
+    break;
+case 5:
+    FUN_140851f00(param_3, param_4, &amp;local_158);             // Extended model A
+    break;
+case 6:
+    FUN_14085c9e0(param_3, param_4, &amp;local_158);             // Extended model B (CarSport?)
+    break;
+case 0xb:
+    FUN_14086d3b0(param_3, param_4, &amp;local_158);             // Extended model C
+    break;
+}</code></pre></div>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: This is the exact switch from the decompiled code. Note:</p>
+<ul>
+  <li>Cases 0/1/2 fall through to the same function</li>
+  <li>Cases 0-4 pass 2 arguments; cases 5/6/0xB pass 3 (adding <code>param_4</code>)</li>
+  <li><code>local_158</code> is a struct containing: param_1 (context), lVar6 (entity), local_118 (model), local_110 (model class), local_108 (arena), local_148 (body ID), param_5 (tick), param_4 (time param)</li>
+  <li>There is <strong>no default case</strong>. Model values not in {0,1,2,3,4,5,6,11} silently skip force computation.</li>
+</ul>
+<h3 id="38-what-each-case-calls-summary-from-decompiled-files"><a class="anchor" href="#38-what-each-case-calls-summary-from-decompiled-files">#</a>3.8 What Each Case Calls (Summary from Decompiled Files)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Case</th>
+  <th style="text-align:left">Function</th>
+  <th style="text-align:left">Key Sub-Functions Called</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0,1,2</td>
+  <td style="text-align:left">FUN_140869cd0</td>
+  <td style="text-align:left">FUN_1408456b0 (slope), FUN_140869570 (per-wheel force), FUN_140845210 (apply force), FUN_140845260 (apply torque), FUN_14042bcb0 (curve sample)</td>
+  <td style="text-align:left">4 wheels, per-wheel surface lookup, sliding detection, speed clamping. Decompiled as stub with header annotations.</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">FUN_14086b060</td>
+  <td style="text-align:left">FUN_1408456b0, FUN_140869570, FUN_14086af20 (lateral grip), FUN_14018d310 (atan2)</td>
+  <td style="text-align:left">2-axle model, drift state machine, yaw damping. Decompiled as stub.</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">FUN_14086bc50</td>
+  <td style="text-align:left">FUN_1408456b0, FUN_140869570, FUN_140844090, FUN_140845210, FUN_140845260, FUN_14042bcb0, FUN_14083db50/80/f0</td>
+  <td style="text-align:left"><strong>Fully decompiled</strong> (598 lines). 4-wheel with traction control loop, sliding detection, engine braking torque.</td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">FUN_140851f00</td>
+  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span> (partially read, very large function)</td>
+  <td style="text-align:left">Largest force model. Takes time parameter. <strong>Partially decompiled</strong>.</td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">FUN_14085c9e0</td>
+  <td style="text-align:left">FUN_1408570e0 (per-wheel), FUN_14085ad30 (steering), FUN_14085a0d0 (suspension), FUN_14085ba50 (anti-roll), FUN_140858c90 (damping), FUN_140857380 (drift), FUN_140857b20 (boost/reactor), FUN_14085c1b0 (airborne), FUN_14085b600 (integration)</td>
+  <td style="text-align:left">Decompiled as annotated stub with 12 sub-functions identified.</td>
+</tr>
+<tr>
+  <td style="text-align:left">0xB</td>
+  <td style="text-align:left">FUN_14086d3b0</td>
+  <td style="text-align:left">FUN_140843150, FUN_140845220, FUN_140858660, FUN_14018d310, FUN_1408581d0, FUN_1408570e0, FUN_14085ad30, FUN_140858c90, FUN_14086cc60, FUN_140857b20, FUN_14085b600, FUN_14085a920/FUN_140858e70, FUN_140855ea0, FUN_1408562d0</td>
+  <td style="text-align:left"><strong>Fully decompiled</strong> (302 lines). Two code paths based on <code><em>(int </em>)(plVar3 + 0x157c)</code>. Post-respawn force fade system visible.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="39-the-turbo-force-computation-is-it-really-a-ramp-up"><a class="anchor" href="#39-the-turbo-force-computation-is-it-really-a-ramp-up">#</a>3.9 The Turbo Force Computation: Is It REALLY a Ramp-Up?</h3>
+<p>The documentation claims the turbo force ramps up. Let me verify this directly.</p>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:105-106</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">local_b8 = ((float)(param_5 - uVar2) / (float)*(uint *)(lVar6 + 0x16e0)) *
+           *(float *)(lVar6 + 0x16e4) * *(float *)(*(longlong *)(lVar6 + 0x1bb0) + 0xe0);</code></pre></div>
+<p>Breaking this down:</p>
+<ul>
+  <li><code>param_5 - uVar2</code> = current_tick - start_tick = elapsed ticks (increases over time)</li>
+  <li><code>/ <em>(uint</em>)(lVar6 + 0x16e0)</code> = / total_duration = normalized time (0 to 1)</li>
+  <li><code><em> </em>(float<em>)(lVar6 + 0x16e4)</code> = </em> strength</li>
+  <li><code><em> </em>(float<em>)(model + 0xe0)</code> = </em> model_scale</li>
+</ul>
+<p>At the START of the boost: elapsed = 0, so force = 0. At the END of the boost: elapsed = duration, so force = strength * scale.</p>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: The turbo force IS a linear ramp-up from 0 to maximum. This is confirmed beyond doubt from the arithmetic.</p>
+<h3 id="310-post-dispatch-checkpoint-reset-logic"><a class="anchor" href="#310-post-dispatch-checkpoint-reset-logic">#</a>3.10 Post-Dispatch: Checkpoint Reset Logic</h3>
+<p><strong>Source</strong>: <code>NSceneVehiclePhy__ComputeForces.c:173-199</code></p>
+<p>After the force model runs, the code checks if per-wheel state should be reset:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
+    (iVar5 = FUN_14083db20(local_150 + 0x1280), iVar5 != 0)) {
+    // Reset 4 wheel blocks at stride 0xB8
+    // Pattern: previous = current; current = 0; timers = 0
+}</code></pre></div>
+<p>The condition <code>(value - 5) > 1</code> in unsigned arithmetic passes for values 0-4 and 7+, fails for 5 and 6. Combined with the FUN_14083db20 check, this resets wheel state for certain vehicle/mode combinations.</p>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: The 4-block reset pattern at stride 0xB8 is consistent with 4 wheels of 184-byte state each.</p>
+<h3 id="311-speed-clamping-mechanism-in-force-models"><a class="anchor" href="#311-speed-clamping-mechanism-in-force-models">#</a>3.11 Speed Clamping Mechanism (In Force Models)</h3>
+<p>Within the force model case 4 (the fully decompiled one), there is an additional speed clamping layer:</p>
+<p><strong>Source</strong>: <code>force_model_case4_FUN_14086bc50.c:533-538</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if ((float)local_120 * *(float *)(lVar12 + 0xab0) &lt; fVar16) {
+    fVar24 = (float)(*(uint *)(lVar12 + 0x308) ^ uVar31);  // negative of 0x308 value
+}
+if (fVar16 &lt; (float)((uint)((float)local_120 * *(float *)(lVar12 + 0xab4)) ^ uVar31)) {
+    fVar24 = *(float *)(lVar12 + 0x308);  // positive of 0x308 value
+}</code></pre></div>
+<p>Two speed limits from tuning data:</p>
+<ul>
+  <li><code>tuning+0xAB0</code>: Forward speed cap. If speed exceeds this, force is clamped to <code>-tuning+0x308</code> (braking force).</li>
+  <li><code>tuning+0xAB4</code>: Reverse speed cap. If speed is below the negative of this, force is clamped to <code>+tuning+0x308</code> (acceleration force).</li>
+</ul>
+<p><strong><span class="badge badge-verified">VERIFIED</span></strong>: The speed clamping applies a fixed retarding/accelerating force at the speed limits, creating hard speed boundaries in both directions.</p>
+<hr>
+<h2 id="lecture-4-what-we-cannot-determine-from-available-evidence"><a class="anchor" href="#lecture-4-what-we-cannot-determine-from-available-evidence">#</a>Lecture 4: What We Cannot Determine From Available Evidence</h2>
+<h3 id="40-an-honest-assessment"><a class="anchor" href="#40-an-honest-assessment">#</a>4.0 An Honest Assessment</h3>
+<p>Students, this lecture is about intellectual honesty. For every verified fact we have, there are gaps we cannot fill from the available decompiled code. Here is a complete accounting.</p>
+<h3 id="41-un-decompiled-sub-functions"><a class="anchor" href="#41-un-decompiled-sub-functions">#</a>4.1 Un-Decompiled Sub-Functions</h3>
+<p>The following critical functions are called from the code we have but have NOT been decompiled:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Function</th>
+  <th style="text-align:left">Called From</th>
+  <th style="text-align:left">Purpose (Inferred)</th>
+  <th style="text-align:left">Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">FUN_14083dca0</td>
+  <td style="text-align:left">PhysicsStep_TM:71</td>
+  <td style="text-align:left">Get friction coefficient for vehicle</td>
+  <td style="text-align:left">We know WHAT it returns (a float used as a timestep scale) but not HOW it computes it</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_1414ffee0</td>
+  <td style="text-align:left">PhysicsStep_TM:155</td>
+  <td style="text-align:left">Core force computation dispatch</td>
+  <td style="text-align:left">This is the wrapper that calls ComputeForces. Its internal logic is unknown.</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_1414ff9d0</td>
+  <td style="text-align:left">PhysicsStep_TM:157</td>
+  <td style="text-align:left">Post-force state update</td>
+  <td style="text-align:left">Unknown what state it modifies</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_1415009d0</td>
+  <td style="text-align:left">PhysicsStep_TM:159</td>
+  <td style="text-align:left">Physics step dispatch</td>
+  <td style="text-align:left">The actual rigid body integration step</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_14083df50</td>
+  <td style="text-align:left">PhysicsStep_TM:162</td>
+  <td style="text-align:left">Integration</td>
+  <td style="text-align:left">Final velocity/position integration</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_1407bdd20</td>
+  <td style="text-align:left">force_apply:15</td>
+  <td style="text-align:left">Add force to rigid body</td>
+  <td style="text-align:left">The actual accumulation into body forces</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_1407bdf40</td>
+  <td style="text-align:left">force_apply:30</td>
+  <td style="text-align:left">Add torque to rigid body</td>
+  <td style="text-align:left">The actual accumulation into body torques</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_140841ca0</td>
+  <td style="text-align:left">ComputeForces:127</td>
+  <td style="text-align:left">Contact/surface initialization</td>
+  <td style="text-align:left">What it initializes is unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_140841f40</td>
+  <td style="text-align:left">ComputeForces:140</td>
+  <td style="text-align:left">Suspension pre-computation</td>
+  <td style="text-align:left">What forces it applies is unknown</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_1408426e0</td>
+  <td style="text-align:left">ComputeForces:141</td>
+  <td style="text-align:left">Wheel state tick update</td>
+  <td style="text-align:left">Calls tire grip state machine internally</td>
+</tr>
+<tr>
+  <td style="text-align:left">FUN_1408025a0</td>
+  <td style="text-align:left">PhysicsStep_V2:201</td>
+  <td style="text-align:left">Internal physics step (the solver itself)</td>
+  <td style="text-align:left">The actual constraint solver is un-decompiled</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42-magic-constants-without-context"><a class="anchor" href="#42-magic-constants-without-context">#</a>4.2 Magic Constants Without Context</h3>
+<p>Throughout the decompiled code, there are global constants referenced by address (e.g., <code>DAT_141d1f3c8</code>, <code>DAT_141d1f71c</code>). From the annotation in the case 4 model header:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Constant</th>
+  <th style="text-align:left">Likely Value</th>
+  <th style="text-align:left">Evidence</th>
+  <th style="text-align:left">Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">DAT_141d1f3c8</td>
+  <td style="text-align:left">1.0f</td>
+  <td style="text-align:left">Used as identity multiplier everywhere</td>
+  <td style="text-align:left">HIGH (from context)</td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d1f1ac</td>
+  <td style="text-align:left">0.5f</td>
+  <td style="text-align:left">Used as "half" in force calculations</td>
+  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d1f71c</td>
+  <td style="text-align:left">~57.3 (180/pi)</td>
+  <td style="text-align:left">Annotated as "rad-to-deg or similar scale"</td>
+  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d21c00</td>
+  <td style="text-align:left"><code class="addr">0x7FFFFFFF</code></td>
+  <td style="text-align:left">Float abs mask (clear sign bit)</td>
+  <td style="text-align:left">HIGH (standard technique)</td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d21c30</td>
+  <td style="text-align:left"><code class="addr">0x80000000</code></td>
+  <td style="text-align:left">Float sign flip mask (toggle sign bit)</td>
+  <td style="text-align:left">HIGH (standard technique)</td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d1fd80</td>
+  <td style="text-align:left">-1.0f</td>
+  <td style="text-align:left">Used as negative identity</td>
+  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d1fa9c</td>
+  <td style="text-align:left">1000.0f</td>
+  <td style="text-align:left">Used in substep cap division</td>
+  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d1ed34</td>
+  <td style="text-align:left">Small epsilon</td>
+  <td style="text-align:left">Minimum threshold for various checks</td>
+  <td style="text-align:left">Exact value <span class="badge badge-unknown">UNKNOWN</span></td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d1ecc4</td>
+  <td style="text-align:left">Very small epsilon</td>
+  <td style="text-align:left">Min normal length squared</td>
+  <td style="text-align:left">Exact value <span class="badge badge-unknown">UNKNOWN</span></td>
+</tr>
+<tr>
+  <td style="text-align:left">DAT_141d1fc24</td>
+  <td style="text-align:left">Large number</td>
+  <td style="text-align:left">Max normal length squared sanity</td>
+  <td style="text-align:left">Exact value <span class="badge badge-unknown">UNKNOWN</span></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><span class="badge badge-unknown">UNKNOWN</span></strong>: The actual float values of these constants. They could be extracted by reading the binary's .rdata section at these addresses, but this has not been done for all of them.</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="43-struct-offsets-we-cannot-name"><a class="anchor" href="#43-struct-offsets-we-cannot-name">#</a>4.3 Struct Offsets We Cannot Name</h3></summary>
+<div class="collapsible-content">
+<p>The vehicle entity struct has hundreds of fields accessed by numeric offset. Many have been identified from context, but many remain unknown. From the offset table in doc 10 S3.1, fields marked <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> include:</p>
+<ul>
+  <li>entity+0x1794 through +0x17A8 (wheel block 1 unknowns)</li>
+  <li>entity+0x1848 through +0x185C (wheel block 2 unknowns)</li>
+  <li>entity+0x1900 through +0x191C (wheel block 3 unknowns)</li>
+  <li>entity+0x19B8 through +0x19D4 (wheel block 4 unknowns)</li>
+  <li>Many fields in the 0x1280-0x1600 range (vehicle-specific state)</li>
+</ul>
+</div>
+</details>
+<h3 id="44-the-gap-between-decompiled-code-and-runtime-behavior"><a class="anchor" href="#44-the-gap-between-decompiled-code-and-runtime-behavior">#</a>4.4 The Gap Between Decompiled Code and Runtime Behavior</h3>
+<p>Several important caveats:</p>
+<ol>
+  <li><strong>Ghidra decompilation artifacts</strong>: The decompiled C code is Ghidra's best guess at the original source. Variable types may be wrong (Ghidra often uses <code>undefined4</code> where the original was <code>float</code>). Control flow may be restructured. The <code>CONCAT44</code> calls are Ghidra's representation of 64-bit register packing, not original code.</li>
+</ol>
+<ol>
+  <li><strong>Compiler optimizations</strong>: The original code likely used vector intrinsics (SSE/AVX) that Ghidra decompiles into sequential scalar operations. The actual execution may use SIMD instructions that process 4 floats simultaneously.</li>
+</ol>
+<ol>
+  <li><strong>Inlining</strong>: Small functions may have been inlined by the compiler. What appears as inline code in the decompilation may have been a separate function in the source.</li>
+</ol>
+<ol>
+  <li><strong>Data-driven behavior</strong>: Most physics parameters come from GBX data files loaded at runtime. The code we see is the ENGINE; the actual vehicle BEHAVIOR depends on the data. Two vehicles using the same force model case can behave very differently based on their loaded tuning curves.</li>
+</ol>
+<ol>
+  <li><strong>We cannot observe initialization</strong>: We can see what the code DOES with values, but for data-loaded constants, we cannot see what values are loaded. The curve sample function (<code>FUN_14042bcb0</code>) is well understood, but we do not have the actual keyframe data for any curve.</li>
+</ol>
+<h3 id="45-specific-open-questions"><a class="anchor" href="#45-specific-open-questions">#</a>4.5 Specific Open Questions</h3>
+<ol>
+  <li><strong>Which vehicle uses which force model?</strong> We know CarSport, CarSnow, CarRally, CarDesert exist. We know models 0-4, 5, 6, 0xB exist. The mapping is <span class="badge badge-unknown">UNKNOWN</span> from code alone.</li>
+</ol>
+<ol>
+  <li><strong>What are the actual tuning curve values?</strong> Every speed-dependent coefficient (friction, grip, engine torque, drag) is stored as a keyframe curve. We have the curve evaluation code but zero curve data.</li>
+</ol>
+<ol>
+  <li><strong>How does the constraint solver work internally?</strong> We have SSolverParams (iteration counts) but FUN_1408025a0 (the actual solver) is not decompiled.</li>
+</ol>
+<ol>
+  <li><strong>What is the full airborne control model?</strong> FUN_14085c1b0 is partially decompiled (196 lines) but references sub-functions for gravity assist and angular damping that are not.</li>
+</ol>
+<ol>
+  <li><strong>How does vehicle transformation work at runtime?</strong> Surface IDs 15-17 and 20 trigger vehicle transforms (CarRally, CarSnow, CarDesert, Reset). The mechanics of swapping the physics model mid-drive are <span class="badge badge-unknown">UNKNOWN</span>.</li>
+</ol>
+<ol>
+  <li><strong>What are the reactor boost physics?</strong> We see <code>FUN_140857b20</code> handles spring/damper + reactor forces, but the reactor-specific force curve is not fully traced.</li>
+</ol>
+<hr>
+<h2 id="lecture-5-recommendations-for-students-building-a-racing-game"><a class="anchor" href="#lecture-5-recommendations-for-students-building-a-racing-game">#</a>Lecture 5: Recommendations for Students Building a Racing Game</h2>
+<h3 id="50-approach"><a class="anchor" href="#50-approach">#</a>5.0 Approach</h3>
+<p>Everything in this lecture is grounded in verified findings. Where I make recommendations, I will state which verified facts support them.</p>
+<h3 id="51-what-to-replicate-exactly"><a class="anchor" href="#51-what-to-replicate-exactly">#</a>5.1 What to Replicate Exactly</h3>
+<h4 id="511-fixed-timestep-with-integer-time"><a class="anchor" href="#511-fixed-timestep-with-integer-time">#</a>5.1.1 Fixed-Timestep with Integer Time</h4>
+<p><strong>Based on</strong>: PhysicsStep_TM.c:63 (<span class="badge badge-verified">VERIFIED</span>)</p>
+<p>Use integer tick counters and convert to time units via integer multiplication. Do NOT use <code>accumulated_time += delta_time</code> with floating point. The TM2020 approach:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>tick_counter += 1    // integer, exact
+timestamp_us = tick_counter * 1000000   // integer multiplication</code></pre></div>
+<p>This guarantees your replays will be deterministic. It is the single most important architectural decision.</p>
+<h4 id="512-adaptive-sub-stepping-based-on-velocity"><a class="anchor" href="#512-adaptive-sub-stepping-based-on-velocity">#</a>5.1.2 Adaptive Sub-Stepping Based on Velocity</h4>
+<p><strong>Based on</strong>: PhysicsStep_TM.c:71-167 (<span class="badge badge-verified">VERIFIED</span>)</p>
+<p>The sub-stepping formula ensures stability at high speeds without wasting CPU at low speeds:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>total_speed = |linear_vel| + |angular_vel| + ... (sum of relevant speeds)
+num_substeps = clamp(floor(total_speed * dt_scaled / step_size) + 1, 1, MAX_SUBSTEPS)</code></pre></div>
+<p>Key: process N-1 equal sub-steps, then one remainder step. This ensures total simulated time equals exactly the tick period.</p>
+<h4 id="513-curve-based-tuning-system"><a class="anchor" href="#513-curve-based-tuning-system">#</a>5.1.3 Curve-Based Tuning System</h4>
+<p><strong>Based on</strong>: curve_sample_FUN_14042bcb0.c (<span class="badge badge-verified">VERIFIED</span>)</p>
+<p>Every speed-dependent parameter should be a sampled curve, not a single value. The TM2020 curve format supports:</p>
+<ul>
+  <li>Linear interpolation (default)</li>
+  <li>Smoothstep: <code>3t^2 - 2t^3</code> (for S-shaped transitions)</li>
+  <li>Step mode (discontinuous jumps)</li>
+  <li>Spline (catmull-rom)</li>
+</ul>
+<p>This makes tuning extremely flexible without code changes.</p>
+<h4 id="514-sequential-entity-processing"><a class="anchor" href="#514-sequential-entity-processing">#</a>5.1.4 Sequential Entity Processing</h4>
+<p><strong>Based on</strong>: PhysicsStep_TM.c:64-220 (<span class="badge badge-verified">VERIFIED</span>)</p>
+<p>Process vehicles in deterministic array order. No parallel physics dispatch. Determinism requires identical processing order across all runs.</p>
+<h4 id="515-per-wheel-surface-material-lookup"><a class="anchor" href="#515-per-wheel-surface-material-lookup">#</a>5.1.5 Per-Wheel Surface Material Lookup</h4>
+<p><strong>Based on</strong>: force_model_case4_FUN_14086bc50.c:160-169 (<span class="badge badge-verified">VERIFIED</span>)</p>
+<p>Each wheel independently looks up its surface material. A car can have different wheels on different surfaces simultaneously. The lookup is: <code>material_table[surface_id]</code>, where the surface ID comes from the wheel's contact point.</p>
+<h3 id="52-where-you-have-freedom-to-innovate"><a class="anchor" href="#52-where-you-have-freedom-to-innovate">#</a>5.2 Where You Have Freedom to Innovate</h3>
+<h4 id="521-the-force-model-architecture"><a class="anchor" href="#521-the-force-model-architecture">#</a>5.2.1 The Force Model Architecture</h4>
+<p>TM2020 uses 7 different force models selected by a switch statement. You do NOT need 7. You could:</p>
+<ul>
+  <li>Use a single configurable force model with feature flags</li>
+  <li>Use a component system (mix and match: 2-wheel vs 4-wheel, drift enabled/disabled, etc.)</li>
+  <li>Use the same model with different data for each vehicle</li>
+</ul>
+<p>The switch-based dispatch is an engineering choice, not a physics requirement.</p>
+<h4 id="522-the-tire-model"><a class="anchor" href="#522-the-tire-model">#</a>5.2.2 The Tire Model</h4>
+<p>The decompiled code shows two approaches:</p>
+<ul>
+  <li><strong>4-wheel model (case 4)</strong>: Per-wheel friction force from curve, sliding detection via force-vs-grip comparison</li>
+  <li><strong>2-wheel model (case 3)</strong>: Simplified lateral grip with linear + quadratic terms</li>
+</ul>
+<p>Neither is a full Pacejka Magic Formula. You can use ANY tire model that gives you the feel you want. What matters is:</p>
+<ul>
+  <li>A speed-dependent grip curve (<span class="badge badge-verified">VERIFIED</span>: all models use FUN_14042bcb0 for this)</li>
+  <li>A sliding/grip threshold (<span class="badge badge-verified">VERIFIED</span>: the case 4 model explicitly compares force against grip limit)</li>
+  <li>Surface-dependent coefficients (<span class="badge badge-verified">VERIFIED</span>: material lookup per wheel)</li>
+</ul>
+<h4 id="523-the-constraint-solver"><a class="anchor" href="#523-the-constraint-solver">#</a>5.2.3 The Constraint Solver</h4>
+<p>We know TM2020 uses a sequential-impulse solver with configurable iteration counts (<span class="badge badge-verified">VERIFIED</span> from SSolverParams). You can use:</p>
+<ul>
+  <li>Bullet Physics</li>
+  <li>Box2D-style solver</li>
+  <li>Your own Gauss-Seidel implementation</li>
+  <li>Any solver that gives deterministic results</li>
+</ul>
+<h4 id="524-the-boostturbo-system"><a class="anchor" href="#524-the-boostturbo-system">#</a>5.2.4 The Boost/Turbo System</h4>
+<p>TM2020 uses linear ramp-up (<span class="badge badge-verified">VERIFIED</span>). You could use:</p>
+<ul>
+  <li>Constant force (simpler)</li>
+  <li>Exponential decay (TMNF style)</li>
+  <li>Any curve you want</li>
+</ul>
+<p>The ramp-up vs decay is a game design choice, not a physics necessity.</p>
+<h3 id="53-what-not-to-assume-transfers-from-tmnf"><a class="anchor" href="#53-what-not-to-assume-transfers-from-tmnf">#</a>5.3 What NOT to Assume Transfers from TMNF</h3>
+<p><strong>Based on</strong>: Doc 10 S11 (<span class="badge badge-verified">VERIFIED</span> differences)</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Feature</th>
+  <th style="text-align:left">TMNF</th>
+  <th style="text-align:left">TM2020</th>
+  <th style="text-align:left">Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Boost force profile</td>
+  <td style="text-align:left">Decay (max to 0)</td>
+  <td style="text-align:left">Ramp-up (0 to max)</td>
+  <td style="text-align:left">ComputeForces.c:105 (<span class="badge badge-verified">VERIFIED</span>)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Max substeps</td>
+  <td style="text-align:left">10,000</td>
+  <td style="text-align:left">1,000</td>
+  <td style="text-align:left">PhysicsStep_TM.c:126 (<span class="badge badge-verified">VERIFIED</span>)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Force model count</td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">ComputeForces.c:142-162 (<span class="badge badge-verified">VERIFIED</span>)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Vehicle state size</td>
+  <td style="text-align:left">~2,112 bytes</td>
+  <td style="text-align:left">~7,328+ bytes</td>
+  <td style="text-align:left">Doc 10 S11 (<span class="badge badge-plausible">PLAUSIBLE</span>)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">x86 (x87 FPU)</td>
+  <td style="text-align:left">x64 (SSE)</td>
+  <td style="text-align:left">Binary analysis (<span class="badge badge-verified">VERIFIED</span>)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Time conversion</td>
+  <td style="text-align:left">tick * 0.001 (float ms)</td>
+  <td style="text-align:left">tick * 1000000 (integer us)</td>
+  <td style="text-align:left">PhysicsStep_TM.c:63 (<span class="badge badge-verified">VERIFIED</span>)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Pair physics</td>
+  <td style="text-align:left">Not observed</td>
+  <td style="text-align:left">Explicit PairComputeForces</td>
+  <td style="text-align:left">PairComputeForces.c (<span class="badge badge-verified">VERIFIED</span>)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Critical warning</strong>: Do NOT port TMNF physics formulas to a TM2020-like engine without verifying each one. The boost direction change alone would make every turbo pad behave differently.</p>
+<h3 id="54-what-needs-empirical-testing-against-the-real-game"><a class="anchor" href="#54-what-needs-empirical-testing-against-the-real-game">#</a>5.4 What Needs Empirical Testing Against the Real Game</h3>
+<p>These aspects cannot be determined from decompilation alone and require live testing:</p>
+<ol>
+  <li><strong>Actual tuning curve values</strong>: Record vehicle speed under controlled conditions (straight road, specific surface) using Openplanet's VehicleState plugin. Compare acceleration profiles to reconstruct the engine torque curve.</li>
+</ol>
+<ol>
+  <li><strong>Vehicle-to-model mapping</strong>: Use Openplanet to read the <code>+0x1790</code> offset on each vehicle type's physics model data while each car is active.</li>
+</ol>
+<ol>
+  <li><strong>Grip curve shape</strong>: Test grip at various speeds on different surfaces. The grip state machine (tire_grip_state_machine) shows buildup/decay rates come from tuning+0xCDC/CE0/CE4/CE8, but the actual tick counts are data-loaded.</li>
+</ol>
+<ol>
+  <li><strong>Slope thresholds</strong>: Test acceleration on inclines of known angles to determine the four slope threshold values (tuning+0x19E4/E8/EC/F0).</li>
+</ol>
+<ol>
+  <li><strong>Reactor boost behavior</strong>: The reactor force model involves spring/damper physics at hardpoints plus differential torque steering. The formulas are visible but the tuning data determines the feel.</li>
+</ol>
+<ol>
+  <li><strong>Sleep detection thresholds</strong>: The sleep damping factor and velocity threshold (DAT_141ebcd00, DAT_141ebcd04) are global constants. Their values could be measured by observing when a stationary vehicle stops micro-updating.</li>
+</ol>
+<h3 id="55-summary-build-vs-buy"><a class="anchor" href="#55-summary-build-vs-buy">#</a>5.5 Summary: Build vs Buy</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Component</th>
+  <th style="text-align:left">Build from Scratch</th>
+  <th style="text-align:left">Use Existing Library</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Fixed-timestep loop</td>
+  <td style="text-align:left">Build</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Critical for determinism</td>
+</tr>
+<tr>
+  <td style="text-align:left">Curve sampler</td>
+  <td style="text-align:left">Build</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Simple but important (see FUN_14042bcb0)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Tire model</td>
+  <td style="text-align:left">Build</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">TM2020's is simpler than academic Pacejka</td>
+</tr>
+<tr>
+  <td style="text-align:left">Rigid body dynamics</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Bullet/PhysX</td>
+  <td style="text-align:left">Constraint solver is complex</td>
+</tr>
+<tr>
+  <td style="text-align:left">Collision detection</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Bullet/PhysX</td>
+  <td style="text-align:left">Contact merging is well-studied</td>
+</tr>
+<tr>
+  <td style="text-align:left">Surface material system</td>
+  <td style="text-align:left">Build</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Game-specific</td>
+</tr>
+<tr>
+  <td style="text-align:left">Boost/turbo system</td>
+  <td style="text-align:left">Build</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Game-specific</td>
+</tr>
+<tr>
+  <td style="text-align:left">Adaptive sub-stepping</td>
+  <td style="text-align:left">Build</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Custom to your speed range</td>
+</tr>
+<tr>
+  <td style="text-align:left">Replay system</td>
+  <td style="text-align:left">Build</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Must record inputs, not state</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="56-final-exam-question"><a class="anchor" href="#56-final-exam-question">#</a>5.6 Final Exam Question</h3>
+<p>If you take away one lesson from this course, it is this: <strong>the code is the authority, not the documentation about the code</strong>. I found at least one error in the existing documentation (the "v^2 air resistance" claim). I found several places where documentation confidence levels were too high. In your own reverse engineering work, always check the primary source.</p>
+<p>The physics engine of Trackmania 2020 is not magic. It is approximately 40 functions totaling perhaps 15,000 lines of C code, operating on data-driven curves and a standard rigid body solver. What makes it excellent is the tuning data, not the code complexity.</p>
+<p>Good luck with your projects.</p>
+<p>-- Professor Chen</p>
+<hr>
+<h2 id="appendix-a-complete-file-index"><a class="anchor" href="#appendix-a-complete-file-index">#</a>Appendix A: Complete File Index</h2>
+<p>All decompiled source files referenced in these lectures:</p>
+<h3 id="physics-directory-decompiledphysics"><a class="anchor" href="#physics-directory-decompiledphysics">#</a>Physics Directory (<code>decompiled/physics/</code>)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">File</th>
+  <th style="text-align:left">Address</th>
+  <th style="text-align:left">Lecture</th>
+  <th style="text-align:left">Lines Read</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>PhysicsStep_TM.c</code></td>
+  <td style="text-align:left">FUN_141501800</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">224 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c</code></td>
+  <td style="text-align:left">FUN_1408427d0</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">235 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>force_model_case4_FUN_14086bc50.c</code></td>
+  <td style="text-align:left">FUN_14086bc50</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">598 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>force_model_case0xB.c</code></td>
+  <td style="text-align:left">FUN_14086d3b0</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">302 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>force_model_4wheel_FUN_140869cd0.c</code></td>
+  <td style="text-align:left">FUN_140869cd0</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">67 (annotated stub)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>force_model_2wheel_FUN_14086b060.c</code></td>
+  <td style="text-align:left">FUN_14086b060</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">55 (annotated stub)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>force_model_carsport_FUN_14085c9e0.c</code></td>
+  <td style="text-align:left">FUN_14085c9e0</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">49 (annotated stub)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>force_model_case5.c</code></td>
+  <td style="text-align:left">FUN_140851f00</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">100+ (partial)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>wheel_force_FUN_140869570.c</code></td>
+  <td style="text-align:left">FUN_140869570</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">43 (annotated stub)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>curve_sample_FUN_14042bcb0.c</code></td>
+  <td style="text-align:left">FUN_14042bcb0</td>
+  <td style="text-align:left">L1,L3</td>
+  <td style="text-align:left">71 (pseudocode)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>tire_grip_state_machine_FUN_140842310.c</code></td>
+  <td style="text-align:left">FUN_140842310</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">100 (pseudocode)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>slope_gravity_factor_FUN_1408456b0.c</code></td>
+  <td style="text-align:left">FUN_1408456b0</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">68 (pseudocode)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>airborne_control.c</code></td>
+  <td style="text-align:left">FUN_14085c1b0</td>
+  <td style="text-align:left">L3,L4</td>
+  <td style="text-align:left">196 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>boost_reactor_force.c</code></td>
+  <td style="text-align:left">FUN_140857b20</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">234 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>carsport_per_wheel_force.c</code></td>
+  <td style="text-align:left">FUN_1408570e0</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">155 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>force_apply_FUN_140845210.c</code></td>
+  <td style="text-align:left">FUN_140845210/260</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">31 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>steering_input_FUN_14083d8e0.c</code></td>
+  <td style="text-align:left">FUN_14083d8e0</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">41 (annotated stub)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>lateral_grip_2wheel_FUN_14086af20.c</code></td>
+  <td style="text-align:left">FUN_14086af20</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">39 (annotated stub)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>wheel_contact_surface_FUN_140845b60.c</code></td>
+  <td style="text-align:left">FUN_140845b60</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">43 (annotated stub)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneDyna__PhysicsStep.c</code></td>
+  <td style="text-align:left">FUN_1407bd0e0</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">22 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneDyna__PhysicsStep_V2.c</code></td>
+  <td style="text-align:left">FUN_140803920</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">237 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c</code></td>
+  <td style="text-align:left">FUN_1407f89d0</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">103 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneDyna__ComputeExternalForces.c</code></td>
+  <td style="text-align:left">FUN_1407f81c0</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">31 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneDyna__ComputeWaterForces.c</code></td>
+  <td style="text-align:left">FUN_1407f8290</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">53 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneDyna__DynamicCollisionCreateCache.c</code></td>
+  <td style="text-align:left">FUN_1407f9da0</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">88 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NHmsCollision__MergeContacts.c</code></td>
+  <td style="text-align:left">FUN_1402a8a70</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">271 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NHmsCollision__StartPhyFrame.c</code></td>
+  <td style="text-align:left">FUN_1402a9c60</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">57+ (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneVehiclePhy__PairComputeForces.c</code></td>
+  <td style="text-align:left">FUN_140842ed0</td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">93 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneVehiclePhy__PhysicsStep_BeforeMgrDynaUpdate.c</code></td>
+  <td style="text-align:left">FUN_1407cfce0</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">292 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c</code></td>
+  <td style="text-align:left">FUN_1407d2b90</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">51 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneVehiclePhy__ExtractVisStates.c</code></td>
+  <td style="text-align:left">FUN_1407d29a0</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">48 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CSmArenaPhysics__Players_BeginFrame.c</code></td>
+  <td style="text-align:left">FUN_1412c2cc0</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">42 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ArenaPhysics_CarPhyUpdate.c</code></td>
+  <td style="text-align:left">FUN_1412e8490</td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">61 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tunings_CoefFriction_CoefAcceleration.c</code></td>
+  <td style="text-align:left">FUN_141071b20</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">48 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FrictionIterCount_Config.c</code></td>
+  <td style="text-align:left">FUN_1407f3fc0</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">105 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SSolverParams_FUN_1407f3fc0.c</code></td>
+  <td style="text-align:left">FUN_1407f3fc0</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">44 (pseudocode)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SSleepingParams_FUN_1407f4430.c</code></td>
+  <td style="text-align:left">FUN_1407f4430</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">16 (pseudocode)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CSceneVehicleVisState_FUN_140726440.c</code></td>
+  <td style="text-align:left">FUN_140726440</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">147 (complete)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CPlugVehiclePhyModelCustom_FUN_14061abb0.c</code></td>
+  <td style="text-align:left">FUN_14061abb0</td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">39 (pseudocode)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tuning-directory-decompiledtuning"><a class="anchor" href="#tuning-directory-decompiledtuning">#</a>Tuning Directory (<code>decompiled/tuning/</code>)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">File</th>
+  <th style="text-align:left">Lecture</th>
+  <th style="text-align:left">Lines Read</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>CPlugVehiclePhyModelCustom_Archive.c</code></td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">45 (pseudocode)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NSceneVehiclePhy_ComputeForces.c</code></td>
+  <td style="text-align:left">L3</td>
+  <td style="text-align:left">103 (pseudocode)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SetPlayer_Delayed_AccelCoef.c</code></td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">80 (pseudocode)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>VehicleRegistry.c</code></td>
+  <td style="text-align:left">L1</td>
+  <td style="text-align:left">38 (annotated)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PhysicsStep_TM.c</code></td>
+  <td style="text-align:left">L2</td>
+  <td style="text-align:left">107 (pseudocode)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="documentation-files-referenced"><a class="anchor" href="#documentation-files-referenced">#</a>Documentation Files Referenced</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">File</th>
+  <th style="text-align:left">Priority</th>
+  <th style="text-align:left">Used In</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>docs/re/10-physics-deep-dive.md</code></td>
+  <td style="text-align:left">3rd (RE Analysis)</td>
+  <td style="text-align:left">L1 audit</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>docs/re/22-ghidra-gap-findings.md</code></td>
+  <td style="text-align:left">3rd (RE Analysis)</td>
+  <td style="text-align:left">L1 audit</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>docs/re/19-openplanet-intelligence.md</code></td>
+  <td style="text-align:left">2nd (Validated)</td>
+  <td style="text-align:left">L1 wheel order, VisState</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>docs/re/21-competitive-mechanics.md</code></td>
+  <td style="text-align:left">3rd (RE Analysis)</td>
+  <td style="text-align:left">L1 timing verification</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="appendix-b-confidence-legend"><a class="anchor" href="#appendix-b-confidence-legend">#</a>Appendix B: Confidence Legend</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Tag</th>
+  <th style="text-align:left">Meaning</th>
+  <th style="text-align:left">Standard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
+  <td style="text-align:left">Directly visible in decompiled code at cited file:line</td>
+  <td style="text-align:left">Can be independently confirmed by reading the code</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>INFERENCE</strong></td>
+  <td style="text-align:left">Logically derived from verified facts</td>
+  <td style="text-align:left">Conclusion follows from evidence but involves interpretation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><span class="badge badge-plausible">PLAUSIBLE</span></strong></td>
+  <td style="text-align:left">Consistent with evidence but alternative explanations exist</td>
+  <td style="text-align:left">Multiple independent sources agree but no single proof</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><span class="badge badge-speculative">SPECULATIVE</span></strong></td>
+  <td style="text-align:left">Educated guess based on limited evidence</td>
+  <td style="text-align:left">Should not be taught as fact</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><span class="badge badge-unknown">UNKNOWN</span></strong></td>
+  <td style="text-align:left">Cannot determine from available evidence</td>
+  <td style="text-align:left">Honest acknowledgment of limits</td>
+</tr>
+</tbody>
+</table></div>
+
+                        <nav class="prev-next"><a class="prev" href="seminar-jordan.html">&larr; Jordan: Systems Notes</a><a class="next" href="seminar-kovac.html">Prof. Kovac: Graphics Lectures &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#lecture-1-what-we-know-vs-what-we-think-we-know">Lecture 1: What We KNOW vs What We THINK We Know</a></li>
+  <li class="toc-h3"><a href="#10-opening-remarks">1.0 Opening Remarks</a></li>
+  <li class="toc-h3"><a href="#11-verification-audit-table">1.1 Verification Audit Table</a></li>
+  <li class="toc-h3"><a href="#12-errata-documentation-errors-found">1.2 Errata: Documentation Errors Found</a></li>
+  <li class="toc-h3"><a href="#13-what-i-am-confident-teaching-you">1.3 What I Am Confident Teaching You</a></li>
+  <li class="toc-h3"><a href="#14-what-i-am-not-confident-teaching">1.4 What I Am NOT Confident Teaching</a></li>
+<li class=""><a href="#lecture-2-the-physics-tick-verified-only">Lecture 2: The Physics Tick (VERIFIED ONLY)</a></li>
+  <li class="toc-h3"><a href="#20-scope">2.0 Scope</a></li>
+  <li class="toc-h3"><a href="#21-function-signature">2.1 Function Signature</a></li>
+  <li class="toc-h3"><a href="#22-profiling-and-initialization">2.2 Profiling and Initialization</a></li>
+  <li class="toc-h3"><a href="#23-vehicle-iteration-loop">2.3 Vehicle Iteration Loop</a></li>
+  <li class="toc-h3"><a href="#24-entity-state-filter">2.4 Entity State Filter</a></li>
+  <li class="toc-h3"><a href="#25-the-friction-coefficient-and-delta-time">2.5 The Friction Coefficient and Delta Time</a></li>
+  <li class="toc-h3"><a href="#26-adaptive-sub-stepping-computation">2.6 Adaptive Sub-Stepping Computation</a></li>
+  <li class="toc-h3"><a href="#27-the-sub-step-loop">2.7 The Sub-Step Loop</a></li>
+  <li class="toc-h3"><a href="#28-the-final-step-remainder">2.8 The Final Step (Remainder)</a></li>
+  <li class="toc-h3"><a href="#29-fragile-check-and-stunt-detection">2.9 Fragile Check and Stunt Detection</a></li>
+  <li class="toc-h3"><a href="#210-state-2-entity-path-transform-copy-only">2.10 State 2 Entity Path (Transform Copy Only)</a></li>
+  <li class="toc-h3"><a href="#211-function-epilogue">2.11 Function Epilogue</a></li>
+  <li class="toc-h3"><a href="#212-summary-what-is-hardcoded-vs-data-loaded">2.12 Summary: What Is Hardcoded vs Data-Loaded</a></li>
+<li class=""><a href="#lecture-3-force-model-dispatch-verified-only">Lecture 3: Force Model Dispatch (VERIFIED ONLY)</a></li>
+  <li class="toc-h3"><a href="#30-scope">3.0 Scope</a></li>
+  <li class="toc-h3"><a href="#31-function-signature-and-profiling">3.1 Function Signature and Profiling</a></li>
+  <li class="toc-h3"><a href="#32-entity-resolution">3.2 Entity Resolution</a></li>
+  <li class="toc-h3"><a href="#33-velocity-retrieval-and-speed-clamping">3.3 Velocity Retrieval and Speed Clamping</a></li>
+  <li class="toc-h3"><a href="#34-state-1-early-exit-force-zeroing">3.4 State 1 Early Exit (Force Zeroing)</a></li>
+  <li class="toc-h3"><a href="#35-boost-force-system">3.5 Boost Force System</a></li>
+  <li class="toc-h3"><a href="#36-pre-dispatch-setup">3.6 Pre-Dispatch Setup</a></li>
+  <li class="toc-h3"><a href="#37-the-switch-statement">3.7 The Switch Statement</a></li>
+  <li class="toc-h3"><a href="#38-what-each-case-calls-summary-from-decompiled-files">3.8 What Each Case Calls (Summary from Decompiled Files)</a></li>
+  <li class="toc-h3"><a href="#39-the-turbo-force-computation-is-it-really-a-ramp-up">3.9 The Turbo Force Computation: Is It REALLY a Ramp-Up?</a></li>
+  <li class="toc-h3"><a href="#310-post-dispatch-checkpoint-reset-logic">3.10 Post-Dispatch: Checkpoint Reset Logic</a></li>
+  <li class="toc-h3"><a href="#311-speed-clamping-mechanism-in-force-models">3.11 Speed Clamping Mechanism (In Force Models)</a></li>
+<li class=""><a href="#lecture-4-what-we-cannot-determine-from-available-evidence">Lecture 4: What We Cannot Determine From Available Evidence</a></li>
+  <li class="toc-h3"><a href="#40-an-honest-assessment">4.0 An Honest Assessment</a></li>
+  <li class="toc-h3"><a href="#41-un-decompiled-sub-functions">4.1 Un-Decompiled Sub-Functions</a></li>
+  <li class="toc-h3"><a href="#42-magic-constants-without-context">4.2 Magic Constants Without Context</a></li>
+  <li class="toc-h3"><a href="#43-struct-offsets-we-cannot-name">4.3 Struct Offsets We Cannot Name</a></li>
+  <li class="toc-h3"><a href="#44-the-gap-between-decompiled-code-and-runtime-behavior">4.4 The Gap Between Decompiled Code and Runtime Behavior</a></li>
+  <li class="toc-h3"><a href="#45-specific-open-questions">4.5 Specific Open Questions</a></li>
+<li class=""><a href="#lecture-5-recommendations-for-students-building-a-racing-game">Lecture 5: Recommendations for Students Building a Racing Game</a></li>
+  <li class="toc-h3"><a href="#50-approach">5.0 Approach</a></li>
+  <li class="toc-h3"><a href="#51-what-to-replicate-exactly">5.1 What to Replicate Exactly</a></li>
+  <li class="toc-h3"><a href="#52-where-you-have-freedom-to-innovate">5.2 Where You Have Freedom to Innovate</a></li>
+  <li class="toc-h3"><a href="#53-what-not-to-assume-transfers-from-tmnf">5.3 What NOT to Assume Transfers from TMNF</a></li>
+  <li class="toc-h3"><a href="#54-what-needs-empirical-testing-against-the-real-game">5.4 What Needs Empirical Testing Against the Real Game</a></li>
+  <li class="toc-h3"><a href="#55-summary-build-vs-buy">5.5 Summary: Build vs Buy</a></li>
+  <li class="toc-h3"><a href="#56-final-exam-question">5.6 Final Exam Question</a></li>
+<li class=""><a href="#appendix-a-complete-file-index">Appendix A: Complete File Index</a></li>
+  <li class="toc-h3"><a href="#physics-directory-decompiledphysics">Physics Directory (`decompiled/physics/`)</a></li>
+  <li class="toc-h3"><a href="#tuning-directory-decompiledtuning">Tuning Directory (`decompiled/tuning/`)</a></li>
+  <li class="toc-h3"><a href="#documentation-files-referenced">Documentation Files Referenced</a></li>
+<li class=""><a href="#appendix-b-confidence-legend">Appendix B: Confidence Legend</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

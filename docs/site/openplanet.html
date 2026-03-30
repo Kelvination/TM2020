@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Openplanet Intelligence - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item active" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Openplanet Intelligence</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="openplanet-plugin-intelligence-extraction"><a class="anchor" href="#openplanet-plugin-intelligence-extraction">#</a>Openplanet Plugin Intelligence Extraction</h1>
+<p><strong>Source</strong>: Openplanet plugins installed at <code>Trackmania/Openplanet/Plugins/</code> <strong>Date</strong>: 2026-03-27 <strong>Confidence</strong>: HIGH — These are working plugins that read live game memory. Field names and offsets are <span class="badge badge-verified">VERIFIED</span> against the running game.</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-vehicle-state-structure">Vehicle State Structure (CSceneVehicleVisState)</a></li>
+  <li><a href="#2-vehicle-types--enumerations">Vehicle Types & Enumerations</a></li>
+  <li><a href="#3-wheel-state-structure">Wheel State Structure</a></li>
+  <li><a href="#4-scene-manager-architecture">Scene Manager Architecture</a></li>
+  <li><a href="#5-nadeo-services-api">Nadeo Services API</a></li>
+  <li><a href="#6-authentication-flow">Authentication Flow</a></li>
+  <li><a href="#7-camera-system">Camera System</a></li>
+  <li><a href="#8-rendering-internals">Rendering Internals</a></li>
+  <li><a href="#9-game-coordinate-system">Game Coordinate System</a></li>
+</ol>
+<hr>
+<h2 id="1-vehicle-state-structure-cscenevehiclevisstate"><a class="anchor" href="#1-vehicle-state-structure-cscenevehiclevisstate">#</a>1. Vehicle State Structure (CSceneVehicleVisState)</h2>
+<p><strong>Source</strong>: <code>VehicleState/Debugger/Main.as</code>, <code>VehicleState/StateWrappers.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (working plugin reads these fields from live game memory)</p>
+<p>The <code>CSceneVehicleVisState</code> is the primary vehicle state visible to the rendering/visual system. It mirrors physics state for display purposes. All fields below are confirmed accessible in TM2020 (code name: TMNEXT).</p>
+<h3 id="input-fields"><a class="anchor" href="#input-fields">#</a>Input Fields</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Range</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>InputSteer</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-1.0 to 1.0</td>
+  <td style="text-align:left">Steering input</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputGasPedal</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0.0 to 1.0</td>
+  <td style="text-align:left">Throttle input</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputBrakePedal</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0.0 to 1.0</td>
+  <td style="text-align:left">Brake input</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputIsBraking</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Whether currently braking</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputVertical</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Vertical input (reactor/flying)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="motion-fields"><a class="anchor" href="#motion-fields">#</a>Motion Fields</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Range</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>FrontSpeed</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">m/s</td>
+  <td style="text-align:left">Forward speed (multiply by 3.6 for km/h)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SideSpeed</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">m/s</td>
+  <td style="text-align:left">Lateral speed (via custom offset)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WorldVel</code></td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left">m/s</td>
+  <td style="text-align:left">World-space velocity vector</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Position</code></td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left">meters</td>
+  <td style="text-align:left">World-space position</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Dir</code></td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left">unit</td>
+  <td style="text-align:left">Forward direction vector</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Left</code></td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left">unit</td>
+  <td style="text-align:left">Left direction vector</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Up</code></td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left">unit</td>
+  <td style="text-align:left">Up direction vector</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Location</code></td>
+  <td style="text-align:left">iso4</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Full transform (3x3 rotation matrix + vec3 position)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="enginedrivetrain"><a class="anchor" href="#enginedrivetrain">#</a>Engine/Drivetrain</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Range</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>CurGear</code></td>
+  <td style="text-align:left">uint</td>
+  <td style="text-align:left">0-7</td>
+  <td style="text-align:left">Current gear</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RPM</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-11000</td>
+  <td style="text-align:left">Engine RPM (via custom offset, not default exposed)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>EngineOn</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Whether engine is running</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ground-contact"><a class="anchor" href="#ground-contact">#</a>Ground Contact</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>IsGroundContact</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Any wheel touching ground</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>IsTopContact</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Top of car touching something</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GroundDist</code></td>
+  <td style="text-align:left">float (0-20)</td>
+  <td style="text-align:left">Distance to ground</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="turboboost"><a class="anchor" href="#turboboost">#</a>Turbo/Boost</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>IsTurbo</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Currently in turbo</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TurboTime</code></td>
+  <td style="text-align:left">float (0-1)</td>
+  <td style="text-align:left">Turbo duration remaining (normalized)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Turbo</code></td>
+  <td style="text-align:left">float (0-1)</td>
+  <td style="text-align:left">Turbo intensity on CSceneVehicleVis</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="reactor-boost"><a class="anchor" href="#reactor-boost">#</a>Reactor Boost</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>ReactorBoostLvl</code></td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Reactor boost level</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ReactorBoostType</code></td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Reactor boost type</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ReactorAirControl</code></td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left">Air control vector during reactor</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ReactorFinalTimer</code></td>
+  <td style="text-align:left">float (0-1)</td>
+  <td style="text-align:left">Counts 0→1 in final second of boost</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ReactorInputsX</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Reactor input state</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>IsReactorGroundMode</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Reactor ground mode active</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="visual-effects"><a class="anchor" href="#visual-effects">#</a>Visual Effects</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Range</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>AirBrakeNormed</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Air brake visual deployment</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BulletTimeNormed</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Slow-motion visual effect</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SpoilerOpenNormed</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Rear spoiler deployment</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WingsOpenNormed</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-0.08</td>
+  <td style="text-align:left">Wing deployment (small range!)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>IsWheelsBurning</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Tire burnout visual</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterImmersionCoef</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">How submerged in water</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterOverSurfacePos</code></td>
+  <td style="text-align:left">vec3</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Position of water surface</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WetnessValue01</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">How wet the car is</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="race-state"><a class="anchor" href="#race-state">#</a>Race State</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>RaceStartTime</code></td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Race start timestamp</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SimulationTimeCoef</code></td>
+  <td style="text-align:left">float (0-1)</td>
+  <td style="text-align:left">Time scale multiplier</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DiscontinuityCount</code></td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Teleport/reset count</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CamGrpStates</code></td>
+  <td style="text-align:left">bytes</td>
+  <td style="text-align:left">Changes during vehicle transform</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CruiseDisplaySpeed</code></td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">Speed shown on car during cruise control (0 if not in cruise)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="2-vehicle-types-enumerations"><a class="anchor" href="#2-vehicle-types-enumerations">#</a>2. Vehicle Types & Enumerations</h2>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="vehicletype-enum"><a class="anchor" href="#vehicletype-enum">#</a>VehicleType Enum</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Name</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left"><code>CharacterPilot</code></td>
+  <td style="text-align:left">On-foot pilot character</td>
+</tr>
+<tr>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left"><code>CarSport</code></td>
+  <td style="text-align:left">Stadium car (default)</td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left"><code>CarSnow</code></td>
+  <td style="text-align:left">Snow car</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left"><code>CarRally</code></td>
+  <td style="text-align:left">Rally car</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left"><code>CarDesert</code></td>
+  <td style="text-align:left">Desert car</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Evidence</strong>: Vehicle type is determined by looking up a <code>uint8</code> index in the VisState, then matching the corresponding <code>CGameItemModel.Id</code> against known MwIds:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>IdCarSport, IdCarSnow, IdCarRally, IdCarDesert, IdCharacterPilot</code></pre></div>
+<h3 id="turbolevel-enum"><a class="anchor" href="#turbolevel-enum">#</a>TurboLevel Enum</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Name</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">No turbo</td>
+</tr>
+<tr>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left"><code>Normal</code></td>
+  <td style="text-align:left">Regular turbo (Turbo)</td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left"><code>Super</code></td>
+  <td style="text-align:left">Super turbo (Turbo2)</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left"><code>RouletteNormal</code></td>
+  <td style="text-align:left">Roulette normal</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left"><code>RouletteSuper</code></td>
+  <td style="text-align:left">Roulette super</td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left"><code>RouletteUltra</code></td>
+  <td style="text-align:left">Roulette ultra (Turbo3Roulette)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="fallingstate-enum"><a class="anchor" href="#fallingstate-enum">#</a>FallingState Enum</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Name</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left"><code>FallingAir</code></td>
+  <td style="text-align:left">Falling through air</td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left"><code>FallingWater</code></td>
+  <td style="text-align:left">Falling through water</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left"><code>RestingGround</code></td>
+  <td style="text-align:left">Resting on ground</td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left"><code>RestingWater</code></td>
+  <td style="text-align:left">Resting on water surface</td>
+</tr>
+<tr>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left"><code>GlidingGround</code></td>
+  <td style="text-align:left">Gliding on ground</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Note</strong>: Values are always even (0, 2, 4, 6, 8). The plugin author notes this "may be completely incorrect and give unexpected results" — the raw memory values may have different semantics.</p>
+<hr>
+<h2 id="3-wheel-state-structure"><a class="anchor" href="#3-wheel-state-structure">#</a>3. Wheel State Structure</h2>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code> (MP4/Turbo variant with explicit offsets) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (MP4/Turbo offsets confirmed, TM2020 uses Openplanet's native reflection which doesn't expose raw offsets)</p>
+<h3 id="wheel-order"><a class="anchor" href="#wheel-order">#</a>Wheel Order</h3>
+<p>Clockwise from front-left: <strong>FL(0), FR(1), RR(2), RL(3)</strong></p>
+<p><strong>IMPORTANT</strong>: The Openplanet VehicleState plugin swaps the indices for public API to be FL(0), FR(1), RL(2), RR(3) — but internally the memory layout is FL, FR, RR, RL (clockwise).</p>
+<h3 id="per-wheel-fields-tm2020-tmnext"><a class="anchor" href="#per-wheel-fields-tm2020-tmnext">#</a>Per-Wheel Fields (TM2020 / TMNEXT)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Range</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>DamperLen</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-0.2</td>
+  <td style="text-align:left">Suspension compression (meters)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WheelRot</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1608.495</td>
+  <td style="text-align:left">Wheel rotation angle (radians, accumulates)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WheelRotSpeed</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-1000 to 1000</td>
+  <td style="text-align:left">Wheel angular velocity</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SteerAngle</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-1 to 1</td>
+  <td style="text-align:left">Steering angle</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GroundContactMaterial</code></td>
+  <td style="text-align:left">ESurfId (uint16)</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Surface material ID</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SlipCoef</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Tire slip coefficient</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BreakNormedCoef</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Brake visual coefficient</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Dirt</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Dirt accumulation on tire</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Falling</code></td>
+  <td style="text-align:left">FallingState</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Per-wheel falling state</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Icing01</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Ice accumulation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TireWear01</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Tire wear level</td>
+</tr>
+</tbody>
+</table></div>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="wheel-struct-layout-mp4-version-0x24-bytes-per-wheel"><a class="anchor" href="#wheel-struct-layout-mp4-version-0x24-bytes-per-wheel">#</a>Wheel Struct Layout (MP4 version, 0x24 bytes per wheel)</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+0x00: DamperLen        (float)
++0x04: WheelRot         (float)
++0x08: WheelRotSpeed    (float)
++0x0C: SteerAngle       (float)
++0x10: GroundContactMaterial (uint16, ESurfId)
++0x14: GroundContact    (uint32, 1=touching)
++0x18: SlipCoef         (float)
++0x20: IsWet            (uint32, 1=wet) [MP4 only]</code></pre></div>
+<p><strong>Note</strong>: TM2020 wheel struct is likely larger (has additional fields: BreakNormedCoef, Dirt, Falling, Icing01, TireWear01) but exact offsets are resolved via Openplanet reflection, not hardcoded.</p>
+</div>
+</details>
+<h3 id="visstate-layout-mp4-version-for-reference"><a class="anchor" href="#visstate-layout-mp4-version-for-reference">#</a>VisState Layout (MP4 version, for reference)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CSceneVehicleVis:
+  +0x000: EntityId         (uint32)
+  ...
+  +0x4C0: InputSteer       (float)
+  +0x4C4: InputGasPedal    (float)
+  +0x4CC: InputIsBraking   (uint32)
+  +0x4E0: Location         (iso4, 48 bytes: 3x3 matrix + vec3 pos)
+  +0x504: Position         (vec3, = Location + 0x24)
+  +0x510: WorldVel         (vec3, = Location + 0x30)
+  +0x528: FrontSpeed       (float)
+  +0x52C: SideSpeed        (float)
+  +0x538: IsGroundContact  (uint32)
+  +0x53C: Wheels[0] start  (FL, 0x24 bytes each)
+  +0x560: Wheels[1]        (FR)
+  +0x584: Wheels[2]        (RR)
+  +0x5A8: Wheels[3]        (RL)
+  +0x5E8: RPM              (float)
+  +0x5F4: CurGear          (uint32)
+  +0x630: ActiveEffects    (uint32, bit flags)
+  +0x824: TurboActive      (float, 1.0 = active)
+  +0x830: TurboPercent     (float)
+  +0x83C: GearPercent      (float)</code></pre></div>
+<p><strong>CRITICAL</strong>: These MP4 offsets do NOT apply to TM2020. TM2020 uses Openplanet's native reflection system to find offsets dynamically. The struct layout in TM2020 is different (larger, more fields).</p>
+<hr>
+<h2 id="4-scene-manager-architecture"><a class="anchor" href="#4-scene-manager-architecture">#</a>4. Scene Manager Architecture</h2>
+<p><strong>Source</strong>: <code>VehicleState/Internal/SceneVis.as</code>, <code>VehicleState/Internal/Vehicle/VehicleNext.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The scene system uses an indexed manager array accessible through <code>ISceneVis</code>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ISceneVis:
+  +0x08: managerCount (uint32)
+  +0x10: managers[0]  (pointer, 8 bytes each)
+  +0x18: managers[1]
+  ...
+  +0x10 + index * 0x8: managers[index]</code></pre></div>
+<h3 id="known-manager-indices-tm2020"><a class="anchor" href="#known-manager-indices-tm2020">#</a>Known Manager Indices (TM2020)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Index</th>
+  <th style="text-align:left">Class</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">13</td>
+  <td style="text-align:left"><code>NSceneVehicleVis_SMgr</code></td>
+  <td style="text-align:left">Vehicle visualization manager</td>
+</tr>
+<tr>
+  <td style="text-align:left">?</td>
+  <td style="text-align:left">Other managers</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - need enumeration]</span></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Version History for VehiclesManagerIndex</strong>:</p>
+<ul>
+  <li>Before 2022-03-18: index = 4-5</li>
+  <li>2022-03-18: index = 11</li>
+  <li>2022-03-31: index = 12</li>
+  <li>2023-03-03: index = 12</li>
+  <li>2025-09-26: index = 13</li>
+</ul>
+<h3 id="vehicle-manager-structure-nscenevehiclevis_smgr"><a class="anchor" href="#vehicle-manager-structure-nscenevehiclevis_smgr">#</a>Vehicle Manager Structure (NSceneVehicleVis_SMgr)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+0x210: vehicles pointer (uint64, must be 16-byte aligned)
++0x218: vehicle count   (uint32)</code></pre></div>
+<p><strong>Version History for VehiclesOffset</strong>:</p>
+<ul>
+  <li>Before 2023-03-03: 0x1C8 → 0x1E0</li>
+  <li>2023-12-21: 0x210</li>
+</ul>
+<h3 id="vehicle-array"><a class="anchor" href="#vehicle-array">#</a>Vehicle Array</h3>
+<p>Array of pointers, each 8 bytes:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vehicles[i * 0x8] → CSceneVehicleVis pointer</code></pre></div>
+<p>Each CSceneVehicleVis starts with a uint32 entity ID at offset 0x0:</p>
+<ul>
+  <li>Entity IDs with mask <code class="addr">0x02000000</code> are local player vehicles</li>
+  <li>Entity IDs with mask <code class="addr">0x04000000</code> are replay/editor vehicles</li>
+</ul>
+<hr>
+<h2 id="5-nadeo-services-api"><a class="anchor" href="#5-nadeo-services-api">#</a>5. Nadeo Services API</h2>
+<p><strong>Source</strong>: <code>NadeoServices/NadeoServices.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (working API client)</p>
+<h3 id="base-urls"><a class="anchor" href="#base-urls">#</a>Base URLs</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Service</th>
+  <th style="text-align:left">URL</th>
+  <th style="text-align:left">Audience</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Core</td>
+  <td style="text-align:left"><code>https://prod.trackmania.core.nadeo.online</code></td>
+  <td style="text-align:left"><code>NadeoServices</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Live</td>
+  <td style="text-align:left"><code>https://live-services.trackmania.nadeo.live</code></td>
+  <td style="text-align:left"><code>NadeoLiveServices</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Meet</td>
+  <td style="text-align:left"><code>https://meet.trackmania.nadeo.club</code></td>
+  <td style="text-align:left"><code>NadeoLiveServices</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="authentication-header"><a class="anchor" href="#authentication-header">#</a>Authentication Header</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Authorization: nadeo_v1 t=&lt;token&gt;</code></pre></div>
+<h3 id="audience-system"><a class="anchor" href="#audience-system">#</a>Audience System</h3>
+<p>Two audience types:</p>
+<ul>
+  <li><strong>NadeoServices</strong> — Core API access. Token obtained directly from game's internal auth (no refresh needed).</li>
+  <li><strong>NadeoLiveServices</strong> — Live/Meet API access. Token obtained via <code>Authentication_GetToken</code> API call to the game.</li>
+</ul>
+<p><strong>DEPRECATED</strong> (as of 2024-01-31): <code>NadeoClubServices</code> audience. Now maps to <code>NadeoLiveServices</code>.</p>
+<h3 id="account-id-login-conversion"><a class="anchor" href="#account-id-login-conversion">#</a>Account ID ↔ Login Conversion</h3>
+<p>Login is a base64-encoded UUID. Account ID is a hyphenated hex UUID:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Login → decode base64 → format as UUID with hyphens
+AccountID → remove hyphens → hex to bytes → encode base64</code></pre></div>
+<h3 id="display-name-resolution"><a class="anchor" href="#display-name-resolution">#</a>Display Name Resolution</h3>
+<p>Batched API: up to 209 account IDs per <code>RetrieveDisplayName</code> request.</p>
+<hr>
+<h2 id="6-authentication-flow"><a class="anchor" href="#6-authentication-flow">#</a>6. Authentication Flow</h2>
+<p><strong>Source</strong>: <code>NadeoServices/AccessToken.as</code>, <code>NadeoServices/CoreToken.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="core-token"><a class="anchor" href="#core-token">#</a>Core Token</h3>
+<p>Direct from game internals: <code>Internal::NadeoServices::GetCoreToken()</code>. Always considered authenticated. No refresh needed.</p>
+<h3 id="access-token-livemeet"><a class="anchor" href="#access-token-livemeet">#</a>Access Token (Live/Meet)</h3>
+<p>Obtained through the game's own authentication system:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. Cast app to CGameManiaPlanet
+2. Access app.ManiaPlanetScriptAPI
+3. Wait for any existing token request to finish
+4. Call api.Authentication_GetToken(userId, audience)
+5. Wait for api.Authentication_GetTokenResponseReceived
+6. Read api.Authentication_Token on success
+7. Read api.Authentication_ErrorCode on failure</code></pre></div>
+<p><strong>Token Lifetime</strong>: 55 minutes (Nadeo's validation window) + random 1-60 seconds jitter.</p>
+<p><strong>Retry Strategy on Failure</strong>: Exponential backoff: 1s → 2s → 4s → 8s → 16s → ... The plugin notes "this is intentionally mimicking Nadeo's code" for the retry pattern.</p>
+<hr>
+<h2 id="7-camera-system"><a class="anchor" href="#7-camera-system">#</a>7. Camera System</h2>
+<p><strong>Source</strong>: <code>Camera/Impl.as</code>, <code>Camera/Export.as</code>, <code>NGameCamera_SCamSys_StaticInit.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="projection"><a class="anchor" href="#projection">#</a>Projection</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vec4 projected = projectionMatrix * worldPos;
+vec2 screenPos = displayPos + (projected.xy / projected.w + 1) / 2 * displaySize;
+// Point is behind camera if projected.w &gt; 0</code></pre></div>
+<h3 id="editor-orbital-camera-tm2020"><a class="anchor" href="#editor-orbital-camera-tm2020">#</a>Editor Orbital Camera (TM2020)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameCtnEditorCommon.OrbitalCameraControl:
+  .m_CurrentHAngle   (float, radians)
+  .m_CurrentVAngle   (float, radians)
+  .m_TargetedPosition (vec3)
+  .m_CameraToTargetDistance (float)
+  .Pos               (vec3, camera world position)</code></pre></div>
+<p>Camera position calculation:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>h = (HAngle + PI/2) * -1
+v = VAngle
+axis = vec4(1,0,0,0)
+axis = axis * Rotate(v, vec3(0,0,-1))
+axis = axis * Rotate(h, vec3(0,1,0))
+cameraPos = targetPos + axis.xyz * distance</code></pre></div>
+<h3 id="camera-types-from-decompiled-camera-init"><a class="anchor" href="#camera-types-from-decompiled-camera-init">#</a>Camera Types (from decompiled camera init)</h3>
+<p>See <code>decompiled/camera/NGameCamera_SCamSys_StaticInit.c</code> for complete list:</p>
+<ul>
+  <li>Race cameras: 3 variants (Race, Race2, Race3)</li>
+  <li>First/third person</li>
+  <li>Free camera</li>
+  <li>Orbital camera</li>
+  <li>Helicopter camera</li>
+  <li>Vehicle internal camera</li>
+  <li>HMD (VR) external camera</li>
+  <li>Target camera</li>
+  <li>Camera effects (shake, script, inertial tracking)</li>
+</ul>
+<hr>
+<h2 id="8-rendering-internals"><a class="anchor" href="#8-rendering-internals">#</a>8. Rendering Internals</h2>
+<p><strong>Source</strong>: <code>Finetuner/src/01_RenderDistance.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="block-size"><a class="anchor" href="#block-size">#</a>Block Size</h3>
+<p><strong>32 meters</strong> per block unit. Evidence: <code>Math::Ceil(distance / 32.0f)</code> converts meters to blocks.</p>
+<h3 id="default-far-clip"><a class="anchor" href="#default-far-clip">#</a>Default Far Clip</h3>
+<ul>
+  <li>TMF: 50,000 meters</li>
+  <li>TM2020: <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> from plugins, likely similar or larger]</span></li>
+</ul>
+<h3 id="key-rendering-types"><a class="anchor" href="#key-rendering-types">#</a>Key Rendering Types</h3>
+<ul>
+  <li><code>CHmsCamera</code> — Has <code>.FarZ</code> property for clip distance</li>
+  <li><code>CVisionViewport</code> — Has <code>.AsyncRender</code> property for async rendering</li>
+</ul>
+<hr>
+<h2 id="9-game-coordinate-system"><a class="anchor" href="#9-game-coordinate-system">#</a>9. Game Coordinate System</h2>
+<p><strong>Source</strong>: Inferred from camera code and vehicle state <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
+<p>Based on the orbital camera code:</p>
+<ul>
+  <li><strong>Y-axis is UP</strong> (orbital camera rotates around Y for horizontal angle)</li>
+  <li><strong>Z-axis is forward</strong> (vec3(0, 0, -1) for vertical rotation axis)</li>
+  <li>Left-handed coordinate system (consistent with D3D11)</li>
+</ul>
+<p>The <code>iso4</code> type (used for Location) is a 4x4 isometric transform stored as:</p>
+<ul>
+  <li>3x3 rotation matrix (9 floats)</li>
+  <li>3D position vector (3 floats)</li>
+  <li>Total: 48 bytes (not 64, because the homogeneous row [0,0,0,1] is implicit)</li>
+</ul>
+<p>Speed conversion: <strong>1 m/s = 3.6 km/h</strong> (confirmed by <code>FrontSpeed * 3.6f</code> in debugger code)</p>
+<hr>
+<h2 id="10-material-surface-system"><a class="anchor" href="#10-material-surface-system">#</a>10. Material & Surface System</h2>
+<p><strong>Source</strong>: <code>NadeoImporterMaterialLib.txt</code> (208 materials, 1374 lines) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="critical-finding-gameplay-effects-are-not-material-driven"><a class="anchor" href="#critical-finding-gameplay-effects-are-not-material-driven">#</a>Critical Finding: Gameplay Effects are NOT Material-Driven</h3>
+<p>ALL 208 materials in the library have <code>DGameplayId(None)</code>. Gameplay effects (turbo, reactor boost, no-grip, slow motion, etc.) are applied through <strong>block/item types or trigger zones</strong>, NOT through material properties.</p>
+<p>Materials only affect:</p>
+<ul>
+  <li><strong>Surface ID</strong> → physics collision properties (friction, sound)</li>
+  <li><strong>UV layers</strong> → texture mapping (BaseMaterial layer 0, Lightmap layer 1)</li>
+  <li><strong>Color</strong> → optional vertex color tinting (DColor0)</li>
+</ul>
+<h3 id="complete-surface-id-table-19-unique-types"><a class="anchor" href="#complete-surface-id-table-19-unique-types">#</a>Complete Surface ID Table (19 unique types)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Surface ID</th>
+  <th style="text-align:left">Physics Role</th>
+  <th style="text-align:left">Example Materials</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Asphalt</code></td>
+  <td style="text-align:left">Road surface, high grip</td>
+  <td style="text-align:left">RoadTech, PlatformTech, OpenTechBorders</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Concrete</code></td>
+  <td style="text-align:left">Structural surface</td>
+  <td style="text-align:left">Waterground, ItemPillarConcrete</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Dirt</code></td>
+  <td style="text-align:left">Off-road surface, lower grip</td>
+  <td style="text-align:left">RoadDirt</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Grass</code></td>
+  <td style="text-align:left">Natural ground, low grip</td>
+  <td style="text-align:left">Grass, DecoHill</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Green</code></td>
+  <td style="text-align:left">Vegetation surface</td>
+  <td style="text-align:left">DecoGreen</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ice</code></td>
+  <td style="text-align:left">Very low grip</td>
+  <td style="text-align:left">PlatformIce</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Metal</code></td>
+  <td style="text-align:left">Metallic surface</td>
+  <td style="text-align:left">Technics, Structure, Pylon</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MetalTrans</code></td>
+  <td style="text-align:left">Transparent metal (glass/screens)</td>
+  <td style="text-align:left">LightSpot, Ad screens</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NotCollidable</code></td>
+  <td style="text-align:left">No collision (pass-through)</td>
+  <td style="text-align:left">Chrono digits, GlassWaterWall</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Pavement</code></td>
+  <td style="text-align:left">Sidewalk/paved surface</td>
+  <td style="text-align:left">PlatformPavement</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Plastic</code></td>
+  <td style="text-align:left">Inflatable/obstacle material</td>
+  <td style="text-align:left">ItemInflatable*, ItemObstacle</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ResonantMetal</code></td>
+  <td style="text-align:left">Resonant metallic sound</td>
+  <td style="text-align:left">Structure, TrackWallClips</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RoadIce</code></td>
+  <td style="text-align:left">Icy road surface</td>
+  <td style="text-align:left">RoadIce</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RoadSynthetic</code></td>
+  <td style="text-align:left">Synthetic road surface</td>
+  <td style="text-align:left">RoadBump, ScreenBack</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Rock</code></td>
+  <td style="text-align:left">Natural rock</td>
+  <td style="text-align:left">various deco</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Rubber</code></td>
+  <td style="text-align:left">Bouncy rubber surface</td>
+  <td style="text-align:left">TrackBorders</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Sand</code></td>
+  <td style="text-align:left">Sandy surface</td>
+  <td style="text-align:left">various deco</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Snow</code></td>
+  <td style="text-align:left">Snow surface</td>
+  <td style="text-align:left">various deco</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Wood</code></td>
+  <td style="text-align:left">Wooden surface</td>
+  <td style="text-align:left">TrackWall</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="material-format"><a class="anchor" href="#material-format">#</a>Material Format</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>DLibrary(&lt;name&gt;)           -- Library declaration
+  DMaterial(&lt;name&gt;)         -- Material name
+    DSurfaceId(&lt;id&gt;)        -- Physics surface type
+    DGameplayId(&lt;id&gt;)       -- Gameplay effect (always None in stock materials)
+    DUvLayer(&lt;type&gt;, &lt;idx&gt;) -- UV mapping layers
+    DColor0()               -- Optional vertex color</code></pre></div>
+<h3 id="uv-layer-types"><a class="anchor" href="#uv-layer-types">#</a>UV Layer Types</h3>
+<ul>
+  <li><code>BaseMaterial</code> (layer 0) — Primary diffuse/PBR texture</li>
+  <li><code>Lightmap</code> (layer 1) — Baked lighting data</li>
+</ul>
+<h3 id="material-categories-208-total"><a class="anchor" href="#material-categories-208-total">#</a>Material Categories (208 total)</h3>
+<ul>
+  <li>Roads: RoadTech, RoadBump, RoadDirt, RoadIce</li>
+  <li>Platforms: PlatformTech, PlatformDirt, PlatformIce, PlatformGrass, PlatformPlastic</li>
+  <li>Technics: Structure, Technics, TechnicsTrims, Pylon</li>
+  <li>Track Elements: TrackBorders, TrackWall, TrackWallClips</li>
+  <li>Racing: RaceArch*, Speedometer, Chrono digits (NotCollidable)</li>
+  <li>Decoration: Grass, DecoHill, Waterground, GlassWaterWall</li>
+  <li>Items: ItemPillar<em>, ItemTrackBarrier</em>, ItemObstacle*, ItemRamp</li>
+  <li>Screens/Ads: Ad*Screen, 16x9ScreenOff</li>
+  <li>Water: WaterBorders, Underwater</li>
+</ul>
+<hr>
+<h2 id="11-editor-internals"><a class="anchor" href="#11-editor-internals">#</a>11. Editor Internals</h2>
+<p><strong>Source</strong>: <code>EditorDeveloper/Main.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="editor-ui-structure"><a class="anchor" href="#editor-ui-structure">#</a>Editor UI Structure</h3>
+<p>The editor uses a <code>CControlContainer</code> hierarchy accessed via:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>editor.EditorInterface.InterfaceScene.Mobils[0]  → root CControlContainer</code></pre></div>
+<h3 id="known-ui-frame-ids"><a class="anchor" href="#known-ui-frame-ids">#</a>Known UI Frame IDs</h3>
+<ul>
+  <li><code>FrameDeveloperTools</code> — Hidden Nadeo developer tools (can be shown via Openplanet)</li>
+  <li><code>FrameEditTools</code> — Main editing toolbar</li>
+  <li><code>ButtonOffZone</code> — Off-zone placement button (hidden by default)</li>
+  <li><code>FrameLightTools</code> — Lighting controls</li>
+</ul>
+<h3 id="orbital-camera-parameters-tm2020"><a class="anchor" href="#orbital-camera-parameters-tm2020">#</a>Orbital Camera Parameters (TM2020)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>editor.OrbitalCameraControl:
+  .m_ParamScrollAreaStart = 0.7  (default)
+  .m_ParamScrollAreaMax = 0.98   (default)</code></pre></div>
+<h3 id="binary-patching-offzone-enable"><a class="anchor" href="#binary-patching-offzone-enable">#</a>Binary Patching (Offzone Enable)</h3>
+<p>Pattern: <code>0F 84 ?? ?? ?? ?? 4C 8D 45 ?? BA 13</code> → <code>90 90 90 90 90 90</code> (NOP out conditional jump)</p>
+<hr>
+<h2 id="12-display-configuration-system"><a class="anchor" href="#12-display-configuration-system">#</a>12. Display Configuration System</h2>
+<p><strong>Source</strong>: <code>Finetuner/src/*.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="systemconfigdisplay-properties"><a class="anchor" href="#systemconfigdisplay-properties">#</a>SystemConfig.Display Properties</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>GeomLodScaleZ</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">LOD distance scale (1.0 = default, higher = more aggressive LOD)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Decals_3D__TextureDecals_</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">3D decals (grass, bushes) on/off (TM2020 property name)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TextureDecals_3D</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Same as above (MP4 property name)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="viewport-properties"><a class="anchor" href="#viewport-properties">#</a>Viewport Properties</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Viewport.AverageFps</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">Current FPS</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Viewport.AsyncRender</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Async rendering mode</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="game-modes-from-stats-plugin"><a class="anchor" href="#game-modes-from-stats-plugin">#</a>Game Modes (from Stats plugin)</h3>
+<ul>
+  <li>Solo play</li>
+  <li>Online play</li>
+  <li>Map Editor</li>
+  <li>Map Editor Test</li>
+  <li>Skin Editor (TM2020 only)</li>
+  <li>MediaTracker</li>
+</ul>
+<hr>
+<h2 id="13-complete-configuration-schema-defaultjson"><a class="anchor" href="#13-complete-configuration-schema-defaultjson">#</a>13. Complete Configuration Schema (Default.json)</h2>
+<p><strong>Source</strong>: <code>Documents/Trackmania/Config/Default.json</code> (219 lines) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (actual game configuration)</p>
+<p>The Default.json contains the full configuration schema. Key categories:</p>
+<h3 id="display-configuration-65-parameters"><a class="anchor" href="#display-configuration-65-parameters">#</a>Display Configuration (65 parameters)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Parameter</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Values</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>RenderingApi</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>"d3d11"</code></td>
+  <td style="text-align:left">Only D3D11 available</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Antialiasing</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>none</code>, <code>_2_samples</code>, <code>_4_samples</code>, <code>_8_samples</code></td>
+  <td style="text-align:left">MSAA</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredAA</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>none</code>, <code>_fxaa</code>, <code>_txaa</code></td>
+  <td style="text-align:left">Deferred anti-aliasing</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ShaderQuality</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>very_fast</code> - <code>ultra</code></td>
+  <td style="text-align:left">Shader complexity level</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TexturesQuality</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>very_low</code> - <code>high</code></td>
+  <td style="text-align:left">Texture resolution</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FilterAnisoQ</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>bilinear</code>, <code>anisotropic__2x</code>-<code>_16x</code></td>
+  <td style="text-align:left">Anisotropic filtering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GeometryQuality</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>fast</code>, <code>nice</code>, <code>very_nice</code>, <code>ultra</code></td>
+  <td style="text-align:left">Mesh detail</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Shadows</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>none</code> - <code>high</code></td>
+  <td style="text-align:left">Shadow quality</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FxBloomHdr</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>none</code> - <code>high</code></td>
+  <td style="text-align:left">HDR bloom</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FxMotionBlur</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>off</code>/<code>on</code></td>
+  <td style="text-align:left">Motion blur</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FxMotionBlurIntens</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Motion blur intensity (default 0.35)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LM SizeMax</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>auto</code>, <code>1k2</code>, etc.</td>
+  <td style="text-align:left">Lightmap max resolution</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LM Quality</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>very_fast</code> - <code>ultra</code></td>
+  <td style="text-align:left">Lightmap quality</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LM iLight</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Indirect lighting in lightmaps</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Decals_3D (TextureDecals)</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">3D grass/bush decals</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterReflect</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>very_fast</code> - <code>ultra</code></td>
+  <td style="text-align:left">Water reflection quality</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>VehicleReflect</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>low</code> - <code>high</code></td>
+  <td style="text-align:left">Car reflection quality</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>VehicleReflectMaxCount</code></td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Max reflected vehicles</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LightFromMap</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>none</code>, <code>this_vehicle</code>, <code>all_vehicles</code></td>
+  <td style="text-align:left">Map lighting on cars</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MultiThread</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Enable multithreading</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ThreadCountMax</code></td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">default 4</td>
+  <td style="text-align:left">Maximum thread count</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MaxFps</code></td>
+  <td style="text-align:left">int</td>
+  <td style="text-align:left">0 = unlimited</td>
+  <td style="text-align:left">FPS cap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AsyncRender</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left">Async rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ParticleMaxGpuLoadMs</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">1.7 default</td>
+  <td style="text-align:left">Max GPU time for particles</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GpuSync0-3</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left"><code>immediate</code>, <code>1_frame</code>, <code>2_frames</code>, <code>3_frames</code>, <code>none</code></td>
+  <td style="text-align:left">GPU frame latency</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="network-configuration-18-parameters"><a class="anchor" href="#network-configuration-18-parameters">#</a>Network Configuration (18 parameters)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Parameter</th>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>NetworkServerPort</code></td>
+  <td style="text-align:left">2350</td>
+  <td style="text-align:left">Default server port</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NetworkP2PServerPort</code></td>
+  <td style="text-align:left">3450</td>
+  <td style="text-align:left">P2P port</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NetworkClientPort</code></td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">Dynamic client port</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NetworkSpeed</code></td>
+  <td style="text-align:left"><code>"100mbps"</code></td>
+  <td style="text-align:left">Connection speed profile</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NetworkCustomDownload</code></td>
+  <td style="text-align:left">1310720</td>
+  <td style="text-align:left">Download speed (bytes/s)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NetworkCustomUpload</code></td>
+  <td style="text-align:left">327680</td>
+  <td style="text-align:left">Upload speed (bytes/s)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NetworkUseNatUPnP</code></td>
+  <td style="text-align:left">false</td>
+  <td style="text-align:left">UPnP NAT traversal</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="gamephysics-configuration"><a class="anchor" href="#gamephysics-configuration">#</a>Game/Physics Configuration</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Parameter</th>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>SmMaxPlayerResimStepPerFrame</code></td>
+  <td style="text-align:left"><strong>100</strong></td>
+  <td style="text-align:left"><strong>Max physics resim steps per frame — STRONG evidence for 100Hz tick rate</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TmMaxOpponents</code></td>
+  <td style="text-align:left">16</td>
+  <td style="text-align:left">Max visible opponents</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TmCarQuality</code></td>
+  <td style="text-align:left"><code>"high_medium_opponents"</code></td>
+  <td style="text-align:left">Car mesh quality tiers</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TmCarParticlesQuality</code></td>
+  <td style="text-align:left"><code>"all_high"</code></td>
+  <td style="text-align:left">Particle quality</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PlayerShadow</code></td>
+  <td style="text-align:left"><code>"all"</code></td>
+  <td style="text-align:left">Shadow rendering for players</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PlayerOcclusion</code></td>
+  <td style="text-align:left"><code>"all"</code></td>
+  <td style="text-align:left">Occlusion for players</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TmOpponents</code></td>
+  <td style="text-align:left"><code>"hide_too_close"</code></td>
+  <td style="text-align:left">Opponent visibility mode</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DisableReplayRecording</code></td>
+  <td style="text-align:left">false</td>
+  <td style="text-align:left">Ghost recording</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TmBackgroundQuality</code></td>
+  <td style="text-align:left"><code>"high"</code></td>
+  <td style="text-align:left">Background/scenery quality</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="audio-configuration"><a class="anchor" href="#audio-configuration">#</a>Audio Configuration</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Parameter</th>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>AudioDevice_Oal</code></td>
+  <td style="text-align:left">string</td>
+  <td style="text-align:left">OpenAL device name</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AudioSoundVolume</code></td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Master SFX volume</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AudioSoundLimit_Scene</code></td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Scene sound limit</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AudioSoundLimit_Ui</code></td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">UI sound limit</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AudioMusicVolume</code></td>
+  <td style="text-align:left">0-1</td>
+  <td style="text-align:left">Music volume</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AudioGlobalQuality</code></td>
+  <td style="text-align:left"><code>"normal"</code></td>
+  <td style="text-align:left">Audio quality</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AudioAllowEFX</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Environmental audio effects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AudioAllowHRTF</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Head-related transfer function (3D audio)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AudioDisableDoppler</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">Doppler effect</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="input-configuration"><a class="anchor" href="#input-configuration">#</a>Input Configuration</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Parameter</th>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>InputsAlternateMethod</code></td>
+  <td style="text-align:left">false</td>
+  <td style="text-align:left">Alternative input method</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputsFreezeUnusedAxes</code></td>
+  <td style="text-align:left">true</td>
+  <td style="text-align:left">Freeze unused analog axes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputsEnableRumble</code></td>
+  <td style="text-align:left">true</td>
+  <td style="text-align:left">Force feedback</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputsEnableJoysticks</code></td>
+  <td style="text-align:left">true</td>
+  <td style="text-align:left">Joystick support</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="advertising-anzu-sdk"><a class="anchor" href="#advertising-anzu-sdk">#</a>Advertising (Anzu SDK)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Parameter</th>
+  <th style="text-align:left">Value</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Advertising_Enabled</code></td>
+  <td style="text-align:left"><code>"configurable"</code></td>
+  <td style="text-align:left">In-game ads toggle</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Advertising_TunningCoef</code></td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">Ad intensity tuning</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Advertising_DisabledByUser</code></td>
+  <td style="text-align:left">false</td>
+  <td style="text-align:left">User opt-out</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="safe-mode-configuration"><a class="anchor" href="#safe-mode-configuration">#</a>Safe Mode Configuration</h3>
+<p>The <code>DisplaySafe</code> block contains fallback settings:</p>
+<ul>
+  <li>Resolution: 800x450 windowed</li>
+  <li>No AA, no deferred AA</li>
+  <li>Very low textures, bilinear filtering</li>
+  <li>No shadows, decals, bloom, motion blur</li>
+  <li>No lightmap indirect lighting</li>
+  <li>SingleThread, MaxFps=150</li>
+  <li>GpuSync: immediate (no latency)</li>
+</ul>
+<p>This represents the absolute minimum viable rendering target for a browser recreation.</p>
+
+                        <nav class="prev-next"><a class="prev" href="validation.html">&larr; Validation Review</a><a class="next" href="recreation.html">Browser Recreation Guide &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-vehicle-state-structure-cscenevehiclevisstate">1. Vehicle State Structure (CSceneVehicleVisState)</a></li>
+  <li class="toc-h3"><a href="#input-fields">Input Fields</a></li>
+  <li class="toc-h3"><a href="#motion-fields">Motion Fields</a></li>
+  <li class="toc-h3"><a href="#enginedrivetrain">Engine/Drivetrain</a></li>
+  <li class="toc-h3"><a href="#ground-contact">Ground Contact</a></li>
+  <li class="toc-h3"><a href="#turboboost">Turbo/Boost</a></li>
+  <li class="toc-h3"><a href="#reactor-boost">Reactor Boost</a></li>
+  <li class="toc-h3"><a href="#visual-effects">Visual Effects</a></li>
+  <li class="toc-h3"><a href="#race-state">Race State</a></li>
+<li class=""><a href="#2-vehicle-types-enumerations">2. Vehicle Types &amp; Enumerations</a></li>
+  <li class="toc-h3"><a href="#vehicletype-enum">VehicleType Enum</a></li>
+  <li class="toc-h3"><a href="#turbolevel-enum">TurboLevel Enum</a></li>
+  <li class="toc-h3"><a href="#fallingstate-enum">FallingState Enum</a></li>
+<li class=""><a href="#3-wheel-state-structure">3. Wheel State Structure</a></li>
+  <li class="toc-h3"><a href="#wheel-order">Wheel Order</a></li>
+  <li class="toc-h3"><a href="#per-wheel-fields-tm2020-tmnext">Per-Wheel Fields (TM2020 / TMNEXT)</a></li>
+  <li class="toc-h3"><a href="#wheel-struct-layout-mp4-version-0x24-bytes-per-wheel">Wheel Struct Layout (MP4 version, 0x24 bytes per wheel)</a></li>
+  <li class="toc-h3"><a href="#visstate-layout-mp4-version-for-reference">VisState Layout (MP4 version, for reference)</a></li>
+<li class=""><a href="#4-scene-manager-architecture">4. Scene Manager Architecture</a></li>
+  <li class="toc-h3"><a href="#known-manager-indices-tm2020">Known Manager Indices (TM2020)</a></li>
+  <li class="toc-h3"><a href="#vehicle-manager-structure-nscenevehiclevis_smgr">Vehicle Manager Structure (NSceneVehicleVis_SMgr)</a></li>
+  <li class="toc-h3"><a href="#vehicle-array">Vehicle Array</a></li>
+<li class=""><a href="#5-nadeo-services-api">5. Nadeo Services API</a></li>
+  <li class="toc-h3"><a href="#base-urls">Base URLs</a></li>
+  <li class="toc-h3"><a href="#authentication-header">Authentication Header</a></li>
+  <li class="toc-h3"><a href="#audience-system">Audience System</a></li>
+  <li class="toc-h3"><a href="#account-id-login-conversion">Account ID ↔ Login Conversion</a></li>
+  <li class="toc-h3"><a href="#display-name-resolution">Display Name Resolution</a></li>
+<li class=""><a href="#6-authentication-flow">6. Authentication Flow</a></li>
+  <li class="toc-h3"><a href="#core-token">Core Token</a></li>
+  <li class="toc-h3"><a href="#access-token-livemeet">Access Token (Live/Meet)</a></li>
+<li class=""><a href="#7-camera-system">7. Camera System</a></li>
+  <li class="toc-h3"><a href="#projection">Projection</a></li>
+  <li class="toc-h3"><a href="#editor-orbital-camera-tm2020">Editor Orbital Camera (TM2020)</a></li>
+  <li class="toc-h3"><a href="#camera-types-from-decompiled-camera-init">Camera Types (from decompiled camera init)</a></li>
+<li class=""><a href="#8-rendering-internals">8. Rendering Internals</a></li>
+  <li class="toc-h3"><a href="#block-size">Block Size</a></li>
+  <li class="toc-h3"><a href="#default-far-clip">Default Far Clip</a></li>
+  <li class="toc-h3"><a href="#key-rendering-types">Key Rendering Types</a></li>
+<li class=""><a href="#9-game-coordinate-system">9. Game Coordinate System</a></li>
+<li class=""><a href="#10-material-surface-system">10. Material &amp; Surface System</a></li>
+  <li class="toc-h3"><a href="#critical-finding-gameplay-effects-are-not-material-driven">Critical Finding: Gameplay Effects are NOT Material-Driven</a></li>
+  <li class="toc-h3"><a href="#complete-surface-id-table-19-unique-types">Complete Surface ID Table (19 unique types)</a></li>
+  <li class="toc-h3"><a href="#material-format">Material Format</a></li>
+  <li class="toc-h3"><a href="#uv-layer-types">UV Layer Types</a></li>
+  <li class="toc-h3"><a href="#material-categories-208-total">Material Categories (208 total)</a></li>
+<li class=""><a href="#11-editor-internals">11. Editor Internals</a></li>
+  <li class="toc-h3"><a href="#editor-ui-structure">Editor UI Structure</a></li>
+  <li class="toc-h3"><a href="#known-ui-frame-ids">Known UI Frame IDs</a></li>
+  <li class="toc-h3"><a href="#orbital-camera-parameters-tm2020">Orbital Camera Parameters (TM2020)</a></li>
+  <li class="toc-h3"><a href="#binary-patching-offzone-enable">Binary Patching (Offzone Enable)</a></li>
+<li class=""><a href="#12-display-configuration-system">12. Display Configuration System</a></li>
+  <li class="toc-h3"><a href="#systemconfigdisplay-properties">SystemConfig.Display Properties</a></li>
+  <li class="toc-h3"><a href="#viewport-properties">Viewport Properties</a></li>
+  <li class="toc-h3"><a href="#game-modes-from-stats-plugin">Game Modes (from Stats plugin)</a></li>
+<li class=""><a href="#13-complete-configuration-schema-defaultjson">13. Complete Configuration Schema (Default.json)</a></li>
+  <li class="toc-h3"><a href="#display-configuration-65-parameters">Display Configuration (65 parameters)</a></li>
+  <li class="toc-h3"><a href="#network-configuration-18-parameters">Network Configuration (18 parameters)</a></li>
+  <li class="toc-h3"><a href="#gamephysics-configuration">Game/Physics Configuration</a></li>
+  <li class="toc-h3"><a href="#audio-configuration">Audio Configuration</a></li>
+  <li class="toc-h3"><a href="#input-configuration">Input Configuration</a></li>
+  <li class="toc-h3"><a href="#advertising-anzu-sdk">Advertising (Anzu SDK)</a></li>
+  <li class="toc-h3"><a href="#safe-mode-configuration">Safe Mode Configuration</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

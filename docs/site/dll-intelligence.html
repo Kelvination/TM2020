@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLL Intelligence - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item active" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>DLL Intelligence</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="27-dll-intelligence-report"><a class="anchor" href="#27-dll-intelligence-report">#</a>27 - DLL Intelligence Report</h1>
+<p>> Deep binary analysis of all DLL/EXE files in the Trackmania 2020 install directory. > Extracted via <code>file</code>, <code>strings</code> commands on macOS (CrossOver bottle). > > <strong>Analysis Date</strong>: 2026-03-27 > <strong>Install Path</strong>: <code>/Users/kelvinnewton/Library/Application Support/CrossOver/Bottles/Steam/drive_c/Program Files (x86)/Steam/steamapps/common/Trackmania/</code></p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-vivoxsdkdll---vivox-voice-chat-sdk">vivoxsdk.dll - Vivox Voice Chat SDK</a></li>
+  <li><a href="#2-voicechatdll---nadeo-voice-wrapper-harbour-sdk">VoiceChat.dll - Nadeo Voice Wrapper (Harbour SDK)</a></li>
+  <li><a href="#3-upc_r2_loader64dll---ubisoft-connect-platform">upc_r2_loader64.dll - Ubisoft Connect Platform</a></li>
+  <li><a href="#4-libfbxsdkdll---autodesk-fbx-sdk">libfbxsdk.dll - Autodesk FBX SDK</a></li>
+  <li><a href="#5-anzudll---in-game-advertising">anzu.dll - In-Game Advertising</a></li>
+  <li><a href="#6-openal64_bundleddll---openal-soft-audio">OpenAL64_bundled.dll - OpenAL Soft Audio</a></li>
+  <li><a href="#7-libwebp64dll---webp-image-codec">libwebp64.dll - WebP Image Codec</a></li>
+  <li><a href="#8-vorbis64dll---ogg-vorbis-audio">vorbis64.dll - Ogg Vorbis Audio</a></li>
+  <li><a href="#9-ntdll_odll---wine-ntdll-backup">ntdll_o.dll - Wine NTDLL Backup</a></li>
+  <li><a href="#10-openplanetdll---mod-framework">Openplanet.dll - Mod Framework</a></li>
+  <li><a href="#11-nadeoimporterexe---asset-pipeline">NadeoImporter.exe - Asset Pipeline</a></li>
+  <li><a href="#12-dinput8dll---openplanet-hook-loader">dinput8.dll - Openplanet Hook Loader</a></li>
+  <li><a href="#13-d3dcompiler_47dll---d3d-shader-compiler">d3dcompiler_47.dll - D3D Shader Compiler</a></li>
+  <li><a href="#14-dll-dependency-map">DLL Dependency Map</a></li>
+  <li><a href="#15-third-party-sdk-version-catalog">Third-Party SDK Version Catalog</a></li>
+  <li><a href="#16-cross-reference-with-existing-docs">Cross-Reference with Existing Docs</a></li>
+</ol>
+<hr>
+<h2 id="1-vivoxsdkdll-vivox-voice-chat-sdk"><a class="anchor" href="#1-vivoxsdkdll-vivox-voice-chat-sdk">#</a>1. vivoxsdk.dll - Vivox Voice Chat SDK</h2>
+<h3 id="file-metadata"><a class="anchor" href="#file-metadata">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">12,441,688 bytes (11.87 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (console) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">x86-64 (Windows)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="version-information"><a class="anchor" href="#version-information">#</a>Version Information</h3>
+<ul>
+  <li><strong>SDK Version</strong>: <code>5.19.2.33478.213423bef1</code></li>
+  <li><strong>Build</strong>: Unity build pipeline (<code>c:\build\output\unity\vivox-sdk\</code>)</li>
+  <li><strong>Branch</strong>: <code>NO_BRANCH_RECORDED</code></li>
+  <li><strong>Subversion Date</strong>: <code>1/1/1970</code> (epoch placeholder)</li>
+</ul>
+<h3 id="protocols-and-networking"><a class="anchor" href="#protocols-and-networking">#</a>Protocols and Networking</h3>
+<ul>
+  <li><strong>SIP</strong> (Session Initiation Protocol): Primary signaling protocol</li>
+  <li><code>sip:confctl-e-</code> -- Echo conference control</li>
+  <li><code>sip:confctl-g-</code> -- Group conference control</li>
+  <li><code>sip:confctl-d-%s%s%s!p-%d-%d-%.3f-%d@%s</code> -- Dynamic conference URI format</li>
+  <li><strong>XMPP</strong>: Used for presence/messaging alongside SIP</li>
+  <li><code><?xml version='1.0'?><stream:stream to='</code> -- XMPP stream setup</li>
+  <li><code>VIVOX_XMPP_CLEARTEXT_PORT</code> -- XMPP cleartext port config</li>
+  <li><code>SSL Negotiation to XMPP Server Failed</code> -- TLS for XMPP</li>
+  <li><strong>STUN/ICE</strong>: NAT traversal</li>
+  <li><code>AttemptStunOn/Off/Unspecified</code> -- STUN configuration</li>
+  <li><code>ND_E_CANT_CONTACT_STUN_SERVER_ON_UDP_PORT_3478</code> -- Standard STUN port</li>
+  <li><strong>RTP/SRTP</strong>: Media transport</li>
+  <li><code>VIVOX_BLOCK_RTP_OUT</code>, <code>VIVOX_BLOCK_RTP_IN</code> -- RTP flow control</li>
+  <li><code>VX_VAR_RTP_ENCRYPTION</code>, <code>RTPEncryption</code> -- SRTP encryption</li>
+  <li><code>Receiving rtp packet with version number !=2...discarded</code></li>
+  <li>Built on <code>amsip-4.0.3-vivox-srtp</code> -- aMSIP SIP stack with SRTP</li>
+  <li><strong>STRO</strong>: Vivox's proprietary streaming/real-time overlay protocol</li>
+  <li>Full module: <code>vivox.stro</code> with connection, session, subscription, RTP, media session components</li>
+  <li><strong>TLS</strong>: <code>starttls</code>, <code>urn:ietf:params:xml:ns:xmpp-tls</code>, <code>VIVOX_IGNORE_SSL_ERRORS</code></li>
+</ul>
+<h3 id="audio-codecs-new-finding"><a class="anchor" href="#audio-codecs-new-finding">#</a>Audio Codecs (NEW FINDING)</h3>
+<ul>
+  <li><strong>Opus</strong>: Primary codec</li>
+  <li><code>CodecTypeOpus</code>, <code>CurrentOpusBitRate</code>, <code>CurrentOpusComplexity</code></li>
+  <li><code>CurrentOpusVbrMode</code>, <code>CurrentOpusBandwidth</code>, <code>CurrentOpusMaxPacketSize</code></li>
+  <li><code>VIVOXVANI_V2_AUDIO_DATA_MONO_OPUS_48000</code> -- 48kHz Opus</li>
+  <li><strong>Siren14</strong>: Polycom's wideband codec at 32kHz</li>
+  <li><code>VIVOXVANI_V2_AUDIO_DATA_MONO_SIREN14_32000</code></li>
+  <li><strong>Siren7</strong>: Polycom's narrowband codec at 16kHz</li>
+  <li><code>VIVOXVANI_V2_AUDIO_DATA_MONO_SIREN7_16000</code></li>
+  <li><strong>Speex</strong>: Resampler only (not primary codec)</li>
+  <li><code>VIVOXVANI_V2_AUDIO_DATA_MONO_SPEEX_WB</code> -- Wideband Speex</li>
+  <li><code>Speex resampler intialization failed</code> [sic]</li>
+</ul>
+<h3 id="audio-processing"><a class="anchor" href="#audio-processing">#</a>Audio Processing</h3>
+<ul>
+  <li><strong>AEC</strong>: <code>acousticechocancellation.cpp</code> -- Acoustic Echo Cancellation</li>
+  <li><strong>AGC</strong>: <code>automaticgaincontrol.cpp</code> -- Automatic Gain Control</li>
+  <li><strong>Voice Processor</strong>: Full per-participant, per-session voice processing pipeline</li>
+</ul>
+<h3 id="key-api-functions-exported"><a class="anchor" href="#key-api-functions-exported">#</a>Key API Functions (Exported)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vx_get_message_internal
+vx_issue_request_internal
+vx_uninitialize
+vx_req_connector_create_create_internal
+vx_req_account_login_create_internal
+vx_req_account_authtoken_login_create_internal
+vx_req_session_create_create_internal
+vx_req_session_media_connect_create_internal
+vx_req_session_set_3d_position_create_internal
+vx_req_session_set_voice_font_create_internal
+vx_req_channel_mute_user_create_internal
+vx_req_channel_kick_user_create_internal</code></pre></div>
+<h3 id="source-code-structure-from-build-paths"><a class="anchor" href="#source-code-structure-from-build-paths">#</a>Source Code Structure (from build paths)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vivox.api/          -- Public API layer (commandhandler, convert)
+vivox.client/       -- Client logic (voiceprocessor, logincontext, encode)
+vivox.stro/         -- STRO protocol (connection, session, subscription, RTP)
+vivox.media/        -- Audio processing (AEC, AGC)
+vivox.media.vxa/    -- Audio unit abstraction (capture, render devices)
+vivox.system/       -- Infrastructure (HTTP, message queue, network monitor)
+vivox.web/          -- Web client
+vivox.network.reachability/ -- Network availability detection
+vivox.core/         -- Event aggregation
+lohika/xbone/       -- Xbox audio backend (CoreAudio)
+amsip-4.0.3-vivox-srtp/ortp/ -- RTP library (oRTP by Linphone)</code></pre></div>
+<h3 id="environment-variables"><a class="anchor" href="#environment-variables">#</a>Environment Variables</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>VIVOX_BLOCK_OUTBOUND_SIP
+VIVOX_BLOCK_RTP_OUT / VIVOX_BLOCK_RTP_IN
+VIVOX_ENABLE_PERSISTENT_HTTP
+VIVOX_SIP_LOG_LEVEL
+VIVOX_STUN_TIMEOUT
+VIVOX_XMPP_CLEARTEXT_PORT
+VIVOX_IGNORE_SSL_ERRORS
+VIVOX_RTP_LOG_LEVEL
+VIVOX_FORCE_AUDIO_UNIT_FAILURE
+VIVOX_VOICE_SERVICE_HOST / VIVOX_VOICE_SERVICE_PORT
+VX_VAR_RTP_ENCRYPTION</code></pre></div>
+<h3 id="relevance-to-browser-recreation"><a class="anchor" href="#relevance-to-browser-recreation">#</a>Relevance to Browser Recreation</h3>
+<p><strong>LOW</strong> -- Voice chat is not needed for core gameplay. However, the 3D positional audio support (<code>vx_req_session_set_3d_position</code>) reveals that voice chat positions are tied to game coordinates, which could inform spatial audio design.</p>
+<hr>
+<h2 id="2-voicechatdll-nadeo-voice-wrapper-harbour-sdk"><a class="anchor" href="#2-voicechatdll-nadeo-voice-wrapper-harbour-sdk">#</a>2. VoiceChat.dll - Nadeo Voice Wrapper (Harbour SDK)</h2>
+<h3 id="file-metadata-1"><a class="anchor" href="#file-metadata-1">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">1,298,648 bytes (1.24 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (GUI) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">x86-64 (Windows)</td>
+</tr>
+<tr>
+  <td style="text-align:left">PDB Path</td>
+  <td style="text-align:left"><code>D:\Codebase\Nadeo\Out\x64_Release_ImportLib_Harbour\VoiceChat.pdb</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Signed By</td>
+  <td style="text-align:left">NADEO SAS</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="new-finding-harbour-sdk-framework"><a class="anchor" href="#new-finding-harbour-sdk-framework">#</a>NEW FINDING: Harbour SDK Framework</h3>
+<p>VoiceChat.dll is built on <strong>Harbour</strong>, a Ubisoft/Nadeo internal middleware framework. This is a dependency-injection / service-container architecture.</p>
+<p><strong>Harbour modules discovered</strong>:</p>
+<ul>
+  <li><code>Harbour.Voicechat</code> -- Top-level voicechat module</li>
+  <li><code>Harbour.Voicechat.Vivox</code> -- Vivox-specific implementation</li>
+  <li><code>Harbour.Common</code> -- Shared infrastructure</li>
+</ul>
+<p><strong>Harbour tags</strong> (service registration identifiers):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>HARBOUR_TAG_VOICECHAT_API              -- Public API
+HARBOUR_TAG_VOICECHAT_API_SDK          -- SDK layer
+HARBOUR_TAG_VOICECHAT_API_BINDINGS     -- Language bindings
+HARBOUR_TAG_VOICECHAT_API_DOTNET       -- .NET bindings
+HARBOUR_TAG_VOICECHAT_API_POLICIES     -- Policy injection points
+HARBOUR_TAG_VOICECHAT_UBISOFT          -- Ubisoft integration
+HARBOUR_TAG_VOICECHAT_VIVOX            -- Vivox backend
+HARBOUR_TAG_VOICECHAT_GME              -- Tencent GME backend (!)
+HARBOUR_TAG_VOICECHAT_GME_WWISE        -- GME + Wwise audio
+HARBOUR_TAG_VOICECHAT_DISCORD          -- Discord voice backend (!)
+HARBOUR_TAG_VOICECHAT_PLAYFAB          -- PlayFab Party voice (!)
+HARBOUR_TAG_COMMON_CONFIG              -- Config system
+HARBOUR_TAG_FOUNDATION                 -- Base framework
+HARBOUR_TAG_TRANSPORT                  -- Network transport</code></pre></div>
+<p><strong>Critical finding</strong>: The Harbour SDK supports <strong>four voice backends</strong>: Vivox, Tencent GME, Discord, and PlayFab Party. Trackmania uses Vivox, but the framework is multi-backend capable.</p>
+<h3 id="vivox-configuration-parameters"><a class="anchor" href="#vivox-configuration-parameters">#</a>Vivox Configuration Parameters</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>voicechat.vivox.server_url         -- Vivox server URL
+voicechat.vivox.token_issuer       -- Auth token issuer
+voicechat.vivox.access_token_key   -- Auth token key
+voicechat.vivox.domain             -- Vivox domain
+voicechat.vivox.token_type         -- Token type
+voicechat.vivox.token              -- Auth token
+voicechat.vivox.channel_uri        -- Channel URI
+voicechat.vivox.account_uri        -- Account URI
+voicechat.vivox.account_name       -- Account name
+voicechat.vivox.profile_id         -- User profile ID
+voicechat.vivox.log_level          -- Log verbosity
+voicechat.vivox.logfileName        -- Log file name
+voicechat.vivox.platform_check_permission  -- Permission checking
+voicechat.vivox.delay_connect      -- Delayed connection
+voicechat.vivox.codec_selection    -- Codec choice
+voicechat.vivox.codec_bitrate      -- Bitrate (16/24/32/40 kbit/s)
+voicechat.vivox.codec_complexity   -- Codec complexity</code></pre></div>
+<h3 id="vivox-server"><a class="anchor" href="#vivox-server">#</a>Vivox Server</h3>
+<ul>
+  <li><strong>Server URL</strong>: <code>https://hyxd.www.vivox.com/api2</code></li>
+  <li><strong>App Name</strong>: <code>VivoxTrackmania</code></li>
+</ul>
+<h3 id="codec-selection-new-finding"><a class="anchor" href="#codec-selection-new-finding">#</a>Codec Selection (NEW FINDING)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Successfully set Vivox codec to Siren14
+Successfully set Vivox codec to Siren7
+Using Opus as Vivox codec                          -- default
+Bitrate must be equals to 16, 24, 32, 40           -- kbit/s options</code></pre></div>
+<p>Opus is the default codec. Siren14 and Siren7 are fallback options.</p>
+<h3 id="3d-positional-audio"><a class="anchor" href="#3d-positional-audio">#</a>3D Positional Audio</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>voicechat.vivox.3d                    -- Enable 3D voice
+voicechat.vivox.3d.max_range          -- Max hearing distance
+voicechat.vivox.3d.clamping_distance  -- Clamping distance
+voicechat.vivox.3d.rolloff            -- Volume rolloff curve
+voicechat.vivox.3d.distance_model     -- Distance attenuation model</code></pre></div>
+<ul>
+  <li><code>This solution requires that a positional 3D channel is the first and only channel.</code></li>
+  <li><code>Fail send update 3D position.</code></li>
+</ul>
+<h3 id="text-to-speech-speech-to-text-accessibility"><a class="anchor" href="#text-to-speech-speech-to-text-accessibility">#</a>Text-to-Speech / Speech-to-Text (Accessibility)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>voicechat.vivox.default_language.text_chat
+voicechat.vivox.default_language.voice_chat
+voicechat.vivox.default_language.text_to_speech
+voicechat.vivox.default_language.speech_to_text
+TTS_Enable / TTS_Disable
+User-&gt;enableSpeechToText User=%s Channel=%s
+User-&gt;enableTextToSpeech User=%s</code></pre></div>
+<h3 id="abi-compatibility-system"><a class="anchor" href="#abi-compatibility-system">#</a>ABI Compatibility System</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Caller ABI is incompatible. The caller ABI is [%s] while the Harbour library ABI is [%s].
+version=%u,platform=%s,buildType=%s,crt=%s,cxxStandard=%lld,cxxLibrary=%s,...</code></pre></div>
+<p>The Harbour SDK has strict ABI versioning including C++ standard version, library version, exception settings, and RTTI configuration.</p>
+<h3 id="relevance-to-browser-recreation-1"><a class="anchor" href="#relevance-to-browser-recreation-1">#</a>Relevance to Browser Recreation</h3>
+<p><strong>LOW</strong> -- Voice chat wrapper. The Harbour SDK discovery is architecturally interesting but not relevant to gameplay recreation.</p>
+<hr>
+<h2 id="3-upc_r2_loader64dll-ubisoft-connect-platform"><a class="anchor" href="#3-upc_r2_loader64dll-ubisoft-connect-platform">#</a>3. upc_r2_loader64.dll - Ubisoft Connect Platform</h2>
+<h3 id="file-metadata-2"><a class="anchor" href="#file-metadata-2">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">436,032 bytes (426 KB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (console) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">x86-64 (Windows)</td>
+</tr>
+<tr>
+  <td style="text-align:left">PDB Path</td>
+  <td style="text-align:left"><code>D:\JenkinsWorkspace\workspace\client_build_installer\client\build\working_directory\RelWithDebInfo\upc_r2_loader64.pdb</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Signed By</td>
+  <td style="text-align:left">Ubisoft Entertainment Sweden AB</td>
+</tr>
+<tr>
+  <td style="text-align:left">Code Signing</td>
+  <td style="text-align:left">DigiCert Trusted G4 Code Signing RSA4096 SHA384 2021 CA1</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="complete-exported-upc-api-103-functions"><a class="anchor" href="#complete-exported-upc-api-103-functions">#</a>Complete Exported UPC API (103 functions)</h3>
+<p><strong>Initialization/Lifecycle</strong>:</p>
+<ul>
+  <li><code>UPC_Init</code>, <code>UPC_Uninit</code>, <code>UPC_Update</code></li>
+  <li><code>UPC_ContextCreate</code>, <code>UPC_ContextFree</code></li>
+  <li><code>UPC_Cancel</code>, <code>UPC_ErrorToString</code></li>
+</ul>
+<p><strong>Identity</strong>:</p>
+<ul>
+  <li><code>UPC_IdGet</code>, <code>UPC_IdGet_Extended</code> -- Ubisoft account ID</li>
+  <li><code>UPC_NameGet</code>, <code>UPC_NameGet_Extended</code> -- Display name</li>
+  <li><code>UPC_EmailGet</code>, <code>UPC_EmailGet_Extended</code> -- Email</li>
+  <li><code>UPC_AvatarGet</code>, <code>UPC_AvatarFree</code> -- Avatar image</li>
+  <li><code>UPC_UserGet</code>, <code>UPC_UserFree</code> -- User profile</li>
+  <li><code>UPC_TicketGet</code>, <code>UPC_TicketGet_Extended</code> -- Auth ticket</li>
+</ul>
+<p><strong>Application</strong>:</p>
+<ul>
+  <li><code>UPC_ApplicationIdGet</code> -- Game application ID</li>
+  <li><code>UPC_LaunchApp</code> -- Launch another UPC application</li>
+  <li><code>UPC_InstallLanguageGet</code>, <code>UPC_InstallLanguageGet_Extended</code></li>
+  <li><code>UPC_InstallChunkListGet</code>, <code>UPC_InstallChunkListFree</code></li>
+  <li><code>UPC_InstallChunksOrderUpdate</code>, <code>UPC_InstallChunksPresenceCheck</code></li>
+</ul>
+<p><strong>Social</strong>:</p>
+<ul>
+  <li><code>UPC_FriendAdd</code>, <code>UPC_FriendRemove</code>, <code>UPC_FriendCheck</code></li>
+  <li><code>UPC_FriendListGet</code>, <code>UPC_FriendListFree</code></li>
+  <li><code>UPC_BlacklistAdd</code>, <code>UPC_BlacklistHas</code></li>
+  <li><code>UPC_UserPlayedWithAdd</code> -- Recent players</li>
+</ul>
+<p><strong>Multiplayer</strong>:</p>
+<ul>
+  <li><code>UPC_MultiplayerInvite</code>, <code>UPC_MultiplayerInviteAnswer</code></li>
+  <li><code>UPC_MultiplayerSessionGet/Set/Clear/Free</code></li>
+</ul>
+<p><strong>Achievements</strong>:</p>
+<ul>
+  <li><code>UPC_AchievementListGet</code>, <code>UPC_AchievementListFree</code></li>
+  <li><code>UPC_AchievementImageGet</code>, <code>UPC_AchievementImageFree</code></li>
+  <li><code>UPC_AchievementUnlock</code></li>
+</ul>
+<p><strong>Store/Products</strong> (DLC/microtransactions):</p>
+<ul>
+  <li><code>UPC_ProductListGet</code>, <code>UPC_ProductListFree</code></li>
+  <li><code>UPC_ProductConsume</code>, <code>UPC_ProductConsumeSignatureFree</code></li>
+  <li><code>UPC_StoreProductListGet</code>, <code>UPC_StoreProductDetailsShow</code></li>
+  <li><code>UPC_StoreCheckout</code>, <code>UPC_StoreIsEnabled</code></li>
+  <li><code>UPC_StorePartnerGet</code> -- Partner store (Steam?)</li>
+  <li><code>UPC_StoreLanguageSet</code></li>
+</ul>
+<p><strong>Cloud Storage</strong>:</p>
+<ul>
+  <li><code>UPC_StorageFileOpen</code>, <code>UPC_StorageFileClose</code></li>
+  <li><code>UPC_StorageFileRead</code>, <code>UPC_StorageFileWrite</code></li>
+  <li><code>UPC_StorageFileDelete</code></li>
+  <li><code>UPC_StorageFileListGet</code>, <code>UPC_StorageFileListFree</code></li>
+</ul>
+<p><strong>Overlay</strong>:</p>
+<ul>
+  <li><code>UPC_OverlayShow</code> -- Main overlay</li>
+  <li><code>UPC_OverlayBrowserUrlShow</code> -- In-overlay browser</li>
+  <li><code>UPC_OverlayFriendInvitationShow</code></li>
+  <li><code>UPC_OverlayFriendSelectionShow/Free</code></li>
+  <li><code>UPC_OverlayMicroAppShow</code> -- Micro-app overlay</li>
+  <li><code>UPC_OverlayNotificationShow</code></li>
+</ul>
+<p><strong>Rich Presence</strong>:</p>
+<ul>
+  <li><code>UPC_RichPresenceSet</code>, <code>UPC_RichPresenceSet_Extended</code></li>
+</ul>
+<p><strong>Events</strong>:</p>
+<ul>
+  <li><code>UPC_EventNextPeek</code>, <code>UPC_EventNextPoll</code></li>
+  <li><code>UPC_EventRegisterHandler</code>, <code>UPC_EventUnregisterHandler</code></li>
+</ul>
+<p><strong>Streaming</strong> (Ubisoft+ cloud gaming) (NEW FINDING):</p>
+<ul>
+  <li><code>UPC_StreamingTypeGet</code> -- Cloud streaming type</li>
+  <li><code>UPC_StreamingDeviceTypeGet</code> -- Device type</li>
+  <li><code>UPC_StreamingInputTypeGet</code> -- Input method</li>
+  <li><code>UPC_StreamingInputGamepadTypeGet</code> -- Gamepad type</li>
+  <li><code>UPC_StreamingResolutionGet/Free</code> -- Stream resolution</li>
+  <li><code>UPC_StreamingNetworkDelayForInputGet</code> -- Input latency</li>
+  <li><code>UPC_StreamingNetworkDelayForVideoGet</code> -- Video latency</li>
+  <li><code>UPC_StreamingNetworkDelayRoundtripGet</code> -- RTT</li>
+  <li><code>UPC_StreamingCurrentUserCountryGet/Free</code> -- Geo location</li>
+</ul>
+<p><strong>Hardware Scoring</strong>:</p>
+<ul>
+  <li><code>UPC_CPUScoreGet</code> -- CPU benchmark score</li>
+  <li><code>UPC_GPUScoreGet</code> -- GPU benchmark score</li>
+</ul>
+<h3 id="dll-dependencies"><a class="anchor" href="#dll-dependencies">#</a>DLL Dependencies</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>KERNEL32.dll    -- LoadLibraryW, GetProcAddress, GetModuleHandleW, LoadLibraryExW
+SHELL32.dll
+ADVAPI32.dll</code></pre></div>
+<h3 id="key-findings"><a class="anchor" href="#key-findings">#</a>Key Findings</h3>
+<ul>
+  <li>This is a <strong>loader stub</strong>, not the full UPC SDK. It dynamically loads the real Ubisoft Connect runtime.</li>
+  <li>Built on Jenkins CI: <code>D:\JenkinsWorkspace\workspace\client_build_installer\</code></li>
+  <li>The streaming APIs confirm Trackmania supports <strong>Ubisoft+ cloud gaming</strong> -- important for understanding latency requirements.</li>
+  <li><code>UPC_StorePartnerGet</code> suggests Steam store integration alongside Ubisoft Store.</li>
+</ul>
+<h3 id="relevance-to-browser-recreation-2"><a class="anchor" href="#relevance-to-browser-recreation-2">#</a>Relevance to Browser Recreation</h3>
+<p><strong>MEDIUM</strong> -- The auth ticket system (<code>UPC_TicketGet</code>) is how Trackmania authenticates with Nadeo services. Understanding this is needed if the browser recreation needs to authenticate with Nadeo APIs. The cloud storage API is used for save games/profiles.</p>
+<hr>
+<h2 id="4-libfbxsdkdll-autodesk-fbx-sdk"><a class="anchor" href="#4-libfbxsdkdll-autodesk-fbx-sdk">#</a>4. libfbxsdk.dll - Autodesk FBX SDK</h2>
+<h3 id="file-metadata-3"><a class="anchor" href="#file-metadata-3">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">8,341,944 bytes (7.95 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (console) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">x86-64 (Windows)</td>
+</tr>
+<tr>
+  <td style="text-align:left">File Date</td>
+  <td style="text-align:left">2018-07-09</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="version-compatibility"><a class="anchor" href="#version-compatibility">#</a>Version Compatibility</h3>
+<p>Supports FBX files from all major versions:</p>
+<ul>
+  <li>FBX 6.0 (binary, ASCII, encrypted)</li>
+  <li>Compatible with Autodesk 2006-2017 applications</li>
+  <li>Latest compatibility: <strong>Autodesk 2016/2017 applications/FBX plug-ins</strong></li>
+</ul>
+<h3 id="supported-file-formats"><a class="anchor" href="#supported-file-formats">#</a>Supported File Formats</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Format</th>
+  <th style="text-align:left">Extensions</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">FBX Binary</td>
+  <td style="text-align:left">.fbx</td>
+  <td style="text-align:left">Primary format</td>
+</tr>
+<tr>
+  <td style="text-align:left">FBX ASCII</td>
+  <td style="text-align:left">.fbx</td>
+  <td style="text-align:left">Human-readable variant</td>
+</tr>
+<tr>
+  <td style="text-align:left">FBX Encrypted</td>
+  <td style="text-align:left">.fbx</td>
+  <td style="text-align:left">DRM-protected models</td>
+</tr>
+<tr>
+  <td style="text-align:left">3D Studio</td>
+  <td style="text-align:left">.3ds</td>
+  <td style="text-align:left">Legacy 3DS Max format</td>
+</tr>
+<tr>
+  <td style="text-align:left">Alias OBJ</td>
+  <td style="text-align:left">.obj</td>
+  <td style="text-align:left">Wavefront OBJ</td>
+</tr>
+<tr>
+  <td style="text-align:left">Collada</td>
+  <td style="text-align:left">.dae</td>
+  <td style="text-align:left">XML-based interchange</td>
+</tr>
+<tr>
+  <td style="text-align:left">AutoCAD DXF</td>
+  <td style="text-align:left">.dxf</td>
+  <td style="text-align:left">2D/3D CAD format</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="complete-class-hierarchy-106-classes"><a class="anchor" href="#complete-class-hierarchy-106-classes">#</a>Complete Class Hierarchy (106 classes)</h3>
+<p>Key classes for understanding the 3D pipeline:</p>
+<p><strong>Scene/Document</strong>: <code>FbxScene</code>, <code>FbxDocument</code>, <code>FbxGlobalSettings</code> <strong>Geometry</strong>: <code>FbxMesh</code>, <code>FbxNurbs</code>, <code>FbxNurbsCurve</code>, <code>FbxNurbsSurface</code>, <code>FbxPatch</code>, <code>FbxSubDiv</code> <strong>Deformers</strong>: <code>FbxSkin</code>, <code>FbxCluster</code>, <code>FbxBlendShape</code>, <code>FbxBlendShapeChannel</code>, <code>FbxVertexCacheDeformer</code> <strong>Skeleton</strong>: <code>FbxSkeleton</code>, <code>FbxPose</code>, <code>FbxCharacterPose</code> <strong>Materials</strong>: <code>FbxSurfaceMaterial</code>, <code>FbxSurfaceLambert</code>, <code>FbxSurfacePhong</code>, <code>FbxFileTexture</code>, <code>FbxProceduralTexture</code> <strong>Animation</strong>: <code>FbxAnimStack</code>, <code>FbxAnimLayer</code>, <code>FbxAnimCurve</code>, <code>FbxAnimEvaluator</code> <strong>Constraints</strong>: <code>FbxConstraintAim</code>, <code>FbxConstraintParent</code>, <code>FbxConstraintPosition</code>, <code>FbxConstraintRotation</code>, <code>FbxConstraintScale</code>, <code>FbxConstraintSingleChainIK</code> <strong>Cameras/Lights</strong>: <code>FbxCamera</code>, <code>FbxCameraStereo</code>, <code>FbxCameraSwitcher</code>, <code>FbxLight</code> <strong>I/O</strong>: <code>FbxImporter</code>, <code>FbxExporter</code>, <code>FbxIOSettings</code></p>
+<h3 id="relevance-to-browser-recreation-3"><a class="anchor" href="#relevance-to-browser-recreation-3">#</a>Relevance to Browser Recreation</h3>
+<p><strong>LOW</strong> -- Only used by NadeoImporter.exe for asset import, not at game runtime. However, the FBX class list confirms the full range of 3D features the game's asset pipeline handles.</p>
+<hr>
+<h2 id="5-anzudll-in-game-advertising-anzuio"><a class="anchor" href="#5-anzudll-in-game-advertising-anzuio">#</a>5. anzu.dll - In-Game Advertising (Anzu.io)</h2>
+<h3 id="file-metadata-4"><a class="anchor" href="#file-metadata-4">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">3,930,968 bytes (3.75 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">SDK Version</td>
+  <td style="text-align:left">5.41</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="new-findings-beyond-09-game-files-analysismd"><a class="anchor" href="#new-findings-beyond-09-game-files-analysismd">#</a>NEW FINDINGS (beyond 09-game-files-analysis.md)</h3>
+<p><strong>Embedded JavaScript Engine</strong>: The Anzu SDK contains a full JavaScript runtime with polyfills:</p>
+<ul>
+  <li><code>ScriptableSDKObj.prototype.runCommand</code> -- Command dispatch</li>
+  <li><code>ScriptableSDKObj.prototype.setTimeout/setInterval/clearTimeout/clearInterval</code></li>
+  <li><code>window.setInterval</code>, <code>window.setTimeout</code>, <code>Date.now</code>, <code>console.log</code></li>
+  <li><code>encodeURIComponent</code> -- Custom implementation</li>
+  <li><code>String.prototype.substr</code>, <code>String.prototype.endsWith</code> -- Polyfills</li>
+  <li><code>document.createEvent("MouseEvents")</code> -- Simulated click events</li>
+  <li><code>document.elementFromPoint(%f <em> window.innerWidth, %f </em> window.innerHeight)</code> -- Hit testing</li>
+  <li>Ad logic is evaluated via <code>(function(){...})</code> JavaScript execution</li>
+</ul>
+<p><strong>Video Ad Support</strong>:</p>
+<ul>
+  <li><code>video/ogg</code> -- Theora video format support</li>
+  <li><code>Theora animated texture: no video stream found in file %s</code></li>
+  <li><code>TheoraDecoder::decode_video_frame</code> -- Theora video decoder</li>
+  <li><code>anzu::PngAnimatedTexture::ReadPng</code> -- Animated PNG support</li>
+</ul>
+<p><strong>Network Protocols</strong>:</p>
+<ul>
+  <li><strong>MQTT</strong>: Real-time ad event messaging (<code>mqtt message for %s : %s</code>)</li>
+  <li><strong>WebSocket</strong>: <code>ixwebsocket/</code>, <code>Sec-WebSocket-Protocol</code>, <code>Upgrade: websocket</code>, <code>Sec-WebSocket-Version: 13</code></li>
+  <li><strong>JSON</strong>: REST API communication for ad configuration</li>
+</ul>
+<p><strong>Ad Campaign System</strong>:</p>
+<ul>
+  <li><code>campaign_id</code>, <code>campaigns</code>, <code>campaignId</code></li>
+  <li><code>placement</code>, <code>Placement aspect ratio don't match</code></li>
+  <li><code>interstitial_id</code>, <code>interstitial_action</code>, <code>interstitial_start/stop</code></li>
+  <li><code>display</code>, <code>video</code>, <code>interstitials</code>, <code>videotextures</code></li>
+  <li>Close button configuration: <code>Invalid close_button value (%s) provided in interstitial configuration</code></li>
+</ul>
+<h3 id="relevance-to-browser-recreation-4"><a class="anchor" href="#relevance-to-browser-recreation-4">#</a>Relevance to Browser Recreation</h3>
+<p><strong>NONE</strong> -- Advertising SDK, irrelevant to gameplay.</p>
+<hr>
+<h2 id="6-openal64_bundleddll-openal-soft-audio"><a class="anchor" href="#6-openal64_bundleddll-openal-soft-audio">#</a>6. OpenAL64_bundled.dll - OpenAL Soft Audio</h2>
+<h3 id="file-metadata-5"><a class="anchor" href="#file-metadata-5">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">1,446,928 bytes (1.38 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (console) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">Version</td>
+  <td style="text-align:left"><strong>1.23.99</strong> (development/pre-release of 1.24)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Vendor</td>
+  <td style="text-align:left">OpenAL Community</td>
+</tr>
+<tr>
+  <td style="text-align:left">Version String</td>
+  <td style="text-align:left"><code>1.1 ALSOFT 1.23.99</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Library</td>
+  <td style="text-align:left">OpenAL Soft</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="audio-extensions-complete-list"><a class="anchor" href="#audio-extensions-complete-list">#</a>Audio Extensions (Complete List)</h3>
+<p><strong>AL Extensions</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>AL_EXT_ALAW                    -- A-law PCM format
+AL_EXT_BFORMAT                 -- B-format ambisonic
+AL_EXT_debug                   -- Debug output
+AL_EXT_direct_context          -- Thread-safe contexts
+AL_EXT_DOUBLE                  -- 64-bit float samples
+AL_EXT_EXPONENT_DISTANCE       -- Exponential distance model
+AL_EXT_FLOAT32                 -- 32-bit float samples
+AL_EXT_IMA4                    -- IMA ADPCM compression
+AL_EXT_LINEAR_DISTANCE         -- Linear distance model
+AL_EXT_MCFORMATS               -- Multi-channel formats
+AL_EXT_MULAW                   -- mu-law PCM format
+AL_EXT_MULAW_BFORMAT           -- mu-law B-format
+AL_EXT_MULAW_MCFORMATS         -- mu-law multi-channel
+AL_EXT_OFFSET                  -- Sample offset queries
+AL_EXT_source_distance_model   -- Per-source distance model
+AL_EXT_SOURCE_RADIUS           -- Source radius for area sounds
+AL_EXT_STATIC_BUFFER           -- Zero-copy buffer loading
+AL_EXT_STEREO_ANGLES           -- Stereo source panning angles
+AL_LOKI_quadriphonic           -- Quad speaker layout
+AL_SOFT_bformat_ex             -- Extended B-format
+AL_SOFT_block_alignment        -- Block alignment queries
+AL_SOFT_buffer_length_query    -- Buffer length queries
+AL_SOFT_buffer_sub_data        -- Partial buffer updates
+AL_SOFT_callback_buffer        -- Callback-driven buffers
+AL_SOFT_deferred_updates       -- Batched state updates
+AL_SOFT_direct_channels        -- Bypass spatialization
+AL_SOFT_direct_channels_remix  -- Direct channel remixing
+AL_SOFT_effect_target          -- Effect routing
+AL_SOFT_events                 -- Event system
+AL_SOFT_gain_clamp_ex          -- Extended gain clamping
+AL_SOFT_loop_points            -- Loop start/end points
+AL_SOFT_MSADPCM                -- Microsoft ADPCM
+AL_SOFT_source_latency         -- Source playback latency
+AL_SOFT_source_length          -- Source length queries
+AL_SOFT_source_resampler       -- Resampler selection
+AL_SOFT_source_spatialize      -- Spatialization toggle
+AL_SOFT_source_start_delay     -- Synchronized start
+AL_SOFT_UHJ                    -- UHJ stereo encoding
+AL_SOFT_UHJ_ex                 -- Extended UHJ</code></pre></div>
+<p><strong>ALC Extensions</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ALC_ENUMERATE_ALL_EXT          -- Device enumeration
+ALC_EXT_CAPTURE                -- Audio capture
+ALC_EXT_debug                  -- Debug output
+ALC_EXT_DEDICATED              -- Dedicated effects
+ALC_EXT_direct_context         -- Thread-safe context
+ALC_EXT_disconnect             -- Device disconnect events
+ALC_EXT_EFX                    -- Effects framework (reverb, chorus, etc.)
+ALC_EXT_thread_local_context   -- Thread-local contexts
+ALC_SOFT_device_clock          -- Device clock queries
+ALC_SOFT_HRTF                  -- HRTF rendering
+ALC_SOFT_loopback              -- Loopback rendering
+ALC_SOFT_loopback_bformat      -- B-format loopback
+ALC_SOFT_output_limiter        -- Output limiter
+ALC_SOFT_output_mode           -- Output mode selection
+ALC_SOFT_pause_device          -- Device pause/resume
+ALC_SOFT_reopen_device         -- Hot device switching
+ALC_SOFT_system_events         -- System event notification</code></pre></div>
+<h3 id="audio-backend"><a class="anchor" href="#audio-backend">#</a>Audio Backend</h3>
+<ul>
+  <li><strong>WASAPI</strong> -- Windows Audio Session API (primary backend)</li>
+  <li><strong>Null</strong> backend (fallback)</li>
+  <li><strong>Loopback</strong> backend (for capture)</li>
+  <li>Config env var: <code>ALSOFT_DRIVERS</code></li>
+</ul>
+<h3 id="hrtf-head-related-transfer-function"><a class="anchor" href="#hrtf-head-related-transfer-function">#</a>HRTF (Head-Related Transfer Function)</h3>
+<p>Full HRTF support for headphone spatialization:</p>
+<ul>
+  <li><code>ALC_HRTF_SOFT</code> -- Enable/disable</li>
+  <li><code>ALC_HRTF_HEADPHONES_DETECTED_SOFT</code> -- Auto-detection</li>
+  <li><code>%u%s order %sHRTF rendering enabled, using "%s"</code> -- Higher-order HRTF</li>
+  <li><code>ALC_STEREO_HRTF_SOFT</code> -- Stereo HRTF mode</li>
+</ul>
+<h3 id="effects-framework-efx"><a class="anchor" href="#effects-framework-efx">#</a>Effects Framework (EFX)</h3>
+<ul>
+  <li>Reverb, Chorus, Autowah (from extension strings)</li>
+  <li>Effect slots with auxiliary sends</li>
+  <li><code>Unpacking data with mismatched ambisonic order</code> -- Ambisonic processing</li>
+</ul>
+<h3 id="relevance-to-browser-recreation-5"><a class="anchor" href="#relevance-to-browser-recreation-5">#</a>Relevance to Browser Recreation</h3>
+<p><strong>HIGH</strong> -- Web Audio API is the browser equivalent. Key features to replicate:</p>
+<ol>
+  <li>3D positional audio with distance models (linear, exponential, inverse)</li>
+  <li>HRTF for headphone users</li>
+  <li>Ambisonic audio support</li>
+  <li>Effect chains (reverb, etc.)</li>
+  <li>Loop points for seamless audio loops</li>
+  <li>Buffer streaming</li>
+</ol>
+<hr>
+<h2 id="7-libwebp64dll-webp-image-codec"><a class="anchor" href="#7-libwebp64dll-webp-image-codec">#</a>7. libwebp64.dll - WebP Image Codec</h2>
+<h3 id="file-metadata-6"><a class="anchor" href="#file-metadata-6">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">677,960 bytes (662 KB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (console) x86-64</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="exported-functions-complete-75-functions"><a class="anchor" href="#exported-functions-complete-75-functions">#</a>Exported Functions (Complete - 75 functions)</h3>
+<p><strong>Decoding</strong> (17 functions):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>WebPDecode, WebPDecodeRGB, WebPDecodeRGBA, WebPDecodeRGBAInto
+WebPDecodeRGBInto, WebPDecodeBGR, WebPDecodeBGRA, WebPDecodeBGRAInto
+WebPDecodeBGRInto, WebPDecodeARGB, WebPDecodeARGBInto
+WebPDecodeYUV, WebPDecodeYUVInto
+WebPGetDecoderVersion, WebPGetFeaturesInternal, WebPGetInfo
+WebPFreeDecBuffer</code></pre></div>
+<p><strong>Encoding</strong> (10 functions):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>WebPEncode, WebPEncodeRGB, WebPEncodeRGBA
+WebPEncodeBGR, WebPEncodeBGRA
+WebPEncodeLosslessRGB, WebPEncodeLosslessRGBA
+WebPEncodeLosslessBGR, WebPEncodeLosslessBGRA
+WebPGetEncoderVersion</code></pre></div>
+<p><strong>Incremental Decoding</strong> (8 functions):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>WebPIDecode, WebPINewDecoder, WebPINewRGB, WebPINewYUV, WebPINewYUVA
+WebPIAppend, WebPIUpdate, WebPIDelete, WebPIDecodedArea
+WebPIDecGetRGB, WebPIDecGetYUVA</code></pre></div>
+<p><strong>Picture Operations</strong> (16 functions):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>WebPPictureAlloc, WebPPictureFree, WebPPictureCopy
+WebPPictureCrop, WebPPictureRescale, WebPPictureView
+WebPPictureImportRGB, WebPPictureImportRGBA, WebPPictureImportRGBX
+WebPPictureImportBGR, WebPPictureImportBGRA, WebPPictureImportBGRX
+WebPPictureARGBToYUVA, WebPPictureARGBToYUVADithered
+WebPPictureSharpARGBToYUVA, WebPPictureSmartARGBToYUVA
+WebPPictureYUVAToARGB, WebPPictureDistortion, WebPPlaneDistortion
+WebPPictureHasTransparency, WebPPictureIsView</code></pre></div>
+<p><strong>Configuration</strong>: <code>WebPConfigInitInternal</code>, <code>WebPConfigLosslessPreset</code>, <code>WebPValidateConfig</code> <strong>Color Conversion (SharpYuv)</strong>: <code>SharpYuvConvert</code>, <code>SharpYuvGetVersion</code>, <code>SharpYuvComputeConversionMatrix</code> <strong>Memory</strong>: <code>WebPMalloc</code>, <code>WebPSafeMalloc</code>, <code>WebPSafeCalloc</code>, <code>WebPSafeFree</code>, <code>WebPFree</code></p>
+<h3 id="features"><a class="anchor" href="#features">#</a>Features</h3>
+<ul>
+  <li><strong>Lossy and lossless</strong> encoding/decoding</li>
+  <li><strong>Alpha channel</strong> support (transparency)</li>
+  <li><strong>YUV and RGB</strong> color spaces</li>
+  <li><strong>Incremental decoding</strong> (streaming)</li>
+  <li><strong>SharpYuv</strong> high-quality YUV conversion</li>
+  <li><strong>Keyframe</strong> support (animation frames)</li>
+</ul>
+<h3 id="relevance-to-browser-recreation-6"><a class="anchor" href="#relevance-to-browser-recreation-6">#</a>Relevance to Browser Recreation</h3>
+<p><strong>LOW</strong> -- Browsers natively support WebP. Used for texture compression in the game.</p>
+<hr>
+<h2 id="8-vorbis64dll-ogg-vorbis-audio"><a class="anchor" href="#8-vorbis64dll-ogg-vorbis-audio">#</a>8. vorbis64.dll - Ogg Vorbis Audio</h2>
+<h3 id="file-metadata-7"><a class="anchor" href="#file-metadata-7">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">866,304 bytes (846 KB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (GUI) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">Library</td>
+  <td style="text-align:left">Xiph.Org libVorbis</td>
+</tr>
+<tr>
+  <td style="text-align:left">Version</td>
+  <td style="text-align:left"><strong>1.3.5</strong> (release date: 2015-01-05)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Version String</td>
+  <td style="text-align:left"><code>Xiph.Org libVorbis I 20150105</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="exported-functions-40-functions"><a class="anchor" href="#exported-functions-40-functions">#</a>Exported Functions (40 functions)</h3>
+<p><strong>Analysis/Encoding</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vorbis_analysis, vorbis_analysis_blockout, vorbis_analysis_buffer
+vorbis_analysis_headerout, vorbis_analysis_init, vorbis_analysis_wrote
+vorbis_bitrate_addblock, vorbis_bitrate_flushpacket
+vorbis_encode_init, vorbis_encode_init_vbr
+vorbis_encode_setup_init, vorbis_encode_setup_managed, vorbis_encode_setup_vbr
+vorbis_encode_ctl</code></pre></div>
+<p><strong>Synthesis/Decoding</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vorbis_synthesis, vorbis_synthesis_blockin
+vorbis_synthesis_halfrate, vorbis_synthesis_halfrate_p
+vorbis_synthesis_headerin, vorbis_synthesis_idheader
+vorbis_synthesis_init, vorbis_synthesis_lapout
+vorbis_synthesis_pcmout, vorbis_synthesis_read, vorbis_synthesis_restart</code></pre></div>
+<p><strong>Infrastructure</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vorbis_info_init, vorbis_info_clear, vorbis_info_blocksize
+vorbis_dsp_clear, vorbis_block_init, vorbis_block_clear
+vorbis_comment_init, vorbis_comment_clear
+vorbis_comment_add, vorbis_comment_add_tag
+vorbis_comment_query, vorbis_comment_query_count
+vorbis_commentheader_out
+vorbis_granule_time, vorbis_packet_blocksize</code></pre></div>
+<h3 id="key-finding"><a class="anchor" href="#key-finding">#</a>Key Finding</h3>
+<p>This exports <strong>both encoder and decoder</strong> functions, meaning the game can both read and write Ogg Vorbis files. The encoder could be used for replay audio or voice recording.</p>
+<h3 id="relevance-to-browser-recreation-7"><a class="anchor" href="#relevance-to-browser-recreation-7">#</a>Relevance to Browser Recreation</h3>
+<p><strong>MEDIUM</strong> -- Browser supports Ogg Vorbis natively via <code><audio></code> and Web Audio API. Knowing the version helps ensure compatibility.</p>
+<hr>
+<h2 id="9-ntdll_odll-wine-ntdll-backup"><a class="anchor" href="#9-ntdll_odll-wine-ntdll-backup">#</a>9. ntdll_o.dll - Wine NTDLL Backup</h2>
+<h3 id="file-metadata-8"><a class="anchor" href="#file-metadata-8">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">687,696 bytes (672 KB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (console) x86-64, stripped to external PDB</td>
+</tr>
+<tr>
+  <td style="text-align:left">Origin</td>
+  <td style="text-align:left">Wine builtin DLL</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="size-comparison"><a class="anchor" href="#size-comparison">#</a>Size Comparison</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">File</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">ntdll_o.dll</td>
+  <td style="text-align:left">687,696</td>
+  <td style="text-align:left">Trackmania directory</td>
+</tr>
+<tr>
+  <td style="text-align:left">ntdll.dll (system32)</td>
+  <td style="text-align:left">687,696</td>
+  <td style="text-align:left"><code>windows/system32/</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">ntdll.dll (syswow64)</td>
+  <td style="text-align:left">667,216</td>
+  <td style="text-align:left"><code>windows/syswow64/</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Finding</strong>: <code>ntdll_o.dll</code> is <strong>identical in size</strong> to <code>system32/ntdll.dll</code> (both 687,696 bytes). This confirms it is a backup copy. The <code>_o</code> suffix stands for "original" -- likely placed by Openplanet's dinput8.dll hook to preserve the original before any modifications.</p>
+<h3 id="nt-api-surface"><a class="anchor" href="#nt-api-surface">#</a>NT API Surface</h3>
+<p>Exports standard NT kernel API: <code>NtAllocateVirtualMemory</code>, <code>NtCreateFile</code>, <code>NtReadFile</code>, <code>LdrLoadDll</code>, <code>LdrGetProcedureAddress</code>, <code>RtlAllocateHeap</code>, etc.</p>
+<h3 id="wine-specific-strings"><a class="anchor" href="#wine-specific-strings">#</a>Wine-Specific Strings</h3>
+<ul>
+  <li><code>EXCEPTION_WINE_ASSERTION</code>, <code>EXCEPTION_WINE_CXX_EXCEPTION</code></li>
+  <li><code>wine: could not open working directory %s</code></li>
+  <li><code>Wine builtin DLL</code></li>
+</ul>
+<h3 id="relevance-to-browser-recreation-8"><a class="anchor" href="#relevance-to-browser-recreation-8">#</a>Relevance to Browser Recreation</h3>
+<p><strong>NONE</strong> -- Wine/CrossOver infrastructure artifact.</p>
+<hr>
+<h2 id="10-openplanetdll-mod-framework"><a class="anchor" href="#10-openplanetdll-mod-framework">#</a>10. Openplanet.dll - Mod Framework</h2>
+<h3 id="file-metadata-9"><a class="anchor" href="#file-metadata-9">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">12,764,672 bytes (12.17 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) (GUI) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">Version</td>
+  <td style="text-align:left"><strong>1.29.1</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Build Path</td>
+  <td style="text-align:left"><code>e:\Dev\openplanet\Openplanet\Openplanet\</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="hooking-architecture"><a class="anchor" href="#hooking-architecture">#</a>Hooking Architecture</h3>
+<p><strong>Entry Point</strong>: dinput8.dll proxy loads Openplanet.dll</p>
+<p><strong>Graphics Overlay Hooks</strong>:</p>
+<ul>
+  <li><code>OffsetGraphicsDevice</code> -- D3D11 device pointer</li>
+  <li><code>OffsetGraphicsContext</code> -- D3D11 device context</li>
+  <li><code>OffsetGraphicsSwapChain</code> -- DXGI swap chain</li>
+  <li><code>Fatal: Unable to detect graphics overlay offsets.</code> -- Pattern scanning for vtable offsets</li>
+  <li>Hooks into swap chain Present for overlay rendering</li>
+</ul>
+<p><strong>Window Procedure Hook</strong>:</p>
+<ul>
+  <li><code>Hooking WndProc...</code> -- Intercepts window messages for input handling</li>
+</ul>
+<p><strong>Game Logic Hooks</strong>:</p>
+<ul>
+  <li><code>Fatal: Unable to detect MainUpdate hook pointer.</code> -- Main game loop hook</li>
+  <li><code>Fatal: Unable to detect SetAuthToken hook pointer.</code> -- Auth token interception</li>
+</ul>
+<p><strong>Code Injection System</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>HookInfo@ Hook(IntPtr ptr, int padding, const string &amp;in func, int pushRegisters = 0, ...)
+void Unhook(HookInfo@ hook)
+bool ProcIntercept(CMwStack &amp;in)
+void InterceptProc(const string &amp;in className, const string &amp;in procName, ...)
+void ResetInterceptProc(const string &amp;in className, const string &amp;in procName)
+string Patch(IntPtr ptr, const string &amp;in pattern)</code></pre></div>
+<h3 id="angelscript-scripting-engine"><a class="anchor" href="#angelscript-scripting-engine">#</a>AngelScript Scripting Engine</h3>
+<p>Openplanet uses <strong>AngelScript</strong> as its scripting engine:</p>
+<ul>
+  <li><code>Angelscript</code> -- Engine identification</li>
+  <li><code>Script context is not suspended.</code></li>
+  <li><code>Restart/Stop/Start script engine</code></li>
+  <li><code>Verbose script compilation log</code></li>
+  <li><code>Script execution timeout</code></li>
+</ul>
+<h3 id="imgui-overlay"><a class="anchor" href="#imgui-overlay">#</a>ImGui Overlay</h3>
+<ul>
+  <li>Uses <strong>dear imgui</strong> for all UI rendering</li>
+  <li>Docking support: <code>OverlayEnableDocking</code>, <code>OverlayEnableDockingWithShift</code></li>
+  <li>DPI scaling: <code>OverlayEnableDpiScaleFonts</code></li>
+  <li>Custom styling via TOML: <code>Openplanet/DefaultStyle.toml</code></li>
+  <li>Custom fonts: DroidSans, ManiaIcons, DroidSansMono</li>
+</ul>
+<h3 id="game-engine-reflection"><a class="anchor" href="#game-engine-reflection">#</a>Game Engine Reflection</h3>
+<p><strong>Core Engine Access</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameCtnApp@ GetApp()                              -- Main application
+CGameCtnNetwork                                     -- Network subsystem
+CTrackManiaNetwork                                  -- Trackmania-specific networking
+array&lt;CGameManialinkPage@&gt;@ GetManialinkPages()     -- ManiaLink UI pages</code></pre></div>
+<p><strong>Nod System</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CMwNod@ Preload(CSystemFidFile@ fid)               -- Asset preloading
+const MwFastBuffer&lt;CPlugFilePack@&gt; AllPacks         -- All pack files
+int GetRefCount(CMwNod@ nod)                        -- Reference counting
+void NodTree(CMwNod@ nod, ...)                      -- Tree traversal
+CMwNod@ GetOffsetNod(const ?&amp;in nod, uint offset)   -- Raw memory offset access
+void SetOffset(const ?&amp;in nod, uint offset, ...)    -- Raw memory write</code></pre></div>
+<p><strong>Game Events</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>void OnLoadCallback(CMwNod@ nod)
+void OnSetCurChallenge(CGameCtnChallenge@ challenge)
+void OnLoadDecoration(CGameCtnDecoration@ decoration, CGameCtnChallenge@ challenge)</code></pre></div>
+<h3 id="file-system-access"><a class="anchor" href="#file-system-access">#</a>File System Access</h3>
+<ul>
+  <li><code>AllPacks</code>, <code>AllPacksGameData</code>, <code>AllPacksUserDir</code> -- Pack file enumeration</li>
+  <li><code>FindOrAddFid</code>, <code>RemappedLoadFromFid</code> -- File ID resolution</li>
+  <li>Pack Explorer and Fid Explorer UI tools</li>
+  <li>File extraction: <code>Extracted file '%s'</code></li>
+</ul>
+<h3 id="plugin-system"><a class="anchor" href="#plugin-system">#</a>Plugin System</h3>
+<ul>
+  <li><code>Plugin render early</code>, <code>Plugin render interface</code>, <code>Plugin render</code> -- Three render phases</li>
+  <li><code>Reload plugin</code>, <code>Edit plugin</code>, <code>Toggle plugin</code></li>
+  <li><code>Favorite Plugins</code></li>
+  <li>Dependency resolution: <code>array<string>@ get_Dependencies()</code></li>
+</ul>
+<h3 id="relevance-to-browser-recreation-9"><a class="anchor" href="#relevance-to-browser-recreation-9">#</a>Relevance to Browser Recreation</h3>
+<p><strong>HIGH</strong> -- Openplanet's reflection data reveals the actual game engine class names, member layouts, and function signatures. The <code>GetApp()</code>, Nod system, and offset access patterns document the game's internal architecture.</p>
+<hr>
+<h2 id="11-nadeoimporterexe-asset-pipeline"><a class="anchor" href="#11-nadeoimporterexe-asset-pipeline">#</a>11. NadeoImporter.exe - Asset Pipeline</h2>
+<h3 id="file-metadata-10"><a class="anchor" href="#file-metadata-10">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">8,675,328 bytes (8.27 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (console) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">Config File</td>
+  <td style="text-align:left"><code>Nadeo.ini</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Log File</td>
+  <td style="text-align:left"><code>NadeoImporterLog.txt</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Registry</td>
+  <td style="text-align:left"><code>Software\Nadeo\ManiaPlanet</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="embedded-openssl"><a class="anchor" href="#embedded-openssl">#</a>Embedded OpenSSL</h3>
+<ul>
+  <li>Statically linked OpenSSL (<code>ossl_static.pdb</code>)</li>
+  <li>RSA, AES, SHA support</li>
+  <li>Used for GBX file signing/verification</li>
+</ul>
+<h3 id="gbx-file-types-producedconsumed"><a class="anchor" href="#gbx-file-types-producedconsumed">#</a>GBX File Types Produced/Consumed</h3>
+<p><strong>Item/Object Types</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>.Item.gbx              -- Custom items
+.Mesh.gbx              -- 3D mesh data
+.Shape.gbx             -- Physics collision shape
+.Material.gbx          -- Material definitions
+.Texture.Gbx           -- Texture data
+.Skel.gbx              -- Skeleton (bones)
+.Rig.gbx               -- Animation rig
+.Anim.gbx              -- Animation clips
+.skin.pack.gbx         -- Skin packages
+.pack.gbx              -- Generic pack files</code></pre></div>
+<p><strong>Engine Resources</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FuncShader.Gbx          -- Shader functions
+FuncTree.Gbx            -- Function trees
+FuncColorGradient.Gbx   -- Color gradients
+FuncKey.Gbx             -- Keyframe functions
+Visual.Gbx              -- Visual data
+Material.Gbx            -- Materials
+MaterialFx.Gbx          -- Material effects
+Decal.Gbx               -- Decal definitions
+TexturePack.Gbx         -- Texture atlases
+ViewDepLocator.Gbx      -- View-dependent LOD
+Sound/Music/Audio*.Gbx  -- Audio resources</code></pre></div>
+<p><strong>Processing Outputs</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>.Reduction40.Gbx        -- 40% polygon reduction LOD
+.Remesh.Gbx             -- Remeshed LOD
+.ReductionRetextured.Gbx -- Reduced + retextured LOD
+.Impostor.Gbx           -- Billboard impostor LOD
+.GpuCache.Gbx           -- GPU shader cache</code></pre></div>
+<h3 id="vehicle-data"><a class="anchor" href="#vehicle-data">#</a>Vehicle Data</h3>
+<p>All vehicle ObjectInfo references found:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>\Trackmania\Items\Vehicles\BayCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\CanyonCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\CoastCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\DesertCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\IslandCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\LagoonCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\RallyCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\SnowCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\StadiumCar.ObjectInfo.Gbx
+\Trackmania\Items\Vehicles\ValleyCar.ObjectInfo.Gbx</code></pre></div>
+<p>Plus ShootMania character references: <code>ArenaPlayer.Item.gbx</code>, <code>Minion.Item.gbx</code></p>
+<h3 id="complete-cplug-class-hierarchy-250-classes"><a class="anchor" href="#complete-cplug-class-hierarchy-250-classes">#</a>Complete CPlug Class Hierarchy (250+ classes)</h3>
+<p>This is the most comprehensive class listing found in any DLL. Key categories:</p>
+<p><strong>Visual/Rendering</strong> (40+ classes): <code>CPlugVisual</code>, <code>CPlugVisual2D</code>, <code>CPlugVisual3D</code>, <code>CPlugVisualIndexedTriangles</code>, <code>CPlugVisualGrid</code>, <code>CPlugVisualSprite</code>, <code>CPlugTree</code>, <code>CPlugTreeLight</code>, <code>CPlugTreeVisualMip</code>, <code>CPlugSolid</code>, <code>CPlugSolid2Model</code>, <code>CPlugLight</code>, <code>CPlugLightDyna</code>, <code>CPlugBitmap</code>, <code>CPlugBitmapArray</code>, <code>CPlugBitmapRender*</code> (13 variants)</p>
+<p><strong>Materials/Shaders</strong> (15+ classes): <code>CPlugMaterial</code>, <code>CPlugMaterialCustom</code>, <code>CPlugMaterialFx*</code>, <code>CPlugMaterialUserInst</code>, <code>CPlugShader</code>, <code>CPlugShaderApply</code>, <code>CPlugShaderGeneric</code>, <code>CPlugShaderPass</code></p>
+<p><strong>Animation</strong> (50+ classes): <code>CPlugAnimClip</code>, <code>CPlugAnimGraph</code>, <code>CPlugAnimRigNode_*</code> (25+ variants including <code>Blend</code>, <code>Blend2d</code>, <code>ClipPlay</code>, <code>JointIK2</code>, <code>JointInertia</code>, <code>StateMachine</code>, <code>LayeredBlend</code>)</p>
+<p><strong>Vehicle</strong> (17 classes): <code>CPlugVehicleCarPhyShape</code>, <code>CPlugVehicleGearBox</code>, <code>CPlugVehiclePhyModelCustom</code>, <code>CPlugVehicleWheelPhyModel</code>, <code>CPlugVehicleVisModel*</code>, camera models (Race, Race2, Race3, Internal, Helico, HMD)</p>
+<p><strong>Physics/Dynamics</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>NPlugDyna::SKinematicConstraint    -- Kinematic animation constraints
+NPlugDyna::SConstraintModel        -- Physics constraint definitions
+NPlugDyna::SForceFieldModel        -- Force field definitions
+NPlugDyna::SAnimFunc01/Nat         -- Animation functions for dynamics
+NPlugDynaObjectModel::SInstanceParams -- Dynamic object instances
+CPlugDynaModel, CPlugDynaObjectModel, CPlugDynaPointModel, CPlugDynaWaterModel</code></pre></div>
+<p><strong>Particles/VFX</strong> (15+ classes): <code>CPlugParticleEmitterModel</code>, <code>CPlugParticleGpuModel</code>, <code>CPlugFxSystem</code>, <code>CPlugFxLensFlareArray</code>, <code>CPlugFxLightning</code>, <code>CPlugVFXFile</code>, <code>CPlugVFXNode_*</code></p>
+<p><strong>Audio</strong> (12 classes): <code>CPlugSound</code>, <code>CPlugSoundEngine</code>, <code>CPlugSoundEngine2</code>, <code>CPlugSoundMood</code>, <code>CPlugSoundSurface</code>, <code>CPlugMusic</code>, <code>CPlugAudio*</code></p>
+<p><strong>Terrain/Environment</strong>: <code>CPlugClouds</code>, <code>CPlugFogMatter</code>, <code>CPlugFogVolume</code>, <code>CPlugWeather</code>, <code>CPlugWeatherModel</code>, <code>CPlugMoodSetting</code>, <code>CPlugMoodBlender</code>, <code>CPlugDayTime</code>, <code>CPlugGrassMatterArray</code>, <code>CPlugVegetTreeModel</code></p>
+<h3 id="shader-system-strings"><a class="anchor" href="#shader-system-strings">#</a>Shader System Strings</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>DiffuseIntensity, DoSpecular, SpecularRGB, DynaSpecular
+Normal, CameraNormal, WorldNormal, EyeNormal
+NormalRotate, NormalAreSigned, NoMipNormalize
+OpacityIsDiffuseAlpha
+Conv.Diffuse
+LightMapOnly
+EConvertMethod</code></pre></div>
+<p>These reveal a <strong>PBR-adjacent material system</strong> with diffuse, specular, normal mapping, and lightmap support.</p>
+<h3 id="texture-processing"><a class="anchor" href="#texture-processing">#</a>Texture Processing</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Can&#x27;t crop cubemap textures
+Cropping input texture from window (%ux%u)-(%ux%u)
+Clamping input texture to %ux%u
+Resampling input texture to %ux%u
+mipmapped_texture::write_dds  -- DDS output
+crn_comp_params               -- Crunch texture compression</code></pre></div>
+<h3 id="relevance-to-browser-recreation-10"><a class="anchor" href="#relevance-to-browser-recreation-10">#</a>Relevance to Browser Recreation</h3>
+<p><strong>HIGH</strong> -- The complete CPlug class hierarchy is essential for understanding what data structures the game uses. The vehicle physics classes, material system, and LOD pipeline are directly relevant.</p>
+<hr>
+<h2 id="12-dinput8dll-openplanet-hook-loader"><a class="anchor" href="#12-dinput8dll-openplanet-hook-loader">#</a>12. dinput8.dll - Openplanet Hook Loader</h2>
+<h3 id="file-metadata-11"><a class="anchor" href="#file-metadata-11">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">14,336 bytes (14 KB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) x86-64</td>
+</tr>
+<tr>
+  <td style="text-align:left">PDB Path</td>
+  <td style="text-align:left"><code>G:\Games\Trackmania\dinput8.pdb</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Export</td>
+  <td style="text-align:left"><code>DirectInput8Create</code> (single function)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="complete-hook-sequence"><a class="anchor" href="#complete-hook-sequence">#</a>Complete Hook Sequence</h3>
+<ol>
+  <li>Check <code>UPLAY_ARGUMENTS</code> environment variable</li>
+  <li>Check if Pause key held (bypass: <code>Pause key held - not loading Openplanet.</code>)</li>
+  <li>Find <code>Openplanet\Lib</code> subdirectory</li>
+  <li>Modify <code>PATH</code> to include Openplanet libraries</li>
+  <li>Load <code>Openplanet.dll</code> via <code>LoadLibraryA</code></li>
+  <li>Call <code>DinputInit</code> function in Openplanet.dll</li>
+  <li>Load original <code>\dinput8.dll</code> from system directory</li>
+  <li>Forward <code>DirectInput8Create</code> calls to real DLL</li>
+</ol>
+<h3 id="dependencies"><a class="anchor" href="#dependencies">#</a>Dependencies</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>KERNEL32.dll    -- GetEnvironmentVariableA, LoadLibraryA, GetProcAddress, etc.
+USER32.dll      -- GetAsyncKeyState (Pause key check)
+VCRUNTIME140.dll
+api-ms-win-crt-string-l1-1-0.dll
+api-ms-win-crt-stdio-l1-1-0.dll
+api-ms-win-crt-time-l1-1-0.dll
+api-ms-win-crt-runtime-l1-1-0.dll</code></pre></div>
+<h3 id="relevance-to-browser-recreation-11"><a class="anchor" href="#relevance-to-browser-recreation-11">#</a>Relevance to Browser Recreation</h3>
+<p><strong>NONE</strong> -- Mod framework hook mechanism.</p>
+<hr>
+<h2 id="13-d3dcompiler_47dll-d3d-shader-compiler"><a class="anchor" href="#13-d3dcompiler_47dll-d3d-shader-compiler">#</a>13. d3dcompiler_47.dll - D3D Shader Compiler</h2>
+<h3 id="file-metadata-12"><a class="anchor" href="#file-metadata-12">#</a>File Metadata</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Size</td>
+  <td style="text-align:left">4,346,120 bytes (4.15 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Type</td>
+  <td style="text-align:left">PE32+ executable (DLL) x86-64</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="shader-model-support"><a class="anchor" href="#shader-model-support">#</a>Shader Model Support</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vs_2_x, vs_2_sw, vs_3_sw       -- Vertex shader 2.x/3.0
+ps_2_x, ps_2_sw, ps_3_sw       -- Pixel shader 2.x/3.0
+vs_4_0, vs_4_0_level_9_1       -- Vertex shader 4.0 (+ DX9 compat)
+vs_4_0_level_9_3, vs_4_1       -- Vertex shader 4.x
+ps/vs/gs/hs/ds/cs_%d_%d        -- All SM4+ stages
+cs_5_0                          -- Compute shader 5.0</code></pre></div>
+<h3 id="hlsl-types-present"><a class="anchor" href="#hlsl-types-present">#</a>HLSL Types Present</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Texture2D, Texture2DMS, Texture2DArray, Texture2DMSArray
+SamplerState
+cbuffer
+StructuredBuffer (enableRawAndStructuredBuffers)</code></pre></div>
+<h3 id="key-features"><a class="anchor" href="#key-features">#</a>Key Features</h3>
+<ul>
+  <li>All six shader stages: Vertex, Pixel, Geometry, Hull, Domain, Compute</li>
+  <li>Shader Model 5.0 support (D3D11)</li>
+  <li>D3D11.1 extensions: <code>enable11_1ShaderExtensions</code></li>
+  <li>UAVs at every shader stage</li>
+  <li>SV_RenderTargetArrayIndex from any stage</li>
+  <li>D3D11 Linker for shader linking</li>
+</ul>
+<h3 id="relevance-to-browser-recreation-12"><a class="anchor" href="#relevance-to-browser-recreation-12">#</a>Relevance to Browser Recreation</h3>
+<p><strong>HIGH</strong> -- Confirms SM5/D3D11.1 as the shader target. WebGPU's WGSL must replicate equivalent functionality.</p>
+<hr>
+<h2 id="14-dll-dependency-map"><a class="anchor" href="#14-dll-dependency-map">#</a>14. DLL Dependency Map</h2>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Trackmania.exe (not present in CrossOver install)
+  |
+  +-- d3dcompiler_47.dll          [Microsoft D3D Shader Compiler]
+  +-- OpenAL64_bundled.dll        [OpenAL Soft 1.23.99 - 3D Audio]
+  +-- vorbis64.dll                [Xiph libVorbis 1.3.5 - Audio Codec]
+  +-- libwebp64.dll               [Google WebP - Texture Codec]
+  +-- vivoxsdk.dll                [Vivox SDK 5.19.2 - Voice Chat]
+  +-- VoiceChat.dll               [Nadeo/Harbour - Voice Wrapper]
+  |     +-- vivoxsdk.dll          (runtime dependency)
+  +-- upc_r2_loader64.dll         [Ubisoft Connect Platform]
+  |     +-- KERNEL32.dll          (LoadLibraryW for UPC runtime)
+  +-- anzu.dll                    [Anzu 5.41 - In-Game Ads]
+  |
+  +-- dinput8.dll                 [Openplanet Hook Proxy]
+        +-- Openplanet.dll        [Openplanet 1.29.1 - Mod Framework]
+              +-- (hooks into Trackmania.exe at runtime)
+
+NadeoImporter.exe                 [Asset Pipeline Tool]
+  +-- libfbxsdk.dll               [Autodesk FBX SDK ~2018]
+  +-- OpenSSL (static)            [Crypto for GBX signing]
+
+ntdll_o.dll                       [Wine NTDLL backup - not loaded]</code></pre></div>
+<h3 id="runtime-dll-loading-evidence"><a class="anchor" href="#runtime-dll-loading-evidence">#</a>Runtime DLL Loading Evidence</h3>
+<p>From dinput8.dll strings:</p>
+<ul>
+  <li><code>LoadLibraryA</code> -- Used to load Openplanet.dll</li>
+  <li><code>GetProcAddress</code> -- Used to find DinputInit, DirectInput8Create</li>
+  <li><code>GetModuleFileNameA/W</code> -- Process identification</li>
+</ul>
+<p>From upc_r2_loader64.dll:</p>
+<ul>
+  <li><code>LoadLibraryW</code>, <code>LoadLibraryExW</code> -- Loads full UPC runtime</li>
+  <li><code>GetModuleHandleW</code>, <code>GetModuleHandleExW</code> -- Module detection</li>
+  <li><code>GetProcAddress</code> -- Function resolution</li>
+</ul>
+<hr>
+<h2 id="15-third-party-sdk-version-catalog"><a class="anchor" href="#15-third-party-sdk-version-catalog">#</a>15. Third-Party SDK Version Catalog</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">SDK</th>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Vendor</th>
+  <th style="text-align:left">Purpose</th>
+  <th style="text-align:left">Confirmed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Vivox SDK</td>
+  <td style="text-align:left">5.19.2.33478</td>
+  <td style="text-align:left">Vivox (Unity)</td>
+  <td style="text-align:left">Voice chat</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Harbour SDK</td>
+  <td style="text-align:left">Unknown</td>
+  <td style="text-align:left">Ubisoft/Nadeo</td>
+  <td style="text-align:left">Service framework</td>
+  <td style="text-align:left">YES (strings)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Anzu SDK</td>
+  <td style="text-align:left">5.41</td>
+  <td style="text-align:left">Anzu.io</td>
+  <td style="text-align:left">In-game advertising</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+<tr>
+  <td style="text-align:left">OpenAL Soft</td>
+  <td style="text-align:left">1.23.99</td>
+  <td style="text-align:left">OpenAL Community</td>
+  <td style="text-align:left">3D spatial audio</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+<tr>
+  <td style="text-align:left">libVorbis</td>
+  <td style="text-align:left">1.3.5 (2015-01-05)</td>
+  <td style="text-align:left">Xiph.Org</td>
+  <td style="text-align:left">Audio codec</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+<tr>
+  <td style="text-align:left">libWebP</td>
+  <td style="text-align:left">Unknown exact</td>
+  <td style="text-align:left">Google</td>
+  <td style="text-align:left">Image codec</td>
+  <td style="text-align:left">YES (exports)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Autodesk FBX SDK</td>
+  <td style="text-align:left">~2018</td>
+  <td style="text-align:left">Autodesk</td>
+  <td style="text-align:left">3D model import</td>
+  <td style="text-align:left">YES (file date)</td>
+</tr>
+<tr>
+  <td style="text-align:left">D3D Compiler</td>
+  <td style="text-align:left">47</td>
+  <td style="text-align:left">Microsoft</td>
+  <td style="text-align:left">Shader compilation</td>
+  <td style="text-align:left">YES (filename)</td>
+</tr>
+<tr>
+  <td style="text-align:left">OpenSSL</td>
+  <td style="text-align:left">Unknown</td>
+  <td style="text-align:left">OpenSSL Project</td>
+  <td style="text-align:left">Crypto (static in NadeoImporter)</td>
+  <td style="text-align:left">YES (strings)</td>
+</tr>
+<tr>
+  <td style="text-align:left">aMSIP</td>
+  <td style="text-align:left">4.0.3</td>
+  <td style="text-align:left">Linphone/Vivox fork</td>
+  <td style="text-align:left">SIP stack (in Vivox)</td>
+  <td style="text-align:left">YES (path)</td>
+</tr>
+<tr>
+  <td style="text-align:left">oRTP</td>
+  <td style="text-align:left">Unknown</td>
+  <td style="text-align:left">Linphone</td>
+  <td style="text-align:left">RTP transport (in Vivox)</td>
+  <td style="text-align:left">YES (path)</td>
+</tr>
+<tr>
+  <td style="text-align:left">ixwebsocket</td>
+  <td style="text-align:left">Unknown</td>
+  <td style="text-align:left">IXWebSocket</td>
+  <td style="text-align:left">WebSocket (in Anzu)</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+<tr>
+  <td style="text-align:left">AngelScript</td>
+  <td style="text-align:left">Unknown</td>
+  <td style="text-align:left">angelcode.com</td>
+  <td style="text-align:left">Scripting (in Openplanet)</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+<tr>
+  <td style="text-align:left">dear imgui</td>
+  <td style="text-align:left">Unknown</td>
+  <td style="text-align:left">Omar Cornut</td>
+  <td style="text-align:left">UI overlay (in Openplanet)</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+<tr>
+  <td style="text-align:left">AsmJit</td>
+  <td style="text-align:left">2008-2025</td>
+  <td style="text-align:left">AsmJit Authors</td>
+  <td style="text-align:left">JIT assembly (in Openplanet)</td>
+  <td style="text-align:left">YES (copyright)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Crunch</td>
+  <td style="text-align:left">Unknown</td>
+  <td style="text-align:left">Rich Geldreich</td>
+  <td style="text-align:left">Texture compression (in NadeoImporter)</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+<tr>
+  <td style="text-align:left">zlib/unzip</td>
+  <td style="text-align:left">1.01</td>
+  <td style="text-align:left">Gilles Vollant</td>
+  <td style="text-align:left">ZIP decompression (in NadeoImporter)</td>
+  <td style="text-align:left">YES (string)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="16-cross-reference-with-existing-docs"><a class="anchor" href="#16-cross-reference-with-existing-docs">#</a>16. Cross-Reference with Existing Docs</h2>
+<h3 id="confirmations-of-09-game-files-analysismd"><a class="anchor" href="#confirmations-of-09-game-files-analysismd">#</a>Confirmations of 09-game-files-analysis.md</h3>
+<ul>
+  <li>Anzu SDK version 5.41: <strong>CONFIRMED</strong></li>
+  <li>dinput8.dll as Openplanet proxy: <strong>CONFIRMED</strong>, expanded with full hook sequence</li>
+  <li>libfbxsdk.dll as Autodesk FBX: <strong>CONFIRMED</strong>, expanded with complete class list</li>
+  <li>OpenAL for 3D audio: <strong>CONFIRMED</strong>, version now identified as 1.23.99</li>
+  <li>ntdll_o.dll as Wine backup: <strong>CONFIRMED</strong>, size comparison proves identity</li>
+</ul>
+<h3 id="new-findings-not-in-existing-docs"><a class="anchor" href="#new-findings-not-in-existing-docs">#</a>New Findings Not in Existing Docs</h3>
+<ol>
+  <li><strong>Vivox SDK version 5.19.2.33478</strong> -- Previously unversioned</li>
+  <li><strong>Vivox codec support</strong>: Opus (default), Siren14, Siren7 -- NEW</li>
+  <li><strong>Vivox protocol stack</strong>: SIP + XMPP + STRO + RTP/SRTP -- NEW</li>
+  <li><strong>Harbour SDK framework</strong> in VoiceChat.dll -- NEW</li>
+  <li><strong>Four voice backends</strong> compiled into Harbour: Vivox, Tencent GME, Discord, PlayFab Party -- NEW</li>
+  <li><strong>Vivox server URL</strong>: <code>https://hyxd.www.vivox.com/api2</code> -- NEW</li>
+  <li><strong>3D positional voice chat</strong> parameters (max_range, clamping_distance, rolloff) -- NEW</li>
+  <li><strong>Text-to-speech/Speech-to-text</strong> accessibility features in voice chat -- NEW</li>
+  <li><strong>Complete UPC API</strong> (103 functions) including cloud streaming support -- NEW</li>
+  <li><strong>Ubisoft+ cloud gaming</strong> APIs in UPC loader -- NEW</li>
+  <li><strong>OpenAL Soft 1.23.99</strong> with 37 AL + 14 ALC extensions -- NEW</li>
+  <li><strong>HRTF headphone spatialization</strong> support -- NEW</li>
+  <li><strong>Complete FBX format support</strong> (FBX, OBJ, DAE, 3DS, DXF) -- Previously partial</li>
+  <li><strong>250+ CPlug engine classes</strong> in NadeoImporter -- Previously ~50 known</li>
+  <li><strong>NPlugDyna::SKinematicConstraint</strong> confirmed in NadeoImporter -- NEW</li>
+  <li><strong>Vehicle physics classes</strong> confirmed: <code>CPlugVehicleCarPhyShape</code>, <code>CPlugVehicleGearBox</code>, <code>CPlugVehiclePhyModelCustom</code>, <code>CPlugVehicleWheelPhyModel</code> -- NEW details</li>
+  <li><strong>Shader system material properties</strong>: DiffuseIntensity, DoSpecular, NormalRotate, OpacityIsDiffuseAlpha, LightMapOnly -- NEW</li>
+  <li><strong>LOD pipeline</strong>: Reduction40, Remesh, ReductionRetextured, Impostor -- NEW</li>
+  <li><strong>Crunch texture compression</strong> in NadeoImporter -- NEW</li>
+  <li><strong>Anzu SDK contains Theora video decoder</strong> for animated ads -- NEW</li>
+  <li><strong>Anzu SDK uses MQTT + WebSocket</strong> for real-time ad delivery -- NEW</li>
+  <li><strong>Openplanet hooks</strong>: MainUpdate, SetAuthToken, WndProc, SwapChain -- NEW details</li>
+  <li><strong>Openplanet uses AsmJit</strong> for runtime code generation -- NEW</li>
+  <li><strong>All 10 vehicle ObjectInfo paths</strong> from NadeoImporter -- NEW</li>
+  <li><strong>VoiceChat ABI versioning system</strong> with platform/compiler/feature flags -- NEW</li>
+</ol>
+<h3 id="corrections-to-existing-docs"><a class="anchor" href="#corrections-to-existing-docs">#</a>Corrections to Existing Docs</h3>
+<ul>
+  <li>09-game-files-analysis.md stated OpenAL version was unknown -- it is <strong>1.23.99</strong></li>
+  <li>vorbis64.dll was listed without version -- it is <strong>libVorbis 1.3.5 (2015-01-05)</strong></li>
+  <li>The Harbour SDK framework was completely undocumented</li>
+</ul>
+<hr>
+<h2 id="summary-architecture-insights-for-browser-recreation"><a class="anchor" href="#summary-architecture-insights-for-browser-recreation">#</a>Summary: Architecture Insights for Browser Recreation</h2>
+<h3 id="audio-pipeline"><a class="anchor" href="#audio-pipeline">#</a>Audio Pipeline</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Game Audio Sources
+  |
+  +-- OpenAL Soft 1.23.99 (3D spatial, HRTF, EFX effects)
+  |     +-- WASAPI backend
+  |     +-- Ambisonic support
+  |
+  +-- vorbis64.dll (Ogg Vorbis 1.3.5 decode/encode)
+  |
+  +-- Voice Chat: VoiceChat.dll -&gt; vivoxsdk.dll
+        +-- Opus codec @ 16-40 kbit/s
+        +-- SIP signaling, RTP/SRTP media
+        +-- 3D positional audio</code></pre></div>
+<p><strong>Browser equivalent</strong>: Web Audio API with AudioContext, PannerNode (HRTF mode), ConvolverNode (reverb), native Ogg Vorbis decoding.</p>
+<h3 id="rendering-pipeline"><a class="anchor" href="#rendering-pipeline">#</a>Rendering Pipeline</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>D3D11.1 Device
+  +-- d3dcompiler_47.dll (SM5 runtime compilation)
+  +-- Shader stages: VS, PS, GS, HS, DS, CS
+  +-- Material system: Diffuse, Specular, Normal, LightMap
+  +-- Texture formats: DDS, WebP (libwebp64), PNG
+  +-- LOD: Reduction40, Remesh, Impostor</code></pre></div>
+<p><strong>Browser equivalent</strong>: WebGPU with WGSL shaders, or WebGL2 with GLSL ES 3.0.</p>
+<h3 id="networkservices"><a class="anchor" href="#networkservices">#</a>Network/Services</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Ubisoft Connect (upc_r2_loader64.dll)
+  +-- Auth tickets
+  +-- Cloud storage
+  +-- Friends/social
+  +-- Achievement system
+  +-- Cloud streaming support
+
+Vivox Voice (vivoxsdk.dll)
+  +-- SIP/XMPP signaling
+  +-- RTP/SRTP media
+  +-- STUN NAT traversal</code></pre></div>
+<h3 id="asset-pipeline-offline"><a class="anchor" href="#asset-pipeline-offline">#</a>Asset Pipeline (Offline)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>NadeoImporter.exe
+  +-- FBX/OBJ/DAE/3DS/DXF -&gt; GBX
+  +-- Texture processing (DDS, Crunch compression)
+  +-- LOD generation
+  +-- OpenSSL signing
+  +-- 250+ CPlug class types</code></pre></div>
+
+                        <nav class="prev-next"><a class="prev" href="real-files.html">&larr; Real File Analysis</a><a class="next" href="map-structure.html">Map Structure Encyclopedia &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-vivoxsdkdll-vivox-voice-chat-sdk">1. vivoxsdk.dll - Vivox Voice Chat SDK</a></li>
+  <li class="toc-h3"><a href="#file-metadata">File Metadata</a></li>
+  <li class="toc-h3"><a href="#version-information">Version Information</a></li>
+  <li class="toc-h3"><a href="#protocols-and-networking">Protocols and Networking</a></li>
+  <li class="toc-h3"><a href="#audio-codecs-new-finding">Audio Codecs (NEW FINDING)</a></li>
+  <li class="toc-h3"><a href="#audio-processing">Audio Processing</a></li>
+  <li class="toc-h3"><a href="#key-api-functions-exported">Key API Functions (Exported)</a></li>
+  <li class="toc-h3"><a href="#source-code-structure-from-build-paths">Source Code Structure (from build paths)</a></li>
+  <li class="toc-h3"><a href="#environment-variables">Environment Variables</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#2-voicechatdll-nadeo-voice-wrapper-harbour-sdk">2. VoiceChat.dll - Nadeo Voice Wrapper (Harbour SDK)</a></li>
+  <li class="toc-h3"><a href="#file-metadata-1">File Metadata</a></li>
+  <li class="toc-h3"><a href="#new-finding-harbour-sdk-framework">NEW FINDING: Harbour SDK Framework</a></li>
+  <li class="toc-h3"><a href="#vivox-configuration-parameters">Vivox Configuration Parameters</a></li>
+  <li class="toc-h3"><a href="#vivox-server">Vivox Server</a></li>
+  <li class="toc-h3"><a href="#codec-selection-new-finding">Codec Selection (NEW FINDING)</a></li>
+  <li class="toc-h3"><a href="#3d-positional-audio">3D Positional Audio</a></li>
+  <li class="toc-h3"><a href="#text-to-speech-speech-to-text-accessibility">Text-to-Speech / Speech-to-Text (Accessibility)</a></li>
+  <li class="toc-h3"><a href="#abi-compatibility-system">ABI Compatibility System</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-1">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#3-upc_r2_loader64dll-ubisoft-connect-platform">3. upc_r2_loader64.dll - Ubisoft Connect Platform</a></li>
+  <li class="toc-h3"><a href="#file-metadata-2">File Metadata</a></li>
+  <li class="toc-h3"><a href="#complete-exported-upc-api-103-functions">Complete Exported UPC API (103 functions)</a></li>
+  <li class="toc-h3"><a href="#dll-dependencies">DLL Dependencies</a></li>
+  <li class="toc-h3"><a href="#key-findings">Key Findings</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-2">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#4-libfbxsdkdll-autodesk-fbx-sdk">4. libfbxsdk.dll - Autodesk FBX SDK</a></li>
+  <li class="toc-h3"><a href="#file-metadata-3">File Metadata</a></li>
+  <li class="toc-h3"><a href="#version-compatibility">Version Compatibility</a></li>
+  <li class="toc-h3"><a href="#supported-file-formats">Supported File Formats</a></li>
+  <li class="toc-h3"><a href="#complete-class-hierarchy-106-classes">Complete Class Hierarchy (106 classes)</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-3">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#5-anzudll-in-game-advertising-anzuio">5. anzu.dll - In-Game Advertising (Anzu.io)</a></li>
+  <li class="toc-h3"><a href="#file-metadata-4">File Metadata</a></li>
+  <li class="toc-h3"><a href="#new-findings-beyond-09-game-files-analysismd">NEW FINDINGS (beyond 09-game-files-analysis.md)</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-4">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#6-openal64_bundleddll-openal-soft-audio">6. OpenAL64_bundled.dll - OpenAL Soft Audio</a></li>
+  <li class="toc-h3"><a href="#file-metadata-5">File Metadata</a></li>
+  <li class="toc-h3"><a href="#audio-extensions-complete-list">Audio Extensions (Complete List)</a></li>
+  <li class="toc-h3"><a href="#audio-backend">Audio Backend</a></li>
+  <li class="toc-h3"><a href="#hrtf-head-related-transfer-function">HRTF (Head-Related Transfer Function)</a></li>
+  <li class="toc-h3"><a href="#effects-framework-efx">Effects Framework (EFX)</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-5">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#7-libwebp64dll-webp-image-codec">7. libwebp64.dll - WebP Image Codec</a></li>
+  <li class="toc-h3"><a href="#file-metadata-6">File Metadata</a></li>
+  <li class="toc-h3"><a href="#exported-functions-complete-75-functions">Exported Functions (Complete - 75 functions)</a></li>
+  <li class="toc-h3"><a href="#features">Features</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-6">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#8-vorbis64dll-ogg-vorbis-audio">8. vorbis64.dll - Ogg Vorbis Audio</a></li>
+  <li class="toc-h3"><a href="#file-metadata-7">File Metadata</a></li>
+  <li class="toc-h3"><a href="#exported-functions-40-functions">Exported Functions (40 functions)</a></li>
+  <li class="toc-h3"><a href="#key-finding">Key Finding</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-7">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#9-ntdll_odll-wine-ntdll-backup">9. ntdll_o.dll - Wine NTDLL Backup</a></li>
+  <li class="toc-h3"><a href="#file-metadata-8">File Metadata</a></li>
+  <li class="toc-h3"><a href="#size-comparison">Size Comparison</a></li>
+  <li class="toc-h3"><a href="#nt-api-surface">NT API Surface</a></li>
+  <li class="toc-h3"><a href="#wine-specific-strings">Wine-Specific Strings</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-8">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#10-openplanetdll-mod-framework">10. Openplanet.dll - Mod Framework</a></li>
+  <li class="toc-h3"><a href="#file-metadata-9">File Metadata</a></li>
+  <li class="toc-h3"><a href="#hooking-architecture">Hooking Architecture</a></li>
+  <li class="toc-h3"><a href="#angelscript-scripting-engine">AngelScript Scripting Engine</a></li>
+  <li class="toc-h3"><a href="#imgui-overlay">ImGui Overlay</a></li>
+  <li class="toc-h3"><a href="#game-engine-reflection">Game Engine Reflection</a></li>
+  <li class="toc-h3"><a href="#file-system-access">File System Access</a></li>
+  <li class="toc-h3"><a href="#plugin-system">Plugin System</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-9">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#11-nadeoimporterexe-asset-pipeline">11. NadeoImporter.exe - Asset Pipeline</a></li>
+  <li class="toc-h3"><a href="#file-metadata-10">File Metadata</a></li>
+  <li class="toc-h3"><a href="#embedded-openssl">Embedded OpenSSL</a></li>
+  <li class="toc-h3"><a href="#gbx-file-types-producedconsumed">GBX File Types Produced/Consumed</a></li>
+  <li class="toc-h3"><a href="#vehicle-data">Vehicle Data</a></li>
+  <li class="toc-h3"><a href="#complete-cplug-class-hierarchy-250-classes">Complete CPlug Class Hierarchy (250+ classes)</a></li>
+  <li class="toc-h3"><a href="#shader-system-strings">Shader System Strings</a></li>
+  <li class="toc-h3"><a href="#texture-processing">Texture Processing</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-10">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#12-dinput8dll-openplanet-hook-loader">12. dinput8.dll - Openplanet Hook Loader</a></li>
+  <li class="toc-h3"><a href="#file-metadata-11">File Metadata</a></li>
+  <li class="toc-h3"><a href="#complete-hook-sequence">Complete Hook Sequence</a></li>
+  <li class="toc-h3"><a href="#dependencies">Dependencies</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-11">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#13-d3dcompiler_47dll-d3d-shader-compiler">13. d3dcompiler_47.dll - D3D Shader Compiler</a></li>
+  <li class="toc-h3"><a href="#file-metadata-12">File Metadata</a></li>
+  <li class="toc-h3"><a href="#shader-model-support">Shader Model Support</a></li>
+  <li class="toc-h3"><a href="#hlsl-types-present">HLSL Types Present</a></li>
+  <li class="toc-h3"><a href="#key-features">Key Features</a></li>
+  <li class="toc-h3"><a href="#relevance-to-browser-recreation-12">Relevance to Browser Recreation</a></li>
+<li class=""><a href="#14-dll-dependency-map">14. DLL Dependency Map</a></li>
+  <li class="toc-h3"><a href="#runtime-dll-loading-evidence">Runtime DLL Loading Evidence</a></li>
+<li class=""><a href="#15-third-party-sdk-version-catalog">15. Third-Party SDK Version Catalog</a></li>
+<li class=""><a href="#16-cross-reference-with-existing-docs">16. Cross-Reference with Existing Docs</a></li>
+  <li class="toc-h3"><a href="#confirmations-of-09-game-files-analysismd">Confirmations of 09-game-files-analysis.md</a></li>
+  <li class="toc-h3"><a href="#new-findings-not-in-existing-docs">New Findings Not in Existing Docs</a></li>
+  <li class="toc-h3"><a href="#corrections-to-existing-docs">Corrections to Existing Docs</a></li>
+<li class=""><a href="#summary-architecture-insights-for-browser-recreation">Summary: Architecture Insights for Browser Recreation</a></li>
+  <li class="toc-h3"><a href="#audio-pipeline">Audio Pipeline</a></li>
+  <li class="toc-h3"><a href="#rendering-pipeline">Rendering Pipeline</a></li>
+  <li class="toc-h3"><a href="#networkservices">Network/Services</a></li>
+  <li class="toc-h3"><a href="#asset-pipeline-offline">Asset Pipeline (Offline)</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

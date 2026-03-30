@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost &amp; Replay Format - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item active" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Ghost &amp; Replay Format</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="ghost-replay-format-reference"><a class="anchor" href="#ghost-replay-format-reference">#</a>Ghost & Replay Format Reference</h1>
+<p><strong>Date</strong>: 2026-03-27 <strong>Purpose</strong>: Comprehensive reference for Trackmania 2020 ghost and replay file formats, covering file structure, sample encoding, input recording, checkpoint data, validation, network format, and implementation guidance.</p>
+<p><strong>Sources</strong>: Ghidra decompilation (doc 22), community knowledge (doc 29, GBX.NET), Openplanet intelligence (doc 19), GBX format spec (doc 16), real file hex analysis (doc 26), class hierarchy, and hex dumps of actual <code>.Replay.Gbx</code> files from the game.</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-overview-ghost-vs-replay-vs-inputreplay">Overview: Ghost vs Replay vs InputReplay</a></li>
+  <li><a href="#2-class-hierarchy">Class Hierarchy</a></li>
+  <li><a href="#3-replay-file-structure-replaygbx">Replay File Structure (.Replay.Gbx)</a></li>
+  <li><a href="#4-replay-header-chunks">Replay Header Chunks</a></li>
+  <li><a href="#5-replay-body-structure">Replay Body Structure</a></li>
+  <li><a href="#6-cgamectnghost-format">CGameCtnGhost Format</a></li>
+  <li><a href="#7-ghost-sample-encoding-50ms-period">Ghost Sample Encoding (50ms Period)</a></li>
+  <li><a href="#8-input-recording-format-cinputreplay">Input Recording Format (CInputReplay)</a></li>
+  <li><a href="#9-entity-record-data-cplugentrecorddata">Entity Record Data (CPlugEntRecordData)</a></li>
+  <li><a href="#10-checkpoint-times--validation-data">Checkpoint Times & Validation Data</a></li>
+  <li><a href="#11-cgamectnghost-vs-cgamectnreplayrecord-differences">CGameCtnGhost vs CGameCtnReplayRecord Differences</a></li>
+  <li><a href="#12-ghost-playback--interpolation">Ghost Playback & Interpolation</a></li>
+  <li><a href="#13-network-ghost-format">Network Ghost Format</a></li>
+  <li><a href="#14-anti-cheat--replay-validation">Anti-Cheat & Replay Validation</a></li>
+  <li><a href="#15-real-file-hex-analysis">Real File Hex Analysis</a></li>
+  <li><a href="#16-browser-typescript-implementation-guide">Browser TypeScript Implementation Guide</a></li>
+  <li><a href="#17-known-unknowns">Known Unknowns</a></li>
+  <li><a href="#18-cross-references">Cross-References</a></li>
+</ol>
+<hr>
+<h2 id="1-overview-ghost-vs-replay-vs-inputreplay"><a class="anchor" href="#1-overview-ghost-vs-replay-vs-inputreplay">#</a>1. Overview: Ghost vs Replay vs InputReplay</h2>
+<p>Trackmania 2020 uses three distinct but related systems for recording and playing back race data:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Concept</th>
+  <th style="text-align:left">File Extension</th>
+  <th style="text-align:left">Class</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Ghost</strong></td>
+  <td style="text-align:left"><code>.Ghost.Gbx</code></td>
+  <td style="text-align:left"><code>CGameCtnGhost</code></td>
+  <td style="text-align:left">Visual replay: position/rotation/visual state sampled at 50ms intervals</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Replay</strong></td>
+  <td style="text-align:left"><code>.Replay.Gbx</code></td>
+  <td style="text-align:left"><code>CGameCtnReplayRecord</code></td>
+  <td style="text-align:left">Complete package: ghost(s) + embedded map + metadata</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Input Replay</strong></td>
+  <td style="text-align:left"><code>.InputsReplay.Gbx</code></td>
+  <td style="text-align:left"><code>CInputReplay</code></td>
+  <td style="text-align:left">Deterministic replay: raw input events at 100Hz tick rate</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Key distinction</strong>: Ghosts store sampled visual state (position, rotation, speed) for rendering. Input replays store raw inputs (steer, gas, brake) for deterministic re-simulation. A replay file bundles one or more ghosts plus the map itself, forming a self-contained package.</p>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> -- class names from binary RTTI, file extensions from string table, architecture from decompilation.</p>
+<h3 id="recording-pipeline"><a class="anchor" href="#recording-pipeline">#</a>Recording Pipeline</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>During gameplay:
+  1. CInputReplay captures raw input each simulation tick (100 Hz)
+  2. CPlugEntRecordData stores entity state samples (position, rotation, speed)
+  3. CGameCtnGhost / CGameGhostTMData wraps ghost-specific metadata
+  4. CGhostManager manages active ghost instances
+  5. CGameCtnReplayRecord bundles ghost(s) + map reference + times + metadata</code></pre></div>
+<hr>
+<h2 id="2-class-hierarchy"><a class="anchor" href="#2-class-hierarchy">#</a>2. Class Hierarchy</h2>
+<p><strong>Source</strong>: Binary RTTI extraction (class_hierarchy.json), Ghidra string analysis (doc 22) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="core-classes"><a class="anchor" href="#core-classes">#</a>Core Classes</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CMwNod
+  +-- CGameCtnGhost              -- Ghost data (sampled car state)
+  |     Class ID: 0x03092000 (from GBX.NET / community)
+  |     String address: 0x141c5e3c8
+  |
+  +-- CGameCtnReplayRecord       -- Complete replay record
+  |     Class ID: 0x03093000
+  |     String address: 0x141c49c50
+  |
+  +-- CGameCtnReplayRecordInfo   -- Replay metadata
+  |     String address: 0x141bf98b0
+  |
+  +-- CGameGhost                 -- Base ghost object
+  +-- CGameGhostTMData           -- TrackMania-specific ghost data
+  +-- CGameGhostMgrScript        -- Ghost manager script API
+  +-- CGameGhostScript           -- Ghost script interface
+  +-- CGhostManager              -- Ghost lifecycle manager
+  |     String address: 0x141bfb480
+  |
+  +-- CReplayInfo                -- Replay file info
+  +-- CGameReplayObjectVisData   -- Replay object visual data
+  |     String address: 0x141c6e7e8
+  |
+  +-- CPlugEntRecordData         -- Entity record data (raw ghost frames)
+  |     String address: 0x141bcb440
+  |
+  +-- CInputReplay               -- Input recording/playback
+  |     String address: 0x141b6dd98
+  |
+  +-- CPlugSimuDump              -- Simulation state dump
+  +-- CGameSaveLaunchedCheckpoints -- Checkpoint state saves during run</code></pre></div>
+<h3 id="ghost-member-variables-from-m_ghost-strings"><a class="anchor" href="#ghost-member-variables-from-m_ghost-strings">#</a>Ghost Member Variables (from <code>m_Ghost*</code> strings)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Member</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>m_GhostLogin</code></td>
+  <td style="text-align:left">Player login identifier</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>m_GhostTrigram</code></td>
+  <td style="text-align:left">3-letter country trigram</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>m_GhostCountryPath</code></td>
+  <td style="text-align:left">Full country/zone path</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>m_GhostNickname</code></td>
+  <td style="text-align:left">Display name</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>m_GhostNameLogoType</code></td>
+  <td style="text-align:left">Name logo type identifier</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>m_GhostAvatarName</code></td>
+  <td style="text-align:left">Avatar asset identifier</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ghost-api-functions-27-maniascript-exposed"><a class="anchor" href="#ghost-api-functions-27-maniascript-exposed">#</a>Ghost API Functions (27 ManiaScript-exposed)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Function</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Ghost_Add</code></td>
+  <td style="text-align:left">Add ghost to scene</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_AddWaypointSynced</code></td>
+  <td style="text-align:left">Add ghost synchronized to waypoints</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_AddPhysicalized</code></td>
+  <td style="text-align:left">Add ghost with physics interaction</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_Remove</code></td>
+  <td style="text-align:left">Remove specific ghost</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_RemoveAll</code></td>
+  <td style="text-align:left">Remove all ghosts</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_IsVisible</code></td>
+  <td style="text-align:left">Query ghost visibility</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_IsReplayOver</code></td>
+  <td style="text-align:left">Check if replay playback finished</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_SetDossard</code></td>
+  <td style="text-align:left">Set ghost's number bib</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_SetMarker</code></td>
+  <td style="text-align:left">Set ghost's UI marker</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_GetPosition</code></td>
+  <td style="text-align:left">Get ghost's 3D position</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_RetrieveFromPlayer</code></td>
+  <td style="text-align:left">Capture ghost from live player</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_RetrieveFromPlayer2</code></td>
+  <td style="text-align:left">Capture ghost (v2 API)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_GetLiveFromPlayer</code></td>
+  <td style="text-align:left">Get live ghost stream from player</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_GetTimeClosestToPlayer</code></td>
+  <td style="text-align:left">Find closest time comparison point</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_CopyToScoreBestRaceAndLap</code></td>
+  <td style="text-align:left">Transfer checkpoint/lap times to score</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_Upload</code></td>
+  <td style="text-align:left">Upload ghost to server</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_Download</code></td>
+  <td style="text-align:left">Download ghost from server</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_Release</code></td>
+  <td style="text-align:left">Release ghost resources</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> -- all 27 function names extracted from binary string table.</p>
+<hr>
+<h2 id="3-replay-file-structure-replaygbx"><a class="anchor" href="#3-replay-file-structure-replaygbx">#</a>3. Replay File Structure (.Replay.Gbx)</h2>
+<h3 id="file-layout"><a class="anchor" href="#file-layout">#</a>File Layout</h3>
+<p>Replay files follow the standard GBX format (version 6) with class ID <code class="addr">0x03093000</code> (CGameCtnReplayRecord).</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+=======================================+
+| GBX HEADER                            |
+|   Magic: &quot;GBX&quot; (3 bytes)             |
+|   Version: 6 (uint16)                |
+|   Format: &quot;BUCR&quot; (4 bytes)           |
+|   Class ID: 0x03093000               |
+|   User Data Size (uint32)            |
+|   3 Header Chunks                     |
++=======================================+
+| NODE COUNT (uint32)                   |
++=======================================+
+| REFERENCE TABLE                       |
+|   External refs (usually 0)          |
++=======================================+
+| BODY SECTION (compressed)             |
+|   Uncompressed Size (uint32)         |
+|   Compressed Size (uint32)           |
+|   LZO-compressed body chunks:        |
+|     Embedded map (.Map.Gbx)          |
+|     Ghost data (CGameCtnGhost)       |
+|     Input replay data                |
+|     Checkpoint times                 |
+|     Validation metadata              |
+|     0xFACADE01 end sentinel          |
++=======================================+</code></pre></div>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> -- real file analysis confirms class ID, format flags, header structure.</p>
+<h3 id="real-file-evidence"><a class="anchor" href="#real-file-evidence">#</a>Real File Evidence</h3>
+<p>From <code>ReallyRally_Kelvination_1-18-2026...Replay.Gbx</code> (4,388,346 bytes):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Bytes              Field                    Value
+------  -----              -----                    -----
+0x00    47 42 58           magic                    &quot;GBX&quot;
+0x03    06 00              version                  6
+0x05    42 55 43 52        format_flags             &quot;BUCR&quot;
+0x09    00 30 09 03        class_id                 0x03093000 (CGameCtnReplayRecord)
+0x0D    C1 02 00 00        user_data_size           705 bytes
+0x11    03 00 00 00        num_header_chunks        3</code></pre></div>
+<h3 id="embedded-map"><a class="anchor" href="#embedded-map">#</a>Embedded Map</h3>
+<p>The replay body contains a complete embedded <code>.Map.Gbx</code> file. At offset 0x2E4 in the ReallyRally replay, a nested GBX header appears:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>000002e0: ...  47 42 5806 00    Nested &quot;GBX&quot; magic + version 6
+000002f0: 4255 4352 0030 0403  &quot;BUCR&quot; + class 0x03043000 (CGameCtnChallenge)</code></pre></div>
+<p>This means every replay is self-contained -- it carries its own copy of the map, so the replay can be viewed without having the original map installed.</p>
+<hr>
+<h2 id="4-replay-header-chunks"><a class="anchor" href="#4-replay-header-chunks">#</a>4. Replay Header Chunks</h2>
+<p>Replay files have exactly 3 header chunks.</p>
+<h3 id="header-chunk-index"><a class="anchor" href="#header-chunk-index">#</a>Header Chunk Index</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Index</th>
+  <th style="text-align:left">Chunk ID</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Heavy?</th>
+  <th style="text-align:left">Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left"><code class="addr">0x03093000</code></td>
+  <td style="text-align:left">variable</td>
+  <td style="text-align:left">No</td>
+  <td style="text-align:left">Replay info (version, map UID, author)</td>
+</tr>
+<tr>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left"><code class="addr">0x03093001</code></td>
+  <td style="text-align:left">variable</td>
+  <td style="text-align:left">Yes</td>
+  <td style="text-align:left">XML metadata</td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left"><code class="addr">0x03093002</code></td>
+  <td style="text-align:left">82 bytes</td>
+  <td style="text-align:left">No</td>
+  <td style="text-align:left">Author info</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Verification</strong>: user_data_size = 4 + 3*8 + sum(chunk_sizes). For ReallyRally: 4 + 24 + (140 + 455 + 82) = 705 = 0x02C1. <strong>CONFIRMED</strong>.</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="chunk-0x03093000-replay-info"><a class="anchor" href="#chunk-0x03093000-replay-info">#</a>Chunk <code class="addr">0x03093000</code>: Replay Info</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Type      Field
+------  ----      -----
++0x00   uint32    version              (observed: 8)
++0x04   uint32    [UNKNOWN]            (observed: 3)
++0x08   uint32    [UNKNOWN]            (observed: 0)
++0x0C   uint32    lookback_version     (0x40000000 = version 3)
++0x10   string    map_uid              (length-prefixed, e.g., &quot;gEpyZSp892q6BVU3t98ycuUugKl&quot;)
+        string    map_author_login     (lookback string)</code></pre></div>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="chunk-0x03093001-xml-metadata-heavy"><a class="anchor" href="#chunk-0x03093001-xml-metadata-heavy">#</a>Chunk <code class="addr">0x03093001</code>: XML Metadata (Heavy)</h3></summary>
+<div class="collapsible-content">
+<p>Contains human-readable XML with full replay metadata:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;header type=&quot;replay&quot; exever=&quot;3.3.0&quot; exebuild=&quot;2025-07-04_14_15&quot; title=&quot;TMStadium&quot;&gt;
+  &lt;map uid=&quot;gEpyZSp892q6BVU3t98ycuUugKl&quot; name=&quot;ReallyRally&quot;
+       author=&quot;XChwDu8FRmWH-gHqXUbBtg&quot; authorzone=&quot;World|Africa|South Africa&quot;/&gt;
+  &lt;desc envir=&quot;Stadium&quot; mood=&quot;Day (no stadium)&quot; maptype=&quot;TrackMania\TM_Race&quot;
+        mapstyle=&quot;&quot; displaycost=&quot;5672&quot; mod=&quot;&quot;/&gt;
+  &lt;playermodel id=&quot;CarRally&quot;/&gt;
+  &lt;times best=&quot;38401&quot; respawns=&quot;0&quot; stuntscore=&quot;0&quot; validable=&quot;1&quot;/&gt;
+  &lt;checkpoints cur=&quot;8&quot;/&gt;
+&lt;/header&gt;</code></pre></div>
+<p><strong>Key fields</strong>:</p>
+<ul>
+  <li><code>best</code>: Race time in milliseconds (38401 = 38.401s)</li>
+  <li><code>respawns</code>: Number of respawns during run</li>
+  <li><code>validable</code>: 1 if the run is valid for leaderboards</li>
+  <li><code>checkpoints cur</code>: Number of checkpoint times recorded</li>
+  <li><code>playermodel id</code>: Vehicle type used ("CarSport", "CarRally", "CarSnow", "CarDesert")</li>
+</ul>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h3 id="chunk-0x03093002-author-info"><a class="anchor" href="#chunk-0x03093002-author-info">#</a>Chunk <code class="addr">0x03093002</code>: Author Info</h3></summary>
+<div class="collapsible-content">
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Type      Field
+------  ----      -----
++0x00   uint32    version              (observed: 1)
++0x04   string    author_login         (&quot;XChwDu8FRmWH-gHqXUbBtg&quot;)
++0x??   string    author_nickname      (&quot;Kelvination&quot;)
++0x??   string    author_zone          (&quot;World|Africa|South Africa&quot;)</code></pre></div>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> from real file hex dumps. All autosave and manual save replays share this exact structure.</p>
+<hr>
+</div>
+</details>
+<h2 id="5-replay-body-structure"><a class="anchor" href="#5-replay-body-structure">#</a>5. Replay Body Structure</h2>
+<p>The replay body is LZO-compressed (format flag byte 2 = 'C'). After decompression, it contains a stream of body chunks belonging to the <code>CGameCtnReplayRecord</code> class (chunk IDs 0x0309300X).</p>
+<h3 id="known-body-chunks-from-gbxnet-community"><a class="anchor" href="#known-body-chunks-from-gbxnet-community">#</a>Known Body Chunks (from GBX.NET / Community)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Chunk ID</th>
+  <th style="text-align:left">Content</th>
+  <th style="text-align:left">Skippable?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093002</code></td>
+  <td style="text-align:left">Map embedded data / map reference</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093003</code></td>
+  <td style="text-align:left">Ghost data (embedded CGameCtnGhost)</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093004</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093005</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093007</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093008</code></td>
+  <td style="text-align:left">Title UID ("TMStadium")</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093014</code></td>
+  <td style="text-align:left">Ghost(s) array</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03093015</code></td>
+  <td style="text-align:left">Clip / MediaTracker data</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0309301C</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Note</strong>: Chunk ID assignment is derived from GBX.NET source code analysis. The exact semantics of each chunk require decompilation of the chunk dispatch handlers, which has not been completed. The body is compressed, making direct hex analysis of chunk boundaries difficult without decompression.</p>
+<h3 id="body-content-summary"><a class="anchor" href="#body-content-summary">#</a>Body Content Summary</h3>
+<p>The replay body contains:</p>
+<ol>
+  <li><strong>Embedded map</strong> -- A complete <code>.Map.Gbx</code> (visible as nested "GBX" magic in hex)</li>
+  <li><strong>One or more ghosts</strong> -- <code>CGameCtnGhost</code> instances with sampled data</li>
+  <li><strong>Checkpoint times</strong> -- Array of millisecond timestamps</li>
+  <li><strong>Validation data</strong> -- Race validity flags</li>
+  <li><strong>Title/environment info</strong> -- e.g., "TMStadium"</li>
+  <li><strong>Extras</strong> -- Plugin metadata (e.g., "Openplanet 1.28.0"), game version strings</li>
+</ol>
+<h3 id="evidence-from-file-tail"><a class="anchor" href="#evidence-from-file-tail">#</a>Evidence from File Tail</h3>
+<p>The end of the ReallyRally replay (at offset ~0x42F500) contains:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>&quot;ebc2b176b45 GameVersion=3.3.0&quot;
+&quot;Openplanet 1.28.0 (next, Public, ...8-16)&quot;
+&quot;TMStadium&quot;
+&quot;Kelvination&quot;
+&quot;_RaceValid&quot;
+&quot;_Local&quot;</code></pre></div>
+<p>These strings confirm that replays embed game version, plugin info, environment, player name, and validation status directly in the body.</p>
+<hr>
+<h2 id="6-cgamectnghost-format"><a class="anchor" href="#6-cgamectnghost-format">#</a>6. CGameCtnGhost Format</h2>
+<h3 id="class-id"><a class="anchor" href="#class-id">#</a>Class ID</h3>
+<p><strong>Community (GBX.NET)</strong>: <code class="addr">0x03092000</code> <strong>Binary evidence</strong>: String at <code class="addr">0x141c5e3c8</code> <strong>Confidence</strong>: HIGH (from GBX.NET, which successfully parses these files)</p>
+<h3 id="ghost-chunk-ids-from-gbxnet"><a class="anchor" href="#ghost-chunk-ids-from-gbxnet">#</a>Ghost Chunk IDs (from GBX.NET)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Chunk ID</th>
+  <th style="text-align:left">Content</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092000</code></td>
+  <td style="text-align:left">Race time + ghost data</td>
+  <td style="text-align:left">Core ghost data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092002</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - appears in older versions]</span></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092005</code></td>
+  <td style="text-align:left">Race time (uint32, milliseconds)</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092006</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092008</code></td>
+  <td style="text-align:left">Ghost login</td>
+  <td style="text-align:left">Player identifier</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0309200A</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0309200B</code></td>
+  <td style="text-align:left">Light trail color / car skin</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0309200C</code></td>
+  <td style="text-align:left">Checkpoint times array</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0309200E</code></td>
+  <td style="text-align:left">UID + player data</td>
+  <td style="text-align:left">Ghost metadata</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0309200F</code></td>
+  <td style="text-align:left">Ghost nickname / display name</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092010</code></td>
+  <td style="text-align:left">Ghost avatar</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092012</code></td>
+  <td style="text-align:left">Record data (CPlugEntRecordData)</td>
+  <td style="text-align:left">The actual sampled frames</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092013</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092015</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - newer version]</span></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092017</code></td>
+  <td style="text-align:left">Player model (vehicle type)</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092018</code></td>
+  <td style="text-align:left">Player inputs (event-based)</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x03092019</code></td>
+  <td style="text-align:left">Validation data</td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x0309201C</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left"></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> -- chunk IDs from GBX.NET source analysis. Not verified against Ghidra decompilation of chunk dispatch.</p>
+<h3 id="ghost-data-composition"><a class="anchor" href="#ghost-data-composition">#</a>Ghost Data Composition</h3>
+<p>A ghost contains:</p>
+<ol>
+  <li><strong>Metadata</strong>: Player login, nickname, avatar, country zone</li>
+  <li><strong>Race result</strong>: Total time (ms), checkpoint times, validation status</li>
+  <li><strong>Sampled visual data</strong>: Position/rotation/speed at 50ms intervals (via <code>CPlugEntRecordData</code>)</li>
+  <li><strong>Input events</strong>: Discrete input changes (steer/gas/brake state transitions)</li>
+  <li><strong>Vehicle model</strong>: Which car was used (CarSport, CarRally, CarSnow, CarDesert)</li>
+</ol>
+<hr>
+<h2 id="7-ghost-sample-encoding-50ms-period"><a class="anchor" href="#7-ghost-sample-encoding-50ms-period">#</a>7. Ghost Sample Encoding (50ms Period)</h2>
+<p><strong>Source</strong>: Community knowledge (doc 29, section 6.2), GBX.NET source <strong>Confidence</strong>: HIGH -- community tools successfully parse ghosts using this encoding</p>
+<h3 id="sample-period"><a class="anchor" href="#sample-period">#</a>Sample Period</h3>
+<p>Ghost samples are recorded at <strong>50ms intervals</strong> (20 samples per second). This is much lower than the physics tick rate of 100Hz (10ms), reflecting that ghosts are for visual playback, not deterministic re-simulation.</p>
+<h3 id="per-sample-fields"><a class="anchor" href="#per-sample-fields">#</a>Per-Sample Fields</h3>
+<p>Each ghost sample encodes the following state:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Encoding</th>
+  <th style="text-align:left">Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Position X</td>
+  <td style="text-align:left">float32</td>
+  <td style="text-align:left">4 bytes</td>
+  <td style="text-align:left">IEEE 754</td>
+  <td style="text-align:left">World coordinates (meters)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Position Y</td>
+  <td style="text-align:left">float32</td>
+  <td style="text-align:left">4 bytes</td>
+  <td style="text-align:left">IEEE 754</td>
+  <td style="text-align:left">World coordinates (meters)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Position Z</td>
+  <td style="text-align:left">float32</td>
+  <td style="text-align:left">4 bytes</td>
+  <td style="text-align:left">IEEE 754</td>
+  <td style="text-align:left">World coordinates (meters)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Angle</td>
+  <td style="text-align:left">uint16</td>
+  <td style="text-align:left">2 bytes</td>
+  <td style="text-align:left">Linear: <code>value / 0xFFFF * pi</code></td>
+  <td style="text-align:left">0 to pi</td>
+</tr>
+<tr>
+  <td style="text-align:left">Axis Heading</td>
+  <td style="text-align:left">int16</td>
+  <td style="text-align:left">2 bytes</td>
+  <td style="text-align:left">Linear: <code>value / 0x7FFF * pi</code></td>
+  <td style="text-align:left">-pi to pi</td>
+</tr>
+<tr>
+  <td style="text-align:left">Axis Pitch</td>
+  <td style="text-align:left">int16</td>
+  <td style="text-align:left">2 bytes</td>
+  <td style="text-align:left">Linear: <code>value / 0x7FFF * (pi/2)</code></td>
+  <td style="text-align:left">-pi/2 to pi/2</td>
+</tr>
+<tr>
+  <td style="text-align:left">Speed</td>
+  <td style="text-align:left">int16</td>
+  <td style="text-align:left">2 bytes</td>
+  <td style="text-align:left">Exponential: <code>exp(value / 1000)</code></td>
+  <td style="text-align:left">Special: 0x8000 = speed 0</td>
+</tr>
+<tr>
+  <td style="text-align:left">Velocity Heading</td>
+  <td style="text-align:left">int8</td>
+  <td style="text-align:left">1 byte</td>
+  <td style="text-align:left">Linear: <code>value / 0x7F * pi</code></td>
+  <td style="text-align:left">-pi to pi</td>
+</tr>
+<tr>
+  <td style="text-align:left">Velocity Pitch</td>
+  <td style="text-align:left">int8</td>
+  <td style="text-align:left">1 byte</td>
+  <td style="text-align:left">Linear: <code>value / 0x7F * (pi/2)</code></td>
+  <td style="text-align:left">-pi/2 to pi/2</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="sample-size"><a class="anchor" href="#sample-size">#</a>Sample Size</h3>
+<p>Per sample: 3 * 4 (position) + 2 (angle) + 2 (heading) + 2 (pitch) + 2 (speed) + 1 (vel heading) + 1 (vel pitch) = <strong>22 bytes</strong> uncompressed per sample.</p>
+<h3 id="compression"><a class="anchor" href="#compression">#</a>Compression</h3>
+<p>Ghost sample data is <strong>zlib-compressed</strong> (deflate), not LZO like the outer GBX body. This means there are two compression layers:</p>
+<ol>
+  <li><strong>Outer</strong>: GBX body compression (LZO)</li>
+  <li><strong>Inner</strong>: Ghost sample data compression (zlib deflate)</li>
+</ol>
+<h3 id="encoding-details"><a class="anchor" href="#encoding-details">#</a>Encoding Details</h3>
+<p><strong>Rotation representation</strong>: The rotation uses an axis-angle representation rather than quaternion or Euler angles. The angle field gives the rotation magnitude, while heading and pitch define the rotation axis direction in spherical coordinates.</p>
+<p><strong>Speed encoding</strong>: The exponential encoding <code>exp(value/1000)</code> allows compact representation of both slow and fast speeds. When <code>value == 0x8000</code> (-32768 as signed), the speed is defined as exactly 0. The exponential curve means small integer differences at low speeds map to small velocity differences, while the same integer step at high speeds maps to larger velocity differences -- matching the perceptual importance.</p>
+<p><strong>Integer precision</strong>:</p>
+<ul>
+  <li>int16 heading/pitch: ~0.0001 radian precision (~0.006 degrees) -- sufficient for smooth visual playback</li>
+  <li>int8 velocity heading/pitch: ~0.025 radian precision (~1.4 degrees) -- coarser, since velocity direction is less visually critical</li>
+  <li>uint16 angle: ~0.00005 radian precision (~0.003 degrees)</li>
+</ul>
+<h3 id="decoding-pseudocode"><a class="anchor" href="#decoding-pseudocode">#</a>Decoding Pseudocode</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">function decodeSample(reader: BinaryReader): GhostSample {
+  const posX = reader.readFloat32();
+  const posY = reader.readFloat32();
+  const posZ = reader.readFloat32();
+
+  const angleRaw = reader.readUint16();
+  const headingRaw = reader.readInt16();
+  const pitchRaw = reader.readInt16();
+  const speedRaw = reader.readInt16();
+  const velHeadingRaw = reader.readInt8();
+  const velPitchRaw = reader.readInt8();
+
+  return {
+    position: { x: posX, y: posY, z: posZ },
+    angle: (angleRaw / 0xFFFF) * Math.PI,
+    axisHeading: (headingRaw / 0x7FFF) * Math.PI,
+    axisPitch: (pitchRaw / 0x7FFF) * (Math.PI / 2),
+    speed: speedRaw === -0x8000 ? 0 : Math.exp(speedRaw / 1000),
+    velocityHeading: (velHeadingRaw / 0x7F) * Math.PI,
+    velocityPitch: (velPitchRaw / 0x7F) * (Math.PI / 2),
+  };
+}</code></pre></div>
+<h3 id="for-a-38-second-replay"><a class="anchor" href="#for-a-38-second-replay">#</a>For a 38-Second Replay</h3>
+<p>At 50ms per sample: <code>38000 / 50 = 760 samples</code>. At 22 bytes each: <code>760 * 22 = 16,720 bytes</code> uncompressed. After zlib compression, this would typically reduce to ~5-10 KB, which is consistent with observed ghost data sizes within replay files.</p>
+<hr>
+<h2 id="8-input-recording-format-cinputreplay"><a class="anchor" href="#8-input-recording-format-cinputreplay">#</a>8. Input Recording Format (CInputReplay)</h2>
+<p><strong>Source</strong>: Ghidra string analysis (doc 22), class hierarchy, community knowledge <strong>Confidence</strong>: PARTIAL -- architecture confirmed, exact binary format <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></p>
+<h3 id="overview"><a class="anchor" href="#overview">#</a>Overview</h3>
+<p><code>CInputReplay</code> (string at <code class="addr">0x141b6dd98</code>) handles deterministic input recording at the full physics tick rate of 100Hz. This is separate from the ghost visual data.</p>
+<h3 id="input-replay-operations"><a class="anchor" href="#input-replay-operations">#</a>Input Replay Operations</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Operation</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>InputsReplay_Record</code></td>
+  <td style="text-align:left">Begin recording inputs</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputsReplay_Replay</code></td>
+  <td style="text-align:left">Enter replay mode</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputsReplay_Playback</code></td>
+  <td style="text-align:left">Play back recorded inputs</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputsReplay_Pause</code></td>
+  <td style="text-align:left">Pause playback</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputsReplay_Resume</code></td>
+  <td style="text-align:left">Resume playback</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputsReplay_Stop</code></td>
+  <td style="text-align:left">Stop recording/playback</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="input-fields-recorded"><a class="anchor" href="#input-fields-recorded">#</a>Input Fields Recorded</h3>
+<p>From the <code>CSceneVehicleVisState</code> (doc 19), the inputs that define a complete game state are:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Range</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>InputSteer</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">-1.0 to 1.0</td>
+  <td style="text-align:left">Steering (normalized from raw int range -65536 to 65536)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputGasPedal</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0.0 to 1.0</td>
+  <td style="text-align:left">Throttle</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputBrakePedal</code></td>
+  <td style="text-align:left">float</td>
+  <td style="text-align:left">0.0 to 1.0</td>
+  <td style="text-align:left">Brake</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InputIsBraking</code></td>
+  <td style="text-align:left">bool</td>
+  <td style="text-align:left">0 or 1</td>
+  <td style="text-align:left">Braking state</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="raw-integer-input-range"><a class="anchor" href="#raw-integer-input-range">#</a>Raw Integer Input Range</h3>
+<p><strong>Community (TMInterface / donadigo)</strong>: Raw input values are integers:</p>
+<ul>
+  <li>Steering: -65536 to 65536 (signed, 17-bit effective)</li>
+  <li>Gas: 0 to 65535 (unsigned, 16-bit)</li>
+  <li>Brake: 0 to 65535 (unsigned, 16-bit)</li>
+</ul>
+<p>The conversion from raw integer to normalized float is: <code>float_value = int_value / 65536.0</code></p>
+<h3 id="binary-format-unknown"><a class="anchor" href="#binary-format-unknown">#</a>Binary Format <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></h3>
+<p>The exact on-disk encoding of <code>CInputReplay</code> data has not been decompiled. Based on the architecture, it likely uses:</p>
+<ul>
+  <li><strong>Event-based encoding</strong>: Only state changes are stored (e.g., "at tick 150, steer changed to 0.5") rather than every tick</li>
+  <li><strong>Delta encoding</strong>: <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> whether consecutive input values are delta-encoded</li>
+  <li><strong>Compression</strong>: Likely zlib (consistent with ghost data compression)</li>
+</ul>
+<p>The file extension <code>.InputsReplay.Gbx</code> (string at <code class="addr">0x141cccef0</code>) suggests these can be stored as standalone GBX files, though they are typically embedded within replay files.</p>
+<hr>
+<h2 id="9-entity-record-data-cplugentrecorddata"><a class="anchor" href="#9-entity-record-data-cplugentrecorddata">#</a>9. Entity Record Data (CPlugEntRecordData)</h2>
+<p><strong>Source</strong>: Class hierarchy, Ghidra string analysis <strong>Confidence</strong>: PARTIAL -- class identified and role confirmed, internal format <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></p>
+<h3 id="role"><a class="anchor" href="#role">#</a>Role</h3>
+<p><code>CPlugEntRecordData</code> (string at <code class="addr">0x141bcb440</code>, class from the Plug engine 0x09) is the low-level container for recorded entity state frames. It is referenced by ghost chunk <code class="addr">0x03092012</code> in the GBX.NET source.</p>
+<p>This class stores the raw sampled state data that gets encoded into the ghost sample format (Section 7). The relationship is:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameCtnGhost
+  +-- metadata (login, nickname, times)
+  +-- CPlugEntRecordData  (chunk 0x03092012)
+      +-- sample_count
+      +-- sample_period (50ms)
+      +-- compressed_data (zlib)
+          +-- sample[0]: {position, rotation, speed, ...}
+          +-- sample[1]: ...
+          +-- sample[N]: ...</code></pre></div>
+<h3 id="duplicationtruncation"><a class="anchor" href="#duplicationtruncation">#</a>Duplication/Truncation</h3>
+<p>The function <code>NGameReplay::EntRecordDataDuplicateAndTruncate</code> (string at <code class="addr">0x141c66e28</code>) confirms that entity record data can be:</p>
+<ul>
+  <li><strong>Duplicated</strong>: Copied for sharing/upload</li>
+  <li><strong>Truncated</strong>: Cut to a specific time point (e.g., for partial replays up to a checkpoint)</li>
+</ul>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary><h2 id="10-checkpoint-times-validation-data"><a class="anchor" href="#10-checkpoint-times-validation-data">#</a>10. Checkpoint Times & Validation Data</h2></summary>
+<div class="collapsible-content">
+<h3 id="checkpoint-times-array"><a class="anchor" href="#checkpoint-times-array">#</a>Checkpoint Times Array</h3>
+<p>Ghost chunk <code class="addr">0x0309200C</code> stores checkpoint times as an array of uint32 values in milliseconds.</p>
+<p>From the XML header of the ReallyRally replay:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;times best=&quot;38401&quot; respawns=&quot;0&quot; stuntscore=&quot;0&quot; validable=&quot;1&quot;/&gt;
+&lt;checkpoints cur=&quot;8&quot;/&gt;</code></pre></div>
+<p>This indicates 8 checkpoint times for a 38.401-second run.</p>
+<h3 id="checkpoint-data-structure-partial"><a class="anchor" href="#checkpoint-data-structure-partial">#</a>Checkpoint Data Structure [PARTIAL]</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>uint32    num_checkpoints        Number of checkpoint times
+uint32[]  checkpoint_times       Array of times in milliseconds (cumulative from race start)</code></pre></div>
+<p>For the ReallyRally replay, checkpoint times would be something like:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CP 1: ~4800ms
+CP 2: ~9600ms
+...
+CP 8: 38401ms (finish)</code></pre></div>
+<p>The last checkpoint time equals the total race time (<code>best</code> in the XML).</p>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="validation-status"><a class="anchor" href="#validation-status">#</a>Validation Status</h3></summary>
+<div class="collapsible-content">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">XML Attribute</th>
+  <th style="text-align:left">Values</th>
+  <th style="text-align:left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Validable</td>
+  <td style="text-align:left"><code>validable="1"</code></td>
+  <td style="text-align:left">0 or 1</td>
+  <td style="text-align:left">Whether the run counts for records</td>
+</tr>
+<tr>
+  <td style="text-align:left">Respawns</td>
+  <td style="text-align:left"><code>respawns="0"</code></td>
+  <td style="text-align:left">uint32</td>
+  <td style="text-align:left">Number of times the player respawned</td>
+</tr>
+<tr>
+  <td style="text-align:left">Stunt Score</td>
+  <td style="text-align:left"><code>stuntscore="0"</code></td>
+  <td style="text-align:left">uint32</td>
+  <td style="text-align:left">Stunt-mode score (unused in Race mode)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</details>
+<h3 id="cgamesavelaunchedcheckpoints"><a class="anchor" href="#cgamesavelaunchedcheckpoints">#</a>CGameSaveLaunchedCheckpoints</h3>
+<p>The class <code>CGameSaveLaunchedCheckpoints</code> handles saving checkpoint state during a run, enabling respawns. When a player triggers a checkpoint:</p>
+<ol>
+  <li>The current simulation state is captured</li>
+  <li>The time is recorded in the checkpoint array</li>
+  <li>If the player later respawns, state is restored to the last checkpoint</li>
+</ol>
+<p><strong>Ghost recording</strong>: Checkpoint events are embedded in the ghost data alongside position samples. The <code>Ghost_CopyToScoreBestRaceAndLap</code> API function transfers these times to the score system.</p>
+<hr>
+</div>
+</details>
+<h2 id="11-cgamectnghost-vs-cgamectnreplayrecord-differences"><a class="anchor" href="#11-cgamectnghost-vs-cgamectnreplayrecord-differences">#</a>11. CGameCtnGhost vs CGameCtnReplayRecord Differences</h2>
+<h3 id="structural-comparison"><a class="anchor" href="#structural-comparison">#</a>Structural Comparison</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Feature</th>
+  <th style="text-align:left">CGameCtnGhost (<code class="addr">0x03092000</code>)</th>
+  <th style="text-align:left">CGameCtnReplayRecord (<code class="addr">0x03093000</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Purpose</strong></td>
+  <td style="text-align:left">Single driver's recorded run</td>
+  <td style="text-align:left">Complete replay package</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Contains map?</strong></td>
+  <td style="text-align:left">No -- references map by UID</td>
+  <td style="text-align:left">Yes -- embeds complete <code>.Map.Gbx</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Number of ghosts</strong></td>
+  <td style="text-align:left">Is a ghost (1 driver)</td>
+  <td style="text-align:left">Contains 1+ ghosts</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Standalone file?</strong></td>
+  <td style="text-align:left"><code>.Ghost.Gbx</code></td>
+  <td style="text-align:left"><code>.Replay.Gbx</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Metadata</strong></td>
+  <td style="text-align:left">Player info, times, checkpoints</td>
+  <td style="text-align:left">All ghost metadata + map metadata</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Self-contained?</strong></td>
+  <td style="text-align:left">No (needs map to display)</td>
+  <td style="text-align:left">Yes (can be viewed without original map)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Header chunks</strong></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> count]</span></td>
+  <td style="text-align:left">3 header chunks</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>XML in header?</strong></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left">Yes (chunk <code class="addr">0x03093001</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="when-each-is-used"><a class="anchor" href="#when-each-is-used">#</a>When Each Is Used</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Context</th>
+  <th style="text-align:left">Format Used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Autosave after completing a map</td>
+  <td style="text-align:left"><code>.Replay.Gbx</code> (autosaves directory)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Manual save of a run</td>
+  <td style="text-align:left"><code>.Replay.Gbx</code> (My Replays directory)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Downloading a leaderboard ghost</td>
+  <td style="text-align:left"><code>.Ghost.Gbx</code> or ghost data via API</td>
+</tr>
+<tr>
+  <td style="text-align:left">Multiplayer ghost display</td>
+  <td style="text-align:left">Network ghost format (streamed)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ghost upload for validation</td>
+  <td style="text-align:left">Ghost data (embedded in replay)</td>
+</tr>
+<tr>
+  <td style="text-align:left">MediaTracker replay</td>
+  <td style="text-align:left"><code>.Replay.Gbx</code> (for camera/effects)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="file-paths"><a class="anchor" href="#file-paths">#</a>File Paths</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Replays/
+  My Replays/         -- Manual saves (*.Replay.Gbx)
+  Autosaves/          -- Auto-saved PBs (*_PersonalBest_TimeAttack.Replay.Gbx)
+  Downloaded/         -- Downloaded replays</code></pre></div>
+<hr>
+<h2 id="12-ghost-playback-interpolation"><a class="anchor" href="#12-ghost-playback-interpolation">#</a>12. Ghost Playback & Interpolation</h2>
+<h3 id="rendering-ghost-cars"><a class="anchor" href="#rendering-ghost-cars">#</a>Rendering Ghost Cars</h3>
+<p>When displaying a ghost, the game:</p>
+<ol>
+  <li>Determines the current playback time</li>
+  <li>Finds the two nearest ghost samples (at 50ms intervals)</li>
+  <li>Interpolates between them for the current frame</li>
+</ol>
+<h3 id="interpolation-method-partial"><a class="anchor" href="#interpolation-method-partial">#</a>Interpolation Method [PARTIAL]</h3>
+<p>Given the 50ms sample period and typical 60+ FPS rendering, interpolation is needed for smooth display. Based on the data fields available:</p>
+<p><strong>Position</strong>: Linear interpolation between consecutive sample positions. At 50ms intervals and typical car speeds (~100-500 km/h), the maximum positional error from linear interpolation is small (< 1 meter) and visually acceptable.</p>
+<p><strong>Rotation</strong>: Likely spherical linear interpolation (slerp) of the axis-angle representation, or conversion to quaternion followed by slerp.</p>
+<p><strong>Speed</strong>: Linear interpolation of the decoded speed value.</p>
+<p><strong>Velocity direction</strong>: Linear interpolation of heading/pitch angles.</p>
+<h3 id="entity-id-masking"><a class="anchor" href="#entity-id-masking">#</a>Entity ID Masking</h3>
+<p>Ghost/replay vehicles are identified by entity ID mask:</p>
+<ul>
+  <li><code class="addr">0x02000000</code> -- Local player vehicles</li>
+  <li><code class="addr">0x04000000</code> -- Replay/editor vehicles</li>
+</ul>
+<p>This allows the rendering system to distinguish live players from ghost playback.</p>
+<h3 id="playback-api"><a class="anchor" href="#playback-api">#</a>Playback API</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Function</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Ghost_IsReplayOver</code></td>
+  <td style="text-align:left">Returns true when playback reaches the end</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_GetPosition</code></td>
+  <td style="text-align:left">Returns interpolated 3D position at current time</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_GetTimeClosestToPlayer</code></td>
+  <td style="text-align:left">Finds the ghost time nearest to the live player's time</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ghost_IsVisible</code></td>
+  <td style="text-align:left">Whether the ghost car is currently rendered</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="13-network-ghost-format"><a class="anchor" href="#13-network-ghost-format">#</a>13. Network Ghost Format</h2>
+<p><strong>Source</strong>: Networking deep dive (doc 17), Ghidra string analysis (doc 22) <strong>Confidence</strong>: PARTIAL</p>
+<h3 id="ghost-data-flow-online"><a class="anchor" href="#ghost-data-flow-online">#</a>Ghost Data Flow (Online)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Local Recording:
+  CInputReplay captures every input frame (100 Hz)
+  CGameGhostTMData stores TM-specific metadata
+  CGameCtnGhost wraps with car/map context
+
+Upload (on PB or request):
+  CWebServicesTask_UploadSessionReplay      -- Full replay upload
+  CGameDataFileTask_GhostDriver_Upload      -- Ghost-specific upload
+  CGameDataFileTask_GhostDriver_UploadLimits -- Upload size limits
+
+Download:
+  CGameDataFileTask_GhostDriver_Download    -- Download ghost
+  CGameScoreTask_GetPlayerMapRecordGhost    -- Get PB ghost for a map
+
+Ghost Management:
+  CGhostManager handles lifecycle
+  CGameGhostMgrScript exposes to ManiaScript</code></pre></div>
+<h3 id="anti-cheat-upload"><a class="anchor" href="#anti-cheat-upload">#</a>Anti-Cheat Upload</h3>
+<p>Replays for leaderboard validation are uploaded in chunks:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Config Parameter</th>
+  <th style="text-align:left">Address</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>AntiCheatReplayChunkSize</code></td>
+  <td style="text-align:left"><code class="addr">0x141c2af98</code></td>
+  <td style="text-align:left">Size per upload chunk</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AntiCheatReplayMaxSize</code></td>
+  <td style="text-align:left"><code class="addr">0x141c2afe0</code></td>
+  <td style="text-align:left">Maximum total upload</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>AntiCheatReplayMaxSizeOnCheatReport</code></td>
+  <td style="text-align:left"><code class="addr">0x141c2afb8</code></td>
+  <td style="text-align:left">Increased limit on cheat reports</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>UploadAntiCheatReplayForcedOnCheatReport</code></td>
+  <td style="text-align:left"><code class="addr">0x141c2b118</code></td>
+  <td style="text-align:left">Force upload when cheat detected</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="secure-record-attempt-flow"><a class="anchor" href="#secure-record-attempt-flow">#</a>Secure Record Attempt Flow</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. POST  CreateMapRecordSecureAttempt      -- Get attempt token
+2. Player completes the map
+3. PATCH PatchMapRecordSecureAttempt       -- Submit ghost + result
+4. Upload UploadSessionReplay              -- Full replay for validation
+5. Server replays inputs, verifies time matches</code></pre></div>
+<h3 id="multiplayer-ghost-streaming-unknown"><a class="anchor" href="#multiplayer-ghost-streaming-unknown">#</a>Multiplayer Ghost Streaming <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></h3>
+<p>During online play, ghost positions of other players are likely sent via:</p>
+<ul>
+  <li><code>CGameNetFormPlayground</code> over UDP</li>
+  <li><code>CGameNetFormPlaygroundSync</code> for input synchronization</li>
+  <li>Reduced sample rate compared to 100Hz physics (likely position updates at 10-20Hz)</li>
+</ul>
+<p>The exact wire format for multiplayer ghost streaming is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>.</p>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary><h2 id="14-anti-cheat-replay-validation"><a class="anchor" href="#14-anti-cheat-replay-validation">#</a>14. Anti-Cheat & Replay Validation</h2></summary>
+<div class="collapsible-content">
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="server-side-validation"><a class="anchor" href="#server-side-validation">#</a>Server-Side Validation</h3></summary>
+<div class="collapsible-content">
+<p><strong>Source</strong>: Doc 17 section on validation, doc 22 anti-cheat strings <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (string-level), binary format <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></p>
+<p>The server validates replays by:</p>
+<ol>
+  <li><strong>Receiving</strong> the uploaded replay (ghost data + input recording)</li>
+  <li><strong>Re-simulating</strong> the run using the input recording against deterministic physics</li>
+  <li><strong>Comparing</strong> the resulting time against the client's claimed time</li>
+  <li><strong>Checking</strong> for impossible physics states (wall clipping, etc.)</li>
+  <li><strong>Verifying</strong> client file checksums against known-good hashes</li>
+</ol>
+</div>
+</details>
+<h3 id="encrypted-package-system"><a class="anchor" href="#encrypted-package-system">#</a>Encrypted Package System</h3>
+<p>Replays include cryptographic integrity data:</p>
+<ul>
+  <li>Session replay with encrypted checksums</li>
+  <li>Chunk-based upload with size limits</li>
+  <li>Forced upload on cheat detection reports</li>
+  <li>Game file checksum comparison (<code>CryptedChecksumsExe</code>)</li>
+</ul>
+<h3 id="what-makes-a-run-validable"><a class="anchor" href="#what-makes-a-run-validable">#</a>What Makes a Run "Validable"</h3>
+<p>From the XML header: <code>validable="1"</code> means the run is eligible for leaderboard submission. A run becomes non-validable if:</p>
+<ul>
+  <li>The player used editor test mode</li>
+  <li>Game modifications were detected</li>
+  <li>The map was modified during the run</li>
+  <li><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Other anti-cheat triggers</li>
+</ul>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h2 id="15-real-file-hex-analysis"><a class="anchor" href="#15-real-file-hex-analysis">#</a>15. Real File Hex Analysis</h2></summary>
+<div class="collapsible-content">
+<h3 id="file-comparison-two-replay-files"><a class="anchor" href="#file-comparison-two-replay-files">#</a>File Comparison: Two Replay Files</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">ReallyRally (Rally car)</th>
+  <th style="text-align:left">Fall 2025 - 07 (Stadium car)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">File size</td>
+  <td style="text-align:left">4,388,346 bytes</td>
+  <td style="text-align:left">Smaller (Nadeo map, less items)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Class ID</td>
+  <td style="text-align:left"><code class="addr">0x03093000</code></td>
+  <td style="text-align:left"><code class="addr">0x03093000</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Format flags</td>
+  <td style="text-align:left"><code>BUCR</code></td>
+  <td style="text-align:left"><code>BUCR</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Version</td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">6</td>
+</tr>
+<tr>
+  <td style="text-align:left">Header chunks</td>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">3</td>
+</tr>
+<tr>
+  <td style="text-align:left">Player model</td>
+  <td style="text-align:left"><code>CarRally</code></td>
+  <td style="text-align:left"><code>CarSport</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Best time</td>
+  <td style="text-align:left">38401 ms</td>
+  <td style="text-align:left">29646 ms</td>
+</tr>
+<tr>
+  <td style="text-align:left">Checkpoints</td>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">5</td>
+</tr>
+<tr>
+  <td style="text-align:left">Map author</td>
+  <td style="text-align:left"><code>XChwDu8FRmWH-gHqXUbBtg</code> (user)</td>
+  <td style="text-align:left"><code>Nadeo</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="header-layout-consistency"><a class="anchor" href="#header-layout-consistency">#</a>Header Layout Consistency</h3>
+<p>Both replay files show identical structural layout:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Byte 0x00: Magic &quot;GBX&quot;
+Byte 0x03: Version 6
+Byte 0x05: &quot;BUCR&quot;
+Byte 0x09: Class 0x03093000
+Byte 0x0D: user_data_size (varies)
+Byte 0x11: num_header_chunks = 3
+Byte 0x15: Chunk index [0x03093000, 0x03093001, 0x03093002]</code></pre></div>
+<h3 id="body-region"><a class="anchor" href="#body-region">#</a>Body Region</h3>
+<p>The body starts after the reference table (typically at the offset just past the header data). For the ReallyRally replay:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>After header + reference table:
+  Uncompressed body contains embedded map starting with nested &quot;GBX&quot; magic
+  Map class 0x03043000 (CGameCtnChallenge) visible at offset ~0x2E4
+
+  Ghost/replay data follows the map in the body chunk stream
+
+  File tail contains:
+    Game version string: &quot;GameVersion=3.3.0&quot;
+    Plugin info: &quot;Openplanet 1.28.0 (next, Public, ...)&quot;
+    Environment: &quot;TMStadium&quot;
+    Player name: &quot;Kelvination&quot;
+    Validation marker: &quot;_RaceValid&quot;
+    End sentinel: 0xFACADE01 (01 DE CA FA in LE)</code></pre></div>
+<h3 id="embedded-map-evidence"><a class="anchor" href="#embedded-map-evidence">#</a>Embedded Map Evidence</h3>
+<p>At offset 0x2E4 in the ReallyRally replay:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>000002e0: ...4742 5806 00       &quot;GBX&quot; version 6
+000002f0: 4255 4352 0030 0403   &quot;BUCR&quot; class 0x03043000 (Map)
+...
+00000310: ...4361 7252 616c 6c   &quot;CarRally&quot; (vehicle model in map)
+00000320: 7913 27ac ...
+00000330: ...4e 6164 656f        &quot;Nadeo&quot; (map collection author)</code></pre></div>
+<p>The map embedded in the replay is the complete, playable map data.</p>
+<hr>
+</div>
+</details>
+<h2 id="16-browser-typescript-implementation-guide"><a class="anchor" href="#16-browser-typescript-implementation-guide">#</a>16. Browser TypeScript Implementation Guide</h2>
+<h3 id="recommended-approach"><a class="anchor" href="#recommended-approach">#</a>Recommended Approach</h3>
+<p>For a browser recreation, use <strong>input-based deterministic replay</strong> rather than parsing the complex ghost sample format.</p>
+<h3 id="strategy-1-simple-input-recording-recommended-for-custom-replays"><a class="anchor" href="#strategy-1-simple-input-recording-recommended-for-custom-replays">#</a>Strategy 1: Simple Input Recording (Recommended for Custom Replays)</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">interface InputFrame {
+  tick: number;           // Physics tick number (100 Hz)
+  steer: number;          // -1.0 to 1.0
+  gas: number;            // 0.0 to 1.0
+  brake: number;          // 0.0 to 1.0
+}
+
+interface SimpleReplay {
+  mapUid: string;
+  playerName: string;
+  vehicleType: &#x27;CarSport&#x27; | &#x27;CarRally&#x27; | &#x27;CarSnow&#x27; | &#x27;CarDesert&#x27;;
+  finishTime: number;     // milliseconds
+  checkpoints: number[];  // cumulative ms timestamps
+  inputs: InputFrame[];   // only store state changes
+}</code></pre></div>
+<p>Recording: only store an <code>InputFrame</code> when any input value changes. For a typical 38-second run, this produces ~200-500 events (far less than 3,800 ticks).</p>
+<p>Playback: feed recorded inputs into the deterministic physics engine at 100Hz. If the physics is bit-identical, the replay is exact.</p>
+<h3 id="strategy-2-parsing-official-tm2020-ghosts-advanced"><a class="anchor" href="#strategy-2-parsing-official-tm2020-ghosts-advanced">#</a>Strategy 2: Parsing Official TM2020 Ghosts (Advanced)</h3>
+<p>To load official <code>.Replay.Gbx</code> files, the parser must:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">class ReplayParser {
+  // Step 1: Parse GBX header
+  parseGbxHeader(buffer: ArrayBuffer): GbxHeader {
+    const view = new DataView(buffer);
+    const magic = String.fromCharCode(
+      view.getUint8(0), view.getUint8(1), view.getUint8(2)
+    );
+    if (magic !== &#x27;GBX&#x27;) throw new Error(&#x27;Not a GBX file&#x27;);
+
+    const version = view.getUint16(3, true);
+    const formatFlags = String.fromCharCode(
+      view.getUint8(5), view.getUint8(6), view.getUint8(7), view.getUint8(8)
+    );
+    const classId = view.getUint32(9, true);
+    const userDataSize = view.getUint32(13, true);
+
+    return { version, formatFlags, classId, userDataSize };
+  }
+
+  // Step 2: Parse header chunks for metadata
+  parseHeaderChunks(buffer: ArrayBuffer, offset: number, count: number): HeaderChunk[] {
+    const view = new DataView(buffer);
+    const chunks: HeaderChunk[] = [];
+    let pos = offset;
+
+    // Read chunk index
+    for (let i = 0; i &lt; count; i++) {
+      const chunkId = view.getUint32(pos, true); pos += 4;
+      const rawSize = view.getUint32(pos, true); pos += 4;
+      const isHeavy = (rawSize &amp; 0x80000000) !== 0;
+      const size = rawSize &amp; 0x7FFFFFFF;
+      chunks.push({ chunkId, size, isHeavy });
+    }
+
+    // Read chunk data
+    for (const chunk of chunks) {
+      chunk.data = new Uint8Array(buffer, pos, chunk.size);
+      pos += chunk.size;
+    }
+
+    return chunks;
+  }
+
+  // Step 3: Extract XML metadata from chunk 0x03093001
+  parseXmlMetadata(chunkData: Uint8Array): ReplayMetadata {
+    const decoder = new TextDecoder();
+    // Find XML start (after version + length prefix)
+    // The XML is embedded directly in the chunk data
+    const text = decoder.decode(chunkData);
+    const xmlStart = text.indexOf(&#x27;&lt;header&#x27;);
+    const xmlEnd = text.indexOf(&#x27;&lt;/header&gt;&#x27;) + &#x27;&lt;/header&gt;&#x27;.length;
+    const xml = text.substring(xmlStart, xmlEnd);
+    // Parse with DOMParser
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xml, &#x27;text/xml&#x27;);
+    return this.extractMetadata(doc);
+  }
+
+  // Step 4: Decompress body (LZO)
+  decompressBody(buffer: ArrayBuffer, bodyOffset: number): ArrayBuffer {
+    const view = new DataView(buffer);
+    const uncompressedSize = view.getUint32(bodyOffset, true);
+    const compressedSize = view.getUint32(bodyOffset + 4, true);
+    const compressedData = new Uint8Array(buffer, bodyOffset + 8, compressedSize);
+    return lzoDecompress(compressedData, uncompressedSize); // Need LZO library
+  }
+
+  // Step 5: Parse body chunks
+  parseBodyChunks(bodyData: ArrayBuffer): void {
+    const view = new DataView(bodyData);
+    let pos = 0;
+
+    while (pos &lt; bodyData.byteLength) {
+      const chunkId = view.getUint32(pos, true);
+      pos += 4;
+
+      if (chunkId === 0xFACADE01) break; // End sentinel
+
+      // Check for SKIP marker
+      const possibleSkip = view.getUint32(pos, true);
+      if (possibleSkip === 0x534B4950) { // &quot;SKIP&quot;
+        pos += 4;
+        const chunkSize = view.getUint32(pos, true);
+        pos += 4;
+        // Can skip unknown chunks by advancing pos += chunkSize
+        pos += chunkSize;
+      } else {
+        // Non-skippable chunk -- must understand format to continue
+        throw new Error(`Unknown non-skippable chunk: 0x${chunkId.toString(16)}`);
+      }
+    }
+  }
+
+  // Step 6: Decode ghost samples (from zlib-compressed CPlugEntRecordData)
+  decodeGhostSamples(compressedData: Uint8Array): GhostSample[] {
+    const decompressed = pako.inflate(compressedData); // zlib decompression
+    const view = new DataView(decompressed.buffer);
+    const samples: GhostSample[] = [];
+    let pos = 0; // [UNKNOWN]: may have header before samples
+
+    while (pos + 22 &lt;= decompressed.byteLength) {
+      samples.push({
+        position: {
+          x: view.getFloat32(pos, true),
+          y: view.getFloat32(pos + 4, true),
+          z: view.getFloat32(pos + 8, true),
+        },
+        angle: (view.getUint16(pos + 12, true) / 0xFFFF) * Math.PI,
+        axisHeading: (view.getInt16(pos + 14, true) / 0x7FFF) * Math.PI,
+        axisPitch: (view.getInt16(pos + 16, true) / 0x7FFF) * (Math.PI / 2),
+        speed: decodeSpeed(view.getInt16(pos + 18, true)),
+        velHeading: (view.getInt8(pos + 20) / 0x7F) * Math.PI,
+        velPitch: (view.getInt8(pos + 21) / 0x7F) * (Math.PI / 2),
+      });
+      pos += 22;
+    }
+    return samples;
+  }
+}
+
+function decodeSpeed(raw: number): number {
+  if (raw === -0x8000) return 0;
+  return Math.exp(raw / 1000);
+}</code></pre></div>
+<h3 id="required-external-libraries"><a class="anchor" href="#required-external-libraries">#</a>Required External Libraries</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Library</th>
+  <th style="text-align:left">Purpose</th>
+  <th style="text-align:left">Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>lzo1x.js</strong> or <strong>minilzo-js</strong></td>
+  <td style="text-align:left">LZO decompression for GBX body</td>
+  <td style="text-align:left">~5 KB</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>pako</strong></td>
+  <td style="text-align:left">zlib decompression for ghost sample data</td>
+  <td style="text-align:left">~25 KB</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="implementation-priority"><a class="anchor" href="#implementation-priority">#</a>Implementation Priority</h3>
+<ol>
+  <li><strong>Phase 1</strong>: Parse GBX header + XML metadata only (trivial, useful for displaying replay info)</li>
+  <li><strong>Phase 2</strong>: Custom input-based replay format for browser-native recordings</li>
+  <li><strong>Phase 3</strong>: Full GBX body decompression + chunk parsing</li>
+  <li><strong>Phase 4</strong>: Ghost sample decoding + interpolated playback</li>
+</ol>
+<p>Phase 1 requires no external libraries. Phase 2 is independent of the TM2020 format. Phase 3+ requires LZO and zlib libraries plus significant chunk-format reverse engineering.</p>
+<hr>
+<h2 id="17-known-unknowns"><a class="anchor" href="#17-known-unknowns">#</a>17. Known Unknowns</h2>
+<p>These are areas where the format is not fully understood. They are listed honestly to avoid false confidence.</p>
+<h3 id="critical-unknowns"><a class="anchor" href="#critical-unknowns">#</a>Critical Unknowns</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Area</th>
+  <th style="text-align:left">What We Do Not Know</th>
+  <th style="text-align:left">Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Ghost sample data header</strong></td>
+  <td style="text-align:left">Exact bytes before the sample array in CPlugEntRecordData -- may include version, sample count, sample period</td>
+  <td style="text-align:left">Cannot reliably parse ghost samples without this</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Input recording binary format</strong></td>
+  <td style="text-align:left">How CInputReplay serializes input events on disk</td>
+  <td style="text-align:left">Cannot replay official TM2020 input recordings</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Body chunk semantics</strong></td>
+  <td style="text-align:left">Exact purpose and format of many 0x0309300X chunks</td>
+  <td style="text-align:left">Cannot fully parse replay body</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Ghost chunk dispatch</strong></td>
+  <td style="text-align:left">Decompiled handlers for each 0x03092XXX chunk</td>
+  <td style="text-align:left">Need for reliable ghost parsing</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Network ghost wire format</strong></td>
+  <td style="text-align:left">How ghost data is encoded for multiplayer transmission</td>
+  <td style="text-align:left">Cannot implement multiplayer ghost display</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="moderate-unknowns"><a class="anchor" href="#moderate-unknowns">#</a>Moderate Unknowns</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Area</th>
+  <th style="text-align:left">What We Do Not Know</th>
+  <th style="text-align:left">Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Ghost sample additional fields</strong></td>
+  <td style="text-align:left">Whether newer versions add extra per-sample fields (e.g., wheel state, turbo)</td>
+  <td style="text-align:left">May misparse newer ghost data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Validation checksum algorithm</strong></td>
+  <td style="text-align:left">Exact hashing/signing for replay integrity</td>
+  <td style="text-align:left">Cannot create valid replay files</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>MediaTracker data</strong></td>
+  <td style="text-align:left">Camera keyframe and effect format within replays</td>
+  <td style="text-align:left">Cannot render cinematic replays</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Input compression scheme</strong></td>
+  <td style="text-align:left">Whether delta or run-length encoding is used</td>
+  <td style="text-align:left">Affects parser implementation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Ghost chunk versioning</strong></td>
+  <td style="text-align:left">How chunk versions affect field layout</td>
+  <td style="text-align:left">May fail on older/newer replays</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="low-priority-unknowns"><a class="anchor" href="#low-priority-unknowns">#</a>Low-Priority Unknowns</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Area</th>
+  <th style="text-align:left">What We Do Not Know</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Stunt score calculation</td>
+  <td style="text-align:left">How stunt score is computed from ghost data</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ghost visual effects</td>
+  <td style="text-align:left">How turbo/boost visual state is encoded in ghost</td>
+</tr>
+<tr>
+  <td style="text-align:left">Multi-ghost replays</td>
+  <td style="text-align:left">How multiple ghosts are indexed in a single replay</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ghost car skin data</td>
+  <td style="text-align:left">How car skin/color is stored in ghost chunk <code class="addr">0x0309200B</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="18-cross-references"><a class="anchor" href="#18-cross-references">#</a>18. Cross-References</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Topic</th>
+  <th style="text-align:left">Document</th>
+  <th style="text-align:left">Section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">GBX file format specification</td>
+  <td style="text-align:left"><a href="file-formats.html">16-fileformat-deep-dive.md</a></td>
+  <td style="text-align:left">Sections 1-8</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ghost class hierarchy (decompiled)</td>
+  <td style="text-align:left"><a href="22-ghidra-gap-findings.md">22-ghidra-gap-findings.md</a></td>
+  <td style="text-align:left">Priority 3</td>
+</tr>
+<tr>
+  <td style="text-align:left">Ghost sample encoding (community)</td>
+  <td style="text-align:left"><a href="29-community-knowledge.md">29-community-knowledge.md</a></td>
+  <td style="text-align:left">Section 6.2</td>
+</tr>
+<tr>
+  <td style="text-align:left">Vehicle state fields</td>
+  <td style="text-align:left"><a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a></td>
+  <td style="text-align:left">Section 1</td>
+</tr>
+<tr>
+  <td style="text-align:left">Real replay hex analysis</td>
+  <td style="text-align:left"><a href="26-real-file-analysis.md">26-real-file-analysis.md</a></td>
+  <td style="text-align:left">Section 3</td>
+</tr>
+<tr>
+  <td style="text-align:left">Class hierarchy JSON</td>
+  <td style="text-align:left"><a href="class_hierarchy.json">class_hierarchy.json</a></td>
+  <td style="text-align:left">CGameCtnGhost, CGameCtnReplayRecord, CPlugEntRecordData</td>
+</tr>
+<tr>
+  <td style="text-align:left">Replay/ghost subsystem map</td>
+  <td style="text-align:left"><a href="class-hierarchy.html">13-subsystem-class-map.md</a></td>
+  <td style="text-align:left">Section 6</td>
+</tr>
+<tr>
+  <td style="text-align:left">Network ghost flow</td>
+  <td style="text-align:left"><a href="networking.html">17-networking-deep-dive.md</a></td>
+  <td style="text-align:left">Ghost System section</td>
+</tr>
+<tr>
+  <td style="text-align:left">Anti-cheat validation</td>
+  <td style="text-align:left"><a href="networking.html">17-networking-deep-dive.md</a></td>
+  <td style="text-align:left">Validation Flow section</td>
+</tr>
+<tr>
+  <td style="text-align:left">Browser recreation guidance</td>
+  <td style="text-align:left"><a href="20-browser-recreation-guide.md">20-browser-recreation-guide.md</a></td>
+  <td style="text-align:left">Ghost/Replay section</td>
+</tr>
+<tr>
+  <td style="text-align:left">Physics tick rate (100Hz)</td>
+  <td style="text-align:left"><a href="physics.html">10-physics-deep-dive.md</a></td>
+  <td style="text-align:left">Tick rate section</td>
+</tr>
+<tr>
+  <td style="text-align:left">Surface gameplay effects</td>
+  <td style="text-align:left"><a href="22-ghidra-gap-findings.md">22-ghidra-gap-findings.md</a></td>
+  <td style="text-align:left">Priority 2</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="community-tools-for-ghostreplay-parsing"><a class="anchor" href="#community-tools-for-ghostreplay-parsing">#</a>Community Tools for Ghost/Replay Parsing</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Tool</th>
+  <th style="text-align:left">Language</th>
+  <th style="text-align:left">URL</th>
+  <th style="text-align:left">Ghost Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>GBX.NET</strong></td>
+  <td style="text-align:left">C#/.NET</td>
+  <td style="text-align:left">https://github.com/BigBang1112/gbx-net</td>
+  <td style="text-align:left">Full ghost parsing (400+ classes)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>pygbx</strong></td>
+  <td style="text-align:left">Python</td>
+  <td style="text-align:left">https://github.com/donadigo/pygbx</td>
+  <td style="text-align:left">Basic ghost reading</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>gbx-ts</strong></td>
+  <td style="text-align:left">TypeScript</td>
+  <td style="text-align:left">https://github.com/thaumictom/gbx-ts</td>
+  <td style="text-align:left">TypeScript GBX parser</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>clip-input</strong></td>
+  <td style="text-align:left">C#</td>
+  <td style="text-align:left">https://github.com/bigbang1112-cz/clip-input</td>
+  <td style="text-align:left">Converts replay inputs to visual clips</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>gbxtools</strong></td>
+  <td style="text-align:left">Python</td>
+  <td style="text-align:left">https://github.com/donadigo/gbxtools</td>
+  <td style="text-align:left">Replay analysis scripts</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>TMInterface</strong></td>
+  <td style="text-align:left">C++/DLL</td>
+  <td style="text-align:left">https://donadigo.com/tminterface/</td>
+  <td style="text-align:left">TMNF/TMUF input recording (not TM2020)</td>
+</tr>
+</tbody>
+</table></div>
+
+                        <nav class="prev-next"><a class="prev" href="ghidra-gaps.html">&larr; Ghidra Gap Research</a><a class="next" href="maniascript.html">ManiaScript Reference &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-overview-ghost-vs-replay-vs-inputreplay">1. Overview: Ghost vs Replay vs InputReplay</a></li>
+  <li class="toc-h3"><a href="#recording-pipeline">Recording Pipeline</a></li>
+<li class=""><a href="#2-class-hierarchy">2. Class Hierarchy</a></li>
+  <li class="toc-h3"><a href="#core-classes">Core Classes</a></li>
+  <li class="toc-h3"><a href="#ghost-member-variables-from-m_ghost-strings">Ghost Member Variables (from `m_Ghost*` strings)</a></li>
+  <li class="toc-h3"><a href="#ghost-api-functions-27-maniascript-exposed">Ghost API Functions (27 ManiaScript-exposed)</a></li>
+<li class=""><a href="#3-replay-file-structure-replaygbx">3. Replay File Structure (.Replay.Gbx)</a></li>
+  <li class="toc-h3"><a href="#file-layout">File Layout</a></li>
+  <li class="toc-h3"><a href="#real-file-evidence">Real File Evidence</a></li>
+  <li class="toc-h3"><a href="#embedded-map">Embedded Map</a></li>
+<li class=""><a href="#4-replay-header-chunks">4. Replay Header Chunks</a></li>
+  <li class="toc-h3"><a href="#header-chunk-index">Header Chunk Index</a></li>
+  <li class="toc-h3"><a href="#chunk-0x03093000-replay-info">Chunk 0x03093000: Replay Info</a></li>
+  <li class="toc-h3"><a href="#chunk-0x03093001-xml-metadata-heavy">Chunk 0x03093001: XML Metadata (Heavy)</a></li>
+  <li class="toc-h3"><a href="#chunk-0x03093002-author-info">Chunk 0x03093002: Author Info</a></li>
+<li class=""><a href="#5-replay-body-structure">5. Replay Body Structure</a></li>
+  <li class="toc-h3"><a href="#known-body-chunks-from-gbxnet-community">Known Body Chunks (from GBX.NET / Community)</a></li>
+  <li class="toc-h3"><a href="#body-content-summary">Body Content Summary</a></li>
+  <li class="toc-h3"><a href="#evidence-from-file-tail">Evidence from File Tail</a></li>
+<li class=""><a href="#6-cgamectnghost-format">6. CGameCtnGhost Format</a></li>
+  <li class="toc-h3"><a href="#class-id">Class ID</a></li>
+  <li class="toc-h3"><a href="#ghost-chunk-ids-from-gbxnet">Ghost Chunk IDs (from GBX.NET)</a></li>
+  <li class="toc-h3"><a href="#ghost-data-composition">Ghost Data Composition</a></li>
+<li class=""><a href="#7-ghost-sample-encoding-50ms-period">7. Ghost Sample Encoding (50ms Period)</a></li>
+  <li class="toc-h3"><a href="#sample-period">Sample Period</a></li>
+  <li class="toc-h3"><a href="#per-sample-fields">Per-Sample Fields</a></li>
+  <li class="toc-h3"><a href="#sample-size">Sample Size</a></li>
+  <li class="toc-h3"><a href="#compression">Compression</a></li>
+  <li class="toc-h3"><a href="#encoding-details">Encoding Details</a></li>
+  <li class="toc-h3"><a href="#decoding-pseudocode">Decoding Pseudocode</a></li>
+  <li class="toc-h3"><a href="#for-a-38-second-replay">For a 38-Second Replay</a></li>
+<li class=""><a href="#8-input-recording-format-cinputreplay">8. Input Recording Format (CInputReplay)</a></li>
+  <li class="toc-h3"><a href="#overview">Overview</a></li>
+  <li class="toc-h3"><a href="#input-replay-operations">Input Replay Operations</a></li>
+  <li class="toc-h3"><a href="#input-fields-recorded">Input Fields Recorded</a></li>
+  <li class="toc-h3"><a href="#raw-integer-input-range">Raw Integer Input Range</a></li>
+  <li class="toc-h3"><a href="#binary-format-unknown">Binary Format [UNKNOWN]</a></li>
+<li class=""><a href="#9-entity-record-data-cplugentrecorddata">9. Entity Record Data (CPlugEntRecordData)</a></li>
+  <li class="toc-h3"><a href="#role">Role</a></li>
+  <li class="toc-h3"><a href="#duplicationtruncation">Duplication/Truncation</a></li>
+<li class=""><a href="#10-checkpoint-times-validation-data">10. Checkpoint Times &amp; Validation Data</a></li>
+  <li class="toc-h3"><a href="#checkpoint-times-array">Checkpoint Times Array</a></li>
+  <li class="toc-h3"><a href="#checkpoint-data-structure-partial">Checkpoint Data Structure [PARTIAL]</a></li>
+  <li class="toc-h3"><a href="#validation-status">Validation Status</a></li>
+  <li class="toc-h3"><a href="#cgamesavelaunchedcheckpoints">CGameSaveLaunchedCheckpoints</a></li>
+<li class=""><a href="#11-cgamectnghost-vs-cgamectnreplayrecord-differences">11. CGameCtnGhost vs CGameCtnReplayRecord Differences</a></li>
+  <li class="toc-h3"><a href="#structural-comparison">Structural Comparison</a></li>
+  <li class="toc-h3"><a href="#when-each-is-used">When Each Is Used</a></li>
+  <li class="toc-h3"><a href="#file-paths">File Paths</a></li>
+<li class=""><a href="#12-ghost-playback-interpolation">12. Ghost Playback &amp; Interpolation</a></li>
+  <li class="toc-h3"><a href="#rendering-ghost-cars">Rendering Ghost Cars</a></li>
+  <li class="toc-h3"><a href="#interpolation-method-partial">Interpolation Method [PARTIAL]</a></li>
+  <li class="toc-h3"><a href="#entity-id-masking">Entity ID Masking</a></li>
+  <li class="toc-h3"><a href="#playback-api">Playback API</a></li>
+<li class=""><a href="#13-network-ghost-format">13. Network Ghost Format</a></li>
+  <li class="toc-h3"><a href="#ghost-data-flow-online">Ghost Data Flow (Online)</a></li>
+  <li class="toc-h3"><a href="#anti-cheat-upload">Anti-Cheat Upload</a></li>
+  <li class="toc-h3"><a href="#secure-record-attempt-flow">Secure Record Attempt Flow</a></li>
+  <li class="toc-h3"><a href="#multiplayer-ghost-streaming-unknown">Multiplayer Ghost Streaming [UNKNOWN]</a></li>
+<li class=""><a href="#14-anti-cheat-replay-validation">14. Anti-Cheat &amp; Replay Validation</a></li>
+  <li class="toc-h3"><a href="#server-side-validation">Server-Side Validation</a></li>
+  <li class="toc-h3"><a href="#encrypted-package-system">Encrypted Package System</a></li>
+  <li class="toc-h3"><a href="#what-makes-a-run-validable">What Makes a Run &quot;Validable&quot;</a></li>
+<li class=""><a href="#15-real-file-hex-analysis">15. Real File Hex Analysis</a></li>
+  <li class="toc-h3"><a href="#file-comparison-two-replay-files">File Comparison: Two Replay Files</a></li>
+  <li class="toc-h3"><a href="#header-layout-consistency">Header Layout Consistency</a></li>
+  <li class="toc-h3"><a href="#body-region">Body Region</a></li>
+  <li class="toc-h3"><a href="#embedded-map-evidence">Embedded Map Evidence</a></li>
+<li class=""><a href="#16-browser-typescript-implementation-guide">16. Browser TypeScript Implementation Guide</a></li>
+  <li class="toc-h3"><a href="#recommended-approach">Recommended Approach</a></li>
+  <li class="toc-h3"><a href="#strategy-1-simple-input-recording-recommended-for-custom-replays">Strategy 1: Simple Input Recording (Recommended for Custom Replays)</a></li>
+  <li class="toc-h3"><a href="#strategy-2-parsing-official-tm2020-ghosts-advanced">Strategy 2: Parsing Official TM2020 Ghosts (Advanced)</a></li>
+  <li class="toc-h3"><a href="#required-external-libraries">Required External Libraries</a></li>
+  <li class="toc-h3"><a href="#implementation-priority">Implementation Priority</a></li>
+<li class=""><a href="#17-known-unknowns">17. Known Unknowns</a></li>
+  <li class="toc-h3"><a href="#critical-unknowns">Critical Unknowns</a></li>
+  <li class="toc-h3"><a href="#moderate-unknowns">Moderate Unknowns</a></li>
+  <li class="toc-h3"><a href="#low-priority-unknowns">Low-Priority Unknowns</a></li>
+<li class=""><a href="#18-cross-references">18. Cross-References</a></li>
+  <li class="toc-h3"><a href="#community-tools-for-ghostreplay-parsing">Community Tools for Ghost/Replay Parsing</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

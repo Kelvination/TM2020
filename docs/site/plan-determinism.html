@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Determinism Analysis - Trackmania 2020 Planning</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item active" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Determinism Analysis</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        
+                        <h1 id="wasm-floating-point-determinism-analysis-for-opentm"><a class="anchor" href="#wasm-floating-point-determinism-analysis-for-opentm">#</a>WASM Floating-Point Determinism Analysis for OpenTM</h1>
+<p><strong>Date</strong>: 2026-03-27 <strong>Purpose</strong>: Determine whether WebAssembly can guarantee bit-identical floating-point physics across browsers for ghost validation and competitive integrity. <strong>Verdict</strong>: CONDITIONALLY YES -- achievable with discipline, but requires specific engineering constraints.</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-wasm-float-specification-summary">WASM Float Specification Summary</a></li>
+  <li><a href="#2-known-nondeterminism-sources-with-evidence">Known Nondeterminism Sources</a></li>
+  <li><a href="#3-mitigation-strategies">Mitigation Strategies</a></li>
+  <li><a href="#4-tm2020s-approach-from-re-docs">TM2020's Approach</a></li>
+  <li><a href="#5-recommended-strategy-for-opentm">Recommended Strategy for OpenTM</a></li>
+  <li><a href="#6-fixed-point-alternative-analysis">Fixed-Point Alternative Analysis</a></li>
+  <li><a href="#7-test-plan">Test Plan</a></li>
+  <li><a href="#8-verdict-can-we-guarantee-determinism">Verdict</a></li>
+</ol>
+<hr>
+<h2 id="1-wasm-float-specification-summary"><a class="anchor" href="#1-wasm-float-specification-summary">#</a>1. WASM Float Specification Summary</h2>
+<h3 id="11-the-core-guarantee"><a class="anchor" href="#11-the-core-guarantee">#</a>1.1 The Core Guarantee</h3>
+<p>The WebAssembly specification (currently v3.0, 2026) provides a remarkably strong determinism guarantee for floating-point operations:</p>
+<p>> <strong>If neither the inputs to nor the output from a floating-point instruction is NaN, then the output is deterministic and agrees across all platforms.</strong></p>
+<p>This was explicitly confirmed by WebAssembly spec contributor Dan Gohman (sunfishcode) in <a href="https://github.com/WebAssembly/design/issues/1385">design issue #1385</a>:</p>
+<p>> "Yes, it's correct. Wasm's floating-point is deterministic, other than NaN bit patterns."</p>
+<h3 id="12-ieee-754-compliance"><a class="anchor" href="#12-ieee-754-compliance">#</a>1.2 IEEE 754 Compliance</h3>
+<p>WASM specifies:</p>
+<ul>
+  <li><strong>Rounding mode</strong>: Round-to-nearest, ties-to-even (the IEEE 754 default). No other rounding modes are accessible. Non-default directed rounding is not supported.</li>
+  <li><strong>Precision</strong>: Operations on f32 produce f32 results; operations on f64 produce f64 results. No extended precision (no x87-style 80-bit intermediate values).</li>
+  <li><strong>No fast-math</strong>: Compiler optimizations that change effective precision, rounding, or range are explicitly forbidden. Implementations may NOT contract or fuse operations to elide intermediate rounding steps.</li>
+  <li><strong>Subnormals</strong>: Full IEEE 754 subnormal support is required for scalar operations. Subnormals are NOT flushed to zero.</li>
+  <li><strong>Non-stop mode</strong>: All operations use non-stop mode. Floating-point exceptions are not observable.</li>
+</ul>
+<h3 id="13-what-operations-are-available"><a class="anchor" href="#13-what-operations-are-available">#</a>1.3 What Operations Are Available</h3>
+<p>WASM provides these built-in floating-point operations, all of which are deterministic (excluding NaN bit patterns):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Category</th>
+  <th style="text-align:left">Operations</th>
+  <th style="text-align:left">Deterministic?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Arithmetic</td>
+  <td style="text-align:left"><code>f32.add</code>, <code>f32.sub</code>, <code>f32.mul</code>, <code>f32.div</code></td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">Square root</td>
+  <td style="text-align:left"><code>f32.sqrt</code></td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">Comparison</td>
+  <td style="text-align:left"><code>f32.eq</code>, <code>f32.lt</code>, <code>f32.gt</code>, <code>f32.le</code>, <code>f32.ge</code></td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">Min/Max</td>
+  <td style="text-align:left"><code>f32.min</code>, <code>f32.max</code></td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">Rounding</td>
+  <td style="text-align:left"><code>f32.ceil</code>, <code>f32.floor</code>, <code>f32.trunc</code>, <code>f32.nearest</code></td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">Conversion</td>
+  <td style="text-align:left"><code>f32.convert_i32_s</code>, <code>i32.trunc_f32_s</code>, etc.</td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">Reinterpret</td>
+  <td style="text-align:left"><code>f32.reinterpret_i32</code></td>
+  <td style="text-align:left">YES</td>
+</tr>
+<tr>
+  <td style="text-align:left">Sign manipulation</td>
+  <td style="text-align:left"><code>f32.neg</code>, <code>f32.abs</code>, <code>f32.copysign</code></td>
+  <td style="text-align:left">YES (even NaN bits preserved)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Fused multiply-add</td>
+  <td style="text-align:left"><code>f32.fma</code> (proposed)</td>
+  <td style="text-align:left">YES (single rounding)</td>
+</tr>
+</tbody>
+</table></div>
+<p>The same applies for f64 variants.</p>
+<h3 id="14-what-operations-are-not-available"><a class="anchor" href="#14-what-operations-are-not-available">#</a>1.4 What Operations Are NOT Available</h3>
+<p>Critically, <strong>WASM has no built-in transcendental functions</strong>:</p>
+<ul>
+  <li>No <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>atan2</code></li>
+  <li>No <code>exp</code>, <code>log</code>, <code>pow</code></li>
+  <li>No <code>asin</code>, <code>acos</code></li>
+</ul>
+<p>These must be implemented as library code compiled to WASM, or imported from the host environment. This is actually <strong>good for determinism</strong> -- see Section 3.</p>
+<h3 id="15-the-nan-exception"><a class="anchor" href="#15-the-nan-exception">#</a>1.5 The NaN Exception</h3>
+<p>The ONLY floating-point nondeterminism in WASM is NaN bit patterns:</p>
+<ol>
+  <li><strong>NaN payload propagation</strong>: When multiple NaN inputs are present, which NaN's payload propagates is nondeterministic.</li>
+  <li><strong>NaN sign bit</strong>: When an operation produces NaN from non-NaN inputs (e.g., <code>0.0 / 0.0</code>), the sign bit of the result is nondeterministic.</li>
+  <li><strong>Canonical NaN rule</strong>: If all NaN inputs have canonical payloads, the output payload is canonical. Otherwise, the payload is picked nondeterministically among arithmetic NaNs.</li>
+</ol>
+<p><strong>Why NaN bits are nondeterministic</strong>: Per <a href="https://github.com/WebAssembly/design/issues/619">design issue #619</a>, canonicalizing NaN bits after every operation would be too expensive. x86 produces NaN sign=1 while ARM produces NaN sign=0, and normalizing this would require extra instructions on every float operation.</p>
+<p><strong>Deterministic Profile</strong>: WASM 3.0 includes a deterministic profile where "a positive canonical NaN is reliably produced" in ambiguous cases. Browser adoption status is unclear, but this is available in non-browser runtimes like Wasmtime.</p>
+<hr>
+<h2 id="2-known-nondeterminism-sources-with-evidence"><a class="anchor" href="#2-known-nondeterminism-sources-with-evidence">#</a>2. Known Nondeterminism Sources (with Evidence)</h2>
+<h3 id="21-sources-that-do-affect-us"><a class="anchor" href="#21-sources-that-do-affect-us">#</a>2.1 Sources That DO Affect Us</h3>
+<h4 id="211-nan-bit-patterns-medium-risk"><a class="anchor" href="#211-nan-bit-patterns-medium-risk">#</a>2.1.1 NaN Bit Patterns (MEDIUM RISK)</h4>
+<p><strong>What</strong>: Different browsers may produce different NaN bit patterns for the same computation.</p>
+<p><strong>Impact on physics</strong>: NaN bit patterns only matter if:</p>
+<ul>
+  <li>You observe them via <code>i32.reinterpret_f32</code> or memory storage</li>
+  <li>You use <code>copysign</code> with a NaN operand</li>
+  <li>NaN values feed into subsequent non-NaN-producing operations</li>
+</ul>
+<p><strong>For a physics engine</strong>: NaN values should NEVER appear in normal simulation. If they do, something is already catastrophically wrong. TM2020 guards against this with negative-sqrt checks (Section 4).</p>
+<p><strong>Risk assessment</strong>: LOW for physics computations. NaN should never occur. The mitigation is: if NaN appears, the simulation is invalid regardless.</p>
+<h4 id="212-transcendental-functions-high-risk-if-mishandled"><a class="anchor" href="#212-transcendental-functions-high-risk-if-mishandled">#</a>2.1.2 Transcendental Functions (HIGH RISK if mishandled)</h4>
+<p><strong>What</strong>: <code>sin</code>, <code>cos</code>, <code>atan2</code>, etc. are NOT WASM built-ins. They must come from somewhere:</p>
+<ul>
+  <li><strong>Option A: Import from JavaScript <code>Math</code> object</strong> -- NONDETERMINISTIC. Browser engines (V8, SpiderMonkey, JavaScriptCore) may use different algorithms. JavaScript's <code>Math.sin</code> is explicitly allowed to vary between implementations.</li>
+  <li><strong>Option B: Compile a software implementation (e.g., Rust's <code>libm</code>)</strong> -- DETERMINISTIC. The exact same WASM bytecode runs on all engines. Since WASM basic operations are deterministic, the same algorithm with the same inputs produces the same outputs.</li>
+  <li><strong>Option C: Custom lookup tables</strong> -- DETERMINISTIC. Pre-computed tables with interpolation are guaranteed identical since they use only basic WASM operations.</li>
+</ul>
+<p><strong>Evidence</strong>: The <a href="https://www.nhatcher.com/post/should_i_import_or_should_i_roll/">nhatcher.com analysis</a> found importing browser <code>Math</code> functions was faster than compiled <code>libm</code>, but did NOT test cross-browser consistency. The performance difference is ~10x for heavy trig use -- but for a physics engine doing occasional atan2 calls, this is irrelevant.</p>
+<p><strong>Verdict</strong>: MUST use compiled-in implementations (Option B or C). NEVER import browser Math functions for physics.</p>
+<h4 id="213-relaxed-simd-high-risk-if-used"><a class="anchor" href="#213-relaxed-simd-high-risk-if-used">#</a>2.1.3 Relaxed SIMD (HIGH RISK if used)</h4>
+<p><strong>What</strong>: The Relaxed SIMD proposal (shipping in browsers) explicitly introduces "local non-determinism" -- results may vary based on hardware. Includes relaxed FMA, relaxed integer dot products, relaxed min/max.</p>
+<p><strong>Mitigation</strong>: Simply do not use relaxed SIMD instructions for physics. Use standard (non-relaxed) SIMD or scalar operations only.</p>
+<h4 id="214-rust-compiler-nondeterminism-medium-risk"><a class="anchor" href="#214-rust-compiler-nondeterminism-medium-risk">#</a>2.1.4 Rust Compiler Nondeterminism (MEDIUM RISK)</h4>
+<p><strong>What</strong>: Rust's compiler does not guarantee bit-identical WASM output across:</p>
+<ul>
+  <li>Different compiler versions</li>
+  <li>Different host OS during compilation (Cargo metadata hashing bug, <a href="https://github.com/rust-lang/rust/issues/117597">rust#117597</a>)</li>
+  <li>Different optimization levels</li>
+</ul>
+<p><strong>Evidence</strong>: Parity Technologies <a href="https://dev.to/gnunicorn/hunting-down-a-non-determinism-bug-in-our-rust-wasm-build-4fk1">documented</a> a case where LLVM's "Fix Irreducible Control Flow" pass produced nondeterministic basic block ordering, and Cargo's <code>-C metadata</code> hash varied by host OS.</p>
+<p><strong>Impact</strong>: This affects whether two separately compiled WASM binaries produce the same bytecode. It does NOT affect whether the SAME WASM binary produces the same results across browsers. For OpenTM, we ship one WASM binary to all clients, so this is manageable.</p>
+<p><strong>Mitigation</strong>: Pin Rust compiler version. Use reproducible builds. Ship the same <code>.wasm</code> artifact to all clients.</p>
+<h3 id="22-sources-that-do-not-affect-us"><a class="anchor" href="#22-sources-that-do-not-affect-us">#</a>2.2 Sources That Do NOT Affect Us</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Source</th>
+  <th style="text-align:left">Why It's Not a Problem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">SharedArrayBuffer / threads</td>
+  <td style="text-align:left">We use single-threaded physics (same as TM2020)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Flexible-vectors proposal</td>
+  <td style="text-align:left">Not yet standardized, don't use it</td>
+</tr>
+<tr>
+  <td style="text-align:left">Resource exhaustion (stack overflow, OOM)</td>
+  <td style="text-align:left">Detectable; abort simulation rather than diverge</td>
+</tr>
+<tr>
+  <td style="text-align:left">Feature variation</td>
+  <td style="text-align:left">All target browsers support WASM MVP + needed features</td>
+</tr>
+<tr>
+  <td style="text-align:left">FMA instruction fusion</td>
+  <td style="text-align:left">WASM spec forbids implicit fusion; <code>f32.mul</code> + <code>f32.add</code> always rounds twice</td>
+</tr>
+<tr>
+  <td style="text-align:left">x87 extended precision</td>
+  <td style="text-align:left">WASM uses 32/64-bit only; no 80-bit intermediate values exist</td>
+</tr>
+<tr>
+  <td style="text-align:left">Subnormal flush-to-zero</td>
+  <td style="text-align:left">WASM scalar ops require full subnormal support</td>
+</tr>
+<tr>
+  <td style="text-align:left">Rounding mode differences</td>
+  <td style="text-align:left">WASM only supports round-to-nearest; no way to change it</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23-the-fma-question-important-detail"><a class="anchor" href="#23-the-fma-question-important-detail">#</a>2.3 The FMA Question (Important Detail)</h3>
+<p>Fused Multiply-Add is a common source of nondeterminism in native code because compilers may or may not fuse <code>a * b + c</code> into a single FMA instruction, producing different rounding.</p>
+<p><strong>In WASM, this is NOT a problem.</strong> The specification explicitly states: > "Implementations are not permitted to contract or fuse operations to elide intermediate rounding steps."</p>
+<p>A <code>f32.mul</code> followed by <code>f32.add</code> will ALWAYS produce two rounding steps. If you want single-rounding FMA behavior, you must explicitly use the <code>f32.fma</code> instruction. This is the opposite of native code, where FMA might happen implicitly.</p>
+<p>Box2D uses <code>-ffp-contract=off</code> to prevent FMA fusion in native builds. In WASM, this restriction is enforced by the specification itself.</p>
+<hr>
+<h2 id="3-mitigation-strategies"><a class="anchor" href="#3-mitigation-strategies">#</a>3. Mitigation Strategies</h2>
+<h3 id="31-strategy-compiled-in-math-library-recommended"><a class="anchor" href="#31-strategy-compiled-in-math-library-recommended">#</a>3.1 Strategy: Compiled-In Math Library (RECOMMENDED)</h3>
+<p>Use Rust's <code>libm</code> crate (or equivalent) for ALL transcendental functions. This compiles <code>sin</code>, <code>cos</code>, <code>atan2</code>, <code>exp</code>, <code>log</code> etc. to pure WASM bytecode using only basic operations.</p>
+<p><strong>Why this works</strong>: If the WASM bytecode is identical (same <code>.wasm</code> binary), and WASM basic operations are deterministic, then the composed function is deterministic. The algorithm is the same. The inputs are the same. The intermediate rounding is the same. The output is the same.</p>
+<p><strong>Performance</strong>: Compiled <code>libm</code> sin/cos is approximately 10x slower than browser-native Math.sin for bulk computation (<a href="https://www.nhatcher.com/post/should_i_import_or_should_i_roll/">nhatcher.com benchmarks</a>). For a physics engine computing a few trig functions per tick per vehicle, this is negligible -- we are talking microseconds.</p>
+<p><strong>Rapier physics engine</strong> (Rust) takes exactly this approach with its <code>enhanced-determinism</code> feature flag, using nalgebra's <code>ComplexField</code> traits for cross-platform math.</p>
+<h3 id="32-strategy-nan-prevention-required"><a class="anchor" href="#32-strategy-nan-prevention-required">#</a>3.2 Strategy: NaN Prevention (REQUIRED)</h3>
+<p>Follow TM2020's pattern: prevent NaN from ever entering the simulation.</p>
+<ul>
+  <li>Guard every <code>sqrt</code> call: <code>if x < 0.0 { x = 0.0 } sqrt(x)</code></li>
+  <li>Guard every division: check for zero denominator</li>
+  <li>Clamp velocities and positions to sane ranges</li>
+  <li>Validate all inputs at the physics boundary</li>
+</ul>
+<p>If NaN never appears, the NaN nondeterminism problem does not exist.</p>
+<h3 id="33-strategy-avoid-relaxed-simd"><a class="anchor" href="#33-strategy-avoid-relaxed-simd">#</a>3.3 Strategy: Avoid Relaxed SIMD</h3>
+<p>Use only standard WASM SIMD (128-bit fixed-width) for physics, never relaxed SIMD. Standard SIMD operations follow the same determinism rules as scalar operations. Relaxed SIMD explicitly trades determinism for performance.</p>
+<p>Note: Standard WASM SIMD does have one caveat -- on 32-bit ARM (ARMv7), subnormals may be flushed to zero in SIMD operations. However, this is only relevant for very old mobile hardware (pre-ARMv8/AArch64). All modern browsers on desktop and modern mobile run AArch64 with full subnormal support in SIMD.</p>
+<h3 id="34-strategy-single-wasm-binary"><a class="anchor" href="#34-strategy-single-wasm-binary">#</a>3.4 Strategy: Single WASM Binary</h3>
+<p>Ship exactly one <code>.wasm</code> binary to all clients. Do not recompile per-platform. Do not allow clients to compile their own WASM. The binary IS the physics specification.</p>
+<h3 id="35-strategy-determinism-hash-verification"><a class="anchor" href="#35-strategy-determinism-hash-verification">#</a>3.5 Strategy: Determinism Hash Verification</h3>
+<p>After each physics tick (or every N ticks), compute a hash of the full simulation state (positions, velocities, forces). Compare this hash between:</p>
+<ul>
+  <li>Client and server</li>
+  <li>Two clients in multiplayer</li>
+  <li>Live play and ghost replay</li>
+</ul>
+<p>Any divergence indicates a determinism failure and should be treated as invalid.</p>
+<hr>
+<h2 id="4-tm2020s-approach-from-re-docs"><a class="anchor" href="#4-tm2020s-approach-from-re-docs">#</a>4. TM2020's Approach (from RE Docs)</h2>
+<p>TM2020 achieves determinism through the following mechanisms, verified via decompilation:</p>
+<h3 id="41-integer-based-timing"><a class="anchor" href="#41-integer-based-timing">#</a>4.1 Integer-Based Timing</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:63</code>, <code>NSceneDyna__PhysicsStep.c:15</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">lVar18 = (ulonglong)*param_4 * 1000000;  // integer * integer = integer</code></pre></div>
+<p>Time is tracked as integer tick counts (100Hz = 10ms per tick). The tick-to-microsecond conversion uses integer multiplication, not floating-point. No <code>time += deltaTime</code> accumulation. This eliminates time-base drift entirely.</p>
+<h3 id="42-fixed-100hz-timestep"><a class="anchor" href="#42-fixed-100hz-timestep">#</a>4.2 Fixed 100Hz Timestep</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> (inferred from converging evidence)</p>
+<p>The physics runs at exactly 100Hz. Display framerate is completely decoupled. <code>SmMaxPlayerResimStepPerFrame=100</code> caps resimulation to 1 second per frame. Running at 30fps vs 300fps produces identical physics.</p>
+<h3 id="43-deterministic-sub-stepping"><a class="anchor" href="#43-deterministic-sub-stepping">#</a>4.3 Deterministic Sub-Stepping</h3>
+<p><strong>Source</strong>: <code>PhysicsStep_TM.c:71-167</code></p>
+<p>Within each 10ms tick, adaptive sub-stepping divides the timestep based on velocity:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>total_speed = |linear_vel| + |angular_vel_body| + |angular_vel1| + |angular_vel2|
+num_substeps = clamp(floor(total_speed * scale * dt / step_size) + 1, 1, 1000)
+sub_dt = dt / num_substeps</code></pre></div>
+<p>The sub-step count is deterministic given the same velocity state. The final sub-step uses a remainder calculation to avoid floating-point drift from repeated addition.</p>
+<h3 id="44-guarded-square-root"><a class="anchor" href="#44-guarded-square-root">#</a>4.4 Guarded Square Root</h3>
+<p><strong>Source</strong>: All physics files</p>
+<p>Every <code>sqrt</code> call is preceded by a negative check:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (fVar24 &lt; 0.0) {
+    fVar24 = safe_sqrt(fVar24);  // handles negative input
+} else {
+    fVar24 = SQRT(fVar24);       // SSE sqrtss
+}</code></pre></div>
+<p>This prevents NaN propagation from floating-point precision artifacts where <code>x<em>x + y</em>y + z*z</code> might produce tiny negative values. NaN would break determinism because <code>NaN != NaN</code> causes divergent control flow.</p>
+<h3 id="45-sequential-body-processing"><a class="anchor" href="#45-sequential-body-processing">#</a>4.5 Sequential Body Processing</h3>
+<p><strong>Source</strong>: <code>NSceneDyna__PhysicsStep_V2.c:103-116</code></p>
+<p>Bodies are processed in array order via sequential iteration over a sorted index array. No parallel dispatch, no random ordering. Collision pair processing order is deterministic regardless of memory allocation.</p>
+<h3 id="46-sse-on-x64-platform-specific"><a class="anchor" href="#46-sse-on-x64-platform-specific">#</a>4.6 SSE on x64 (Platform-Specific)</h3>
+<p>TM2020 is compiled for x64, using SSE for all float operations. SSE <code>sqrtss</code>, <code>addss</code>, <code>mulss</code> are IEEE 754 compliant and deterministic on the same CPU architecture.</p>
+<p><strong>Key limitation</strong>: TM2020's determinism guarantee is "within same build, same platform (x64)." Cross-architecture determinism (x64 vs ARM) is NOT guaranteed by their code patterns. This is acceptable because TM2020 only runs on Windows x64 PCs and their own servers.</p>
+<h3 id="47-input-based-replays"><a class="anchor" href="#47-input-based-replays">#</a>4.7 Input-Based Replays</h3>
+<p>The ghost/replay system records inputs (steer, gas, brake) per tick, not positions. Replay validation re-simulates the run from recorded inputs. Server-side anti-cheat re-runs the physics to verify claimed times. This only works because the simulation is deterministic.</p>
+<h3 id="48-what-opentm-can-learn"><a class="anchor" href="#48-what-opentm-can-learn">#</a>4.8 What OpenTM Can Learn</h3>
+<p>TM2020's approach maps well to WASM because:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">TM2020 Mechanism</th>
+  <th style="text-align:left">OpenTM WASM Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">SSE (deterministic on same arch)</td>
+  <td style="text-align:left">WASM spec (deterministic on ALL implementations)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Same binary = same results</td>
+  <td style="text-align:left">Same <code>.wasm</code> binary = same results (stronger guarantee)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Integer tick counting</td>
+  <td style="text-align:left">Identical approach (i32/i64 ticks)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Guarded sqrt</td>
+  <td style="text-align:left">Identical approach</td>
+</tr>
+<tr>
+  <td style="text-align:left">Sequential processing</td>
+  <td style="text-align:left">Identical approach (WASM is single-threaded)</td>
+</tr>
+<tr>
+  <td style="text-align:left">100Hz fixed timestep</td>
+  <td style="text-align:left">Same or similar (100Hz or 120Hz)</td>
+</tr>
+</tbody>
+</table></div>
+<p>OpenTM actually has a STRONGER determinism foundation than TM2020 because WASM guarantees cross-architecture consistency for basic float operations, while SSE only guarantees same-architecture consistency.</p>
+<hr>
+<h2 id="5-recommended-strategy-for-opentm"><a class="anchor" href="#5-recommended-strategy-for-opentm">#</a>5. Recommended Strategy for OpenTM</h2>
+<h3 id="51-architecture"><a class="anchor" href="#51-architecture">#</a>5.1 Architecture</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>[Physics Engine (Rust)] --&gt; [Compiled to .wasm] --&gt; [Same binary to all clients]
+                                                         |
+                                    +--------------------+--------------------+
+                                    |                    |                    |
+                               Chrome/V8          Firefox/SpiderMonkey   Safari/JSC
+                                    |                    |                    |
+                              Identical results    Identical results    Identical results</code></pre></div>
+<h3 id="52-engineering-rules"><a class="anchor" href="#52-engineering-rules">#</a>5.2 Engineering Rules</h3>
+<ol>
+  <li><strong>Use f32 for all physics</strong> (same as TM2020). f64 is unnecessary for a racing game and doubles memory bandwidth.</li>
+</ol>
+<ol>
+  <li><strong>Compile ALL math into WASM</strong>. Use <code>libm</code> crate for sin/cos/atan2. NEVER call JavaScript Math functions from physics code.</li>
+</ol>
+<ol>
+  <li><strong>No relaxed SIMD</strong>. Standard SIMD only, or pure scalar operations.</li>
+</ol>
+<ol>
+  <li><strong>Guard every sqrt</strong>. Clamp input to >= 0.0 before calling <code>f32.sqrt</code>.</li>
+</ol>
+<ol>
+  <li><strong>Guard every division</strong>. Check for zero/near-zero denominators.</li>
+</ol>
+<ol>
+  <li><strong>Integer tick counting</strong>. Follow TM2020: <code>tick * 1_000_000</code> for microseconds, integer multiplication only.</li>
+</ol>
+<ol>
+  <li><strong>Fixed timestep</strong> (100Hz recommended). No variable timestep, no <code>time += dt</code> accumulation.</li>
+</ol>
+<ol>
+  <li><strong>Sequential processing</strong>. No threading in physics. Process bodies in deterministic order.</li>
+</ol>
+<ol>
+  <li><strong>Single .wasm binary</strong>. Ship the exact same binary to all clients and servers. Pin Rust compiler version for reproducible builds.</li>
+</ol>
+<ol>
+  <li><strong>Determinism verification hash</strong>. Compute a state hash every tick. Compare across client/server/replay.</li>
+</ol>
+<h3 id="53-what-this-does-not-require"><a class="anchor" href="#53-what-this-does-not-require">#</a>5.3 What This Does NOT Require</h3>
+<ul>
+  <li>No fixed-point arithmetic</li>
+  <li>No software float emulation (softfloat)</li>
+  <li>No NaN canonicalization pass</li>
+  <li>No special browser flags or APIs</li>
+  <li>No platform-specific code paths</li>
+</ul>
+<h3 id="54-confidence-level"><a class="anchor" href="#54-confidence-level">#</a>5.4 Confidence Level</h3>
+<p><strong>HIGH confidence</strong> that this approach works. The reasoning chain:</p>
+<ol>
+  <li>WASM basic float operations (add, sub, mul, div, sqrt) are <strong>spec-guaranteed deterministic</strong> for non-NaN inputs.</li>
+  <li>NaN prevention ensures we never hit the nondeterministic path.</li>
+  <li>Compiled-in <code>libm</code> ensures transcendental functions are deterministic (they're just sequences of basic operations).</li>
+  <li>Same <code>.wasm</code> binary ensures all clients execute identical bytecode.</li>
+  <li>Fixed timestep and integer time ensure the simulation is seeded identically.</li>
+</ol>
+<p>The only remaining question is whether all browser JIT compilers correctly implement the spec. This is testable (Section 7) and the evidence from the WASM spec testsuite, which covers edge cases including subnormals and operations that would round differently in x87, suggests compliance is high.</p>
+<hr>
+<h2 id="6-fixed-point-alternative-analysis"><a class="anchor" href="#6-fixed-point-alternative-analysis">#</a>6. Fixed-Point Alternative Analysis</h2>
+<h3 id="61-what-is-fixed-point"><a class="anchor" href="#61-what-is-fixed-point">#</a>6.1 What Is Fixed-Point?</h3>
+<p>Fixed-point arithmetic represents real numbers as integers with an implicit scale factor. For example, Q16.16 format uses 16 integer bits and 16 fractional bits, representing values from -32768.0 to 32767.99998 with precision of 1/65536 (~0.0000153).</p>
+<h3 id="62-advantages"><a class="anchor" href="#62-advantages">#</a>6.2 Advantages</h3>
+<ul>
+  <li><strong>Absolute determinism</strong>: Integer arithmetic is deterministic everywhere, always. No NaN, no rounding mode questions, no specification edge cases.</li>
+  <li><strong>No spec dependency</strong>: Does not rely on browser WASM engines correctly implementing IEEE 754.</li>
+  <li><strong>Battle-tested</strong>: Used by Age of Empires, StarCraft, and many RTS games for lockstep networking.</li>
+</ul>
+<h3 id="63-disadvantages"><a class="anchor" href="#63-disadvantages">#</a>6.3 Disadvantages</h3>
+<h4 id="631-precision-loss"><a class="anchor" href="#631-precision-loss">#</a>6.3.1 Precision Loss</h4>
+<p>Q16.16 provides ~4.8 decimal digits of precision. Compare with f32's ~7.2 decimal digits.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Operation</th>
+  <th style="text-align:left">f32 result</th>
+  <th style="text-align:left">Q16.16 result</th>
+  <th style="text-align:left">Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">sin(0.1)</td>
+  <td style="text-align:left">0.09983342</td>
+  <td style="text-align:left">0.09983521</td>
+  <td style="text-align:left">0.0018%</td>
+</tr>
+<tr>
+  <td style="text-align:left">1.0 / 3.0</td>
+  <td style="text-align:left">0.33333334</td>
+  <td style="text-align:left">0.33331299</td>
+  <td style="text-align:left">0.006%</td>
+</tr>
+<tr>
+  <td style="text-align:left">sqrt(2.0)</td>
+  <td style="text-align:left">1.41421356</td>
+  <td style="text-align:left">1.41421509</td>
+  <td style="text-align:left">0.0001%</td>
+</tr>
+<tr>
+  <td style="text-align:left">100.0 * 100.0</td>
+  <td style="text-align:left">10000.0</td>
+  <td style="text-align:left">OVERFLOW</td>
+  <td style="text-align:left">Fatal</td>
+</tr>
+</tbody>
+</table></div>
+<p>The overflow problem is severe for a physics engine. Velocities can reach 1000+ km/h in TM, and forces involve multiplication of large values. Q16.16 overflows at 32768.</p>
+<p>Q32.32 (64-bit fixed-point) solves the range problem but requires 64-bit integer arithmetic, which is slower in WASM (WASM's native word size is 32-bit; i64 operations require multi-instruction sequences on 32-bit hosts, though modern 64-bit browsers handle i64 natively).</p>
+<h4 id="632-performance-impact"><a class="anchor" href="#632-performance-impact">#</a>6.3.2 Performance Impact</h4>
+<p>Benchmark data from the <a href="https://dev.to/shaisrc/deterministic-physics-in-ts-why-i-wrote-a-fixed-point-engine-4b0l">@shaisrc/fixed-point</a> library (TypeScript, 5M iterations):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Operation</th>
+  <th style="text-align:left">Native float (ms)</th>
+  <th style="text-align:left">Fixed-point (ms)</th>
+  <th style="text-align:left">Slowdown</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Add/Multiply</td>
+  <td style="text-align:left">6.70</td>
+  <td style="text-align:left">120.24</td>
+  <td style="text-align:left">18x</td>
+</tr>
+<tr>
+  <td style="text-align:left">Sin (LUT)</td>
+  <td style="text-align:left">197.90</td>
+  <td style="text-align:left">64.75</td>
+  <td style="text-align:left">0.3x (faster!)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Basic arithmetic is 10-20x slower. Trigonometry via lookup tables can be faster than JavaScript's <code>Math.sin</code>, but that comparison is irrelevant for WASM where we'd compile <code>libm</code>.</p>
+<p>In WASM specifically, fixed-point arithmetic replaces hardware <code>f32.mul</code> (1 cycle) with integer multiply + shift (2-3 cycles minimum). For division, it's much worse: fixed-point division requires widening to 64-bit, dividing, then narrowing -- vs <code>f32.div</code> which is a single instruction.</p>
+<h4 id="633-implementation-complexity"><a class="anchor" href="#633-implementation-complexity">#</a>6.3.3 Implementation Complexity</h4>
+<p>Every physics formula must be rewritten. You cannot use standard linear algebra libraries. Debugging is harder because values are not human-readable. Overflow detection must be manual.</p>
+<h3 id="64-verdict-on-fixed-point"><a class="anchor" href="#64-verdict-on-fixed-point">#</a>6.4 Verdict on Fixed-Point</h3>
+<p><strong>Not recommended for OpenTM.</strong> The engineering cost and performance penalty are not justified when WASM's float determinism guarantees are sufficient. Fixed-point makes sense when:</p>
+<ul>
+  <li>You cannot control the float implementation (native code across different compilers/platforms)</li>
+  <li>You need to support ancient hardware with non-IEEE-754-compliant FPUs</li>
+  <li>Your value ranges are narrow and well-bounded</li>
+</ul>
+<p>None of these apply to OpenTM. WASM gives us a controlled, spec-compliant float environment. Use it.</p>
+<p><strong>Exception</strong>: If cross-browser testing (Section 7) reveals WASM float nondeterminism in practice, fixed-point becomes the fallback strategy.</p>
+<hr>
+<h2 id="7-test-plan"><a class="anchor" href="#7-test-plan">#</a>7. Test Plan</h2>
+<h3 id="71-phase-1-basic-operation-verification"><a class="anchor" href="#71-phase-1-basic-operation-verification">#</a>7.1 Phase 1: Basic Operation Verification</h3>
+<p>Write a small WASM module (in Rust) that performs every float operation used in physics and hashes the results:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">// test_determinism.rs -&gt; test_determinism.wasm
+fn test_basic_ops() -&gt; u64 {
+    let mut hasher = FnvHasher::new();
+
+    // Basic arithmetic
+    hash(&amp;mut hasher, 1.0f32 + 0.1f32);
+    hash(&amp;mut hasher, 1.0f32 - 0.1f32);
+    hash(&amp;mut hasher, 1.0f32 * 0.1f32);
+    hash(&amp;mut hasher, 1.0f32 / 0.3f32);
+
+    // Edge cases
+    hash(&amp;mut hasher, f32::MIN_POSITIVE * 0.5); // subnormal
+    hash(&amp;mut hasher, 1.0e38f32 + 1.0e38f32);  // overflow to inf
+    hash(&amp;mut hasher, f32::sqrt(2.0));
+    hash(&amp;mut hasher, f32::sqrt(0.0));
+
+    // Transcendental (compiled libm)
+    hash(&amp;mut hasher, libm::sinf(0.1));
+    hash(&amp;mut hasher, libm::cosf(0.1));
+    hash(&amp;mut hasher, libm::atan2f(1.0, 1.0));
+
+    hasher.finish()
+}</code></pre></div>
+<p>Run this WASM module in:</p>
+<ul>
+  <li>Chrome (V8) on Windows x64, macOS ARM64, Linux x64</li>
+  <li>Firefox (SpiderMonkey) on same platforms</li>
+  <li>Safari (JavaScriptCore) on macOS ARM64, iOS</li>
+</ul>
+<p><strong>Expected result</strong>: Identical hash across all browser/platform combinations.</p>
+<h3 id="72-phase-2-physics-simulation-divergence-test"><a class="anchor" href="#72-phase-2-physics-simulation-divergence-test">#</a>7.2 Phase 2: Physics Simulation Divergence Test</h3>
+<p>Run the actual OpenTM physics engine for 10,000 ticks (100 seconds) with a predefined input sequence. Hash the full vehicle state (position, velocity, rotation) at every tick.</p>
+<ul>
+  <li>Compare Chrome vs Firefox vs Safari</li>
+  <li>Compare x64 vs ARM64 (Mac)</li>
+  <li>Compare optimized vs debug builds of the same WASM</li>
+</ul>
+<p><strong>What to look for</strong>:</p>
+<ul>
+  <li>First tick where any hash diverges</li>
+  <li>Which state variable diverged first</li>
+  <li>Whether divergence grows over time or is bounded</li>
+</ul>
+<h3 id="73-phase-3-edge-case-stress-test"><a class="anchor" href="#73-phase-3-edge-case-stress-test">#</a>7.3 Phase 3: Edge Case Stress Test</h3>
+<p>Design inputs that stress determinism-critical paths:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Test Case</th>
+  <th style="text-align:left">Why It's Risky</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Very high speed (1000+ km/h)</td>
+  <td style="text-align:left">Large sub-step counts, many float operations</td>
+</tr>
+<tr>
+  <td style="text-align:left">Very slow speed (< 0.01 km/h)</td>
+  <td style="text-align:left">Subnormal values possible</td>
+</tr>
+<tr>
+  <td style="text-align:left">Grazing collision angle</td>
+  <td style="text-align:left">Near-zero contact normals, division by small numbers</td>
+</tr>
+<tr>
+  <td style="text-align:left">Extended air time (10+ seconds)</td>
+  <td style="text-align:left">Accumulated gravity integration</td>
+</tr>
+<tr>
+  <td style="text-align:left">Rapid surface transitions</td>
+  <td style="text-align:left">Many contact state changes per tick</td>
+</tr>
+<tr>
+  <td style="text-align:left">Simultaneous vehicle interactions</td>
+  <td style="text-align:left">Collision pair ordering</td>
+</tr>
+<tr>
+  <td style="text-align:left">Near-zero velocity at rest</td>
+  <td style="text-align:left">Sleep detection thresholds</td>
+</tr>
+</tbody>
+</table></div>
+<details class="collapsible collapsed-by-default">
+<summary><h3 id="74-phase-4-long-duration-ghost-validation"><a class="anchor" href="#74-phase-4-long-duration-ghost-validation">#</a>7.4 Phase 4: Long-Duration Ghost Validation</h3></summary>
+<div class="collapsible-content">
+<p>Record a ghost (input sequence) on Chrome. Replay it on Firefox and Safari. Compare:</p>
+<ul>
+  <li>Final position (should be bit-identical)</li>
+  <li>Final time (should be identical)</li>
+  <li>Intermediate checkpoints (should all match)</li>
+</ul>
+<p>Test with runs of varying length: 10s, 60s, 300s, 900s (15 minutes).</p>
+</div>
+</details>
+<h3 id="75-existing-test-resources"><a class="anchor" href="#75-existing-test-resources">#</a>7.5 Existing Test Resources</h3>
+<p>The <a href="https://github.com/meheleventyone/wasm-float-determinism-test">wasm-float-determinism-test</a> project (Zig-based) has already built infrastructure for cross-browser WASM float testing and solicits results via GitHub issues. We should both use their results and contribute our own.</p>
+<hr>
+<h2 id="8-verdict-can-we-guarantee-determinism"><a class="anchor" href="#8-verdict-can-we-guarantee-determinism">#</a>8. Verdict: Can We Guarantee Determinism?</h2>
+<h3 id="conditionally-yes"><a class="anchor" href="#conditionally-yes">#</a>CONDITIONALLY YES</h3>
+<p>WebAssembly can provide bit-identical floating-point physics across Chrome, Firefox, and Safari, IF the following conditions are met:</p>
+<h3 id="required-conditions"><a class="anchor" href="#required-conditions">#</a>Required Conditions</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">#</th>
+  <th style="text-align:left">Condition</th>
+  <th style="text-align:left">Difficulty</th>
+  <th style="text-align:left">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Ship same <code>.wasm</code> binary to all clients</td>
+  <td style="text-align:left">Easy</td>
+  <td style="text-align:left">Architectural decision</td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Compile all math (sin, cos, atan2) into WASM via <code>libm</code></td>
+  <td style="text-align:left">Easy</td>
+  <td style="text-align:left">Cargo dependency</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">Never import JavaScript <code>Math</code> functions for physics</td>
+  <td style="text-align:left">Easy</td>
+  <td style="text-align:left">Code review rule</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Never use relaxed SIMD for physics</td>
+  <td style="text-align:left">Easy</td>
+  <td style="text-align:left">Code review rule</td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">Prevent NaN from entering simulation (guard sqrt, guard div)</td>
+  <td style="text-align:left">Medium</td>
+  <td style="text-align:left">Follows TM2020 pattern</td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Use fixed timestep with integer tick counting</td>
+  <td style="text-align:left">Medium</td>
+  <td style="text-align:left">Follows TM2020 pattern</td>
+</tr>
+<tr>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">Process bodies in deterministic order (sequential)</td>
+  <td style="text-align:left">Medium</td>
+  <td style="text-align:left">Follows TM2020 pattern</td>
+</tr>
+<tr>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">Pin Rust compiler version for reproducible builds</td>
+  <td style="text-align:left">Easy</td>
+  <td style="text-align:left">CI configuration</td>
+</tr>
+<tr>
+  <td style="text-align:left">9</td>
+  <td style="text-align:left">Run cross-browser determinism tests in CI</td>
+  <td style="text-align:left">Medium</td>
+  <td style="text-align:left">Test infrastructure</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="what-could-still-go-wrong"><a class="anchor" href="#what-could-still-go-wrong">#</a>What Could Still Go Wrong</h3>
+<ol>
+  <li><strong>Browser engine bugs</strong>: A JIT compiler could miscompile a WASM float operation. This is unlikely but not impossible. Mitigation: determinism hash verification catches this at runtime.</li>
+</ol>
+<ol>
+  <li><strong>Spec loopholes we haven't found</strong>: The WASM spec is large. There could be edge cases where nondeterminism is permitted that we haven't identified. Mitigation: exhaustive testing (Section 7).</li>
+</ol>
+<ol>
+  <li><strong>Future WASM proposals</strong>: New features (like relaxed SIMD, flexible vectors) may introduce nondeterminism. Mitigation: never use them for physics; freeze the physics WASM feature set.</li>
+</ol>
+<ol>
+  <li><strong>Rust <code>libm</code> changes</strong>: If we update the <code>libm</code> crate version, the compiled WASM may change, breaking replay compatibility with older ghosts. Mitigation: pin <code>libm</code> version; version ghost format to include physics engine version.</li>
+</ol>
+<h3 id="comparison-to-tm2020"><a class="anchor" href="#comparison-to-tm2020">#</a>Comparison to TM2020</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Aspect</th>
+  <th style="text-align:left">TM2020</th>
+  <th style="text-align:left">OpenTM (WASM)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Float determinism basis</td>
+  <td style="text-align:left">SSE on x64 (same-platform)</td>
+  <td style="text-align:left">WASM spec (cross-platform)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Cross-architecture</td>
+  <td style="text-align:left">NOT guaranteed</td>
+  <td style="text-align:left">Guaranteed by spec</td>
+</tr>
+<tr>
+  <td style="text-align:left">Cross-build</td>
+  <td style="text-align:left">NOT guaranteed (recompilation can break)</td>
+  <td style="text-align:left">Same <code>.wasm</code> binary = guaranteed</td>
+</tr>
+<tr>
+  <td style="text-align:left">Transcendental functions</td>
+  <td style="text-align:left">Native x64 (compiler-determined)</td>
+  <td style="text-align:left">Compiled <code>libm</code> (deterministic)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Verification</td>
+  <td style="text-align:left">Server resimulation</td>
+  <td style="text-align:left">Hash comparison + server resimulation</td>
+</tr>
+<tr>
+  <td style="text-align:left">NaN prevention</td>
+  <td style="text-align:left">Guarded sqrt pattern</td>
+  <td style="text-align:left">Same pattern</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>OpenTM's determinism story is actually STRONGER than TM2020's</strong>, because:</p>
+<ul>
+  <li>WASM provides cross-platform guarantees that native x64 does not</li>
+  <li>We compile transcendental functions into deterministic WASM bytecode rather than relying on compiler-specific x64 code generation</li>
+  <li>Same <code>.wasm</code> binary eliminates the "different build = different results" problem</li>
+</ul>
+<h3 id="bottom-line"><a class="anchor" href="#bottom-line">#</a>Bottom Line</h3>
+<p>Browser-based WASM floating-point determinism is achievable for a racing physics engine. The WASM specification was designed with this use case in mind. The nondeterminism in the spec (NaN bit patterns) is avoidable with standard engineering practices. The transcendental function problem (the biggest real-world risk) is solved by compiling <code>libm</code> into WASM rather than importing browser functions.</p>
+<p><strong>Proceed with f32 floating-point physics in WASM. Do not use fixed-point. Implement NaN prevention and compiled-in math. Test across browsers early and continuously.</strong></p>
+<hr>
+<h2 id="sources"><a class="anchor" href="#sources">#</a>Sources</h2>
+<h3 id="webassembly-specification"><a class="anchor" href="#webassembly-specification">#</a>WebAssembly Specification</h3>
+<ul>
+  <li><a href="https://webassembly.github.io/spec/core/exec/numerics.html">WebAssembly 3.0 Numerics</a></li>
+  <li><a href="https://webassembly.github.io/spec/core/syntax/values.html">WebAssembly 3.0 Values</a></li>
+  <li><a href="https://github.com/WebAssembly/design/blob/master/Nondeterminism.md">WebAssembly Design: Nondeterminism</a></li>
+  <li><a href="https://github.com/WebAssembly/design/issues/1385">WebAssembly Design Issue #1385: Determinism with non-NaN results</a></li>
+  <li><a href="https://github.com/WebAssembly/design/issues/619">WebAssembly Design Issue #619: NaN bits not fully deterministic</a></li>
+  <li><a href="https://github.com/WebAssembly/design/issues/148">WebAssembly Design Issue #148: Subnormals</a></li>
+  <li><a href="https://github.com/WebAssembly/design/issues/1463">WebAssembly Design Issue #1463: NaN canonicalization motivation</a></li>
+</ul>
+<h3 id="fma-and-simd"><a class="anchor" href="#fma-and-simd">#</a>FMA and SIMD</h3>
+<ul>
+  <li><a href="https://github.com/WebAssembly/relaxed-simd/issues/44">WebAssembly Relaxed SIMD: Deterministic FMA</a></li>
+  <li><a href="https://github.com/WebAssembly/design/issues/1391">WebAssembly SIMD: FMA instruction</a></li>
+  <li><a href="https://github.com/WebAssembly/simd/pull/79">WebAssembly SIMD: Quasi-FMA proposal</a></li>
+</ul>
+<h3 id="rust-and-wasm"><a class="anchor" href="#rust-and-wasm">#</a>Rust and WASM</h3>
+<ul>
+  <li><a href="https://rust-lang.github.io/rfcs/3514-float-semantics.html">Rust Float Semantics RFC 3514</a></li>
+  <li><a href="https://github.com/rust-lang/rust/issues/117597">Rust Issue #117597: Non-deterministic wasm32 output across OS</a></li>
+  <li><a href="https://dev.to/gnunicorn/hunting-down-a-non-determinism-bug-in-our-rust-wasm-build-4fk1">Hunting down a non-determinism-bug in Rust WASM build</a></li>
+  <li><a href="https://rapier.rs/docs/user_guides/rust/determinism/">Rapier Physics: Determinism</a></li>
+  <li><a href="https://deepwiki.com/rust-lang/libm">rust-lang/libm</a></li>
+</ul>
+<h3 id="game-physics-determinism"><a class="anchor" href="#game-physics-determinism">#</a>Game Physics Determinism</h3>
+<ul>
+  <li><a href="https://gafferongames.com/post/floating_point_determinism/">Gaffer on Games: Floating Point Determinism</a></li>
+  <li><a href="https://gafferongames.com/post/deterministic_lockstep/">Gaffer on Games: Deterministic Lockstep</a></li>
+  <li><a href="https://box2d.org/posts/2024/08/determinism/">Box2D: Determinism</a></li>
+  <li><a href="https://dev.to/shaisrc/deterministic-physics-in-ts-why-i-wrote-a-fixed-point-engine-4b0l">Deterministic Physics in TypeScript: Fixed-Point Engine</a></li>
+  <li><a href="https://www.gamedeveloper.com/programming/cross-platform-rts-synchronization-and-floating-point-indeterminism">Cross-Platform RTS Synchronization</a></li>
+</ul>
+<h3 id="wasm-determinism-in-practice"><a class="anchor" href="#wasm-determinism-in-practice">#</a>WASM Determinism in Practice</h3>
+<ul>
+  <li><a href="https://medium.com/haderech-dev/determinism-wasm-40e0a03a9b45">Determinism & WASM (Haderech/Medium)</a></li>
+  <li><a href="https://docs.wasmtime.dev/examples-deterministic-wasm-execution.html">Wasmtime: Deterministic Execution</a></li>
+  <li><a href="https://github.com/meheleventyone/wasm-float-determinism-test">WASM Float Determinism Test (Zig)</a></li>
+  <li><a href="https://docs.arbitrum.io/how-arbitrum-works/fraud-proofs/wavm-floats">Arbitrum: WAVM Floating Point</a></li>
+  <li><a href="https://www.nhatcher.com/post/should_i_import_or_should_i_roll/">Trigonometric Functions in WebAssembly</a></li>
+</ul>
+<h3 id="browser-based-lockstep"><a class="anchor" href="#browser-based-lockstep">#</a>Browser-Based Lockstep</h3>
+<ul>
+  <li><a href="https://github.com/pietrobassi/deterministic-lockstep-demo">Deterministic Lockstep Demo (browser)</a></li>
+  <li><a href="https://forum.babylonjs.com/t/how-do-i-use-deterministic-lockstep-to-help-sync-clients/17008">Babylon.js: Deterministic Lockstep</a></li>
+</ul>
+
+                        <nav class="prev-next"><a class="prev" href="plan-blockmesh.html">&larr; Block Mesh Research</a><a class="next" href="plan-constants.html">Physics Constants &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-wasm-float-specification-summary">1. WASM Float Specification Summary</a></li>
+  <li class="toc-h3"><a href="#11-the-core-guarantee">1.1 The Core Guarantee</a></li>
+  <li class="toc-h3"><a href="#12-ieee-754-compliance">1.2 IEEE 754 Compliance</a></li>
+  <li class="toc-h3"><a href="#13-what-operations-are-available">1.3 What Operations Are Available</a></li>
+  <li class="toc-h3"><a href="#14-what-operations-are-not-available">1.4 What Operations Are NOT Available</a></li>
+  <li class="toc-h3"><a href="#15-the-nan-exception">1.5 The NaN Exception</a></li>
+<li class=""><a href="#2-known-nondeterminism-sources-with-evidence">2. Known Nondeterminism Sources (with Evidence)</a></li>
+  <li class="toc-h3"><a href="#21-sources-that-do-affect-us">2.1 Sources That DO Affect Us</a></li>
+  <li class="toc-h3"><a href="#22-sources-that-do-not-affect-us">2.2 Sources That Do NOT Affect Us</a></li>
+  <li class="toc-h3"><a href="#23-the-fma-question-important-detail">2.3 The FMA Question (Important Detail)</a></li>
+<li class=""><a href="#3-mitigation-strategies">3. Mitigation Strategies</a></li>
+  <li class="toc-h3"><a href="#31-strategy-compiled-in-math-library-recommended">3.1 Strategy: Compiled-In Math Library (RECOMMENDED)</a></li>
+  <li class="toc-h3"><a href="#32-strategy-nan-prevention-required">3.2 Strategy: NaN Prevention (REQUIRED)</a></li>
+  <li class="toc-h3"><a href="#33-strategy-avoid-relaxed-simd">3.3 Strategy: Avoid Relaxed SIMD</a></li>
+  <li class="toc-h3"><a href="#34-strategy-single-wasm-binary">3.4 Strategy: Single WASM Binary</a></li>
+  <li class="toc-h3"><a href="#35-strategy-determinism-hash-verification">3.5 Strategy: Determinism Hash Verification</a></li>
+<li class=""><a href="#4-tm2020s-approach-from-re-docs">4. TM2020&#x27;s Approach (from RE Docs)</a></li>
+  <li class="toc-h3"><a href="#41-integer-based-timing">4.1 Integer-Based Timing</a></li>
+  <li class="toc-h3"><a href="#42-fixed-100hz-timestep">4.2 Fixed 100Hz Timestep</a></li>
+  <li class="toc-h3"><a href="#43-deterministic-sub-stepping">4.3 Deterministic Sub-Stepping</a></li>
+  <li class="toc-h3"><a href="#44-guarded-square-root">4.4 Guarded Square Root</a></li>
+  <li class="toc-h3"><a href="#45-sequential-body-processing">4.5 Sequential Body Processing</a></li>
+  <li class="toc-h3"><a href="#46-sse-on-x64-platform-specific">4.6 SSE on x64 (Platform-Specific)</a></li>
+  <li class="toc-h3"><a href="#47-input-based-replays">4.7 Input-Based Replays</a></li>
+  <li class="toc-h3"><a href="#48-what-opentm-can-learn">4.8 What OpenTM Can Learn</a></li>
+<li class=""><a href="#5-recommended-strategy-for-opentm">5. Recommended Strategy for OpenTM</a></li>
+  <li class="toc-h3"><a href="#51-architecture">5.1 Architecture</a></li>
+  <li class="toc-h3"><a href="#52-engineering-rules">5.2 Engineering Rules</a></li>
+  <li class="toc-h3"><a href="#53-what-this-does-not-require">5.3 What This Does NOT Require</a></li>
+  <li class="toc-h3"><a href="#54-confidence-level">5.4 Confidence Level</a></li>
+<li class=""><a href="#6-fixed-point-alternative-analysis">6. Fixed-Point Alternative Analysis</a></li>
+  <li class="toc-h3"><a href="#61-what-is-fixed-point">6.1 What Is Fixed-Point?</a></li>
+  <li class="toc-h3"><a href="#62-advantages">6.2 Advantages</a></li>
+  <li class="toc-h3"><a href="#63-disadvantages">6.3 Disadvantages</a></li>
+  <li class="toc-h3"><a href="#64-verdict-on-fixed-point">6.4 Verdict on Fixed-Point</a></li>
+<li class=""><a href="#7-test-plan">7. Test Plan</a></li>
+  <li class="toc-h3"><a href="#71-phase-1-basic-operation-verification">7.1 Phase 1: Basic Operation Verification</a></li>
+  <li class="toc-h3"><a href="#72-phase-2-physics-simulation-divergence-test">7.2 Phase 2: Physics Simulation Divergence Test</a></li>
+  <li class="toc-h3"><a href="#73-phase-3-edge-case-stress-test">7.3 Phase 3: Edge Case Stress Test</a></li>
+  <li class="toc-h3"><a href="#74-phase-4-long-duration-ghost-validation">7.4 Phase 4: Long-Duration Ghost Validation</a></li>
+  <li class="toc-h3"><a href="#75-existing-test-resources">7.5 Existing Test Resources</a></li>
+<li class=""><a href="#8-verdict-can-we-guarantee-determinism">8. Verdict: Can We Guarantee Determinism?</a></li>
+  <li class="toc-h3"><a href="#conditionally-yes">CONDITIONALLY YES</a></li>
+  <li class="toc-h3"><a href="#required-conditions">Required Conditions</a></li>
+  <li class="toc-h3"><a href="#what-could-still-go-wrong">What Could Still Go Wrong</a></li>
+  <li class="toc-h3"><a href="#comparison-to-tm2020">Comparison to TM2020</a></li>
+  <li class="toc-h3"><a href="#bottom-line">Bottom Line</a></li>
+<li class=""><a href="#sources">Sources</a></li>
+  <li class="toc-h3"><a href="#webassembly-specification">WebAssembly Specification</a></li>
+  <li class="toc-h3"><a href="#fma-and-simd">FMA and SIMD</a></li>
+  <li class="toc-h3"><a href="#rust-and-wasm">Rust and WASM</a></li>
+  <li class="toc-h3"><a href="#game-physics-determinism">Game Physics Determinism</a></li>
+  <li class="toc-h3"><a href="#wasm-determinism-in-practice">WASM Determinism in Practice</a></li>
+  <li class="toc-h3"><a href="#browser-based-lockstep">Browser-Based Lockstep</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

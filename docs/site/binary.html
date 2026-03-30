@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Analysis - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item active" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Binary Analysis</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="trackmaniaexe-binary-overview"><a class="anchor" href="#trackmaniaexe-binary-overview">#</a>Trackmania.exe Binary Overview</h1>
+<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020 / Trackmania Nations remake by Nadeo/Ubisoft) <strong>Date of analysis</strong>: 2026-03-27 <strong>Tools</strong>: Ghidra 11.x via PyGhidra bridge <strong>File size</strong>: 45,467,720 bytes (43.36 MB)</p>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary><h2 id="pe-header-summary"><a class="anchor" href="#pe-header-summary">#</a>PE Header Summary</h2></summary>
+<div class="collapsible-content">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Field</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Format</td>
+  <td style="text-align:left">PE32+ (x86-64)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">x86:LE:64:default</td>
+</tr>
+<tr>
+  <td style="text-align:left">Image base</td>
+  <td style="text-align:left"><code class="addr">0x140000000</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Subsystem</td>
+  <td style="text-align:left">Windows GUI</td>
+</tr>
+<tr>
+  <td style="text-align:left">File size on disk</td>
+  <td style="text-align:left">45,467,720 bytes (43.36 MB)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Mapped size</td>
+  <td style="text-align:left">~46,879,280 bytes (44.71 MB)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h2 id="entry-points"><a class="anchor" href="#entry-points">#</a>Entry Points</h2></summary>
+<div class="collapsible-content">
+<p>7 entry points were identified:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Address</th>
+  <th style="text-align:left">Name</th>
+  <th style="text-align:left">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14291e317</code></td>
+  <td style="text-align:left"><code>entry</code></td>
+  <td style="text-align:left">Function</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14299e63a</code></td>
+  <td style="text-align:left"><code>tls_callback_0</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141521958</code></td>
+  <td style="text-align:left"><code>tls_callback_1</code></td>
+  <td style="text-align:left">Function</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1415223d4</code></td>
+  <td style="text-align:left"><code>tls_callback_2</code></td>
+  <td style="text-align:left">Function</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140a811a0</code></td>
+  <td style="text-align:left"><code>Dxgi_Present_HookCallback</code></td>
+  <td style="text-align:left">Function</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141e70f38</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - no function]</span></td>
+  <td style="text-align:left">Data?</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141e70f3c</code></td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - no function]</span></td>
+  <td style="text-align:left">Data?</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Notes:</strong></p>
+<ul>
+  <li>The main <code>entry</code> point at <code class="addr">0x14291e317</code> resides in the <code>.D."</code> section (non-standard), not <code>.text</code>. This is unusual and may indicate unpacking or code relocation.</li>
+  <li><code>tls_callback_0</code> through <code>tls_callback_2</code> are Thread Local Storage callbacks. TLS callbacks execute before the main entry point and are commonly used by packers/protectors for anti-debug or unpacking logic.</li>
+  <li><code>Dxgi_Present_HookCallback</code> appears to be an intentional DXGI present hook, likely for overlay rendering or frame capture. It resides in <code>.text</code> at <code class="addr">0x140a811a0</code>.</li>
+  <li>The two unnamed entry points at <code class="addr">0x141e70f38</code> and <code class="addr">0x141e70f3c</code> correspond to the <code>AmdPowerXpressRequestHighPerformance</code> and <code>NvOptimusEnablement</code> exports (see Exports section) -- these are data values, not executable code.</li>
+</ul>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h2 id="section-layout"><a class="anchor" href="#section-layout">#</a>Section Layout</h2></summary>
+<div class="collapsible-content">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Section</th>
+  <th style="text-align:left">Start</th>
+  <th style="text-align:left">End</th>
+  <th style="text-align:left">Size</th>
+  <th style="text-align:left">Perms</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Headers</td>
+  <td style="text-align:left"><code class="addr">0x140000000</code></td>
+  <td style="text-align:left"><code class="addr">0x1400003ff</code></td>
+  <td style="text-align:left">1,024 B</td>
+  <td style="text-align:left">R</td>
+  <td style="text-align:left">PE/COFF headers</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.text</code></td>
+  <td style="text-align:left"><code class="addr">0x140001000</code></td>
+  <td style="text-align:left"><code class="addr">0x14196e5ff</code></td>
+  <td style="text-align:left">25.43 MB</td>
+  <td style="text-align:left">RX</td>
+  <td style="text-align:left">Main code section</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.rodata</code></td>
+  <td style="text-align:left"><code class="addr">0x14196f000</code></td>
+  <td style="text-align:left"><code class="addr">0x14196f9ff</code></td>
+  <td style="text-align:left">2,560 B</td>
+  <td style="text-align:left">RX</td>
+  <td style="text-align:left">Read-only data (very small)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.rdata</code></td>
+  <td style="text-align:left"><code class="addr">0x141970000</code></td>
+  <td style="text-align:left"><code class="addr">0x141e63bff</code></td>
+  <td style="text-align:left">4.95 MB</td>
+  <td style="text-align:left">R</td>
+  <td style="text-align:left">Read-only data / import tables</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.data</code></td>
+  <td style="text-align:left"><code class="addr">0x141e64000</code></td>
+  <td style="text-align:left"><code class="addr">0x1420d2bdf</code></td>
+  <td style="text-align:left">2.43 MB</td>
+  <td style="text-align:left">RW</td>
+  <td style="text-align:left">Initialized data (globals)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.pdata</code></td>
+  <td style="text-align:left"><code class="addr">0x1420d3000</code></td>
+  <td style="text-align:left"><code class="addr">0x14221ffff</code></td>
+  <td style="text-align:left">1.30 MB</td>
+  <td style="text-align:left">R</td>
+  <td style="text-align:left">Exception handling unwind data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>_RDATA</code></td>
+  <td style="text-align:left"><code class="addr">0x142220000</code></td>
+  <td style="text-align:left"><code class="addr">0x1422223ff</code></td>
+  <td style="text-align:left">9,216 B</td>
+  <td style="text-align:left">R</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Additional rdata</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.A2U</code></td>
+  <td style="text-align:left"><code class="addr">0x142223000</code></td>
+  <td style="text-align:left"><code class="addr">0x14281c1ff</code></td>
+  <td style="text-align:left">5.97 MB</td>
+  <td style="text-align:left">RX</td>
+  <td style="text-align:left">Non-standard executable section</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.9Bv</code></td>
+  <td style="text-align:left"><code class="addr">0x14281d000</code></td>
+  <td style="text-align:left"><code class="addr">0x14281e7ff</code></td>
+  <td style="text-align:left">6,144 B</td>
+  <td style="text-align:left">RW</td>
+  <td style="text-align:left">Non-standard writable section</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.D."</code></td>
+  <td style="text-align:left"><code class="addr">0x14281f000</code></td>
+  <td style="text-align:left"><code class="addr">0x142c595ff</code></td>
+  <td style="text-align:left">4.23 MB</td>
+  <td style="text-align:left">RX</td>
+  <td style="text-align:left">Non-standard executable section</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.reloc</code></td>
+  <td style="text-align:left"><code class="addr">0x142c5a000</code></td>
+  <td style="text-align:left"><code class="addr">0x142cac7ff</code></td>
+  <td style="text-align:left">337,920 B</td>
+  <td style="text-align:left">R</td>
+  <td style="text-align:left">Base relocation table</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.rsrc</code></td>
+  <td style="text-align:left"><code class="addr">0x142cad000</code></td>
+  <td style="text-align:left"><code class="addr">0x142cb91ff</code></td>
+  <td style="text-align:left">49,664 B</td>
+  <td style="text-align:left">R</td>
+  <td style="text-align:left">Resources (icons, manifests)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>tdb</code></td>
+  <td style="text-align:left"><code class="addr">0xff00000000</code></td>
+  <td style="text-align:left"><code class="addr">0xff0000184f</code></td>
+  <td style="text-align:left">6,224 B</td>
+  <td style="text-align:left">RW</td>
+  <td style="text-align:left">Ghidra-internal (Thread DB)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="section-analysis"><a class="anchor" href="#section-analysis">#</a>Section Analysis</h3>
+<p><strong>Standard sections</strong> (<code>.text</code>, <code>.rdata</code>, <code>.data</code>, <code>.pdata</code>, <code>.reloc</code>, <code>.rsrc</code>) are typical for a MSVC-compiled PE64 binary.</p>
+<p><strong>Non-standard sections requiring investigation:</strong></p>
+<ol>
+  <li><strong><code>.A2U</code></strong> (5.97 MB, RX) -- This is a large executable section with a nonsensical name. At ~6 MB it contains a significant amount of code. Possible explanations:</li>
+  <li><strong>Packer/protector</strong>: Section names like this are characteristic of commercial executable protectors (e.g., Themida, VMProtect, or Ubisoft's proprietary protector). The random-looking name is a hallmark of obfuscation tooling.</li>
+  <li><strong>Additional code segment</strong>: Could be a separately-linked module or statically-linked library placed in its own section.</li>
+  <li><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> The exact purpose requires further analysis of the code within this section.</li>
+</ol>
+<ol>
+  <li><strong><code>.9Bv</code></strong> (6,144 B, RW) -- Tiny writable section with another nonsensical name. Likely serves as a data/state section for the packer/protector code in <code>.A2U</code> or <code>.D."</code>. Its small size suggests it holds configuration, decryption keys, or runtime state.</li>
+</ol>
+<ol>
+  <li><strong><code>.D."</code></strong> (4.23 MB, RX) -- Another large executable section with a non-standard name. The main <code>entry</code> point (<code class="addr">0x14291e317</code>) resides here. This strongly suggests this section contains the unpacker/protector stub that executes first, decrypts/decompresses the main <code>.text</code> code, and then transfers control.</li>
+</ol>
+<ol>
+  <li><strong><code>_RDATA</code></strong> (9,216 B, R) -- This is a known MSVC linker artifact. It typically contains import address table (IAT) entries and security cookie data. Small and benign.</li>
+</ol>
+<ol>
+  <li><strong><code>.rodata</code></strong> (2,560 B, RX) -- Unusually small and marked as executable. Standard <code>.rodata</code> should be R-only. The RX permissions suggest it may contain small code trampolines or thunks.</li>
+</ol>
+<p><strong>Size distribution of executable code:</strong></p>
+<ul>
+  <li><code>.text</code>: 25.43 MB (main application code)</li>
+  <li><code>.A2U</code>: 5.97 MB (suspected protector code or packed payload)</li>
+  <li><code>.D."</code>: 4.23 MB (suspected protector/unpacker stub, contains entry point)</li>
+  <li>Total executable: ~35.63 MB</li>
+</ul>
+<p>The presence of ~10 MB of non-standard executable sections suggests Ubisoft employs a code protection/packing scheme on this binary. The entry point being in <code>.D."</code> rather than <code>.text</code> supports this -- the protector code runs first to unpack or decrypt <code>.text</code> before the actual game code executes.</p>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h2 id="import-analysis"><a class="anchor" href="#import-analysis">#</a>Import Analysis</h2></summary>
+<div class="collapsible-content">
+<p>35 imported symbols from 23 DLLs were identified. The low import count is consistent with a packed/protected binary -- the real imports are likely resolved at runtime after unpacking.</p>
+<h3 id="system-core-windows"><a class="anchor" href="#system-core-windows">#</a>System / Core Windows</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Functions</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">KERNEL32.DLL</td>
+  <td style="text-align:left"><code>GetVersionExA</code>, <code>GetVersion</code>, <code>LocalAlloc</code>, <code>LocalFree</code>, <code>GetModuleFileNameW</code>, <code>ExitProcess</code>, <code>LoadLibraryA</code>, <code>GetModuleHandleA</code>, <code>GetProcAddress</code></td>
+  <td style="text-align:left">OS core, memory, module loading</td>
+</tr>
+<tr>
+  <td style="text-align:left">ADVAPI32.DLL</td>
+  <td style="text-align:left"><code>OpenProcessToken</code></td>
+  <td style="text-align:left">Security / privileges</td>
+</tr>
+<tr>
+  <td style="text-align:left">BCRYPT.DLL</td>
+  <td style="text-align:left"><code>BCryptGenRandom</code></td>
+  <td style="text-align:left">Cryptographic RNG</td>
+</tr>
+<tr>
+  <td style="text-align:left">RPCRT4.DLL</td>
+  <td style="text-align:left"><code>UuidToStringA</code></td>
+  <td style="text-align:left">UUID handling</td>
+</tr>
+<tr>
+  <td style="text-align:left">USERENV.DLL</td>
+  <td style="text-align:left"><code>GetUserProfileDirectoryW</code></td>
+  <td style="text-align:left">User profile paths</td>
+</tr>
+<tr>
+  <td style="text-align:left">VERSION.DLL</td>
+  <td style="text-align:left"><code>GetFileVersionInfoSizeW</code></td>
+  <td style="text-align:left">File version queries</td>
+</tr>
+<tr>
+  <td style="text-align:left">SETUPAPI.DLL</td>
+  <td style="text-align:left"><code>SetupDiEnumDeviceInterfaces</code></td>
+  <td style="text-align:left">Hardware device enumeration</td>
+</tr>
+<tr>
+  <td style="text-align:left">DBGHELP.DLL</td>
+  <td style="text-align:left"><code>SymInitialize</code></td>
+  <td style="text-align:left">Debug symbol loading / crash reporting</td>
+</tr>
+<tr>
+  <td style="text-align:left">CRYPT32.DLL</td>
+  <td style="text-align:left"><code>CertFreeCertificateContext</code></td>
+  <td style="text-align:left">Certificate / TLS operations</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="graphics-display"><a class="anchor" href="#graphics-display">#</a>Graphics / Display</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Functions</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">D3D11.DLL</td>
+  <td style="text-align:left"><code>D3D11CreateDevice</code></td>
+  <td style="text-align:left">Direct3D 11 device creation</td>
+</tr>
+<tr>
+  <td style="text-align:left">DXGI.DLL</td>
+  <td style="text-align:left"><code>CreateDXGIFactory1</code></td>
+  <td style="text-align:left">DXGI factory for swap chains</td>
+</tr>
+<tr>
+  <td style="text-align:left">GDI32.DLL</td>
+  <td style="text-align:left"><code>DeleteDC</code></td>
+  <td style="text-align:left">GDI device context cleanup</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Note</strong>: Only D3D11 is imported -- no D3D12 import is visible. The game may load D3D12 dynamically via <code>LoadLibraryA</code>/<code>GetProcAddress</code> at runtime, or the packed section resolves it. <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> whether the game actually uses D3D12.</p>
+<h3 id="windowing-ui"><a class="anchor" href="#windowing-ui">#</a>Windowing / UI</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Functions</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">USER32.DLL</td>
+  <td style="text-align:left"><code>DestroyWindow</code>, <code>CharUpperBuffW</code></td>
+  <td style="text-align:left">Window management, string ops</td>
+</tr>
+<tr>
+  <td style="text-align:left">SHELL32.DLL</td>
+  <td style="text-align:left"><code>SHFileOperationW</code></td>
+  <td style="text-align:left">File operations (copy/move/delete)</td>
+</tr>
+<tr>
+  <td style="text-align:left">OLE32.DLL</td>
+  <td style="text-align:left"><code>CoInitialize</code></td>
+  <td style="text-align:left">COM initialization</td>
+</tr>
+<tr>
+  <td style="text-align:left">OLEAUT32.DLL</td>
+  <td style="text-align:left"><code>Ordinal_2</code></td>
+  <td style="text-align:left">OLE Automation (ordinal import)</td>
+</tr>
+<tr>
+  <td style="text-align:left">COMDLG32.DLL</td>
+  <td style="text-align:left"><code>GetSaveFileNameW</code></td>
+  <td style="text-align:left">Save file dialog</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="input"><a class="anchor" href="#input">#</a>Input</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Functions</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">DINPUT8.DLL</td>
+  <td style="text-align:left"><code>DirectInput8Create</code></td>
+  <td style="text-align:left">DirectInput 8 (legacy input)</td>
+</tr>
+<tr>
+  <td style="text-align:left">XINPUT9_1_0.DLL</td>
+  <td style="text-align:left"><code>XInputSetState</code></td>
+  <td style="text-align:left">XInput (gamepad vibration)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Note</strong>: The game imports XInput 9.1.0 (Vista-era), not the newer XInput 1.4. DirectInput8 is used alongside it, likely for steering wheels and other non-XInput devices.</p>
+<h3 id="audio-video"><a class="anchor" href="#audio-video">#</a>Audio / Video</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Functions</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">WINMM.DLL</td>
+  <td style="text-align:left"><code>timeGetDevCaps</code></td>
+  <td style="text-align:left">Multimedia timer capabilities</td>
+</tr>
+<tr>
+  <td style="text-align:left">VORBIS64.DLL</td>
+  <td style="text-align:left"><code>vorbis_block_clear</code></td>
+  <td style="text-align:left">Ogg Vorbis audio decoding</td>
+</tr>
+<tr>
+  <td style="text-align:left">AVIFIL32.DLL</td>
+  <td style="text-align:left"><code>AVIFileInit</code></td>
+  <td style="text-align:left">AVI video file handling</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Note</strong>: Vorbis is used for audio assets. AVI support may be for intro videos or replay recording.</p>
+<h3 id="network"><a class="anchor" href="#network">#</a>Network</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Functions</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">WS2_32.DLL</td>
+  <td style="text-align:left"><code>Ordinal_1</code> (likely <code>accept</code> or socket init)</td>
+  <td style="text-align:left">Winsock2 networking</td>
+</tr>
+<tr>
+  <td style="text-align:left">IPHLPAPI.DLL</td>
+  <td style="text-align:left"><code>GetIpAddrTable</code></td>
+  <td style="text-align:left">IP address enumeration</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="media-encoding"><a class="anchor" href="#media-encoding">#</a>Media / Encoding</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Functions</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">LIBWEBP64.DLL</td>
+  <td style="text-align:left"><code>WebPPictureImportRGBX</code></td>
+  <td style="text-align:left">WebP image encoding</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Note</strong>: WebP is used for screenshot or thumbnail encoding.</p>
+<h3 id="drm-platform"><a class="anchor" href="#drm-platform">#</a>DRM / Platform</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">DLL</th>
+  <th style="text-align:left">Functions</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">UPC_R2_LOADER64.DLL</td>
+  <td style="text-align:left"><code>UPC_TicketGet</code></td>
+  <td style="text-align:left">Ubisoft Connect (UPC) DRM</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Note</strong>: This is the Ubisoft Connect (formerly Uplay) platform integration. <code>UPC_TicketGet</code> retrieves an authentication ticket for online services.</p>
+<h3 id="import-summary"><a class="anchor" href="#import-summary">#</a>Import Summary</h3>
+<p>The import table is minimal (35 functions across 23 DLLs). This is significantly fewer than expected for a game of this complexity and strongly indicates:</p>
+<ol>
+  <li>The binary is packed/protected -- the real IAT is reconstructed at runtime</li>
+  <li>Many APIs are resolved dynamically via <code>LoadLibraryA</code> + <code>GetProcAddress</code> (both present in imports)</li>
+  <li>The visible imports represent the minimum set needed by the unpacker stub before the main code is decrypted</li>
+</ol>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h2 id="export-analysis"><a class="anchor" href="#export-analysis">#</a>Export Analysis</h2></summary>
+<div class="collapsible-content">
+<p>10 exports were identified:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Address</th>
+  <th style="text-align:left">Name</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14291e317</code></td>
+  <td style="text-align:left"><code>entry</code></td>
+  <td style="text-align:left">Main entry point</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14299e63a</code></td>
+  <td style="text-align:left"><code>tls_callback_0</code></td>
+  <td style="text-align:left">TLS callback (pre-entry)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141521958</code></td>
+  <td style="text-align:left"><code>tls_callback_1</code></td>
+  <td style="text-align:left">TLS callback</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1415223d4</code></td>
+  <td style="text-align:left"><code>tls_callback_2</code></td>
+  <td style="text-align:left">TLS callback</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140a811a0</code></td>
+  <td style="text-align:left"><code>Dxgi_Present_HookCallback</code> / <code>Ordinal_2</code></td>
+  <td style="text-align:left">DXGI present hook</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141e70f38</code></td>
+  <td style="text-align:left"><code>AmdPowerXpressRequestHighPerformance</code> / <code>Ordinal_1</code></td>
+  <td style="text-align:left">AMD GPU selection flag</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141e70f3c</code></td>
+  <td style="text-align:left"><code>NvOptimusEnablement</code> / <code>Ordinal_3</code></td>
+  <td style="text-align:left">NVIDIA Optimus GPU selection flag</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Notes:</strong></p>
+<ul>
+  <li><code>AmdPowerXpressRequestHighPerformance</code> and <code>NvOptimusEnablement</code> are standard exported DWORD variables that tell AMD/NVIDIA drivers to use the discrete GPU instead of integrated graphics on laptops. Both reside in <code>.data</code> (address <code class="addr">0x141e70f38</code> / <code class="addr">0x141e70f3c</code>).</li>
+  <li><code>Dxgi_Present_HookCallback</code> is an interesting export -- it suggests the game exposes a hook point for DXGI Present calls. This could be used by Ubisoft's overlay system or anti-cheat.</li>
+  <li>Three TLS callbacks are present, which is more than typical. This pattern is common in protected binaries where TLS callbacks perform anti-debugging checks or decryption steps before the main entry.</li>
+</ul>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h2 id="function-statistics"><a class="anchor" href="#function-statistics">#</a>Function Statistics</h2></summary>
+<div class="collapsible-content">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Metric</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Total functions identified</td>
+  <td style="text-align:left">131,311</td>
+</tr>
+<tr>
+  <td style="text-align:left">Functions >= 5,000 bytes</td>
+  <td style="text-align:left">363</td>
+</tr>
+<tr>
+  <td style="text-align:left">Largest function</td>
+  <td style="text-align:left">80,516 bytes (78.6 KB) at <code class="addr">0x14006bc80</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>131,311 functions is a large count, consistent with a major C++ application with extensive template instantiation and inline expansion. For reference, this is comparable to other large game engines.</p>
+<h3 id="largest-functions-top-20"><a class="anchor" href="#largest-functions-top-20">#</a>Largest Functions (Top 20)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Address</th>
+  <th style="text-align:left">Size (bytes)</th>
+  <th style="text-align:left">Size (KB)</th>
+  <th style="text-align:left">Suspected Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14006bc80</code></td>
+  <td style="text-align:left">80,516</td>
+  <td style="text-align:left">78.6</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Extremely large -- possibly a generated parser, state machine, or virtual machine interpreter</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1400a7980</code></td>
+  <td style="text-align:left">37,526</td>
+  <td style="text-align:left">36.6</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140b78f10</code></td>
+  <td style="text-align:left">34,959</td>
+  <td style="text-align:left">34.1</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141194010</code></td>
+  <td style="text-align:left">33,561</td>
+  <td style="text-align:left">32.8</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140efa200</code></td>
+  <td style="text-align:left">31,877</td>
+  <td style="text-align:left">31.1</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1409b93e0</code></td>
+  <td style="text-align:left">30,071</td>
+  <td style="text-align:left">29.4</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140606250</code></td>
+  <td style="text-align:left">29,993</td>
+  <td style="text-align:left">29.3</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1400d98b0</code></td>
+  <td style="text-align:left">29,731</td>
+  <td style="text-align:left">29.0</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1411d3960</code></td>
+  <td style="text-align:left">29,475</td>
+  <td style="text-align:left">28.8</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14144e600</code></td>
+  <td style="text-align:left">27,867</td>
+  <td style="text-align:left">27.2</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140c81610</code></td>
+  <td style="text-align:left">27,543</td>
+  <td style="text-align:left">26.9</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14180f330</code></td>
+  <td style="text-align:left">27,478</td>
+  <td style="text-align:left">26.8</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1400bd500</code></td>
+  <td style="text-align:left">26,954</td>
+  <td style="text-align:left">26.3</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1418592e0</code></td>
+  <td style="text-align:left">24,230</td>
+  <td style="text-align:left">23.7</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1418165e0</code></td>
+  <td style="text-align:left">23,519</td>
+  <td style="text-align:left">23.0</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1405da8a0</code></td>
+  <td style="text-align:left">22,957</td>
+  <td style="text-align:left">22.4</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140b3c070</code></td>
+  <td style="text-align:left">22,124</td>
+  <td style="text-align:left">21.6</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141864180</code></td>
+  <td style="text-align:left">20,524</td>
+  <td style="text-align:left">20.0</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14185f190</code></td>
+  <td style="text-align:left">20,456</td>
+  <td style="text-align:left">20.0</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140ea8fb0</code></td>
+  <td style="text-align:left">19,670</td>
+  <td style="text-align:left">19.2</td>
+  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Observations on large functions:</strong></p>
+<ul>
+  <li>All top-20 functions reside in <code>.text</code>, meaning they are part of the main application code (not the protector).</li>
+  <li>The largest function at 80.5 KB is exceptionally large. Common causes: generated serialization/deserialization code, switch-heavy parsers (e.g., GBX file format parsing), physics simulation loops, or render pipeline setup.</li>
+  <li>The presence of 363 functions over 5 KB suggests heavy use of inlined code, template expansion, or compiler-generated code (typical of MSVC C++ builds).</li>
+  <li>Several function pairs have identical sizes (e.g., <code class="addr">0x1406c8860</code> and <code class="addr">0x1406c5330</code> both at 13,578 bytes; <code class="addr">0x1406cf1d0</code> and <code class="addr">0x1406cbf10</code> both at 12,946 bytes), which may indicate template instantiations over different types or duplicated logic for different subsystems.</li>
+</ul>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary></div>
+</details>
+<h2 id="string-statistics"><a class="anchor" href="#string-statistics">#</a>String Statistics</h2></summary>
+<div class="collapsible-content">
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Metric</th>
+  <th style="text-align:left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Total defined strings</td>
+  <td style="text-align:left">52,890</td>
+</tr>
+</tbody>
+</table></div>
+<p>52,890 strings is a substantial count. These will be invaluable for reverse engineering -- string cross-references can identify:</p>
+<ul>
+  <li>File format parsers (by format identifiers and field names)</li>
+  <li>Network protocol handlers (by URL patterns, HTTP methods)</li>
+  <li>Error messages (by descriptive text)</li>
+  <li>Class/type names (ManiaPlanet engine uses RTTI-like strings)</li>
+  <li>Configuration keys and paths</li>
+</ul>
+<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> No string content was extracted in this overview. A follow-up analysis should categorize strings by type (file paths, URLs, error messages, class names, format strings, etc.).</p>
+<hr>
+</div>
+</details>
+<h2 id="summary-of-key-findings"><a class="anchor" href="#summary-of-key-findings">#</a>Summary of Key Findings</h2>
+<h3 id="what-we-know"><a class="anchor" href="#what-we-know">#</a>What we know:</h3>
+<ol>
+  <li><strong>Architecture</strong>: PE32+ x86-64, image base <code class="addr">0x140000000</code>, 43 MB GUI application</li>
+  <li><strong>Protection</strong>: The binary uses some form of code protection/packing. Evidence:</li>
+  <li>Entry point is in non-standard section <code>.D."</code> rather than <code>.text</code></li>
+  <li>Three non-standard sections (<code>.A2U</code>, <code>.9Bv</code>, <code>.D."</code>) with random-looking names totaling ~10 MB</li>
+  <li>Minimal import table (35 functions) with <code>LoadLibraryA</code>/<code>GetProcAddress</code> for runtime resolution</li>
+  <li>Three TLS callbacks (common anti-debug/unpacking technique)</li>
+  <li><strong>Graphics</strong>: Direct3D 11 is the confirmed graphics API (imported directly). D3D12 status is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>.</li>
+  <li><strong>Input</strong>: DirectInput 8 + XInput 9.1.0 for controller support</li>
+  <li><strong>Audio</strong>: Ogg Vorbis (via vorbis64.dll) for audio decoding</li>
+  <li><strong>Network</strong>: Winsock2 for networking, IPHLPAPI for network interface enumeration</li>
+  <li><strong>DRM</strong>: Ubisoft Connect integration via <code>UPC_R2_LOADER64.DLL</code></li>
+  <li><strong>Media encoding</strong>: WebP for image encoding, AVI for video file handling</li>
+  <li><strong>Scale</strong>: 131,311 functions, 52,890 strings -- this is a large, complex binary</li>
+</ol>
+<h3 id="what-we-suspect-but-cannot-confirm"><a class="anchor" href="#what-we-suspect-but-cannot-confirm">#</a>What we suspect but cannot confirm:</h3>
+<ul>
+  <li>The non-standard sections are from a commercial packer/protector (possibly Ubisoft's custom solution or a third-party tool like Themida/VMProtect)</li>
+  <li>The largest function (~80 KB) may be a serialization engine, GBX parser, or virtual machine</li>
+  <li>Many more imports exist but are resolved dynamically after unpacking</li>
+  <li>D3D12 may be loaded at runtime</li>
+</ul>
+<h3 id="recommended-next-steps"><a class="anchor" href="#recommended-next-steps">#</a>Recommended next steps:</h3>
+<ol>
+  <li>Analyze TLS callbacks to understand the unpacking/protection sequence</li>
+  <li>Dump strings and categorize them to identify subsystems</li>
+  <li>Investigate the <code>.A2U</code> and <code>.D."</code> sections for protector signatures</li>
+  <li>Cross-reference <code>LoadLibraryA</code> and <code>GetProcAddress</code> calls to find dynamically resolved APIs</li>
+  <li>Decompile the largest functions to identify key subsystems (GBX parser, physics, renderer)</li>
+  <li>Search for ManiaPlanet engine class name strings (the engine uses a reflection system with embedded type names)</li>
+</ol>
+
+                        <nav class="prev-next"><a class="prev" href="index.html">&larr; Overview</a><a class="next" href="class-hierarchy.html">Class System &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#pe-header-summary">PE Header Summary</a></li>
+<li class=""><a href="#entry-points">Entry Points</a></li>
+<li class=""><a href="#section-layout">Section Layout</a></li>
+  <li class="toc-h3"><a href="#section-analysis">Section Analysis</a></li>
+<li class=""><a href="#import-analysis">Import Analysis</a></li>
+  <li class="toc-h3"><a href="#system-core-windows">System / Core Windows</a></li>
+  <li class="toc-h3"><a href="#graphics-display">Graphics / Display</a></li>
+  <li class="toc-h3"><a href="#windowing-ui">Windowing / UI</a></li>
+  <li class="toc-h3"><a href="#input">Input</a></li>
+  <li class="toc-h3"><a href="#audio-video">Audio / Video</a></li>
+  <li class="toc-h3"><a href="#network">Network</a></li>
+  <li class="toc-h3"><a href="#media-encoding">Media / Encoding</a></li>
+  <li class="toc-h3"><a href="#drm-platform">DRM / Platform</a></li>
+  <li class="toc-h3"><a href="#import-summary">Import Summary</a></li>
+<li class=""><a href="#export-analysis">Export Analysis</a></li>
+<li class=""><a href="#function-statistics">Function Statistics</a></li>
+  <li class="toc-h3"><a href="#largest-functions-top-20">Largest Functions (Top 20)</a></li>
+<li class=""><a href="#string-statistics">String Statistics</a></li>
+<li class=""><a href="#summary-of-key-findings">Summary of Key Findings</a></li>
+  <li class="toc-h3"><a href="#what-we-know">What we know:</a></li>
+  <li class="toc-h3"><a href="#what-we-suspect-but-cannot-confirm">What we suspect but cannot confirm:</a></li>
+  <li class="toc-h3"><a href="#recommended-next-steps">Recommended next steps:</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,3657 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shader Catalog - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item active" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Shader Catalog</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="trackmania-2020-shader-catalog"><a class="anchor" href="#trackmania-2020-shader-catalog">#</a>Trackmania 2020 Shader Catalog</h1>
+<p><strong>Source</strong>: <code>GpuCache_D3D11_SM5.zip</code> (16 MB, 1,113 compiled HLSL shaders) <strong>Date</strong>: 2026-03-27 <strong>Purpose</strong>: Complete shader inventory for WebGPU recreation of the rendering pipeline <strong>Cross-references</strong>: <a href="rendering.html">11-rendering-deep-dive.md</a>, <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a></p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-shader-cache-overview">Shader Cache Overview</a></li>
+  <li><a href="#2-category-breakdown">Category Breakdown</a></li>
+  <li><a href="#3-essential-shaders-for-mvp">Essential Shaders for MVP</a></li>
+  <li><a href="#4-deferred-pipeline-shader-map">Deferred Pipeline Shader Map</a></li>
+  <li><a href="#5-material-shader-variants-tech3-system">Material Shader Variants (Tech3 System)</a></li>
+  <li><a href="#6-post-processing-chain">Post-Processing Chain</a></li>
+  <li><a href="#7-compute-shaders">Compute Shaders</a></li>
+  <li><a href="#8-special-effects">Special Effects</a></li>
+</ol>
+<hr>
+<h2 id="1-shader-cache-overview"><a class="anchor" href="#1-shader-cache-overview">#</a>1. Shader Cache Overview</h2>
+<h3 id="format"><a class="anchor" href="#format">#</a>Format</h3>
+<p>Each entry in the zip is a compiled D3D11 SM5 shader bytecode wrapped in a GameBox (<code>.GpuCache.Gbx</code>) container. Files are NOT source code -- they are pre-compiled DXBC bytecode blobs. The <code>.Gbx</code> wrapper adds Nadeo-specific metadata (shader permutation keys, constant buffer layout hints).</p>
+<p>There are two naming conventions:</p>
+<ol>
+  <li><strong>Direct HLSL</strong>: <code>Category/ShaderName_stage.hlsl.GpuCache.Gbx</code> -- the majority of shaders</li>
+  <li><strong>Text-referenced</strong>: <code>Category/Media/Text/PHLSL/ShaderName.PHlsl.Txt.GpuCache.Gbx</code> -- shaders defined via text resource indirection (used for material shader templates)</li>
+</ol>
+<h3 id="shader-stage-suffixes"><a class="anchor" href="#shader-stage-suffixes">#</a>Shader Stage Suffixes</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Suffix</th>
+  <th style="text-align:left">D3D11 Stage</th>
+  <th style="text-align:left">Count</th>
+  <th style="text-align:left">WebGPU Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>_p.hlsl</code></td>
+  <td style="text-align:left">Pixel (Fragment) Shader</td>
+  <td style="text-align:left">515</td>
+  <td style="text-align:left"><code>@fragment</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>_v.hlsl</code></td>
+  <td style="text-align:left">Vertex Shader</td>
+  <td style="text-align:left">388</td>
+  <td style="text-align:left"><code>@vertex</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>_c.hlsl</code></td>
+  <td style="text-align:left">Compute Shader</td>
+  <td style="text-align:left">105</td>
+  <td style="text-align:left"><code>@compute</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.PHlsl</code></td>
+  <td style="text-align:left">Pixel (via text reference)</td>
+  <td style="text-align:left">51</td>
+  <td style="text-align:left"><code>@fragment</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.VHlsl</code></td>
+  <td style="text-align:left">Vertex (via text reference)</td>
+  <td style="text-align:left">40</td>
+  <td style="text-align:left"><code>@vertex</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>_g.hlsl</code></td>
+  <td style="text-align:left">Geometry Shader</td>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">Emulate via vertex + storage buffers</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>_d.hlsl</code></td>
+  <td style="text-align:left">Domain (Tessellation Eval)</td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Not available in WebGPU</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>_h.hlsl</code></td>
+  <td style="text-align:left">Hull (Tessellation Control)</td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Not available in WebGPU</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Total</strong>: 1,112 shader stages + 1 <code>SourceVersionInfo.txt</code> = 1,113 entries.</p>
+<h3 id="webgpu-stage-mapping-notes"><a class="anchor" href="#webgpu-stage-mapping-notes">#</a>WebGPU Stage Mapping Notes</h3>
+<ul>
+  <li><strong>Geometry shaders</strong> (5 total): Used for particle voxelization, energy FX, cubemap batching, and HBAO+ CoarseAO. Must be replaced with vertex shader expansions or compute pre-passes.</li>
+  <li><strong>Tessellation shaders</strong> (8 total: 4 hull + 4 domain): Used only for ocean (<code>Ocean_h/d.hlsl</code>, <code>Ocean_tri_h/d.hlsl</code>, <code>Ocean_trigeom_h/d.hlsl</code>) and one terrain shader (<code>Block_TAddLighted_Domain_h/d.hlsl</code>). WebGPU has no tessellation -- replace with pre-tessellated meshes or compute-based displacement.</li>
+</ul>
+<h3 id="top-level-category-counts"><a class="anchor" href="#top-level-category-counts">#</a>Top-Level Category Counts</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Category</th>
+  <th style="text-align:left">Count</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Tech3/</code></td>
+  <td style="text-align:left">533</td>
+  <td style="text-align:left">Material shaders, deferred pipeline, scene objects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Engines/</code></td>
+  <td style="text-align:left">218</td>
+  <td style="text-align:left">Engine utilities, PBR tooling, culling, blitting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Effects/</code></td>
+  <td style="text-align:left">154</td>
+  <td style="text-align:left">Post-processing, particles, fog, lens effects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Lightmap/</code></td>
+  <td style="text-align:left">78</td>
+  <td style="text-align:left">Baked lighting, probe grids, irradiance</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Painter/</code></td>
+  <td style="text-align:left">16</td>
+  <td style="text-align:left">Car skin painting / sticker system</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Menu/</code></td>
+  <td style="text-align:left">16</td>
+  <td style="text-align:left">UI background, HUD, minimap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Techno3/</code></td>
+  <td style="text-align:left">12</td>
+  <td style="text-align:left">Material template text references</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ShootMania/</code></td>
+  <td style="text-align:left">12</td>
+  <td style="text-align:left">ShootMania-specific (shared engine; not used in TM)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Garage/</code></td>
+  <td style="text-align:left">10</td>
+  <td style="text-align:left">Car garage/showroom rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Clouds/</code></td>
+  <td style="text-align:left">9</td>
+  <td style="text-align:left">Cloud rendering and god rays</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Bench/</code></td>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">GPU benchmarking (anisotropy, bandwidth, arithmetic)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Editor/</code></td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Editor debug visualization</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Test/</code></td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">PBR test and noise test shaders</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Sky/</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Sky dome rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ShadowCache/</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Shadow cache index update (compute)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Noise/</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">3D noise volume generation (compute)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Root-level</td>
+  <td style="text-align:left">26</td>
+  <td style="text-align:left">Misc material templates (TEmblem, PC3, switches)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="2-category-breakdown"><a class="anchor" href="#2-category-breakdown">#</a>2. Category Breakdown</h2>
+<h3 id="21-tech3-material-and-scene-shaders-533-shaders"><a class="anchor" href="#21-tech3-material-and-scene-shaders-533-shaders">#</a>2.1 Tech3/ -- Material and Scene Shaders (533 shaders)</h3>
+<p>The core rendering category. "Tech3" is Nadeo's 3rd-generation shader framework. Every material in the game maps to a Tech3 shader.</p>
+<h4 id="block-shaders-180-shaders-track-geometry"><a class="anchor" href="#block-shaders-180-shaders-track-geometry">#</a>Block Shaders (180 shaders) -- Track Geometry</h4>
+<p>The largest single group. Renders all track blocks (road, platform, dirt, ice, grass, plastic).</p>
+<p><strong>Naming convention</strong>: <code>Block_<TextureSlots>_<Pipeline>_<Variant>_<Stage>.hlsl</code></p>
+<p>Texture slot codes:</p>
+<ul>
+  <li><code>T</code> = albedo Texture, <code>D</code> = Diffuse color, <code>S</code> = Specular, <code>N</code> = Normal map</li>
+  <li><code>Py</code> = Y-axis projection (top-down triplanar), <code>Pxz</code> = XZ-plane projection (side triplanar)</li>
+  <li><code>X2</code> / <code>H2</code> = double-resolution variant, <code>ids</code> = material ID indexing</li>
+</ul>
+<p>Pipeline stages:</p>
+<ul>
+  <li><code>DefWrite</code> = G-buffer fill (DeferredWrite pass)</li>
+  <li><code>DefReadP1</code> = Deferred lighting read, pass 1</li>
+  <li><code>PeelDiff</code> = Depth peeling for lightmap baking</li>
+  <li>(no suffix) = forward rendering fallback</li>
+</ul>
+<p><strong>Key block shader families</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader Family</th>
+  <th style="text-align:left">Count</th>
+  <th style="text-align:left">Purpose</th>
+  <th style="text-align:left">WebGPU Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Block_TDSN_*</code></td>
+  <td style="text-align:left">32</td>
+  <td style="text-align:left">Standard PBR block (Texture+Diffuse+Specular+Normal)</td>
+  <td style="text-align:left">Single uber-shader with defines</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_PyPxz_*</code></td>
+  <td style="text-align:left">40</td>
+  <td style="text-align:left">Triplanar-mapped blocks (Y + XZ projection blend)</td>
+  <td style="text-align:left">Triplanar sampling in fragment</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_PyDSNX2_*</code></td>
+  <td style="text-align:left">12</td>
+  <td style="text-align:left">High-res Y-projected blocks</td>
+  <td style="text-align:left">Same as TDSN, higher mip</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_PTDSN_*</code></td>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">Blocks with extra projection layer</td>
+  <td style="text-align:left">Uber-shader variant</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_PxzDSN_*</code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">XZ-only projected blocks (walls, cliffs)</td>
+  <td style="text-align:left">Triplanar sampling</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_PxzTDSN_*</code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">XZ-projected with texture layer</td>
+  <td style="text-align:left">Triplanar + texture</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_PyPxzTLayered_*</code></td>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">Layered triplanar (terrain blend)</td>
+  <td style="text-align:left">Multi-layer blend</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_DefReadP1_*</code></td>
+  <td style="text-align:left">23</td>
+  <td style="text-align:left">Lighting read variants (LM0/LM1/LM2, COut, SI)</td>
+  <td style="text-align:left">Deferred read uber-shader</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_TreeSprite_*</code></td>
+  <td style="text-align:left">9</td>
+  <td style="text-align:left">Billboard tree sprites on blocks</td>
+  <td style="text-align:left">Billboard vertex shader</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_TAdd*</code></td>
+  <td style="text-align:left">12</td>
+  <td style="text-align:left">Additive-blend blocks (signs, lights, energy)</td>
+  <td style="text-align:left">Forward alpha-add pass</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_TSelfI_*</code></td>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">Self-illuminated blocks (emissive)</td>
+  <td style="text-align:left">Emissive channel in G-buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_Ice<em></code> / <code>Block_WaterWall</em></code></td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Ice and water wall surfaces</td>
+  <td style="text-align:left">Specialized material</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_DecalGeom_*</code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Geometric decals on blocks</td>
+  <td style="text-align:left">Decal projection shader</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_LQ_*</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Low-quality fallback blocks</td>
+  <td style="text-align:left">Simplified material</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Block_ReflectLQ_*</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Low-quality reflective blocks</td>
+  <td style="text-align:left">Cube sample + tint</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="car-shaders-31-shaders-vehicle-rendering"><a class="anchor" href="#car-shaders-31-shaders-vehicle-rendering">#</a>Car Shaders (31 shaders) -- Vehicle Rendering</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Pipeline</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>CarSkin_DefWrite_p/v</code></td>
+  <td style="text-align:left">G-buffer</td>
+  <td style="text-align:left">Main car body with skin texture</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarSkin_DefRead_p/v</code></td>
+  <td style="text-align:left">Deferred read</td>
+  <td style="text-align:left">Lighting on car body</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarSkin_p/v</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Forward-rendered car body</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarSkin_SpecAmbient_p</code></td>
+  <td style="text-align:left">Ambient</td>
+  <td style="text-align:left">Specular ambient for car</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarDetails_DefWrite_p/v</code></td>
+  <td style="text-align:left">G-buffer</td>
+  <td style="text-align:left">Car detail parts (spoiler, wheels)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarDetails_DefRead_p/v</code></td>
+  <td style="text-align:left">Deferred read</td>
+  <td style="text-align:left">Lighting on details</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarDetails_p/v</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Forward detail rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarDetails_SpecAmbient_p/v</code></td>
+  <td style="text-align:left">Ambient</td>
+  <td style="text-align:left">Detail specular ambient</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarGems_DefWrite_p/v</code></td>
+  <td style="text-align:left">G-buffer</td>
+  <td style="text-align:left">Gem/crystal car parts</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarGems_p/v</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Forward gem rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarGlass_p1_p/v</code></td>
+  <td style="text-align:left">Forward pass 1</td>
+  <td style="text-align:left">Windshield, first layer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarGlass_p2_p/v</code></td>
+  <td style="text-align:left">Forward pass 2</td>
+  <td style="text-align:left">Windshield, second layer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarGlass_Opacity_p/v</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Glass opacity pass</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarGlassRefract_p/v</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Refractive glass</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarGhost_p/v</code></td>
+  <td style="text-align:left">Ghost layer</td>
+  <td style="text-align:left">Transparent ghost car</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarAnimSkelDmg_v</code></td>
+  <td style="text-align:left">Vertex</td>
+  <td style="text-align:left">Skeletal damage animation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarAnimSkelDmg_Teleport_v</code></td>
+  <td style="text-align:left">Vertex</td>
+  <td style="text-align:left">Teleport effect on damaged car</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CarAnimSkelDmg_VertexAddLight_v</code></td>
+  <td style="text-align:left">Vertex</td>
+  <td style="text-align:left">Per-vertex lighting for damaged car</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PeelDepthDiffuse_Car_p/v</code></td>
+  <td style="text-align:left">Lightmap bake</td>
+  <td style="text-align:left">Depth peel for car lightmap</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="deferred-pipeline-shaders-53-shaders"><a class="anchor" href="#deferred-pipeline-shaders-53-shaders">#</a>Deferred Pipeline Shaders (53 shaders)</h4>
+<p>Core infrastructure for the 19-pass deferred pipeline.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Pass</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Deferred_SetILightDir_p</code></td>
+  <td style="text-align:left">DeferredRead</td>
+  <td style="text-align:left">Set indirect light direction from probes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Deferred_AddAmbient_Fresnel_p</code></td>
+  <td style="text-align:left">DeferredRead</td>
+  <td style="text-align:left">Add ambient term with Fresnel at grazing angles</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Deferred_AddLightLm_p</code></td>
+  <td style="text-align:left">DeferredRead</td>
+  <td style="text-align:left">Add baked lightmap contribution</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Deferred_SetLDirFromMask_p</code></td>
+  <td style="text-align:left">DeferredRead</td>
+  <td style="text-align:left">Derive light direction from LightMask buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Deferred_ReProjectLm_p</code></td>
+  <td style="text-align:left">DeferredRead</td>
+  <td style="text-align:left">Reproject lightmap for temporal stability</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredCameraMotion_p/v</code></td>
+  <td style="text-align:left">CameraMotion</td>
+  <td style="text-align:left">Per-pixel motion vectors</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredShadowPssm_p/v</code></td>
+  <td style="text-align:left">DeferredShadow</td>
+  <td style="text-align:left">Sample 4-cascade PSSM shadow maps</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDecalGeom_p/v</code></td>
+  <td style="text-align:left">DeferredDecals</td>
+  <td style="text-align:left">Box-projected deferred decals</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDecalGeom_TIntens_PyDiff_p/v</code></td>
+  <td style="text-align:left">DeferredDecals</td>
+  <td style="text-align:left">Intensity-modulated Y-projected decal</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDecalGeom_VDiff_p/v</code></td>
+  <td style="text-align:left">DeferredDecals</td>
+  <td style="text-align:left">Vertex-colored decal</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDecalGeom_VtxAmbient_v</code></td>
+  <td style="text-align:left">DeferredDecals</td>
+  <td style="text-align:left">Vertex ambient decal</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDecal_Boxs_p</code></td>
+  <td style="text-align:left">DeferredDecals</td>
+  <td style="text-align:left">Batched box decals (pixel)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDecal_Boxs_CBuffer_v</code></td>
+  <td style="text-align:left">DeferredDecals</td>
+  <td style="text-align:left">Box decals via constant buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDecal_Boxs_SRView_v</code></td>
+  <td style="text-align:left">DeferredDecals</td>
+  <td style="text-align:left">Box decals via SRV</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDecal_FullTri_p/v</code></td>
+  <td style="text-align:left">DeferredDecals</td>
+  <td style="text-align:left">Full-screen-triangle decal</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomBurnSphere_p/v</code></td>
+  <td style="text-align:left">DeferredBurn</td>
+  <td style="text-align:left">Tire/scorch burn marks</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomFakeOcc_p/v</code></td>
+  <td style="text-align:left">DeferredFakeOcc</td>
+  <td style="text-align:left">Fake ambient occlusion for distant objects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomCameraMap_p/v</code></td>
+  <td style="text-align:left">CustomEnding</td>
+  <td style="text-align:left">Camera-mapped texture projection</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomLightBall_p</code></td>
+  <td style="text-align:left">DeferredLighting</td>
+  <td style="text-align:left">Point light (sphere proxy)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomLightSpot_p</code></td>
+  <td style="text-align:left">DeferredLighting</td>
+  <td style="text-align:left">Spot light (cone proxy)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomLightFxSphere_p</code></td>
+  <td style="text-align:left">DeferredLighting</td>
+  <td style="text-align:left">Decorative sphere light</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomLightFxCylinder_p</code></td>
+  <td style="text-align:left">DeferredLighting</td>
+  <td style="text-align:left">Decorative cylinder light</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomProjector_p/v</code></td>
+  <td style="text-align:left">DeferredLighting</td>
+  <td style="text-align:left">Projected texture light</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomShadowVol_p/v</code></td>
+  <td style="text-align:left">DeferredShadow</td>
+  <td style="text-align:left">Shadow volume stencil</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomFogBoxOutside_p/v</code></td>
+  <td style="text-align:left">DeferredFogVolumes</td>
+  <td style="text-align:left">Fog box (camera outside)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomFogBoxInside_p/v</code></td>
+  <td style="text-align:left">DeferredFogVolumes</td>
+  <td style="text-align:left">Fog box (camera inside)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredFog_p</code></td>
+  <td style="text-align:left">DeferredFog</td>
+  <td style="text-align:left">Global distance fog</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredFogGlobal_p</code></td>
+  <td style="text-align:left">DeferredFog</td>
+  <td style="text-align:left">Full global fog</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredFaceNormalFromDepth_p</code></td>
+  <td style="text-align:left">DeferredWriteFNormal</td>
+  <td style="text-align:left">Reconstruct face normals from depth</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredDeCompFaceNormal_p</code></td>
+  <td style="text-align:left">DeferredWriteFNormal</td>
+  <td style="text-align:left">Decompress stored face normals</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredFull_Warp_p</code></td>
+  <td style="text-align:left">DeferredReadFull</td>
+  <td style="text-align:left">Full-screen warp distortion</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredZBufferToDist01_p</code></td>
+  <td style="text-align:left">Utility</td>
+  <td style="text-align:left">Convert Z-buffer to linear [0,1] distance</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredWrite_BlackNoSpec_p/v</code></td>
+  <td style="text-align:left">DeferredWrite</td>
+  <td style="text-align:left">Black material with no specular</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredRain_p</code></td>
+  <td style="text-align:left">Post-lighting</td>
+  <td style="text-align:left">Rain screen-space effect</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredWaterFog_p/v</code></td>
+  <td style="text-align:left">DeferredFog</td>
+  <td style="text-align:left">Water-influenced fog</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredWaterFog_FullTri_p/v</code></td>
+  <td style="text-align:left">DeferredFog</td>
+  <td style="text-align:left">Full-screen water fog</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredGeomSmOffZoneLayer_p/v</code></td>
+  <td style="text-align:left">ShootMania</td>
+  <td style="text-align:left">Off-zone layer (SM-specific)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeferredOutput_ImpostorConvert_c</code></td>
+  <td style="text-align:left">Impostors</td>
+  <td style="text-align:left">Compute: convert 3D to impostor billboard</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="waterocean-shaders-18-shaders"><a class="anchor" href="#waterocean-shaders-18-shaders">#</a>Water/Ocean Shaders (18 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Stage</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Ocean_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Main ocean surface rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_h/d</code></td>
+  <td style="text-align:left">Hull/Domain</td>
+  <td style="text-align:left">Tessellation for ocean mesh</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_tri_h/d/v</code></td>
+  <td style="text-align:left">Tessellation</td>
+  <td style="text-align:left">Triangle tessellation path</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_trigeom_h/d/v</code></td>
+  <td style="text-align:left">Tessellation</td>
+  <td style="text-align:left">Triangle geometry tessellation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_Flow_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Flow map simulation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_FlowStream_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Stream flow computation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_Gradient_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Wave gradient computation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_ProfileBuffer_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Wave profile buffer generation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_ObjectDepthMask_p/v</code></td>
+  <td style="text-align:left">Depth</td>
+  <td style="text-align:left">Object depth mask for ocean</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ocean_Particles_p/v</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Ocean spray particles</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Sea_p/v</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Simpler sea surface rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Sea_DefWrite_p/v</code></td>
+  <td style="text-align:left">G-buffer</td>
+  <td style="text-align:left">Sea G-buffer write</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Sea_BlendRefract_p</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Sea refraction blend</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterFall_p/v</code></td>
+  <td style="text-align:left">Forward</td>
+  <td style="text-align:left">Waterfall rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterFog_WGeomUnder_p/v</code></td>
+  <td style="text-align:left">Fog</td>
+  <td style="text-align:left">Underwater geometry fog</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterFogFromDepthH_p/v</code></td>
+  <td style="text-align:left">Fog</td>
+  <td style="text-align:left">Height-based water fog</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterFogFromDepthH_FullTri_p</code></td>
+  <td style="text-align:left">Fog</td>
+  <td style="text-align:left">Full-screen water fog</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterNormals_p/v</code></td>
+  <td style="text-align:left">Utility</td>
+  <td style="text-align:left">Water normal map generation</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="treevegetation-shaders-30-shaders"><a class="anchor" href="#treevegetation-shaders-30-shaders">#</a>Tree/Vegetation Shaders (30 shaders)</h4>
+<p>Under <code>Tech3/Trees/</code>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader Family</th>
+  <th style="text-align:left">Count</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Tree_SelfAO_DefWrite_p/v</code></td>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">Tree G-buffer with self-AO</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_SelfAO_DefRead_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Tree deferred lighting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_SelfAO_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Tree forward rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_SelfAO_TDSN_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Tree with full TDSN material</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_SelfAO_Shadow_p</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Tree shadow caster</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_SelfAO_ZOnly_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Tree depth-only pass</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_SelfAO_NoInstance_DefWrite_v</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Non-instanced tree variant</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_Impostor_DefWrite_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Tree impostor G-buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_Impostor_DefRead_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Tree impostor lighting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_Impostor_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Tree impostor forward</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_Instance_AddLight_c</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Compute: per-instance lighting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_Shadow_v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Tree shadow vertex (instanced + non-instanced)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tree_VertexAddLight_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Per-vertex light addition</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PeelDepthDiffuse_Tree_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Depth peel for lightmap bake</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DepthColor_Upscale2x2_p</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Upscale tree depth/color</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MergeColor_p</code> / <code>MergeDepth_p</code> etc.</td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Merge/composite tree layers</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="grass-shaders-10-shaders"><a class="anchor" href="#grass-shaders-10-shaders">#</a>Grass Shaders (10 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Grass/Grass_p/v</code></td>
+  <td style="text-align:left">Main grass blade rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Grass/Chunk_AddInstances_c</code></td>
+  <td style="text-align:left">Compute: populate grass instances per chunk</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Grass/SetMatterId_p/v</code></td>
+  <td style="text-align:left">Set material ID for grass</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GrassFence_p/v</code></td>
+  <td style="text-align:left">Grass fence border rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GrassFence_VDepLight_DefWrite_p/v</code></td>
+  <td style="text-align:left">Grass fence G-buffer with vertex lighting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GrassFence_VDepLight_DefRead_p/v</code></td>
+  <td style="text-align:left">Grass fence deferred read</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GrassFence_VDepLight_p/v</code></td>
+  <td style="text-align:left">Grass fence forward</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GrassFence_VDepLight_ZOnly_p/v</code></td>
+  <td style="text-align:left">Grass fence depth only</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="dynamic-object-shaders-dyna-body-char-55-shaders"><a class="anchor" href="#dynamic-object-shaders-dyna-body-char-55-shaders">#</a>Dynamic Object Shaders (Dyna<em>, Body</em>, Char*) (55 shaders)</h4>
+<p>Animated/dynamic objects including characters, kinematic items, and moving decorations.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Family</th>
+  <th style="text-align:left">Count</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>BodyAnim_*</code></td>
+  <td style="text-align:left">22</td>
+  <td style="text-align:left">Skeletal animated bodies (DefWrite, DefRead, forward, energy, shield, teleport)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BodyAnimSkel_*</code></td>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">Skeletal body with per-vertex lighting and depth peel</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Body_Tween_*</code></td>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">Vertex morph/tween animated bodies</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BodyParticule_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Particle-system driven body</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CharAnimSkel_Body_*</code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Character body (DefWrite, DefRead, forward)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CharAnimSkel_Part_*</code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Character parts (helmet, accessories)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CharAnimSkel_Anim_v</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Character skeletal animation vertex</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Dyna_TDSN_DefWrite_p</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Dynamic TDSN G-buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Dyna_TDSNE_DefRead_p</code> / <code>Dyna_TDSNI_DefRead_p</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Dynamic deferred read (emissive / illuminated)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Dyna0_TN_<em></code> / <code>Dyna1_TN_</em></code></td>
+  <td style="text-align:left">9</td>
+  <td style="text-align:left">Dynamic LOD 0/1 shaders</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaFacing_*</code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Camera-facing dynamic sprites</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaSpriteDiffuse_*</code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Dynamic diffuse sprites</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="warp-shaders-31-shaders"><a class="anchor" href="#warp-shaders-31-shaders">#</a>Warp Shaders (31 shaders)</h4>
+<p>Surface warping/distortion shaders for terrain blending, vertex tweening, and animated materials.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Family</th>
+  <th style="text-align:left">Count</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Warp_Py_To_PyPgx2_*</code></td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Y-projection to Y+Grass X2 warp</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Warp_PyaDiff_To_PDiffPGrassX2_*</code></td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Y-alpha-Diffuse to Grass warp</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Warp_PyaPxz_<em></code> / <code>Warp_PyPxz_</em></code></td>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">Triplanar projection warps</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Warp_TDiffSpec_VertexTween_*</code></td>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">Vertex tween with diffuse+specular</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Warp_TDiffSpecNorm_*</code></td>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">Full TDSN warp variants</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="other-tech3-shaders"><a class="anchor" href="#other-tech3-shaders">#</a>Other Tech3 Shaders</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Count</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Voxel_<em></code> / <code>VoxelIce_</em></code></td>
+  <td style="text-align:left">13</td>
+  <td style="text-align:left">Voxel-based geometry rendering (ice, terrain)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Decal2d_<em></code> / <code>Decal3d_</em></code> / <code>DecalSprite*</code></td>
+  <td style="text-align:left">18</td>
+  <td style="text-align:left">2D/3D/sprite decals</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Ice_<em></code> / <code>IceWall_</em></code> / <code>IcePathBorder_*</code></td>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">Ice surface variants</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MenuBox_*</code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Menu/UI 3D boxes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Sky_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Sky dome rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Stars_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Star field rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SSReflect_*</code></td>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">Screen-space reflections (deferred, forward, temporal, upsample)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SpriteAdd<em></code> / <code>SpriteBlendSoft</em></code></td>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left">Additive/blended sprite effects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SphereShield*</code></td>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left">Shield sphere effects (ShootMania origin)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Impostor_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Generic impostor billboard</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GlassBasic_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Basic glass material</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>EditorHelpers_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Editor helper visualization</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TitleCover_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Title screen cover image</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SelfIllumAtHue_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Self-illuminated with hue shift</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Weapon_Laser_p/v</code></td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">Laser weapon (ShootMania)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Tech3VehicleShield_p</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Vehicle shield overlay</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GeomDynaVertex_AddLight_p</code></td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">Dynamic vertex lighting</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="22-engines-engine-infrastructure-218-shaders"><a class="anchor" href="#22-engines-engine-infrastructure-218-shaders">#</a>2.2 Engines/ -- Engine Infrastructure (218 shaders)</h3>
+<p>Low-level rendering utilities shared across all game modes.</p>
+<h4 id="culling-and-instancing-7-shaders"><a class="anchor" href="#culling-and-instancing-7-shaders">#</a>Culling and Instancing (7 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Instances_Cull_SetLOD_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">GPU frustum culling + LOD selection (DipCulling pass)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Instances_Merge_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Merge culled instance lists</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Instances_AddCount_ToN_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Accumulate instance counts</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Instances_AddCounts_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Sum instance counts</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>IndexedInst_SetDrawArgs_LOD_SGs_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Write indirect draw arguments per LOD/shadow group</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ForwardTileCull_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Forward+ tile-based light culling</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ForwardTileCull_DbgDraw_p</code></td>
+  <td style="text-align:left">Pixel</td>
+  <td style="text-align:left">Debug visualization of tile culling</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="pbr-ibl-tooling-6-shaders"><a class="anchor" href="#pbr-ibl-tooling-6-shaders">#</a>PBR / IBL Tooling (6 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Pbr_IntegrateBRDF_GGX_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Pre-compute GGX BRDF LUT (NdotV x roughness)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Pbr_PreFilterEnvMap_GGX_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Split-sum IBL env map pre-filtering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Pbr_FastFilterEnvMap_GGX_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Fast env map filter variant</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Pbr_FastFilterEnvMap_MirrorDiagXZ_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Mirror diagonal XZ for symmetric env maps</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Pbr_RoughnessFilterNormalInMips_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Filter normal maps by roughness in mip chain</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Pbr_Spec_to_Roughness_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Convert specular power to roughness</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="buffer-texture-utilities-30-shaders"><a class="anchor" href="#buffer-texture-utilities-30-shaders">#</a>Buffer / Texture Utilities (30+ shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Family</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Buffer_Fill/Copy/Add/IndexCopy_c</code></td>
+  <td style="text-align:left">Compute buffer operations</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BufferReduction_*_c</code></td>
+  <td style="text-align:left">Parallel reduction (min/max, SH2, SH3)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CopyRawTexture2D/3D_c</code></td>
+  <td style="text-align:left">Raw texture copies</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CopyTexture2dArray_c</code></td>
+  <td style="text-align:left">Texture array copies</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MakeMips*_c</code></td>
+  <td style="text-align:left">Compute mipmap generation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Texture_Fill_c</code> / <code>Texture3d_CopyFromBuffer_c</code></td>
+  <td style="text-align:left">Texture fill/copy</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Convert_RGB_to_YCC_c</code></td>
+  <td style="text-align:left">Color space conversion</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Encode_BC4/BC5_p/v</code></td>
+  <td style="text-align:left">Block compression encoding</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="depth-z-buffer-15-shaders"><a class="anchor" href="#depth-z-buffer-15-shaders">#</a>Depth / Z-Buffer (15 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>ZOnly_p/v</code></td>
+  <td style="text-align:left">Depth-only pass (Z-prepass)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ZOnly_Alpha01_p/v</code></td>
+  <td style="text-align:left">Alpha-tested depth pass</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ZOnly_InstancingStatic_v</code></td>
+  <td style="text-align:left">Instanced static depth</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ZOnly_InstScaleAniso_v</code></td>
+  <td style="text-align:left">Anisotropic-scaled instanced depth</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ZOnly_ClipFarZ_v</code></td>
+  <td style="text-align:left">Far-Z clipped depth</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ZOnly_Peel_p</code></td>
+  <td style="text-align:left">Depth peeling pass</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ZOnly_StaticKillMesh_*</code></td>
+  <td style="text-align:left">Kill-mesh depth (visibility masks)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ZOnlyParaboloid_v</code></td>
+  <td style="text-align:left">Paraboloid projection depth</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DepthDown2x2_Max/MinMax/Range_p</code></td>
+  <td style="text-align:left">Depth hierarchy downsampling</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DepthDown3x3_Max_p</code></td>
+  <td style="text-align:left">3x3 depth downsample</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DepthGetLinearZ01_p</code></td>
+  <td style="text-align:left">Linear depth extraction</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DepthGutterMax_p</code></td>
+  <td style="text-align:left">Depth gutter fill</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DepthUp_p</code></td>
+  <td style="text-align:left">Depth upsampling</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="cubemap-environment-12-shaders"><a class="anchor" href="#cubemap-environment-12-shaders">#</a>Cubemap / Environment (12 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>CubeMap_EyeInWorld_p/v</code></td>
+  <td style="text-align:left">Cubemap rendering (eye position)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CubeMap_EyeInWorld_HdrAlpha2_p</code></td>
+  <td style="text-align:left">HDR cubemap with alpha</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CubeMap_EyeInWorld_GradientV_p</code></td>
+  <td style="text-align:left">Cubemap with vertical gradient</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CubeMapFromNormal_p/v</code></td>
+  <td style="text-align:left">Cubemap lookup from normal</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CubeToSphereHdrA2_p</code></td>
+  <td style="text-align:left">Cube-to-sphere HDR conversion</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Cube_CopyAndMirrorDiag_c</code></td>
+  <td style="text-align:left">Mirror cubemap diagonal</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Cube_Down2x2_c</code></td>
+  <td style="text-align:left">Cubemap downsample</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Cube_MulBounceFactor_c</code></td>
+  <td style="text-align:left">Multiply bounce factor into cubemap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CubeFromEquirectMirror_c</code></td>
+  <td style="text-align:left">Equirectangular to cubemap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CubeFilterDown4x4_Cube3x2_p/v</code></td>
+  <td style="text-align:left">4x4 cubemap filter</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>EquiRectFromCube_p</code></td>
+  <td style="text-align:left">Cubemap to equirectangular</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>EquiRectFromCubeFace_p</code></td>
+  <td style="text-align:left">Per-face cubemap to equirect</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="rasterization-blitting-30-shaders"><a class="anchor" href="#rasterization-blitting-30-shaders">#</a>Rasterization / Blitting (30+ shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Family</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>RasterBitmapBlend*_p</code></td>
+  <td style="text-align:left">Bitmap compositing (various modes)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterBitmapAlpha_p</code></td>
+  <td style="text-align:left">Alpha bitmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterBitmapMsaa_p</code></td>
+  <td style="text-align:left">MSAA bitmap resolve</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterMsaaResolve_p</code> / <code>_Hdr_p</code></td>
+  <td style="text-align:left">MSAA resolve (LDR and HDR)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterBink_YCrCb_*</code></td>
+  <td style="text-align:left">Bink video decode/render</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterConst_p</code> / <code>ConstPreMod_p</code></td>
+  <td style="text-align:left">Constant-color fill</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterBlendFogUp*_TestZ_p</code></td>
+  <td style="text-align:left">Upscale fog with depth test</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterZOnly_v</code></td>
+  <td style="text-align:left">Z-only raster vertex</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterSphereProjInv_p</code></td>
+  <td style="text-align:left">Inverse sphere projection</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="full-screen-triangle-5-shaders"><a class="anchor" href="#full-screen-triangle-5-shaders">#</a>Full-Screen Triangle (5 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>FullTriangle_v</code></td>
+  <td style="text-align:left">Minimal full-screen triangle vertex</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FullTriangle_TexCoord_v</code></td>
+  <td style="text-align:left">Full-screen triangle with UVs</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FullTriangle_TcRect_v</code></td>
+  <td style="text-align:left">Full-screen triangle with rect UVs</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FullTriangle_Batch_v/g</code></td>
+  <td style="text-align:left">Batched full-screen triangle (uses geometry shader)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="normal-map-baking-6-shaders"><a class="anchor" href="#normal-map-baking-6-shaders">#</a>Normal Map Baking (6 shaders)</h4>
+<p>Under <code>Engines/NormalMapBaking/</code>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>ComputeGrid3D_Allocate_c</code></td>
+  <td style="text-align:left">Allocate 3D grid for baking</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ComputeGrid3D_FillGrid_c</code></td>
+  <td style="text-align:left">Fill 3D grid</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NormalMapBaker_p/v</code></td>
+  <td style="text-align:left">Bake normal maps from geometry</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NormalMapDownSize4x4_c</code></td>
+  <td style="text-align:left">Downsample baked normals</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NormalMapGutter_p</code></td>
+  <td style="text-align:left">Fill gutter pixels</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Grid3D_DebugRender_p/v</code></td>
+  <td style="text-align:left">Debug: render 3D grid</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="mesh-occlusion-6-shaders"><a class="anchor" href="#mesh-occlusion-6-shaders">#</a>Mesh Occlusion (6 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>MeshOcclusionProj_p</code></td>
+  <td style="text-align:left">Project occlusion geometry</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MeshOcclusionSelf_p/v</code></td>
+  <td style="text-align:left">Self-occlusion computation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MeshOcclusionSelf_AccumPerTri_c</code></td>
+  <td style="text-align:left">Compute: per-triangle occlusion</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MeshOcclusionSelf_AccumNormalize_c</code></td>
+  <td style="text-align:left">Compute: normalize AO accumulation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MeshOccDownAndComp_p</code></td>
+  <td style="text-align:left">Downsample and compose occlusion</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="miscellaneous-engines-shaders"><a class="anchor" href="#miscellaneous-engines-shaders">#</a>Miscellaneous Engines Shaders</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>GeomImGui_p/v</code></td>
+  <td style="text-align:left">Dear ImGui rendering (developer overlay)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GeomImGui_TextureViewer_p</code></td>
+  <td style="text-align:left">ImGui texture viewer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GeomToFaceNormal_Alpha01_p/v</code></td>
+  <td style="text-align:left">Geometry to face normal (alpha tested)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GeomToReflectCubeDist/Map_p/v</code></td>
+  <td style="text-align:left">Geometry to reflection cubemap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LensFlareOccQuery_v</code></td>
+  <td style="text-align:left">Lens flare occlusion query</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmILight_*_c</code></td>
+  <td style="text-align:left">Lightmap indirect light compute shaders</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PixelBlendCubes_g/p/v</code></td>
+  <td style="text-align:left">Blend cubemaps (geometry shader path)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PixelBlendHdrMaps*_p</code></td>
+  <td style="text-align:left">Blend HDR environment maps</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PixelSpread_8Taps_*_p</code></td>
+  <td style="text-align:left">8-tap pixel spread (dilation)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProjectCubeFlat3x2_SH*_c</code></td>
+  <td style="text-align:left">Project cubemap to SH coefficients</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DriverCrash_p/v</code></td>
+  <td style="text-align:left">Intentional crash shader (debug)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FillColor_DrawFreq_p</code></td>
+  <td style="text-align:left">Draw-frequency color fill</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SortLib/*_c</code></td>
+  <td style="text-align:left">GPU parallel bitonic sort (4 shaders)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Geom_ShadowDepthPeel_Alpha01_p/v</code></td>
+  <td style="text-align:left">Shadow depth peel (alpha tested)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Geom_TestClipMapShadow_p/v</code></td>
+  <td style="text-align:left">Clip map shadow test</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Geom_TestVirtualShadow_p/v</code></td>
+  <td style="text-align:left">Virtual shadow map test</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23-effects-post-processing-and-particles-154-shaders"><a class="anchor" href="#23-effects-post-processing-and-particles-154-shaders">#</a>2.3 Effects/ -- Post-Processing and Particles (154 shaders)</h3>
+<h4 id="post-processing-effectspostfx-40-shaders"><a class="anchor" href="#post-processing-effectspostfx-40-shaders">#</a>Post-Processing (Effects/PostFx/) -- 40 shaders</h4>
+<p><strong>Bloom</strong> (6 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>BloomSelectFilterDown2_p</code></td>
+  <td style="text-align:left">Threshold + 2x downsample</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BloomSelectFilterDown4_p</code></td>
+  <td style="text-align:left">4x downsample</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Bloom_HorizonBlur_p</code></td>
+  <td style="text-align:left">Horizontal Gaussian blur per mip</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Bloom_StreaksWorkDir_p</code></td>
+  <td style="text-align:left">Directional light streaks (anamorphic)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Bloom_StreaksSelectSrc_p</code></td>
+  <td style="text-align:left">Select streak source intensity</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Bloom_Final_p</code></td>
+  <td style="text-align:left">Composite bloom back to HDR</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tone Mapping</strong> (8 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>TM_GetLumi_p</code></td>
+  <td style="text-align:left">Extract luminance from HDR</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_GetLog2LumiDown1_p/v</code></td>
+  <td style="text-align:left">Log2 luminance + downsample</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_GetAvgLumiCurr_p</code></td>
+  <td style="text-align:left">Average luminance (current frame)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_GetAvgLumiCurr_VeryFast_p</code></td>
+  <td style="text-align:left">Fast luminance average</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_GetLdrALogFromCopyFirst_p</code></td>
+  <td style="text-align:left">LDR adaptive log</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_GlobalOp_p</code></td>
+  <td style="text-align:left">Global Reinhard operator</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_GlobalOpAutoExp_p</code></td>
+  <td style="text-align:left">Global + auto-exposure</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_GlobalFilmCurve_p</code></td>
+  <td style="text-align:left">Filmic curve (Hable-style power segments)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_LocalOp_p</code></td>
+  <td style="text-align:left">Local per-pixel adaptive tone map</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TM_DebugCurve_v</code></td>
+  <td style="text-align:left">Debug: visualize tone curve</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Anti-Aliasing</strong> (2 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>FXAA_p</code></td>
+  <td style="text-align:left">FXAA 3.11 implementation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TemporalAA/TemporalAA_p</code></td>
+  <td style="text-align:left">Ubisoft custom TXAA (cross-vendor TAA)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Color Grading</strong> (3 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>ColorGrading_p</code></td>
+  <td style="text-align:left">LUT-based 3D color grading</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Colors_p</code></td>
+  <td style="text-align:left">Brightness/contrast/saturation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ColorBlindnessCorrection_p</code></td>
+  <td style="text-align:left">Accessibility: color blindness filter</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>HBAO+</strong> (9 shaders, under <code>Effects/PostFx/HBAO_plus/</code>):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>LinearizeDepth_p</code></td>
+  <td style="text-align:left">Step 1: Convert depth to linear Z</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DeinterleaveDepth_p</code></td>
+  <td style="text-align:left">Step 2: Split into 4x4 interleaved layers</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ReconstructNormal_p</code></td>
+  <td style="text-align:left">Step 3: Reconstruct normals from depth</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CoarseAO_p</code></td>
+  <td style="text-align:left">Step 4: Main AO computation (quarter-res)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CoarseAO_g</code></td>
+  <td style="text-align:left">Step 4 alt: Geometry shader variant</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ReinterleaveAO_p</code></td>
+  <td style="text-align:left">Step 5: Recombine layers to full-res</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BlurX_p</code></td>
+  <td style="text-align:left">Step 6a: Bilateral blur horizontal</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BlurY_p</code></td>
+  <td style="text-align:left">Step 6b: Bilateral blur vertical</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FullScreenTriangle_v</code></td>
+  <td style="text-align:left">Utility: full-screen triangle for HBAO+</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Other PostFx</strong> (12 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>DoF_T3_BlurAtDepth_p</code></td>
+  <td style="text-align:left">Depth of field blur</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BlurWeighted_p</code></td>
+  <td style="text-align:left">Weighted Gaussian blur</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>EdgeBlender_Detect_p/v</code></td>
+  <td style="text-align:left">Edge detection for blending</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>EdgeBlender_Gutter_p</code></td>
+  <td style="text-align:left">Gutter fill for edge blend</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>StereoAnaglyph*_p</code> (3)</td>
+  <td style="text-align:left">Stereoscopic 3D modes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DebugBitmap_p</code></td>
+  <td style="text-align:left">Debug: display any render target</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="particles-effectsparticles-51-shaders"><a class="anchor" href="#particles-effectsparticles-51-shaders">#</a>Particles (Effects/Particles/) -- 51 shaders</h4>
+<p><strong>Core Particle Pipeline</strong> (14 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>MgrParticleSpawn_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Spawn new particles</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleSpawnPoints_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Spawn at specific points</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleUpdate_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Main particle simulation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleUpdateFromCPU_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">CPU-driven parameter update</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleRender_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Alpha-blended particle rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleRenderOpaques_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Opaque particle rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleRenderStatic_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Static (non-animated) particles</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleRenderStaticFakeOcc_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Static particles with fake occlusion</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleShadow_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Particle shadow casting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MgrParticleShowStates_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Debug: show particle states</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Particle Computation</strong> (5 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Particles_ComputeBBox_c</code></td>
+  <td style="text-align:left">Bounding box for particle sorting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Particles_ComputeDepth_c</code></td>
+  <td style="text-align:left">Depth for particle sorting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Particles_InitBBoxes_c</code></td>
+  <td style="text-align:left">Initialize bounding boxes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ParticlesToFog_c</code></td>
+  <td style="text-align:left">Inject particles into fog volume</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Self-Shadowing</strong> (5 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>SelfShadow/ParticleVoxelization_g/p/v</code></td>
+  <td style="text-align:left">Voxelize particles via geometry shader</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SelfShadow/ParticlePropagation_p/v</code></td>
+  <td style="text-align:left">Propagate shadow through volume</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SelfShadow/ParticlesShadowOnOpaque_p/v</code></td>
+  <td style="text-align:left">Apply particle shadow on opaque</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Vortex Simulation</strong> (4 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>VortexSimulation/VortexSpawn_c</code></td>
+  <td style="text-align:left">Spawn vortex particles</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>VortexSimulation/VortexUpdate_c</code></td>
+  <td style="text-align:left">Update vortex simulation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>VortexSimulation/VortexDebugRender_p/v</code></td>
+  <td style="text-align:left">Debug: render vortex</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SmVortexParticle_p/v</code></td>
+  <td style="text-align:left">ShootMania vortex particle render</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Water Interaction</strong> (7 shaders):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>WaterSplash_IntersectTriangles_p</code></td>
+  <td style="text-align:left">GPU triangle intersection for splash</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterSplash_SpawnParticles_p/v</code></td>
+  <td style="text-align:left">Spawn splash at collision</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterSplash_TransformVertices_p</code></td>
+  <td style="text-align:left">Transform splash vertices</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>WaterSplash_DebugEdges_p/v</code></td>
+  <td style="text-align:left">Debug: splash edge visualization</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CameraWaterDroplets/CameraWaterDroplets_Spawn_c</code></td>
+  <td style="text-align:left">Spawn screen droplets</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CameraWaterDroplets/CameraWaterDroplets_Update_c</code></td>
+  <td style="text-align:left">Update screen droplets</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CameraWaterDroplets/CameraWaterDroplets_Render_p</code></td>
+  <td style="text-align:left">Render screen droplets</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CameraWaterDroplets/CameraWaterDroplets_RenderToAccumulator_p/v</code></td>
+  <td style="text-align:left">Accumulate droplets</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CameraWaterDroplets/CameraWaterDroplets_RenderNextAccumulator_p</code></td>
+  <td style="text-align:left">Next-frame accumulator</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Other Particles</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>LightTrail_p/v</code></td>
+  <td style="text-align:left">Car light trail rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Stem_p/v</code></td>
+  <td style="text-align:left">Particle stem (connector lines)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="fog-effectsfog-12-shaders"><a class="anchor" href="#fog-effectsfog-12-shaders">#</a>Fog (Effects/Fog/) -- 12 shaders</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>3DFog_RayMarching_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Volumetric fog ray marching</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>3DFog_ComputeInScatteringAndDensity_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">In-scattering + density field</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>3DFog_BlendInCamera_p</code></td>
+  <td style="text-align:left">Pixel</td>
+  <td style="text-align:left">Blend fog into camera view</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>3DFog_UpdateNoiseTexture_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Animated fog noise</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ComputeFogSpaceInfo_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Fog space transform setup</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FogInC_Compute_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Camera-space fog compute</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FogInC_Copy_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Copy fog buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FogInC_Propagate_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Propagate fog</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FogInC_Propagate_WithLuminance_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Propagate fog with luminance</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>UpdateFog_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Update fog state</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FogSpaceInfoRender_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Render fog space debug info</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="other-effects"><a class="anchor" href="#other-effects">#</a>Other Effects</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>MotionBlur2d_p</code></td>
+  <td style="text-align:left">Per-pixel velocity motion blur</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>OccZCmp_p</code></td>
+  <td style="text-align:left">Occlusion Z-compare</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PlaneReflect_BumpScale_HyperZ_p</code></td>
+  <td style="text-align:left">Planar reflection with bump</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterDistor2d_p</code></td>
+  <td style="text-align:left">2D distortion effect</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SSAA_Accum/SetMult_p</code></td>
+  <td style="text-align:left">SSAA accumulation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SubSurface/SeparableSSS_p</code></td>
+  <td style="text-align:left">Jimenez separable SSS</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SignedDistanceField/*</code> (4)</td>
+  <td style="text-align:left">SDF generation and rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SortLib/*_c</code> (4)</td>
+  <td style="text-align:left">GPU bitonic sort (for particles)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Energy/*</code> (5)</td>
+  <td style="text-align:left">Energy beam/field effects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GrassMarkFenceIntens_p/v</code></td>
+  <td style="text-align:left">Grass/fence intensity marks</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LineWithZBias_v</code> (2)</td>
+  <td style="text-align:left">Debug lines with depth bias</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>2dFlareAdd_Hdr_p/v</code></td>
+  <td style="text-align:left">HDR lens flare composite</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>2dLensDirtAdd_p/v</code></td>
+  <td style="text-align:left">Lens dirt overlay</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>2dMoon_p/v</code></td>
+  <td style="text-align:left">Moon billboard rendering</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="24-lightmap-baked-lighting-78-shaders"><a class="anchor" href="#24-lightmap-baked-lighting-78-shaders">#</a>2.4 Lightmap/ -- Baked Lighting (78 shaders)</h3>
+<h4 id="lightmap-baking-and-compression"><a class="anchor" href="#lightmap-baking-and-compression">#</a>Lightmap Baking and Compression</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>LmCompress_HBasis_YCbCr4_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Compress lightmap to H-basis in YCbCr4</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLBumpILighting_Inst_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Bumped indirect lighting from lightmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLBumpAmbient_Inst_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Bumped ambient from lightmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLBumpDirect_Inst_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Bumped direct light from lightmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLBumpLDir_Inst_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Bumped light direction from lightmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLBumpProj_Inst_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Bumped projected light from lightmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLHBasisDirect_Inst_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">H-basis direct lighting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLHBasisILighting_Inst_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">H-basis indirect lighting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLIndex_Inst_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Lightmap index lookup</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLIndex_Sort_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Sort lightmap indices</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLightAddDir_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Add directional light to lightmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLightSumBumpAvg_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Sum bumped average light</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmLightSumCopy_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Copy light sum</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmILightDir_Set_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Set indirect light direction</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmILightDir_AddAmbient_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Add ambient to indirect light direction</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PeelZDiffuse_p/Inst_v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Depth-peel diffuse for baking</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmRasterPosNrm_Inst_v</code></td>
+  <td style="text-align:left">VS</td>
+  <td style="text-align:left">Rasterize position+normal for baking</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmCoverage_Inst_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Lightmap coverage analysis</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmDblSidedAddTrans_Inst_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Double-sided translucent for baking</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmBlendWaterFog_Inst_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Blend water fog into lightmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmSSResolve_*</code></td>
+  <td style="text-align:left">Various</td>
+  <td style="text-align:left">Screen-space resolve passes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmSSGid_*</code></td>
+  <td style="text-align:left">Various</td>
+  <td style="text-align:left">Screen-space geometry ID</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LmSSNorm*_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Screen-space normal passes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SetWaterId_Inst_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Mark water areas in lightmap</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ShowProgressBumpAvgNorm_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Debug: show baking progress</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="light-probe-grid-12-shaders"><a class="anchor" href="#light-probe-grid-12-shaders">#</a>Light Probe Grid (12 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_Sample_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Sample probe grid at position</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_Sample_CbTrans_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Sample with transform</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_LightListSample_QuatTrans_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Sample with quaternion transform</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_ListMerge_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Merge probe lists</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_LightAcc_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Accumulate probe light</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_LightWeightMax_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Max probe weight</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_SetILightDir_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Set indirect direction from probe</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_SetIsValid_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Mark valid probes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProbeGrid_AddSkyVisibility_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Add sky visibility term</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ProgeGrid_List_Sort_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Sort probe list (note typo "Proge")</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DebugProbeGrid_*</code></td>
+  <td style="text-align:left">Debug</td>
+  <td style="text-align:left">Probe visualization (4 variants)</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="dynamic-lightmap-dynabox-10-shaders"><a class="anchor" href="#dynamic-lightmap-dynabox-10-shaders">#</a>Dynamic Lightmap (DynaBox) (10 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Type</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>DynaBox_AddLight_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Add dynamic light to box</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaBox_SetDiffuse_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Set dynamic diffuse</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaBox_LightAccumMulDiffuse_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Multiply accumulated light by diffuse</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaBox_SetLightAmb_FromHandle_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Set ambient from handle</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaBox_ILightDir_SetFromPeel_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Set indirect direction from peel</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaBox_ILightDir_AddToAccum_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Add indirect direction to accumulator</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaBox_PeelZDiffuse_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Peel depth + diffuse</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaGridProbeId_Sample_CbTrans_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Sample probe by ID with transform</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DynaGridProbeId_Sample_CbTransOutId_c</code></td>
+  <td style="text-align:left">Compute</td>
+  <td style="text-align:left">Sample with output ID</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LightFromMapT3_p/v</code></td>
+  <td style="text-align:left">VS/PS</td>
+  <td style="text-align:left">Sample baked lightmap for dynamic objects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GeomILightIn0_Inst_v</code></td>
+  <td style="text-align:left">VS</td>
+  <td style="text-align:left">Instanced indirect light input</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GeomILightIn0_p</code></td>
+  <td style="text-align:left">PS</td>
+  <td style="text-align:left">Indirect light input pixel</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="25-other-categories"><a class="anchor" href="#25-other-categories">#</a>2.5 Other Categories</h3>
+<h4 id="painter-16-shaders-car-skin-system"><a class="anchor" href="#painter-16-shaders-car-skin-system">#</a>Painter/ (16 shaders) -- Car Skin System</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>BlendLayer_p/v</code></td>
+  <td style="text-align:left">Blend paint layers</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BlendLayer_TextureOp_p</code></td>
+  <td style="text-align:left">Blend with texture operation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BlendLayerStencil_p</code></td>
+  <td style="text-align:left">Stencil-masked layer blend</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ModulateLayer_p/v</code></td>
+  <td style="text-align:left">Modulate (multiply) layer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ModulateSvg_p</code></td>
+  <td style="text-align:left">Modulate SVG overlay</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FillSvg_p/v</code></td>
+  <td style="text-align:left">Fill SVG shape</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PaintWithAlpha_p/v</code></td>
+  <td style="text-align:left">Alpha paint brush</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PreviewMask_p</code></td>
+  <td style="text-align:left">Preview paint mask</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterAlphaMask_p</code></td>
+  <td style="text-align:left">Alpha mask rasterization</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RasterRgbMask_p</code></td>
+  <td style="text-align:left">RGB mask rasterization</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ShadingImage_p/v</code></td>
+  <td style="text-align:left">Shading image generation</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="menu-16-shaders-ui-rendering"><a class="anchor" href="#menu-16-shaders-ui-rendering">#</a>Menu/ (16 shaders) -- UI Rendering</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>BackgroundLayer_p/v</code></td>
+  <td style="text-align:left">Menu background</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BackgroundLayerBlur_p/v</code></td>
+  <td style="text-align:left">Blurred background</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BackgroundLayerHueShift_p/v</code></td>
+  <td style="text-align:left">Hue-shifted background</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BlendTextureAndBorderMask_p/v</code></td>
+  <td style="text-align:left">Texture + border mask blend</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>BlendTextureSuperSample_p/v</code></td>
+  <td style="text-align:left">Super-sampled texture blend</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CutOff_p/v</code></td>
+  <td style="text-align:left">Cutoff transition effect</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Hud3d_p/v</code></td>
+  <td style="text-align:left">3D HUD elements</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>ShowMiniMap_p/v</code></td>
+  <td style="text-align:left">Minimap display</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="clouds-9-shaders"><a class="anchor" href="#clouds-9-shaders">#</a>Clouds/ (9 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>CloudsT3b_p/v</code></td>
+  <td style="text-align:left">Cloud rendering (Tech3b variant)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CloudsTech3_p/v</code></td>
+  <td style="text-align:left">Cloud rendering (Tech3)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CloudsTech3_Opacity_p/v</code></td>
+  <td style="text-align:left">Cloud opacity pass</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CloudsEdgeLight_p</code></td>
+  <td style="text-align:left">Cloud edge lighting (silver lining)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CloudsGodLight_p</code></td>
+  <td style="text-align:left">God ray light shafts</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>CloudsGodMask_p</code></td>
+  <td style="text-align:left">God ray masking</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="garage-10-shaders"><a class="anchor" href="#garage-10-shaders">#</a>Garage/ (10 shaders)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Shader</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>Garage_TDiff_p/v</code></td>
+  <td style="text-align:left">Garage floor diffuse</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Garage_TDiff_GroundReflect_p/v</code></td>
+  <td style="text-align:left">Garage ground reflection</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Garage_TSelfI_p/v</code></td>
+  <td style="text-align:left">Garage self-illuminated elements</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PlaneReflect_InMenus_p/v</code></td>
+  <td style="text-align:left">Planar reflection in menu scenes</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PlaneReflect_InMenus_DefRead_p/v</code></td>
+  <td style="text-align:left">Deferred read for menu reflection</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="root-level-material-templates-26-entries"><a class="anchor" href="#root-level-material-templates-26-entries">#</a>Root-Level Material Templates (26 entries)</h4>
+<p>These are <code>.PHlsl.Txt</code> / <code>.VHlsl.Txt</code> material shader templates referenced by name from <code>.Shader.Gbx</code> files:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Template</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>PC3</code> (4 pixel + 2 vertex)</td>
+  <td style="text-align:left">Base material template (multiple variants)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TEmblem</code> (2p + 2v)</td>
+  <td style="text-align:left">Emblem/logo overlay shader</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TEnergySwitch</code> (1p + 1v)</td>
+  <td style="text-align:left">Energy switch effect</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TDiff_Spec_Norm_Switch</code> (1p + 1v)</td>
+  <td style="text-align:left">Diffuse+Specular+Normal with switch</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TNorm_Switch</code> (1p + 1v)</td>
+  <td style="text-align:left">Normal-only switch</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TRenderOverlay</code> (1p + 1v)</td>
+  <td style="text-align:left">Render overlay shader</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RenderOverlay</code> (1p)</td>
+  <td style="text-align:left">Alternate render overlay</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PyDiffSpecNormSwitch_PyGrassX2</code> (1p + 1v)</td>
+  <td style="text-align:left">Y-projected material with grass X2</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PyNormSwitch_PyGrassX2</code> (1p + 1v)</td>
+  <td style="text-align:left">Y-projected normal with grass X2</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>PoleEnergy</code> / <code>PoleEnergyInt</code> (2p + 2v)</td>
+  <td style="text-align:left">Energy pole effects</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GeomLProbe</code> (1p + 1v)</td>
+  <td style="text-align:left">Geometry light probe</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DefReadP1_Probe</code> (1p)</td>
+  <td style="text-align:left">Deferred read pass 1 with probe</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>EnergySwitch</code> (1p)</td>
+  <td style="text-align:left">Energy switch pixel</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LM1_TgtFixed_EnergySwitch</code> (1v)</td>
+  <td style="text-align:left">LM1 energy switch vertex</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LM1_TgtFixed_RenderOverlay</code> (1v)</td>
+  <td style="text-align:left">LM1 render overlay vertex</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="3-essential-shaders-for-mvp"><a class="anchor" href="#3-essential-shaders-for-mvp">#</a>3. Essential Shaders for MVP</h2>
+<p>The minimum viable WebGPU renderer needs approximately 50-60 equivalent shader programs (many TM2020 shader files can be merged into uber-shaders). Grouped by priority:</p>
+<h3 id="tier-1-absolutely-required-renders-a-visible-scene"><a class="anchor" href="#tier-1-absolutely-required-renders-a-visible-scene">#</a>Tier 1: Absolutely Required (renders a visible scene)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">#</th>
+  <th style="text-align:left">WebGPU Shader</th>
+  <th style="text-align:left">TM2020 Originals</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left"><code>gbuffer_fill.wgsl</code></td>
+  <td style="text-align:left"><code>Block_TDSN_DefWrite_p/v</code>, <code>Block_PyPxz_*_DefWrite_p/v</code>, all block DefWrite variants</td>
+  <td style="text-align:left">G-buffer write for track geometry</td>
+</tr>
+<tr>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left"><code>depth_only.wgsl</code></td>
+  <td style="text-align:left"><code>ZOnly_p/v</code>, <code>ZOnly_Alpha01_p/v</code></td>
+  <td style="text-align:left">Z-prepass</td>
+</tr>
+<tr>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left"><code>deferred_ambient.wgsl</code></td>
+  <td style="text-align:left"><code>Deferred_SetILightDir_p</code>, <code>Deferred_AddAmbient_Fresnel_p</code>, <code>Deferred_AddLightLm_p</code>, <code>Deferred_SetLDirFromMask_p</code></td>
+  <td style="text-align:left">Ambient/indirect lighting</td>
+</tr>
+<tr>
+  <td style="text-align:left">4</td>
+  <td style="text-align:left"><code>deferred_light_point.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredGeomLightBall_p</code></td>
+  <td style="text-align:left">Point light accumulation</td>
+</tr>
+<tr>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left"><code>deferred_light_spot.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredGeomLightSpot_p</code></td>
+  <td style="text-align:left">Spot light accumulation</td>
+</tr>
+<tr>
+  <td style="text-align:left">6</td>
+  <td style="text-align:left"><code>deferred_shadow_pssm.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredShadowPssm_p/v</code></td>
+  <td style="text-align:left">PSSM shadow sampling</td>
+</tr>
+<tr>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left"><code>fullscreen_tri.wgsl</code></td>
+  <td style="text-align:left"><code>FullTriangle_v</code>, <code>FullTriangle_TexCoord_v</code></td>
+  <td style="text-align:left">Full-screen passes</td>
+</tr>
+<tr>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left"><code>face_normal.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredFaceNormalFromDepth_p</code></td>
+  <td style="text-align:left">Face normal reconstruction</td>
+</tr>
+<tr>
+  <td style="text-align:left">9</td>
+  <td style="text-align:left"><code>linear_depth.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredZBufferToDist01_p</code>, <code>DepthGetLinearZ01_p</code></td>
+  <td style="text-align:left">Linear depth conversion</td>
+</tr>
+<tr>
+  <td style="text-align:left">10</td>
+  <td style="text-align:left"><code>tone_map.wgsl</code></td>
+  <td style="text-align:left"><code>TM_GlobalFilmCurve_p</code>, <code>TM_GetAvgLumiCurr_p</code>, <code>TM_GetLog2LumiDown1_p</code></td>
+  <td style="text-align:left">Tone mapping + auto-exposure</td>
+</tr>
+<tr>
+  <td style="text-align:left">11</td>
+  <td style="text-align:left"><code>sky.wgsl</code></td>
+  <td style="text-align:left"><code>Sky_p/v</code></td>
+  <td style="text-align:left">Sky rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left">12</td>
+  <td style="text-align:left"><code>motion_vectors.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredCameraMotion_p/v</code></td>
+  <td style="text-align:left">Motion vector generation</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tier-2-visual-quality-needed-for-acceptable-appearance"><a class="anchor" href="#tier-2-visual-quality-needed-for-acceptable-appearance">#</a>Tier 2: Visual Quality (needed for acceptable appearance)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">#</th>
+  <th style="text-align:left">WebGPU Shader</th>
+  <th style="text-align:left">TM2020 Originals</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">13</td>
+  <td style="text-align:left"><code>car_skin.wgsl</code></td>
+  <td style="text-align:left"><code>CarSkin_DefWrite_p/v</code>, <code>CarSkin_DefRead_p/v</code></td>
+  <td style="text-align:left">Car body rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left">14</td>
+  <td style="text-align:left"><code>car_details.wgsl</code></td>
+  <td style="text-align:left"><code>CarDetails_DefWrite_p/v</code>, <code>CarDetails_DefRead_p/v</code></td>
+  <td style="text-align:left">Car parts</td>
+</tr>
+<tr>
+  <td style="text-align:left">15</td>
+  <td style="text-align:left"><code>car_glass.wgsl</code></td>
+  <td style="text-align:left"><code>CarGlass_p1_p/v</code>, <code>CarGlass_p2_p/v</code>, <code>CarGlassRefract_p/v</code></td>
+  <td style="text-align:left">Car windshield</td>
+</tr>
+<tr>
+  <td style="text-align:left">16</td>
+  <td style="text-align:left"><code>decal_deferred.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredDecalGeom_p/v</code>, <code>DeferredDecal_Boxs_p</code></td>
+  <td style="text-align:left">Deferred decals</td>
+</tr>
+<tr>
+  <td style="text-align:left">17</td>
+  <td style="text-align:left"><code>fog_global.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredFogGlobal_p</code>, <code>DeferredFog_p</code></td>
+  <td style="text-align:left">Global fog</td>
+</tr>
+<tr>
+  <td style="text-align:left">18</td>
+  <td style="text-align:left"><code>bloom.wgsl</code></td>
+  <td style="text-align:left"><code>BloomSelectFilterDown*_p</code>, <code>Bloom_HorizonBlur_p</code>, <code>Bloom_Final_p</code></td>
+  <td style="text-align:left">HDR bloom</td>
+</tr>
+<tr>
+  <td style="text-align:left">19</td>
+  <td style="text-align:left"><code>fxaa.wgsl</code></td>
+  <td style="text-align:left"><code>FXAA_p</code></td>
+  <td style="text-align:left">Anti-aliasing</td>
+</tr>
+<tr>
+  <td style="text-align:left">20</td>
+  <td style="text-align:left"><code>color_grading.wgsl</code></td>
+  <td style="text-align:left"><code>ColorGrading_p</code>, <code>Colors_p</code></td>
+  <td style="text-align:left">Color grading</td>
+</tr>
+<tr>
+  <td style="text-align:left">21</td>
+  <td style="text-align:left"><code>ao_ssao.wgsl</code></td>
+  <td style="text-align:left">HBAO+ pipeline (9 shaders)</td>
+  <td style="text-align:left">Ambient occlusion</td>
+</tr>
+<tr>
+  <td style="text-align:left">22</td>
+  <td style="text-align:left"><code>gpu_cull.wgsl</code></td>
+  <td style="text-align:left"><code>Instances_Cull_SetLOD_c</code>, <code>Instances_Merge_c</code></td>
+  <td style="text-align:left">GPU frustum culling</td>
+</tr>
+<tr>
+  <td style="text-align:left">23</td>
+  <td style="text-align:left"><code>tree.wgsl</code></td>
+  <td style="text-align:left"><code>Tree_SelfAO_DefWrite_p/v</code>, <code>Tree_SelfAO_DefRead_p/v</code></td>
+  <td style="text-align:left">Tree rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left">24</td>
+  <td style="text-align:left"><code>grass.wgsl</code></td>
+  <td style="text-align:left"><code>Grass_p/v</code>, <code>Chunk_AddInstances_c</code></td>
+  <td style="text-align:left">Grass rendering</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tier-3-full-feature-set"><a class="anchor" href="#tier-3-full-feature-set">#</a>Tier 3: Full Feature Set</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">#</th>
+  <th style="text-align:left">WebGPU Shader</th>
+  <th style="text-align:left">TM2020 Originals</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">25</td>
+  <td style="text-align:left"><code>ssr.wgsl</code></td>
+  <td style="text-align:left"><code>SSReflect_Deferred_p</code>, <code>SSReflect_Deferred_LastFrames_p</code></td>
+  <td style="text-align:left">Screen-space reflections</td>
+</tr>
+<tr>
+  <td style="text-align:left">26</td>
+  <td style="text-align:left"><code>temporal_aa.wgsl</code></td>
+  <td style="text-align:left"><code>TemporalAA_p</code></td>
+  <td style="text-align:left">Temporal anti-aliasing</td>
+</tr>
+<tr>
+  <td style="text-align:left">27</td>
+  <td style="text-align:left"><code>particles.wgsl</code></td>
+  <td style="text-align:left"><code>MgrParticleUpdate_c</code>, <code>MgrParticleRender_p/v</code></td>
+  <td style="text-align:left">GPU particles</td>
+</tr>
+<tr>
+  <td style="text-align:left">28</td>
+  <td style="text-align:left"><code>fog_volumetric.wgsl</code></td>
+  <td style="text-align:left"><code>3DFog_RayMarching_c</code>, <code>3DFog_ComputeInScatteringAndDensity_c</code></td>
+  <td style="text-align:left">Volumetric fog</td>
+</tr>
+<tr>
+  <td style="text-align:left">29</td>
+  <td style="text-align:left"><code>fog_box.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredGeomFogBoxInside_p/v</code>, <code>DeferredGeomFogBoxOutside_p/v</code></td>
+  <td style="text-align:left">Fog box volumes</td>
+</tr>
+<tr>
+  <td style="text-align:left">30</td>
+  <td style="text-align:left"><code>water.wgsl</code></td>
+  <td style="text-align:left"><code>Sea_p/v</code>, <code>Sea_DefWrite_p/v</code>, <code>WaterFog*</code></td>
+  <td style="text-align:left">Water surface</td>
+</tr>
+<tr>
+  <td style="text-align:left">31</td>
+  <td style="text-align:left"><code>clouds.wgsl</code></td>
+  <td style="text-align:left"><code>CloudsT3b_p/v</code>, <code>CloudsGodLight_p</code></td>
+  <td style="text-align:left">Clouds and god rays</td>
+</tr>
+<tr>
+  <td style="text-align:left">32</td>
+  <td style="text-align:left"><code>dof.wgsl</code></td>
+  <td style="text-align:left"><code>DoF_T3_BlurAtDepth_p</code></td>
+  <td style="text-align:left">Depth of field</td>
+</tr>
+<tr>
+  <td style="text-align:left">33</td>
+  <td style="text-align:left"><code>motion_blur.wgsl</code></td>
+  <td style="text-align:left"><code>MotionBlur2d_p</code></td>
+  <td style="text-align:left">Motion blur</td>
+</tr>
+<tr>
+  <td style="text-align:left">34</td>
+  <td style="text-align:left"><code>lens_flare.wgsl</code></td>
+  <td style="text-align:left"><code>2dFlareAdd_Hdr_p</code>, <code>2dLensDirtAdd_p</code>, <code>LensFlareOccQuery_v</code></td>
+  <td style="text-align:left">Lens effects</td>
+</tr>
+<tr>
+  <td style="text-align:left">35</td>
+  <td style="text-align:left"><code>ghost_car.wgsl</code></td>
+  <td style="text-align:left"><code>CarGhost_p/v</code></td>
+  <td style="text-align:left">Ghost car overlay</td>
+</tr>
+<tr>
+  <td style="text-align:left">36</td>
+  <td style="text-align:left"><code>burn_marks.wgsl</code></td>
+  <td style="text-align:left"><code>DeferredGeomBurnSphere_p/v</code></td>
+  <td style="text-align:left">Tire scorch marks</td>
+</tr>
+<tr>
+  <td style="text-align:left">37</td>
+  <td style="text-align:left"><code>impostor.wgsl</code></td>
+  <td style="text-align:left"><code>Tree_Impostor_DefWrite_p/v</code>, <code>DeferredOutput_ImpostorConvert_c</code></td>
+  <td style="text-align:left">Billboard impostors</td>
+</tr>
+<tr>
+  <td style="text-align:left">38</td>
+  <td style="text-align:left"><code>pbr_precompute.wgsl</code></td>
+  <td style="text-align:left"><code>Pbr_IntegrateBRDF_GGX_c</code>, <code>Pbr_PreFilterEnvMap_GGX_c</code></td>
+  <td style="text-align:left">Pre-compute PBR LUTs</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Summary</strong>: 12 shaders for a minimal scene, 24 for acceptable quality, 38 for feature-complete. The massive shader count (1,112) collapses because most TM2020 shaders are permutations of the same logic with different texture slot configurations.</p>
+<hr>
+<h2 id="4-deferred-pipeline-shader-map"><a class="anchor" href="#4-deferred-pipeline-shader-map">#</a>4. Deferred Pipeline Shader Map</h2>
+<p>Each of the 19 deferred pipeline passes and its associated shader(s):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>PASS                    SHADER(S)                                    WebGPU PLAN
+=======================================================================================
+ 1. DipCulling          Instances_Cull_SetLOD_c.hlsl                 Compute pass
+                        IndexedInst_SetDrawArgs_LOD_SGs_c.hlsl      Writes indirect args
+---------------------------------------------------------------------------------------
+ 2. DeferredWrite       Block_TDSN_DefWrite_p/v.hlsl                 Uber G-buffer shader
+                        Block_PyPxz_*_DefWrite_p/v.hlsl              (variants via defines)
+                        CarSkin_DefWrite_p/v.hlsl
+                        Tree_SelfAO_DefWrite_p/v.hlsl
+                        BodyAnim_DefWrite_p/v.hlsl
+                        CharAnimSkel_*_DefWrite_p/v.hlsl
+                        Dyna*_DefWrite_*.hlsl
+                        DynaFacing_DefWrite_p/v.hlsl
+                        DynaSpriteDiffuse_DefWrite_p/v.hlsl
+                        Sea_DefWrite_p/v.hlsl
+                        DecalSprite_DefWrite_p/v.hlsl
+                        Block_TreeSprite_DefWrite_p/v.hlsl
+                        MenuBox_DefWrite_v.hlsl
+                        IceWall_DefWrite_p/v.hlsl
+                        Voxel_DefWrite_TDSN_p/v.hlsl
+                        VoxelIce_DefWrite_p/v.hlsl
+                        GrassFence_VDepLight_DefWrite_p/v.hlsl
+                        DeferredWrite_BlackNoSpec_p/v.hlsl
+                        Warp_*_DefWrite_*.hlsl
+                        Block_PyPxzTLayered_DefWrite_p/v.hlsl
+---------------------------------------------------------------------------------------
+ 3. DeferredWriteFNormal DeferredFaceNormalFromDepth_p.hlsl           Reconstruct from depth
+                        DeferredDeCompFaceNormal_p.hlsl              Or decompress stored
+---------------------------------------------------------------------------------------
+ 4. DeferredWriteVNormal (Vertex normals written during DeferredWrite MRT -- no separate shader)
+---------------------------------------------------------------------------------------
+ 5. DeferredDecals      DeferredDecalGeom_p/v.hlsl                   Box projection
+                        DeferredDecal_Boxs_p.hlsl                   Batched box decals
+                        DeferredDecal_FullTri_p/v.hlsl              Full-screen decal
+                        Decal_2d_CV_DefDecal_p/v.hlsl               2D vertex-color decal
+---------------------------------------------------------------------------------------
+ 6. DeferredBurn        DeferredGeomBurnSphere_p/v.hlsl             Sphere-shaped burns
+---------------------------------------------------------------------------------------
+ 7. DeferredShadow      DeferredShadowPssm_p/v.hlsl                 Sample PSSM cascades
+                        DeferredGeomShadowVol_p/v.hlsl              Shadow volume stencil
+---------------------------------------------------------------------------------------
+ 8. DeferredAmbientOcc  HBAO_plus/LinearizeDepth_p.hlsl              6-step HBAO+ pipeline
+                        HBAO_plus/DeinterleaveDepth_p.hlsl           (run twice: small+big)
+                        HBAO_plus/ReconstructNormal_p.hlsl
+                        HBAO_plus/CoarseAO_p.hlsl
+                        HBAO_plus/ReinterleaveAO_p.hlsl
+                        HBAO_plus/BlurX_p.hlsl
+                        HBAO_plus/BlurY_p.hlsl
+---------------------------------------------------------------------------------------
+ 9. DeferredFakeOcc     DeferredGeomFakeOcc_p/v.hlsl                Cheap distant AO
+---------------------------------------------------------------------------------------
+10. CameraMotion        DeferredCameraMotion_p/v.hlsl               Motion vectors
+---------------------------------------------------------------------------------------
+11. DeferredRead        Deferred_SetILightDir_p.hlsl                Indirect light setup
+                        Deferred_AddAmbient_Fresnel_p.hlsl          Ambient + Fresnel
+                        Deferred_AddLightLm_p.hlsl                  Lightmap contribution
+                        Deferred_SetLDirFromMask_p.hlsl             Light dir from mask
+                        Block_DefReadP1_*.hlsl (23 variants)        Per-material read
+                        CarSkin_DefRead_p/v.hlsl
+                        CarDetails_DefRead_p/v.hlsl
+                        Tree_SelfAO_DefRead_p/v.hlsl
+                        Tree_Impostor_DefRead_p/v.hlsl
+                        BodyAnim_DefRead_p/v.hlsl
+                        CharAnimSkel_*_DefRead_p/v.hlsl
+                        GrassFence_VDepLight_DefRead_p/v.hlsl
+                        DynaSpriteDiffuse_DefRead_p/v.hlsl
+                        DecalSprite_DefRead_p/v.hlsl
+                        Block_PyPxzTLayered_DefRead_p/v.hlsl
+                        Warp_TDiffSpec_VertexTween_DefRead_p/v.hlsl
+                        Voxel_DefRead_TDSNI_COut_p.hlsl
+---------------------------------------------------------------------------------------
+12. DeferredReadFull    DeferredFull_Warp_p.hlsl                    Warp distortion
+                        Deferred_ReProjectLm_p.hlsl                 Lightmap reprojection
+---------------------------------------------------------------------------------------
+13. Reflects_CullObjects (CPU-side pass; no shader)                  Reflection probe cull
+---------------------------------------------------------------------------------------
+14. DeferredLighting    DeferredGeomLightBall_p.hlsl                 Point lights
+                        DeferredGeomLightSpot_p.hlsl                Spot lights
+                        DeferredGeomLightFxSphere_p.hlsl            Sphere FX lights
+                        DeferredGeomLightFxCylinder_p.hlsl          Cylinder FX lights
+                        DeferredGeomProjector_p/v.hlsl              Projected textures
+---------------------------------------------------------------------------------------
+15. CustomEnding        DeferredGeomCameraMap_p/v.hlsl              Camera-mapped effects
+---------------------------------------------------------------------------------------
+16. DeferredFogVolumes  DeferredGeomFogBoxOutside_p/v.hlsl          Fog box (outside)
+                        DeferredGeomFogBoxInside_p/v.hlsl           Fog box (inside)
+                        3DFog_RayMarching_c.hlsl                    Volumetric ray march
+                        3DFog_ComputeInScatteringAndDensity_c.hlsl  Scattering
+                        3DFog_BlendInCamera_p.hlsl                  Blend fog
+---------------------------------------------------------------------------------------
+17. DeferredFog         DeferredFogGlobal_p.hlsl                    Global height fog
+                        DeferredFog_p.hlsl                          Distance fog
+                        DeferredWaterFog_p/v.hlsl                   Water fog
+                        DeferredWaterFog_FullTri_p/v.hlsl           Full-screen water fog
+---------------------------------------------------------------------------------------
+18. LensFlares          LensFlareOccQuery_v.hlsl                    Occlusion query
+                        2dFlareAdd_Hdr_p/v.hlsl                     HDR flare composite
+                        2dLensDirtAdd_p/v.hlsl                      Lens dirt overlay
+---------------------------------------------------------------------------------------
+19. FxTXAA              TemporalAA_p.hlsl                           Temporal AA resolve
+                        (or NVIDIA GFSDK_TXAA via SDK)              (hardware path)
+=======================================================================================</code></pre></div>
+<hr>
+<h2 id="5-material-shader-variants-tech3-system"><a class="anchor" href="#5-material-shader-variants-tech3-system">#</a>5. Material Shader Variants (Tech3 System)</h2>
+<h3 id="naming-convention-decoded"><a class="anchor" href="#naming-convention-decoded">#</a>Naming Convention Decoded</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Tech3/&lt;ObjectType&gt;_&lt;TextureSlots&gt;_&lt;Modifier&gt;_&lt;Pipeline&gt;_&lt;Stage&gt;.hlsl
+
+Object Types:     Block, Car*, Body*, Char*, Dyna*, Tree, Sea, Voxel, Grass, Decal, etc.
+Texture Slots:    T=Texture, D=Diffuse, S=Specular, N=Normal, I=Illumination, E=Emissive
+                  O=Occlusion, EM=Environment Map
+Projection:       Py=Y-axis, Pxz=XZ-plane, P=generic projection
+Modifiers:        COut=ColorOutput, CIn=ColorInput, SI=SelfIllum, LM0/1/2=Lightmap tier
+                  X2=DoubleRes, H2=HalfRes(?), Hue=HueShift, Op=Opacity
+                  TDecalMod=Decal-modulated, Layered=multi-layer blend
+Pipeline:         DefWrite=G-buffer, DefRead/DefReadP1=deferred light, PeelDiff=lightmap bake
+                  Anim=animation variant, Shadow=shadow caster, ZOnly=depth only
+Stage:            _p=pixel, _v=vertex, _c=compute, _g=geometry, _h=hull, _d=domain</code></pre></div>
+<h3 id="variant-explosion-analysis"><a class="anchor" href="#variant-explosion-analysis">#</a>Variant Explosion Analysis</h3>
+<p>The 180 block shaders derive from approximately 6 core shader programs:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CORE BLOCK SHADERS:
+1. Block_TDSN          -- Standard PBR (single texture + Diffuse/Specular/Normal)
+2. Block_PyPxz         -- Triplanar Y + XZ (terrain-like, two projections)
+3. Block_PyDSNX2       -- High-res Y-projected
+4. Block_PxzDSN        -- XZ-projected walls
+5. Block_PTDSN         -- Extra projection layer + TDSN
+6. Block_PyPxzTLayered -- Layered triplanar terrain blend
+
+EACH CORE has up to 8 pipeline variants:
+  - _p/_v              (forward rendering)
+  - _DefWrite_p/_v     (G-buffer fill)
+  - _DefReadP1_*       (deferred lighting, with LM0/LM1/LM2/COut/SI sub-variants)
+  - _PeelDiff_p/_v     (depth peeling for lightmap baking)
+  - _Anim_v            (animated texture coordinates)
+  - _Shadow_v          (shadow caster)
+  - _ZOnly_p/_v        (depth-only)
+  - _DecalMod_*        (decal-modulated)
+
+MODIFIERS create additional sub-variants:
+  - COut / CIn         (color output / input -- sticker/paint system)
+  - DispIn / Parallax  (displacement input / parallax mapping)
+  - Hue                (hue-shift for color variants)
+  - X2H2               (resolution multiplier)
+  - ids                (material ID indexing)
+  - TI / SI            (texture illumination / self-illumination)
+  - OpBlend / OpTest   (opacity blend / opacity test)</code></pre></div>
+<h3 id="webgpu-consolidation-strategy"><a class="anchor" href="#webgpu-consolidation-strategy">#</a>WebGPU Consolidation Strategy</h3>
+<p>Instead of 180+ block shader files, implement <strong>1 uber-shader</strong> with preprocessor defines:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-wgsl">// block_material.wgsl -- single uber-shader
+// Compile-time variants via pipeline overrides:
+//   PROJECTION_MODE: 0=TDSN, 1=PyPxz, 2=PxzDSN, 3=PTDSN, 4=Layered
+//   PIPELINE_STAGE:  0=GBuffer, 1=DeferredRead, 2=Forward, 3=DepthOnly, 4=Shadow
+//   HAS_SELF_ILLUM:  0/1
+//   HAS_COLOR_OUT:   0/1
+//   LIGHTMAP_TIER:   0/1/2
+//   HAS_PARALLAX:    0/1</code></pre></div>
+<p>This collapses ~180 block shaders into ~30 pipeline specializations of a single shader module.</p>
+<p>Similarly for cars (~31 shaders -> 1 uber-shader with 4-5 specializations) and trees (~30 shaders -> 1 uber-shader with 3-4 specializations).</p>
+<hr>
+<h2 id="6-post-processing-chain"><a class="anchor" href="#6-post-processing-chain">#</a>6. Post-Processing Chain</h2>
+<h3 id="complete-post-processing-shader-sequence"><a class="anchor" href="#complete-post-processing-shader-sequence">#</a>Complete Post-Processing Shader Sequence</h3>
+<p>Executed after deferred lighting in this order:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>STAGE                SHADER(S)                              WEBGPU APPROACH
+===============================================================================
+1. Fog Volumes       DeferredGeomFogBoxOutside_p/v          Render fog box geom
+                     DeferredGeomFogBoxInside_p/v           Inside variant
+                     3DFog_RayMarching_c                    Compute ray march
+                     3DFog_ComputeInScatteringAndDensity_c  Compute scattering
+                     3DFog_UpdateNoiseTexture_c             Compute noise
+                     3DFog_BlendInCamera_p                  Composite fog
+-------------------------------------------------------------------------------
+2. Global Fog        DeferredFogGlobal_p                    Full-screen pass
+                     DeferredFog_p                          Distance-based fog
+                     DeferredWaterFog_p/v                   Water fog overlay
+                     WaterFogFromDepthH_p/v                 Height-based water fog
+-------------------------------------------------------------------------------
+3. Lens Flares       LensFlareOccQuery_v                    Occlusion query -&gt; readback
+                     2dFlareAdd_Hdr_p/v                     Sprite composite
+                     2dLensDirtAdd_p/v                      Screen-space dirt
+                     2dMoon_p/v                             Moon billboard
+-------------------------------------------------------------------------------
+4. Depth of Field    DoF_T3_BlurAtDepth_p                   Variable-kernel blur
+-------------------------------------------------------------------------------
+5. Motion Blur       MotionBlur2d_p                         Per-pixel velocity blur
+-------------------------------------------------------------------------------
+6. Blur              BlurHV_p                               Separable Gaussian
+                     BlurHV_DepthMask_p                     Depth-masked blur
+                     BlurHV_DepthTest_p                     Depth-tested blur
+                     BilateralBlur_p                        Edge-preserving blur
+                     BlurWeighted_p                         Weighted blur
+-------------------------------------------------------------------------------
+7. Colors            Colors_p                               Brightness/contrast/sat
+                     ColorBlindnessCorrection_p             Accessibility
+                     ColorGrading_p                         3D LUT
+-------------------------------------------------------------------------------
+8. Tone Mapping      TM_GetLumi_p                           Extract luminance
+                     TM_GetLog2LumiDown1_p/v                Log downsample (chain)
+                     TM_GetAvgLumiCurr_p                    Average luminance
+                     TM_GlobalFilmCurve_p                   Filmic tone map
+                     (or TM_GlobalOpAutoExp_p)              (auto-exposure)
+                     (or TM_LocalOp_p)                      (local operator)
+-------------------------------------------------------------------------------
+9. Bloom             BloomSelectFilterDown2_p               Threshold + 2x down
+                     BloomSelectFilterDown4_p               4x down
+                     Bloom_HorizonBlur_p                    Horizontal blur (per mip)
+                     Bloom_StreaksWorkDir_p                  Anamorphic streaks
+                     Bloom_StreaksSelectSrc_p               Streak source
+                     Bloom_Final_p                          Composite onto scene
+                     Bloom_EdShowBlow_p                     Editor: show bloom regions
+-------------------------------------------------------------------------------
+10. Anti-Aliasing    FXAA_p                                 FXAA 3.11
+                     (or TemporalAA_p)                      TAA resolve
+                     EdgeBlender_Detect_p/v                 Edge detection
+                     EdgeBlender_Gutter_p                   Edge gutter
+-------------------------------------------------------------------------------
+11. SSR (deferred)   SSReflect_Deferred_p                   Screen-space ray march
+                     SSReflect_Deferred_LastFrames_p        Temporal reprojection
+                     SSReflect_Forward_p                    Forward path variant
+                     SSReflect_Forward_LastFrames_p         Forward temporal
+                     SSReflect_UpSample_p                   Half-res upsample
+-------------------------------------------------------------------------------
+12. SubSurface       SeparableSSS_p                         Jimenez separable SSS
+-------------------------------------------------------------------------------
+13. MSAA Resolve     RasterMsaaResolve_p                    LDR resolve
+                     RasterMsaaResolveHdr_p                 HDR resolve
+-------------------------------------------------------------------------------
+14. Final Blit       RasterBitmapBlend*_p (various)         Copy to back buffer
+                     DownSize2x2AvgInLdr / 3x3AvgInLdr     Downsample
+                     FillConst_AutoExpScaled_p              Auto-exposure scaled fill
+===============================================================================</code></pre></div>
+<hr>
+<h2 id="7-compute-shaders"><a class="anchor" href="#7-compute-shaders">#</a>7. Compute Shaders</h2>
+<h3 id="complete-inventory-105-compute-shaders"><a class="anchor" href="#complete-inventory-105-compute-shaders">#</a>Complete Inventory (105 compute shaders)</h3>
+<p>Organized by subsystem:</p>
+<h4 id="gpu-culling-and-instancing-7"><a class="anchor" href="#gpu-culling-and-instancing-7">#</a>GPU Culling and Instancing (7)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/Instances_Cull_SetLOD_c.hlsl         -- Frustum cull + LOD select
+Engines/Instances_Merge_c.hlsl               -- Merge instance lists
+Engines/Instances_AddCount_ToN_c.hlsl        -- Count accumulation
+Engines/Instances_AddCounts_c.hlsl           -- Sum counts
+Engines/IndexedInst_SetDrawArgs_LOD_SGs_c.hlsl -- Write indirect draw args
+Engines/ForwardTileCull_c.hlsl               -- Forward+ tile light culling
+Tech3/Grass/Chunk_AddInstances_c.hlsl        -- Grass instance population</code></pre></div>
+<h4 id="particle-system-11"><a class="anchor" href="#particle-system-11">#</a>Particle System (11)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Effects/Particles/MgrParticleUpdate_c.hlsl           -- Main particle sim
+Effects/Particles/MgrParticleUpdateFromCPU_c.hlsl    -- CPU parameter update
+Effects/Particles/Particles_ComputeBBox_c.hlsl       -- Bounding boxes
+Effects/Particles/Particles_ComputeDepth_c.hlsl      -- Depth for sorting
+Effects/Particles/Particles_InitBBoxes_c.hlsl        -- Init bounding boxes
+Effects/Particles/ParticlesToFog_c.hlsl              -- Inject into fog
+Effects/Particles/CameraWaterDroplets_Spawn_c.hlsl   -- Screen droplet spawn
+Effects/Particles/CameraWaterDroplets_Update_c.hlsl  -- Screen droplet update
+Effects/Particles/VortexSimulation/VortexSpawn_c.hlsl   -- Vortex spawn
+Effects/Particles/VortexSimulation/VortexUpdate_c.hlsl  -- Vortex update</code></pre></div>
+<h4 id="volumetric-fog-9"><a class="anchor" href="#volumetric-fog-9">#</a>Volumetric Fog (9)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Effects/Fog/3DFog_RayMarching_c.hlsl                       -- Ray march
+Effects/Fog/3DFog_ComputeInScatteringAndDensity_c.hlsl     -- Scattering
+Effects/Fog/3DFog_UpdateNoiseTexture_c.hlsl                -- Animated noise
+Effects/Fog/ComputeFogSpaceInfo_c.hlsl                     -- Fog space setup
+Effects/Fog/FogInC_Compute_c.hlsl                          -- Camera fog compute
+Effects/Fog/FogInC_Copy_c.hlsl                             -- Copy fog
+Effects/Fog/FogInC_Propagate_c.hlsl                        -- Propagate fog
+Effects/Fog/FogInC_Propagate_WithLuminance_c.hlsl          -- Propagate + lumi
+Effects/Fog/UpdateFog_c.hlsl                               -- Update fog state</code></pre></div>
+<h4 id="lightmap-and-probe-grid-16"><a class="anchor" href="#lightmap-and-probe-grid-16">#</a>Lightmap and Probe Grid (16)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Lightmap/DynaBox_AddLight_c.hlsl                           -- Dynamic light add
+Lightmap/DynaBox_ILightDir_AddToAccum_c.hlsl               -- ILight dir accum
+Lightmap/DynaBox_ILightDir_SetFromPeel_c.hlsl              -- ILight from peel
+Lightmap/DynaBox_LightAccumMulDiffuse_c.hlsl               -- Light * diffuse
+Lightmap/DynaBox_SetDiffuse_c.hlsl                         -- Set diffuse
+Lightmap/DynaBox_SetLightAmb_FromHandle_c.hlsl             -- Set ambient
+Lightmap/DynaGridProbeId_Sample_CbTrans_c.hlsl             -- Probe sample
+Lightmap/DynaGridProbeId_Sample_CbTransOutId_c.hlsl        -- Probe + output ID
+Lightmap/LmCompress_HBasis_YCbCr4_c.hlsl                  -- Compress LM
+Lightmap/LmILightDir_AddAmbient_c.hlsl                     -- Add ambient
+Lightmap/LmLIndex_Sort_c.hlsl                              -- Sort LM indices
+Lightmap/LmSSResolve_Spread_ListMerge_c.hlsl               -- SS resolve merge
+Lightmap/PixelCopyToTextureArray_c.hlsl                     -- Copy to tex array
+Lightmap/ProbeGrid_LightListSample_QuatTrans_c.hlsl        -- Probe light sample
+Lightmap/ProbeGrid_ListMerge_c.hlsl                         -- Merge probe lists
+Lightmap/ProbeGrid_Sample_c.hlsl                            -- Sample probe grid
+Lightmap/ProbeGrid_Sample_CbTrans_c.hlsl                    -- Sample w/ transform
+Lightmap/ProgeGrid_List_Sort_c.hlsl                         -- Sort probe list</code></pre></div>
+<h4 id="pbr-ibl-precomputation-6"><a class="anchor" href="#pbr-ibl-precomputation-6">#</a>PBR / IBL Precomputation (6)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/Pbr_IntegrateBRDF_GGX_c.hlsl                -- BRDF LUT
+Engines/Pbr_PreFilterEnvMap_GGX_c.hlsl               -- IBL pre-filter
+Engines/Pbr_FastFilterEnvMap_GGX_c.hlsl              -- Fast filter
+Engines/Pbr_FastFilterEnvMap_MirrorDiagXZ_c.hlsl     -- Mirror diagonal
+Engines/Pbr_RoughnessFilterNormalInMips_c.hlsl       -- Normal mip filter
+Engines/Pbr_Spec_to_Roughness_c.hlsl                -- Spec to roughness</code></pre></div>
+<h4 id="buffer-utilities-14"><a class="anchor" href="#buffer-utilities-14">#</a>Buffer Utilities (14)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/Buffer_Add_c.hlsl                   -- Buffer addition
+Engines/Buffer_CopyOrTransform_c.hlsl       -- Copy or transform
+Engines/Buffer_CopyRaw_c.hlsl               -- Raw copy
+Engines/Buffer_Fill_c.hlsl                  -- Fill buffer
+Engines/Buffer_IndexCopy_c.hlsl             -- Indexed copy
+Engines/Buffer_IndexedCopy_c.hlsl           -- Indexed copy variant
+Engines/Buffer_ScatteredCopy_c.hlsl         -- Scattered write
+Engines/BufferReduction_MinOrMax_c.hlsl     -- Min/max reduction
+Engines/BufferReduction_SH2_Norm4_c.hlsl    -- SH2 reduction
+Engines/BufferReduction_SH3_Rgb_c.hlsl      -- SH3 RGB reduction
+Engines/ClearHTilePSVR_c.hlsl              -- Clear H-tile (PSVR)
+Engines/PixelCountInBuckets_c.hlsl          -- Pixel histogram
+Engines/PixelGetBoundPos_c.hlsl             -- Get bounding position
+Engines/PixelMinOrMax_c.hlsl                -- Pixel min/max</code></pre></div>
+<h4 id="texture-utilities-10"><a class="anchor" href="#texture-utilities-10">#</a>Texture Utilities (10)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CopyTextureFloatToInt_c.hlsl                -- Float to int texture
+CopyTextureIntToFloat_c.hlsl                -- Int to float texture
+Engines/CopyRawTexture2D_c.hlsl             -- Raw 2D copy
+Engines/CopyRawTexture3D_c.hlsl             -- Raw 3D copy
+Engines/CopyTexture2dArray_c.hlsl           -- Texture array copy
+Engines/Convert_RGB_to_YCC_c.hlsl           -- RGB to YCbCr
+Engines/FillDebugPattern_Texture2D_c.hlsl   -- Debug pattern fill
+Engines/Texture_Fill_c.hlsl                 -- Texture fill
+Engines/Texture3d_CopyFromBuffer_c.hlsl     -- 3D texture from buffer
+Noise/FillNoiseVolume_c.hlsl                -- Fill 3D noise volume</code></pre></div>
+<h4 id="cubemap-processing-4"><a class="anchor" href="#cubemap-processing-4">#</a>Cubemap Processing (4)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/Cube_CopyAndMirrorDiag_c.hlsl       -- Mirror diagonal
+Engines/Cube_Down2x2_c.hlsl                 -- 2x2 downsample
+Engines/Cube_MulBounceFactor_c.hlsl         -- Bounce factor multiply
+Engines/CubeFromEquirectMirror_c.hlsl       -- Equirect to cube</code></pre></div>
+<h4 id="sh-projection-2"><a class="anchor" href="#sh-projection-2">#</a>SH Projection (2)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/ProjectCubeFlat3x2_SH2_Norm4_c.hlsl -- Project cube to SH2
+Engines/ProjectCubeFlat3x2_SH3_Rgb_c.hlsl   -- Project cube to SH3 RGB</code></pre></div>
+<h4 id="mipmap-generation-3"><a class="anchor" href="#mipmap-generation-3">#</a>Mipmap Generation (3)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/MakeMips1D64_c.hlsl                  -- 1D mipmap (64 texels)
+Engines/MakeMips8x8_c.hlsl                   -- 8x8 mipmap
+Engines/MakeMipsTail8x8_c.hlsl               -- 8x8 mip tail</code></pre></div>
+<h4 id="normal-map-baking-3"><a class="anchor" href="#normal-map-baking-3">#</a>Normal Map Baking (3)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/NormalMapBaking/ComputeGrid3D_Allocate_c.hlsl  -- Allocate grid
+Engines/NormalMapBaking/ComputeGrid3D_FillGrid_c.hlsl  -- Fill grid
+Engines/NormalMapBaking/NormalMapDownSize4x4_c.hlsl     -- Downsize normals</code></pre></div>
+<h4 id="mesh-occlusion-2"><a class="anchor" href="#mesh-occlusion-2">#</a>Mesh Occlusion (2)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/MeshOcclusionSelf_AccumNormalize_c.hlsl  -- Normalize AO
+Engines/MeshOcclusionSelf_AccumPerTri_c.hlsl     -- Per-tri AO</code></pre></div>
+<h4 id="ocean-simulation-4"><a class="anchor" href="#ocean-simulation-4">#</a>Ocean Simulation (4)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Tech3/Ocean_Flow_c.hlsl           -- Flow map simulation
+Tech3/Ocean_FlowStream_c.hlsl    -- Stream flow
+Tech3/Ocean_Gradient_c.hlsl      -- Wave gradient
+Tech3/Ocean_ProfileBuffer_c.hlsl -- Wave profile buffer</code></pre></div>
+<h4 id="gpu-sort-4"><a class="anchor" href="#gpu-sort-4">#</a>GPU Sort (4)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Effects/SortLib/InitSortArgs_c.hlsl   -- Init sort args
+Effects/SortLib/Sort_c.hlsl           -- Main sort
+Effects/SortLib/SortInner_c.hlsl      -- Inner sort
+Effects/SortLib/SortStep_c.hlsl       -- Sort step</code></pre></div>
+<h4 id="sdf-generation-2"><a class="anchor" href="#sdf-generation-2">#</a>SDF Generation (2)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Effects/SignedDistanceField/SignedDistanceField_Analytic_c.hlsl    -- Analytic SDF
+Effects/SignedDistanceField/SignedDistanceField_BruteForce_c.hlsl  -- Brute force SDF</code></pre></div>
+<h4 id="lightmap-indirect-light-4"><a class="anchor" href="#lightmap-indirect-light-4">#</a>Lightmap Indirect Light (4)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/LmILight_Bilinear_c.hlsl       -- Bilinear indirect light
+Engines/LmILight_MergeBuffers_c.hlsl   -- Merge light buffers
+Engines/LmILight_SetFromVideo_c.hlsl   -- Set from video
+Engines/LmILight_UpdateTime_c.hlsl     -- Update time-varying light</code></pre></div>
+<h4 id="misc-4"><a class="anchor" href="#misc-4">#</a>Misc (4)</h4>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ShadowCache/UpdateShadowIndex_c.hlsl           -- Shadow cache index update
+Tech3/DeferredOutput_ImpostorConvert_c.hlsl     -- Convert 3D to impostor
+Tech3/Trees/Tree_Instance_AddLight_c.hlsl       -- Per-instance tree light</code></pre></div>
+<h3 id="webgpu-compute-compatibility"><a class="anchor" href="#webgpu-compute-compatibility">#</a>WebGPU Compute Compatibility</h3>
+<p>All 105 compute shaders can run directly in WebGPU <code>@compute</code> shaders. Key considerations:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">TM2020 Feature</th>
+  <th style="text-align:left">WebGPU Equivalent</th>
+  <th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>RWStructuredBuffer</code></td>
+  <td style="text-align:left"><code>storage</code> buffer</td>
+  <td style="text-align:left">Direct mapping</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>RWTexture2D/3D</code></td>
+  <td style="text-align:left"><code>storage</code> texture</td>
+  <td style="text-align:left">Requires <code>"bgra8unorm-storage"</code> for some</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>GroupMemoryBarrier</code></td>
+  <td style="text-align:left"><code>workgroupBarrier()</code></td>
+  <td style="text-align:left">Direct mapping</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>InterlockedAdd</code></td>
+  <td style="text-align:left"><code>atomicAdd()</code></td>
+  <td style="text-align:left">Direct mapping</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>Append/ConsumeBuffer</code></td>
+  <td style="text-align:left">No direct equivalent</td>
+  <td style="text-align:left">Use atomic counter + storage buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left">Indirect dispatch args</td>
+  <td style="text-align:left"><code>dispatchWorkgroupsIndirect()</code></td>
+  <td style="text-align:left">Direct mapping</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="8-special-effects"><a class="anchor" href="#8-special-effects">#</a>8. Special Effects</h2>
+<h3 id="81-water-system"><a class="anchor" href="#81-water-system">#</a>8.1 Water System</h3>
+<p><strong>Shader count</strong>: 18 (Tech3/) + 7 (Effects/Particles/WaterSplash*) + 6 (CameraWaterDroplets) = 31 total</p>
+<p><strong>Architecture</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>OCEAN (deep water):
+  Compute:  Ocean_Flow_c -&gt; Ocean_FlowStream_c -&gt; Ocean_Gradient_c -&gt; Ocean_ProfileBuffer_c
+  Tessellation: Ocean_h -&gt; Ocean_d -&gt; Ocean_v -&gt; Ocean_p
+  Depth mask: Ocean_ObjectDepthMask_p/v
+
+SEA (shallow/pool water):
+  Deferred: Sea_DefWrite_p/v -&gt; Sea_p/v
+  Refraction: Sea_BlendRefract_p
+
+WATER SURFACE FX:
+  WaterNormals_p/v        -- Normal map animation
+  WaterFall_p/v           -- Waterfall
+  WaterFog_WGeomUnder_p/v -- Underwater geometry fog
+  WaterFogFromDepthH_p/v  -- Height-based water fog
+  Block_WaterWall_p/v     -- Water wall block surface
+
+PARTICLE INTERACTION:
+  WaterSplash_IntersectTriangles_p    -- GPU collision test
+  WaterSplash_SpawnParticles_p/v      -- Spawn splash
+  CameraWaterDroplets_Spawn/Update_c  -- Screen droplets
+  CameraWaterDroplets_Render_p        -- Render droplets</code></pre></div>
+<p><strong>WebGPU approach</strong>: Ocean tessellation must be pre-computed or replaced with compute-based displacement. The flow/gradient/profile compute shaders translate directly. Water fog and droplets are standard screen-space effects.</p>
+<h3 id="82-fog-system"><a class="anchor" href="#82-fog-system">#</a>8.2 Fog System</h3>
+<p><strong>Shader count</strong>: 12 (fog compute) + 8 (deferred fog pixel/vertex) = 20 total</p>
+<p><strong>Two fog systems</strong>:</p>
+<ol>
+  <li><strong>Volumetric 3D Fog</strong> (compute-based):</li>
+  <li><code>3DFog_RayMarching_c</code> -- main ray march through froxel grid</li>
+  <li><code>3DFog_ComputeInScatteringAndDensity_c</code> -- light scattering evaluation</li>
+  <li><code>3DFog_UpdateNoiseTexture_c</code> -- animated 3D noise for fog turbulence</li>
+  <li><code>FogInC_Propagate_WithLuminance_c</code> -- propagate fog with luminance coupling</li>
+  <li>Renders into a 3D texture (froxel grid) then composites onto scene</li>
+</ol>
+<ol>
+  <li><strong>Deferred Fog</strong> (geometry/screen-space):</li>
+  <li><code>DeferredFogGlobal_p</code> -- full-screen global height/distance fog</li>
+  <li><code>DeferredGeomFogBoxOutside_p/v</code> -- box fog volume (camera outside)</li>
+  <li><code>DeferredGeomFogBoxInside_p/v</code> -- box fog volume (camera inside)</li>
+  <li><code>DeferredWaterFog_p/v</code> -- water-specific fog</li>
+  <li>Applied as geometry passes during post-processing</li>
+</ol>
+<h3 id="83-lens-effects"><a class="anchor" href="#83-lens-effects">#</a>8.3 Lens Effects</h3>
+<p><strong>Shader count</strong>: 6 total</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/LensFlareOccQuery_v.hlsl       -- Render tiny quad at sun, occlusion query
+Effects/2dFlareAdd_Hdr_p/v.hlsl       -- Composite HDR flare sprites
+Effects/2dLensDirtAdd_p/v.hlsl        -- Screen-space lens dirt (modulated by bloom)
+Effects/2dMoon_p/v.hlsl               -- Moon billboard</code></pre></div>
+<p><strong>WebGPU note</strong>: D3D11 occlusion queries translate to <code>occlusionQuerySet</code> in WebGPU. Alternatively, use a compute shader to read the depth buffer at the sun position.</p>
+<h3 id="84-cloud-system"><a class="anchor" href="#84-cloud-system">#</a>8.4 Cloud System</h3>
+<p><strong>Shader count</strong>: 9 total</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CloudsT3b_p/v.hlsl                -- Main cloud rendering (Tech3 billboards)
+CloudsTech3_p/v.hlsl               -- Alternative cloud variant
+CloudsTech3_Opacity_p/v.hlsl       -- Cloud opacity pass
+CloudsEdgeLight_p.hlsl             -- Silver lining on cloud edges
+CloudsGodLight_p.hlsl              -- God ray light shafts from clouds
+CloudsGodMask_p.hlsl               -- Mask for god ray regions</code></pre></div>
+<h3 id="85-screen-space-reflections"><a class="anchor" href="#85-screen-space-reflections">#</a>8.5 Screen-Space Reflections</h3>
+<p><strong>Shader count</strong>: 5 total</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SSReflect_Deferred_p.hlsl            -- Ray march in screen space
+SSReflect_Deferred_LastFrames_p.hlsl -- Temporal reprojection (fill gaps)
+SSReflect_Forward_p.hlsl             -- Forward path variant
+SSReflect_Forward_LastFrames_p.hlsl  -- Forward temporal
+SSReflect_UpSample_p.hlsl            -- Half-res to full-res upscale</code></pre></div>
+<h3 id="86-subsurface-scattering"><a class="anchor" href="#86-subsurface-scattering">#</a>8.6 Subsurface Scattering</h3>
+<p><strong>Shader count</strong>: 1</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Effects/SubSurface/SeparableSSS_p.hlsl  -- Jimenez separable SSS</code></pre></div>
+<p>Applied to car paint and translucent materials. Uses separable Gaussian blur in screen-space along the surface normal direction.</p>
+<h3 id="87-energy-shield-effects"><a class="anchor" href="#87-energy-shield-effects">#</a>8.7 Energy / Shield Effects</h3>
+<p><strong>Shader count</strong>: 5 (Effects/Energy/) + 6 (Tech3 Shield/Energy)</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Effects/Energy/EnergyAnalytic_p/v.hlsl   -- Analytic energy field
+Effects/Energy/EnergyGeom_g/p/v.hlsl     -- Energy geometry (uses GS!)
+Tech3/SphereShield_p/v.hlsl              -- Sphere shield
+Tech3/SphereShieldOpaque_p/v.hlsl        -- Opaque sphere shield
+Tech3/BodyAnim_Energy_p/v.hlsl           -- Energy body animation
+Tech3/BodyAnim_Shield_p/v.hlsl           -- Shield body animation
+Tech3/Block_TAddShield_p/v.hlsl          -- Shield block overlay
+Tech3/Dyna_TAddShield_p/v.hlsl           -- Shield dynamic overlay
+Tech3/Tech3VehicleShield_p.hlsl          -- Vehicle shield</code></pre></div>
+<p>These are primarily ShootMania effects; in Trackmania they appear as item energy gates.</p>
+<h3 id="88-ice-effects"><a class="anchor" href="#88-ice-effects">#</a>8.8 Ice Effects</h3>
+<p><strong>Shader count</strong>: 7</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Tech3/Ice_p/v.hlsl                    -- Ice surface (refraction + blue tint)
+Tech3/IceWall_DefWrite_p/v.hlsl       -- Ice wall G-buffer
+Tech3/IceWall_p/v.hlsl                -- Ice wall forward
+Tech3/IcePathBorder_p/v.hlsl          -- Ice path border (transition)
+Tech3/Block_Ice_p/v.hlsl              -- Ice block variant
+Tech3/VoxelIce_DefWrite_p/v.hlsl      -- Voxel ice G-buffer
+Tech3/VoxelIce_p/v.hlsl               -- Voxel ice forward</code></pre></div>
+<hr>
+<h2 id="appendix-shader-count-summary"><a class="anchor" href="#appendix-shader-count-summary">#</a>Appendix: Shader Count Summary</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Category</th>
+  <th style="text-align:left">Pixel</th>
+  <th style="text-align:left">Vertex</th>
+  <th style="text-align:left">Compute</th>
+  <th style="text-align:left">Geometry</th>
+  <th style="text-align:left">Hull</th>
+  <th style="text-align:left">Domain</th>
+  <th style="text-align:left">Text PS</th>
+  <th style="text-align:left">Text VS</th>
+  <th style="text-align:left"><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Tech3</td>
+  <td style="text-align:left">263</td>
+  <td style="text-align:left">216</td>
+  <td style="text-align:left">7</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">3</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left"><strong>533</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Engines</td>
+  <td style="text-align:left">105</td>
+  <td style="text-align:left">62</td>
+  <td style="text-align:left">47</td>
+  <td style="text-align:left">1</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">9</td>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left"><strong>218</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Effects</td>
+  <td style="text-align:left">93</td>
+  <td style="text-align:left">30</td>
+  <td style="text-align:left">26</td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">12</td>
+  <td style="text-align:left">9</td>
+  <td style="text-align:left"><strong>154</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Lightmap</td>
+  <td style="text-align:left">38</td>
+  <td style="text-align:left">13</td>
+  <td style="text-align:left">16</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left"><strong>78</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Painter</td>
+  <td style="text-align:left">10</td>
+  <td style="text-align:left">5</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left"><strong>16</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Menu</td>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">8</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left"><strong>16</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Others</td>
+  <td style="text-align:left">40</td>
+  <td style="text-align:left">28</td>
+  <td style="text-align:left">2</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">0</td>
+  <td style="text-align:left">20</td>
+  <td style="text-align:left">18</td>
+  <td style="text-align:left"><strong>97</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Total</strong></td>
+  <td style="text-align:left"><strong>515</strong></td>
+  <td style="text-align:left"><strong>388</strong></td>
+  <td style="text-align:left"><strong>105</strong></td>
+  <td style="text-align:left"><strong>5</strong></td>
+  <td style="text-align:left"><strong>4</strong></td>
+  <td style="text-align:left"><strong>4</strong></td>
+  <td style="text-align:left"><strong>51</strong></td>
+  <td style="text-align:left"><strong>40</strong></td>
+  <td style="text-align:left"><strong>1,112</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Unique shader programs (combining _p + _v pairs as one program): approximately <strong>580</strong>.</p>
+<p>For WebGPU recreation, the 1,112 shaders collapse to approximately <strong>35-40 uber-shader modules</strong> due to the variant explosion pattern of the Tech3 framework.</p>
+
+                        <nav class="prev-next"><a class="prev" href="ui-manialink.html">&larr; UI &amp; ManiaLink</a><a class="next" href="plan-overview.html">Executive Summary &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-shader-cache-overview">1. Shader Cache Overview</a></li>
+  <li class="toc-h3"><a href="#format">Format</a></li>
+  <li class="toc-h3"><a href="#shader-stage-suffixes">Shader Stage Suffixes</a></li>
+  <li class="toc-h3"><a href="#webgpu-stage-mapping-notes">WebGPU Stage Mapping Notes</a></li>
+  <li class="toc-h3"><a href="#top-level-category-counts">Top-Level Category Counts</a></li>
+<li class=""><a href="#2-category-breakdown">2. Category Breakdown</a></li>
+  <li class="toc-h3"><a href="#21-tech3-material-and-scene-shaders-533-shaders">2.1 Tech3/ -- Material and Scene Shaders (533 shaders)</a></li>
+  <li class="toc-h3"><a href="#22-engines-engine-infrastructure-218-shaders">2.2 Engines/ -- Engine Infrastructure (218 shaders)</a></li>
+  <li class="toc-h3"><a href="#23-effects-post-processing-and-particles-154-shaders">2.3 Effects/ -- Post-Processing and Particles (154 shaders)</a></li>
+  <li class="toc-h3"><a href="#24-lightmap-baked-lighting-78-shaders">2.4 Lightmap/ -- Baked Lighting (78 shaders)</a></li>
+  <li class="toc-h3"><a href="#25-other-categories">2.5 Other Categories</a></li>
+<li class=""><a href="#3-essential-shaders-for-mvp">3. Essential Shaders for MVP</a></li>
+  <li class="toc-h3"><a href="#tier-1-absolutely-required-renders-a-visible-scene">Tier 1: Absolutely Required (renders a visible scene)</a></li>
+  <li class="toc-h3"><a href="#tier-2-visual-quality-needed-for-acceptable-appearance">Tier 2: Visual Quality (needed for acceptable appearance)</a></li>
+  <li class="toc-h3"><a href="#tier-3-full-feature-set">Tier 3: Full Feature Set</a></li>
+<li class=""><a href="#4-deferred-pipeline-shader-map">4. Deferred Pipeline Shader Map</a></li>
+<li class=""><a href="#5-material-shader-variants-tech3-system">5. Material Shader Variants (Tech3 System)</a></li>
+  <li class="toc-h3"><a href="#naming-convention-decoded">Naming Convention Decoded</a></li>
+  <li class="toc-h3"><a href="#variant-explosion-analysis">Variant Explosion Analysis</a></li>
+  <li class="toc-h3"><a href="#webgpu-consolidation-strategy">WebGPU Consolidation Strategy</a></li>
+<li class=""><a href="#6-post-processing-chain">6. Post-Processing Chain</a></li>
+  <li class="toc-h3"><a href="#complete-post-processing-shader-sequence">Complete Post-Processing Shader Sequence</a></li>
+<li class=""><a href="#7-compute-shaders">7. Compute Shaders</a></li>
+  <li class="toc-h3"><a href="#complete-inventory-105-compute-shaders">Complete Inventory (105 compute shaders)</a></li>
+  <li class="toc-h3"><a href="#webgpu-compute-compatibility">WebGPU Compute Compatibility</a></li>
+<li class=""><a href="#8-special-effects">8. Special Effects</a></li>
+  <li class="toc-h3"><a href="#81-water-system">8.1 Water System</a></li>
+  <li class="toc-h3"><a href="#82-fog-system">8.2 Fog System</a></li>
+  <li class="toc-h3"><a href="#83-lens-effects">8.3 Lens Effects</a></li>
+  <li class="toc-h3"><a href="#84-cloud-system">8.4 Cloud System</a></li>
+  <li class="toc-h3"><a href="#85-screen-space-reflections">8.5 Screen-Space Reflections</a></li>
+  <li class="toc-h3"><a href="#86-subsurface-scattering">8.6 Subsurface Scattering</a></li>
+  <li class="toc-h3"><a href="#87-energy-shield-effects">8.7 Energy / Shield Effects</a></li>
+  <li class="toc-h3"><a href="#88-ice-effects">8.8 Ice Effects</a></li>
+<li class=""><a href="#appendix-shader-count-summary">Appendix: Shader Count Summary</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

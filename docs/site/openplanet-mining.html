@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Openplanet Deep Mining - Trackmania 2020 Engine Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="site-title"><a href="index.html">TM2020 Engine Reference</a></h1>
+                <p class="site-subtitle">Reverse Engineering Documentation</p>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="search-input" placeholder="Search documentation..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
+                    <span class="toggle-icon">&#9660;</span>
+                    Hide Technical Details
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section">Reverse Engineering</div>
+<a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<a class="nav-item active" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
+<a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-section">Planning</div>
+<a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
+<a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
+<a class="nav-item" href="plan-physics.html"><span class="nav-text">Physics Engine Design</span></a>
+<a class="nav-item" href="plan-renderer.html"><span class="nav-text">Renderer Design</span></a>
+<a class="nav-item" href="plan-assets.html"><span class="nav-text">Asset Pipeline</span></a>
+<a class="nav-item" href="plan-blockmesh.html"><span class="nav-text">Block Mesh Research</span></a>
+<a class="nav-item" href="plan-determinism.html"><span class="nav-text">Determinism Analysis</span></a>
+<a class="nav-item" href="plan-constants.html"><span class="nav-text">Physics Constants</span></a>
+<a class="nav-item" href="plan-mvp.html"><span class="nav-text">MVP Task Breakdown</span></a>
+<a class="nav-item" href="plan-tuning.html"><span class="nav-text">Tuning Data Extraction</span></a>
+<a class="nav-item" href="plan-tuning-loading.html"><span class="nav-text">Tuning Loading Analysis</span></a>
+<div class="nav-section">Seminar</div>
+<a class="nav-item" href="seminar-alex.html"><span class="nav-text">Alex: Physics Notes</span></a>
+<a class="nav-item" href="seminar-maya.html"><span class="nav-text">Maya: Rendering Notes</span></a>
+<a class="nav-item" href="seminar-jordan.html"><span class="nav-text">Jordan: Systems Notes</span></a>
+<a class="nav-item" href="seminar-chen.html"><span class="nav-text">Prof. Chen: Physics Lectures</span></a>
+<a class="nav-item" href="seminar-kovac.html"><span class="nav-text">Prof. Kovac: Graphics Lectures</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <span class="theme-icon-dark">&#9790;</span>
+                    <span class="theme-icon-light">&#9728;</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile header -->
+        <header class="mobile-header">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-title">TM2020 Engine Reference</span>
+            <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle theme">
+                <span class="theme-icon-dark">&#9790;</span>
+                <span class="theme-icon-light">&#9728;</span>
+            </button>
+        </header>
+
+        <!-- Main content -->
+        <main class="content" id="content">
+            <div class="content-wrapper">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="sep">/</span>
+                    <span>Openplanet Deep Mining</span>
+                </nav>
+
+                <div class="content-body">
+                    <div class="content-main">
+                        <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
+                        <h1 id="openplanet-plugin-deep-mining-game-engine-intelligence"><a class="anchor" href="#openplanet-plugin-deep-mining-game-engine-intelligence">#</a>Openplanet Plugin Deep Mining - Game Engine Intelligence</h1>
+<p><strong>Generated</strong>: 2026-03-27 <strong>Source</strong>: 81 AngelScript (.as) files across 12 plugin directories <strong>Scope</strong>: Every installed Openplanet plugin, exhaustively mined</p>
+<hr>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
+<ol>
+  <li><a href="#1-memory-layout-intelligence">Memory Layout Intelligence</a></li>
+  <li><a href="#2-enum-definitions">Enum Definitions</a></li>
+  <li><a href="#3-api-intelligence">API Intelligence</a></li>
+  <li><a href="#4-binary-patch-patterns">Binary Patch Patterns</a></li>
+  <li><a href="#5-game-events-and-hooks">Game Events and Hooks</a></li>
+  <li><a href="#6-class-member-catalog">Class Member Catalog</a></li>
+  <li><a href="#7-version-history">Version History</a></li>
+  <li><a href="#8-camera-system-internals">Camera System Internals</a></li>
+  <li><a href="#9-editor-system-internals">Editor System Internals</a></li>
+  <li><a href="#10-networking-internals">Networking Internals</a></li>
+  <li><a href="#11-rendering-and-display-settings">Rendering and Display Settings</a></li>
+  <li><a href="#12-plugin-system-meta-intelligence">Plugin System Meta-Intelligence</a></li>
+</ol>
+<hr>
+<details class="collapsible collapsed-by-default">
+<summary><h2 id="1-memory-layout-intelligence"><a class="anchor" href="#1-memory-layout-intelligence">#</a>1. Memory Layout Intelligence</h2></summary>
+<div class="collapsible-content">
+<h3 id="11-cscenevehiclevis-tm2020next-entity-id-and-vehicle-vis-manager"><a class="anchor" href="#11-cscenevehiclevis-tm2020next-entity-id-and-vehicle-vis-manager">#</a>1.1 CSceneVehicleVis (TM2020/Next) - Entity ID and Vehicle Vis Manager</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/Vehicle/VehicleNext.as</code></p>
+<p>The vehicle visualization system is accessed through a scene manager hierarchy:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ISceneVis
+  +0x08: uint32 managerCount
+  +0x10: CMwNod*[managerCount] managers  (stride 0x08 per entry)</code></pre></div>
+<p>The vehicle vis manager is at <strong>scene manager index 13</strong> (as of 2025-09-26):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>NSceneVehicleVis_SMgr (vehicleVisMgr = SceneVis::GetManager(sceneVis, 13))
+  +0x210: CMwNod* vehicles_ptr    (array of CSceneVehicleVis pointers)
+  +0x218: uint32  vehicles_count</code></pre></div>
+<p><strong>Vehicle Vis Array Structure</strong> (indirect pointer array):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vehicles_ptr[i * 0x08] -&gt; CSceneVehicleVis*</code></pre></div>
+<p><strong>CSceneVehicleVis</strong> (confirmed from live memory):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  +0x00: uint32 EntityId</code></pre></div>
+<p>Entity ID bit masks for vehicle identification:</p>
+<ul>
+  <li><code class="addr">0x02000000</code> mask: Player vehicle (used when vehicleEntityId == 0 to find player)</li>
+  <li><code class="addr">0x04000000</code> mask: Replay/editor vehicle (checked to avoid editor car placement)</li>
+</ul>
+<h3 id="12-iscenevis-manager-array-alternative-layout"><a class="anchor" href="#12-iscenevis-manager-array-alternative-layout">#</a>1.2 ISceneVis Manager Array (Alternative Layout)</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/SceneVis.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ISceneVis (fast path):
+  +0x08:  uint32 managerCount  (used by GetManager for bounds check)
+  +0x10:  CMwNod*[N] managers  (stride 0x08)
+
+ISceneVis (full managers enumeration):
+  +0x290: uint32 sceneVisManagersCount
+  +0x298: struct[N] {    (stride 0x10)
+    +0x00: CMwNod* ptr
+    +0x08: CMwNod* classNamePtr  -&gt; +0x00: uint64 classNameString (C string ptr)
+  }</code></pre></div>
+<p>The managers at +0x10 and +0x290 appear to be two different manager arrays. The +0x10 array is used for fast indexed access (like getting the vehicle vis manager), while the +0x290 array stores metadata including class name strings.</p>
+<h3 id="13-cscenevehiclevisstate-tm2020next-reflection-based-offsets"><a class="anchor" href="#13-cscenevehiclevisstate-tm2020next-reflection-based-offsets">#</a>1.3 CSceneVehicleVisState (TM2020/Next) - Reflection-Based Offsets</h3>
+<p><strong>Source</strong>: <code>VehicleState/Main.as</code></p>
+<p>These offsets are computed at runtime using Openplanet's reflection system, relative to known member offsets in <code>CSceneVehicleVisState</code>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Property</th>
+  <th style="text-align:left">How Computed</th>
+  <th style="text-align:left">Relative To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">EngineRPM</td>
+  <td style="text-align:left"><code>CurGear.Offset - 0x0C</code></td>
+  <td style="text-align:left">CurGear</td>
+</tr>
+<tr>
+  <td style="text-align:left">WheelDirt[FL]</td>
+  <td style="text-align:left"><code>FLIcing01.Offset - 0x04</code></td>
+  <td style="text-align:left">FLIcing01</td>
+</tr>
+<tr>
+  <td style="text-align:left">WheelDirt[FR]</td>
+  <td style="text-align:left"><code>FRIcing01.Offset - 0x04</code></td>
+  <td style="text-align:left">FRIcing01</td>
+</tr>
+<tr>
+  <td style="text-align:left">WheelDirt[RL]</td>
+  <td style="text-align:left"><code>RLIcing01.Offset - 0x04</code></td>
+  <td style="text-align:left">RLIcing01</td>
+</tr>
+<tr>
+  <td style="text-align:left">WheelDirt[RR]</td>
+  <td style="text-align:left"><code>RRIcing01.Offset - 0x04</code></td>
+  <td style="text-align:left">RRIcing01</td>
+</tr>
+<tr>
+  <td style="text-align:left">SideSpeed</td>
+  <td style="text-align:left"><code>FrontSpeed.Offset + 0x04</code></td>
+  <td style="text-align:left">FrontSpeed</td>
+</tr>
+<tr>
+  <td style="text-align:left">WheelFalling[FL]</td>
+  <td style="text-align:left"><code>FLBreakNormedCoef.Offset + 0x04</code></td>
+  <td style="text-align:left">FLBreakNormedCoef</td>
+</tr>
+<tr>
+  <td style="text-align:left">WheelFalling[FR]</td>
+  <td style="text-align:left"><code>FRBreakNormedCoef.Offset + 0x04</code></td>
+  <td style="text-align:left">FRBreakNormedCoef</td>
+</tr>
+<tr>
+  <td style="text-align:left">WheelFalling[RL]</td>
+  <td style="text-align:left"><code>RLBreakNormedCoef.Offset + 0x04</code></td>
+  <td style="text-align:left">RLBreakNormedCoef</td>
+</tr>
+<tr>
+  <td style="text-align:left">WheelFalling[RR]</td>
+  <td style="text-align:left"><code>RRBreakNormedCoef.Offset + 0x04</code></td>
+  <td style="text-align:left">RRBreakNormedCoef</td>
+</tr>
+<tr>
+  <td style="text-align:left">LastTurboLevel</td>
+  <td style="text-align:left"><code>ReactorBoostLvl.Offset - 0x04</code></td>
+  <td style="text-align:left">ReactorBoostLvl</td>
+</tr>
+<tr>
+  <td style="text-align:left">ReactorFinalTimer</td>
+  <td style="text-align:left"><code>ReactorBoostType.Offset + 0x04</code></td>
+  <td style="text-align:left">ReactorBoostType</td>
+</tr>
+<tr>
+  <td style="text-align:left">CruiseDisplaySpeed</td>
+  <td style="text-align:left"><code>FrontSpeed.Offset + 0x0C</code></td>
+  <td style="text-align:left">FrontSpeed</td>
+</tr>
+<tr>
+  <td style="text-align:left">VehicleType</td>
+  <td style="text-align:left"><code>InputSteer.Offset - 0x08</code></td>
+  <td style="text-align:left">InputSteer</td>
+</tr>
+</tbody>
+</table></div>
+<p>This means the in-memory layout near <code>FrontSpeed</code> is:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FrontSpeed - 0x00: float FrontSpeed
+FrontSpeed + 0x04: float SideSpeed
+FrontSpeed + 0x08: (unknown 4 bytes)
+FrontSpeed + 0x0C: int   CruiseDisplaySpeed</code></pre></div>
+<p>And near <code>CurGear</code>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CurGear - 0x0C: float EngineRPM
+CurGear - 0x08: (unknown)
+CurGear - 0x04: (unknown)
+CurGear + 0x00: uint  CurGear</code></pre></div>
+<p>And near wheel data (e.g. FL):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FLIcing01 - 0x04: float FLDirt
+FLIcing01 + 0x00: float FLIcing01</code></pre></div>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FLBreakNormedCoef + 0x00: float FLBreakNormedCoef
+FLBreakNormedCoef + 0x04: int   FLFallingState</code></pre></div>
+<p><strong>Vehicle type</strong> is read as uint8 at <code>InputSteer.Offset - 0x08</code>, used as an index into <code>playground.Arena.Resources.m_AllGameItemModels[]</code> to look up the vehicle model's MwId.</p>
+<h3 id="14-cscenevehiclevisstate-maniaplanet-4-mp4-hardcoded-offsets"><a class="anchor" href="#14-cscenevehiclevisstate-maniaplanet-4-mp4-hardcoded-offsets">#</a>1.4 CSceneVehicleVisState (ManiaPlanet 4 / MP4) - Hardcoded Offsets</h3>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CSceneVehicleVisState (MP4 - via CSceneVehicleVis internal pointer):
+  +0x000: uint32 EntityId
+  +0x4C0: float  InputSteer
+  +0x4C4: float  InputGasPedal
+  +0x4CC: uint32 InputIsBraking  (1 = true)
+  +0x4E0: iso4   Location        (3x3 rotation matrix)
+  +0x504: vec3   Position        (at Location + 0x24)
+  +0x510: vec3   WorldVel        (at Location + 0x30)
+  +0x528: float  FrontSpeed
+  +0x52C: float  SideSpeed
+  +0x538: uint32 IsGroundContact (1 = true)
+  +0x53C: Wheel[4] wheels        (stride 0x24, order: FL=0, FR=1, RR=2, RL=3)
+  +0x5E8: float  RPM
+  +0x5F4: uint32 CurGear
+  +0x630: uint32 ActiveEffects   (bitmask of EffectFlags)
+  +0x824: float  TurboActive     (1.0 = true)
+  +0x830: float  TurboPercent
+  +0x83C: float  GearPercent</code></pre></div>
+<p><strong>MP4 Wheel struct</strong> (stride 0x24):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  +0x00: float  DamperLen
+  +0x04: float  WheelRot
+  +0x08: float  WheelRotSpeed
+  +0x0C: float  SteerAngle
+  +0x10: uint16 GroundContactMaterial (ESurfId enum)
+  +0x14: uint32 GroundContact (1 = true)
+  +0x18: float  SlipCoef
+  +0x20: uint32 IsWet (1 = true)</code></pre></div>
+<p><strong>MP4 wheel order in memory</strong>: FL=0, FR=1, RR=2, RL=3 (clockwise starting from front-left)</p>
+<h3 id="15-cscenevehiclevisstate-turbo-hardcoded-offsets"><a class="anchor" href="#15-cscenevehiclevisstate-turbo-hardcoded-offsets">#</a>1.5 CSceneVehicleVisState (Turbo) - Hardcoded Offsets</h3>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CSceneVehicleVisState (Turbo - from vehicleMobil offset):
+  +0x00: uint32 EntityId
+  +0x8C: float  InputSteer
+  +0x94: float  InputGasPedal
+  +0x98: uint32 InputIsBraking  (1 = true)
+  +0xA0: iso4   Location        (rotation matrix)
+  +0xC4: vec3   Position        (at Location + 0x24)
+  +0xD0: vec3   WorldVel        (at Location + 0x30)
+  +0xE8: float  FrontSpeed
+  +0xEC: float  SideSpeed
+  +0xF8: uint32 IsGroundContact (1 = true)
+  +0xFC: Wheel[4] wheels        (stride 0x24, same struct as MP4 minus IsWet)
+  +0x18C: float RPM
+  +0x198: uint32 CurGear
+  +0x1A0: uint32 TurboActive    (1 = true)
+  +0x1A4: float  TurboPercent
+  +0x1B8: uint32 ActiveEffects  (bitmask)</code></pre></div>
+<h3 id="16-cscenevehiclecar-tmnfforever-hardcoded-offsets"><a class="anchor" href="#16-cscenevehiclecar-tmnfforever-hardcoded-offsets">#</a>1.6 CSceneVehicleCar (TMNF/Forever) - Hardcoded Offsets</h3>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CSceneVehicleCar (Forever):
+  +0x2E8: int32   WheelCount
+  +0x2EC: uint32  WheelsArrayPtr  (absolute address, not relative)
+
+  State base (m_offsetState = 0x2F8):
+  +0x2F8 + 0x08: float  InputSteer
+  +0x2F8 + 0x0C: float  InputGasPedal
+  +0x2F8 + 0x10: float  InputBrakePedal
+  +0x2F8 + 0x34: iso4   Location (rotation matrix)
+  +0x2F8 + 0x58: vec3   Position
+  +0x2F8 + 0x6C: vec3   WorldVel
+  +0x2F8 + 0x78: float  FrontSpeed
+  +0x2F8 + 0x90: uint32 IsGroundContact (1 = true)
+
+  Engine base (m_offsetEngine = 0x59C):
+  +0x59C + 0x18: float  RPM
+  +0x59C + 0x2C: uint32 CurGear
+
+  +0x5F4: float  TurboPercent (flagged as &quot;probably wrong&quot;)
+  +0x600: uint32 TurboActive (1 = true)
+  +0x60C: uint32 ActiveEffects (bitmask)</code></pre></div>
+<p><strong>Forever Wheel struct</strong> (stride 0x2FC per wheel, absolute address from WheelsArrayPtr):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  +0x0B4: float  DamperLen
+  +0x120: float  WheelRotSpeed
+  +0x124: uint32 GroundContact (1 = true)
+  +0x128: uint16 GroundContactMaterial (ESurfId)
+  +0x150: float  WheelRot
+  +0x154: float  SteerAngle</code></pre></div>
+<h3 id="17-ctrackmaniaplayer-mp4-vehicle-vis-pointer"><a class="anchor" href="#17-ctrackmaniaplayer-mp4-vehicle-vis-pointer">#</a>1.7 CTrackManiaPlayer (MP4) - Vehicle Vis Pointer</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/Vehicle/VehicleMP4.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CTrackManiaPlayer (MP4):
+  +0x2B8: CMwNod* vehicleVisPtr   (same pointer as found via VehicleVisMgr)
+  +0x2C4: uint32  EntityId</code></pre></div>
+<h3 id="18-cscenemgrvehiclevisimpl-mp4-vehicle-array"><a class="anchor" href="#18-cscenemgrvehiclevisimpl-mp4-vehicle-array">#</a>1.8 CSceneMgrVehicleVisImpl (MP4) - Vehicle Array</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/Vehicle/VehicleMP4.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CSceneMgrVehicleVisImpl (MP4):
+  +0x38: CMwNod* vehicles_ptr
+  +0x40: uint32  vehicles_count</code></pre></div>
+<h3 id="19-cgamemobil-turbo-vehicle-vis-access"><a class="anchor" href="#19-cgamemobil-turbo-vehicle-vis-access">#</a>1.9 CGameMobil (Turbo) - Vehicle Vis Access</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/Vehicle/VehicleTurbo.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameMobil (Turbo):
+  +0x14: CMwNod* vehicleMobilPtr
+    -&gt; +0x84: CMwNod* vehicleVisPtr</code></pre></div>
+<h3 id="110-gamecamera-mp4-viewing-vehicle-id"><a class="anchor" href="#110-gamecamera-mp4-viewing-vehicle-id">#</a>1.10 GameCamera (MP4) - Viewing Vehicle ID</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/Vehicle/VehicleMP4.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameCamera (MP4):
+  +0xD4: uint32 ViewingVisId</code></pre></div>
+<p>Special viewing ID <code class="addr">0x0FF00000</code> is used during intro/podium scenes (when camera is null).</p>
+<h3 id="111-cnetclient-netconfig-tcp-limit"><a class="anchor" href="#111-cnetclient-netconfig-tcp-limit">#</a>1.11 CNetClient - NetConfig TCP Limit</h3>
+<p><strong>Source</strong>: <code>InfiniteEmbedSize/NetConfig.as</code></p>
+<p>The NetConfig struct is accessed relative to <code>CNetClient.TCPSendingNodTotal</code> reflection offset:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CNetClient:
+  TCPSendingNodTotal.Offset + 4: IntPtr netConfigPtr  (pointer to NetConfig struct)
+
+NetConfig (TM2020):
+  +0x38: uint32 TcpMaxPacketSize</code></pre></div>
+<h3 id="112-cgamectneditorcommon-orbital-camera"><a class="anchor" href="#112-cgamectneditorcommon-orbital-camera">#</a>1.12 CGameCtnEditorCommon - Orbital Camera</h3>
+<p><strong>Source</strong>: <code>Camera/Impl.as</code>, <code>EditorDeveloper/Main.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameCtnEditorCommon.OrbitalCameraControl (TM2020/MP4):
+  .m_CurrentHAngle: float   (Turbo: .CurrentHAngle)
+  .m_CurrentVAngle: float   (Turbo: .CurrentVAngle)
+  .m_TargetedPosition: vec3  (Turbo: .TargetedPosition)
+  .m_CameraToTargetDistance: float  (Turbo: .CameraToTargetDistance)
+  .Pos: vec3  (TM2020 only)
+  +0x44: vec3 cameraPos  (MP4 only, via Dev::SetOffset)
+  .m_ParamScrollAreaStart: float  (default 0.7, Turbo: .ParamScrollAreaStart)
+  .m_ParamScrollAreaMax: float    (default 0.98, Turbo: .ParamScrollAreaMax)</code></pre></div>
+<hr>
+</div>
+</details>
+<h2 id="2-enum-definitions"><a class="anchor" href="#2-enum-definitions">#</a>2. Enum Definitions</h2>
+<h3 id="21-fallingstate-tm2020-only"><a class="anchor" href="#21-fallingstate-tm2020-only">#</a>2.1 FallingState (TM2020 only)</h3>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>enum FallingState {
+    FallingAir     = 0,
+    FallingWater   = 2,
+    RestingGround  = 4,
+    RestingWater   = 6,
+    GlidingGround  = 8
+}</code></pre></div>
+<p>Note: Values are always even (0, 2, 4, 6, 8). The plugin validates against this exact set and rejects unexpected values.</p>
+<h3 id="22-turbolevel-tm2020-only"><a class="anchor" href="#22-turbolevel-tm2020-only">#</a>2.2 TurboLevel (TM2020 only)</h3>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>enum TurboLevel {
+    None           = 0,
+    Normal         = 1,
+    Super          = 2,
+    RouletteNormal = 3,
+    RouletteSuper  = 4,
+    RouletteUltra  = 5
+}</code></pre></div>
+<p>Valid range: 1-5. Value 0 and values > 5 are treated as None.</p>
+<h3 id="23-vehicletype-tm2020-only"><a class="anchor" href="#23-vehicletype-tm2020-only">#</a>2.3 VehicleType (TM2020 only)</h3>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>enum VehicleType {
+    CharacterPilot = 0,
+    CarSport       = 1,  // Stadium
+    CarSnow        = 2,
+    CarRally       = 3,
+    CarDesert      = 4
+}</code></pre></div>
+<p>Vehicle type is determined by reading a uint8 index from the vis state, looking up the corresponding <code>CGameItemModel</code> from <code>playground.Arena.Resources.m_AllGameItemModels[index]</code>, and comparing its <code>MwId</code> against known vehicle IDs. The MwIds are initialized from string names: "CharacterPilot", "CarSport", "CarSnow", "CarRally", "CarDesert".</p>
+<h3 id="24-effectflags-mp4turboforever"><a class="anchor" href="#24-effectflags-mp4turboforever">#</a>2.4 EffectFlags (MP4/Turbo/Forever)</h3>
+<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>enum EffectFlags {
+    FreeWheeling       = 1,    // All games
+    ForcedAcceleration = 2,    // MP4 only
+    NoBrakes           = 4,    // MP4 only
+    NoSteering         = 8,    // MP4 only
+    NoGrip             = 16    // MP4 only
+}</code></pre></div>
+<h3 id="25-esurfid-ground-contact-material"><a class="anchor" href="#25-esurfid-ground-contact-material">#</a>2.5 ESurfId (Ground Contact Material)</h3>
+<p>Referenced via <code>CAudioSourceSurface::ESurfId</code> (TM2020/MP4/Turbo) or <code>CAudioSoundSurface::ESurfId</code> (Forever). These are uint16 values stored in the wheel struct. The actual enum values are not defined in the plugin source -- they come from the game's audio surface type system.</p>
+<h3 id="26-ehmsoverlayadaptratio-tm2020"><a class="anchor" href="#26-ehmsoverlayadaptratio-tm2020">#</a>2.6 EHmsOverlayAdaptRatio (TM2020)</h3>
+<p><strong>Source</strong>: <code>Finetuner/src/02_OverlayScaling.as</code></p>
+<p>Referenced as <code>EHmsOverlayAdaptRatio</code> with value <code>ShrinkToKeepRatio</code> as default. Applied to viewport overlays via <code>viewport.Overlays[i].m_AdaptRatio</code>.</p>
+<h3 id="27-shortcutmode"><a class="anchor" href="#27-shortcutmode">#</a>2.7 ShortcutMode</h3>
+<p><strong>Source</strong>: <code>Finetuner/src/99_Shortcuts.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>enum ShortcutMode {
+    Toggle      = 0,
+    Hold        = 1,
+    InverseHold = 2
+}</code></pre></div>
+<hr>
+<h2 id="3-api-intelligence"><a class="anchor" href="#3-api-intelligence">#</a>3. API Intelligence</h2>
+<h3 id="31-nadeo-services-base-urls"><a class="anchor" href="#31-nadeo-services-base-urls">#</a>3.1 Nadeo Services Base URLs</h3>
+<p><strong>Source</strong>: <code>NadeoServices/NadeoServices.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Audience</th>
+  <th style="text-align:left">Base URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">NadeoServices (Core)</td>
+  <td style="text-align:left"><code>https://prod.trackmania.core.nadeo.online</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">NadeoLiveServices (Live)</td>
+  <td style="text-align:left"><code>https://live-services.trackmania.nadeo.live</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">NadeoLiveServices (Meet)</td>
+  <td style="text-align:left"><code>https://meet.trackmania.nadeo.club</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>DEPRECATION</strong>: As of 2024-01-31, <code>NadeoClubServices</code> is deprecated. All requests are redirected to <code>NadeoLiveServices</code>.</p>
+<h3 id="32-authentication-pattern"><a class="anchor" href="#32-authentication-pattern">#</a>3.2 Authentication Pattern</h3>
+<p><strong>Source</strong>: <code>NadeoServices/AccessToken.as</code>, <code>NadeoServices/CoreToken.as</code></p>
+<p>Two token types:</p>
+<ol>
+  <li><strong>CoreToken</strong> (<code>NadeoServices</code>): Retrieved directly via <code>Internal::NadeoServices::GetCoreToken()</code> -- always authenticated, no refresh needed.</li>
+  <li><strong>AccessToken</strong> (<code>NadeoLiveServices</code>): Obtained via <code>api.Authentication_GetToken(userId, audience)</code>.</li>
+</ol>
+<p><strong>Token lifecycle</strong>:</p>
+<ul>
+  <li>Tokens are valid for <strong>55 minutes</strong> + random 1-60 seconds (intentionally slightly longer than Nadeo's internal 55-minute window to avoid conflicts with the game's own auth).</li>
+  <li>On authentication failure: exponential backoff retry (1s, 2s, 4s, 8s, 16s, ...) -- "intentionally mimicking Nadeo's code".</li>
+  <li>Auth header format: <code>Authorization: nadeo_v1 t=<token></code></li>
+</ul>
+<p><strong>Authentication flow</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameManiaPlanet.ManiaPlanetScriptAPI.Authentication_GetToken(MSUsers[0].Id, audience)
+  -&gt; wait for .Authentication_GetTokenResponseReceived
+  -&gt; check .Authentication_ErrorCode == 0
+  -&gt; read .Authentication_Token</code></pre></div>
+<h3 id="33-account-id-login-conversion"><a class="anchor" href="#33-account-id-login-conversion">#</a>3.3 Account ID / Login Conversion</h3>
+<p><strong>Source</strong>: <code>NadeoServices/NadeoServices.as</code></p>
+<p>Login (base64url) to AccountId (UUID) conversion:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Login: &quot;c5jutptORLinoaIUmVWscA&quot;
+  -&gt; Base64url decode -&gt; raw bytes
+  -&gt; Format as: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+Result: &quot;7398eeb6-9b4e-44b8-a7a1-a2149955ac70&quot;</code></pre></div>
+<p>This confirms the UUID format: 4-2-2-2-6 byte groups from the 16-byte decoded base64.</p>
+<h3 id="34-display-name-resolution"><a class="anchor" href="#34-display-name-resolution">#</a>3.4 Display Name Resolution</h3>
+<p><strong>Source</strong>: <code>NadeoServices/NadeoServices.as</code></p>
+<p>Display names are resolved via <code>UserManagerScript</code>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>userMgr.FindDisplayName(accountId)  // checks cache first
+userMgr.RetrieveDisplayName(userId, accountIds)  // batch fetch, max 209 per batch
+userMgr.TaskResult_Release(req.Id)  // cleanup</code></pre></div>
+<p>The batch limit of <strong>209 account IDs per request</strong> is enforced in the code.</p>
+<h3 id="35-map-info-from-services"><a class="anchor" href="#35-map-info-from-services">#</a>3.5 Map Info from Services</h3>
+<p><strong>Source</strong>: <code>Discord/Services.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>maniaApp.DataFileMgr.Map_NadeoServices_GetListFromUid(0, uids)
+  -&gt; req.MapList[i].Uid
+  -&gt; req.MapList[i].ThumbnailUrl  (with &quot;.jpg&quot; suffix appended if missing)</code></pre></div>
+<h3 id="36-openplanet-plugin-api"><a class="anchor" href="#36-openplanet-plugin-api">#</a>3.6 Openplanet Plugin API</h3>
+<p><strong>Source</strong>: <code>PluginManager/src/Settings.as</code>, <code>PluginManager/src/Utils/API.as</code></p>
+<p>Base URL: <code>https://api.openplanet.dev</code></p>
+<p>Endpoints:</p>
+<ul>
+  <li><code>GET /plugins?tags=Trackmania&page=0</code> -- list plugins (tags: "Trackmania", "Turbo", "Forever", "Maniaplanet")</li>
+  <li><code>GET /plugins?tags=Trackmania&order=f</code> -- featured</li>
+  <li><code>GET /plugins?tags=Trackmania&order=d</code> -- popular (by downloads)</li>
+  <li><code>GET /plugins?tags=Trackmania&order=u</code> -- last updated</li>
+  <li><code>GET /plugins?tags=Trackmania&search=query</code> -- search</li>
+  <li><code>GET /plugins?ids=1,2,3</code> -- specific plugins</li>
+  <li><code>GET /plugin/{siteID}</code> -- single plugin details</li>
+  <li><code>GET /plugin/{siteID}/versions</code> -- changelog/versions</li>
+  <li><code>GET /plugin/{siteID}/download</code> -- download plugin .op file</li>
+  <li><code>GET /versions?ids=1,2,3</code> -- batch version check for updates</li>
+</ul>
+<p>Web URL: <code>https://openplanet.dev</code></p>
+<hr>
+<h2 id="4-binary-patch-patterns"><a class="anchor" href="#4-binary-patch-patterns">#</a>4. Binary Patch Patterns</h2>
+<h3 id="41-editor-offzone-enable-patch"><a class="anchor" href="#41-editor-offzone-enable-patch">#</a>4.1 Editor Offzone Enable Patch</h3>
+<p><strong>Source</strong>: <code>EditorDeveloper/Main.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Pattern</th>
+  <th style="text-align:left">Replacement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">TM2020 (release)</td>
+  <td style="text-align:left"><code>0F 84 ?? ?? ?? ?? 4C 8D 45 ?? BA 13</code></td>
+  <td style="text-align:left"><code>90 90 90 90 90 90</code> (NOP 6 bytes)</td>
+</tr>
+<tr>
+  <td style="text-align:left">TM2020 (logs/debug)</td>
+  <td style="text-align:left"><code>0F 84 ?? ?? ?? ?? 4C 8D 45 F0 BA ?? ?? ?? ?? 48 8B CF E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 45 85 FF 0F 84 ?? ?? ?? ?? 83 BF ?? ?? ?? ?? ?? 0F 84 ?? ?? ?? ?? 39</code></td>
+  <td style="text-align:left"><code>90 90 90 90 90 90</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">MP4.1 (64-bit)</td>
+  <td style="text-align:left"><code>F6 86 ?? ?? ?? ?? ?? 0F 84 ?? ?? ?? ?? 4C 8D 44 24 70 BA</code></td>
+  <td style="text-align:left"><code>90 90 90 90 90 90 90 90 90 90 90 90 90</code> (NOP 13 bytes)</td>
+</tr>
+<tr>
+  <td style="text-align:left">MP4 (32-bit)</td>
+  <td style="text-align:left"><code>0F 84 ?? ?? ?? ?? 8D ?? ?? ?? ?? ?? ?? 50 6A 12</code></td>
+  <td style="text-align:left"><code>90 90 90 90 90 90</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>All patches convert conditional jumps (JE/JZ) to NOPs, unconditionally enabling offzone placement in the editor.</p>
+<h3 id="42-editor-edge-camera-scroll-disable"><a class="anchor" href="#42-editor-edge-camera-scroll-disable">#</a>4.2 Editor Edge Camera Scroll Disable</h3>
+<p><strong>Source</strong>: <code>EditorDeveloper/Main.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Pattern</th>
+  <th style="text-align:left">Replacement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Forever (32-bit)</td>
+  <td style="text-align:left"><code>83 EC 3C D9 EE</code></td>
+  <td style="text-align:left"><code>C2 0C 00</code> (RET 0x0C -- early return)</td>
+</tr>
+</tbody>
+</table></div>
+<p>For TM2020/MP4/Turbo, scrolling is disabled by setting <code>OrbitalCameraControl.m_ParamScrollAreaStart = 1.1</code> and <code>.m_ParamScrollAreaMax = 1.1</code> (both values > 1.0 effectively disable edge scrolling).</p>
+<h3 id="43-embed-size-limit-bypass"><a class="anchor" href="#43-embed-size-limit-bypass">#</a>4.3 Embed Size Limit Bypass</h3>
+<p><strong>Source</strong>: <code>InfiniteEmbedSize/EmbedLimit.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Pattern</th>
+  <th style="text-align:left">Replacement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">TM2020 (64-bit)</td>
+  <td style="text-align:left"><code>76 08 C7 00 01 00 00 00 EB 2D</code></td>
+  <td style="text-align:left"><code>EB</code> (JBE -> JMP)</td>
+</tr>
+<tr>
+  <td style="text-align:left">MP4.1 (64-bit)</td>
+  <td style="text-align:left"><code>81 FB 00 A0 0F 00 76</code></td>
+  <td style="text-align:left"><code>81 FB 00 A0 0F 00 EB</code> (JBE -> JMP)</td>
+</tr>
+<tr>
+  <td style="text-align:left">Turbo (32-bit)</td>
+  <td style="text-align:left"><code>83 C4 10 3B ?? ?? ?? ?? ?? 76</code></td>
+  <td style="text-align:left"><code>83 C4 10 3B ?? ?? ?? ?? ?? EB</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Other (32-bit)</td>
+  <td style="text-align:left"><code>81 FE 00 A0 0F 00 76 08 C7</code></td>
+  <td style="text-align:left"><code>81 FE 00 A0 0F 00 EB</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code class="addr">0x000FA000</code> value (1,024,000 bytes = ~1000 KB) appears in the MP4/32-bit patterns as the comparison threshold. All patches change conditional branches to unconditional jumps.</p>
+<h3 id="44-max-challenge-size-pattern"><a class="anchor" href="#44-max-challenge-size-pattern">#</a>4.4 Max Challenge Size Pattern</h3>
+<p><strong>Source</strong>: <code>InfiniteEmbedSize/MaxChallengeSize.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Pattern</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">TM2020 (Windows)</td>
+  <td style="text-align:left"><code>3B ?? ?? ?? ?? ?? 77 0F 33 C0</code></td>
+  <td style="text-align:left">Locates the max challenge size global variable</td>
+</tr>
+<tr>
+  <td style="text-align:left">TM2020 (Linux)</td>
+  <td style="text-align:left"><code>48 8D 0D ?? ?? ?? ?? 3B 01 76 0B</code></td>
+  <td style="text-align:left">Linux variant, offset at +3</td>
+</tr>
+</tbody>
+</table></div>
+<p>The address is resolved via RIP-relative addressing:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ptr = Dev::FindPattern(pattern)
+ptrOffset = Dev::ReadInt32(ptr + 2)  // or +3 for Linux
+globalVar = ptr + 2 + 4 + ptrOffset  // RIP-relative resolution</code></pre></div>
+<p>The value at this address is set to <code>(maxBytes - 0xC00)</code> where default maxBytes = 12 <em> 1024 </em> 1024. The <code>0xC00</code> (3072 byte) subtraction "matches Nadeo's amounts".</p>
+<hr>
+<h2 id="5-game-events-and-hooks"><a class="anchor" href="#5-game-events-and-hooks">#</a>5. Game Events and Hooks</h2>
+<h3 id="51-openplanet-callback-functions"><a class="anchor" href="#51-openplanet-callback-functions">#</a>5.1 Openplanet Callback Functions</h3>
+<p>Every plugin can implement these standard callbacks:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Callback</th>
+  <th style="text-align:left">When Called</th>
+  <th style="text-align:left">Plugins Using</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>void Main()</code></td>
+  <td style="text-align:left">Plugin startup (coroutine-capable)</td>
+  <td style="text-align:left">All plugins</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>void Render()</code></td>
+  <td style="text-align:left">Every frame, always</td>
+  <td style="text-align:left">Finetuner, Stats</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>void RenderEarly()</code></td>
+  <td style="text-align:left">Before main render, for camera setup</td>
+  <td style="text-align:left">Camera</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>void RenderInterface()</code></td>
+  <td style="text-align:left">When overlay is open</td>
+  <td style="text-align:left">VehicleState, Discord, BigDecor, Controls, PluginManager</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>void RenderMenu()</code></td>
+  <td style="text-align:left">Overlay menu rendering</td>
+  <td style="text-align:left">EditorDeveloper, Finetuner, Stats, BigDecor, ClassicMenu, UsefulInformation, PluginManager, InfiniteEmbedSize</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>void OnDestroyed()</code></td>
+  <td style="text-align:left">Plugin unload</td>
+  <td style="text-align:left">Stats, EditorDeveloper, InfiniteEmbedSize</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>void OnDisabled()</code></td>
+  <td style="text-align:left">Plugin disabled</td>
+  <td style="text-align:left">Discord</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>void OnSettingsChanged()</code></td>
+  <td style="text-align:left">Setting modified</td>
+  <td style="text-align:left">EditorDeveloper, Discord, InfiniteEmbedSize</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>UI::InputBlocking OnKeyPress(bool down, VirtualKey key)</code></td>
+  <td style="text-align:left">Key events</td>
+  <td style="text-align:left">Finetuner</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52-metaruncontext"><a class="anchor" href="#52-metaruncontext">#</a>5.2 Meta::RunContext</h3>
+<p><strong>Source</strong>: <code>Finetuner/src/Main.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Meta::StartWithRunContext(Meta::RunContext::NetworkAfterMainLoop, callback)</code></pre></div>
+<p>This allows code to run in a specific point in the game's main loop -- specifically after the network processing but before the next frame. Used by Finetuner to update render distance without visual artifacts.</p>
+<h3 id="53-game-state-detection-patterns"><a class="anchor" href="#53-game-state-detection-patterns">#</a>5.3 Game State Detection Patterns</h3>
+<p><strong>Source</strong>: Various plugins (Stats, Discord, ClassicMenu)</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>// In a map
+TM2020/MP4.1: GetApp().RootMap !is null
+Turbo/Forever: GetApp().Challenge !is null
+
+// In map editor
+TM2020/MP4: cast&lt;CGameCtnEditorFree&gt;(GetApp().Editor) !is null
+Forever:    cast&lt;CTrackManiaEditorCatalog&gt;(cast&lt;CTrackMania&gt;(GetApp()).Editor) !is null
+
+// In MediaTracker
+TM2020: cast&lt;CGameEditorMediaTracker&gt;(GetApp().Editor) !is null
+Others: cast&lt;CGameCtnMediaTracker&gt;(cast&lt;CTrackMania&gt;(GetApp()).Editor) !is null
+
+// In skin editor (TM2020 only)
+cast&lt;CGameEditorSkin&gt;(app.Editor) !is null
+
+// In server
+TM2020/MP4: serverInfo.ServerLogin != &quot;&quot;
+Forever:    serverInfo.ServerHostName != &quot;&quot;
+
+// Spectating
+app.Network.Spectator
+
+// In custom menu
+app.ActiveMenus[i].CurrentFrame.IdName == &quot;FrameMenuCustom&quot;
+
+// In main menu
+app.ActiveMenus[0].CurrentFrame.IdName == &quot;FrameManiaPlanetMain&quot;</code></pre></div>
+<h3 id="54-player-access-patterns"><a class="anchor" href="#54-player-access-patterns">#</a>5.4 Player Access Patterns</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/Impl.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Game</th>
+  <th style="text-align:left">Player Access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">TM2020</td>
+  <td style="text-align:left"><code>cast<CSmPlayer>(playground.GameTerminals[0].GUIPlayer)</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Turbo</td>
+  <td style="text-align:left"><code>cast<CTrackManiaRace>(app.CurrentPlayground).LocalPlayerMobil</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">MP4</td>
+  <td style="text-align:left"><code>playground.GameTerminals[0].GUIPlayer</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Forever</td>
+  <td style="text-align:left"><code>cast<CTrackManiaRace>(app.CurrentPlayground).LocalPlayerMobil</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Player entity ID (TM2020): <code>player.GetCurrentEntityID()</code></p>
+<hr>
+<h2 id="6-class-member-catalog"><a class="anchor" href="#6-class-member-catalog">#</a>6. Class Member Catalog</h2>
+<h3 id="61-cscenevehiclevisstate-members-tm2020"><a class="anchor" href="#61-cscenevehiclevisstate-members-tm2020">#</a>6.1 CSceneVehicleVisState Members (TM2020)</h3>
+<p>Confirmed accessible via Openplanet reflection (used in VehicleState debugger):</p>
+<p><strong>Core State</strong>:</p>
+<ul>
+  <li><code>InputSteer</code> (float, -1.0 to 1.0)</li>
+  <li><code>InputGasPedal</code> (float, 0.0 to 1.0)</li>
+  <li><code>InputBrakePedal</code> (float, 0.0 to 1.0)</li>
+  <li><code>InputIsBraking</code> (bool)</li>
+  <li><code>InputVertical</code> (float)</li>
+  <li><code>FrontSpeed</code> (float, m/s)</li>
+  <li><code>CurGear</code> (uint, 0-7)</li>
+  <li><code>EngineOn</code> (bool)</li>
+  <li><code>GroundDist</code> (float)</li>
+  <li><code>IsGroundContact</code> (bool)</li>
+  <li><code>IsTopContact</code> (bool)</li>
+  <li><code>IsTurbo</code> (bool)</li>
+  <li><code>IsWheelsBurning</code> (bool)</li>
+  <li><code>IsReactorGroundMode</code> (bool)</li>
+  <li><code>DiscontinuityCount</code> (uint)</li>
+  <li><code>RaceStartTime</code> (uint)</li>
+  <li><code>SimulationTimeCoef</code> (float, 0.0 to 1.0)</li>
+  <li><code>WaterImmersionCoef</code> (float, 0.0 to 1.0)</li>
+  <li><code>WetnessValue01</code> (float, 0.0 to 1.0)</li>
+</ul>
+<p><strong>Vectors/Matrices</strong>:</p>
+<ul>
+  <li><code>Location</code> (iso4 -- 3x3 rotation + 3D position)</li>
+  <li><code>Position</code> (vec3 -- extracted from Location)</li>
+  <li><code>WorldVel</code> (vec3)</li>
+  <li><code>Left</code> (vec3 -- column from rotation)</li>
+  <li><code>Up</code> (vec3)</li>
+  <li><code>Dir</code> (vec3)</li>
+  <li><code>WaterOverSurfacePos</code> (vec3)</li>
+  <li><code>ReactorAirControl</code> (vec3)</li>
+</ul>
+<p><strong>Turbo/Reactor</strong>:</p>
+<ul>
+  <li><code>TurboTime</code> (float, 0.0 to 1.0)</li>
+  <li><code>ReactorBoostLvl</code> (uint)</li>
+  <li><code>ReactorBoostType</code> (uint)</li>
+  <li><code>ReactorInputsX</code> (bool)</li>
+  <li><code>BulletTimeNormed</code> (float)</li>
+</ul>
+<p><strong>Visual</strong>:</p>
+<ul>
+  <li><code>AirBrakeNormed</code> (float, 0.0 to 1.0)</li>
+  <li><code>SpoilerOpenNormed</code> (float, 0.0 to 1.0)</li>
+  <li><code>WingsOpenNormed</code> (float, 0.0 to 0.08)</li>
+  <li><code>CamGrpStates</code> (unknown type -- reading crashes game; accessible via raw offset reads as 4 bytes at 0x00, 0x04, 0x08, 0x0C relative)</li>
+</ul>
+<p><strong>Per-Wheel</strong> (FL, FR, RL, RR):</p>
+<ul>
+  <li><code>{X}DamperLen</code> (float, 0.0 to ~0.2)</li>
+  <li><code>{X}WheelRot</code> (float, 0.0 to ~1608.495)</li>
+  <li><code>{X}WheelRotSpeed</code> (float)</li>
+  <li><code>{X}SteerAngle</code> (float, -1.0 to 1.0)</li>
+  <li><code>{X}SlipCoef</code> (float, 0.0 to 1.0)</li>
+  <li><code>{X}GroundContactMaterial</code> (ESurfId)</li>
+  <li><code>{X}BreakNormedCoef</code> (float, 0.0 to 1.0)</li>
+  <li><code>{X}Icing01</code> (float, 0.0 to 1.0)</li>
+  <li><code>{X}TireWear01</code> (float, 0.0 to 1.0)</li>
+</ul>
+<p><strong>Note on wheel indices</strong>: The exported API uses FL=0, FR=1, RL=2, RR=3 but internally the memory order is FL=0, FR=1, RR=2, RL=3 (clockwise). The comment states: "These indices are inconsistent with the game's memory but must remain unchanged as to not break dependent plugins."</p>
+<h3 id="62-cscenevehiclevis-members-tm2020"><a class="anchor" href="#62-cscenevehiclevis-members-tm2020">#</a>6.2 CSceneVehicleVis Members (TM2020)</h3>
+<ul>
+  <li><code>AsyncState</code> (CSceneVehicleVisState@)</li>
+  <li><code>Turbo</code> (float, 0.0 to 1.0 -- visual turbo indicator)</li>
+</ul>
+<h3 id="63-chmscamera-members"><a class="anchor" href="#63-chmscamera-members">#</a>6.3 CHmsCamera Members</h3>
+<p><strong>Source</strong>: <code>Camera/Main.as</code></p>
+<ul>
+  <li><code>Location</code> (iso4)</li>
+  <li><code>Fov</code> (float)</li>
+  <li><code>NearZ</code> (float)</li>
+  <li><code>FarZ</code> (float)</li>
+  <li><code>Width_Height</code> (float -- TM2020; aspect ratio)</li>
+  <li><code>RatioXY</code> (float -- other games; aspect ratio)</li>
+  <li><code>DrawRectMin</code> (vec2 -- normalized draw rectangle)</li>
+  <li><code>DrawRectMax</code> (vec2)</li>
+  <li><code>m_IsOverlay3d</code> (bool -- TM2020)</li>
+  <li><code>IsOverlay3d</code> (bool -- MP4/Turbo)</li>
+  <li><code>UseViewDependantRendering</code> (bool -- Forever)</li>
+</ul>
+<p>Camera selection: iterate <code>GetApp().Viewport.Cameras</code> in reverse, skip overlays. Forever heuristic: skip cameras with <code>NearZ >= 100.0f</code> (menu camera).</p>
+<h3 id="64-cgamectnnetserverinfo-members"><a class="anchor" href="#64-cgamectnnetserverinfo-members">#</a>6.4 CGameCtnNetServerInfo Members</h3>
+<p><strong>Source</strong>: <code>UsefulInformation/Main.as</code>, <code>Discord/Main.as</code></p>
+<ul>
+  <li><code>ServerName</code> (string)</li>
+  <li><code>ServerLogin</code> (string -- TM2020/MP4)</li>
+  <li><code>ServerHostName</code> (string -- Forever)</li>
+  <li><code>JoinLink</code> (string)</li>
+  <li><code>ServerVersionBuild</code> (string)</li>
+  <li><code>PlayerCount</code> (uint -- Forever)</li>
+  <li><code>MaxPlayerCount</code> (uint -- Forever)</li>
+</ul>
+<h3 id="65-cnetserverinfo-connection-members"><a class="anchor" href="#65-cnetserverinfo-connection-members">#</a>6.5 CNetServerInfo (Connection) Members</h3>
+<p><strong>Source</strong>: <code>UsefulInformation/Main.as</code></p>
+<ul>
+  <li><code>RemoteIP</code> (string)</li>
+  <li><code>RemoteUDPPort</code> (uint)</li>
+  <li><code>RemoteTCPPort</code> (uint)</li>
+</ul>
+<p>Access: <code>network.Client.Connections[0].Info</code> (only when <code>connection.ClientToServer == true</code>)</p>
+<h3 id="66-ctrackmaniaplayerinfo-members"><a class="anchor" href="#66-ctrackmaniaplayerinfo-members">#</a>6.6 CTrackManiaPlayerInfo Members</h3>
+<p><strong>Source</strong>: <code>UsefulInformation/Main.as</code></p>
+<ul>
+  <li><code>Name</code> (string)</li>
+  <li><code>Login</code> (string)</li>
+  <li><code>WebServicesUserId</code> (string -- TM2020 only)</li>
+  <li><code>Language</code> (string)</li>
+  <li><code>Trigram</code> (string -- TM2020 only)</li>
+  <li><code>ClubTag</code> (string -- TM2020 only)</li>
+</ul>
+<h3 id="67-cgamectnchallenge-map-members"><a class="anchor" href="#67-cgamectnchallenge-map-members">#</a>6.7 CGameCtnChallenge / Map Members</h3>
+<p><strong>Source</strong>: <code>UsefulInformation/Main.as</code>, <code>Discord/Main.as</code></p>
+<p>TM2020/MP4 (via <code>RootMap.MapInfo</code>):</p>
+<ul>
+  <li><code>MapInfo.Name</code> (string)</li>
+  <li><code>MapInfo.MapUid</code> (string)</li>
+  <li><code>MapInfo.FileName</code> (string)</li>
+  <li><code>MapInfo.CopperString</code> (string)</li>
+  <li><code>MapInfo.AuthorNickName</code> (string)</li>
+  <li><code>MapInfo.AuthorLogin</code> (string)</li>
+  <li><code>MapInfo.TMObjective_AuthorTime</code> (uint)</li>
+  <li><code>MapInfo.TMObjective_GoldTime</code> (uint)</li>
+  <li><code>MapInfo.TMObjective_SilverTime</code> (uint)</li>
+  <li><code>MapInfo.TMObjective_BronzeTime</code> (uint)</li>
+  <li><code>MapName</code> (string -- direct on challenge)</li>
+  <li><code>IdName</code> (string -- UID)</li>
+  <li><code>Id.Value</code> (uint -- <code class="addr">0xFFFFFFFF</code> when invalid)</li>
+</ul>
+<p>Forever (via <code>Challenge</code>):</p>
+<ul>
+  <li><code>ChallengeName</code> (string)</li>
+  <li><code>Name</code> (string -- UID)</li>
+  <li><code>Author</code> (string)</li>
+  <li><code>CopperPrice</code> (int)</li>
+  <li><code>ChallengeParameters.AuthorTime</code> (uint)</li>
+  <li><code>ChallengeParameters.GoldTime</code> (uint)</li>
+  <li><code>ChallengeParameters.SilverTime</code> (uint)</li>
+  <li><code>ChallengeParameters.BronzeTime</code> (uint)</li>
+</ul>
+<h3 id="68-cgamectncollection-members"><a class="anchor" href="#68-cgamectncollection-members">#</a>6.8 CGameCtnCollection Members</h3>
+<p><strong>Source</strong>: <code>BigDecor/GameData.as</code></p>
+<ul>
+  <li><code>CollectionId_Text</code> (string -- TM2020)</li>
+  <li><code>DisplayName</code> (string -- MP4/Turbo)</li>
+  <li><code>VehicleName.GetName()</code> (string -- all non-TM2020)</li>
+  <li><code>FolderDecoration</code> (CSystemFidsFolder@)</li>
+  <li><code>FolderDecoration.Leaves[i]</code> (CSystemFid@)</li>
+</ul>
+<h3 id="69-cgamectndecoration-members"><a class="anchor" href="#69-cgamectndecoration-members">#</a>6.9 CGameCtnDecoration Members</h3>
+<p><strong>Source</strong>: <code>BigDecor/Params.as</code></p>
+<ul>
+  <li><code>IdName</code> (string)</li>
+  <li><code>IsInternal</code> (bool)</li>
+  <li><code>DecoSize</code> (CGameCtnDecorationSize@)</li>
+  <li><code>.SizeX</code> (uint)</li>
+  <li><code>.SizeY</code> (uint)</li>
+  <li><code>.SizeZ</code> (uint)</li>
+</ul>
+<h3 id="610-cgamemaniaplanet-ctrackmania-members"><a class="anchor" href="#610-cgamemaniaplanet-ctrackmania-members">#</a>6.10 CGameManiaPlanet / CTrackMania Members</h3>
+<p><strong>Source</strong>: Various plugins</p>
+<ul>
+  <li><code>ManiaPlanetScriptAPI</code> (script API access)</li>
+  <li><code>ManiaPlanetScriptAPI.MasterServer_MSUsers[0].Id</code> (user ID for auth)</li>
+  <li><code>ManiaPlanetScriptAPI.Authentication_GetToken(userId, audience)</code></li>
+  <li><code>ManiaPlanetScriptAPI.Authentication_GetTokenResponseReceived</code> (bool)</li>
+  <li><code>ManiaPlanetScriptAPI.Authentication_ErrorCode</code> (int)</li>
+  <li><code>ManiaPlanetScriptAPI.Authentication_Token</code> (string)</li>
+  <li><code>ManiaTitleFlowScriptAPI.EditNewMap(...)</code> (Turbo)</li>
+  <li><code>ManiaTitleControlScriptAPI.EditNewMap2(...)</code> (TM2020/MP4)</li>
+  <li><code>LoadedManiaTitle</code> (CGameManiaTitle@)</li>
+  <li><code>LoadedManiaTitle.TitleId</code> (string)</li>
+  <li><code>LoadedManiaTitle.BaseTitleId</code> (string)</li>
+  <li><code>LoadedManiaTitle.IdName</code> (string)</li>
+  <li><code>LoadedManiaTitle.Name</code> (string)</li>
+  <li><code>LoadedManiaTitle.CollectionFids</code> (CSystemFid@[])</li>
+  <li><code>MenuManager.MenuCustom_CurrentManiaApp.DataFileMgr</code> (for NadeoServices map queries)</li>
+  <li><code>ActiveMenus[i].CurrentFrame.IdName</code> (string)</li>
+  <li><code>Viewport</code> (CHmsViewport@)</li>
+  <li><code>Viewport.Cameras</code> (CHmsCamera@[])</li>
+  <li><code>Viewport.Overlays</code> (CHmsOverlay@[])</li>
+  <li><code>Viewport.AverageFps</code> (float)</li>
+  <li><code>GameScene</code> (ISceneVis@ / CGameScene@)</li>
+  <li><code>GameCamera</code> (camera for MP4 vis ID)</li>
+  <li><code>CurrentPlayground</code> (playground access)</li>
+  <li><code>CurrentPlayground.GameTerminals</code> (terminal/player access)</li>
+  <li><code>CurrentPlayground.Players</code> (player list)</li>
+  <li><code>CurrentPlayground.Interface</code> (UI interface)</li>
+  <li><code>CurrentPlayground.Arena.Resources.m_AllGameItemModels</code> (item models array)</li>
+  <li><code>Network</code> (CTrackManiaNetwork@)</li>
+  <li><code>Network.Client</code> (CNetClient@)</li>
+  <li><code>Network.Client.Connections</code> (connection list)</li>
+  <li><code>Network.ServerInfo</code> (CGameCtnNetServerInfo@)</li>
+  <li><code>Network.PlayerInfo</code> (local player info)</li>
+  <li><code>Network.PlayerInfos</code> (all player infos)</li>
+  <li><code>Network.Spectator</code> (bool)</li>
+  <li><code>Network.GetManialinkPages()</code> (manialink page list)</li>
+  <li><code>UserManagerScript</code> (display name resolution)</li>
+  <li><code>Editor</code> (current editor, various cast targets)</li>
+  <li><code>EditorBase</code> (CGameEditorBase@ -- MP4)</li>
+  <li><code>ChatManagerScript.CurrentServerPlayerCount</code> (int)</li>
+  <li><code>ChatManagerScript.CurrentServerPlayerCountMax</code> (int)</li>
+  <li><code>BuddiesManager.CurrentServerPlayerCount</code> (int -- Turbo)</li>
+  <li><code>BuddiesManager.CurrentServerPlayerCountMax</code> (int -- Turbo)</li>
+  <li><code>RootMap</code> / <code>Challenge</code> (current map)</li>
+</ul>
+<h3 id="611-viewport-cvisionviewport-members"><a class="anchor" href="#611-viewport-cvisionviewport-members">#</a>6.11 Viewport / CVisionViewport Members</h3>
+<p><strong>Source</strong>: <code>Finetuner/src/01_RenderDistance.as</code></p>
+<ul>
+  <li><code>AsyncRender</code> (bool -- enables async rendering to allow render distance with UI)</li>
+</ul>
+<h3 id="612-system-configuration-members"><a class="anchor" href="#612-system-configuration-members">#</a>6.12 System Configuration Members</h3>
+<p><strong>Source</strong>: <code>Finetuner/src/*.as</code></p>
+<p>Accessed via <code>GetSystemConfig()</code>:</p>
+<ul>
+  <li><code>Display.GeomLodScaleZ</code> (float -- LOD distance scale, default 1.0)</li>
+  <li><code>Display.Decals_3D__TextureDecals_</code> (bool -- TM2020, 3D decals)</li>
+  <li><code>Display.TextureDecals_3D</code> (bool -- MP4/Turbo)</li>
+  <li><code>Display.TextureDecals_2D</code> (bool -- MP4)</li>
+</ul>
+<h3 id="613-editor-ui-controls"><a class="anchor" href="#613-editor-ui-controls">#</a>6.13 Editor UI Controls</h3>
+<p><strong>Source</strong>: <code>EditorDeveloper/Main.as</code></p>
+<p>Editor interface hierarchy:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>editor.EditorInterface.InterfaceScene.Mobils[0]  // root CControlContainer
+  -&gt; FindControl(&quot;FrameDeveloperTools&quot;)           // developer tools panel
+  -&gt; FindControl(&quot;FrameEditTools&quot;)
+     -&gt; FindControl(&quot;ButtonOffZone&quot;)              // offzone button (hidden by default)
+  -&gt; FindControl(&quot;FrameLightTools&quot;)               // light tools bar</code></pre></div>
+<h3 id="614-race-interface-members"><a class="anchor" href="#614-race-interface-members">#</a>6.14 Race Interface Members</h3>
+<p><strong>Source</strong>: <code>Discord/Main.as</code></p>
+<p>MP4/Turbo/Forever:</p>
+<ul>
+  <li><code>CTrackManiaRaceInterface.PlayerGeneralPosition</code> (int -- server position)</li>
+  <li><code>CTrackManiaRaceInterface.CurrentRacePositionText</code> (string -- Forever)</li>
+  <li><code>CTrackManiaRaceInterface.TimeCountDown</code> (uint -- milliseconds)</li>
+</ul>
+<p>TM2020: Countdown is read from ManiaLink pages:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Network.GetManialinkPages()[i].MainFrame.Controls[0]
+  -&gt; Check ControlId == &quot;Race_Countdown&quot;
+  -&gt; GetFirstChild(&quot;label-countdown&quot;).Value  // time string</code></pre></div>
+<p>ShootMania:</p>
+<ul>
+  <li><code>CSmArenaInterfaceUI.InterfaceRoot</code> -> FindControl("LabelTimeLeft") -> <code>.Label</code></li>
+</ul>
+<h3 id="615-permissions-tm2020"><a class="anchor" href="#615-permissions-tm2020">#</a>6.15 Permissions (TM2020)</h3>
+<p><strong>Source</strong>: <code>ClassicMenu/ClassicMenu.as</code>, <code>BigDecor/Main.as</code></p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Permissions::PlayPublicClubRoom()
+Permissions::PlayLocalMap()
+Permissions::CreateLocalServer()
+Permissions::FindLocalServer()
+Permissions::OpenAdvancedMapEditor()
+Permissions::CreateAndUploadMap()
+Permissions::CreateLocalMap()
+Permissions::PlayAgainstReplay()
+Permissions::OpenSkinEditor()</code></pre></div>
+<hr>
+<h2 id="7-version-history"><a class="anchor" href="#7-version-history">#</a>7. Version History</h2>
+<h3 id="71-vehiclesmanagerindex-changes-tm2020"><a class="anchor" href="#71-vehiclesmanagerindex-changes-tm2020">#</a>7.1 VehiclesManagerIndex Changes (TM2020)</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/Vehicle/VehicleNext.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Date</th>
+  <th style="text-align:left">VehiclesManagerIndex</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Before 2021-06-08</td>
+  <td style="text-align:left">5</td>
+</tr>
+<tr>
+  <td style="text-align:left">2021-06-08</td>
+  <td style="text-align:left">4</td>
+</tr>
+<tr>
+  <td style="text-align:left">2022-03-18</td>
+  <td style="text-align:left">11</td>
+</tr>
+<tr>
+  <td style="text-align:left">2022-03-31</td>
+  <td style="text-align:left">12</td>
+</tr>
+<tr>
+  <td style="text-align:left">2022-07-08</td>
+  <td style="text-align:left">11</td>
+</tr>
+<tr>
+  <td style="text-align:left">2023-03-03</td>
+  <td style="text-align:left">12</td>
+</tr>
+<tr>
+  <td style="text-align:left">2025-09-26</td>
+  <td style="text-align:left">13</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="72-vehiclesoffset-changes-tm2020"><a class="anchor" href="#72-vehiclesoffset-changes-tm2020">#</a>7.2 VehiclesOffset Changes (TM2020)</h3>
+<p><strong>Source</strong>: <code>VehicleState/Internal/Vehicle/VehicleNext.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Date</th>
+  <th style="text-align:left">VehiclesOffset</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Before 2023-03-03</td>
+  <td style="text-align:left">0x1C8</td>
+</tr>
+<tr>
+  <td style="text-align:left">2023-03-03</td>
+  <td style="text-align:left">0x1E0</td>
+</tr>
+<tr>
+  <td style="text-align:left">2023-12-21</td>
+  <td style="text-align:left">0x210</td>
+</tr>
+</tbody>
+</table></div>
+<p>These track internal changes to the <code>NSceneVehicleVis_SMgr</code> struct layout across game patches.</p>
+<hr>
+<h2 id="8-camera-system-internals"><a class="anchor" href="#8-camera-system-internals">#</a>8. Camera System Internals</h2>
+<p><strong>Source</strong>: <code>Camera/Main.as</code>, <code>Camera/Impl.as</code>, <code>Camera/Export.as</code></p>
+<h3 id="81-projection-matrix-construction"><a class="anchor" href="#81-projection-matrix-construction">#</a>8.1 Projection Matrix Construction</h3>
+<p>The Camera plugin constructs a projection matrix from the active CHmsCamera:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>projection = Perspective(fov, aspect, nearZ, farZ)
+translation = Translate(camLoc.tx, camLoc.ty, camLoc.tz)
+rotation = Inverse(Inverse(translation) * mat4(camLoc))
+g_projection = projection * Inverse(translation * rotation)</code></pre></div>
+<h3 id="82-world-to-screen-projection"><a class="anchor" href="#82-world-to-screen-projection">#</a>8.2 World-to-Screen Projection</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>projectedPoint = g_projection * worldPos
+if (projectedPoint.w == 0) -&gt; invalid
+screenPos = displayPos + (projectedPoint.xy / projectedPoint.w + 1) / 2 * displaySize
+behindCamera = projectedPoint.w &gt; 0</code></pre></div>
+<p>Display bounds come from the camera's <code>DrawRectMin</code>/<code>DrawRectMax</code> (normalized coordinates), mapped to actual display size via <code>Display::GetSize()</code>.</p>
+<h3 id="83-camera-selection-algorithm"><a class="anchor" href="#83-camera-selection-algorithm">#</a>8.3 Camera Selection Algorithm</h3>
+<p>Cameras are iterated in reverse order from <code>Viewport.Cameras</code>. The first non-overlay camera is selected:</p>
+<ul>
+  <li>TM2020: Skip if <code>m_IsOverlay3d == true</code></li>
+  <li>MP4/Turbo: Skip if <code>IsOverlay3d == true</code></li>
+  <li>Forever: Skip if <code>NearZ >= 100.0f</code> (menu camera) or <code>UseViewDependantRendering == false</code></li>
+</ul>
+<hr>
+<h2 id="9-editor-system-internals"><a class="anchor" href="#9-editor-system-internals">#</a>9. Editor System Internals</h2>
+<p><strong>Source</strong>: <code>EditorDeveloper/Main.as</code>, <code>BigDecor/</code></p>
+<h3 id="91-map-creation-api"><a class="anchor" href="#91-map-creation-api">#</a>9.1 Map Creation API</h3>
+<p><strong>Turbo</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>app.ManiaTitleFlowScriptAPI.EditNewMap(
+    collectionId,    // &quot;Stadium&quot;
+    decorationName,  // &quot;Day&quot;
+    textureModPath,  // &quot;Skins/Stadium/Mod/MyMod.zip&quot;
+    playerModel,     // &quot;StadiumCar&quot;
+    &quot;RaceCE.Script.txt&quot;, &quot;&quot;, &quot;&quot;
+)</code></pre></div>
+<p><strong>TM2020/MP4</strong>:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>app.ManiaTitleControlScriptAPI.EditNewMap2(
+    collectionId,    // &quot;Stadium&quot;
+    decorationName,  // &quot;Base48x48Day&quot;
+    textureModPath,  // &quot;Skins/Stadium/Mod/MyMod.zip&quot;
+    playerModel,     // &quot;CarSport&quot;
+    &quot;&quot;, false, &quot;&quot;, &quot;&quot;
+)</code></pre></div>
+<h3 id="92-environmentcollection-ids"><a class="anchor" href="#92-environmentcollection-ids">#</a>9.2 Environment/Collection IDs</h3>
+<p><strong>TM2020</strong>: Stadium, GreenCoast, RedIsland, BlueBay, WhiteShore, Stadium256 <strong>MP4</strong>: Stadium, Valley, Canyon, Lagoon</p>
+<h3 id="93-player-model-names"><a class="anchor" href="#93-player-model-names">#</a>9.3 Player Model Names</h3>
+<p><strong>TM2020</strong>: CarSport, CarSnow, CarRally, CarDesert, CharacterPilot <strong>MP4</strong>: StadiumCar, CanyonCar, ValleyCar, LagoonCar</p>
+<h3 id="94-decoration-size-manipulation"><a class="anchor" href="#94-decoration-size-manipulation">#</a>9.4 Decoration Size Manipulation</h3>
+<p>The BigDecor plugin modifies <code>CGameCtnDecoration.DecoSize</code> (SizeX/Y/Z) before calling <code>EditNewMap2</code>, then restores the original values when the editor closes. This allows creating maps larger than the standard 48x48 size. The maximum slider value is 255 per axis.</p>
+<hr>
+<h2 id="10-networking-internals"><a class="anchor" href="#10-networking-internals">#</a>10. Networking Internals</h2>
+<h3 id="101-server-connection-details"><a class="anchor" href="#101-server-connection-details">#</a>10.1 Server Connection Details</h3>
+<p><strong>Source</strong>: <code>UsefulInformation/Main.as</code></p>
+<p>Accessible via <code>network.Client.Connections[0]</code>:</p>
+<ul>
+  <li><code>.ClientToServer</code> (bool -- identifies the server connection vs other connections)</li>
+  <li><code>.Info</code> -> <code>CNetServerInfo</code> with RemoteIP, RemoteUDPPort, RemoteTCPPort</li>
+</ul>
+<h3 id="102-server-join-links"><a class="anchor" href="#102-server-join-links">#</a>10.2 Server Join Links</h3>
+<p><strong>Source</strong>: <code>Discord/Main.as</code></p>
+<p>Join URL format:</p>
+<ul>
+  <li><strong>Forever</strong>: <code>#join=serverHostName</code> or <code>#spectate=serverHostName</code></li>
+  <li><strong>MP4/TM2020</strong>: <code>#qjoin=serverLogin@titleId</code> or <code>#qspectate=spec|serverLogin@titleId</code></li>
+</ul>
+<p>Opened via: <code>app.ManiaPlanetScriptAPI.OpenLink(url, CGameManiaPlanetScriptAPI::ELinkType::ManialinkBrowser)</code></p>
+<h3 id="103-nadeoclubservices-deprecation"><a class="anchor" href="#103-nadeoclubservices-deprecation">#</a>10.3 NadeoClubServices Deprecation</h3>
+<p><strong>Source</strong>: <code>NadeoServices/NadeoServices.as</code></p>
+<p>As of 2024-01-31, <code>NadeoClubServices</code> was deprecated by Nadeo. All requests with this audience are silently redirected to <code>NadeoLiveServices</code>. The Meet API will "soon" no longer accept the old audience name.</p>
+<hr>
+<h2 id="11-rendering-and-display-settings"><a class="anchor" href="#11-rendering-and-display-settings">#</a>11. Rendering and Display Settings</h2>
+<h3 id="111-render-distance"><a class="anchor" href="#111-render-distance">#</a>11.1 Render Distance</h3>
+<p><strong>Source</strong>: <code>Finetuner/src/01_RenderDistance.as</code></p>
+<p>Modified via <code>camera.FarZ</code>. Default FarZ for Forever is 50000. The plugin sets this directly on the active camera each frame. Block size is 32 meters (used to display approximate block count).</p>
+<h3 id="112-async-rendering"><a class="anchor" href="#112-async-rendering">#</a>11.2 Async Rendering</h3>
+<p>When render distance limiting is enabled with UI visible, <code>CVisionViewport.AsyncRender</code> must be set to <code>true</code> for the distance limit to take effect (only applicable when not in editor).</p>
+<h3 id="113-level-of-detail"><a class="anchor" href="#113-level-of-detail">#</a>11.3 Level of Detail</h3>
+<p>Modified via <code>GetSystemConfig().Display.GeomLodScaleZ</code>. Higher values cause low-poly LODs to be used more aggressively.</p>
+<h3 id="114-overlay-scaling"><a class="anchor" href="#114-overlay-scaling">#</a>11.4 Overlay Scaling</h3>
+<p>Applied to all viewport overlays: <code>viewport.Overlays[i].m_AdaptRatio = EHmsOverlayAdaptRatio::ShrinkToKeepRatio</code></p>
+<hr>
+<h2 id="12-plugin-system-meta-intelligence"><a class="anchor" href="#12-plugin-system-meta-intelligence">#</a>12. Plugin System Meta-Intelligence</h2>
+<h3 id="121-openplanet-dev-api-functions"><a class="anchor" href="#121-openplanet-dev-api-functions">#</a>12.1 Openplanet Dev API Functions</h3>
+<p>Confirmed functions available through <code>Dev::</code> namespace:</p>
+<ul>
+  <li><code>Dev::GetOffsetUint8(nod, offset)</code> / <code>GetOffsetUint16</code> / <code>GetOffsetUint32</code> / <code>GetOffsetUint64</code></li>
+  <li><code>Dev::GetOffsetInt32(nod, offset)</code></li>
+  <li><code>Dev::GetOffsetFloat(nod, offset)</code></li>
+  <li><code>Dev::GetOffsetVec3(nod, offset)</code></li>
+  <li><code>Dev::GetOffsetIso4(nod, offset)</code></li>
+  <li><code>Dev::GetOffsetNod(nod, offset)</code></li>
+  <li><code>Dev::SetOffset(nod, offset, value)</code> (used for camera position)</li>
+  <li><code>Dev::ReadCString(address)</code> (reads null-terminated string from absolute address)</li>
+  <li><code>Dev::ReadFloat(address)</code> / <code>ReadUint32</code> / <code>ReadUint16</code> / <code>ReadInt32</code></li>
+  <li><code>Dev::Write(address, value)</code> (writes to absolute memory address)</li>
+  <li><code>Dev::FindPattern(pattern)</code> (returns address of first match)</li>
+  <li><code>Dev::ForceCast<T>(nod)</code> (unsafe cast between nod types)</li>
+</ul>
+<h3 id="122-reflection-system"><a class="anchor" href="#122-reflection-system">#</a>12.2 Reflection System</h3>
+<ul>
+  <li><code>Reflection::GetType("ClassName")</code> -> <code>MwClassInfo@</code></li>
+  <li><code>Reflection::TypeOf(nod)</code> -> <code>MwClassInfo@</code></li>
+  <li><code>MwClassInfo.GetMember("memberName")</code> -> <code>MwMemberInfo@</code></li>
+  <li><code>MwMemberInfo.Offset</code> (uint16 -- 0xFFFF when invalid)</li>
+  <li><code>MwClassInfo.Name</code> (string)</li>
+</ul>
+<h3 id="123-patternpatch-system"><a class="anchor" href="#123-patternpatch-system">#</a>12.3 PatternPatch System</h3>
+<p>Used for binary patching:</p>
+<ul>
+  <li><code>PatternPatch(searchPattern, replacePattern)</code> -> <code>IPatch@</code></li>
+  <li><code>patch.Apply()</code> -- applies the replacement</li>
+  <li><code>patch.Revert()</code> -- restores original bytes</li>
+  <li><code>patch.IsApplied()</code> -- check if currently applied</li>
+</ul>
+<h3 id="124-fids-system-file-access"><a class="anchor" href="#124-fids-system-file-access">#</a>12.4 Fids System (File Access)</h3>
+<ul>
+  <li><code>Fids::Preload(fid)</code> -- loads a file's nod (CMwNod) from its fid</li>
+  <li><code>Fids::GetUserFolder(path)</code> -- gets user folder</li>
+  <li><code>Fids::GetFakeFolder(name)</code> -- gets virtual folder</li>
+  <li><code>Fids::GetFidsFolder(tree, path)</code> -- gets folder within tree</li>
+  <li><code>Fids::UpdateTree(folder)</code> -- refreshes folder contents</li>
+  <li><code>GetFidFromNod(nod)</code> -- reverse lookup from nod to fid</li>
+</ul>
+<h3 id="125-meta-plugin-system"><a class="anchor" href="#125-meta-plugin-system">#</a>12.5 Meta Plugin System</h3>
+<ul>
+  <li><code>Meta::AllPlugins()</code> -> <code>Meta::Plugin@[]</code></li>
+  <li><code>Meta::UnloadedPlugins()</code> -> unloaded plugin info list</li>
+  <li><code>Meta::GetPluginFromSiteID(id)</code> -> <code>Meta::Plugin@</code></li>
+  <li><code>Meta::GetPluginFromID(id)</code> -> <code>Meta::Plugin@</code></li>
+  <li><code>Meta::LoadPlugin(path, source, type)</code> -> <code>Meta::Plugin@</code></li>
+  <li><code>Meta::UnloadPlugin(plugin)</code> (queues unload, not immediate)</li>
+  <li><code>Meta::PluginIndex()</code> -- dependency graph builder</li>
+  <li><code>.AddTree(plugin)</code> -- adds plugin and all dependents</li>
+  <li><code>.TopologicalSort()</code> -- returns load order</li>
+</ul>
+<p>Plugin properties: <code>.ID</code>, <code>.Name</code>, <code>.Version</code>, <code>.Author</code>, <code>.Category</code>, <code>.SiteID</code>, <code>.Type</code>, <code>.Enabled</code>, <code>.SourcePath</code> Plugin types: <code>Meta::PluginType::Zip</code>, <code>Meta::PluginType::Folder</code></p>
+<h3 id="126-discord-integration-ids"><a class="anchor" href="#126-discord-integration-ids">#</a>12.6 Discord Integration IDs</h3>
+<p><strong>Source</strong>: <code>Discord/Main.as</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Game</th>
+  <th style="text-align:left">Discord Application ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">TM2020</td>
+  <td style="text-align:left"><code>689165864028864558</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Turbo</td>
+  <td style="text-align:left"><code>500620964195991562</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">Forever</td>
+  <td style="text-align:left"><code>713505734515621939</code></td>
+</tr>
+<tr>
+  <td style="text-align:left">ManiaPlanet</td>
+  <td style="text-align:left"><code>415975536343646208</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="127-conditional-compilation-defines"><a class="anchor" href="#127-conditional-compilation-defines">#</a>12.7 Conditional Compilation Defines</h3>
+<p>Observed <code>#if</code> directives across all plugins:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Define</th>
+  <th style="text-align:left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>TMNEXT</code></td>
+  <td style="text-align:left">Trackmania 2020</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TURBO</code></td>
+  <td style="text-align:left">Trackmania Turbo</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MP4</code></td>
+  <td style="text-align:left">ManiaPlanet 4 (any)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MP41</code></td>
+  <td style="text-align:left">ManiaPlanet 4.1 specifically</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MP40</code></td>
+  <td style="text-align:left">ManiaPlanet 4.0 specifically</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>FOREVER</code></td>
+  <td style="text-align:left">TM United/Nations Forever</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>UNITED_FOREVER</code></td>
+  <td style="text-align:left">TM United Forever specifically</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>NATIONS_FOREVER</code></td>
+  <td style="text-align:left">TM Nations Forever specifically</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MANIA64</code></td>
+  <td style="text-align:left">64-bit ManiaPlanet build</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LINUX</code></td>
+  <td style="text-align:left">Linux build</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>LOGS</code></td>
+  <td style="text-align:left">Debug/logging build</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>DEVELOPER</code></td>
+  <td style="text-align:left">Developer mode enabled</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>SIG_DEVELOPER</code></td>
+  <td style="text-align:left">Signed developer mode</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>MPD</code></td>
+  <td style="text-align:left">ManiaPlanet Dedicated?</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="appendix-a-complete-file-inventory"><a class="anchor" href="#appendix-a-complete-file-inventory">#</a>Appendix A: Complete File Inventory</h2>
+<h3 id="vehiclestate-plugin-11-files"><a class="anchor" href="#vehiclestate-plugin-11-files">#</a>VehicleState Plugin (11 files)</h3>
+<ul>
+  <li><code>Internal/Impl.as</code> - Player/vis lookup, entity ID masks</li>
+  <li><code>Internal/SceneVis.as</code> - ISceneVis manager enumeration at +0x08, +0x10, +0x290</li>
+  <li><code>Internal/Vehicle/VehicleNext.as</code> - TM2020 vehicle vis manager (index 13, offset 0x210)</li>
+  <li><code>Internal/Vehicle/VehicleForever.as</code> - Forever CSceneVehicleCar wrapper</li>
+  <li><code>Internal/Vehicle/VehicleMP4.as</code> - MP4 offsets (player +0x2B8, +0x2C4; vehicles +0x38)</li>
+  <li><code>Internal/Vehicle/VehicleTurbo.as</code> - Turbo offsets (mobil +0x14, vis +0x84)</li>
+  <li><code>StateWrappers.as</code> - All enum definitions, complete struct layouts for MP4/Turbo/Forever</li>
+  <li><code>Export.as</code> - Public API exports</li>
+  <li><code>Main.as</code> - Reflection-based offset discovery for TM2020</li>
+  <li><code>Settings.as</code> - Debug settings</li>
+  <li><code>Debugger/Main.as</code> - Complete member access catalog for all CSceneVehicleVisState fields</li>
+</ul>
+<h3 id="nadeoservices-plugin-6-files"><a class="anchor" href="#nadeoservices-plugin-6-files">#</a>NadeoServices Plugin (6 files)</h3>
+<ul>
+  <li><code>NadeoServices.as</code> - Base URLs, HTTP methods, auth header, account ID conversion</li>
+  <li><code>AccessToken.as</code> - Token lifecycle (55min + random), exponential backoff</li>
+  <li><code>CoreToken.as</code> - Core token (always valid)</li>
+  <li><code>IToken.as</code> - Token interface</li>
+  <li><code>Main.as</code> - Token refresh loop</li>
+  <li><code>Export.as</code> - Public API with usage example</li>
+</ul>
+<h3 id="camera-plugin-3-files"><a class="anchor" href="#camera-plugin-3-files">#</a>Camera Plugin (3 files)</h3>
+<ul>
+  <li><code>Impl.as</code> - World-to-screen projection, editor orbital camera control</li>
+  <li><code>Main.as</code> - Camera selection algorithm, projection matrix construction</li>
+  <li><code>Export.as</code> - Public API exports</li>
+</ul>
+<h3 id="editordeveloper-plugin-1-file"><a class="anchor" href="#editordeveloper-plugin-1-file">#</a>EditorDeveloper Plugin (1 file)</h3>
+<ul>
+  <li><code>Main.as</code> - Offzone binary patch, scroll disable, developer tools, light tools, orbital camera params</li>
+</ul>
+<h3 id="infiniteembedsize-plugin-5-files"><a class="anchor" href="#infiniteembedsize-plugin-5-files">#</a>InfiniteEmbedSize Plugin (5 files)</h3>
+<ul>
+  <li><code>EmbedLimit.as</code> - Embed limit bypass patterns for all games</li>
+  <li><code>NetConfig.as</code> - TCP packet size limit (CNetClient -> NetConfig +0x38)</li>
+  <li><code>MaxChallengeSize.as</code> - Max challenge size pattern and RIP-relative address resolution</li>
+  <li><code>Main.as</code> - Patch application, size calculation with 0xC00 offset</li>
+  <li><code>Settings.as</code> - Default 12MB limit</li>
+</ul>
+<h3 id="finetuner-plugin-6-files"><a class="anchor" href="#finetuner-plugin-6-files">#</a>Finetuner Plugin (6 files)</h3>
+<ul>
+  <li><code>src/Main.as</code> - NetworkAfterMainLoop run context</li>
+  <li><code>src/01_RenderDistance.as</code> - Camera FarZ manipulation, async rendering</li>
+  <li><code>src/02_OverlayScaling.as</code> - Viewport overlay adapt ratio</li>
+  <li><code>src/03_LevelOfDetail.as</code> - GeomLodScaleZ system config</li>
+  <li><code>src/04_Decals.as</code> - Texture decals system config</li>
+  <li><code>src/90_FPS.as</code> - Viewport.AverageFps display</li>
+  <li><code>src/99_Shortcuts.as</code> - Key binding system</li>
+</ul>
+<h3 id="stats-plugin-2-files"><a class="anchor" href="#stats-plugin-2-files">#</a>Stats Plugin (2 files)</h3>
+<ul>
+  <li><code>Main.as</code> - Game state detection patterns, editor type detection</li>
+  <li><code>Statistics.as</code> - Time tracking persistence</li>
+</ul>
+<h3 id="discord-plugin-5-files"><a class="anchor" href="#discord-plugin-5-files">#</a>Discord Plugin (5 files)</h3>
+<ul>
+  <li><code>Main.as</code> - Application IDs, comprehensive game state machine, ManiaLink page parsing</li>
+  <li><code>Services.as</code> - NadeoServices map thumbnail fetch</li>
+  <li><code>Notify.as</code> - Change notification helpers</li>
+  <li><code>Settings.as</code> - Display settings</li>
+  <li><code>Titles.as</code> - Title pack ID to Discord image key mapping (47 entries)</li>
+</ul>
+<h3 id="bigdecor-plugin-6-files"><a class="anchor" href="#bigdecor-plugin-6-files">#</a>BigDecor Plugin (6 files)</h3>
+<ul>
+  <li><code>Main.as</code> - Decoration size manipulation, Fids::Preload</li>
+  <li><code>GameData.as</code> - Collection/decoration/texture mod enumeration</li>
+  <li><code>Params.as</code> - EditNewMap/EditNewMap2 API calls</li>
+  <li><code>PreloadingFid.as</code> - Lazy fid loading wrapper</li>
+  <li><code>Settings.as</code> - Size limits</li>
+  <li><code>Window.as</code> - Environment names, player model names</li>
+</ul>
+<h3 id="classicmenu-plugin-1-file"><a class="anchor" href="#classicmenu-plugin-1-file">#</a>ClassicMenu Plugin (1 file)</h3>
+<ul>
+  <li><code>ClassicMenu.as</code> - MenuMultiPlayer_OnInternet, MenuMultiLocal, MenuEditors; Permissions API</li>
+</ul>
+<h3 id="controls-plugin-5-files"><a class="anchor" href="#controls-plugin-5-files">#</a>Controls Plugin (5 files)</h3>
+<ul>
+  <li>UI component library (Tags, Frames) -- no game engine intelligence</li>
+</ul>
+<h3 id="usefulinformation-plugin-1-file"><a class="anchor" href="#usefulinformation-plugin-1-file">#</a>UsefulInformation Plugin (1 file)</h3>
+<ul>
+  <li><code>Main.as</code> - Server connection details, player info, map info access patterns</li>
+</ul>
+<h3 id="pluginmanager-plugin-21-files"><a class="anchor" href="#pluginmanager-plugin-21-files">#</a>PluginManager Plugin (21 files)</h3>
+<ul>
+  <li><code>src/Utils/API.as</code> - Openplanet API base URL and endpoints</li>
+  <li><code>src/Settings.as</code> - API/web URLs</li>
+  <li>Other files: Plugin management UI (no game engine intelligence)</li>
+</ul>
+
+                        <nav class="prev-next"><a class="prev" href="audio.html">&larr; Audio System</a><a class="next" href="visual-reference.html">Visual Reference &amp; Glossary &rarr;</a></nav>
+                    </div>
+                    <nav class="page-toc" id="page-toc">
+<h3>On This Page</h3>
+<ul>
+<li class=""><a href="#table-of-contents">Table of Contents</a></li>
+<li class=""><a href="#1-memory-layout-intelligence">1. Memory Layout Intelligence</a></li>
+  <li class="toc-h3"><a href="#11-cscenevehiclevis-tm2020next-entity-id-and-vehicle-vis-manager">1.1 CSceneVehicleVis (TM2020/Next) - Entity ID and Vehicle Vis Manager</a></li>
+  <li class="toc-h3"><a href="#12-iscenevis-manager-array-alternative-layout">1.2 ISceneVis Manager Array (Alternative Layout)</a></li>
+  <li class="toc-h3"><a href="#13-cscenevehiclevisstate-tm2020next-reflection-based-offsets">1.3 CSceneVehicleVisState (TM2020/Next) - Reflection-Based Offsets</a></li>
+  <li class="toc-h3"><a href="#14-cscenevehiclevisstate-maniaplanet-4-mp4-hardcoded-offsets">1.4 CSceneVehicleVisState (ManiaPlanet 4 / MP4) - Hardcoded Offsets</a></li>
+  <li class="toc-h3"><a href="#15-cscenevehiclevisstate-turbo-hardcoded-offsets">1.5 CSceneVehicleVisState (Turbo) - Hardcoded Offsets</a></li>
+  <li class="toc-h3"><a href="#16-cscenevehiclecar-tmnfforever-hardcoded-offsets">1.6 CSceneVehicleCar (TMNF/Forever) - Hardcoded Offsets</a></li>
+  <li class="toc-h3"><a href="#17-ctrackmaniaplayer-mp4-vehicle-vis-pointer">1.7 CTrackManiaPlayer (MP4) - Vehicle Vis Pointer</a></li>
+  <li class="toc-h3"><a href="#18-cscenemgrvehiclevisimpl-mp4-vehicle-array">1.8 CSceneMgrVehicleVisImpl (MP4) - Vehicle Array</a></li>
+  <li class="toc-h3"><a href="#19-cgamemobil-turbo-vehicle-vis-access">1.9 CGameMobil (Turbo) - Vehicle Vis Access</a></li>
+  <li class="toc-h3"><a href="#110-gamecamera-mp4-viewing-vehicle-id">1.10 GameCamera (MP4) - Viewing Vehicle ID</a></li>
+  <li class="toc-h3"><a href="#111-cnetclient-netconfig-tcp-limit">1.11 CNetClient - NetConfig TCP Limit</a></li>
+  <li class="toc-h3"><a href="#112-cgamectneditorcommon-orbital-camera">1.12 CGameCtnEditorCommon - Orbital Camera</a></li>
+<li class=""><a href="#2-enum-definitions">2. Enum Definitions</a></li>
+  <li class="toc-h3"><a href="#21-fallingstate-tm2020-only">2.1 FallingState (TM2020 only)</a></li>
+  <li class="toc-h3"><a href="#22-turbolevel-tm2020-only">2.2 TurboLevel (TM2020 only)</a></li>
+  <li class="toc-h3"><a href="#23-vehicletype-tm2020-only">2.3 VehicleType (TM2020 only)</a></li>
+  <li class="toc-h3"><a href="#24-effectflags-mp4turboforever">2.4 EffectFlags (MP4/Turbo/Forever)</a></li>
+  <li class="toc-h3"><a href="#25-esurfid-ground-contact-material">2.5 ESurfId (Ground Contact Material)</a></li>
+  <li class="toc-h3"><a href="#26-ehmsoverlayadaptratio-tm2020">2.6 EHmsOverlayAdaptRatio (TM2020)</a></li>
+  <li class="toc-h3"><a href="#27-shortcutmode">2.7 ShortcutMode</a></li>
+<li class=""><a href="#3-api-intelligence">3. API Intelligence</a></li>
+  <li class="toc-h3"><a href="#31-nadeo-services-base-urls">3.1 Nadeo Services Base URLs</a></li>
+  <li class="toc-h3"><a href="#32-authentication-pattern">3.2 Authentication Pattern</a></li>
+  <li class="toc-h3"><a href="#33-account-id-login-conversion">3.3 Account ID / Login Conversion</a></li>
+  <li class="toc-h3"><a href="#34-display-name-resolution">3.4 Display Name Resolution</a></li>
+  <li class="toc-h3"><a href="#35-map-info-from-services">3.5 Map Info from Services</a></li>
+  <li class="toc-h3"><a href="#36-openplanet-plugin-api">3.6 Openplanet Plugin API</a></li>
+<li class=""><a href="#4-binary-patch-patterns">4. Binary Patch Patterns</a></li>
+  <li class="toc-h3"><a href="#41-editor-offzone-enable-patch">4.1 Editor Offzone Enable Patch</a></li>
+  <li class="toc-h3"><a href="#42-editor-edge-camera-scroll-disable">4.2 Editor Edge Camera Scroll Disable</a></li>
+  <li class="toc-h3"><a href="#43-embed-size-limit-bypass">4.3 Embed Size Limit Bypass</a></li>
+  <li class="toc-h3"><a href="#44-max-challenge-size-pattern">4.4 Max Challenge Size Pattern</a></li>
+<li class=""><a href="#5-game-events-and-hooks">5. Game Events and Hooks</a></li>
+  <li class="toc-h3"><a href="#51-openplanet-callback-functions">5.1 Openplanet Callback Functions</a></li>
+  <li class="toc-h3"><a href="#52-metaruncontext">5.2 Meta::RunContext</a></li>
+  <li class="toc-h3"><a href="#53-game-state-detection-patterns">5.3 Game State Detection Patterns</a></li>
+  <li class="toc-h3"><a href="#54-player-access-patterns">5.4 Player Access Patterns</a></li>
+<li class=""><a href="#6-class-member-catalog">6. Class Member Catalog</a></li>
+  <li class="toc-h3"><a href="#61-cscenevehiclevisstate-members-tm2020">6.1 CSceneVehicleVisState Members (TM2020)</a></li>
+  <li class="toc-h3"><a href="#62-cscenevehiclevis-members-tm2020">6.2 CSceneVehicleVis Members (TM2020)</a></li>
+  <li class="toc-h3"><a href="#63-chmscamera-members">6.3 CHmsCamera Members</a></li>
+  <li class="toc-h3"><a href="#64-cgamectnnetserverinfo-members">6.4 CGameCtnNetServerInfo Members</a></li>
+  <li class="toc-h3"><a href="#65-cnetserverinfo-connection-members">6.5 CNetServerInfo (Connection) Members</a></li>
+  <li class="toc-h3"><a href="#66-ctrackmaniaplayerinfo-members">6.6 CTrackManiaPlayerInfo Members</a></li>
+  <li class="toc-h3"><a href="#67-cgamectnchallenge-map-members">6.7 CGameCtnChallenge / Map Members</a></li>
+  <li class="toc-h3"><a href="#68-cgamectncollection-members">6.8 CGameCtnCollection Members</a></li>
+  <li class="toc-h3"><a href="#69-cgamectndecoration-members">6.9 CGameCtnDecoration Members</a></li>
+  <li class="toc-h3"><a href="#610-cgamemaniaplanet-ctrackmania-members">6.10 CGameManiaPlanet / CTrackMania Members</a></li>
+  <li class="toc-h3"><a href="#611-viewport-cvisionviewport-members">6.11 Viewport / CVisionViewport Members</a></li>
+  <li class="toc-h3"><a href="#612-system-configuration-members">6.12 System Configuration Members</a></li>
+  <li class="toc-h3"><a href="#613-editor-ui-controls">6.13 Editor UI Controls</a></li>
+  <li class="toc-h3"><a href="#614-race-interface-members">6.14 Race Interface Members</a></li>
+  <li class="toc-h3"><a href="#615-permissions-tm2020">6.15 Permissions (TM2020)</a></li>
+<li class=""><a href="#7-version-history">7. Version History</a></li>
+  <li class="toc-h3"><a href="#71-vehiclesmanagerindex-changes-tm2020">7.1 VehiclesManagerIndex Changes (TM2020)</a></li>
+  <li class="toc-h3"><a href="#72-vehiclesoffset-changes-tm2020">7.2 VehiclesOffset Changes (TM2020)</a></li>
+<li class=""><a href="#8-camera-system-internals">8. Camera System Internals</a></li>
+  <li class="toc-h3"><a href="#81-projection-matrix-construction">8.1 Projection Matrix Construction</a></li>
+  <li class="toc-h3"><a href="#82-world-to-screen-projection">8.2 World-to-Screen Projection</a></li>
+  <li class="toc-h3"><a href="#83-camera-selection-algorithm">8.3 Camera Selection Algorithm</a></li>
+<li class=""><a href="#9-editor-system-internals">9. Editor System Internals</a></li>
+  <li class="toc-h3"><a href="#91-map-creation-api">9.1 Map Creation API</a></li>
+  <li class="toc-h3"><a href="#92-environmentcollection-ids">9.2 Environment/Collection IDs</a></li>
+  <li class="toc-h3"><a href="#93-player-model-names">9.3 Player Model Names</a></li>
+  <li class="toc-h3"><a href="#94-decoration-size-manipulation">9.4 Decoration Size Manipulation</a></li>
+<li class=""><a href="#10-networking-internals">10. Networking Internals</a></li>
+  <li class="toc-h3"><a href="#101-server-connection-details">10.1 Server Connection Details</a></li>
+  <li class="toc-h3"><a href="#102-server-join-links">10.2 Server Join Links</a></li>
+  <li class="toc-h3"><a href="#103-nadeoclubservices-deprecation">10.3 NadeoClubServices Deprecation</a></li>
+<li class=""><a href="#11-rendering-and-display-settings">11. Rendering and Display Settings</a></li>
+  <li class="toc-h3"><a href="#111-render-distance">11.1 Render Distance</a></li>
+  <li class="toc-h3"><a href="#112-async-rendering">11.2 Async Rendering</a></li>
+  <li class="toc-h3"><a href="#113-level-of-detail">11.3 Level of Detail</a></li>
+  <li class="toc-h3"><a href="#114-overlay-scaling">11.4 Overlay Scaling</a></li>
+<li class=""><a href="#12-plugin-system-meta-intelligence">12. Plugin System Meta-Intelligence</a></li>
+  <li class="toc-h3"><a href="#121-openplanet-dev-api-functions">12.1 Openplanet Dev API Functions</a></li>
+  <li class="toc-h3"><a href="#122-reflection-system">12.2 Reflection System</a></li>
+  <li class="toc-h3"><a href="#123-patternpatch-system">12.3 PatternPatch System</a></li>
+  <li class="toc-h3"><a href="#124-fids-system-file-access">12.4 Fids System (File Access)</a></li>
+  <li class="toc-h3"><a href="#125-meta-plugin-system">12.5 Meta Plugin System</a></li>
+  <li class="toc-h3"><a href="#126-discord-integration-ids">12.6 Discord Integration IDs</a></li>
+  <li class="toc-h3"><a href="#127-conditional-compilation-defines">12.7 Conditional Compilation Defines</a></li>
+<li class=""><a href="#appendix-a-complete-file-inventory">Appendix A: Complete File Inventory</a></li>
+  <li class="toc-h3"><a href="#vehiclestate-plugin-11-files">VehicleState Plugin (11 files)</a></li>
+  <li class="toc-h3"><a href="#nadeoservices-plugin-6-files">NadeoServices Plugin (6 files)</a></li>
+  <li class="toc-h3"><a href="#camera-plugin-3-files">Camera Plugin (3 files)</a></li>
+  <li class="toc-h3"><a href="#editordeveloper-plugin-1-file">EditorDeveloper Plugin (1 file)</a></li>
+  <li class="toc-h3"><a href="#infiniteembedsize-plugin-5-files">InfiniteEmbedSize Plugin (5 files)</a></li>
+  <li class="toc-h3"><a href="#finetuner-plugin-6-files">Finetuner Plugin (6 files)</a></li>
+  <li class="toc-h3"><a href="#stats-plugin-2-files">Stats Plugin (2 files)</a></li>
+  <li class="toc-h3"><a href="#discord-plugin-5-files">Discord Plugin (5 files)</a></li>
+  <li class="toc-h3"><a href="#bigdecor-plugin-6-files">BigDecor Plugin (6 files)</a></li>
+  <li class="toc-h3"><a href="#classicmenu-plugin-1-file">ClassicMenu Plugin (1 file)</a></li>
+  <li class="toc-h3"><a href="#controls-plugin-5-files">Controls Plugin (5 files)</a></li>
+  <li class="toc-h3"><a href="#usefulinformation-plugin-1-file">UsefulInformation Plugin (1 file)</a></li>
+  <li class="toc-h3"><a href="#pluginmanager-plugin-21-files">PluginManager Plugin (21 files)</a></li>
+</ul>
+</nav>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
