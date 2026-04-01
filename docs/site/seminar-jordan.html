@@ -134,7 +134,7 @@
 <p>This section covers TM2020's complete boot pipeline. You'll learn the 10-phase startup sequence, the 60+ state coroutine machine, and three strategies for translating it to JavaScript.</p>
 <p>The defining question of any game engine: what happens between <code>entry()</code> and the first rendered frame? TM2020 runs 10 phases before showing the main menu, then 5 more before you drive.</p>
 <h4 id="anti-tamper-crt-bootstrap-1ms"><a class="anchor" href="#anti-tamper-crt-bootstrap-1ms">#</a>Anti-Tamper + CRT Bootstrap (< 1ms)</h4>
-<p>The entry point at <span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span> lives in <code>.D."</code> -- an obfuscated, anti-tamper protected region. It calls <code>FUN_1428eb7e6()</code> (unpacker/decoder loop), then transfers to <code>FUN_14291da78()</code> which jumps to real code. Standard MSVC CRT initialization runs: <code>__scrt_common_main_seh</code> calls <code>_initterm</code> for C++ static constructors, then dispatches to <code>WinMain</code> at <code>FUN_140aa7470</code>.</p>
+<p>The entry point at <span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span> lives in <code>.D."</code> -- an obfuscated, anti-tamper protected region. It calls <code><span class="named-addr"><span class="addr-name">Unpacker_DecoderLoop</span><span class="ghidra-ref">FUN_1428eb7e6</span></span>()</code> (unpacker/decoder loop), then transfers to <code><span class="named-addr"><span class="addr-name">TransferToRealCode</span><span class="ghidra-ref">FUN_14291da78</span></span>()</code> which jumps to real code. Standard MSVC CRT initialization runs: <code>__scrt_common_main_seh</code> calls <code>_initterm</code> for C++ static constructors, then dispatches to <code>WinMain</code> at <span class="named-addr"><span class="addr-name">WinMain</span><code class="ghidra-ref">FUN_140aa7470</code></span>.</p>
 <p><em>Source: doc 12 Section 3.1, decompiled boot chain</em></p>
 <h4 id="winmain-early-init-10ms"><a class="anchor" href="#winmain-early-init-10ms">#</a>WinMain Early Init (< 10ms)</h4>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FUN_140aa7470 (WinMain, 202 bytes):
@@ -147,7 +147,7 @@
 <p><strong>Why 75 profiling slots?</strong> The engine has ~75 distinct profiling regions. Each slot is 0x70 bytes (112 bytes). That's <code>75 * 112 = 8,400 bytes</code> for profiling metadata, plus the 128KB buffer. Nadeo takes performance instrumentation seriously.</p>
 <p><em>Source: doc 12 Section 3.1, startup_frame_begin.c</em></p>
 <h4 id="engine-subsystem-init-100-500ms"><a class="anchor" href="#engine-subsystem-init-100-500ms">#</a>Engine Subsystem Init (100-500ms)</h4>
-<p><code>CGbxApp::Init1</code> at <code>FUN_140aa3220</code> is <strong>7,401 bytes</strong> of initialization code. It registers <strong>16 engine subsystems</strong> into a slot-based manager at <code>DAT_141f9f018</code>:</p>
+<p><code>CGbxApp::Init1</code> at <span class="named-addr"><span class="addr-name">CGbxApp::Init1_actual</span><code class="ghidra-ref">FUN_140aa3220</code></span> is <strong>7,401 bytes</strong> of initialization code. It registers <strong>16 engine subsystems</strong> into a slot-based manager at <span class="named-addr"><span class="addr-name">DAT_engineSubsystemTable</span><code class="ghidra-ref">DAT_141f9f018</code></span>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SUBSYSTEM SLOT MAP (DAT_141f9f018)
 +------+------------------+-------+
 | Slot | Subsystem        | Size  |
@@ -169,21 +169,21 @@
 | 0x2E | [UNKNOWN]        | 0x20  |
 +------+------------------+-------+</code></pre></div>
 <p><strong>Architectural observation</strong>: This is a <strong>service locator pattern</strong> (a design pattern where subsystems are registered into a global lookup table) with fixed numeric slots. Not dependency injection, not string-keyed -- integer slots optimized for cache-line-friendly lookups. The non-contiguous slot IDs (0x01, 0x03, 0x05... 0x2E) suggest engine ID constants defined elsewhere.</p>
-<p>The Luna Mode accessibility check looks for UUID <code>41958b32-a08c-4313-a6c0-f49d4fb5a91e</code>. If matched, <code>DAT_141f9cff4 = 1</code> and it logs <code>"[Sys] Luna Mode enabled."</code> This accessibility feature isn't documented elsewhere.</p>
+<p>The Luna Mode accessibility check looks for UUID <code>41958b32-a08c-4313-a6c0-f49d4fb5a91e</code>. If matched, <code><span class="named-addr"><span class="addr-name">DAT_LunaMode</span><span class="ghidra-ref">DAT_141f9cff4</span></span> = 1</code> and it logs <code>"[Sys] Luna Mode enabled."</code> This accessibility feature isn't documented elsewhere.</p>
 <p><em>Source: doc 12 Section 3.1, Subsystem Slot Map</em></p>
 <h4 id="graphics-game-app-init-300-2500ms"><a class="anchor" href="#graphics-game-app-init-300-2500ms">#</a>Graphics + Game App Init (300-2500ms)</h4>
 <p><code>CGbxApp::Init2</code> creates the DirectX viewport. DirectX failure produces the only fatal boot error: <code>"Could not start the game!\r\n  System error, initialization of DirectX failed."</code> Everything else has fallback paths.</p>
 <p>Then <code>CGbxGame::InitApp</code> creates the <code>CSystemEngine</code> and installs three critical callbacks:</p>
 <ul>
-  <li><code>+0x70</code>: Frame callback (<code>FUN_140101a40</code>) -- drives per-frame input</li>
+  <li><code>+0x70</code>: Frame callback (<span class="named-addr"><span class="addr-name">FrameCallback_Input</span><code class="ghidra-ref">FUN_140101a40</code></span>) -- drives per-frame input</li>
   <li><code>+0x80</code>: Security callback (<code>_guard_check_icall</code>) -- MSVC Control Flow Guard</li>
-  <li><code>+0x90</code>: Render callback (<code>FUN_140aa93b0</code>) -- drives the rendering pipeline</li>
+  <li><code>+0x90</code>: Render callback (<span class="named-addr"><span class="addr-name">RenderCallback</span><code class="ghidra-ref">FUN_140aa93b0</code></span>) -- drives the rendering pipeline</li>
 </ul>
-<p>These callbacks install <strong>only when <code>DAT_141fbbee8 == 0</code></strong> (non-headless mode). The same binary runs both client and dedicated server by toggling this flag. That's elegant.</p>
+<p>These callbacks install <strong>only when <code><span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><span class="ghidra-ref">DAT_141fbbee8</span></span> == 0</code></strong> (non-headless mode). The same binary runs both client and dedicated server by toggling this flag. That's elegant.</p>
 <p><em>Source: doc 12 Section 3.1, CGbxApp__Init2.c, CGbxGame__InitApp.c</em></p>
 <h4 id="system-engine-platform-start-150-500ms"><a class="anchor" href="#system-engine-platform-start-150-500ms">#</a>System Engine + Platform Start (150-500ms)</h4>
 <p><code>CSystemEngine::InitForGbxGame</code> reads config strings: <code>"Distro"</code>, <code>"WindowTitle"</code>, <code>"DataDir"</code> (default: <code>"GameData\\"</code>). Then <code>CGameManiaPlanet::Start</code> registers playground types and sets the game name to <code>"Trackmania"</code>.</p>
-<p><code>CGameCtnApp::Start</code> (at <code>FUN_140b4eba0</code>, <strong>3,356 bytes</strong>) creates 7 subsystem objects:</p>
+<p><code>CGameCtnApp::Start</code> (at <span class="named-addr"><span class="addr-name">CGameCtnApp::Start</span><code class="ghidra-ref">FUN_140b4eba0</code></span>, <strong>3,356 bytes</strong>) creates 7 subsystem objects:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameCtnApp::Start() subsystem allocations:
   param_1[0xF9]  = 0x20  bytes -- game state manager
   param_1[0x111] = 0x10  bytes -- display manager
@@ -193,10 +193,10 @@
   param_1[0x79]  = 0x188 bytes -- game client
   param_1[0x74]  = 0xA0  bytes -- refcounted object
   param_1[0x116] = 0x250 bytes -- scene manager</code></pre></div>
-<p>I verified this in the decompiled <code>CGameCtnApp__Start.c</code>. Line 92: <code>FUN_140117690(local_1c8,"CGameCtnApp::Start()");</code> -- the profiling tag. The reference counting pattern appears throughout: <code><em>(puVar8 + 2) = </em>(puVar8 + 2) + 1</code> for AddRef, with the refcount at offset <code>+0x10</code> from every object's base, matching the <code>CMwNod</code> base class layout: <code>[vtable(8)][unknown(8)][refcount(4)]</code>.</p>
+<p>I verified this in the decompiled <code>CGameCtnApp__Start.c</code>. Line 92: <code><span class="named-addr"><span class="addr-name">ProfilingScope_Begin</span><span class="ghidra-ref">FUN_140117690</span></span>(local_1c8,"CGameCtnApp::Start()");</code> -- the profiling tag. The reference counting pattern appears throughout: <code><em>(puVar8 + 2) = </em>(puVar8 + 2) + 1</code> for AddRef, with the refcount at offset <code>+0x10</code> from every object's base, matching the <code>CMwNod</code> base class layout: <code>[vtable(8)][unknown(8)][refcount(4)]</code>.</p>
 <p><em>Source: doc 12 Section 3.1, CGameCtnApp__Start.c lines 92-200</em></p>
 <h4 id="the-60-state-machine"><a class="anchor" href="#the-60-state-machine">#</a>The 60+ State Machine</h4>
-<p><code>CGameCtnApp::UpdateGame</code> at <code>FUN_140b78f10</code> is <strong>34,959 bytes</strong> of decompiled C. It runs <strong>every single frame</strong> with <code>(CGameCtnApp<em> this, ulonglong</em> fiberContext)</code>.</p>
+<p><code>CGameCtnApp::UpdateGame</code> at <span class="named-addr"><span class="addr-name">CGameCtnApp::UpdateGame</span><code class="ghidra-ref">FUN_140b78f10</code></span> is <strong>34,959 bytes</strong> of decompiled C. It runs <strong>every single frame</strong> with <code>(CGameCtnApp<em> this, ulonglong</em> fiberContext)</code>.</p>
 <p>The state machine has <strong>60+ states</strong> organized into 11 phases:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>COMPLETE STATE MACHINE DATA FLOW
 =================================
@@ -272,7 +272,7 @@ LAB_140b7cdcc  [MAIN MENU] -- FUN_140b54b90(param_1, 2), &quot;[Game] main menu.
 0xD45  [Gameplay Active] -- polls FUN_140b76aa0 each frame
   |     returns 0: continue playing (stay in 0xD45)
   |     returns non-0: race complete, return to menu</code></pre></div>
-<p><strong>Key insight</strong>: State 0xD45 is where you LIVE during gameplay. Every frame, the state machine enters 0xD45, calls <code>FUN_140b76aa0</code> to check if gameplay is over, and if not, yields. The actual gameplay (physics, input, script, rendering) runs through the engine callbacks installed at Phase 4. The state machine monitors for completion -- it does not drive gameplay frame-by-frame.</p>
+<p><strong>Key insight</strong>: State 0xD45 is where you LIVE during gameplay. Every frame, the state machine enters 0xD45, calls <span class="named-addr"><span class="addr-name">GameplayPoll_CheckStatus</span><code class="ghidra-ref">FUN_140b76aa0</code></span> to check if gameplay is over, and if not, yields. The actual gameplay (physics, input, script, rendering) runs through the engine callbacks installed at Phase 4. The state machine monitors for completion -- it does not drive gameplay frame-by-frame.</p>
 <p><em>Source: doc 12 Sections 12.1-12.5</em></p>
 <h3 id="browser-translation-strategies"><a class="anchor" href="#browser-translation-strategies">#</a>Browser Translation Strategies</h3>
 <p>The coroutine-based state machine maps to JavaScript in three ways:</p>
@@ -313,14 +313,14 @@ LAB_140b7cdcc  [MAIN MENU] -- FUN_140b54b90(param_1, 2), &quot;[Game] main menu.
   }
 }</code></pre></div>
 <p>I'd go with Option 1. The <code>async/await</code> approach loses explicit state IDs but gains readability. We're not trying to be bug-compatible -- just behaviorally equivalent.</p>
-<p>The headless/dedicated server pattern (<code>DAT_141fbbee8</code> / <code>DAT_141fbbf0c</code>) maps to a Node.js server running the same state machine with rendering disabled. The original binary does exactly this.</p>
+<p>The headless/dedicated server pattern (<span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span> / <span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span>) maps to a Node.js server running the same state machine with rendering disabled. The original binary does exactly this.</p>
 <p><em>Source: doc 12 Sections 10.1-10.6</em></p>
 <hr>
 <h2 id="loading-a-map"><a class="anchor" href="#loading-a-map">#</a>Loading a Map</h2>
 <h3 id="gbx-file-format"><a class="anchor" href="#gbx-file-format">#</a>GBX File Format</h3>
 <p>This section covers the GBX binary format byte-by-byte, LZO1X compression, the LookbackString interning system, and the 22-stage map initialization pipeline.</p>
-<p>Every piece of content in TM2020 is a GBX (GameBox) file. Maps, items, ghosts, replays, materials, meshes -- all GBX. The entry point for loading is <code>FUN_140904730</code> (<code>CSystemArchiveNod::LoadGbx</code>). It checks for three formats: <code>.gbx</code> (binary), <code>.gbx.xml</code> (XML), <code>.json</code> (JSON import), then orchestrates: header parse, class instantiation via factory, body decompress, chunk dispatch, reference resolution.</p>
-<p><em>Source: FUN_140904730_LoadGbx.c, doc 16 Section 1</em></p>
+<p>Every piece of content in TM2020 is a GBX (GameBox) file. Maps, items, ghosts, replays, materials, meshes -- all GBX. The entry point for loading is <span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><code class="ghidra-ref">FUN_140904730</code></span> (<code>CSystemArchiveNod::LoadGbx</code>). It checks for three formats: <code>.gbx</code> (binary), <code>.gbx.xml</code> (XML), <code>.json</code> (JSON import), then orchestrates: header parse, class instantiation via factory, body decompress, chunk dispatch, reference resolution.</p>
+<p><em>Source: <span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><span class="ghidra-ref">FUN_140904730</span></span>_LoadGbx.c, doc 16 Section 1</em></p>
 <h4 id="the-header-bytes-0x00-variable"><a class="anchor" href="#the-header-bytes-0x00-variable">#</a>The Header (Bytes 0x00 - variable)</h4>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>BYTE-LEVEL GBX HEADER (Version 6, TM2020)
 ==========================================
@@ -342,7 +342,7 @@ var     XX XX XX XX        num_nodes           node count for reference sizing</
   <li>C = Body stream compressed (LZO1X)</li>
   <li>R = With external references</li>
 </ul>
-<p>These flags parse at <code>FUN_140901850</code>:</p>
+<p>These flags parse at <span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="ghidra-ref">FUN_140901850</code></span>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Byte 0: &#x27;T&#x27; (text=1) or &#x27;B&#x27; (binary=0)
 // Byte 1: &#x27;C&#x27; (compressed=1) or &#x27;U&#x27; (uncompressed=0) -&gt; stored at +0xD8
 // Byte 2: &#x27;C&#x27; (compressed=1) or &#x27;U&#x27; (uncompressed=0) -&gt; stored at +0xDC
@@ -354,14 +354,14 @@ var     XX XX XX XX        num_nodes           node count for reference sizing</
   <li>Real file validation: compressed body data starts with bytes consistent with LZO1X encoding (0x1A in TechFlow.Map.Gbx means "initial literal run of 9 bytes")</li>
   <li>Both zlib and raw deflate FAIL on the compressed data</li>
   <li>Community tools (GBX.NET, gbx-py) all use LZO</li>
-  <li>The decompression function <code>FUN_140127aa0</code> fires when <code>param_1+0xDC</code> is non-zero</li>
+  <li>The decompression function <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> fires when <code>param_1+0xDC</code> is non-zero</li>
 </ul>
 <p><strong>zlib IS used</strong> for ghost sample data within replays. Two compression layers exist:</p>
 <ol>
   <li>Outer: GBX body = LZO1X</li>
   <li>Inner: Ghost samples within body = zlib deflate</li>
 </ol>
-<p>The decompression buffer pools at <code>DAT_14205c280</code> with max size <code>0xFFFFF</code> (~1MB). Anything larger gets a fresh allocation.</p>
+<p>The decompression buffer pools at <span class="named-addr"><span class="addr-name">DAT_decompressionBufferPool</span><code class="ghidra-ref">DAT_14205c280</code></span> with max size <code>0xFFFFF</code> (~1MB). Anything larger gets a fresh allocation.</p>
 <p><em>Source: doc 16 Section 8, validated in doc 26 Section 2</em></p>
 <h4 id="the-lookbackstring-system"><a class="anchor" href="#the-lookbackstring-system">#</a>The LookbackString System</h4>
 <p>This is the cleverest optimization in the format. <strong>LookbackString</strong> is a per-archive string interning table that replaces repeated strings (like <code>"StadiumRoadMainStraight"</code>) with compact back-references.</p>
@@ -388,7 +388,7 @@ var     XX XX XX XX        num_nodes           node count for reference sizing</
 
   If non-skippable:
     +0x04  bytes   chunk_data    Must be fully understood to continue!</code></pre></div>
-<p>The <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel is confirmed in <code>FUN_1402d0c40</code>. The "SKIP" marker is ASCII <code>S-K-I-P</code> = <span class="named-addr"><span class="addr-name">GBX_SKIP_MARKER</span><code class="addr">0x534B4950</code></span>. Skippable chunks are safe to skip. Non-skippable chunks are the parser's nightmare -- if you can't parse one, you can't find the next chunk boundary.</p>
+<p>The <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel is confirmed in <span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="ghidra-ref">FUN_1402d0c40</code></span>. The "SKIP" marker is ASCII <code>S-K-I-P</code> = <span class="named-addr"><span class="addr-name">GBX_SKIP_MARKER</span><code class="addr">0x534B4950</code></span>. Skippable chunks are safe to skip. Non-skippable chunks are the parser's nightmare -- if you can't parse one, you can't find the next chunk boundary.</p>
 <p><em>Source: doc 16 Sections 6-7</em></p>
 <h3 id="the-22-stage-map-loading-pipeline"><a class="anchor" href="#the-22-stage-map-loading-pipeline">#</a>The 22-Stage Map Loading Pipeline</h3>
 <p>After GBX deserialization, the map undergoes a 22-stage initialization pipeline. Each stage has a dedicated profiling marker:</p>
@@ -690,7 +690,7 @@ interface SimpleReplay {
   Layer  2: Network Engine (CNetEngine, CNetServer, CNetClient, 262 classes)
   Layer  1: Transport (WS2_32 Winsock, libcurl static, OpenSSL 1.1.1t+quic)
   Layer  0: External (UPC SDK DLL, Vivox VoiceChat.dll, XMPP)</code></pre></div>
-<p><strong>562 total networking classes</strong>. The HTTP client uses libcurl's multi interface for non-blocking I/O. Each request is a 0x1A8-byte structure. One shared <code>curl_multi_handle</code> lives at <code>DAT_1420ba2f8</code>. The web services layer uses a dedicated background thread (<code>CWebServices::Update_WebServicesThread</code>) with results dispatched to the main thread.</p>
+<p><strong>562 total networking classes</strong>. The HTTP client uses libcurl's multi interface for non-blocking I/O. Each request is a 0x1A8-byte structure. One shared <code>curl_multi_handle</code> lives at <span class="named-addr"><span class="addr-name">DAT_curl_multi_handle_global</span><code class="ghidra-ref">DAT_1420ba2f8</code></span>. The web services layer uses a dedicated background thread (<code>CWebServices::Update_WebServicesThread</code>) with results dispatched to the main thread.</p>
 <p><em>Source: doc 17 Sections 1, 4, 6</em></p>
 <h3 id="real-time-multiplayer-tcp-udp-dual-stack"><a class="anchor" href="#real-time-multiplayer-tcp-udp-dual-stack">#</a>Real-Time Multiplayer: TCP + UDP Dual Stack</h3>
 <p>The game uses <strong>both TCP and UDP simultaneously</strong> per connection:</p>
@@ -753,7 +753,7 @@ COROUTINE PRIMITIVES:
   sleep(1000);      -- pause for N milliseconds
   wait(condition);  -- poll condition each frame
   meanwhile { }     -- parallel execution branch</code></pre></div>
-<p>The <code>yield</code> implementation: script sets return state, exits <code>FUN_1408d1ea0</code>. Engine re-enters same context next frame. <code>sleep</code> compares <code>*(context+0xC4)</code> against global tick counter <code>DAT_141ffad50</code>. <code>wait</code> is syntactic sugar for <code>while (!condition) yield;</code>.</p>
+<p>The <code>yield</code> implementation: script sets return state, exits <span class="named-addr"><span class="addr-name">CScriptEngine_ExecuteScript</span><code class="ghidra-ref">FUN_1408d1ea0</code></span>. Engine re-enters same context next frame. <code>sleep</code> compares <code>*(context+0xC4)</code> against global tick counter <span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><code class="ghidra-ref">DAT_141ffad50</code></span>. <code>wait</code> is syntactic sugar for <code>while (!condition) yield;</code>.</p>
 <p><em>Source: doc 31 Sections 2, 9, confirmed at addresses <span class="named-addr"><span class="addr-name">str_ManiaScript_SLEEP</span><code class="addr">0x141c023a8</code></span>, <span class="named-addr"><span class="addr-name">str_ManiaScript_WAIT</span><code class="addr">0x141c024c8</code></span>, 0x141c024b0</em></p>
 <h3 id="game-mode-lifecycle"><a class="anchor" href="#game-mode-lifecycle">#</a>Game Mode Lifecycle</h3>
 <p>Game modes use a hierarchy of labels injected via <code>#Extends</code>:</p>
@@ -867,7 +867,7 @@ CControlSimi2, CControlEngine</code></pre></div>
   <li><strong>Slot-based subsystem manager</strong>: Integer-keyed subsystems with O(1) lookup. In TypeScript: a <code>Map<number, Subsystem></code> or even a plain array.</li>
 </ol>
 <ol>
-  <li><strong>Headless mode = server mode</strong>: Same code, rendering disabled. Node.js server with the same state machine. TM2020 does this with <code>DAT_141fbbee8</code>.</li>
+  <li><strong>Headless mode = server mode</strong>: Same code, rendering disabled. Node.js server with the same state machine. TM2020 does this with <span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span>.</li>
 </ol>
 <ol>
   <li><strong>Deterministic physics for replay validation</strong>: Input-based replay is the right approach. Record inputs at tick rate, re-simulate for validation. The 100Hz physics tick with adaptive sub-stepping is well-designed.</li>
@@ -929,7 +929,7 @@ Polish                 8    10-12    Low</code></pre></div>
   <li><strong>String interning saves enormous space.</strong> A map with 1000 blocks uses maybe 100 unique block names. Interning turns 23-byte strings into 4-byte indices after first occurrence.</li>
 </ol>
 <ol>
-  <li><strong>The same binary should run client and server.</strong> TM2020's headless mode flag (<code>DAT_141fbbee8</code>) eliminates an entire class of "works on client, breaks on server" bugs.</li>
+  <li><strong>The same binary should run client and server.</strong> TM2020's headless mode flag (<span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span>) eliminates an entire class of "works on client, breaks on server" bugs.</li>
 </ol>
 <ol>
   <li><strong>Ghost != Physics Replay.</strong> Visual ghosts (50ms, 22 bytes) and input replays (10ms, event-based) serve different purposes. Conflating them leads to wasted bandwidth or inaccurate playback.</li>
@@ -1127,6 +1127,7 @@ FRAME END (FUN_1401176a0)
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

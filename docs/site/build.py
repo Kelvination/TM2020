@@ -142,6 +142,106 @@ def convert_inline(text):
     text = re.sub(r'\[UNKNOWN[^\]]*\]', lambda m: f'<span class="badge badge-unknown">{m.group(0)}</span>', text)
     text = re.sub(r'\bUNKNOWN\b(?![^<]*>)', '<span class="badge badge-unknown">UNKNOWN</span>', text)
 
+    # --- Ghidra FUN_/DAT_ references (process BEFORE 0x addresses) ---
+
+    # Pattern: (FUN_XXXXXXXX @ 0xXXXXXXXXX) - hide entire parenthetical
+    text = re.sub(
+        r'\s*\(FUN_[0-9a-fA-F]{6,16}\s*@\s*0x[0-9a-fA-F]{6,16}\)',
+        lambda m: f'<span class="ghidra-ref">{escape_html(m.group(0))}</span>',
+        text
+    )
+
+    # Pattern: (FUN_XXXXXXXX) - hide parenthetical
+    text = re.sub(
+        r'\s*\(FUN_[0-9a-fA-F]{6,16}\)',
+        lambda m: f'<span class="ghidra-ref">{escape_html(m.group(0))}</span>',
+        text
+    )
+
+    # FUN_XXXXXXXX in <code> tags - replace with named version
+    def fun_code_replace(m):
+        hex_part = m.group(1).lower()
+        addr = '0x' + hex_part
+        name = ADDRESS_NAMES.get(addr)
+        if name:
+            return (f'<span class="named-addr">'
+                    f'<span class="addr-name">{escape_html(name)}</span>'
+                    f'<code class="ghidra-ref">FUN_{m.group(1)}</code>'
+                    f'</span>')
+        return m.group(0)
+
+    text = re.sub(r'<code>FUN_([0-9a-fA-F]{6,16})</code>', fun_code_replace, text)
+
+    # Bare FUN_XXXXXXXX in prose (not inside tags or already-processed spans)
+    def fun_bare_replace(m):
+        full = m.group(0)
+        start = m.start()
+        prefix = text[:start]
+        # Skip if inside an HTML tag
+        last_lt = prefix.rfind('<')
+        last_gt = prefix.rfind('>')
+        if last_lt > last_gt:
+            return full
+        # Skip if inside a ghidra-ref or named-addr span
+        last_ghidra = prefix.rfind('ghidra-ref')
+        last_named = prefix.rfind('named-addr')
+        last_span_close = prefix.rfind('</span>')
+        if max(last_ghidra, last_named) > last_span_close:
+            return full
+        hex_part = m.group(1).lower()
+        addr = '0x' + hex_part
+        name = ADDRESS_NAMES.get(addr)
+        if name:
+            return (f'<span class="named-addr">'
+                    f'<span class="addr-name">{escape_html(name)}</span>'
+                    f'<span class="ghidra-ref">{full}</span>'
+                    f'</span>')
+        return full
+
+    text = re.sub(r'FUN_([0-9a-fA-F]{6,16})', fun_bare_replace, text)
+
+    # DAT_XXXXXXXX in <code> tags
+    def dat_code_replace(m):
+        hex_part = m.group(1).lower()
+        addr = '0x' + hex_part
+        name = ADDRESS_NAMES.get(addr)
+        if name:
+            return (f'<span class="named-addr">'
+                    f'<span class="addr-name">{escape_html(name)}</span>'
+                    f'<code class="ghidra-ref">DAT_{m.group(1)}</code>'
+                    f'</span>')
+        return m.group(0)
+
+    text = re.sub(r'<code>DAT_([0-9a-fA-F]{6,16})</code>', dat_code_replace, text)
+
+    # Bare DAT_XXXXXXXX in prose (not inside tags or already-processed spans)
+    def dat_bare_replace(m):
+        full = m.group(0)
+        start = m.start()
+        prefix = text[:start]
+        last_lt = prefix.rfind('<')
+        last_gt = prefix.rfind('>')
+        if last_lt > last_gt:
+            return full
+        last_ghidra = prefix.rfind('ghidra-ref')
+        last_named = prefix.rfind('named-addr')
+        last_span_close = prefix.rfind('</span>')
+        if max(last_ghidra, last_named) > last_span_close:
+            return full
+        hex_part = m.group(1).lower()
+        addr = '0x' + hex_part
+        name = ADDRESS_NAMES.get(addr)
+        if name:
+            return (f'<span class="named-addr">'
+                    f'<span class="addr-name">{escape_html(name)}</span>'
+                    f'<span class="ghidra-ref">{full}</span>'
+                    f'</span>')
+        return full
+
+    text = re.sub(r'DAT_([0-9a-fA-F]{6,16})', dat_bare_replace, text)
+
+    # --- 0x hex addresses ---
+
     # Named addresses - replace hex with symbolic names when mapping exists
     def named_addr_code(m):
         addr = m.group(1)
@@ -171,6 +271,12 @@ def convert_inline(text):
         last_code_open = prefix.rfind('<code')
         last_code_close = prefix.rfind('</code>')
         if last_code_open > last_code_close:
+            return addr
+        # Skip if inside a ghidra-ref or named-addr span
+        last_ghidra = prefix.rfind('ghidra-ref')
+        last_named = prefix.rfind('named-addr')
+        last_span_close = prefix.rfind('</span>')
+        if max(last_ghidra, last_named) > last_span_close:
             return addr
         # Check naming mapping
         addr_lower = addr.lower()
@@ -709,6 +815,7 @@ def build_page(page_def):
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>'''
@@ -1186,6 +1293,30 @@ code.addr {
 
 body.show-addresses .named-addr .addr {
     display: inline;
+}
+
+/* Ghidra references (FUN_/DAT_ patterns) - hidden by default */
+.ghidra-ref {
+    display: none;
+    margin-left: 3px;
+    font-size: 0.85em;
+    opacity: 0.6;
+    font-family: var(--font-mono);
+}
+
+body.show-addresses .ghidra-ref {
+    display: inline;
+}
+
+/* Named addresses inside code blocks */
+pre code .addr-name {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+pre code .ghidra-ref {
+    font-size: inherit;
 }
 
 .addr-name {
@@ -1784,6 +1915,67 @@ def build_js():
             });
         }
 
+        // Post-process code blocks: replace FUN_/DAT_ with named addresses
+        var addrMap = window.TM_ADDRESS_MAP || {};
+        function lookupAddr(hex) {
+            var addr = "0x" + hex.toLowerCase();
+            return addrMap[addr] || null;
+        }
+
+        document.querySelectorAll("pre code").forEach(function(block) {
+            var html = block.innerHTML;
+            var changed = false;
+
+            // Pass 1: (FUN_XXX @ 0xXXX) - hide entire parenthetical
+            var r1 = html.replace(/\\s*\\([^)]*?FUN_[0-9a-fA-F]{6,16}[^)]*?@[^)]*?0x[0-9a-fA-F]{6,16}[^)]*?\\)/g,
+                function(match) { return '<span class="ghidra-ref">' + match + '</span>'; }
+            );
+            if (r1 !== html) { html = r1; changed = true; }
+
+            // Pass 2: (FUN_XXX) without @ - hide parenthetical
+            var r2 = html.replace(/\\s*\\([^)]*?FUN_[0-9a-fA-F]{6,16}[^)]*?\\)/g,
+                function(match) {
+                    if (match.indexOf('ghidra-ref') !== -1) return match;
+                    return '<span class="ghidra-ref">' + match + '</span>';
+                }
+            );
+            if (r2 !== html) { html = r2; changed = true; }
+
+            // Pass 3: bare FUN_XXX
+            var r3 = html.replace(/FUN_([0-9a-fA-F]{6,16})/g,
+                function(match, hex, offset) {
+                    var before = html.substring(Math.max(0, offset - 200), offset);
+                    if (before.lastIndexOf('ghidra-ref') > before.lastIndexOf('</span>')) return match;
+                    var name = lookupAddr(hex);
+                    if (name) {
+                        return '<span class="named-addr"><span class="addr-name">' +
+                               name + '</span><span class="ghidra-ref">' +
+                               match + '</span></span>';
+                    }
+                    return match;
+                }
+            );
+            if (r3 !== html) { html = r3; changed = true; }
+
+            // Pass 4: DAT_XXX
+            var r4 = html.replace(/DAT_([0-9a-fA-F]{6,16})/g,
+                function(match, hex, offset) {
+                    var before = html.substring(Math.max(0, offset - 200), offset);
+                    if (before.lastIndexOf('ghidra-ref') > before.lastIndexOf('</span>')) return match;
+                    var name = lookupAddr(hex);
+                    if (name) {
+                        return '<span class="named-addr"><span class="addr-name">' +
+                               name + '</span><span class="ghidra-ref">' +
+                               match + '</span></span>';
+                    }
+                    return match;
+                }
+            );
+            if (r4 !== html) { html = r4; changed = true; }
+
+            if (changed) block.innerHTML = html;
+        });
+
         // Technical details toggle
         var TECH_TOGGLE_KEY = "tm2020-docs-tech-hidden";
         var techToggleBtn = document.getElementById("tech-toggle");
@@ -2066,6 +2258,14 @@ def main():
     css = build_css()
     with open(os.path.join(SITE_DIR, 'style.css'), 'w', encoding='utf-8') as f:
         f.write(css)
+
+    # Build address map JS (for client-side code block processing)
+    print("Building address_map.js...")
+    with open(os.path.join(SITE_DIR, 'address_map.js'), 'w', encoding='utf-8') as f:
+        f.write('// Auto-generated address name mapping for client-side code block processing\n')
+        f.write('window.TM_ADDRESS_MAP = ')
+        json.dump(ADDRESS_NAMES, f)
+        f.write(';\n')
 
     # Build JS
     print("Building script.js...")

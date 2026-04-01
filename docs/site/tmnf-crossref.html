@@ -492,7 +492,7 @@
   <td style="text-align:left">Time unit conversion</td>
   <td style="text-align:left"><code>elapsed_ms * 0.001</code> (double)</td>
   <td style="text-align:left"><code><em>param_4 </em> 1000000</code> (microseconds)</td>
-  <td style="text-align:left">TMNF: DAT_00c7efb0; TM2020: PhysicsStep_TM line 63</td>
+  <td style="text-align:left">TMNF: <span class="named-addr"><span class="addr-name">TMNF_DAT_elapsed_ms_to_seconds</span><span class="ghidra-ref">DAT_00c7efb0</span></span>; TM2020: PhysicsStep_TM line 63</td>
 </tr>
 <tr>
   <td style="text-align:left">Sub-step formula</td>
@@ -504,7 +504,7 @@
   <td style="text-align:left">Max sub-steps</td>
   <td style="text-align:left">10,000</td>
   <td style="text-align:left">1,000 (0x3E9)</td>
-  <td style="text-align:left">TMNF: FUN_0057f770; TM2020: PhysicsStep_TM line 126</td>
+  <td style="text-align:left">TMNF: <span class="named-addr"><span class="addr-name">TMNF_VariableSubStepIntegrator</span><span class="ghidra-ref">FUN_0057f770</span></span>; TM2020: PhysicsStep_TM line 126</td>
 </tr>
 <tr>
   <td style="text-align:left">Sub-step remainder</td>
@@ -517,7 +517,7 @@
 <p>TM2020 caps at 1,000 sub-steps, while TMNF allowed up to 10,000. TM2020 computes velocity magnitude from 4 separate vector components (linear + 3 angular from offsets 0x1348-0x135C). TMNF uses 2 terms (linear + angular). [<span class="badge badge-verified">VERIFIED</span>]</p>
 <h3 id="integration-method"><a class="anchor" href="#integration-method">#</a>Integration Method</h3>
 <p>Both use <strong>Forward Euler integration</strong> with sub-stepping for stability. [<span class="badge badge-verified">VERIFIED</span>]</p>
-<p><strong>TMNF (FUN_005645d0, 988 bytes):</strong></p>
+<p><strong>TMNF (<span class="named-addr"><span class="addr-name">TMNF_ForwardEulerIntegration</span><span class="ghidra-ref">FUN_005645d0</span></span>, 988 bytes):</strong></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>position += velocity * dt + applied_impulse * dt
 velocity += (accumulated_force / mass) * dt
 quaternion += 0.5 * [0, omega] * q * dt</code></pre></div>
@@ -563,9 +563,9 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 <h3 id="sleep-state-system"><a class="anchor" href="#sleep-state-system">#</a>Sleep State System</h3>
 <p>TM2020 has an explicit sleep state system in <code>NSceneDyna::ComputeGravityAndSleepStateAndNewVels</code>:</p>
 <ul>
-  <li><code>DAT_141ebccfc</code> -- sleep detection enabled flag</li>
-  <li><code>DAT_141ebcd00</code> -- sleep velocity damping factor</li>
-  <li><code>DAT_141ebcd04</code> -- sleep velocity threshold (squared)</li>
+  <li><span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><code class="ghidra-ref">DAT_141ebccfc</code></span> -- sleep detection enabled flag</li>
+  <li><span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="ghidra-ref">DAT_141ebcd00</code></span> -- sleep velocity damping factor</li>
+  <li><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="ghidra-ref">DAT_141ebcd04</code></span> -- sleep velocity threshold (squared)</li>
 </ul>
 <p>TMNF: No explicit sleep state was documented. This may be a TM2020 addition for performance with many dynamic objects. [UNCERTAIN -- TMNF sleep may exist but was not investigated]</p>
 <h3 id="collision-system"><a class="anchor" href="#collision-system">#</a>Collision System</h3>
@@ -595,7 +595,7 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 </tr>
 <tr>
   <td style="text-align:left">Raycasting</td>
-  <td style="text-align:left">Per-wheel via FUN_0084e600 (1397b)</td>
+  <td style="text-align:left">Per-wheel via <span class="named-addr"><span class="addr-name">TMNF_PerWheelRaycast</span><span class="ghidra-ref">FUN_0084e600</span></span> (1397b)</td>
   <td style="text-align:left"><code>NHmsCollision::PointCast_FirstClip/AllClips</code></td>
 </tr>
 <tr>
@@ -844,11 +844,11 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <td style="text-align:left">TM2020</td>
   <td style="text-align:left">CPlugVehicleCarPhyTuning</td>
   <td style="text-align:left">0x090ED</td>
-  <td style="text-align:left">Remapped in FUN_1402f2610</td>
+  <td style="text-align:left">Remapped in <span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><span class="ghidra-ref">FUN_1402f2610</span></span></td>
 </tr>
 </tbody>
 </table></div>
-<p>TM2020's backward compatibility remap table (200+ entries at <code>FUN_1402f2610</code>) includes mappings from engine 0x0A (old Scene) to engine 0x09 (modern Plug). [<span class="badge badge-verified">VERIFIED</span>]</p>
+<p>TM2020's backward compatibility remap table (200+ entries at <span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="ghidra-ref">FUN_1402f2610</code></span>) includes mappings from engine 0x0A (old Scene) to engine 0x09 (modern Plug). [<span class="badge badge-verified">VERIFIED</span>]</p>
 <h3 id="esteermodel-force-model-selector"><a class="anchor" href="#esteermodel-force-model-selector">#</a>ESteerModel (Force Model Selector)</h3>
 <p><strong>TMNF</strong> (at tuning offset 0x354):</p>
 <div class="table-wrapper"><table>
@@ -866,35 +866,35 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <td style="text-align:left">Steer01</td>
   <td style="text-align:left">0</td>
   <td style="text-align:left">default</td>
-  <td style="text-align:left">FUN_0088e630</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_Steer01_02_ForceModel</span><span class="ghidra-ref">FUN_0088e630</span></span></td>
   <td style="text-align:left">3,691b</td>
 </tr>
 <tr>
   <td style="text-align:left">Steer02</td>
   <td style="text-align:left">1</td>
   <td style="text-align:left">default</td>
-  <td style="text-align:left">FUN_0088e630</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_Steer01_02_ForceModel</span><span class="ghidra-ref">FUN_0088e630</span></span></td>
   <td style="text-align:left">3,691b</td>
 </tr>
 <tr>
   <td style="text-align:left">Steer04</td>
   <td style="text-align:left">3</td>
   <td style="text-align:left">case 3</td>
-  <td style="text-align:left">FUN_0088f4b0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_Steer04_ForceModel</span><span class="ghidra-ref">FUN_0088f4b0</span></span></td>
   <td style="text-align:left">2,933b</td>
 </tr>
 <tr>
   <td style="text-align:left">Steer05</td>
   <td style="text-align:left">4</td>
   <td style="text-align:left">case 4</td>
-  <td style="text-align:left">FUN_00890030</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_Steer05_ForceModel</span><span class="ghidra-ref">FUN_00890030</span></span></td>
   <td style="text-align:left">3,844b</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Steer06</strong></td>
   <td style="text-align:left"><strong>5</strong></td>
   <td style="text-align:left"><strong>case 5</strong></td>
-  <td style="text-align:left"><strong>FUN_0084fd30</strong></td>
+  <td style="text-align:left"><strong><span class="named-addr"><span class="addr-name">TMNF_M6_Steer06_ForceModel</span><span class="ghidra-ref">FUN_0084fd30</span></span></strong></td>
   <td style="text-align:left"><strong>10,660b</strong></td>
 </tr>
 </tbody>
@@ -913,54 +913,54 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 <tr>
   <td style="text-align:left">0</td>
   <td style="text-align:left">case 0-2</td>
-  <td style="text-align:left">FUN_140869cd0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869cd0</span></span></td>
   <td style="text-align:left">Standard car model</td>
 </tr>
 <tr>
   <td style="text-align:left">1</td>
   <td style="text-align:left">case 0-2</td>
-  <td style="text-align:left">FUN_140869cd0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869cd0</span></span></td>
   <td style="text-align:left">Standard car model</td>
 </tr>
 <tr>
   <td style="text-align:left">2</td>
   <td style="text-align:left">case 0-2</td>
-  <td style="text-align:left">FUN_140869cd0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869cd0</span></span></td>
   <td style="text-align:left">Standard car model</td>
 </tr>
 <tr>
   <td style="text-align:left">3</td>
   <td style="text-align:left">case 3</td>
-  <td style="text-align:left">FUN_14086b060</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086b060</span></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Alternate model</td>
 </tr>
 <tr>
   <td style="text-align:left">4</td>
   <td style="text-align:left">case 4</td>
-  <td style="text-align:left">FUN_14086bc50</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><span class="ghidra-ref">FUN_14086bc50</span></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Alternate model</td>
 </tr>
 <tr>
   <td style="text-align:left">5</td>
   <td style="text-align:left">case 5</td>
-  <td style="text-align:left">FUN_140851f00</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> -- likely M6/Steer06</td>
 </tr>
 <tr>
   <td style="text-align:left">6</td>
   <td style="text-align:left">case 6</td>
-  <td style="text-align:left">FUN_14085c9e0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> -- possibly new model</td>
 </tr>
 <tr>
   <td style="text-align:left">0xB</td>
   <td style="text-align:left">case 0xB</td>
-  <td style="text-align:left">FUN_14086d3b0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><span class="ghidra-ref">FUN_14086d3b0</span></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> -- new model not in TMNF</td>
 </tr>
 </tbody>
 </table></div>
-<p>TMNF StadiumCar uses Steer06 (M6), the most complex model with burnout mechanics, RPM simulation, 6-gear ratios, and per-axle braking. If TM2020's case 5 corresponds to the same Steer06 model, <code>FUN_140851f00</code> should contain similar logic. Cases 0-2 share the same function, suggesting three sub-variants. Case 6 and case 0xB are entirely new. [<span class="badge badge-plausible">PLAUSIBLE</span>]</p>
+<p>TMNF StadiumCar uses Steer06 (M6), the most complex model with burnout mechanics, RPM simulation, 6-gear ratios, and per-axle braking. If TM2020's case 5 corresponds to the same Steer06 model, <span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span> should contain similar logic. Cases 0-2 share the same function, suggesting three sub-variants. Case 6 and case 0xB are entirely new. [<span class="badge badge-plausible">PLAUSIBLE</span>]</p>
 <h3 id="tuning-value-comparison-where-known"><a class="anchor" href="#tuning-value-comparison-where-known">#</a>Tuning Value Comparison (Where Known)</h3>
 <p>TMNF StadiumCar values from <code>Stadium.pak</code>. TM2020 values are stored in GBX resources, not extracted.</p>
 <div class="table-wrapper"><table>
@@ -1028,7 +1028,7 @@ CollisionDamper / CollisionBounce -- collision-specific parameters</code></pre><
 <hr>
 <h2 id="how-the-force-models-compare"><a class="anchor" href="#how-the-force-models-compare">#</a>How the Force Models Compare</h2>
 <h3 id="m6-force-model-tmnf-vs-computeforces-tm2020"><a class="anchor" href="#m6-force-model-tmnf-vs-computeforces-tm2020">#</a>M6 Force Model (TMNF) vs ComputeForces (TM2020)</h3>
-<p>The TMNF M6 model (FUN_0084fd30, 10,660 bytes) is fully decompiled. The TM2020 ComputeForces (FUN_1408427d0, 1,713 bytes) is a thin dispatcher.</p>
+<p>The TMNF M6 model (<span class="named-addr"><span class="addr-name">TMNF_M6_Steer06_ForceModel</span><span class="ghidra-ref">FUN_0084fd30</span></span>, 10,660 bytes) is fully decompiled. The TM2020 ComputeForces (<span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><span class="ghidra-ref">FUN_1408427d0</span></span>, 1,713 bytes) is a thin dispatcher.</p>
 <p><strong>Shared patterns</strong> [<span class="badge badge-verified">VERIFIED</span>]:</p>
 <ul>
   <li>Both zero forces when vehicle is in reset/inactive state</li>
@@ -1116,7 +1116,7 @@ else:
 </tbody>
 </table></div>
 <h3 id="class-id-remapping"><a class="anchor" href="#class-id-remapping">#</a>Class ID Remapping</h3>
-<p>TM2020 maintains backward compatibility via ~200 remappings in <code>FUN_1402f2610</code>:</p>
+<p>TM2020 maintains backward compatibility via ~200 remappings in <span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="ghidra-ref">FUN_1402f2610</code></span>:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1320,33 +1320,33 @@ else:
   <td style="text-align:left">GBX magic "GBX"</td>
   <td style="text-align:left">File header</td>
   <td style="text-align:left">GBX magic "GBX"</td>
-  <td style="text-align:left">FUN_140900e60</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><span class="ghidra-ref">FUN_140900e60</span></span></td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
   <td style="text-align:left">FACADE01 end marker</td>
   <td style="text-align:left">Chunk terminator</td>
   <td style="text-align:left">FACADE01 end marker</td>
-  <td style="text-align:left">FUN_1402d0c40</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><span class="ghidra-ref">FUN_1402d0c40</span></span></td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
   <td style="text-align:left">Class ID <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span> (Map)</td>
   <td style="text-align:left">GBX class ID</td>
   <td style="text-align:left">Same class ID</td>
-  <td style="text-align:left">Body label table at FUN_140903140</td>
+  <td style="text-align:left">Body label table at <span class="named-addr"><span class="addr-name">GBX_ClassIdToBodyTypeLabel</span><span class="ghidra-ref">FUN_140903140</span></span></td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
   <td style="text-align:left">Forward Euler integration</td>
-  <td style="text-align:left">FUN_005645d0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_ForwardEulerIntegration</span><span class="ghidra-ref">FUN_005645d0</span></span></td>
   <td style="text-align:left">Forward Euler</td>
   <td style="text-align:left">NSceneDyna::ComputeGravity...</td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
   <td style="text-align:left">Velocity-dependent sub-stepping</td>
-  <td style="text-align:left">FUN_0057f770</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_VariableSubStepIntegrator</span><span class="ghidra-ref">FUN_0057f770</span></span></td>
   <td style="text-align:left">Adaptive sub-stepping</td>
   <td style="text-align:left">PhysicsStep_TM (<span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><code class="addr">0x141501800</code></span>)</td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
@@ -1374,23 +1374,23 @@ else:
 </tr>
 <tr>
   <td style="text-align:left">Speed clamping to max</td>
-  <td style="text-align:left">FUN_00852980</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_ComputeForces_Orchestrator</span><span class="ghidra-ref">FUN_00852980</span></span></td>
   <td style="text-align:left">Speed clamping</td>
   <td style="text-align:left">ComputeForces model+0x2F0</td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
   <td style="text-align:left">Per-wheel contact detection</td>
-  <td style="text-align:left">FUN_0084e600</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_PerWheelRaycast</span><span class="ghidra-ref">FUN_0084e600</span></span></td>
   <td style="text-align:left">Per-wheel raycasts</td>
   <td style="text-align:left">NHmsCollision::PointCast_*</td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
   <td style="text-align:left">CClassicArchive serialization</td>
-  <td style="text-align:left">FUN_009f0ee0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_CClassicArchive::Serialize</span><span class="ghidra-ref">FUN_009f0ee0</span></span></td>
   <td style="text-align:left">CClassicArchive</td>
-  <td style="text-align:left">FUN_14012ba00</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CClassicArchive::ReadData</span><span class="ghidra-ref">FUN_14012ba00</span></span></td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
@@ -1428,8 +1428,8 @@ else:
 </tr>
 <tr>
   <td style="text-align:left">M6 model = case 5</td>
-  <td style="text-align:left">FUN_0084fd30, TMNF StadiumCar</td>
-  <td style="text-align:left">FUN_140851f00 (case 5)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TMNF_M6_Steer06_ForceModel</span><span class="ghidra-ref">FUN_0084fd30</span></span>, TMNF StadiumCar</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span> (case 5)</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
 </tr>
 <tr>
@@ -1514,7 +1514,7 @@ else:
   <li><strong>The physics model selector is an enum called ESteerModel</strong> with values Steer01 through Steer06+. In TM2020, you only see integer values 0-6 and 0xB in the switch. TMNF's gbx-net data maps these to named enum variants. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
 </ol>
 <ol>
-  <li><strong>The M6/Steer06 force model has a burnout state machine</strong> with 4 states (normal, burnout, donut, after-burnout). If TM2020's Stadium car still uses M6, <code>FUN_140851f00</code> should contain the same state machine. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
+  <li><strong>The M6/Steer06 force model has a burnout state machine</strong> with 4 states (normal, burnout, donut, after-burnout). If TM2020's Stadium car still uses M6, <span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span> should contain the same state machine. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
 </ol>
 <ol>
   <li><strong>Gravity is NOT 9.81 m/s^2</strong>. Effective gravity is 9.81 * GravityCoef. TMNF uses GravityCoef = 3.0 for ground, 2.5 for air. Effective gravity is ~29.4 m/s^2 on ground, ~24.5 in air. TM2020 almost certainly uses similar values. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
@@ -1685,6 +1685,7 @@ else:
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

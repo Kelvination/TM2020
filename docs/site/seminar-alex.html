@@ -139,7 +139,7 @@
 </ul>
 <p>I found this fascinating -- the tick rate is never hardcoded in the binary. It is presumably set in a configuration or GBX resource file. The code only cares about "here is one tick, process it."</p>
 <h3 id="walk-through-one-tick-step-by-step"><a class="anchor" href="#walk-through-one-tick-step-by-step">#</a>Walk Through One Tick (Step by Step)</h3>
-<p>From <code>PhysicsStep_TM.c</code> (FUN_141501800):</p>
+<p>From <code>PhysicsStep_TM.c</code><span class="ghidra-ref"> (FUN_141501800)</span>:</p>
 <p><strong>Step 1: Profiling and time setup</strong> (lines 59, 63)</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">FUN_140117690(local_108, &quot;PhysicsStep_TM&quot;);  // profiling scope
 lVar18 = (ulonglong)*param_4 * 1000000;      // tick -&gt; microseconds (INTEGER math!)</code></pre></div>
@@ -173,12 +173,12 @@ num_substeps = raw_count + 1  // always at least 1</code></pre></div>
 <p>If <code>num_substeps >= 1001</code>, it caps at 1000 and uses <code>sub_dt = dt / 1000.0f</code>.</p>
 <p><strong>Step 8: Sub-step loop</strong> (lines 137-167) Runs <code>num_substeps - 1</code> equal-size steps, each executing:</p>
 <ol>
-  <li><code>FUN_141501090</code> -- Collision detection (result stored in bit 16 of ContactPhyFlags)</li>
-  <li><code>FUN_140801e20</code> -- Set dynamics time</li>
-  <li><code>FUN_1414ffee0</code> -- Compute forces</li>
-  <li><code>FUN_1414ff9d0</code> -- Post-force update</li>
-  <li><code>FUN_1415009d0</code> -- Physics step dispatch</li>
-  <li><code>FUN_14083df50</code> -- Integration</li>
+  <li><span class="named-addr"><span class="addr-name">PhysicsStep_TM_CollisionCheck</span><code class="ghidra-ref">FUN_141501090</code></span> -- Collision detection (result stored in bit 16 of ContactPhyFlags)</li>
+  <li><span class="named-addr"><span class="addr-name">NSceneDyna_SetTime</span><code class="ghidra-ref">FUN_140801e20</code></span> -- Set dynamics time</li>
+  <li><span class="named-addr"><span class="addr-name">PhysicsStep_TM_ComputeForces</span><code class="ghidra-ref">FUN_1414ffee0</code></span> -- Compute forces</li>
+  <li><span class="named-addr"><span class="addr-name">PhysicsStep_TM_PostForceUpdate</span><code class="ghidra-ref">FUN_1414ff9d0</code></span> -- Post-force update</li>
+  <li><span class="named-addr"><span class="addr-name">PhysicsStep_TM_PhysicsStepDispatch</span><code class="ghidra-ref">FUN_1415009d0</code></span> -- Physics step dispatch</li>
+  <li><span class="named-addr"><span class="addr-name">PhysicsStep_TM_Integration</span><code class="ghidra-ref">FUN_14083df50</code></span> -- Integration</li>
 </ol>
 <p><strong>Step 9: Final remainder step</strong> (lines 169-190) Same 6 function calls, but with remaining time (<code>scaled_dt - (sub_dt * (N-1))</code>). This ensures total simulated time exactly equals dt -- no floating-point drift!</p>
 <p><strong>Step 10: Fragile check</strong> (lines 191-195) After all sub-steps, checks if the vehicle should break:</p>
@@ -204,11 +204,11 @@ sub_dt = dt / num_substeps</code></pre></div>
 </ul>
 <h3 id="questions-i-still-have"><a class="anchor" href="#questions-i-still-have">#</a>Questions I Still Have</h3>
 <ol>
-  <li>What exactly does <code>FUN_14083dca0</code> compute for the velocity scale factor?</li>
+  <li>What exactly does <span class="named-addr"><span class="addr-name">ComputeVelocityScale</span><code class="ghidra-ref">FUN_14083dca0</code></span> compute for the velocity scale factor?</li>
   <li>The <code>body_step_size</code> at <code>lVar15+0x54</code> -- where does this value come from?</li>
   <li>Why 4 velocity terms instead of TMNF's 2? Are <code>v_wheel1</code> and <code>v_wheel2</code> the wheel spin velocities?</li>
   <li>What is the exact value of the tick duration <code>param_4[2]</code>?</li>
-  <li>The "safe sqrt" function <code>FUN_14195dd00</code> -- does it return <code>sqrt(abs(x))</code> or just <code>0.0</code>?</li>
+  <li>The "safe sqrt" function <span class="named-addr"><span class="addr-name">SafeSqrt_NegativeGuard</span><code class="ghidra-ref">FUN_14195dd00</code></span> -- does it return <code>sqrt(abs(x))</code> or just <code>0.0</code>?</li>
 </ol>
 <h3 id="if-i-were-building-this"><a class="anchor" href="#if-i-were-building-this">#</a>If I Were Building This</h3>
 <p>I would absolutely use the same fixed-tick approach. The 100Hz rate is a sweet spot -- fast enough for responsive gameplay, slow enough to not burn CPU. I might consider 120Hz for smoother feel on modern displays.</p>
@@ -244,42 +244,42 @@ sub_dt = dt / num_substeps</code></pre></div>
 <tbody>
 <tr>
   <td style="text-align:center">0, 1, 2</td>
-  <td style="text-align:center">FUN_140869cd0</td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869cd0</span></span></td>
   <td style="text-align:center">Steer01/02/03</td>
   <td style="text-align:center">Base/legacy</td>
   <td style="text-align:center">2</td>
 </tr>
 <tr>
   <td style="text-align:center">3</td>
-  <td style="text-align:center">FUN_14086b060</td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086b060</span></span></td>
   <td style="text-align:center">Steer04 (M4)</td>
   <td style="text-align:center">Bicycle/simplified</td>
   <td style="text-align:center">2</td>
 </tr>
 <tr>
   <td style="text-align:center">4</td>
-  <td style="text-align:center">FUN_14086bc50</td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><span class="ghidra-ref">FUN_14086bc50</span></span></td>
   <td style="text-align:center">Steer05 (M5)</td>
   <td style="text-align:center">TMNF-era</td>
   <td style="text-align:center">2</td>
 </tr>
 <tr>
   <td style="text-align:center">5</td>
-  <td style="text-align:center">FUN_140851f00</td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span></td>
   <td style="text-align:center">Steer06 (M6)</td>
   <td style="text-align:center">CarSport/Stadium</td>
   <td style="text-align:center">3</td>
 </tr>
 <tr>
   <td style="text-align:center">6</td>
-  <td style="text-align:center">FUN_14085c9e0</td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span></td>
   <td style="text-align:center">NEW</td>
   <td style="text-align:center">Rally/Snow</td>
   <td style="text-align:center">3</td>
 </tr>
 <tr>
   <td style="text-align:center">0xB</td>
-  <td style="text-align:center">FUN_14086d3b0</td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><span class="ghidra-ref">FUN_14086d3b0</span></span></td>
   <td style="text-align:center">NEW</td>
   <td style="text-align:center">Desert/variant</td>
   <td style="text-align:center">3</td>
@@ -305,24 +305,24 @@ if (maxSpeed^2 &lt; speed_sq &amp;&amp; epsilon &lt; maxSpeed) {
     velocity *= scale;  // clamp to maxSpeed
 }</code></pre></div>
 <p>The velocity is hard-clamped to <code>MaxSpeed</code> from the vehicle model. (NSceneVehiclePhy__ComputeForces.c, lines 112-126)</p>
-<h3 id="the-carsport-force-model-case-6-fun_14085c9e0"><a class="anchor" href="#the-carsport-force-model-case-6-fun_14085c9e0">#</a>The CarSport Force Model (Case 6 -- FUN_14085c9e0)</h3>
-<p><strong>A contradiction I need to flag.</strong> The documentation in 10-physics-deep-dive.md (line 275) says CarSport is model 5. But 22-ghidra-gap-findings.md (lines 67-99) identifies FUN_14085c9e0 (case 6) as "the full CarSport (Stadium car) force model." The decompiled file header agrees. I accept the decompiled file headers as more authoritative.</p>
+<h3 id="the-carsport-force-model-case-6-fun_14085c9e0"><a class="anchor" href="#the-carsport-force-model-case-6-fun_14085c9e0">#</a>The CarSport Force Model (Case 6 -- <span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span>)</h3>
+<p><strong>A contradiction I need to flag.</strong> The documentation in 10-physics-deep-dive.md (line 275) says CarSport is model 5. But 22-ghidra-gap-findings.md (lines 67-99) identifies <span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span> (case 6) as "the full CarSport (Stadium car) force model." The decompiled file header agrees. I accept the decompiled file headers as more authoritative.</p>
 <p>The CarSport model (case 6) breaks down into 12 sub-functions (22-ghidra-gap-findings.md, lines 77-86):</p>
 <ol>
-  <li><code>FUN_1408570e0</code> -- Per-wheel force calculation (called 4 times)</li>
-  <li><code>FUN_14085ad30</code> -- Steering model</li>
-  <li><code>FUN_14085a0d0</code> -- Suspension/contact update</li>
-  <li><code>FUN_14085ba50</code> -- Anti-roll bar</li>
-  <li><code>FUN_140858c90</code> -- Damping</li>
-  <li><code>FUN_140857380</code> -- Drift/skid model</li>
-  <li><code>FUN_140857b20</code> -- Boost/reactor forces</li>
-  <li><code>FUN_14085c1b0</code> -- Airborne control forces (pitch/roll/yaw when airborne)</li>
-  <li><code>FUN_14085b600</code> -- Final force integration</li>
-  <li>Surface grip interpolation via FUN_140869c90</li>
+  <li><span class="named-addr"><span class="addr-name">PerWheelVisualStateUpdate</span><code class="ghidra-ref">FUN_1408570e0</code></span> -- Per-wheel force calculation (called 4 times)</li>
+  <li><span class="named-addr"><span class="addr-name">SteeringModel</span><code class="ghidra-ref">FUN_14085ad30</code></span> -- Steering model</li>
+  <li><span class="named-addr"><span class="addr-name">SuspensionContactUpdate</span><code class="ghidra-ref">FUN_14085a0d0</code></span> -- Suspension/contact update</li>
+  <li><span class="named-addr"><span class="addr-name">AntiRollBar</span><code class="ghidra-ref">FUN_14085ba50</code></span> -- Anti-roll bar</li>
+  <li><span class="named-addr"><span class="addr-name">DampingModel</span><code class="ghidra-ref">FUN_140858c90</code></span> -- Damping</li>
+  <li><span class="named-addr"><span class="addr-name">DriftSkidModel</span><code class="ghidra-ref">FUN_140857380</code></span> -- Drift/skid model</li>
+  <li><span class="named-addr"><span class="addr-name">BoostReactorForce</span><code class="ghidra-ref">FUN_140857b20</code></span> -- Boost/reactor forces</li>
+  <li><span class="named-addr"><span class="addr-name">AirborneControl</span><code class="ghidra-ref">FUN_14085c1b0</code></span> -- Airborne control forces (pitch/roll/yaw when airborne)</li>
+  <li><span class="named-addr"><span class="addr-name">FinalForceIntegration</span><code class="ghidra-ref">FUN_14085b600</code></span> -- Final force integration</li>
+  <li>Surface grip interpolation via <span class="named-addr"><span class="addr-name">SurfaceGripInterpolation</span><span class="ghidra-ref">FUN_140869c90</span></span></li>
   <li>Gravity/air damping coefficient lookup</li>
   <li>Throttle-based engine force via curve at <code>+0x310/+0x314</code></li>
 </ol>
-<p>Key state fields discovered (force_model_carsport_FUN_14085c9e0.c, header comments):</p>
+<p>Key state fields discovered (force_model_carsport_<span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span>.c, header comments):</p>
 <ul>
   <li><code>plVar1+0x2EB</code> = friction coefficient state (maps to <code>Tunings.CoefFriction</code>)</li>
   <li><code>plVar1+0x2EC</code> = acceleration coefficient state (maps to <code>Tunings.CoefAcceleration</code>)</li>
@@ -333,7 +333,7 @@ if (maxSpeed^2 &lt; speed_sq &amp;&amp; epsilon &lt; maxSpeed) {
 <p><strong>Speed thresholds</strong>: <code>tuning+0x2AE0</code> (low) and <code>+0x2AE4</code> (high) define a speed range affecting grip behavior.</p>
 <p><strong>Post-respawn force</strong>: A fade-out force is applied for <code>2x duration</code> stored at <code>tuning+0x2B80</code>, linearly fading from full to zero. (22-ghidra-gap-findings.md, lines 92-94)</p>
 <h3 id="the-pacejka-like-tire-model"><a class="anchor" href="#the-pacejka-like-tire-model">#</a>The Pacejka-Like Tire Model</h3>
-<p>The 2-wheel model (case 3, FUN_14086b060) has its lateral grip function fully decompiled as <code>FUN_14086af20</code> (22-ghidra-gap-findings.md, lines 144-159):</p>
+<p>The 2-wheel model (case 3, <span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086b060</span></span>) has its lateral grip function fully decompiled as <span class="named-addr"><span class="addr-name">LateralGripBicycleModel</span><code class="ghidra-ref">FUN_14086af20</code></span> (22-ghidra-gap-findings.md, lines 144-159):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>lateral_force = -slip * linear_coef - slip * |slip| * quadratic_coef</code></pre></div>
 <p>This is a <strong>simplified Pacejka-like model</strong>. The real Pacejka Magic Formula is <code>F = D <em> sin(C </em> atan(B<em>x - E</em>(B<em>x - atan(B</em>x))))</code>. TM2020 uses a quadratic approximation:</p>
 <ul>
@@ -345,7 +345,7 @@ if (maxSpeed^2 &lt; speed_sq &amp;&amp; epsilon &lt; maxSpeed) {
 <p>When force exceeds grip: clamp to grip limit, set sliding flag. When force is within grip: use computed force, clear sliding flag.</p>
 <p>The linear term provides realistic feel at small slip angles. The quadratic term (<code>slip * |slip|</code>) naturally saturates at high slip -- it is slip squared but preserving sign. No need for a complex sin/atan chain.</p>
 <h3 id="the-3-state-drift-machine"><a class="anchor" href="#the-3-state-drift-machine">#</a>The 3-State Drift Machine</h3>
-<p>The drift system in the 2-wheel model has 3 discrete states stored at <code>offset+0x1460</code> (22-ghidra-gap-findings.md, lines 58-63; force_model_2wheel_FUN_14086b060.c, lines 12-16):</p>
+<p>The drift system in the 2-wheel model has 3 discrete states stored at <code>offset+0x1460</code> (22-ghidra-gap-findings.md, lines 58-63; force_model_2wheel_<span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086b060</span></span>.c, lines 12-16):</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -437,7 +437,7 @@ if (maxSpeed^2 &lt; speed_sq &amp;&amp; epsilon &lt; maxSpeed) {
   <li>Which force model does each car ACTUALLY use? The documentation contradicts itself (CarSport = 5 vs CarSport = 6).</li>
   <li>How does the burnout state machine work in TM2020?</li>
   <li>What are the actual tire force curves? They are in GBX tuning data, not the binary.</li>
-  <li>How does the per-wheel force function (<code>FUN_1408570e0</code>) work?</li>
+  <li>How does the per-wheel force function (<span class="named-addr"><span class="addr-name">PerWheelVisualStateUpdate</span><code class="ghidra-ref">FUN_1408570e0</code></span>) work?</li>
   <li>What is the airborne control model? How much control does the player actually have?</li>
 </ol>
 <h3 id="if-i-were-building-this-1"><a class="anchor" href="#if-i-were-building-this-1">#</a>If I Were Building This</h3>
@@ -634,7 +634,7 @@ if (maxSpeed^2 &lt; speed_sq &amp;&amp; epsilon &lt; maxSpeed) {
 <p>The fragile break condition requires ALL THREE conditions simultaneously (PhysicsStep_TM.c, lines 191-195; 21-competitive-mechanics.md, lines 413-434):</p>
 <ol>
   <li>Bits 11 AND 12 of ContactPhyFlags both set (mask 0x1800)</li>
-  <li>Collision severity at <code>vehicle+0x1C8C</code> exceeds global threshold <code>DAT_141d1ef7c</code></li>
+  <li>Collision severity at <code>vehicle+0x1C8C</code> exceeds global threshold <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span></li>
   <li>Status nibble is NOT 2 or 3</li>
 </ol>
 <p><strong>Fragile is NOT "any contact = break."</strong> A collision severity threshold exists. Gentle landings survive. The threshold is a float at <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="addr">0x141d1ef7c</code></span>, identified as value 0.1. (07-physics-constants.md, line 22)</p>
@@ -668,7 +668,7 @@ if (maxSpeed^2 &lt; speed_sq &amp;&amp; epsilon &lt; maxSpeed) {
 </tbody>
 </table></div>
 <p>The "Oriented" variants are NEW in TM2020. They apply force in the direction the pad faces, not the car. Approach angle matters. This creates a much richer optimization space for competitive play.</p>
-<p>The CarSport model has a dedicated airborne control sub-function: <code>FUN_14085c1b0</code> applies pitch/yaw/roll forces when wheels are not in contact. (22-ghidra-gap-findings.md, line 85; 19-openplanet-intelligence.md, line 83)</p>
+<p>The CarSport model has a dedicated airborne control sub-function: <span class="named-addr"><span class="addr-name">AirborneControl</span><code class="ghidra-ref">FUN_14085c1b0</code></span> applies pitch/yaw/roll forces when wheels are not in contact. (22-ghidra-gap-findings.md, line 85; 19-openplanet-intelligence.md, line 83)</p>
 <h3 id="how-would-i-implement-surface-effects"><a class="anchor" href="#how-would-i-implement-surface-effects">#</a>How Would I Implement Surface Effects</h3>
 <p>I would use a component-based approach:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SurfaceEffect (enum) -&gt; EffectHandler (trait/interface) -&gt; VehicleState mutation</code></pre></div>
@@ -772,7 +772,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
 </tr>
 </tbody>
 </table></div>
-<p>The layer system uses a global table at <code>DAT_141fabc20</code> mapping type bytes to layer masks: <code>actual_mask = layer_table[type] & ~body_exclusion_mask</code>.</p>
+<p>The layer system uses a global table at <span class="named-addr"><span class="addr-name">DAT_COLLISION_LAYER_TABLE</span><code class="ghidra-ref">DAT_141fabc20</code></span> mapping type bytes to layer masks: <code>actual_mask = layer_table[type] & ~body_exclusion_mask</code>.</p>
 <p>Compound shapes (type 0x0D) get special treatment: sub-shape pointer and body transform are stored in the cache entry. (10-physics-deep-dive.md, lines 730-734)</p>
 <h3 id="the-gauss-seidel-impulse-solver"><a class="anchor" href="#the-gauss-seidel-impulse-solver">#</a>The Gauss-Seidel Impulse Solver</h3>
 <p>The friction solver is configured via <code>NSceneDyna::SSolverParams</code> (44 bytes) with separate iteration counts (10-physics-deep-dive.md, lines 838-867):</p>
@@ -1053,7 +1053,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
   <li><strong>Turbo should ramp UP.</strong> <code>force = elapsed/duration * strength</code> creates smooth acceleration peaking at the end. (NSceneVehiclePhy__ComputeForces.c, line 105)</li>
 </ol>
 <ol>
-  <li><strong>Use a state machine for drift.</strong> 3 discrete states give learnable transitions. (force_model_2wheel_FUN_14086b060.c, lines 12-16)</li>
+  <li><strong>Use a state machine for drift.</strong> 3 discrete states give learnable transitions. (force_model_2wheel_<span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086b060</span></span>.c, lines 12-16)</li>
 </ol>
 <ol>
   <li><strong>Separate material physics from gameplay effects.</strong> Two-ID system is a clean architectural separation. (10-physics-deep-dive.md, lines 1422-1438)</li>
@@ -1077,12 +1077,12 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
 <ol>
   <li><strong>Force model mapping</strong>: Which model (5, 6, or 0xB) does each car type use?</li>
   <li><strong>Actual tuning values</strong>: All curves are in encrypted GBX files inside .pak archives. Need Openplanet's Fid Loader to extract. (09-tuning-data-extraction.md, lines 81-95)</li>
-  <li><strong>Per-wheel force computation</strong>: <code>FUN_1408570e0</code> is the heart of the tire model but not fully documented.</li>
+  <li><strong>Per-wheel force computation</strong>: <span class="named-addr"><span class="addr-name">PerWheelVisualStateUpdate</span><code class="ghidra-ref">FUN_1408570e0</code></span> is the heart of the tire model but not fully documented.</li>
   <li><strong>Airborne control specifics</strong>: How much pitch/roll/yaw control when airborne?</li>
   <li><strong>Solver iteration counts</strong>: Actual values in GBX data.</li>
   <li><strong>Water physics</strong>: TMNF data suggests <code>WaterReboundMinHSpeed = 200 km/h</code> for skipping.</li>
   <li><strong>Steering model</strong>: How does keyboard digital input convert to smooth steering curves?</li>
-  <li><strong>Anti-roll bar</strong>: <code>FUN_14085ba50</code> stiffness and cornering effects.</li>
+  <li><strong>Anti-roll bar</strong>: <span class="named-addr"><span class="addr-name">AntiRollBar</span><code class="ghidra-ref">FUN_14085ba50</code></span> stiffness and cornering effects.</li>
   <li><strong>Burnout state machine</strong>: TMNF had 4 states. Does TM2020 preserve this?</li>
   <li><strong>CCD implementation</strong>: The collision system mentions Continuous Collision Detection but I did not find the implementation.</li>
 </ol>
@@ -1179,6 +1179,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

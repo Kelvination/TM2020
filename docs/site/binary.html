@@ -699,7 +699,7 @@
 </table></div>
 <p>All top-20 functions reside in <code>.text</code>, meaning they are real application code (not the protector). The 131,311 total is consistent with a major C++ application with extensive template instantiation. Several function pairs have identical sizes, suggesting template instantiations over different types.</p>
 <h2 id="how-many-strings-exist"><a class="anchor" href="#how-many-strings-exist">#</a>How many strings exist</h2>
-<p>The binary contains 52,890 defined strings. These proved invaluable for reverse engineering -- nearly every function begins with a profiling scope tag like <code>FUN_140117690(buf, "ClassName::MethodName")</code>. Cross-referencing these strings enabled identification of hundreds of functions despite the binary being fully stripped of debug symbols.</p>
+<p>The binary contains 52,890 defined strings. These proved invaluable for reverse engineering -- nearly every function begins with a profiling scope tag like <code><span class="named-addr"><span class="addr-name">ProfilingScope_Begin</span><span class="ghidra-ref">FUN_140117690</span></span>(buf, "ClassName::MethodName")</code>. Cross-referencing these strings enabled identification of hundreds of functions despite the binary being fully stripped of debug symbols.</p>
 <h2 id="summary-of-findings"><a class="anchor" href="#summary-of-findings">#</a>Summary of findings</h2>
 <p><strong>What we know:</strong></p>
 <ol>
@@ -763,6 +763,7 @@
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

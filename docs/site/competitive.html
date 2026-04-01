@@ -302,7 +302,7 @@ do {
   <li><strong>Local recording</strong>: Input events per-tick (steer, gas, brake). <code>CInputReplay</code> records input sequences. <code>CPlugEntRecordData</code> stores raw ghost frame data.</li>
 </ol>
 <ol>
-  <li><strong>Local validation</strong>: State 0xC74 in <code>CGameCtnApp::UpdateGame</code> calls virtual <code>(*param_1 + 0x278)</code> for replay validation. State 0x1072 calls <code>FUN_140eb3d60</code>.</li>
+  <li><strong>Local validation</strong>: State 0xC74 in <code>CGameCtnApp::UpdateGame</code> calls virtual <code>(*param_1 + 0x278)</code> for replay validation. State 0x1072 calls <span class="named-addr"><span class="addr-name">ReplayValidationFunc</span><code class="ghidra-ref">FUN_140eb3d60</code></span>.</li>
 </ol>
 <ol>
   <li><strong>Server-side verification</strong>: TM2020 uploads replay data for anti-cheat verification:</li>
@@ -418,32 +418,32 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 <tbody>
 <tr>
   <td style="text-align:left">0, 1, 2</td>
-  <td style="text-align:left"><code>FUN_140869cd0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="ghidra-ref">FUN_140869cd0</code></span></td>
   <td style="text-align:left">Legacy/base models</td>
 </tr>
 <tr>
   <td style="text-align:left">3</td>
-  <td style="text-align:left"><code>FUN_14086b060</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><code class="ghidra-ref">FUN_14086b060</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:left">4</td>
-  <td style="text-align:left"><code>FUN_14086bc50</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><code class="ghidra-ref">FUN_14086bc50</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:left">5</td>
-  <td style="text-align:left"><code>FUN_140851f00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span></td>
   <td style="text-align:left"><strong>Stadium (CarSport)</strong></td>
 </tr>
 <tr>
   <td style="text-align:left">6</td>
-  <td style="text-align:left"><code>FUN_14085c9e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085c9e0</code></span></td>
   <td style="text-align:left"><strong>Rally or Snow</strong></td>
 </tr>
 <tr>
   <td style="text-align:left">0xB (11)</td>
-  <td style="text-align:left"><code>FUN_14086d3b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="ghidra-ref">FUN_14086d3b0</code></span></td>
   <td style="text-align:left"><strong>Desert or variant</strong></td>
 </tr>
 </tbody>
@@ -624,9 +624,9 @@ float force = t * strength * model_scale;</code></pre></div>
     FUN_1407d2870(param_1, lVar9, *param_4);                      // BREAK!
 }</code></pre></div>
 <p><strong>Condition 1</strong>: Bits 11 AND 12 of <code>ContactPhyFlags</code> (vehicle+0x1C7C) must BOTH be set (mask 0x1800).</p>
-<p><strong>Condition 2</strong>: <code>ContactThreshold</code> (vehicle+0x1C8C, a float) must exceed global threshold <code>DAT_141d1ef7c</code>. Gentle landings pass; hard impacts fail.</p>
+<p><strong>Condition 2</strong>: <code>ContactThreshold</code> (vehicle+0x1C8C, a float) must exceed global threshold <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span>. Gentle landings pass; hard impacts fail.</p>
 <p><strong>Condition 3</strong>: Status nibble (vehicle+0x128C & 0xF) must NOT be 2 or 3.</p>
-<p>The fragile break depends on collision severity, not simply "any contact." Gentle landings on fragile surfaces should survive. The exact threshold value <code>DAT_141d1ef7c</code> is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>.</p>
+<p>The fragile break depends on collision severity, not simply "any contact." Gentle landings on fragile surfaces should survive. The exact threshold value <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span> is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>.</p>
 <h3 id="surface-friction-system"><a class="anchor" href="#surface-friction-system">#</a>Surface Friction System</h3>
 <p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <p>The friction system has three layers:</p>
@@ -761,7 +761,7 @@ if ((fVar9 * fVar9 &lt; fVar8) &amp;&amp; (DAT_141d1ed34 &lt; fVar9)) {
     vz *= fVar9;                          // clamp z
     FUN_140845270(uVar3, lVar6, &amp;velocity);  // write back
 }</code></pre></div>
-<p>The speed cap is stored at <strong>vehicle_model+0x2F0</strong>. It is a <strong>3D magnitude cap</strong> -- velocity is scaled uniformly to preserve direction. A minimum threshold <code>DAT_141d1ed34</code> prevents division by near-zero.</p>
+<p>The speed cap is stored at <strong>vehicle_model+0x2F0</strong>. It is a <strong>3D magnitude cap</strong> -- velocity is scaled uniformly to preserve direction. A minimum threshold <span class="named-addr"><span class="addr-name">DAT_MIN_SPEED_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ed34</code></span> prevents division by near-zero.</p>
 <p>TMNF's StadiumCar had MaxSpeed = 277.778 m/s (1000 km/h). TM2020's value is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> from the binary, but community consensus is ~1000 km/h for Stadium.</p>
 <h3 id="sub-step-count-vs-speed"><a class="anchor" href="#sub-step-count-vs-speed">#</a>Sub-Step Count vs Speed</h3>
 <p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
@@ -946,7 +946,7 @@ for (i = 1; i &lt; buffer_size; i++) {
 <h3 id="sub-step-cap-speed"><a class="anchor" href="#sub-step-cap-speed">#</a>Sub-Step Cap Speed</h3>
 <p>At what speed does the 1000 sub-step cap affect collision accuracy? Test wall clipping at increasing velocities.</p>
 <h3 id="sleep-threshold-value"><a class="anchor" href="#sleep-threshold-value">#</a>Sleep Threshold Value</h3>
-<p>What is <code>DAT_141ebcd04</code>? Read address <span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="addr">0x141ebcd04</code></span> via a memory tool, or measure when a car stops on a flat surface.</p>
+<p>What is <span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="ghidra-ref">DAT_141ebcd04</code></span>? Read address <span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="addr">0x141ebcd04</code></span> via a memory tool, or measure when a car stops on a flat surface.</p>
 <h3 id="reactor-boost-oriented-force-direction"><a class="anchor" href="#reactor-boost-oriented-force-direction">#</a>Reactor Boost Oriented Force Direction</h3>
 <p>Does <code>ReactorBoost_Oriented</code> apply force in the pad's facing direction or the car's? Hit an oriented reactor from different angles and observe trajectory.</p>
 <h3 id="checkpoint-state-completeness"><a class="anchor" href="#checkpoint-state-completeness">#</a>Checkpoint State Completeness</h3>
@@ -1044,6 +1044,7 @@ for (i = 1; i &lt; buffer_size; i++) {
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

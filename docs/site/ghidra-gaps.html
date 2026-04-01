@@ -185,14 +185,14 @@
 </table></div>
 <p>Decompiled functions are saved in <code>decompiled/physics/</code> (13 files).</p>
 <h2 id="force-model-internals"><a class="anchor" href="#force-model-internals">#</a>Force Model Internals</h2>
-<h3 id="4-wheel-base-model-cases-012-fun_140869cd0"><a class="anchor" href="#4-wheel-base-model-cases-012-fun_140869cd0">#</a>4-Wheel Base Model -- Cases 0/1/2 (FUN_140869cd0)</h3>
+<h3 id="4-wheel-base-model-cases-012-fun_140869cd0"><a class="anchor" href="#4-wheel-base-model-cases-012-fun_140869cd0">#</a>4-Wheel Base Model -- Cases 0/1/2<span class="ghidra-ref"> (FUN_140869cd0)</span></h3>
 <p>The base 4-wheel force model handles legacy/simple vehicle types. Fully decompiled at ~300 lines.</p>
 <ul>
   <li>Iterates over 4 wheels (stride 0xB8 per wheel, starting at car_state+0x1780)</li>
   <li>Per-wheel surface material lookup from vtable: <code><em>car_state + 0x6B8 + surface_id </em> 8</code></li>
   <li>Surface ID is a byte at wheel_state+0x40</li>
-  <li>Applies forces via FUN_140845210 (linear force) and FUN_140845260 (torque)</li>
-  <li>Speed-dependent coefficients sampled from curves via FUN_14042bcb0</li>
+  <li>Applies forces via <span class="named-addr"><span class="addr-name">ApplyLinearForce</span><span class="ghidra-ref">FUN_140845210</span></span> (linear force) and <span class="named-addr"><span class="addr-name">ApplyTorque</span><span class="ghidra-ref">FUN_140845260</span></span> (torque)</li>
+  <li>Speed-dependent coefficients sampled from curves via <span class="named-addr"><span class="addr-name">CFuncKeysReal::SampleCurve</span><span class="ghidra-ref">FUN_14042bcb0</span></span></li>
   <li>Uses <code>car_state[0x2EB]</code> as friction coefficient and <code>car_state[0x2EC]</code> as acceleration coefficient</li>
   <li>These map directly to <code>Tunings.CoefFriction</code> and <code>Tunings.CoefAcceleration</code> strings</li>
   <li>Anti-roll bar forces computed via cross products</li>
@@ -201,11 +201,11 @@
   <li>Engine braking torque at offset 0x19D0</li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="2-wheel-bicycle-model-case-3-fun_14086b060"><a class="anchor" href="#2-wheel-bicycle-model-case-3-fun_14086b060">#</a>2-Wheel Bicycle Model -- Case 3 (FUN_14086b060)</h3>
+<h3 id="2-wheel-bicycle-model-case-3-fun_14086b060"><a class="anchor" href="#2-wheel-bicycle-model-case-3-fun_14086b060">#</a>2-Wheel Bicycle Model -- Case 3<span class="ghidra-ref"> (FUN_14086b060)</span></h3>
 <p>A simplified bicycle-model physics system. Fully decompiled at ~250 lines.</p>
 <ul>
   <li>Uses a single-axis (front/rear) force decomposition instead of 4 independent wheels</li>
-  <li>Steering via atan2 of velocity components (FUN_14018d310)</li>
+  <li>Steering via atan2 of velocity components<span class="ghidra-ref"> (FUN_14018d310)</span></li>
   <li>Sin/cos decomposition of steering angle for longitudinal/lateral force split</li>
   <li><strong>Drift state machine</strong> with 3 states:</li>
   <li><code>offset+0x1460 == 0</code>: No drift</li>
@@ -213,25 +213,25 @@
   <li><code>offset+0x1460 == 2</code>: Drift committed (using stored angle)</li>
   <li>Drift angle clamped by max value at tuning+0x1B78</li>
   <li>Drift builds proportional to <code>lateral_slip <em> drift_rate </em> delta_time</code> (tuning+0x1B6C)</li>
-  <li>Lateral grip computation delegated to FUN_14086af20</li>
+  <li>Lateral grip computation delegated to <span class="named-addr"><span class="addr-name">LateralGripBicycleModel</span><span class="ghidra-ref">FUN_14086af20</span></span></li>
   <li>Yaw damping: linear term (tuning+0x1A54) + quadratic term (tuning+0x1A58)</li>
   <li>Suspension model at car_state+0x1280 (different from 4-wheel model at +0x250)</li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="carsport-full-model-case-6-fun_14085c9e0"><a class="anchor" href="#carsport-full-model-case-6-fun_14085c9e0">#</a>CarSport Full Model -- Case 6 (FUN_14085c9e0)</h3>
+<h3 id="carsport-full-model-case-6-fun_14085c9e0"><a class="anchor" href="#carsport-full-model-case-6-fun_14085c9e0">#</a>CarSport Full Model -- Case 6<span class="ghidra-ref"> (FUN_14085c9e0)</span></h3>
 <p>The most complex force model, handling the Stadium car. Fully decompiled at ~350 lines.</p>
 <ul>
   <li>Receives 3 parameters including simulation timestamp (for time-dependent effects)</li>
   <li>Sub-function breakdown:</li>
-  <li><code>FUN_1408570e0</code>: Per-wheel force calculation (called 4 times)</li>
-  <li><code>FUN_14085ad30</code>: Steering model</li>
-  <li><code>FUN_14085a0d0</code>: Suspension/contact update</li>
-  <li><code>FUN_14085ba50</code>: Anti-roll bar</li>
-  <li><code>FUN_140858c90</code>: Damping</li>
-  <li><code>FUN_140857380</code>: Drift/skid model</li>
-  <li><code>FUN_140857b20</code>: Boost/reactor forces</li>
-  <li><code>FUN_14085c1b0</code>: Airborne control forces</li>
-  <li><code>FUN_14085b600</code>: Final force integration</li>
+  <li><span class="named-addr"><span class="addr-name">PerWheelVisualStateUpdate</span><code class="ghidra-ref">FUN_1408570e0</code></span>: Per-wheel force calculation (called 4 times)</li>
+  <li><span class="named-addr"><span class="addr-name">SteeringModel</span><code class="ghidra-ref">FUN_14085ad30</code></span>: Steering model</li>
+  <li><span class="named-addr"><span class="addr-name">SuspensionContactUpdate</span><code class="ghidra-ref">FUN_14085a0d0</code></span>: Suspension/contact update</li>
+  <li><span class="named-addr"><span class="addr-name">AntiRollBar</span><code class="ghidra-ref">FUN_14085ba50</code></span>: Anti-roll bar</li>
+  <li><span class="named-addr"><span class="addr-name">DampingModel</span><code class="ghidra-ref">FUN_140858c90</code></span>: Damping</li>
+  <li><span class="named-addr"><span class="addr-name">DriftSkidModel</span><code class="ghidra-ref">FUN_140857380</code></span>: Drift/skid model</li>
+  <li><span class="named-addr"><span class="addr-name">BoostReactorForce</span><code class="ghidra-ref">FUN_140857b20</code></span>: Boost/reactor forces</li>
+  <li><span class="named-addr"><span class="addr-name">AirborneControl</span><code class="ghidra-ref">FUN_14085c1b0</code></span>: Airborne control forces</li>
+  <li><span class="named-addr"><span class="addr-name">FinalForceIntegration</span><code class="ghidra-ref">FUN_14085b600</code></span>: Final force integration</li>
   <li><strong>Launched checkpoint boost system</strong>:</li>
   <li>Checks timestamp against checkpoint grace period (offset+0x15A8)</li>
   <li>Applies directional boost forces from checkpoint data</li>
@@ -246,7 +246,7 @@
   <li>Selection based on flag at car_state+0x15DC</li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="advanced-4-wheel-model-case-5-fun_140851f00"><a class="anchor" href="#advanced-4-wheel-model-case-5-fun_140851f00">#</a>Advanced 4-Wheel Model -- Case 5 (FUN_140851f00)</h3>
+<h3 id="advanced-4-wheel-model-case-5-fun_140851f00"><a class="anchor" href="#advanced-4-wheel-model-case-5-fun_140851f00">#</a>Advanced 4-Wheel Model -- Case 5<span class="ghidra-ref"> (FUN_140851f00)</span></h3>
 <p>The second largest force model (~1185 lines). 4-wheel model with jump detection and crash damage.</p>
 <ul>
   <li>Per-wheel iteration (stride 0xB8, starting at car_state+0x1780)</li>
@@ -254,11 +254,11 @@
   <li><strong>Jump/impact detection state machine</strong> at car_state[0x28F]:</li>
   <li>State 0: Normal driving</li>
   <li>State 1: Jump initiated (timestamp stored at car_state+0x149C)</li>
-  <li>State 2: Delegated to FUN_14084e6e0 (early return)</li>
+  <li>State 2: Delegated to <span class="named-addr"><span class="addr-name">JumpDelegateState2</span><span class="ghidra-ref">FUN_14084e6e0</span></span> (early return)</li>
   <li>State 3: Post-jump grace period (timer at car_state+0x294)</li>
   <li>Transition 0->1: high force + sufficient speed + contact angle check</li>
   <li>During state 3: all 4 wheel contact flags forced to 1</li>
-  <li><strong>Crash/damage detection</strong> via FUN_1408508b0:</li>
+  <li><strong>Crash/damage detection</strong> via <span class="named-addr"><span class="addr-name">CrashDamageDetection</span><span class="ghidra-ref">FUN_1408508b0</span></span>:</li>
   <li>Monitors force differential between ticks</li>
   <li>Stores previous tick force at car_state+0x14CC</li>
   <li><strong>Airborne traction</strong>: Air drag proportional to v^2/speed; lateral/longitudinal computed separately</li>
@@ -267,12 +267,12 @@
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="modular-carsport-variant-case-0xb-fun_14086d3b0"><a class="anchor" href="#modular-carsport-variant-case-0xb-fun_14086d3b0">#</a>Modular CarSport Variant -- Case 0xB (FUN_14086d3b0)</h3></summary>
+<summary><h3 id="modular-carsport-variant-case-0xb-fun_14086d3b0"><a class="anchor" href="#modular-carsport-variant-case-0xb-fun_14086d3b0">#</a>Modular CarSport Variant -- Case 0xB<span class="ghidra-ref"> (FUN_14086d3b0)</span></h3></summary>
 <div class="collapsible-content">
 <p>The newest/most modular force model (~250 lines). Delegates heavily to sub-functions.</p>
 <ul>
-  <li>Per-wheel loop calls FUN_1408570e0 (per-wheel visual state)</li>
-  <li>Calls FUN_14085ad30 (steering), FUN_140858c90 (damping), FUN_140857b20 (boost/reactor)</li>
+  <li>Per-wheel loop calls <span class="named-addr"><span class="addr-name">PerWheelVisualStateUpdate</span><span class="ghidra-ref">FUN_1408570e0</span></span> (per-wheel visual state)</li>
+  <li>Calls <span class="named-addr"><span class="addr-name">SteeringModel</span><span class="ghidra-ref">FUN_14085ad30</span></span> (steering), <span class="named-addr"><span class="addr-name">DampingModel</span><span class="ghidra-ref">FUN_140858c90</span></span> (damping), <span class="named-addr"><span class="addr-name">BoostReactorForce</span><span class="ghidra-ref">FUN_140857b20</span></span> (boost/reactor)</li>
   <li><strong>Two operating modes</strong> based on car_state+0x157C:</li>
   <li>Mode 0 ("Free"): Post-respawn fade-out force, clears wheel visual forces</li>
   <li>Mode 1 ("Grounded"): Full lateral steering, wheel/traction model, pitch/roll damping</li>
@@ -283,21 +283,21 @@
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
 </div>
 </details>
-<h3 id="curve-sampling-function-fun_14042bcb0"><a class="anchor" href="#curve-sampling-function-fun_14042bcb0">#</a>Curve Sampling Function (FUN_14042bcb0)</h3>
+<h3 id="curve-sampling-function-fun_14042bcb0"><a class="anchor" href="#curve-sampling-function-fun_14042bcb0">#</a>Curve Sampling Function<span class="ghidra-ref"> (FUN_14042bcb0)</span></h3>
 <p>Core utility called hundreds of times per physics tick. Used by ALL force models.</p>
 <ul>
   <li>Curve format: header (20 bytes) + keyframe array (pairs of [time, value] floats)</li>
   <li>Header flags:</li>
   <li>Bit 0: Step interpolation (nearest previous keyframe)</li>
   <li>Bit 1: Smooth interpolation (cubic Hermite: <code>3t^2 - 2t^3</code>)</li>
-  <li>Bit 4: Spline interpolation (Catmull-Rom via FUN_14042bba0)</li>
+  <li>Bit 4: Spline interpolation (Catmull-Rom via <span class="named-addr"><span class="addr-name">CatmullRomSplineInterpolation</span><span class="ghidra-ref">FUN_14042bba0</span></span>)</li>
   <li>Bit 5: Spline sub-flag</li>
   <li>Default is linear interpolation</li>
   <li>Values before first keyframe return first value; after last return last value</li>
-  <li>Epsilon tolerance at DAT_141d1ed34 for near-keyframe snapping</li>
+  <li>Epsilon tolerance at <span class="named-addr"><span class="addr-name">DAT_MIN_SPEED_THRESHOLD</span><span class="ghidra-ref">DAT_141d1ed34</span></span> for near-keyframe snapping</li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="wheel-contact-surface-accumulation-fun_140845b60"><a class="anchor" href="#wheel-contact-surface-accumulation-fun_140845b60">#</a>Wheel Contact Surface Accumulation (FUN_140845b60)</h3>
+<h3 id="wheel-contact-surface-accumulation-fun_140845b60"><a class="anchor" href="#wheel-contact-surface-accumulation-fun_140845b60">#</a>Wheel Contact Surface Accumulation<span class="ghidra-ref"> (FUN_140845b60)</span></h3>
 <p>Gathers surface properties across all 4 wheels. Determines what surface the car is on.</p>
 <ul>
   <li>Iterates over 4 wheels at stride 0x2E floats (0xB8 bytes), starting at car_state+0x17CC</li>
@@ -311,10 +311,10 @@
   <li>+0x44..+0x4C: Contact normal direction (vec3)</li>
   <li>+0x50: Capability bitmask (AND-accumulated across wheels)</li>
   <li>All properties averaged by wheel count after accumulation</li>
-  <li>Special override: when DAT_141faa04c != 0 and surface_id == 0x0E, uses surface 0 instead</li>
+  <li>Special override: when <span class="named-addr"><span class="addr-name">DAT_surfaceOverrideFlag</span><span class="ghidra-ref">DAT_141faa04c</span></span> != 0 and surface_id == 0x0E, uses surface 0 instead</li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="lateral-grip-for-2-wheel-model-fun_14086af20"><a class="anchor" href="#lateral-grip-for-2-wheel-model-fun_14086af20">#</a>Lateral Grip for 2-Wheel Model (FUN_14086af20)</h3>
+<h3 id="lateral-grip-for-2-wheel-model-fun_14086af20"><a class="anchor" href="#lateral-grip-for-2-wheel-model-fun_14086af20">#</a>Lateral Grip for 2-Wheel Model<span class="ghidra-ref"> (FUN_14086af20)</span></h3>
 <p>Implements a Pacejka-like tire model (a simplified formula relating slip angle to lateral force):</p>
 <ul>
   <li><code>lateral_force = -slip <em> linear_coef - slip</em>|slip| * quadratic_coef</code></li>
@@ -326,7 +326,7 @@
   <li>When force within grip: use computed force, clear sliding flag</li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="slopegravity-factor-fun_1408456b0"><a class="anchor" href="#slopegravity-factor-fun_1408456b0">#</a>Slope/Gravity Factor (FUN_1408456b0)</h3>
+<h3 id="slopegravity-factor-fun_1408456b0"><a class="anchor" href="#slopegravity-factor-fun_1408456b0">#</a>Slope/Gravity Factor<span class="ghidra-ref"> (FUN_1408456b0)</span></h3>
 <p>Computes slope-dependent acceleration and friction scaling. This explains why cars lose traction on very steep slopes.</p>
 <ul>
   <li>Computes two independent factors: acceleration slope factor and friction slope factor</li>
@@ -338,10 +338,10 @@
   <li>Above maximum threshold: factor = 1 (flat enough, full force)</li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="forcetorque-application-fun_140845210-fun_140845260"><a class="anchor" href="#forcetorque-application-fun_140845210-fun_140845260">#</a>Force/Torque Application (FUN_140845210, FUN_140845260)</h3>
-<p>Both are thin wrappers. FUN_140845210 calls <code>FUN_1407bdd20(world_handle, body_id)</code> to add force. FUN_140845260 calls <code>FUN_1407bdf40(world_handle, body_id)</code> to add torque. Body ID read from <code>car_state + 0x10</code>.</p>
+<h3 id="forcetorque-application-fun_140845210-fun_140845260"><a class="anchor" href="#forcetorque-application-fun_140845210-fun_140845260">#</a>Force/Torque Application (<span class="named-addr"><span class="addr-name">ApplyLinearForce</span><span class="ghidra-ref">FUN_140845210</span></span>, <span class="named-addr"><span class="addr-name">ApplyTorque</span><span class="ghidra-ref">FUN_140845260</span></span>)</h3>
+<p>Both are thin wrappers. <span class="named-addr"><span class="addr-name">ApplyLinearForce</span><span class="ghidra-ref">FUN_140845210</span></span> calls <code><span class="named-addr"><span class="addr-name">DynaWorld_AddForce</span><span class="ghidra-ref">FUN_1407bdd20</span></span>(world_handle, body_id)</code> to add force. <span class="named-addr"><span class="addr-name">ApplyTorque</span><span class="ghidra-ref">FUN_140845260</span></span> calls <code><span class="named-addr"><span class="addr-name">NSceneDyna_ApplyDirectionalForce</span><span class="ghidra-ref">FUN_1407bdf40</span></span>(world_handle, body_id)</code> to add torque. Body ID read from <code>car_state + 0x10</code>.</p>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="per-wheel-visual-state-update-fun_1408570e0"><a class="anchor" href="#per-wheel-visual-state-update-fun_1408570e0">#</a>Per-Wheel Visual State Update (FUN_1408570e0)</h3>
+<h3 id="per-wheel-visual-state-update-fun_1408570e0"><a class="anchor" href="#per-wheel-visual-state-update-fun_1408570e0">#</a>Per-Wheel Visual State Update<span class="ghidra-ref"> (FUN_1408570e0)</span></h3>
 <p>Updates wheel visual positioning, not force computation. ~130 lines decompiled.</p>
 <ul>
   <li>Three suspension modes based on <code>*param_3</code>:</li>
@@ -352,17 +352,17 @@
   <li>param_5[0x1F] stores "is on driven axle" flag from <code>param_1 + 0x1584</code></li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="airborne-control-fun_14085c1b0"><a class="anchor" href="#airborne-control-fun_14085c1b0">#</a>Airborne Control (FUN_14085c1b0)</h3>
+<h3 id="airborne-control-fun_14085c1b0"><a class="anchor" href="#airborne-control-fun_14085c1b0">#</a>Airborne Control<span class="ghidra-ref"> (FUN_14085c1b0)</span></h3>
 <p>Handles in-air rotation and auto-stabilization. ~200 lines decompiled.</p>
 <ul>
-  <li><strong>Ground proximity detection</strong>: Raycast downward via FUN_1402a96f0</li>
+  <li><strong>Ground proximity detection</strong>: Raycast downward via <span class="named-addr"><span class="addr-name">AirborneRaycastDown</span><span class="ghidra-ref">FUN_1402a96f0</span></span></li>
   <li><strong>Auto-landing correction</strong>: Aligns car with ground normal when close to landing. Samples curves by time-to-impact for corrective force.</li>
   <li><strong>Angular damping</strong>: Drag proportional to angular speed, sampled from curve at tuning+0x5B8</li>
   <li><strong>Gravity compensation</strong>: Gravity vector negated and applied as linear force</li>
   <li><strong>Progressive airborne accumulator</strong> at car_state+0x13A4: Increments while airborne, clamped to [0, 1.0]</li>
 </ul>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="boostreactor-force-fun_140857b20"><a class="anchor" href="#boostreactor-force-fun_140857b20">#</a>Boost/Reactor Force (FUN_140857b20)</h3>
+<h3 id="boostreactor-force-fun_140857b20"><a class="anchor" href="#boostreactor-force-fun_140857b20">#</a>Boost/Reactor Force<span class="ghidra-ref"> (FUN_140857b20)</span></h3>
 <p>Spring/damper + reactor thruster + differential torque steering. ~250 lines decompiled.</p>
 <ul>
   <li>Iterates over all hardpoints (car_state+0x380 count, car_state+0x388 array)</li>
@@ -509,7 +509,7 @@
 </tr>
 </tbody>
 </table></div>
-<p>Material lookup in force model: <code><em>car_state + 0x6B8 + surface_id </em> 8</code>. Max surface ID observed: 0x4A (74). When DAT_141faa04c != 0 and surface_id == 0x0E (Bumper2), the game substitutes surface material 0.</p>
+<p>Material lookup in force model: <code><em>car_state + 0x6B8 + surface_id </em> 8</code>. Max surface ID observed: 0x4A (74). When <span class="named-addr"><span class="addr-name">DAT_surfaceOverrideFlag</span><span class="ghidra-ref">DAT_141faa04c</span></span> != 0 and surface_id == 0x0E (Bumper2), the game substitutes surface material 0.</p>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
 <h3 id="surface-effect-details"><a class="anchor" href="#surface-effect-details">#</a>Surface Effect Details</h3>
 <p><strong>NoGrip</strong> (surface ID 1): Reduces grip coefficient to zero via material property at +0x18. Triggered by <code>BeginNoGrip</code>/<code>EndNoGrip</code> events. Can be applied as a handicap with configurable duration.</p>
@@ -704,52 +704,52 @@
 <tr>
   <td style="text-align:left">Force model cases 0/1/2</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_140869cd0 decompiled</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869cd0</span></span> decompiled</td>
 </tr>
 <tr>
   <td style="text-align:left">Force model case 3</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_14086b060 (2-wheel/bicycle model)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086b060</span></span> (2-wheel/bicycle model)</td>
 </tr>
 <tr>
   <td style="text-align:left">Force model case 5</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_140851f00 (advanced 4-wheel with jump detection)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span> (advanced 4-wheel with jump detection)</td>
 </tr>
 <tr>
   <td style="text-align:left">Force model case 6</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_14085c9e0 (CarSport full model)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span> (CarSport full model)</td>
 </tr>
 <tr>
   <td style="text-align:left">Force model case 0xB</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_14086d3b0 (modular CarSport variant)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><span class="ghidra-ref">FUN_14086d3b0</span></span> (modular CarSport variant)</td>
 </tr>
 <tr>
   <td style="text-align:left">Per-wheel visual update</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_1408570e0 (spring/contact position)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">PerWheelVisualStateUpdate</span><span class="ghidra-ref">FUN_1408570e0</span></span> (spring/contact position)</td>
 </tr>
 <tr>
   <td style="text-align:left">Airborne control</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_14085c1b0 (raycast + auto-landing + angular damping)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">AirborneControl</span><span class="ghidra-ref">FUN_14085c1b0</span></span> (raycast + auto-landing + angular damping)</td>
 </tr>
 <tr>
   <td style="text-align:left">Boost/reactor forces</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_140857b20 (spring/damper + thruster + diff torque)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">BoostReactorForce</span><span class="ghidra-ref">FUN_140857b20</span></span> (spring/damper + thruster + diff torque)</td>
 </tr>
 <tr>
   <td style="text-align:left">Speed-dependent coefficients</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_14042bcb0 curve sampler</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CFuncKeysReal::SampleCurve</span><span class="ghidra-ref">FUN_14042bcb0</span></span> curve sampler</td>
 </tr>
 <tr>
   <td style="text-align:left">Surface type determination</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_140845b60 -- vtable at +0x6B8</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">WheelContactSurfaceAccumulation</span><span class="ghidra-ref">FUN_140845b60</span></span> -- vtable at +0x6B8</td>
 </tr>
 <tr>
   <td style="text-align:left">All surface gameplay effects</td>
@@ -759,12 +759,12 @@
 <tr>
   <td style="text-align:left">Slope physics</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_1408456b0 -- cos(angle)-based factor [0..1]</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SlopeGravityFactor</span><span class="ghidra-ref">FUN_1408456b0</span></span> -- cos(angle)-based factor [0..1]</td>
 </tr>
 <tr>
   <td style="text-align:left">2-wheel lateral grip</td>
   <td style="text-align:center"><strong>RESOLVED</strong></td>
-  <td style="text-align:left">FUN_14086af20 -- Pacejka-like with clamp</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">LateralGripBicycleModel</span><span class="ghidra-ref">FUN_14086af20</span></span> -- Pacejka-like with clamp</td>
 </tr>
 <tr>
   <td style="text-align:left">Drift state machine</td>
@@ -840,7 +840,7 @@
 </table></div>
 <h3 id="remaining-open-questions"><a class="anchor" href="#remaining-open-questions">#</a>Remaining Open Questions</h3>
 <ul>
-  <li>Force model case 4 (FUN_14086bc50) only partially decompiled</li>
+  <li>Force model case 4<span class="ghidra-ref"> (FUN_14086bc50)</span> only partially decompiled</li>
   <li>Exact mapping of vehicle type ID to force model case number</li>
   <li>Ghost binary serialization format details (chunk IDs, field layout)</li>
   <li>Pack file binary format (header structure, file table layout)</li>
@@ -921,6 +921,7 @@
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

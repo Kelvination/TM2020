@@ -84,6 +84,67 @@
             });
         }
 
+        // Post-process code blocks: replace FUN_/DAT_ with named addresses
+        var addrMap = window.TM_ADDRESS_MAP || {};
+        function lookupAddr(hex) {
+            var addr = "0x" + hex.toLowerCase();
+            return addrMap[addr] || null;
+        }
+
+        document.querySelectorAll("pre code").forEach(function(block) {
+            var html = block.innerHTML;
+            var changed = false;
+
+            // Pass 1: (FUN_XXX @ 0xXXX) - hide entire parenthetical
+            var r1 = html.replace(/\s*\([^)]*?FUN_[0-9a-fA-F]{6,16}[^)]*?@[^)]*?0x[0-9a-fA-F]{6,16}[^)]*?\)/g,
+                function(match) { return '<span class="ghidra-ref">' + match + '</span>'; }
+            );
+            if (r1 !== html) { html = r1; changed = true; }
+
+            // Pass 2: (FUN_XXX) without @ - hide parenthetical
+            var r2 = html.replace(/\s*\([^)]*?FUN_[0-9a-fA-F]{6,16}[^)]*?\)/g,
+                function(match) {
+                    if (match.indexOf('ghidra-ref') !== -1) return match;
+                    return '<span class="ghidra-ref">' + match + '</span>';
+                }
+            );
+            if (r2 !== html) { html = r2; changed = true; }
+
+            // Pass 3: bare FUN_XXX
+            var r3 = html.replace(/FUN_([0-9a-fA-F]{6,16})/g,
+                function(match, hex, offset) {
+                    var before = html.substring(Math.max(0, offset - 200), offset);
+                    if (before.lastIndexOf('ghidra-ref') > before.lastIndexOf('</span>')) return match;
+                    var name = lookupAddr(hex);
+                    if (name) {
+                        return '<span class="named-addr"><span class="addr-name">' +
+                               name + '</span><span class="ghidra-ref">' +
+                               match + '</span></span>';
+                    }
+                    return match;
+                }
+            );
+            if (r3 !== html) { html = r3; changed = true; }
+
+            // Pass 4: DAT_XXX
+            var r4 = html.replace(/DAT_([0-9a-fA-F]{6,16})/g,
+                function(match, hex, offset) {
+                    var before = html.substring(Math.max(0, offset - 200), offset);
+                    if (before.lastIndexOf('ghidra-ref') > before.lastIndexOf('</span>')) return match;
+                    var name = lookupAddr(hex);
+                    if (name) {
+                        return '<span class="named-addr"><span class="addr-name">' +
+                               name + '</span><span class="ghidra-ref">' +
+                               match + '</span></span>';
+                    }
+                    return match;
+                }
+            );
+            if (r4 !== html) { html = r4; changed = true; }
+
+            if (changed) block.innerHTML = html;
+        });
+
         // Technical details toggle
         var TECH_TOGGLE_KEY = "tm2020-docs-tech-hidden";
         var techToggleBtn = document.getElementById("tech-toggle");

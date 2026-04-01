@@ -479,7 +479,7 @@ External:
   <li><strong>5 files validated byte-exact</strong> against spec: Map, Profile, Block, FuncShader, ImageGen.</li>
   <li><strong>LZO1X body compression</strong> confirmed from real files (not zlib).</li>
   <li><strong>Chunk-based body</strong> with <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> end-of-chunks sentinel.</li>
-  <li><strong>Two-level class registry</strong> at <code>DAT_141ff9d58</code> with TLS-cached lookups.</li>
+  <li><strong>Two-level class registry</strong> at <span class="named-addr"><span class="addr-name">DAT_globalClassRegistry</span><code class="ghidra-ref">DAT_141ff9d58</code></span> with TLS-cached lookups.</li>
   <li><strong>200+ legacy class ID remappings</strong> for backward compatibility across engine versions.</li>
   <li><strong>431 <code>.Gbx</code> file extensions</strong> catalogued.</li>
 </ul>
@@ -868,9 +868,9 @@ External:
   <li><code>PhysicsStep_TM.c</code> - Per-vehicle physics step</li>
   <li><code>NSceneDyna__PhysicsStep_V2.c</code> - Rigid body dynamics</li>
   <li><code>NSceneVehiclePhy__ComputeForces.c</code> - Vehicle force computation</li>
-  <li><code>force_model_4wheel_FUN_140869cd0.c</code> - Base 4-wheel force model (cases 0/1/2)</li>
-  <li><code>force_model_2wheel_FUN_14086b060.c</code> - 2-wheel bicycle model (case 3)</li>
-  <li><code>force_model_carsport_FUN_14085c9e0.c</code> - CarSport/Stadium full model (case 6)</li>
+  <li><code>force_model_4wheel_<span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869cd0</span></span>.c</code> - Base 4-wheel force model (cases 0/1/2)</li>
+  <li><code>force_model_2wheel_<span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086b060</span></span>.c</code> - 2-wheel bicycle model (case 3)</li>
+  <li><code>force_model_carsport_<span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span>.c</code> - CarSport/Stadium full model (case 6)</li>
   <li>Plus collision, water forces, curve sampling, surface lookup</li>
 </ul>
 <h3 id="rendering-5-files-53-kb"><a class="anchor" href="#rendering-5-files-53-kb">#</a>Rendering (5 files, ~53 KB)</h3>
@@ -883,10 +883,10 @@ External:
 </ul>
 <h3 id="file-formats-9-files-19-kb"><a class="anchor" href="#file-formats-9-files-19-kb">#</a>File formats (9 files, ~19 KB)</h3>
 <ul>
-  <li><code>FUN_140904730_LoadGbx.c</code> - Main GBX load entry</li>
-  <li><code>FUN_140900e60_LoadHeader.c</code> - Magic/version validation</li>
-  <li><code>FUN_1402cf380_CreateByMwClassId.c</code> - Class factory</li>
-  <li><code>FUN_1402f2610_ClassIdRemap.c</code> - Legacy compatibility</li>
+  <li><code><span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><span class="ghidra-ref">FUN_140904730</span></span>_LoadGbx.c</code> - Main GBX load entry</li>
+  <li><code><span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><span class="ghidra-ref">FUN_140900e60</span></span>_LoadHeader.c</code> - Magic/version validation</li>
+  <li><code><span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><span class="ghidra-ref">FUN_1402cf380</span></span>_CreateByMwClassId.c</code> - Class factory</li>
+  <li><code><span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><span class="ghidra-ref">FUN_1402f2610</span></span>_ClassIdRemap.c</code> - Legacy compatibility</li>
 </ul>
 <h3 id="networking-4-files-5-kb"><a class="anchor" href="#networking-4-files-5-kb">#</a>Networking (4 files, ~5 KB)</h3>
 <ul>
@@ -952,6 +952,7 @@ External:
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

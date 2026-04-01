@@ -398,7 +398,7 @@
 <tr>
   <td style="text-align:left">Magic "GBX" (3 bytes)</td>
   <td style="text-align:left">CONFIRMED</td>
-  <td style="text-align:left">Bytes 0-2 <code>0x47 0x42 0x58</code> at <code>FUN_140900e60</code></td>
+  <td style="text-align:left">Bytes 0-2 <code>0x47 0x42 0x58</code> at <span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="ghidra-ref">FUN_140900e60</code></span></td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
@@ -687,7 +687,7 @@
 <tr>
   <td style="text-align:left">LZO body compression</td>
   <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">LZO via <code>FUN_140127aa0</code></td>
+  <td style="text-align:left">LZO via <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span></td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
@@ -732,7 +732,7 @@
 <tr>
   <td style="text-align:left">Physics step function</td>
   <td style="text-align:left"><code>CHmsZoneDynamic::PhysicsStep2</code></td>
-  <td style="text-align:left"><code>PhysicsStep_TM (FUN_141501800)</code> calling <code>NSceneDyna::PhysicsStep (FUN_1407bd0e0)</code></td>
+  <td style="text-align:left"><code>PhysicsStep_TM<span class="ghidra-ref"> (FUN_141501800)</span></code> calling <code>NSceneDyna::PhysicsStep<span class="ghidra-ref"> (FUN_1407bd0e0)</span></code></td>
   <td style="text-align:left"><strong>COMPLEMENTARY</strong></td>
 </tr>
 <tr>
@@ -1315,6 +1315,7 @@
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

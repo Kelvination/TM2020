@@ -442,7 +442,7 @@ Engines/Pbr_IntegrateBRDF_GGX_c.hlsl.GpuCache.Gbx</code></pre></div>
 <tr>
   <td style="text-align:left">Class ID two-level lookup table</td>
   <td style="text-align:left">Decompiled at <span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><code class="addr">0x1402f20a0</code></span></td>
-  <td style="text-align:left"><code>FUN_1402f20a0_ClassIdLookup.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><span class="ghidra-ref">FUN_1402f20a0</span></span>_ClassIdLookup.c</code></td>
   <td style="text-align:left"><strong><span class="badge badge-verified">VERIFIED</span></strong></td>
 </tr>
 <tr>
@@ -494,7 +494,7 @@ if (0xafff &lt; (int)*puVar2) {
     DAT_14201d2ec = 0x500;  // SM 5.0 if FL &gt;= 11.0
     uVar14 = *(uint *)(param_1 + 0x3c71) &amp; 0xfffffffd | 5;
 }</code></pre></div>
-<p>The global <code>DAT_14201d2ec</code> stores the shader model: <span class="named-addr"><span class="addr-name">SHADER_MODEL_4_0</span><code class="addr">0x400</code></span> = SM 4.0, <span class="named-addr"><span class="addr-name">SHADER_MODEL_5_0</span><code class="addr">0x500</code></span> = SM 5.0. The threshold <span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_CHECK</span><code class="addr">0xafff</code></span> means feature level > <span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_CHECK</span><code class="addr">0xafff</code></span> (i.e., <span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_0</span><code class="addr">0xb000</code></span> = FL 11.0 or higher) uses SM 5.0. [<strong><span class="badge badge-verified">VERIFIED</span></strong> -- lines 300-306]</p>
+<p>The global <span class="named-addr"><span class="addr-name">DAT_ShaderModelVersion</span><code class="ghidra-ref">DAT_14201d2ec</code></span> stores the shader model: <span class="named-addr"><span class="addr-name">SHADER_MODEL_4_0</span><code class="addr">0x400</code></span> = SM 4.0, <span class="named-addr"><span class="addr-name">SHADER_MODEL_5_0</span><code class="addr">0x500</code></span> = SM 5.0. The threshold <span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_CHECK</span><code class="addr">0xafff</code></span> means feature level > <span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_CHECK</span><code class="addr">0xafff</code></span> (i.e., <span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_0</span><code class="addr">0xb000</code></span> = FL 11.0 or higher) uses SM 5.0. [<strong><span class="badge badge-verified">VERIFIED</span></strong> -- lines 300-306]</p>
 <h3 id="feature-level-summary-verified"><a class="anchor" href="#feature-level-summary-verified">#</a>Feature Level Summary (<span class="badge badge-verified">VERIFIED</span>)</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -510,7 +510,7 @@ if (0xafff &lt; (int)*puVar2) {
   <td style="text-align:left">10.0</td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_10_0</span><code class="addr">0xa000</code></span></td>
   <td style="text-align:left">SM 4.0</td>
-  <td style="text-align:left"><code>DAT_14201d2ec = 0x400</code> (line 300)</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_ShaderModelVersion</span><span class="ghidra-ref">DAT_14201d2ec</span></span> = 0x400</code> (line 300)</td>
 </tr>
 <tr>
   <td style="text-align:left">10.1</td>
@@ -522,7 +522,7 @@ if (0xafff &lt; (int)*puVar2) {
   <td style="text-align:left">11.0</td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_0</span><code class="addr">0xb000</code></span></td>
   <td style="text-align:left">SM 5.0</td>
-  <td style="text-align:left"><code>> 0xafff</code> check, <code>DAT_14201d2ec = 0x500</code> (line 303-305)</td>
+  <td style="text-align:left"><code>> 0xafff</code> check, <code><span class="named-addr"><span class="addr-name">DAT_ShaderModelVersion</span><span class="ghidra-ref">DAT_14201d2ec</span></span> = 0x500</code> (line 303-305)</td>
 </tr>
 <tr>
   <td style="text-align:left">11.1</td>
@@ -691,8 +691,8 @@ if ((((iVar3 == 3) &amp;&amp; (local_1c8 == &#x27;G&#x27;)) &amp;&amp; (local_1c
     // Read 2-byte version number
     FUN_14012ba00(param_1, local_1c4, 2);
     *(ushort *)(param_1 + 0x60) = local_1c4[0];  // Store at offset 0x60</code></pre></div>
-<p>[<strong>Source</strong>: <code>FUN_140900e60_LoadHeader.c</code>, lines 40-47; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
-<p>The version stores as uint16 at archive offset +0x60. Versions 1-2 are rejected with error messages referencing "August 2000". Versions 3-6 dispatch to <code>FUN_140901850</code> for further parsing.</p>
+<p>[<strong>Source</strong>: <code><span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><span class="ghidra-ref">FUN_140900e60</span></span>_LoadHeader.c</code>, lines 40-47; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
+<p>The version stores as uint16 at archive offset +0x60. Versions 1-2 are rejected with error messages referencing "August 2000". Versions 3-6 dispatch to <span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="ghidra-ref">FUN_140901850</code></span> for further parsing.</p>
 <p><strong>All TM2020 files examined use version 6.</strong> No version 3, 4, or 5 files were found. [<strong><span class="badge badge-verified">VERIFIED</span></strong> from 10+ files in doc 26]</p>
 <h3 id="format-flags-version-6"><a class="anchor" href="#format-flags-version-6">#</a>Format Flags (Version 6)</h3>
 <p>Four ASCII bytes encode the format after the version:</p>
@@ -714,7 +714,7 @@ if (((char)local_res10 == &#x27;T&#x27;) || (iVar3 = 0, (char)local_res10 == &#x
 *(int *)(param_1 + 0xdc) = iVar5;
 
 // Byte 3: &#x27;R&#x27; (with refs) or &#x27;E&#x27; (no external refs)</code></pre></div>
-<p>[<strong>Source</strong>: <code>FUN_140901850_ParseVersionHeader.c</code>, lines 36-56; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
+<p>[<strong>Source</strong>: <code><span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><span class="ghidra-ref">FUN_140901850</span></span>_ParseVersionHeader.c</code>, lines 36-56; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
 <p><strong>Critical clarification on byte 1 vs byte 2</strong>: The documentation and some community tools have historically confused these. Based on real file analysis:</p>
 <ul>
   <li><strong>Byte 1</strong> (offset 0x06): Always 'U' in all observed TM2020 files. The documentation labels this as "body compression" but it is never 'C' in practice. [<strong><span class="badge badge-verified">VERIFIED</span></strong> -- doc 26, Section 14]</li>
@@ -811,7 +811,7 @@ if (((char)local_res10 == &#x27;T&#x27;) || (iVar3 = 0, (char)local_res10 == &#x
   <li>Compressed data does not match zlib/deflate headers</li>
   <li>Byte patterns match LZO1X encoding</li>
   <li>All community GBX parsers (GBX.NET, pygbx) use LZO for body decompression</li>
-  <li>The decompression function <code>FUN_140127aa0</code> implements LZO1X natively (no "LZO" string because it compiles in, not as a named library import)</li>
+  <li>The decompression function <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> implements LZO1X natively (no "LZO" string because it compiles in, not as a named library import)</li>
   <li>zlib IS present in the binary but serves other purposes (lightmap compression, ghost data)</li>
 </ol>
 <p>[<strong>Source</strong>: doc 15 Section 4, doc 26 Section 14; <strong><span class="badge badge-verified">VERIFIED</span></strong> (indirect)]</p>
@@ -821,7 +821,7 @@ if (((char)local_res10 == &#x27;T&#x27;) || (iVar3 = 0, (char)local_res10 == &#x
 <p>Inside the decompressed body, chunks read until the sentinel value <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> (little-endian: <code>01 DE CA FA</code>).</p>
 <p>Confirmed from two sources:</p>
 <ol>
-  <li><strong>Decompiled code</strong>: <code>FUN_1402d0c40_ChunkEndMarker.c</code> at address <span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="addr">0x1402d0c40</code></span>:</li>
+  <li><strong>Decompiled code</strong>: <code><span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><span class="ghidra-ref">FUN_1402d0c40</span></span>_ChunkEndMarker.c</code> at address <span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="addr">0x1402d0c40</code></span>:</li>
 </ol>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">undefined8 FUN_1402d0c40(int param_1) {
     undefined8 uVar1;
@@ -831,7 +831,7 @@ if (((char)local_res10 == &#x27;T&#x27;) || (iVar3 = 0, (char)local_res10 == &#x
     }
     return uVar1;
 }</code></pre></div>
-<p>Returns <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> for any chunk ID that is not <span class="named-addr"><span class="addr-name">CMwNod_End_CHUNK_ID</span><code class="addr">0x01001000</code></span> (CMwNod end marker). [<strong>Source</strong>: <code>FUN_1402d0c40_ChunkEndMarker.c</code>; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
+<p>Returns <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> for any chunk ID that is not <span class="named-addr"><span class="addr-name">CMwNod_End_CHUNK_ID</span><code class="addr">0x01001000</code></span> (CMwNod end marker). [<strong>Source</strong>: <code><span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><span class="ghidra-ref">FUN_1402d0c40</span></span>_ChunkEndMarker.c</code>; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
 <ol>
   <li><strong>Real file hex</strong>: The uncompressed FuncShader file ends with <code>01 DE CA FA</code> at offset 0x63. The FuncCloudsParam file ends with <code>01 DE CA FA</code> at offset 0x5A. [<strong>Source</strong>: doc 26, Sections 6-7; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</li>
 </ol>
@@ -851,7 +851,7 @@ uint class_index  = (local_38[0] &gt;&gt; 12) &amp; 0xFFF;</code></pre></div>
   <li>Level 1: Array of engine pointers indexed by <code>engine_index</code></li>
   <li>Level 2: Array of class info pointers indexed by <code>class_index</code></li>
 </ol>
-<p>Each class info entry has a name at offset +0x08 and a factory function at offset +0x30. A TLS-based 2-entry MRU cache accelerates repeated lookups (checking <code>TLS+0x11a8</code> and <code>TLS+0x11ac</code> before the table walk). [<strong>Source</strong>: <code>FUN_1402f20a0_ClassIdLookup.c</code>, lines 34-37; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
+<p>Each class info entry has a name at offset +0x08 and a factory function at offset +0x30. A TLS-based 2-entry MRU cache accelerates repeated lookups (checking <code>TLS+0x11a8</code> and <code>TLS+0x11ac</code> before the table walk). [<strong>Source</strong>: <code><span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><span class="ghidra-ref">FUN_1402f20a0</span></span>_ClassIdLookup.c</code>, lines 34-37; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
 <h3 id="class-id-remapping-backward-compatibility"><a class="anchor" href="#class-id-remapping-backward-compatibility">#</a>Class ID Remapping (Backward Compatibility)</h3>
 <p>The function at <span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="addr">0x1402f2610</code></span> contains a massive switch table remapping legacy class IDs to modern equivalents:</p>
 <div class="table-wrapper"><table>
@@ -880,7 +880,7 @@ uint class_index  = (local_38[0] &gt;&gt; 12) &amp; 0xFFF;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p>[<strong>Source</strong>: <code>FUN_1402f2610_ClassIdRemap.c</code>; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
+<p>[<strong>Source</strong>: <code><span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><span class="ghidra-ref">FUN_1402f2610</span></span>_ClassIdRemap.c</code>; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
 <p>This remapping is active in real files. The FuncShader body uses chunk ID <span class="named-addr"><span class="addr-name">CPlugFuncShader_LEGACY_CHUNK</span><code class="addr">0x0500B005</code></span> (legacy) alongside <span class="named-addr"><span class="addr-name">CPlugFuncShader_CHUNK_Name</span><code class="addr">0x05015005</code></span> (modern). The engine transparently remaps during chunk dispatch. [<strong>Source</strong>: doc 26, Section 6; <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
 <h3 id="the-lookbackstring-system"><a class="anchor" href="#the-lookbackstring-system">#</a>The LookbackString System</h3>
 <p>Inside header chunks, strings use a "lookback" system (a per-archive string interning table) where repeated strings become back-reference indices. The hex dumps confirm:</p>
@@ -1486,11 +1486,11 @@ Example: Tech3/Block_TDSN_DefWrite_p.hlsl
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="format-byte-1byte-2-terminology"><a class="anchor" href="#format-byte-1byte-2-terminology">#</a>Format Byte 1/Byte 2 Terminology</h3></summary>
 <div class="collapsible-content">
-<p><strong>Document</strong>: doc 16 <strong>Claim</strong>: Byte 1 = "body compression", Byte 2 = "<span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> exact role]</span>" <strong>Correction</strong>: Byte 1 is always 'U' in all observed TM2020 files. Byte 2 ('C' or 'U') actually controls whether the body chunk stream has a compression envelope. When byte 2 = 'C', the body is preceded by uncompressed_size + compressed_size + compressed data. When byte 2 = 'U', the body is raw chunks. <strong>Evidence</strong>: BUUR files (FuncShader, FuncCloudsParam) have no compression envelope; BUCR files have one. <strong>Severity</strong>: Medium -- incorrect terminology but functional behavior can be determined empirically. [<strong>Source</strong>: doc 26, Sections 6-8; <code>FUN_140901850_ParseVersionHeader.c</code>]</p>
+<p><strong>Document</strong>: doc 16 <strong>Claim</strong>: Byte 1 = "body compression", Byte 2 = "<span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> exact role]</span>" <strong>Correction</strong>: Byte 1 is always 'U' in all observed TM2020 files. Byte 2 ('C' or 'U') actually controls whether the body chunk stream has a compression envelope. When byte 2 = 'C', the body is preceded by uncompressed_size + compressed_size + compressed data. When byte 2 = 'U', the body is raw chunks. <strong>Evidence</strong>: BUUR files (FuncShader, FuncCloudsParam) have no compression envelope; BUCR files have one. <strong>Severity</strong>: Medium -- incorrect terminology but functional behavior can be determined empirically. [<strong>Source</strong>: doc 26, Sections 6-8; <code><span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><span class="ghidra-ref">FUN_140901850</span></span>_ParseVersionHeader.c</code>]</p>
 </div>
 </details>
 <h3 id="compression-algorithm"><a class="anchor" href="#compression-algorithm">#</a>Compression Algorithm</h3>
-<p><strong>Document</strong>: doc 15, Section 4 (original finding) <strong>Original claim</strong>: "TM2020 uses zlib exclusively for GBX body compression" <strong>Correction</strong>: GBX body compression uses LZO1X. zlib is present in the binary for other data streams (lightmap, ghost data, network). The decompilation at <code>FUN_140127aa0</code> implements LZO1X directly without a named library. <strong>Status</strong>: Already corrected in doc 15 itself (noted as "CORRECTION"), but the original conclusion should be struck. <strong>Severity</strong>: Critical -- using zlib to decompress GBX bodies will fail. [<strong>Source</strong>: doc 15 Section 4 correction note; doc 26 Section 14]</p>
+<p><strong>Document</strong>: doc 15, Section 4 (original finding) <strong>Original claim</strong>: "TM2020 uses zlib exclusively for GBX body compression" <strong>Correction</strong>: GBX body compression uses LZO1X. zlib is present in the binary for other data streams (lightmap, ghost data, network). The decompilation at <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> implements LZO1X directly without a named library. <strong>Status</strong>: Already corrected in doc 15 itself (noted as "CORRECTION"), but the original conclusion should be struck. <strong>Severity</strong>: Critical -- using zlib to decompress GBX bodies will fail. [<strong>Source</strong>: doc 15 Section 4 correction note; doc 26 Section 14]</p>
 <h3 id="g-buffer-format-confidence-levels"><a class="anchor" href="#g-buffer-format-confidence-levels">#</a>G-Buffer Format Confidence Levels</h3>
 <p><strong>Document</strong>: doc 11, Section 3 <strong>Issue</strong>: The G-buffer table presents formats with "[<span class="badge badge-plausible">PLAUSIBLE</span>]" and "[<span class="badge badge-speculative">SPECULATIVE</span>]" labels but the table layout could be read as presenting confirmed formats. Only depth (D24_UNORM_S8_UINT) is verified from the D3D11 runtime log. <strong>Recommendation</strong>: Add clear header noting only depth is confirmed. <strong>Severity</strong>: Low -- documentation labels correctly but presentation could be clearer.</p>
 <h3 id="bloomtonemap-ordering"><a class="anchor" href="#bloomtonemap-ordering">#</a>Bloom/Tonemap Ordering</h3>
@@ -1751,7 +1751,7 @@ Example: Tech3/Block_TDSN_DefWrite_p.hlsl
 </tr>
 </tbody>
 </table></div>
-<p>[<strong>Source</strong>: doc 26 Sections 2-9, 12; <code>FUN_140903140_BodyTypeLabel.c</code>; all <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
+<p>[<strong>Source</strong>: doc 26 Sections 2-9, 12; <code><span class="named-addr"><span class="addr-name">GBX_ClassIdToBodyTypeLabel</span><span class="ghidra-ref">FUN_140903140</span></span>_BodyTypeLabel.c</code>; all <strong><span class="badge badge-verified">VERIFIED</span></strong>]</p>
 <hr>
 <h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
 <ul>
@@ -1847,6 +1847,7 @@ Example: Tech3/Block_TDSN_DefWrite_p.hlsl
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

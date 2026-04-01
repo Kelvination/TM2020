@@ -284,7 +284,7 @@
   <td style="text-align:left">D3D11.1</td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_1</span><code class="addr">0xb001</code></span></td>
   <td style="text-align:left">SM 5.0+</td>
-  <td style="text-align:left"><code>0xafff < (int)*puVar2</code> check, sets <code>DAT_14201d2ec = 0x500</code></td>
+  <td style="text-align:left"><code>0xafff < (int)*puVar2</code> check, sets <code><span class="named-addr"><span class="addr-name">DAT_ShaderModelVersion</span><span class="ghidra-ref">DAT_14201d2ec</span></span> = 0x500</code></td>
 </tr>
 <tr>
   <td style="text-align:left">D3D11.0</td>
@@ -302,7 +302,7 @@
   <td style="text-align:left">D3D10.0</td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_10_0</span><code class="addr">0xa000</code></span></td>
   <td style="text-align:left">SM 4.0</td>
-  <td style="text-align:left">Minimum, sets <code>DAT_14201d2ec = 0x400</code></td>
+  <td style="text-align:left">Minimum, sets <code><span class="named-addr"><span class="addr-name">DAT_ShaderModelVersion</span><span class="ghidra-ref">DAT_14201d2ec</span></span> = 0x400</code></td>
 </tr>
 </tbody>
 </table></div>
@@ -1487,7 +1487,7 @@ GPU Render:
 <tr>
   <td style="text-align:left">Minimum Shader Model</td>
   <td style="text-align:left">SM 4.0 (<span class="named-addr"><span class="addr-name">SHADER_MODEL_4_0</span><code class="addr">0x400</code></span>)</td>
-  <td style="text-align:left"><code>DAT_14201d2ec = 0x400</code> at minimum</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_ShaderModelVersion</span><span class="ghidra-ref">DAT_14201d2ec</span></span> = 0x400</code> at minimum</td>
 </tr>
 <tr>
   <td style="text-align:left">Recommended Shader Model</td>
@@ -2131,6 +2131,7 @@ Bind Group 3 (per-draw, update per draw call):
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -132,7 +132,7 @@
 <hr>
 <h2 id="gbx-class-system-architecture"><a class="anchor" href="#gbx-class-system-architecture">#</a>GBX Class System Architecture</h2>
 <h3 id="class-registration-pattern"><a class="anchor" href="#class-registration-pattern">#</a>Class Registration Pattern</h3>
-<p>Every physics-related GBX class follows the same registration pattern (function <code>FUN_1402EA9E0</code>):</p>
+<p>Every physics-related GBX class follows the same registration pattern (function <span class="named-addr"><span class="addr-name">RegisterStructType</span><code class="ghidra-ref">FUN_1402EA9E0</code></span>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">RegisterClass(class_id, &quot;ClassName&quot;, struct_size, flags, parent_class, 0, 0);
 RegisterConstructor(constructor_func);
 RegisterArchiveFunction(archive_func, secondary_func);
@@ -153,7 +153,7 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
         }
     }
 }</code></pre></div>
-<p>The <code>ArchiveFloat</code> function (<code>FUN_14012C310</code>) checks a mode flag: mode 0 reads 4 bytes from the stream into the target address; mode != 0 writes 4 bytes from the target address to the stream.</p>
+<p>The <code>ArchiveFloat</code> function (<span class="named-addr"><span class="addr-name">ArchiveFloat</span><code class="ghidra-ref">FUN_14012C310</code></span>) checks a mode flag: mode 0 reads 4 bytes from the stream into the target address; mode != 0 writes 4 bytes from the target address to the stream.</p>
 <h3 id="gbx-loading-pipeline"><a class="anchor" href="#gbx-loading-pipeline">#</a>GBX Loading Pipeline</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ArchiveNod::LoadGbx (FUN_140904730)
   -&gt; Opens file stream
@@ -468,38 +468,38 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 <tbody>
 <tr>
   <td style="text-align:left">0,1,2</td>
-  <td style="text-align:left">FUN_140869CD0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869CD0</span></span></td>
   <td style="text-align:left">Legacy/ShootMania</td>
 </tr>
 <tr>
   <td style="text-align:left">3</td>
-  <td style="text-align:left">FUN_14086B060</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086B060</span></span></td>
   <td style="text-align:left">Unknown</td>
 </tr>
 <tr>
   <td style="text-align:left">4</td>
-  <td style="text-align:left">FUN_14086BC50</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><span class="ghidra-ref">FUN_14086BC50</span></span></td>
   <td style="text-align:left">Unknown</td>
 </tr>
 <tr>
   <td style="text-align:left">5</td>
-  <td style="text-align:left">FUN_140851F00</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851F00</span></span></td>
   <td style="text-align:left">TM2/TurboMania</td>
 </tr>
 <tr>
   <td style="text-align:left">6</td>
-  <td style="text-align:left">FUN_14085C9E0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085C9E0</span></span></td>
   <td style="text-align:left"><strong>TM2020 car</strong> (CarSport, CarSnow, CarRally, CarDesert)</td>
 </tr>
 <tr>
   <td style="text-align:left">11</td>
-  <td style="text-align:left">FUN_14086D3B0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><span class="ghidra-ref">FUN_14086D3B0</span></span></td>
   <td style="text-align:left">Unknown</td>
 </tr>
 </tbody>
 </table></div>
 <h3 id="tuning-modifier-application"><a class="anchor" href="#tuning-modifier-application">#</a>Tuning Modifier Application</h3>
-<p>In the case 6 force computation (<code>FUN_14085C9E0</code>):</p>
+<p>In the case 6 force computation (<span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085C9E0</code></span>):</p>
 <ol>
   <li><strong>AccelCoef</strong> reads from <code>model + 0xA54</code> and multiplies with the dynamic accel state at <code>plVar1 + 0x2EB</code></li>
   <li>The combined coefficient clamps to [0, 1]</li>
@@ -555,7 +555,7 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 <p>Available modifications include NoBrakes, NoSteer, NoEngine, ForceEngine (binary toggles), AccelCoef (type 0xD), ControlCoef, GravityCoef, AdherenceCoef (multipliers [0..1]), BoostUp/BoostDown, TireWear, Cruise, Fragile, SlowMotion, VehicleTransform, and Reset.</p>
 <hr>
 <h2 id="vehicle-type-registry"><a class="anchor" href="#vehicle-type-registry">#</a>Vehicle Type Registry</h2>
-<p>The game maintains a static registry at <span class="named-addr"><span class="addr-name">vehicleTypeRegistry</span><code class="addr">0x141F75540</code></span>, initialized by <code>FUN_140CD5590</code>:</p>
+<p>The game maintains a static registry at <span class="named-addr"><span class="addr-name">vehicleTypeRegistry</span><code class="addr">0x141F75540</code></span>, initialized by <span class="named-addr"><span class="addr-name">VehicleRegistry::Init</span><code class="ghidra-ref">FUN_140CD5590</code></span>:</p>
 <h3 id="tm2020-vehicles-items"><a class="anchor" href="#tm2020-vehicles-items">#</a>TM2020 Vehicles (Items)</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -837,6 +837,7 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

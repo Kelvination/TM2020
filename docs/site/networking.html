@@ -319,34 +319,34 @@
 </table></div>
 <details>
 <summary>Decompiled state machine details</summary>
-<p>From <code>CGameCtnNetwork__MainLoop_Menus</code> (at <code>FUN_140af9a40</code>):</p>
+<p>From <code>CGameCtnNetwork__MainLoop_Menus</code> (at <span class="named-addr"><span class="addr-name">CGameCtnNetwork::MainLoop_Menus</span><code class="ghidra-ref">FUN_140af9a40</code></span>):</p>
 <ul>
-  <li>Allocates a 0x48-byte state context object with vtable at <code>PTR_FUN_141c2e840</code></li>
+  <li>Allocates a 0x48-byte state context object with vtable at <code>PTR_<span class="named-addr"><span class="addr-name">PTR_vtable_MainLoop_Menus_context</span><span class="ghidra-ref">FUN_141c2e840</span></span></code></li>
   <li>State field at offset +0x08, with states:</li>
   <li><code>0x0000</code> = Initial state (first entry, may trigger internet connection)</li>
   <li><code>0x0EA5</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - intermediate state, decimal 3749]</span></li>
-  <li><code>0x0EA9</code> = Sub-state processing (calls <code>FUN_140afa000</code>)</li>
+  <li><code>0x0EA9</code> = Sub-state processing (calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork_MainLoop_Menus_SubState</span><code class="ghidra-ref">FUN_140afa000</code></span>)</li>
   <li><code>0x0EAE</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - intermediate state, decimal 3758]</span></li>
   <li><code>0x0EC1</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - intermediate state, decimal 3777]</span></li>
-  <li>Checks global flags at <code>DAT_141fbbee8</code> and <code>DAT_141fbbf0c</code> for network connectivity state</li>
+  <li>Checks global flags at <span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span> and <span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span> for network connectivity state</li>
   <li>Sub-state at offset +0x30 drives menu-level logic (values 0, 1, 2)</li>
   <li>Offset +0x44 stores a menu command type, derived from <code>param_1[0x5b]</code></li>
 </ul>
-<p>From <code>CGameCtnNetwork__MainLoop_SetUp</code> (at <code>FUN_140afc320</code>):</p>
+<p>From <code>CGameCtnNetwork__MainLoop_SetUp</code> (at <span class="named-addr"><span class="addr-name">CGameCtnNetwork::MainLoop_SetUp</span><code class="ghidra-ref">FUN_140afc320</code></span>):</p>
 <ul>
-  <li>Allocates a 0x20-byte state context with vtable at <code>PTR_FUN_141b68250</code></li>
+  <li>Allocates a 0x20-byte state context with vtable at <code>PTR_<span class="named-addr"><span class="addr-name">PTR_vtable_MainLoop_SetUp_context</span><span class="ghidra-ref">FUN_141b68250</span></span></code></li>
   <li>State field at offset +0x08, with states:</li>
-  <li><code>0x0000</code> = Initial (calls <code>FUN_140bd1180</code> for setup)</li>
+  <li><code>0x0000</code> = Initial (calls <span class="named-addr"><span class="addr-name">NetworkSetup_MapPreparation</span><code class="ghidra-ref">FUN_140bd1180</code></span> for setup)</li>
   <li><code>0x125F</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - decimal 4703]</span></li>
   <li><code>0x1271</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - decimal 4721]</span></li>
   <li><code>0x1292</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - decimal 4754, network connection state]</span></li>
   <li><code>0x129D</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - decimal 4765]</span></li>
-  <li>Calls <code>FUN_140bc5a00</code> (network subsystem init) and <code>FUN_140bc1a90</code> during completion</li>
-  <li>Checks <code>DAT_141fbbee8</code>/<code>DAT_141fbbf0c</code> for ongoing network flags</li>
+  <li>Calls <span class="named-addr"><span class="addr-name">NetworkSubsystem_Init</span><code class="ghidra-ref">FUN_140bc5a00</code></span> (network subsystem init) and <span class="named-addr"><span class="addr-name">NetworkSetup_Completion</span><code class="ghidra-ref">FUN_140bc1a90</code></span> during completion</li>
+  <li>Checks <span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span>/<span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span> for ongoing network flags</li>
 </ul>
-<p>From <code>CGameCtnNetwork__MainLoop_PlaygroundPlay</code> (at <code>FUN_140aff380</code>):</p>
+<p>From <code>CGameCtnNetwork__MainLoop_PlaygroundPlay</code> (at <span class="named-addr"><span class="addr-name">CGameCtnNetwork::MainLoop_PlaygroundPlay</span><code class="ghidra-ref">FUN_140aff380</code></span>):</p>
 <ul>
-  <li>Simplest loop -- allocates 0x18-byte context with vtable at <code>PTR_FUN_141b683c0</code></li>
+  <li>Simplest loop -- allocates 0x18-byte context with vtable at <code>PTR_<span class="named-addr"><span class="addr-name">PTR_vtable_MainLoop_PlaygroundPlay_context</span><span class="ghidra-ref">FUN_141b683c0</span></span></code></li>
   <li>Only state 0 = initial, immediately sets <code>*param_3 = 0</code> (result code)</li>
   <li>Cleanup via virtual call at vtable+8 then sets <code>*param_2 = -1</code></li>
 </ul>
@@ -887,7 +887,7 @@ Login -&gt; Account ID:
 </tbody>
 </table></div>
 <p><strong>Step 3: Nadeo Token Exchange (decompiled)</strong></p>
-<p><strong>Decompiled function</strong>: <code>FUN_140356160</code> at <span class="named-addr"><span class="addr-name">NadeoServicesTokenCreateFromUbiservices</span><code class="addr">0x140356160</code></span></p>
+<p><strong>Decompiled function</strong>: <span class="named-addr"><span class="addr-name">NadeoServicesTokenCreateFromUbiservices</span><code class="ghidra-ref">FUN_140356160</code></span> at <span class="named-addr"><span class="addr-name">NadeoServicesTokenCreateFromUbiservices</span><code class="addr">0x140356160</code></span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">void FUN_140356160(undefined8 param_1, undefined8 param_2)
 {
     // Sets API request name to &quot;nadeoservices_token_create_from_ubiservices_v2&quot;
@@ -897,7 +897,7 @@ Login -&gt; Account ID:
     FUN_140355fe0(param_2, &amp;local_28);     // Execute API request
     // ... cleanup
 }</code></pre></div>
-<p>This thin wrapper delegates to <code>FUN_140355fe0</code> (the actual HTTP request executor). The function at <span class="named-addr"><span class="addr-name">NadeoServicesAPIRequestExecutor</span><code class="addr">0x140355fe0</code></span> constructs a POST request to <code>core.trackmania.nadeo.live</code> with the UbiServices session token.</p>
+<p>This thin wrapper delegates to <span class="named-addr"><span class="addr-name">NadeoServicesAPIRequestExecutor</span><code class="ghidra-ref">FUN_140355fe0</code></span> (the actual HTTP request executor). The function at <span class="named-addr"><span class="addr-name">NadeoServicesAPIRequestExecutor</span><code class="addr">0x140355fe0</code></span> constructs a POST request to <code>core.trackmania.nadeo.live</code> with the UbiServices session token.</p>
 <p><strong>Connection Workflow (High-Level)</strong></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CWebServicesTask_Connect
   |
@@ -960,7 +960,7 @@ Completion: cleanup via vtable, set *param_2 = -1</code></pre></div>
 <ul>
   <li><code>CWebServicesTask_CheckNetworkAvailability</code> exists as a task class</li>
   <li><code>CGameNetwork::CheckInternetAtStart</code> runs at startup</li>
-  <li>The state machine in <code>MainLoop_Menus</code> checks global flags <code>DAT_141fbbee8</code> / <code>DAT_141fbbf0c</code> before deciding whether to connect</li>
+  <li>The state machine in <code>MainLoop_Menus</code> checks global flags <span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span> / <span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span> before deciding whether to connect</li>
   <li>If both flags are zero, the game proceeds to menus without internet (<code>goto LAB_140af9c4e</code>)</li>
 </ul>
 </details>
@@ -1045,7 +1045,7 @@ InternalTerminateReq             (0x141b7b8d0)  -- curl_multi_remove_handle + cl
     FUN_1401176a0(local_28, local_18);  // Profile end
     return lVar1 != 0;
 }</code></pre></div>
-<p>Key insight: The curl multi handle comes from a <strong>global</strong> pointer at <code>DAT_1420ba2f8</code>. One shared curl multi-handle serves all HTTP clients.</p>
+<p>Key insight: The curl multi handle comes from a <strong>global</strong> pointer at <span class="named-addr"><span class="addr-name">DAT_curl_multi_handle_global</span><code class="ghidra-ref">DAT_1420ba2f8</code></span>. One shared curl multi-handle serves all HTTP clients.</p>
 </details>
 <h3 id="transport-layer-details"><a class="anchor" href="#transport-layer-details">#</a>Transport Layer Details</h3>
 <p><strong>Winsock2 (WS2_32.DLL)</strong>: Only <code>WS2_32.DLL::Ordinal_1</code> appears in the IAT. Additional Winsock functions resolve at runtime via <code>LoadLibraryA</code>/<code>GetProcAddress</code>.</p>
@@ -3844,34 +3844,34 @@ CGameNetFormVoiceChat, CGameNetOnlineMessage</code></pre></div>
     +---&gt; SpectatorSwitch</code></pre></div>
 <p><strong>Evidence</strong>: String references at addresses <span class="named-addr"><span class="addr-name">str_CGameCtnNetwork_MainLoop_Menus</span><code class="addr">0x141c2b328</code></span> through <span class="named-addr"><span class="addr-name">str_CGameCtnNetwork_MainLoop_SpectatorSwitch</span><code class="addr">0x141c2dae0</code></span>.</p>
 <h3 id="decompiled-state-machine-details"><a class="anchor" href="#decompiled-state-machine-details">#</a>Decompiled State Machine Details</h3>
-<p>From <code>CGameCtnNetwork__MainLoop_Menus</code> (at <code>FUN_140af9a40</code>):</p>
+<p>From <code>CGameCtnNetwork__MainLoop_Menus</code> (at <span class="named-addr"><span class="addr-name">CGameCtnNetwork::MainLoop_Menus</span><code class="ghidra-ref">FUN_140af9a40</code></span>):</p>
 <ul>
-  <li>Allocates a 0x48-byte state context object with vtable at <code>PTR_FUN_141c2e840</code></li>
+  <li>Allocates a 0x48-byte state context object with vtable at <code>PTR_<span class="named-addr"><span class="addr-name">PTR_vtable_MainLoop_Menus_context</span><span class="ghidra-ref">FUN_141c2e840</span></span></code></li>
   <li>State field at offset +0x08, with states:</li>
   <li><code>0x0000</code> = Initial state (first entry, may trigger internet connection)</li>
   <li><code>0x0EA5</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - intermediate state, decimal 3749]</span></li>
-  <li><code>0x0EA9</code> = Sub-state processing (calls <code>FUN_140afa000</code>)</li>
+  <li><code>0x0EA9</code> = Sub-state processing (calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork_MainLoop_Menus_SubState</span><code class="ghidra-ref">FUN_140afa000</code></span>)</li>
   <li><code>0x0EAE</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - intermediate state, decimal 3758]</span></li>
   <li><code>0x0EC1</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - intermediate state, decimal 3777]</span></li>
-  <li>Checks global flags at <code>DAT_141fbbee8</code> and <code>DAT_141fbbf0c</code> for network connectivity state</li>
+  <li>Checks global flags at <span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span> and <span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span> for network connectivity state</li>
   <li>Sub-state at offset +0x30 drives menu-level logic (values 0, 1, 2)</li>
   <li>Offset +0x44 stores a menu command type, derived from <code>param_1[0x5b]</code></li>
 </ul>
-<p>From <code>CGameCtnNetwork__MainLoop_SetUp</code> (at <code>FUN_140afc320</code>):</p>
+<p>From <code>CGameCtnNetwork__MainLoop_SetUp</code> (at <span class="named-addr"><span class="addr-name">CGameCtnNetwork::MainLoop_SetUp</span><code class="ghidra-ref">FUN_140afc320</code></span>):</p>
 <ul>
-  <li>Allocates a 0x20-byte state context with vtable at <code>PTR_FUN_141b68250</code></li>
+  <li>Allocates a 0x20-byte state context with vtable at <code>PTR_<span class="named-addr"><span class="addr-name">PTR_vtable_MainLoop_SetUp_context</span><span class="ghidra-ref">FUN_141b68250</span></span></code></li>
   <li>State field at offset +0x08, with states:</li>
-  <li><code>0x0000</code> = Initial (calls <code>FUN_140bd1180</code> for setup)</li>
+  <li><code>0x0000</code> = Initial (calls <span class="named-addr"><span class="addr-name">NetworkSetup_MapPreparation</span><code class="ghidra-ref">FUN_140bd1180</code></span> for setup)</li>
   <li><code>0x125F</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - decimal 4703]</span></li>
   <li><code>0x1271</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - decimal 4721]</span></li>
   <li><code>0x1292</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - decimal 4754, network connection state]</span></li>
   <li><code>0x129D</code> = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - decimal 4765]</span></li>
-  <li>Calls <code>FUN_140bc5a00</code> (network subsystem init) and <code>FUN_140bc1a90</code> during completion</li>
-  <li>Checks <code>DAT_141fbbee8</code>/<code>DAT_141fbbf0c</code> for ongoing network flags</li>
+  <li>Calls <span class="named-addr"><span class="addr-name">NetworkSubsystem_Init</span><code class="ghidra-ref">FUN_140bc5a00</code></span> (network subsystem init) and <span class="named-addr"><span class="addr-name">NetworkSetup_Completion</span><code class="ghidra-ref">FUN_140bc1a90</code></span> during completion</li>
+  <li>Checks <span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span>/<span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span> for ongoing network flags</li>
 </ul>
-<p>From <code>CGameCtnNetwork__MainLoop_PlaygroundPlay</code> (at <code>FUN_140aff380</code>):</p>
+<p>From <code>CGameCtnNetwork__MainLoop_PlaygroundPlay</code> (at <span class="named-addr"><span class="addr-name">CGameCtnNetwork::MainLoop_PlaygroundPlay</span><code class="ghidra-ref">FUN_140aff380</code></span>):</p>
 <ul>
-  <li>Simplest loop -- allocates 0x18-byte context with vtable at <code>PTR_FUN_141b683c0</code></li>
+  <li>Simplest loop -- allocates 0x18-byte context with vtable at <code>PTR_<span class="named-addr"><span class="addr-name">PTR_vtable_MainLoop_PlaygroundPlay_context</span><span class="ghidra-ref">FUN_141b683c0</span></span></code></li>
   <li>Only state 0 = initial, immediately sets <code>*param_3 = 0</code> (result code)</li>
   <li>Cleanup via virtual call at vtable+8 then sets <code>*param_2 = -1</code></li>
 </ul>
@@ -4304,7 +4304,7 @@ Step 3: Nadeo Token Exchange          Step 4: Token Refresh
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>D:\CodeBase_Ext\externallibs\ubiservices\ubiservices\external\harbourcommon\libraries\_fetch\</code></pre></div>
 <p>The "harbourcommon" namespace refers to Ubisoft's common services framework ("Harbour").</p>
 <h3 id="step-3-nadeo-services-token-exchange"><a class="anchor" href="#step-3-nadeo-services-token-exchange">#</a>Step 3: Nadeo Services Token Exchange</h3>
-<p><strong>Decompiled function</strong>: <code>FUN_140356160</code> at <span class="named-addr"><span class="addr-name">NadeoServicesTokenCreateFromUbiservices</span><code class="addr">0x140356160</code></span> <strong>API name</strong>: <code>nadeoservices_token_create_from_ubiservices_v2</code> (string at <span class="named-addr"><span class="addr-name">str_nadeoservices_token_create_from_ubiservices_v2</span><code class="addr">0x141b85ce8</code></span>)</p>
+<p><strong>Decompiled function</strong>: <span class="named-addr"><span class="addr-name">NadeoServicesTokenCreateFromUbiservices</span><code class="ghidra-ref">FUN_140356160</code></span> at <span class="named-addr"><span class="addr-name">NadeoServicesTokenCreateFromUbiservices</span><code class="addr">0x140356160</code></span> <strong>API name</strong>: <code>nadeoservices_token_create_from_ubiservices_v2</code> (string at <span class="named-addr"><span class="addr-name">str_nadeoservices_token_create_from_ubiservices_v2</span><code class="addr">0x141b85ce8</code></span>)</p>
 <p>From the decompiled code:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">void FUN_140356160(undefined8 param_1, undefined8 param_2)
 {
@@ -4315,7 +4315,7 @@ Step 3: Nadeo Token Exchange          Step 4: Token Refresh
     FUN_140355fe0(param_2, &amp;local_28);     // Execute API request
     // ... cleanup
 }</code></pre></div>
-<p>This is a thin wrapper that delegates to <code>FUN_140355fe0</code> (the actual HTTP request executor). The function at <span class="named-addr"><span class="addr-name">NadeoServicesAPIRequestExecutor</span><code class="addr">0x140355fe0</code></span> constructs a POST request to <code>core.trackmania.nadeo.live</code> with the UbiServices session token.</p>
+<p>This is a thin wrapper that delegates to <span class="named-addr"><span class="addr-name">NadeoServicesAPIRequestExecutor</span><code class="ghidra-ref">FUN_140355fe0</code></span> (the actual HTTP request executor). The function at <span class="named-addr"><span class="addr-name">NadeoServicesAPIRequestExecutor</span><code class="addr">0x140355fe0</code></span> constructs a POST request to <code>core.trackmania.nadeo.live</code> with the UbiServices session token.</p>
 <h3 id="step-4-token-refresh"><a class="anchor" href="#step-4-token-refresh">#</a>Step 4: Token Refresh</h3>
 <p><strong>API name</strong>: <code>nadeoservices_token_refresh_v2</code> (string at <span class="named-addr"><span class="addr-name">str_nadeoservices_token_refresh_v2</span><code class="addr">0x141b85ef0</code></span>)</p>
 <p>Token fields:</p>
@@ -4490,7 +4490,7 @@ Step 3: Nadeo Token Exchange          Step 4: Token Refresh
 </tbody>
 </table></div>
 <h3 id="cgamectnnetworkconnecttointernet"><a class="anchor" href="#cgamectnnetworkconnecttointernet">#</a>CGameCtnNetwork::ConnectToInternet</h3>
-<p><strong>Decompiled function</strong>: <code>FUN_140b00500</code> at <span class="named-addr"><span class="addr-name">CGameCtnNetwork::ConnectToInternet</span><code class="addr">0x140b00500</code></span> <strong>String reference</strong>: <code>"CGameCtnNetwork::ConnectToInternet"</code> at <span class="named-addr"><span class="addr-name">str_ConnectToInternet</span><code class="addr">0x141c2ba20</code></span></p>
+<p><strong>Decompiled function</strong>: <span class="named-addr"><span class="addr-name">CGameCtnNetwork::ConnectToInternet</span><code class="ghidra-ref">FUN_140b00500</code></span> at <span class="named-addr"><span class="addr-name">CGameCtnNetwork::ConnectToInternet</span><code class="addr">0x140b00500</code></span> <strong>String reference</strong>: <code>"CGameCtnNetwork::ConnectToInternet"</code> at <span class="named-addr"><span class="addr-name">str_ConnectToInternet</span><code class="addr">0x141c2ba20</code></span></p>
 <p>State machine flow:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>State 0x0000: Initial / connecting
   - Allocates 0x40-byte connection context
@@ -4521,7 +4521,7 @@ Completion: cleanup via vtable, set *param_2 = -1</code></pre></div>
 <ul>
   <li><code>CWebServicesTask_CheckNetworkAvailability</code> exists as a task class</li>
   <li><code>CGameNetwork::CheckInternetAtStart</code> (from methods list) runs at startup</li>
-  <li>The state machine in <code>MainLoop_Menus</code> checks global flags <code>DAT_141fbbee8</code> / <code>DAT_141fbbf0c</code> before deciding whether to connect</li>
+  <li>The state machine in <code>MainLoop_Menus</code> checks global flags <span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span> / <span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span> before deciding whether to connect</li>
   <li>If both flags are zero, the game can proceed to menus without internet (<code>goto LAB_140af9c4e</code>)</li>
   <li>The <code>DemoToken*</code> system (see below) provides time-limited access with periodic server-side validation</li>
 </ul>
@@ -4563,7 +4563,7 @@ Completion: cleanup via vtable, set *param_2 = -1</code></pre></div>
     FUN_1401176a0(local_28, local_18);  // Profile end
     return lVar1 != 0;
 }</code></pre></div>
-<p>Key insight: The curl multi handle comes from a <strong>global</strong> pointer at <code>DAT_1420ba2f8</code>, meaning there is one shared curl multi-handle for all HTTP clients.</p>
+<p>Key insight: The curl multi handle comes from a <strong>global</strong> pointer at <span class="named-addr"><span class="addr-name">DAT_curl_multi_handle_global</span><code class="ghidra-ref">DAT_1420ba2f8</code></span>, meaning there is one shared curl multi-handle for all HTTP clients.</p>
 <h3 id="cnethttpclientcreaterequest-decompiled"><a class="anchor" href="#cnethttpclientcreaterequest-decompiled">#</a>CNetHttpClient::CreateRequest (Decompiled)</h3>
 <p><strong>Address</strong>: <span class="named-addr"><span class="addr-name">CNetHttpClient::CreateRequest</span><code class="addr">0x14030c3f0</code></span></p>
 <p>Request creation details:</p>
@@ -9087,22 +9087,22 @@ Browser: Game -&gt; Signaling server -&gt; WebRTC peer connection (DTLS-SRTP)</c
   <td style="text-align:left">Called from MainLoop_Menus</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140afa480</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnNetwork::MenuPolling</span><code class="addr">0x140afa480</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">Called from MainLoop_Menus</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140afb0a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnNetwork::ActiveConnection</span><code class="addr">0x140afb0a0</code></span></td>
   <td style="text-align:left">Menu connection handler</td>
   <td style="text-align:left">Called from MainLoop_Menus</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140bc2a20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GetConnectionResult</span><code class="addr">0x140bc2a20</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> network helper</td>
   <td style="text-align:left">Called from MainLoop_Menus, MainLoop_SetUp</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140affcf0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnNetwork::NetworkSync</span><code class="addr">0x140affcf0</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">Called from MainLoop_SetUp</td>
 </tr>
@@ -9628,6 +9628,7 @@ Dependencies: openssl (1.1.1t+quic), curl</code></pre></div>
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

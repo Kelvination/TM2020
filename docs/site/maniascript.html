@@ -793,7 +793,7 @@ foreach (Id =&gt; Name in IdToName) {
 <h3 id="yield"><a class="anchor" href="#yield">#</a>Yield</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">yield;</code></pre></div>
 <p>Pauses execution and returns control to the engine. The script resumes at the next frame. Every ManiaScript main loop must include <code>yield;</code> to prevent infinite loops.</p>
-<p><strong>Implementation</strong>: The script sets its return state and returns from the bytecode interpreter <code>FUN_1408d1ea0</code>. The engine re-enters the same context on the next frame.</p>
+<p><strong>Implementation</strong>: The script sets its return state and returns from the bytecode interpreter <span class="named-addr"><span class="addr-name">CScriptEngine_ExecuteScript</span><code class="ghidra-ref">FUN_1408d1ea0</code></span>. The engine re-enters the same context on the next frame.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">main() {
     while (True) {
         foreach (Event in PendingEvents) {
@@ -804,7 +804,7 @@ foreach (Id =&gt; Name in IdToName) {
 }</code></pre></div>
 <h3 id="sleep"><a class="anchor" href="#sleep">#</a>Sleep</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">sleep(1000);  // Pause for 1000 milliseconds</code></pre></div>
-<p>Pauses execution for the specified duration in milliseconds. The engine checks the timer each frame by comparing the timestamp at <code>*(context+0xC4)</code> against the global tick counter <code>DAT_141ffad50</code>.</p>
+<p>Pauses execution for the specified duration in milliseconds. The engine checks the timer each frame by comparing the timestamp at <code>*(context+0xC4)</code> against the global tick counter <span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><code class="ghidra-ref">DAT_141ffad50</code></span>.</p>
 <h3 id="wait"><a class="anchor" href="#wait">#</a>Wait</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">wait(Player.IsSpawned);
 wait(Http.IsCompleted);</code></pre></div>
@@ -2377,7 +2377,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 </div>
 </details>
 <h3 id="bytecode-interpreter"><a class="anchor" href="#bytecode-interpreter">#</a>Bytecode interpreter</h3>
-<p>The actual bytecode interpreter is at <code>FUN_1408d1ea0</code>. Its internal structure is unknown -- the opcode format, instruction encoding, and stack layout have not been reverse-engineered. This is one of the highest-priority unknowns in the RE documentation.</p>
+<p>The actual bytecode interpreter is at <span class="named-addr"><span class="addr-name">CScriptEngine_ExecuteScript</span><code class="ghidra-ref">FUN_1408d1ea0</code></span>. Its internal structure is unknown -- the opcode format, instruction encoding, and stack layout have not been reverse-engineered. This is one of the highest-priority unknowns in the RE documentation.</p>
 <h3 id="script-to-engine-binding"><a class="anchor" href="#script-to-engine-binding">#</a>Script-to-engine binding</h3>
 <p>ManiaScript calls engine functions through a binding layer protected by MSVC Control Flow Guard (<code>_guard_check_icall</code>). This validates function pointer targets before indirect calls, including script-to-engine bindings.</p>
 <h3 id="engine-singleton"><a class="anchor" href="#engine-singleton">#</a>Engine singleton</h3>
@@ -2878,6 +2878,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

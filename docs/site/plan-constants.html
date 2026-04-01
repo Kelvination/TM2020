@@ -145,7 +145,7 @@
   <td style="text-align:left">Float 1.0</td>
   <td style="text-align:left">1.0</td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_UNIT_NORMAL_SCALE</span><code class="addr">0x141d1f3c8</code></span></td>
-  <td style="text-align:left">Unity value, used everywhere as DAT_141d1f3c8</td>
+  <td style="text-align:left">Unity value, used everywhere as <span class="named-addr"><span class="addr-name">DAT_UNIT_NORMAL_SCALE</span><span class="ghidra-ref">DAT_141d1f3c8</span></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
@@ -357,7 +357,7 @@
 <hr>
 <h2 id="tuning-parameters-runtime-coefficients"><a class="anchor" href="#tuning-parameters-runtime-coefficients">#</a>Tuning Parameters (Runtime Coefficients)</h2>
 <p>These are multiplier fields in the vehicle state, not hardcoded constants. Default value is 1.0 for all.</p>
-<h3 id="ngameslotphysmgr-tuning-fun_141071b20"><a class="anchor" href="#ngameslotphysmgr-tuning-fun_141071b20">#</a>NGameSlotPhy::SMgr Tuning (FUN_141071b20)</h3>
+<h3 id="ngameslotphysmgr-tuning-fun_141071b20"><a class="anchor" href="#ngameslotphysmgr-tuning-fun_141071b20">#</a>NGameSlotPhy::SMgr Tuning<span class="ghidra-ref"> (FUN_141071b20)</span></h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -392,7 +392,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="cplugvehiclephymodelcustom-modifiers-fun_14061abb0"><a class="anchor" href="#cplugvehiclephymodelcustom-modifiers-fun_14061abb0">#</a>CPlugVehiclePhyModelCustom Modifiers (FUN_14061abb0)</h3>
+<h3 id="cplugvehiclephymodelcustom-modifiers-fun_14061abb0"><a class="anchor" href="#cplugvehiclephymodelcustom-modifiers-fun_14061abb0">#</a>CPlugVehiclePhyModelCustom Modifiers<span class="ghidra-ref"> (FUN_14061abb0)</span></h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -494,7 +494,7 @@
 <tr>
   <td style="text-align:left">Engine accel force curve</td>
   <td style="text-align:left">+0xAB8</td>
-  <td style="text-align:left">FUN_14042bf60 curve lookup</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineAccelForceCurveLookup</span><span class="ghidra-ref">FUN_14042bf60</span></span> curve lookup</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
@@ -1264,7 +1264,7 @@
 </table></div>
 <hr>
 <h2 id="physics-model-type-switch"><a class="anchor" href="#physics-model-type-switch">#</a>Physics Model Type Switch</h2>
-<p>In <code>NSceneVehiclePhy::ComputeForces</code> (FUN_1408427d0), the physics model type at <code>model+0x1790</code> selects the force computation:</p>
+<p>In <code>NSceneVehiclePhy::ComputeForces</code><span class="ghidra-ref"> (FUN_1408427d0)</span>, the physics model type at <code>model+0x1790</code> selects the force computation:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1276,38 +1276,38 @@
 <tbody>
 <tr>
   <td style="text-align:left">0, 1, 2</td>
-  <td style="text-align:left">FUN_140869cd0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869cd0</span></span></td>
   <td style="text-align:left">Standard car physics (4-wheel)</td>
 </tr>
 <tr>
   <td style="text-align:left">3</td>
-  <td style="text-align:left">FUN_14086b060</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><span class="ghidra-ref">FUN_14086b060</span></span></td>
   <td style="text-align:left">2-wheel vehicle model</td>
 </tr>
 <tr>
   <td style="text-align:left">4</td>
-  <td style="text-align:left">FUN_14086bc50</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><span class="ghidra-ref">FUN_14086bc50</span></span></td>
   <td style="text-align:left">Special vehicle type 4</td>
 </tr>
 <tr>
   <td style="text-align:left">5</td>
-  <td style="text-align:left">FUN_140851f00</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span></td>
   <td style="text-align:left">CarSport model</td>
 </tr>
 <tr>
   <td style="text-align:left">6</td>
-  <td style="text-align:left">FUN_14085c9e0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span></td>
   <td style="text-align:left">CarSport extended model</td>
 </tr>
 <tr>
   <td style="text-align:left">0xB (11)</td>
-  <td style="text-align:left">FUN_14086d3b0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><span class="ghidra-ref">FUN_14086d3b0</span></span></td>
   <td style="text-align:left">Additional model type</td>
 </tr>
 </tbody>
 </table></div>
 <hr>
-<h2 id="tire-force-model-fun_14086af20-lateral-grip"><a class="anchor" href="#tire-force-model-fun_14086af20-lateral-grip">#</a>Tire Force Model (FUN_14086af20 -- Lateral Grip)</h2>
+<h2 id="tire-force-model-fun_14086af20-lateral-grip"><a class="anchor" href="#tire-force-model-fun_14086af20-lateral-grip">#</a>Tire Force Model (<span class="named-addr"><span class="addr-name">LateralGripBicycleModel</span><span class="ghidra-ref">FUN_14086af20</span></span> -- Lateral Grip)</h2>
 <p>The tire force model uses a slip-angle based friction curve, not a direct Pacejka formula:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>slip_dot = dot(velocity, contact_normal)
 force_linear = abs(slip_dot) * model[+0x1A5C] - slip_dot^2 * model[+0x1A60]
@@ -1490,6 +1490,7 @@ max_force = grip_from_curve * param_5 * param_4[+0xC] * friction_coef</code></pr
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

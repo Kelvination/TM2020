@@ -336,7 +336,7 @@
   <li>Compressed data in real .Map.Gbx and .Profile.Gbx files fails zlib/deflate decompression</li>
   <li>Byte patterns match LZO1X encoding (first byte encodes literal run length)</li>
   <li>Community tools (GBX.NET, pygbx) all use LZO for GBX body decompression</li>
-  <li>The decompression function <code>FUN_140127aa0</code> implements LZO1X (no "LZO" string because the algorithm is compiled in, not linked as a named library)</li>
+  <li>The decompression function <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> implements LZO1X (no "LZO" string because the algorithm is compiled in, not linked as a named library)</li>
 </ul>
 <p><strong>Both are present</strong>: zlib strings exist for <strong>other purposes</strong> (likely lightmap compression, ghost data, or internal data streams per doc 29 Section 2.6). LZO1X handles GBX body compression but has no string signature.</p>
 <p>Confidence: PARTIALLY CORRECTED</p>
@@ -789,6 +789,7 @@
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

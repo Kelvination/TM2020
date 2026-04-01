@@ -169,7 +169,7 @@ CSmArenaServer::UpdatePhysics (FUN_141339cc0 @ 0x141339cc0)
   +-&gt; CSmArenaPhysics::Actors_UpdateTimed [UNKNOWN addr]
   +-&gt; CSmArenaPhysics::Players_EndFrame [UNKNOWN addr]</code></pre></div>
 <h3 id="physicsstep_tm-per-vehicle-loop"><a class="anchor" href="#physicsstep_tm-per-vehicle-loop">#</a>PhysicsStep_TM per-vehicle loop</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:7-224</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_141501800</p>
+<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:7-224</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><span class="ghidra-ref">FUN_141501800</span></span></p>
 <p>The profiling scope string <code>"PhysicsStep_TM"</code> confirms this is the main per-vehicle physics step.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// FUN_141501800 - PhysicsStep_TM
 void FUN_141501800(param_1, param_2, param_3, param_4) {
@@ -204,7 +204,7 @@ lVar18 = (ulonglong)*param_4 * 1000000;
 // NSceneDyna::PhysicsStep
 FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
 <p>Given TM2020 runs at 100Hz (10ms per physics tick), this produces 10,000,000 microseconds per tick.</p>
-<p>A separate <code>CSmArena::SimulationStep</code> function (at <code>FUN_1412e9ea0</code>, referenced at <span class="named-addr"><span class="addr-name">str_SimulationStep_ref</span><code class="addr">0x141cec210</code></span>) orchestrates the overall simulation step. The strings <code>"SimulationTime"</code> and <code>"SimulationRelativeSpeed"</code> suggest the simulation tracks both absolute and relative (slow-motion/speed-up) time.</p>
+<p>A separate <code>CSmArena::SimulationStep</code> function (at <span class="named-addr"><span class="addr-name">CSmArena::SimulationStep</span><code class="ghidra-ref">FUN_1412e9ea0</code></span>, referenced at <span class="named-addr"><span class="addr-name">str_SimulationStep_ref</span><code class="addr">0x141cec210</code></span>) orchestrates the overall simulation step. The strings <code>"SimulationTime"</code> and <code>"SimulationRelativeSpeed"</code> suggest the simulation tracks both absolute and relative (slow-motion/speed-up) time.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -242,7 +242,7 @@ FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
 <tr>
   <td style="text-align:left"><code>"FixedStepCount"</code></td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FixedStepCount</span><code class="addr">0x141bd9a78</code></span></td>
-  <td style="text-align:left">Referenced by <code>FUN_14062c780</code> -- animation fixed step count</td>
+  <td style="text-align:left">Referenced by <span class="named-addr"><span class="addr-name">AnimationFixedStepCount</span><code class="ghidra-ref">FUN_14062c780</code></span> -- animation fixed step count</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Use_TM_Simulation"</code></td>
@@ -257,13 +257,13 @@ FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
 </tbody>
 </table></div>
 <h3 id="physicsstep_v2-orchestration"><a class="anchor" href="#physicsstep_v2-orchestration">#</a>PhysicsStep_V2 orchestration</h3>
-<p><strong>Evidence</strong>: <code>NSceneDyna__PhysicsStep_V2.c:1-237</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_140803920</p>
+<p><strong>Evidence</strong>: <code>NSceneDyna__PhysicsStep_V2.c:1-237</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><span class="ghidra-ref">FUN_140803920</span></span></p>
 <p>PhysicsStep_V2 is the rigid body dynamics orchestrator.</p>
 <ol>
   <li><strong>Step counter increment</strong>: <code>*(param_1 + 0xf4b) += 1</code> (line 89)</li>
-  <li><strong>Time scale</strong>: <code>fVar16 = (float)param_2[2] * DAT_141d1fa9c</code> (line 133)</li>
-  <li><strong>Collision cache creation</strong>: Calls <code>FUN_1407f9da0</code> (DynamicCollisionCreateCache) (line 150)</li>
-  <li><strong>InternalPhysicsStep dispatch</strong>: Calls <code>FUN_1408025a0</code> if bodies need updating (line 201)</li>
+  <li><strong>Time scale</strong>: <code>fVar16 = (float)param_2[2] * <span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><span class="ghidra-ref">DAT_141d1fa9c</span></span></code> (line 133)</li>
+  <li><strong>Collision cache creation</strong>: Calls <span class="named-addr"><span class="addr-name">NSceneDyna::DynamicCollisionCreateCache</span><code class="ghidra-ref">FUN_1407f9da0</code></span> (DynamicCollisionCreateCache) (line 150)</li>
+  <li><strong>InternalPhysicsStep dispatch</strong>: Calls <span class="named-addr"><span class="addr-name">NSceneDyna::InternalPhysicsStep</span><code class="ghidra-ref">FUN_1408025a0</code></span> if bodies need updating (line 201)</li>
   <li><strong>Body force clearing</strong>: Loop zeros <code>+0x8</code> in body array with stride <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span> (56 bytes) (lines 214-232)</li>
 </ol>
 <p><strong>Struct Offset</strong>: <code>param_1[0xf4b]</code> = physics step counter (byte offset 0x7A58).</p>
@@ -389,12 +389,12 @@ remainder = scaled_dt - (scaled_dt_per_step * (num_substeps - 1));
 </tr>
 <tr>
   <td style="text-align:left">Time constant</td>
-  <td style="text-align:left"><code>DAT_141d1fa9c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><code class="ghidra-ref">DAT_141d1fa9c</code></span></td>
   <td style="text-align:left">Used as divisor when capping (likely 1000.0f)</td>
 </tr>
 <tr>
   <td style="text-align:left">Microsecond conversion</td>
-  <td style="text-align:left"><code>_DAT_141d1fe58</code> (double)</td>
+  <td style="text-align:left"><code>_<span class="named-addr"><span class="addr-name">DAT_MICROSECOND_SCALE</span><span class="ghidra-ref">DAT_141d1fe58</span></span></code> (double)</td>
   <td style="text-align:left">Multiplied by sub_dt for time advance</td>
 </tr>
 </tbody>
@@ -509,42 +509,42 @@ remainder = scaled_dt - (scaled_dt_per_step * (num_substeps - 1));
 <tbody>
 <tr>
   <td style="text-align:center">0, 1, 2</td>
-  <td style="text-align:center"><code>FUN_140869cd0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="ghidra-ref">FUN_140869cd0</code></span></td>
   <td style="text-align:center">Steer01/02/03 (default)</td>
   <td style="text-align:center">Base/legacy models</td>
   <td style="text-align:left">2 params, simplest model</td>
 </tr>
 <tr>
   <td style="text-align:center">3</td>
-  <td style="text-align:center"><code>FUN_14086b060</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><code class="ghidra-ref">FUN_14086b060</code></span></td>
   <td style="text-align:center">Steer04 (M4)</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">2 params, lateral friction focus</td>
 </tr>
 <tr>
   <td style="text-align:center">4</td>
-  <td style="text-align:center"><code>FUN_14086bc50</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><code class="ghidra-ref">FUN_14086bc50</code></span></td>
   <td style="text-align:center">Steer05 (M5)</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">2 params, TMNF-era model</td>
 </tr>
 <tr>
   <td style="text-align:center">5</td>
-  <td style="text-align:center"><code>FUN_140851f00</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span></td>
   <td style="text-align:center">Steer06 (M6)</td>
   <td style="text-align:center"><strong>CarSport (Stadium)</strong></td>
   <td style="text-align:left">3 params, full simulation</td>
 </tr>
 <tr>
   <td style="text-align:center">6</td>
-  <td style="text-align:center"><code>FUN_14085c9e0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085c9e0</code></span></td>
   <td style="text-align:center">[NEW in TM2020]</td>
   <td style="text-align:center"><strong>SnowCar</strong> or <strong>RallyCar</strong></td>
   <td style="text-align:left">3 params, new model</td>
 </tr>
 <tr>
   <td style="text-align:center">0xB (11)</td>
-  <td style="text-align:center"><code>FUN_14086d3b0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="ghidra-ref">FUN_14086d3b0</code></span></td>
   <td style="text-align:center">[NEW in TM2020]</td>
   <td style="text-align:center"><strong>DesertCar</strong> or variant</td>
   <td style="text-align:left">3 params, newest model</td>
@@ -588,7 +588,7 @@ if ((fVar9 * fVar9 &lt; fVar8) &amp;&amp; (DAT_141d1ed34 &lt; fVar9)) {
     local_12c = local_12c * fVar9;
     local_128 = local_128 * fVar9;
 }</code></pre></div>
-<p>The speed cap is a <strong>3D magnitude cap</strong> (not per-axis). The car's total speed <code>sqrt(vx^2 + vy^2 + vz^2)</code> is clamped, preserving direction. The constant <code>DAT_141d1ed34</code> is a minimum threshold that prevents division by near-zero.</p>
+<p>The speed cap is a <strong>3D magnitude cap</strong> (not per-axis). The car's total speed <code>sqrt(vx^2 + vy^2 + vz^2)</code> is clamped, preserving direction. The constant <span class="named-addr"><span class="addr-name">DAT_MIN_SPEED_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ed34</code></span> is a minimum threshold that prevents division by near-zero.</p>
 </div>
 </details>
 <h3 id="checkpoint-reset-logic"><a class="anchor" href="#checkpoint-reset-logic">#</a>Checkpoint reset logic</h3>
@@ -946,7 +946,7 @@ WheelRRd / dRRWheel   (Rear Right dynamic)</code></pre></div>
 <h3 id="reactor-jet-model"><a class="anchor" href="#reactor-jet-model">#</a>Reactor (jet) model</h3>
 <p>Four reactors are named <code>FLReactor</code>, <code>FRReactor</code>, <code>RLReactor</code>, <code>RRReactor</code> (at <span class="named-addr"><span class="addr-name">str_FLReactor</span><code class="addr">0x141bd2cc8</code></span>-<span class="named-addr"><span class="addr-name">str_RRReactor</span><code class="addr">0x141bd2cf8</code></span>). Each wheel position can have an associated thruster/reactor for "reactor" gameplay elements.</p>
 <h3 id="contact-point-processing"><a class="anchor" href="#contact-point-processing">#</a>Contact point processing</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c:1-51</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407d2b90</p>
+<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c:1-51</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</span><span class="ghidra-ref">FUN_1407d2b90</span></span></p>
 <p>Contact points are processed in two phases:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Phase 1: Process vehicle-world contacts (stride 0x58 = 88 bytes per contact)
 if (*(uint *)(param_1 + 400) != 0) {
@@ -1014,10 +1014,10 @@ for (uVar11 = 1; uVar11 &lt; uVar17; uVar11++) {
 *(int *)(lVar19 + 0x15b0) = iVar9;  // ContactStateChangeCount</code></pre></div>
 <p>This detects rapid contact/airborne oscillation (a vehicle bouncing). The <code>ContactStateChangeCount</code> at <code>vehicle+0x15B0</code> affects game logic decisions like fragile surface checks.</p>
 <h3 id="vehicle-to-vehicle-interaction-paircomputeforces"><a class="anchor" href="#vehicle-to-vehicle-interaction-paircomputeforces">#</a>Vehicle-to-vehicle interaction (PairComputeForces)</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PairComputeForces.c:1-93</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_140842ed0</p>
+<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PairComputeForces.c:1-93</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PairComputeForces</span><span class="ghidra-ref">FUN_140842ed0</span></span></p>
 <p>When two vehicles collide, <code>PairComputeForces</code> prepares the two-body state:</p>
 <ol>
-  <li>Resolves both vehicle entities via <code>FUN_1407bea40</code></li>
+  <li>Resolves both vehicle entities via <span class="named-addr"><span class="addr-name">NSceneVehiclePhy_ResolveEntity</span><code class="ghidra-ref">FUN_1407bea40</code></span></li>
   <li>Fetches velocity, position, and force data for BOTH vehicles</li>
   <li>Initializes boost start time for both if needed</li>
   <li>Copies current transform to previous for BOTH vehicles</li>
@@ -1192,31 +1192,31 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 <tr>
   <td style="text-align:left"><code>"FrictionDynaIterCount"</code></td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FrictionDynaIterCount</span><code class="addr">0x141bed9e8</code></span></td>
-  <td style="text-align:left"><code>FUN_1407f3fc0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::SSolverParams_Registration</span><code class="ghidra-ref">FUN_1407f3fc0</code></span></td>
   <td style="text-align:left">Dynamic friction solver iteration count</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"FrictionStaticIterCount"</code></td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FrictionStaticIterCount</span><code class="addr">0x141beda38</code></span></td>
-  <td style="text-align:left"><code>FUN_1407f3fc0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::SSolverParams_Registration</span><code class="ghidra-ref">FUN_1407f3fc0</code></span></td>
   <td style="text-align:left">Static friction solver iteration count</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Tunings.CoefFriction"</code></td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Tunings_CoefFriction</span><code class="addr">0x141cb72c8</code></span></td>
-  <td style="text-align:left"><code>FUN_141071b20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NGameSlotPhy::SMgr_TuningsRegistration</span><code class="ghidra-ref">FUN_141071b20</code></span></td>
   <td style="text-align:left">Friction tuning coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Tunings.CoefAcceleration"</code></td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Tunings_CoefAcceleration</span><code class="addr">0x141cb72a8</code></span></td>
-  <td style="text-align:left"><code>FUN_141071b20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NGameSlotPhy::SMgr_TuningsRegistration</span><code class="ghidra-ref">FUN_141071b20</code></span></td>
   <td style="text-align:left">Acceleration tuning coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Tunings.Sensibility"</code></td>
   <td style="text-align:left">[decompiled]</td>
-  <td style="text-align:left"><code>FUN_141071b20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NGameSlotPhy::SMgr_TuningsRegistration</span><code class="ghidra-ref">FUN_141071b20</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Sensibility tuning</td>
 </tr>
 </tbody>
@@ -1229,7 +1229,7 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
   <li><code>Tunings.Sensibility</code> at struct offset <span class="named-addr"><span class="addr-name">slotPhyMgr_sensibility</span><code class="addr">0x60</code></span></li>
 </ul>
 <h3 id="friction-solver-configuration"><a class="anchor" href="#friction-solver-configuration">#</a>Friction solver configuration</h3>
-<p><strong>Evidence</strong>: <code>FrictionIterCount_Config.c:1-105</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407f3fc0</p>
+<p><strong>Evidence</strong>: <code>FrictionIterCount_Config.c:1-105</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneDyna::SSolverParams_Registration</span><span class="ghidra-ref">FUN_1407f3fc0</span></span></p>
 <p>The <code>NSceneDyna::SSolverParams</code> struct (0x2C = 44 bytes):</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1468,7 +1468,7 @@ for each item in set at param_1 + 0xA58:
 </tr>
 </tbody>
 </table></div>
-<p>The global table at <code>DAT_141fabc20</code> maps collision type bytes (0x00-0xFF) to layer masks. The actual mask is <code>layer_table[type] & ~body_exclusion_mask</code>.</p>
+<p>The global table at <span class="named-addr"><span class="addr-name">DAT_COLLISION_LAYER_TABLE</span><code class="ghidra-ref">DAT_141fabc20</code></span> maps collision type bytes (0x00-0xFF) to layer masks. The actual mask is <code>layer_table[type] & ~body_exclusion_mask</code>.</p>
 <h3 id="contact-merging-algorithm"><a class="anchor" href="#contact-merging-algorithm">#</a>Contact merging algorithm</h3>
 <p><strong>Evidence</strong>: <code>NHmsCollision__MergeContacts.c:1-271</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <p>The algorithm reduces redundant contact points to improve solver stability:</p>
@@ -1545,9 +1545,9 @@ Phase 3: Remove consumed contacts
 <p><code>NHmsCollision::BuildDiscreteItems_AccelStructure</code> and <code>NHmsCollision::ProgressiveTreeBuild_PrepareInput</code> suggest a tree-based spatial acceleration structure (likely BVH or k-d tree) for broadphase collision queries.</p>
 <h3 id="collision-in-dynamics"><a class="anchor" href="#collision-in-dynamics">#</a>Collision in dynamics</h3>
 <ul>
-  <li><code>NSceneDyna::DynamicCollisionCreateCache</code> (<code>FUN_1407f9da0</code>) -- Pre-allocates collision cache</li>
-  <li><code>NSceneDyna::Dynas_StaticCollisionDetection</code> (<code>FUN_1407fc730</code>) -- Runs static collision for dynamic objects</li>
-  <li><code>NSceneDyna::Dyna_GetItemsForStaticCollision</code> (<code>FUN_1407fc3c0</code>) -- Gathers items for collision</li>
+  <li><code>NSceneDyna::DynamicCollisionCreateCache</code> (<span class="named-addr"><span class="addr-name">NSceneDyna::DynamicCollisionCreateCache</span><code class="ghidra-ref">FUN_1407f9da0</code></span>) -- Pre-allocates collision cache</li>
+  <li><code>NSceneDyna::Dynas_StaticCollisionDetection</code> (<span class="named-addr"><span class="addr-name">NSceneDyna::Dynas_StaticCollisionDetection</span><code class="ghidra-ref">FUN_1407fc730</code></span>) -- Runs static collision for dynamic objects</li>
+  <li><code>NSceneDyna::Dyna_GetItemsForStaticCollision</code> (<span class="named-addr"><span class="addr-name">NSceneDyna::Dyna_GetItemsForStaticCollision</span><code class="ghidra-ref">FUN_1407fc3c0</code></span>) -- Gathers items for collision</li>
   <li><code>NSceneDyna::BroadPhase_BruteForce</code> -- Brute-force broadphase fallback</li>
 </ul>
 <hr>
@@ -1595,17 +1595,17 @@ pfVar2[3] = angular_force.z * angular_mass.z * param_9 + pfVar2[3];</code></pre>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebccfc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><code class="ghidra-ref">DAT_141ebccfc</code></span></td>
   <td style="text-align:left">Sleep detection enabled flag</td>
   <td style="text-align:center">int</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="ghidra-ref">DAT_141ebcd00</code></span></td>
   <td style="text-align:left">Sleep velocity damping factor</td>
   <td style="text-align:center">float</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd04</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="ghidra-ref">DAT_141ebcd04</code></span></td>
   <td style="text-align:left">Sleep velocity threshold (linear m/s; squared before comparison)</td>
   <td style="text-align:center">float</td>
 </tr>
@@ -1670,7 +1670,7 @@ pfVar2[3] = angular_force.z * angular_mass.z * param_9 + pfVar2[3];</code></pre>
     FUN_1407d2870(param_1, lVar9, *param_4);                      // BREAK!
 }</code></pre></div>
 <p><strong>Condition 1</strong>: Bits 11 AND 12 of <code>ContactPhyFlags</code> (<code>vehicle+0x1C7C</code>) must BOTH be set (mask 0x1800).</p>
-<p><strong>Condition 2</strong>: <code>ContactThreshold</code> (<code>vehicle+0x1C8C</code>, a float) must exceed the global threshold <code>DAT_141d1ef7c</code>. This is a collision severity metric -- gentle landings pass, hard impacts fail.</p>
+<p><strong>Condition 2</strong>: <code>ContactThreshold</code> (<code>vehicle+0x1C8C</code>, a float) must exceed the global threshold <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span>. This is a collision severity metric -- gentle landings pass, hard impacts fail.</p>
 <p><strong>Condition 3</strong>: The status nibble (<code>vehicle+0x128C & 0xF</code>) must NOT be 2 or 3. Unsigned arithmetic: <code>(0 - 2) = 0xFFFFFFFE</code>, so <code>1 < 0xFFFFFFFE</code> is true. Nibble values 0, 1, and 4+ all pass.</p>
 <hr>
 <h2 id="what-the-wallloop-adhesion-physics-look-like"><a class="anchor" href="#what-the-wallloop-adhesion-physics-look-like">#</a>What the wall/loop adhesion physics look like</h2>
@@ -1687,7 +1687,7 @@ pfVar2[3] = angular_force.z * angular_mass.z * param_9 + pfVar2[3];</code></pre>
 <ol>
   <li><strong>Speed threshold for falling off</strong>: No explicit "minimum speed for wall riding" constant exists. The car falls when gravity exceeds centripetal force plus tire friction. This is emergent.</li>
 </ol>
-<p>The actual per-wheel force model functions (FUN_140851f00 for CarSport, etc.) are NOT decompiled. The force computation that makes wall-riding work is inside those un-decompiled functions.</p>
+<p>The actual per-wheel force model functions (<span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span> for CarSport, etc.) are NOT decompiled. The force computation that makes wall-riding work is inside those un-decompiled functions.</p>
 <hr>
 <h2 id="complete-vehicle-state-structure"><a class="anchor" href="#complete-vehicle-state-structure">#</a>Complete vehicle state structure</h2>
 <p><strong>Evidence</strong>: All 18 decompiled files, aggregated <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> for offsets observed in code; <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> for gaps</p>
@@ -2043,7 +2043,7 @@ pfVar2[3] = angular_force.z * angular_mass.z * param_9 + pfVar2[3];</code></pre>
   <td style="text-align:center">4</td>
   <td style="text-align:center">f32</td>
   <td style="text-align:left"><code>ContactThreshold</code></td>
-  <td style="text-align:left">PhysicsStep_TM: compared to <code>DAT_141d1ef7c</code></td>
+  <td style="text-align:left">PhysicsStep_TM: compared to <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x1C90</code></td>
@@ -2755,7 +2755,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fa9c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><code class="ghidra-ref">DAT_141d1fa9c</code></span></td>
   <td style="text-align:left">MAX_SUBSTEP_FLOAT</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">1000.0f</td>
@@ -2763,7 +2763,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Divisor when sub-step count capped</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fe58</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MICROSECOND_SCALE</span><code class="ghidra-ref">DAT_141d1fe58</code></span></td>
   <td style="text-align:left">MICROSECOND_SCALE</td>
   <td style="text-align:center">double</td>
   <td style="text-align:center">1000000.0</td>
@@ -2771,7 +2771,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Converts sub_dt to microseconds</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ed34</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MIN_SPEED_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ed34</code></span></td>
   <td style="text-align:left">MIN_SPEED_THRESHOLD</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -2779,7 +2779,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Minimum maxSpeed for clamping</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ee10</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_STEP_PARAM</span><code class="ghidra-ref">DAT_141d1ee10</code></span></td>
   <td style="text-align:left">STEP_PARAM</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -2787,7 +2787,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Parameter to step functions</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ef7c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span></td>
   <td style="text-align:left">FRAGILE_SEVERITY</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -2795,7 +2795,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Collision severity for fragile break</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fa18</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SURFACE_HEIGHT_SCALE</span><code class="ghidra-ref">DAT_141d1fa18</code></span></td>
   <td style="text-align:left">SURFACE_HEIGHT_SCALE</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -2803,7 +2803,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Surface height scale factor</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ecc4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MIN_NORMAL_LEN_SQ</span><code class="ghidra-ref">DAT_141d1ecc4</code></span></td>
   <td style="text-align:left">MIN_NORMAL_LEN_SQ</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">~0.0001</td>
@@ -2811,7 +2811,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Prevents zero-division</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fc24</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_NORMAL_LEN_SQ</span><code class="ghidra-ref">DAT_141d1fc24</code></span></td>
   <td style="text-align:left">MAX_NORMAL_LEN_SQ</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">~100.0</td>
@@ -2819,7 +2819,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Sanity check</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1f3c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_UNIT_NORMAL_SCALE</span><code class="ghidra-ref">DAT_141d1f3c8</code></span></td>
   <td style="text-align:left">UNIT_NORMAL_SCALE</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">1.0f</td>
@@ -2827,7 +2827,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Normalized normal scale</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141a64350</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_ZERO_VEC_XY</span><code class="ghidra-ref">DAT_141a64350</code></span></td>
   <td style="text-align:left">ZERO_VEC_XY</td>
   <td style="text-align:center">2xfloat</td>
   <td style="text-align:center">{0.0, 0.0}</td>
@@ -2835,7 +2835,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Zero vector constant</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141a64358</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_ZERO_VEC_Z</span><code class="ghidra-ref">DAT_141a64358</code></span></td>
   <td style="text-align:left">ZERO_VEC_Z</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">0.0f</td>
@@ -2843,7 +2843,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Zero Z component</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebccfc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><code class="ghidra-ref">DAT_141ebccfc</code></span></td>
   <td style="text-align:left">SLEEP_ENABLED</td>
   <td style="text-align:center">int</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -2851,7 +2851,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Sleep detection toggle</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="ghidra-ref">DAT_141ebcd00</code></span></td>
   <td style="text-align:left">SLEEP_DAMPING</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>, <1.0]</span></td>
@@ -2859,7 +2859,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Velocity damping factor</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd04</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="ghidra-ref">DAT_141ebcd04</code></span></td>
   <td style="text-align:left">SLEEP_THRESHOLD</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -2867,7 +2867,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Sleep velocity threshold</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141e64060</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_STACK_COOKIE</span><code class="ghidra-ref">DAT_141e64060</code></span></td>
   <td style="text-align:left">STACK_COOKIE</td>
   <td style="text-align:center">uint64</td>
   <td style="text-align:center">[random]</td>
@@ -2875,7 +2875,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Security check cookie</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141fabc20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_COLLISION_LAYER_TABLE</span><code class="ghidra-ref">DAT_141fabc20</code></span></td>
   <td style="text-align:left">COLLISION_LAYER_TABLE</td>
   <td style="text-align:center">uint[256]</td>
   <td style="text-align:center">[256 entries]</td>
@@ -3117,7 +3117,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
 </table></div>
 <p><code>NoGrip</code> (<span class="named-addr"><span class="addr-name">str_NoGrip</span><code class="addr">0x141be1244</code></span>) is NOT a material -- it is a gameplay trigger zone that overrides normal friction. <code>SlowMotion</code> (<span class="named-addr"><span class="addr-name">str_SlowMotion</span><code class="addr">0x141be12d0</code></span>) reduces <code>SimulationTimeCoef</code>, slowing the entire physics simulation for that vehicle.</p>
 <h3 id="how-does-the-gearboxengine-simulation-work"><a class="anchor" href="#how-does-the-gearboxengine-simulation-work">#</a>"How does the gearbox/engine simulation work?"</h3>
-<p>The decompiled <code>ComputeForces</code> dispatcher does NOT contain engine/gearbox logic. That code lives inside the force model functions (FUN_140851f00 etc.).</p>
+<p>The decompiled <code>ComputeForces</code> dispatcher does NOT contain engine/gearbox logic. That code lives inside the force model functions (<span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span> etc.).</p>
 <p>From TMNF cross-reference (where the M6/Steer06 model was fully decompiled):</p>
 <ul>
   <li>6 gear ratios stored in the tuning GBX (TM2020 expanded to 8 gears)</li>
@@ -3136,7 +3136,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
   <li><strong>Force model variants</strong>: The 7 force computation functions need decompilation to reveal the actual per-wheel tire model.</li>
 </ol>
 <ol>
-  <li><strong>Tire model details</strong>: The wheel has SlipCoef and TireWear but the slip curve function is buried inside force model functions. Decompiling <code>FUN_140869cd0</code> (standard car) would reveal the tire model.</li>
+  <li><strong>Tire model details</strong>: The wheel has SlipCoef and TireWear but the slip curve function is buried inside force model functions. Decompiling <span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="ghidra-ref">FUN_140869cd0</code></span> (standard car) would reveal the tire model.</li>
 </ol>
 <ol>
   <li><strong>Friction solver</strong>: <code>NSceneDyna::InternalPhysicsStep</code> (4991 bytes) likely contains the full Gauss-Seidel solver loop.</li>
@@ -3154,7 +3154,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
   <li><strong>Vehicle model data</strong>: The <code>VehiclePhyModelCustom.Gbx</code> file format contains tunable parameters (spring rates, damper values, engine curves, gear ratios).</li>
 </ol>
 <ol>
-  <li><strong>Water buoyancy/drag formulas</strong>: FUN_1407fb580 needs decompilation.</li>
+  <li><strong>Water buoyancy/drag formulas</strong>: <span class="named-addr"><span class="addr-name">NSceneDyna_ComputeWaterForceForBody</span><span class="ghidra-ref">FUN_1407fb580</span></span> needs decompilation.</li>
 </ol>
 <ol>
   <li><strong>Cross-version determinism</strong>: Whether replays/ghosts from one game version produce identical results on another.</li>
@@ -3402,42 +3402,42 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
 <tr>
   <td style="text-align:center">Base</td>
   <td style="text-align:center">0, 1, 2</td>
-  <td style="text-align:center"><code>FUN_140869cd0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="ghidra-ref">FUN_140869cd0</code></span></td>
   <td style="text-align:center">2</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">M4</td>
   <td style="text-align:center">3</td>
-  <td style="text-align:center"><code>FUN_14086b060</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><code class="ghidra-ref">FUN_14086b060</code></span></td>
   <td style="text-align:center">2</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">M5</td>
   <td style="text-align:center">4</td>
-  <td style="text-align:center"><code>FUN_14086bc50</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><code class="ghidra-ref">FUN_14086bc50</code></span></td>
   <td style="text-align:center">2</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">M6 (CarSport)</td>
   <td style="text-align:center">5</td>
-  <td style="text-align:center"><code>FUN_140851f00</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span></td>
   <td style="text-align:center">3</td>
   <td style="text-align:left"><span class="badge badge-unknown">[UNKNOWN -- likely >4KB based on TMNF's M6]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">New Model A</td>
   <td style="text-align:center">6</td>
-  <td style="text-align:center"><code>FUN_14085c9e0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085c9e0</code></span></td>
   <td style="text-align:center">3</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">New Model B</td>
   <td style="text-align:center">0xB</td>
-  <td style="text-align:center"><code>FUN_14086d3b0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="ghidra-ref">FUN_14086d3b0</code></span></td>
   <td style="text-align:center">3</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
@@ -3549,7 +3549,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
                     +-&gt; NSceneDyna::InternalPhysicsStep (FUN_1408025a0)
                     +-&gt; Body force clearing (stride 0x38)</code></pre></div>
 <h3 id="per-vehicle-physics-step-physicsstep_tm"><a class="anchor" href="#per-vehicle-physics-step-physicsstep_tm">#</a>Per-vehicle physics step (PhysicsStep_TM)</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:7-224</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_141501800</p>
+<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:7-224</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><span class="ghidra-ref">FUN_141501800</span></span></p>
 <p>The profiling scope string <code>"PhysicsStep_TM"</code> confirms this is the main per-vehicle physics step.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// FUN_141501800 - PhysicsStep_TM
 void FUN_141501800(param_1, param_2, param_3, param_4) {
@@ -3585,13 +3585,13 @@ lVar18 = (ulonglong)*param_4 * 1000000;
 FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
 <p>The internal time unit is <strong>microseconds</strong>. The input tick is multiplied by 1,000,000. TM2020 runs at 100Hz (10ms per tick). This produces 10,000,000 microseconds per tick.</p>
 <h3 id="how-physicsstep_v2-orchestrates-rigid-body-dynamics"><a class="anchor" href="#how-physicsstep_v2-orchestrates-rigid-body-dynamics">#</a>How PhysicsStep_V2 orchestrates rigid body dynamics</h3>
-<p><strong>Evidence</strong>: <code>NSceneDyna__PhysicsStep_V2.c:1-237</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_140803920</p>
+<p><strong>Evidence</strong>: <code>NSceneDyna__PhysicsStep_V2.c:1-237</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><span class="ghidra-ref">FUN_140803920</span></span></p>
 <p>NSceneDyna::PhysicsStep_V2 is the rigid body dynamics orchestrator (a system that manages the core rigid body simulation, separate from vehicle-specific physics).</p>
 <ol>
   <li><strong>Step counter increment</strong>: <code>*(param_1 + 0xf4b) += 1</code> (line 89)</li>
-  <li><strong>Time scale</strong>: <code>fVar16 = (float)param_2[2] * DAT_141d1fa9c</code> (line 133) -- <code>DAT_141d1fa9c</code> is likely 1000.0f (the max sub-step cap value reused as a divisor)</li>
-  <li><strong>Collision cache creation</strong>: Calls <code>FUN_1407f9da0</code> (DynamicCollisionCreateCache) (line 150)</li>
-  <li><strong>InternalPhysicsStep dispatch</strong>: Calls <code>FUN_1408025a0</code> if bodies need updating (line 201)</li>
+  <li><strong>Time scale</strong>: <code>fVar16 = (float)param_2[2] * <span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><span class="ghidra-ref">DAT_141d1fa9c</span></span></code> (line 133) -- <span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><code class="ghidra-ref">DAT_141d1fa9c</code></span> is likely 1000.0f (the max sub-step cap value reused as a divisor)</li>
+  <li><strong>Collision cache creation</strong>: Calls <span class="named-addr"><span class="addr-name">NSceneDyna::DynamicCollisionCreateCache</span><code class="ghidra-ref">FUN_1407f9da0</code></span> (DynamicCollisionCreateCache) (line 150)</li>
+  <li><strong>InternalPhysicsStep dispatch</strong>: Calls <span class="named-addr"><span class="addr-name">NSceneDyna::InternalPhysicsStep</span><code class="ghidra-ref">FUN_1408025a0</code></span> if bodies need updating (line 201)</li>
   <li><strong>Body force clearing</strong>: Loop zeros <code>+0x8</code> in body array with stride <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span> (56 bytes) (lines 214-232)</li>
 </ol>
 <p><strong>Struct Offset</strong>: <code>param_1[0xf4b]</code> = physics step counter (8-byte aligned: byte offset 0x7A58)</p>
@@ -3639,42 +3639,42 @@ FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
 <tbody>
 <tr>
   <td style="text-align:center">0, 1, 2</td>
-  <td style="text-align:center"><code>FUN_140869cd0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="ghidra-ref">FUN_140869cd0</code></span></td>
   <td style="text-align:center">Steer01/02/03 (default)</td>
   <td style="text-align:center">Base/legacy models</td>
   <td style="text-align:left">2 params, simplest model</td>
 </tr>
 <tr>
   <td style="text-align:center">3</td>
-  <td style="text-align:center"><code>FUN_14086b060</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><code class="ghidra-ref">FUN_14086b060</code></span></td>
   <td style="text-align:center">Steer04 (M4)</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">2 params, lateral friction focus</td>
 </tr>
 <tr>
   <td style="text-align:center">4</td>
-  <td style="text-align:center"><code>FUN_14086bc50</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><code class="ghidra-ref">FUN_14086bc50</code></span></td>
   <td style="text-align:center">Steer05 (M5)</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">2 params, TMNF-era model</td>
 </tr>
 <tr>
   <td style="text-align:center">5</td>
-  <td style="text-align:center"><code>FUN_140851f00</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span></td>
   <td style="text-align:center">Steer06 (M6)</td>
   <td style="text-align:center"><strong>StadiumCar / CarSport</strong></td>
   <td style="text-align:left">3 params, full simulation</td>
 </tr>
 <tr>
   <td style="text-align:center">6</td>
-  <td style="text-align:center"><code>FUN_14085c9e0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085c9e0</code></span></td>
   <td style="text-align:center">[NEW in TM2020]</td>
   <td style="text-align:center"><strong>SnowCar</strong> or <strong>RallyCar</strong></td>
   <td style="text-align:left">3 params, new model</td>
 </tr>
 <tr>
   <td style="text-align:center">0xB (11)</td>
-  <td style="text-align:center"><code>FUN_14086d3b0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="ghidra-ref">FUN_14086d3b0</code></span></td>
   <td style="text-align:center">[NEW in TM2020]</td>
   <td style="text-align:center"><strong>DesertCar</strong> or variant</td>
   <td style="text-align:left">3 params, newest model</td>
@@ -4008,7 +4008,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
   <td style="text-align:center">varies</td>
   <td style="text-align:center">struct</td>
   <td style="text-align:left"><code>ContactData</code></td>
-  <td style="text-align:left">BeforeMgrDynaUpdate: <code>FUN_14084c840(ptr, lVar19 + 0x12D8)</code></td>
+  <td style="text-align:left">BeforeMgrDynaUpdate: <code><span class="named-addr"><span class="addr-name">ContactProcessorCallback</span><span class="ghidra-ref">FUN_14084c840</span></span>(ptr, lVar19 + 0x12D8)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x12DC</code></td>
@@ -4029,7 +4029,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
   <td style="text-align:center">varies</td>
   <td style="text-align:center">struct</td>
   <td style="text-align:left"><code>MatchData</code></td>
-  <td style="text-align:left">ArenaPhysics_CarPhyUpdate: <code>FUN_141403460(uVar4, lVar3 + 0x12F0)</code></td>
+  <td style="text-align:left">ArenaPhysics_CarPhyUpdate: <code><span class="named-addr"><span class="addr-name">MatchDataCallback</span><span class="ghidra-ref">FUN_141403460</span></span>(uVar4, lVar3 + 0x12F0)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x1314</code></td>
@@ -4043,7 +4043,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
   <td style="text-align:center">4</td>
   <td style="text-align:center">uint</td>
   <td style="text-align:left"><code>Param</code></td>
-  <td style="text-align:left">BeforeMgrDynaUpdate: <code>FUN_1407be770(uVar4, <em>(lVar19 + 0x10), </em>(lVar19 + 0x1338))</code></td>
+  <td style="text-align:left">BeforeMgrDynaUpdate: <code><span class="named-addr"><span class="addr-name">VehicleParamLookup</span><span class="ghidra-ref">FUN_1407be770</span></span>(uVar4, <em>(lVar19 + 0x10), </em>(lVar19 + 0x1338))</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x1348</code></td>
@@ -4092,14 +4092,14 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
   <td style="text-align:center">8</td>
   <td style="text-align:center">f64/2xf32</td>
   <td style="text-align:left"><code>InitialVelocity_XY</code></td>
-  <td style="text-align:left">ComputeForces: set to <code>DAT_141a64350</code> (zero)</td>
+  <td style="text-align:left">ComputeForces: set to <span class="named-addr"><span class="addr-name">DAT_ZERO_VEC_XY</span><code class="ghidra-ref">DAT_141a64350</code></span> (zero)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x1578</code></td>
   <td style="text-align:center">4</td>
   <td style="text-align:center">f32</td>
   <td style="text-align:left"><code>InitialVelocity_Z</code></td>
-  <td style="text-align:left">ComputeForces: set to <code>DAT_141a64358</code> (zero)</td>
+  <td style="text-align:left">ComputeForces: set to <span class="named-addr"><span class="addr-name">DAT_ZERO_VEC_Z</span><code class="ghidra-ref">DAT_141a64358</code></span> (zero)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x1584</code></td>
@@ -4330,7 +4330,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
   <td style="text-align:center">8</td>
   <td style="text-align:center">ptr</td>
   <td style="text-align:left"><code>AuxPhysicsPtr</code></td>
-  <td style="text-align:left">BeforeMgrDynaUpdate: if set, calls FUN_1407cf3d0</td>
+  <td style="text-align:left">BeforeMgrDynaUpdate: if set, calls <span class="named-addr"><span class="addr-name">AuxPhysicsUpdate</span><span class="ghidra-ref">FUN_1407cf3d0</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x1BC0</code></td>
@@ -4344,7 +4344,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
   <td style="text-align:center">8</td>
   <td style="text-align:center">ptr</td>
   <td style="text-align:left"><code>ContactProcessorPtr</code></td>
-  <td style="text-align:left">BeforeMgrDynaUpdate: if set, calls FUN_14084c840</td>
+  <td style="text-align:left">BeforeMgrDynaUpdate: if set, calls <span class="named-addr"><span class="addr-name">ContactProcessorCallback</span><span class="ghidra-ref">FUN_14084c840</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x1BD8</code></td>
@@ -4386,7 +4386,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
   <td style="text-align:center">4</td>
   <td style="text-align:center">f32</td>
   <td style="text-align:left"><code>ContactThreshold</code></td>
-  <td style="text-align:left">PhysicsStep_TM: compared to <code>DAT_141d1ef7c</code></td>
+  <td style="text-align:left">PhysicsStep_TM: compared to <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x1C90</code></td>
@@ -4493,7 +4493,7 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
   <td style="text-align:left"><code>+0x30D8</code></td>
   <td style="text-align:center">varies</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">ComputeForces: <code>FUN_140841ca0(uVar3, lVar6, local_118 + 0x30D8, param_5)</code></td>
+  <td style="text-align:left">ComputeForces: <code><span class="named-addr"><span class="addr-name">InitWheelContactState</span><span class="ghidra-ref">FUN_140841ca0</span></span>(uVar3, lVar6, local_118 + 0x30D8, param_5)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x31A8</code></td>
@@ -4554,7 +4554,7 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <h2 id="how-the-tirewheel-contact-model-works"><a class="anchor" href="#how-the-tirewheel-contact-model-works">#</a>How the tire/wheel contact model works</h2>
 <p>Contact points, wheel contact history, boost forces, and speed clamping all interact to produce the vehicle's tire physics behavior.</p>
 <h3 id="contact-point-processing-1"><a class="anchor" href="#contact-point-processing-1">#</a>Contact point processing</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c:1-51</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407d2b90</p>
+<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c:1-51</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</span><span class="ghidra-ref">FUN_1407d2b90</span></span></p>
 <p>Contact points are processed in two phases:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Phase 1: Process vehicle-world contacts (stride 0x58 = 88 bytes per contact)
 if (*(uint *)(param_1 + 400) != 0) {
@@ -4662,7 +4662,7 @@ if (uVar2 &lt;= param_5 &amp;&amp; param_5 &lt;= uVar2 + *(uint *)(lVar6 + 0x16e
 <p>The boost force is:</p>
 <ul>
   <li><strong>Linearly interpolated</strong>: from 0 at start to <code>strength * modelScale</code> at end of duration</li>
-  <li><strong>Direction</strong>: applied via <code>FUN_1407bdf40</code> (a force-at-direction function on the dyna manager)</li>
+  <li><strong>Direction</strong>: applied via <span class="named-addr"><span class="addr-name">NSceneDyna_ApplyDirectionalForce</span><code class="ghidra-ref">FUN_1407bdf40</code></span> (a force-at-direction function on the dyna manager)</li>
   <li><strong>Model-scaled</strong>: multiplied by the model object's <code>+0xE0</code> field (a global scale factor)</li>
 </ul>
 <h3 id="how-speed-clamping-limits-velocity"><a class="anchor" href="#how-speed-clamping-limits-velocity">#</a>How speed clamping limits velocity</h3>
@@ -4686,15 +4686,15 @@ if ((fVar9 * fVar9 &lt; fVar8) &amp;&amp; (DAT_141d1ed34 &lt; fVar9)) {
 FUN_140841f40(param_1, uVar3, lVar6, &amp;local_b8);            // line 140
 FUN_1408426e0(lVar6, param_5);                               // line 141</code></pre></div>
 <ul>
-  <li><code>FUN_140841ca0</code>: Takes the dyna manager, vehicle, model offset <code>+0x30D8</code>, and tick. This likely initializes per-wheel contact state and surface detection.</li>
-  <li><code>FUN_140841f40</code>: Takes the arena, dyna manager, vehicle, and the force vector (from either <code>+0x144C</code> or <code>+0x1534</code>). This likely applies pre-computed suspension forces.</li>
-  <li><code>FUN_1408426e0</code>: Takes the vehicle and tick. This likely updates wheel rotation/position state.</li>
+  <li><span class="named-addr"><span class="addr-name">InitWheelContactState</span><code class="ghidra-ref">FUN_140841ca0</code></span>: Takes the dyna manager, vehicle, model offset <code>+0x30D8</code>, and tick. This likely initializes per-wheel contact state and surface detection.</li>
+  <li><span class="named-addr"><span class="addr-name">ApplySuspensionForces</span><code class="ghidra-ref">FUN_140841f40</code></span>: Takes the arena, dyna manager, vehicle, and the force vector (from either <code>+0x144C</code> or <code>+0x1534</code>). This likely applies pre-computed suspension forces.</li>
+  <li><span class="named-addr"><span class="addr-name">UpdateWheelRotation</span><code class="ghidra-ref">FUN_1408426e0</code></span>: Takes the vehicle and tick. This likely updates wheel rotation/position state.</li>
 </ul>
 <h3 id="how-paircomputeforces-handles-vehicle-to-vehicle-interaction"><a class="anchor" href="#how-paircomputeforces-handles-vehicle-to-vehicle-interaction">#</a>How PairComputeForces handles vehicle-to-vehicle interaction</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PairComputeForces.c:1-93</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_140842ed0</p>
+<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PairComputeForces.c:1-93</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PairComputeForces</span><span class="ghidra-ref">FUN_140842ed0</span></span></p>
 <p>When two vehicles collide, <code>PairComputeForces</code> handles the interaction:</p>
 <ol>
-  <li>Resolves both vehicle entities via <code>FUN_1407bea40</code> (lines 25-29)</li>
+  <li>Resolves both vehicle entities via <span class="named-addr"><span class="addr-name">NSceneVehiclePhy_ResolveEntity</span><code class="ghidra-ref">FUN_1407bea40</code></span> (lines 25-29)</li>
   <li>Fetches velocity, position, and force data for BOTH vehicles (lines 30-36)</li>
   <li>Initializes boost start time for both if needed (lines 37-42)</li>
   <li>Copies current transform to previous for BOTH vehicles (lines 43-90)</li>
@@ -4713,7 +4713,7 @@ FUN_1408426e0(lVar6, param_5);                               // line 141</code><
 <h2 id="how-the-collision-system-works"><a class="anchor" href="#how-the-collision-system-works">#</a>How the collision system works</h2>
 <p>The collision system initializes each frame, creates a collision cache, merges redundant contacts, and feeds the friction solver.</p>
 <h3 id="startphyframe-initializes-each-physics-frame"><a class="anchor" href="#startphyframe-initializes-each-physics-frame">#</a>StartPhyFrame initializes each physics frame</h3>
-<p><strong>Evidence</strong>: <code>NHmsCollision__StartPhyFrame.c:1-57</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1402a9c60</p>
+<p><strong>Evidence</strong>: <code>NHmsCollision__StartPhyFrame.c:1-57</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NHmsCollision::StartPhyFrame</span><span class="ghidra-ref">FUN_1402a9c60</span></span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// 1. Update static collision world if needed
 if (*(int *)(param_1 + 0x28) != 0) {
     FUN_1402a6da0(param_1);   // NHmsCollision::UpdateStatic
@@ -4746,7 +4746,7 @@ for each item in set at param_1 + 0xA58:
 </ul>
 <p>Two separate collision item sets exist at manager offsets <code>+0x9C8</code> and <code>+0xA58</code>. This suggests separation of static-collidable and dynamic-collidable objects.</p>
 <h3 id="how-dynamiccollisioncreatecache-builds-the-solver-cache"><a class="anchor" href="#how-dynamiccollisioncreatecache-builds-the-solver-cache">#</a>How DynamicCollisionCreateCache builds the solver cache</h3>
-<p><strong>Evidence</strong>: <code>NSceneDyna__DynamicCollisionCreateCache.c:1-88</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407f9da0</p>
+<p><strong>Evidence</strong>: <code>NSceneDyna__DynamicCollisionCreateCache.c:1-88</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneDyna::DynamicCollisionCreateCache</span><span class="ghidra-ref">FUN_1407f9da0</span></span></p>
 <p>For each dynamic body, a 56-byte cache entry is created:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Read collision shape type and filter masks
 puVar7[8] = *(uint *)(&amp;DAT_141fabc20 + *(byte *)(lVar2 + 0x11) * 4)
@@ -4815,9 +4815,9 @@ if (*(int *)(shape + 0xC) == 0xD &amp;&amp; *(int *)(shape + 0x58) != 0) {
 </tr>
 </tbody>
 </table></div>
-<p>The global table at <code>DAT_141fabc20</code> maps collision type bytes (0x00-0xFF) to layer masks. The actual mask is computed as <code>layer_table[type] & ~body_exclusion_mask</code>, allowing per-body collision filtering.</p>
+<p>The global table at <span class="named-addr"><span class="addr-name">DAT_COLLISION_LAYER_TABLE</span><code class="ghidra-ref">DAT_141fabc20</code></span> maps collision type bytes (0x00-0xFF) to layer masks. The actual mask is computed as <code>layer_table[type] & ~body_exclusion_mask</code>, allowing per-body collision filtering.</p>
 <h3 id="how-the-contact-merging-algorithm-reduces-redundant-contacts"><a class="anchor" href="#how-the-contact-merging-algorithm-reduces-redundant-contacts">#</a>How the contact merging algorithm reduces redundant contacts</h3>
-<p><strong>Evidence</strong>: <code>NHmsCollision__MergeContacts.c:1-271</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1402a8a70</p>
+<p><strong>Evidence</strong>: <code>NHmsCollision__MergeContacts.c:1-271</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NHmsCollision::MergeContacts</span><span class="ghidra-ref">FUN_1402a8a70</span></span></p>
 <p>The contact merging algorithm reduces redundant contact points to improve solver stability.</p>
 <p><strong>Parameters</strong>:</p>
 <ul>
@@ -4968,7 +4968,7 @@ Phase 3: Remove consumed contacts
 </tbody>
 </table></div>
 <h3 id="how-the-friction-solver-is-configured"><a class="anchor" href="#how-the-friction-solver-is-configured">#</a>How the friction solver is configured</h3>
-<p><strong>Evidence</strong>: <code>FrictionIterCount_Config.c:1-105</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407f3fc0</p>
+<p><strong>Evidence</strong>: <code>FrictionIterCount_Config.c:1-105</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneDyna::SSolverParams_Registration</span><span class="ghidra-ref">FUN_1407f3fc0</span></span></p>
 <p>The friction solver uses the <code>NSceneDyna::SSolverParams</code> struct (0x2C = 44 bytes):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">FUN_1402ea9e0(*puVar1, &quot;NSceneDyna::SSolverParams&quot;, 0x2c, 0, 0, 0, 0);</code></pre></div>
 <div class="table-wrapper"><table>
@@ -5187,14 +5187,14 @@ Phase 3: Remove consumed contacts
 <p>The fragile check requires ALL THREE conditions:</p>
 <ol>
   <li><strong>Flags 0x1800 both set</strong>: Both collision flags at bits 11 and 12 must be active</li>
-  <li><strong>Threshold exceeded</strong>: Float at <code>vehicle+0x1C8C</code> must exceed global <code>DAT_141d1ef7c</code> (a collision severity threshold)</li>
+  <li><strong>Threshold exceeded</strong>: Float at <code>vehicle+0x1C8C</code> must exceed global <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span> (a collision severity threshold)</li>
   <li><strong>Status nibble check</strong>: <code>(nibble - 2)</code> uses unsigned arithmetic, so <code>1 < (nibble - 2)</code> passes for nibble values <strong>0, 1, and 4+</strong>. Values 2 and 3 are excluded.</li>
 </ol>
-<p><code>FUN_1407d2870</code> is the crash/reset handler that triggers the fragile vehicle breakage.</p>
+<p><span class="named-addr"><span class="addr-name">NSceneVehiclePhy_FragileBreak</span><code class="ghidra-ref">FUN_1407d2870</code></span> is the crash/reset handler that triggers the fragile vehicle breakage.</p>
 <hr>
 <h2 id="how-gravity-and-sub-stepping-work"><a class="anchor" href="#how-gravity-and-sub-stepping-work">#</a>How gravity and sub-stepping work</h2>
 <h3 id="gravity-computation-1"><a class="anchor" href="#gravity-computation-1">#</a>Gravity computation</h3>
-<p><strong>Evidence</strong>: <code>NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c:1-103</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407f89d0</p>
+<p><strong>Evidence</strong>: <code>NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c:1-103</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneDyna::ComputeGravityAndSleepStateAndNewVels</span><span class="ghidra-ref">FUN_1407f89d0</span></span></p>
 <p>The gravity function iterates over all dynamic bodies and applies gravity, sleep detection, and velocity integration:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>for each body i in 0..param_1:
     if (body_flags &amp; 2) == 0:  // not kinematic/static
@@ -5243,17 +5243,17 @@ Phase 3: Remove consumed contacts
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebccfc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><code class="ghidra-ref">DAT_141ebccfc</code></span></td>
   <td style="text-align:left">Sleep detection enabled flag</td>
   <td style="text-align:center">int</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="ghidra-ref">DAT_141ebcd00</code></span></td>
   <td style="text-align:left">Sleep velocity damping factor</td>
   <td style="text-align:center">float</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd04</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="ghidra-ref">DAT_141ebcd04</code></span></td>
   <td style="text-align:left">Sleep velocity threshold (linear m/s; squared by code before comparison)</td>
   <td style="text-align:center">float</td>
 </tr>
@@ -5297,7 +5297,7 @@ sub_dt = dt / num_substeps</code></pre></div>
 <hr>
 <h2 id="how-water-physics-works-1"><a class="anchor" href="#how-water-physics-works-1">#</a>How water physics works</h2>
 <h3 id="water-force-computation"><a class="anchor" href="#water-force-computation">#</a>Water force computation</h3>
-<p><strong>Evidence</strong>: <code>NSceneDyna__ComputeWaterForces.c:1-53</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407f8290</p>
+<p><strong>Evidence</strong>: <code>NSceneDyna__ComputeWaterForces.c:1-53</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: <span class="named-addr"><span class="addr-name">NSceneDyna::ComputeWaterForces</span><span class="ghidra-ref">FUN_1407f8290</span></span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Only compute if water exists (param_8 != 0)
 if (param_8 != 0) {
     for each body:
@@ -5334,116 +5334,116 @@ if (param_8 != 0) {
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fa9c</code></td>
-  <td style="text-align:left">PhysicsStep_TM: <code>/ DAT_141d1fa9c</code> when cap at 1000</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><code class="ghidra-ref">DAT_141d1fa9c</code></span></td>
+  <td style="text-align:left">PhysicsStep_TM: <code>/ <span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><span class="ghidra-ref">DAT_141d1fa9c</span></span></code> when cap at 1000</td>
   <td style="text-align:left">1000.0f (max sub-step count)</td>
   <td style="text-align:center">float</td>
   <td style="text-align:left"><code>if (uVar16 >= 0x3E9)</code> then divide by this</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fe58</code></td>
-  <td style="text-align:left">PhysicsStep_TM: <code>dVar11 = (double)fVar26 * _DAT_141d1fe58</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MICROSECOND_SCALE</span><code class="ghidra-ref">DAT_141d1fe58</code></span></td>
+  <td style="text-align:left">PhysicsStep_TM: <code>dVar11 = (double)fVar26 * _<span class="named-addr"><span class="addr-name">DAT_MICROSECOND_SCALE</span><span class="ghidra-ref">DAT_141d1fe58</span></span></code></td>
   <td style="text-align:left">1,000,000.0 (microsecond conversion)</td>
   <td style="text-align:center">double</td>
   <td style="text-align:left">Converts sub_dt seconds to microseconds</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ed34</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MIN_SPEED_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ed34</code></span></td>
   <td style="text-align:left">ComputeForces: speed clamping threshold</td>
   <td style="text-align:left">Min speed threshold for clamping</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left"><code>DAT_141d1ed34 < fVar9</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_MIN_SPEED_THRESHOLD</span><span class="ghidra-ref">DAT_141d1ed34</span></span> < fVar9</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ee10</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_STEP_PARAM</span><code class="ghidra-ref">DAT_141d1ee10</code></span></td>
   <td style="text-align:left">PhysicsStep_TM: used in force loop</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> constant</td>
   <td style="text-align:center">float</td>
   <td style="text-align:left">Used as parameter to step functions</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ef7c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span></td>
   <td style="text-align:left">PhysicsStep_TM: fragile threshold</td>
   <td style="text-align:left">Collision severity threshold for fragile</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left"><code>DAT_141d1ef7c < <em>(float </em>)(lVar9 + 0x1c8c)</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><span class="ghidra-ref">DAT_141d1ef7c</span></span> < <em>(float </em>)(lVar9 + 0x1c8c)</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fa18</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SURFACE_HEIGHT_SCALE</span><code class="ghidra-ref">DAT_141d1fa18</code></span></td>
   <td style="text-align:left">BeforeMgrDynaUpdate: surface height scale</td>
   <td style="text-align:left">Surface parameter scale factor</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left"><code>fVar7 = DAT_141d1fa18</code> used in height calc</td>
+  <td style="text-align:left"><code>fVar7 = <span class="named-addr"><span class="addr-name">DAT_SURFACE_HEIGHT_SCALE</span><span class="ghidra-ref">DAT_141d1fa18</span></span></code> used in height calc</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ecc4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MIN_NORMAL_LEN_SQ</span><code class="ghidra-ref">DAT_141d1ecc4</code></span></td>
   <td style="text-align:left">MergeContacts: min normal length</td>
   <td style="text-align:left">Minimum squared normal length</td>
   <td style="text-align:center">float</td>
   <td style="text-align:left">Prevents zero-division</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fc24</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_NORMAL_LEN_SQ</span><code class="ghidra-ref">DAT_141d1fc24</code></span></td>
   <td style="text-align:left">MergeContacts: max normal length</td>
   <td style="text-align:left">Maximum squared normal length</td>
   <td style="text-align:center">float</td>
   <td style="text-align:left">Sanity check</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1f3c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_UNIT_NORMAL_SCALE</span><code class="ghidra-ref">DAT_141d1f3c8</code></span></td>
   <td style="text-align:left">MergeContacts: normal scale</td>
   <td style="text-align:left">Scale for normalized normal (1.0f)</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left"><code>DAT_141d1f3c8 / sqrt(length)</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_UNIT_NORMAL_SCALE</span><span class="ghidra-ref">DAT_141d1f3c8</span></span> / sqrt(length)</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141a64350</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_ZERO_VEC_XY</span><code class="ghidra-ref">DAT_141a64350</code></span></td>
   <td style="text-align:left">Multiple: zero velocity constant</td>
   <td style="text-align:left"><code>{0.0f, 0.0f}</code> (8 bytes)</td>
   <td style="text-align:center">2xfloat</td>
   <td style="text-align:left">Used to zero velocity vectors</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141a64358</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_ZERO_VEC_Z</span><code class="ghidra-ref">DAT_141a64358</code></span></td>
   <td style="text-align:left">Multiple: zero z component</td>
   <td style="text-align:left"><code>0.0f</code></td>
   <td style="text-align:center">float</td>
   <td style="text-align:left">Z component of zero vector</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebccfc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><code class="ghidra-ref">DAT_141ebccfc</code></span></td>
   <td style="text-align:left">Gravity: sleep enabled flag</td>
   <td style="text-align:left">Sleep detection toggle</td>
   <td style="text-align:center">int</td>
-  <td style="text-align:left"><code>if (DAT_141ebccfc != 0)</code></td>
+  <td style="text-align:left"><code>if (<span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><span class="ghidra-ref">DAT_141ebccfc</span></span> != 0)</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="ghidra-ref">DAT_141ebcd00</code></span></td>
   <td style="text-align:left">Gravity: sleep damping</td>
   <td style="text-align:left">Sleep velocity damping factor (< 1.0)</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left"><code>velocity *= DAT_141ebcd00</code></td>
+  <td style="text-align:left"><code>velocity *= <span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><span class="ghidra-ref">DAT_141ebcd00</span></span></code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd04</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="ghidra-ref">DAT_141ebcd04</code></span></td>
   <td style="text-align:left">Gravity: sleep threshold</td>
   <td style="text-align:left">Sleep velocity threshold (linear m/s)</td>
   <td style="text-align:center">float</td>
   <td style="text-align:left"><code>if (speed_sq < DAT_141ebcd04^2)</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141e64060</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_STACK_COOKIE</span><code class="ghidra-ref">DAT_141e64060</code></span></td>
   <td style="text-align:left">Multiple: stack cookie</td>
   <td style="text-align:left">Security check cookie</td>
   <td style="text-align:center">uint64</td>
-  <td style="text-align:left"><code>local_d8 = DAT_141e64060 ^ (ulonglong)stack</code></td>
+  <td style="text-align:left"><code>local_d8 = <span class="named-addr"><span class="addr-name">DAT_STACK_COOKIE</span><span class="ghidra-ref">DAT_141e64060</span></span> ^ (ulonglong)stack</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141fabc20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_COLLISION_LAYER_TABLE</span><code class="ghidra-ref">DAT_141fabc20</code></span></td>
   <td style="text-align:left">DynCollision: layer table</td>
   <td style="text-align:left">Collision layer mask lookup table</td>
   <td style="text-align:center">uint[]</td>
-  <td style="text-align:left"><code><em>(DAT_141fabc20 + type </em> 4)</code></td>
+  <td style="text-align:left"><code><em>(<span class="named-addr"><span class="addr-name">DAT_COLLISION_LAYER_TABLE</span><span class="ghidra-ref">DAT_141fabc20</span></span> + type </em> 4)</code></td>
 </tr>
 </tbody>
 </table></div>
@@ -5708,7 +5708,7 @@ if (param_8 != 0) {
        fVar24 = SQRT(fVar24);
    }</code></pre></div>
 <ol>
-  <li><strong>FUN_14195dd00</strong>: A "safe sqrt" function called when the value is negative. Likely returns <code>sqrt(abs(x))</code> or <code>0.0f</code>.</li>
+  <li><strong><span class="named-addr"><span class="addr-name">SafeSqrt_NegativeGuard</span><span class="ghidra-ref">FUN_14195dd00</span></span></strong>: A "safe sqrt" function called when the value is negative. Likely returns <code>sqrt(abs(x))</code> or <code>0.0f</code>.</li>
 </ol>
 <h3 id="sub-step-remainder-handling"><a class="anchor" href="#sub-step-remainder-handling">#</a>Sub-step remainder handling</h3>
 <p>The sub-step loop processes <code>N-1</code> equal steps, then one final step with the accumulated remainder:</p>
@@ -5827,7 +5827,7 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
   <li><strong>First tick with boost pending</strong> (line 89): The code checks <code>if (<em>(int </em>)(lVar6 + 0x16e8) == -1)</code>. If the boost start time is uninitialized (<span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span>), it records the current tick: <code><em>(uint </em>)(lVar6 + 0x16e8) = param_5</code>.</li>
 </ol>
 <ol>
-  <li><strong>Event dispatch</strong> (lines 91-99): If the boost has a non-zero duration AND the arena has an event callback AND events are not disabled (bit 2 of <code>+0x1C7C</code> is clear) AND the vehicle has a valid player index, it dispatches a boost event via <code>FUN_1407d6200()</code>.</li>
+  <li><strong>Event dispatch</strong> (lines 91-99): If the boost has a non-zero duration AND the arena has an event callback AND events are not disabled (bit 2 of <code>+0x1C7C</code> is clear) AND the vehicle has a valid player index, it dispatches a boost event via <code><span class="named-addr"><span class="addr-name">NSceneVehiclePhy_DispatchBoostEvent</span><span class="ghidra-ref">FUN_1407d6200</span></span>()</code>.</li>
 </ol>
 <ol>
   <li><strong>Force computation</strong> (lines 101-108): Each tick while <code>start_time <= current_tick <= start_time + duration</code>:</li>
@@ -5836,7 +5836,7 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
    float force = t * strength * model_scale;
    FUN_1407bdf40(dyna_mgr, body_id, &amp;force_vec);</code></pre></div>
 <ol>
-  <li><strong>Force direction</strong>: The force vector <code>local_b8</code> is initialized as a scalar and applied via <code>FUN_1407bdf40</code>, which applies force along the body's forward direction.</li>
+  <li><strong>Force direction</strong>: The force vector <code>local_b8</code> is initialized as a scalar and applied via <span class="named-addr"><span class="addr-name">NSceneDyna_ApplyDirectionalForce</span><code class="ghidra-ref">FUN_1407bdf40</code></span>, which applies force along the body's forward direction.</li>
 </ol>
 <p>The decompiled code at <code>ComputeForces.c:105</code> is unambiguous:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">local_b8 = ((float)(param_5 - uVar2) / (float)*(uint *)(lVar6 + 0x16e0)) *
@@ -5875,7 +5875,7 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
 <h3 id="how-does-the-car-stay-on-a-vertical-wall-or-a-loop"><a class="anchor" href="#how-does-the-car-stay-on-a-vertical-wall-or-a-loop">#</a>How does the car stay on a vertical wall or a loop?</h3>
 <p>There is <strong>no special "sticky" force</strong> in the decompiled dispatcher-level code. Wall/loop adhesion comes from the interaction of multiple systems:</p>
 <ol>
-  <li><strong>Gravity with GravityCoef</strong>: Gravity is applied as <code>force += gravity_scale <em> gravity_direction </em> body_mass <em> dt</code>. The <code>gravity_scale</code> comes from <code>FUN_1407f5130</code>. TMNF's <code>GravityCoef = 3.0</code> multiplies the base gravity by 3x, producing roughly <code>3 </em> 9.81 = 29.43 m/s^2</code>.</li>
+  <li><strong>Gravity with GravityCoef</strong>: Gravity is applied as <code>force += gravity_scale <em> gravity_direction </em> body_mass <em> dt</code>. The <code>gravity_scale</code> comes from <span class="named-addr"><span class="addr-name">ComputeGravityScale</span><code class="ghidra-ref">FUN_1407f5130</code></span>. TMNF's <code>GravityCoef = 3.0</code> multiplies the base gravity by 3x, producing roughly <code>3 </em> 9.81 = 29.43 m/s^2</code>.</li>
 </ol>
 <ol>
   <li><strong>Contact normals direct forces</strong>: When wheels contact a wall or loop surface, the contact normal points AWAY from the surface. The friction solver resolves constraints along these normals, pressing the car to the surface.</li>
@@ -5886,7 +5886,7 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
 <ol>
   <li><strong>Speed threshold for falling off</strong>: No explicit "minimum speed for wall riding" constant exists. The car falls off when gravity pulling it away exceeds centripetal force plus tire friction. This is an emergent property of speed, surface curvature, GravityCoef, and friction coefficients.</li>
 </ol>
-<p>[NEEDS INVESTIGATION: decompile FUN_140851f00 for the per-wheel force computation that makes wall-riding work]</p>
+<p>[NEEDS INVESTIGATION: decompile <span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span> for the per-wheel force computation that makes wall-riding work]</p>
 <hr>
 <h3 id="what-happens-when-you-crash-into-a-wall"><a class="anchor" href="#what-happens-when-you-crash-into-a-wall">#</a>What happens when you crash into a wall?</h3>
 <p><strong>The collision pipeline:</strong></p>
@@ -5994,38 +5994,38 @@ if (num_substeps &gt;= 1001) {
 <tr>
   <td style="text-align:center"><strong>CarSport (Stadium)</strong></td>
   <td style="text-align:center">5</td>
-  <td style="text-align:center"><code>FUN_140851f00</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span></td>
   <td style="text-align:center">YES</td>
 </tr>
 <tr>
   <td style="text-align:center"><strong>CarRally</strong></td>
   <td style="text-align:center">6 (likely)</td>
-  <td style="text-align:center"><code>FUN_14085c9e0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085c9e0</code></span></td>
   <td style="text-align:center">YES</td>
 </tr>
 <tr>
   <td style="text-align:center"><strong>CarSnow</strong></td>
   <td style="text-align:center">6 or 0xB</td>
-  <td style="text-align:center"><code>FUN_14085c9e0</code> or <code>FUN_14086d3b0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085c9e0</code></span> or <span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="ghidra-ref">FUN_14086d3b0</code></span></td>
   <td style="text-align:center">YES</td>
 </tr>
 <tr>
   <td style="text-align:center"><strong>CarDesert</strong></td>
   <td style="text-align:center">0xB (likely)</td>
-  <td style="text-align:center"><code>FUN_14086d3b0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="ghidra-ref">FUN_14086d3b0</code></span></td>
   <td style="text-align:center">YES</td>
 </tr>
 <tr>
   <td style="text-align:center">Legacy/inactive</td>
   <td style="text-align:center">0, 1, 2</td>
-  <td style="text-align:center"><code>FUN_140869cd0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="ghidra-ref">FUN_140869cd0</code></span></td>
   <td style="text-align:center">NO</td>
 </tr>
 </tbody>
 </table></div>
 <p>The force model selector at <code>vehicle_model+0x1790</code> determines WHICH function computes tire forces. Models 0-5 read from <code>vehicle+0x144C</code>, models 6+ read from <code>vehicle+0x1534</code>. Max speed is read from <code>model+0x2F0</code> per vehicle type. Tuning data at <code>model+0x30D8</code> and <code>model+0x31A8</code> contains all car-specific parameters.</p>
-<p>The actual force model functions (<code>FUN_140851f00</code>, <code>FUN_14085c9e0</code>, <code>FUN_14086d3b0</code>) are <strong>not decompiled</strong>. Each is likely 4,000-10,000+ bytes containing per-wheel tire force computation, burnout/slip state machines, engine/gear simulation, suspension force integration, and steering response curves.</p>
-<p>[NEEDS INVESTIGATION: Decompile FUN_140851f00 (CarSport), FUN_14085c9e0 (model 6), FUN_14086d3b0 (model 0xB)]</p>
+<p>The actual force model functions (<span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span>, <span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085c9e0</code></span>, <span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="ghidra-ref">FUN_14086d3b0</code></span>) are <strong>not decompiled</strong>. Each is likely 4,000-10,000+ bytes containing per-wheel tire force computation, burnout/slip state machines, engine/gear simulation, suspension force integration, and steering response curves.</p>
+<p>[NEEDS INVESTIGATION: Decompile <span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span> (CarSport), <span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span> (model 6), <span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><span class="ghidra-ref">FUN_14086d3b0</span></span> (model 0xB)]</p>
 <hr>
 <h3 id="how-does-the-gearboxengine-simulation-work-1"><a class="anchor" href="#how-does-the-gearboxengine-simulation-work-1">#</a>How does the gearbox/engine simulation work?</h3>
 <p>The decompiled ComputeForces dispatcher does NOT contain engine/gearbox logic. This is entirely inside the force model functions.</p>
@@ -6059,7 +6059,7 @@ if (num_substeps &gt;= 1001) {
 FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></pre></div>
 <p>Bodies can be in a global water volume or a custom per-zone water volume. The function takes <code>lVar1 + 0x18</code> (body collision shape) and <code>lVar3</code> (water shape), suggesting <strong>submerged volume computation</strong> for buoyancy.</p>
 <p>From <code>FallingState</code> enum: <code>FallingWater</code> (2) and <code>RestingWater</code> (6) exist. <code>WaterImmersionCoef</code> (0-1) tracks submersion depth. The TMNF cross-reference mentions <code>WaterReboundMinHSpeed = 55.556 m/s</code> (200 km/h), suggesting cars can skip across water at sufficient speed.</p>
-<p>[NEEDS INVESTIGATION: Decompile FUN_1407fb580 for buoyancy/drag formulas]</p>
+<p>[NEEDS INVESTIGATION: Decompile <span class="named-addr"><span class="addr-name">NSceneDyna_ComputeWaterForceForBody</span><span class="ghidra-ref">FUN_1407fb580</span></span> for buoyancy/drag formulas]</p>
 <hr>
 <h3 id="how-does-the-game-guarantee-deterministic-physics"><a class="anchor" href="#how-does-the-game-guarantee-deterministic-physics">#</a>How does the game guarantee deterministic physics?</h3>
 <p><strong>1. Fixed-tick integer timing</strong> (<code>PhysicsStep_TM.c:63</code>):</p>
@@ -6067,7 +6067,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
 <p>Time is NEVER accumulated as floating-point.</p>
 <p><strong>2. Deterministic sub-stepping</strong>: The sub-step count is computed from velocity magnitudes via a deterministic formula. The remainder handling ensures total time = dt exactly.</p>
 <p><strong>3. Ordered iteration</strong>: All bodies and vehicles are iterated in array order. No parallel dispatch is visible.</p>
-<p><strong>4. Safe sqrt</strong>: Every square root computation has a <code>< 0.0</code> guard calling <code>FUN_14195dd00</code>, preventing NaN propagation.</p>
+<p><strong>4. Safe sqrt</strong>: Every square root computation has a <code>< 0.0</code> guard calling <span class="named-addr"><span class="addr-name">SafeSqrt_NegativeGuard</span><code class="ghidra-ref">FUN_14195dd00</code></span>, preventing NaN propagation.</p>
 <p><strong>5. SSE floating-point</strong>: The x64 build uses SSE instructions (<code>sqrtss</code>, etc.) which are IEEE 754 compliant and produce identical results on all x64 CPUs. No x87 FPU is used.</p>
 <p><strong>6. Network replay validation</strong>: When <code>SimulationMode == 1</code> (replay), the game copies 2,168 bytes of vehicle state from a replay data pointer:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">FUN_1418d7510(lVar19 + 0x1280, *(lVar19 + 0x1c98), 0x878);</code></pre></div>
@@ -6094,7 +6094,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fa9c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><code class="ghidra-ref">DAT_141d1fa9c</code></span></td>
   <td style="text-align:left">MAX_SUBSTEP_FLOAT</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">1000.0f</td>
@@ -6102,7 +6102,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Divisor when sub-step count capped at 1000</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fe58</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MICROSECOND_SCALE</span><code class="ghidra-ref">DAT_141d1fe58</code></span></td>
   <td style="text-align:left">MICROSECOND_SCALE</td>
   <td style="text-align:center">double</td>
   <td style="text-align:center">1000000.0</td>
@@ -6110,7 +6110,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Converts sub_dt (seconds) to microseconds</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ed34</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MIN_SPEED_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ed34</code></span></td>
   <td style="text-align:left">MIN_SPEED_THRESHOLD</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -6118,7 +6118,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Minimum maxSpeed value for clamping to apply</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ee10</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_STEP_PARAM</span><code class="ghidra-ref">DAT_141d1ee10</code></span></td>
   <td style="text-align:left">STEP_PARAM</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -6126,7 +6126,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Parameter passed to step functions</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ef7c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="ghidra-ref">DAT_141d1ef7c</code></span></td>
   <td style="text-align:left">FRAGILE_SEVERITY</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -6134,7 +6134,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Collision severity threshold for fragile break</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fa18</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SURFACE_HEIGHT_SCALE</span><code class="ghidra-ref">DAT_141d1fa18</code></span></td>
   <td style="text-align:left">SURFACE_HEIGHT_SCALE</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -6142,7 +6142,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Scale factor for surface height parameter</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1ecc4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MIN_NORMAL_LEN_SQ</span><code class="ghidra-ref">DAT_141d1ecc4</code></span></td>
   <td style="text-align:left">MIN_NORMAL_LEN_SQ</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">~0.0001</td>
@@ -6150,7 +6150,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Minimum squared normal length (prevents /0)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1fc24</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_NORMAL_LEN_SQ</span><code class="ghidra-ref">DAT_141d1fc24</code></span></td>
   <td style="text-align:left">MAX_NORMAL_LEN_SQ</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">~100.0</td>
@@ -6158,7 +6158,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Maximum squared normal length (sanity)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141d1f3c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_UNIT_NORMAL_SCALE</span><code class="ghidra-ref">DAT_141d1f3c8</code></span></td>
   <td style="text-align:left">UNIT_NORMAL_SCALE</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">1.0f</td>
@@ -6166,7 +6166,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Scale factor for normalized normals</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141a64350</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_ZERO_VEC_XY</span><code class="ghidra-ref">DAT_141a64350</code></span></td>
   <td style="text-align:left">ZERO_VEC_XY</td>
   <td style="text-align:center">2xfloat</td>
   <td style="text-align:center">{0.0, 0.0}</td>
@@ -6174,7 +6174,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Zero vector constant for clearing</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141a64358</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_ZERO_VEC_Z</span><code class="ghidra-ref">DAT_141a64358</code></span></td>
   <td style="text-align:left">ZERO_VEC_Z</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center">0.0f</td>
@@ -6182,7 +6182,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Zero Z component</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebccfc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><code class="ghidra-ref">DAT_141ebccfc</code></span></td>
   <td style="text-align:left">SLEEP_ENABLED</td>
   <td style="text-align:center">int</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -6190,7 +6190,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Sleep detection toggle (0=off, non-zero=on)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="ghidra-ref">DAT_141ebcd00</code></span></td>
   <td style="text-align:left">SLEEP_DAMPING</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>, <1.0]</span></td>
@@ -6198,7 +6198,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Velocity damping factor when below sleep threshold</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ebcd04</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="ghidra-ref">DAT_141ebcd04</code></span></td>
   <td style="text-align:left">SLEEP_THRESHOLD</td>
   <td style="text-align:center">float</td>
   <td style="text-align:center"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
@@ -6206,7 +6206,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Sleep velocity threshold (m/s, squared by code)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141e64060</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_STACK_COOKIE</span><code class="ghidra-ref">DAT_141e64060</code></span></td>
   <td style="text-align:left">STACK_COOKIE</td>
   <td style="text-align:center">uint64</td>
   <td style="text-align:center">[random]</td>
@@ -6214,7 +6214,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:left">Security check cookie for stack protection</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141fabc20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_COLLISION_LAYER_TABLE</span><code class="ghidra-ref">DAT_141fabc20</code></span></td>
   <td style="text-align:left">COLLISION_LAYER_TABLE</td>
   <td style="text-align:center">uint[256]</td>
   <td style="text-align:center">[256 entries]</td>
@@ -6430,43 +6430,43 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:center">0x00</td>
   <td style="text-align:left">FrictionStaticIterCount</td>
   <td style="text-align:center">int</td>
-  <td style="text-align:left">Registered via <code>FUN_1401dc2a0</code> (int type)</td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterIntField</span><code class="ghidra-ref">FUN_1401dc2a0</code></span> (int type)</td>
 </tr>
 <tr>
   <td style="text-align:center">0x04</td>
   <td style="text-align:left">FrictionDynaIterCount</td>
   <td style="text-align:center">int</td>
-  <td style="text-align:left">Registered via <code>FUN_1401dc2a0</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterIntField</span><code class="ghidra-ref">FUN_1401dc2a0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:center">0x08</td>
   <td style="text-align:left">VelocityIterCount</td>
   <td style="text-align:center">int</td>
-  <td style="text-align:left">Registered via <code>FUN_1401dc2a0</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterIntField</span><code class="ghidra-ref">FUN_1401dc2a0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:center">0x0C</td>
   <td style="text-align:left">PositionIterCount</td>
   <td style="text-align:center">int</td>
-  <td style="text-align:left">Registered via <code>FUN_1401dc2a0</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterIntField</span><code class="ghidra-ref">FUN_1401dc2a0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:center">0x10</td>
   <td style="text-align:left">DepenImpulseFactor</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left">Registered via <code>FUN_14016e290</code> (float type)</td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterFloatField</span><code class="ghidra-ref">FUN_14016e290</code></span> (float type)</td>
 </tr>
 <tr>
   <td style="text-align:center">0x14</td>
   <td style="text-align:left">MaxDepenVel</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left">Registered via <code>FUN_14016e290</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterFloatField</span><code class="ghidra-ref">FUN_14016e290</code></span></td>
 </tr>
 <tr>
   <td style="text-align:center">0x18</td>
   <td style="text-align:left">EnablePositionConstraint</td>
   <td style="text-align:center">bool</td>
-  <td style="text-align:left">Registered via <code>FUN_1401dc110</code> (bool type)</td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterBoolField</span><code class="ghidra-ref">FUN_1401dc110</code></span> (bool type)</td>
 </tr>
 <tr>
   <td style="text-align:center">0x1C</td>
@@ -6478,19 +6478,19 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:center">0x20</td>
   <td style="text-align:left">VelBiasMode</td>
   <td style="text-align:center">int</td>
-  <td style="text-align:left">Registered via <code>FUN_1401dc2a0</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterIntField</span><code class="ghidra-ref">FUN_1401dc2a0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:center">0x24</td>
   <td style="text-align:left">UseConstraints2</td>
   <td style="text-align:center">bool</td>
-  <td style="text-align:left">Registered via <code>FUN_1401dc110</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterBoolField</span><code class="ghidra-ref">FUN_1401dc110</code></span></td>
 </tr>
 <tr>
   <td style="text-align:center">0x28</td>
   <td style="text-align:left">MinVelocityForRestitution</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left">Registered via <code>FUN_14016e290</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterFloatField</span><code class="ghidra-ref">FUN_14016e290</code></span></td>
 </tr>
 </tbody>
 </table></div>
@@ -6509,19 +6509,19 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
   <td style="text-align:center">0x58</td>
   <td style="text-align:left">Tunings.CoefFriction</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left">Registered via <code>FUN_14016e290</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterFloatField</span><code class="ghidra-ref">FUN_14016e290</code></span></td>
 </tr>
 <tr>
   <td style="text-align:center">0x5C</td>
   <td style="text-align:left">Tunings.CoefAcceleration</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left">Registered via <code>FUN_14016e290</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterFloatField</span><code class="ghidra-ref">FUN_14016e290</code></span></td>
 </tr>
 <tr>
   <td style="text-align:center">0x60</td>
   <td style="text-align:left">Tunings.Sensibility</td>
   <td style="text-align:center">float</td>
-  <td style="text-align:left">Registered via <code>FUN_14016e290</code></td>
+  <td style="text-align:left">Registered via <span class="named-addr"><span class="addr-name">RegisterFloatField</span><code class="ghidra-ref">FUN_14016e290</code></span></td>
 </tr>
 </tbody>
 </table></div>
@@ -6664,42 +6664,42 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
 <tr>
   <td style="text-align:center">Base</td>
   <td style="text-align:center">0, 1, 2</td>
-  <td style="text-align:center"><code>FUN_140869cd0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="ghidra-ref">FUN_140869cd0</code></span></td>
   <td style="text-align:center">2</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">M4</td>
   <td style="text-align:center">3</td>
-  <td style="text-align:center"><code>FUN_14086b060</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><code class="ghidra-ref">FUN_14086b060</code></span></td>
   <td style="text-align:center">2</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">M5</td>
   <td style="text-align:center">4</td>
-  <td style="text-align:center"><code>FUN_14086bc50</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><code class="ghidra-ref">FUN_14086bc50</code></span></td>
   <td style="text-align:center">2</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">M6 (StadiumCar)</td>
   <td style="text-align:center">5</td>
-  <td style="text-align:center"><code>FUN_140851f00</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="ghidra-ref">FUN_140851f00</code></span></td>
   <td style="text-align:center">3</td>
   <td style="text-align:left"><span class="badge badge-unknown">[UNKNOWN -- likely large, >4KB based on TMNF's M6 at 10660 bytes]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">New Model A</td>
   <td style="text-align:center">6</td>
-  <td style="text-align:center"><code>FUN_14085c9e0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="ghidra-ref">FUN_14085c9e0</code></span></td>
   <td style="text-align:center">3</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:center">New Model B</td>
   <td style="text-align:center">0xB</td>
-  <td style="text-align:center"><code>FUN_14086d3b0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="ghidra-ref">FUN_14086d3b0</code></span></td>
   <td style="text-align:center">3</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
@@ -6740,12 +6740,12 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
 <tr>
   <td style="text-align:left">SSolverParams</td>
   <td style="text-align:center">0x2C (44 bytes)</td>
-  <td style="text-align:left">FUN_1402ea9e0 size parameter</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">RegisterStructType</span><span class="ghidra-ref">FUN_1402ea9e0</span></span> size parameter</td>
 </tr>
 <tr>
   <td style="text-align:left">NGameSlotPhy::SMgr</td>
   <td style="text-align:center">0x90 (144 bytes)</td>
-  <td style="text-align:left">FUN_1402ea9e0 size parameter</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">RegisterStructType</span><span class="ghidra-ref">FUN_1402ea9e0</span></span> size parameter</td>
 </tr>
 <tr>
   <td style="text-align:left">Per-wheel state block</td>
@@ -6787,7 +6787,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
 <tr>
   <td style="text-align:left">Per-wheel tire force formulas</td>
   <td style="text-align:left">Inside force model functions</td>
-  <td style="text-align:left">Decompile FUN_140851f00 (CarSport, ~10KB)</td>
+  <td style="text-align:left">Decompile <span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span> (CarSport, ~10KB)</td>
 </tr>
 <tr>
   <td style="text-align:left">Friction coefficients per material</td>
@@ -6801,8 +6801,8 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
 </tr>
 <tr>
   <td style="text-align:left">Water buoyancy/drag formulas</td>
-  <td style="text-align:left">Inside FUN_1407fb580</td>
-  <td style="text-align:left">Decompile FUN_1407fb580</td>
+  <td style="text-align:left">Inside <span class="named-addr"><span class="addr-name">NSceneDyna_ComputeWaterForceForBody</span><span class="ghidra-ref">FUN_1407fb580</span></span></td>
+  <td style="text-align:left">Decompile <span class="named-addr"><span class="addr-name">NSceneDyna_ComputeWaterForceForBody</span><span class="ghidra-ref">FUN_1407fb580</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Exact sleep threshold values</td>
@@ -6817,7 +6817,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
 <tr>
   <td style="text-align:left">How Rally/Snow/Desert differ</td>
   <td style="text-align:left">Force model 6 and 0xB not decompiled</td>
-  <td style="text-align:left">Decompile FUN_14085c9e0 and FUN_14086d3b0</td>
+  <td style="text-align:left">Decompile <span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><span class="ghidra-ref">FUN_14085c9e0</span></span> and <span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><span class="ghidra-ref">FUN_14086d3b0</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Reactor boost force direction</td>
@@ -7030,6 +7030,7 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

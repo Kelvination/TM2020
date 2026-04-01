@@ -2320,7 +2320,7 @@ Output:
 <p><strong>What we don't know</strong>: The exact cascade split formula and distances (doc 11: "<span class="badge badge-speculative">SPECULATIVE</span> for exact split distances").</p>
 <p><strong>Impact on visual quality</strong>: MEDIUM. Wrong split distances produce either shadow resolution wasted on distant terrain (splits too uniform) or shadow gaps near the camera (splits too logarithmic). The visual artifact is shadow aliasing -- stairstepping at cascade boundaries.</p>
 <p><strong>Workaround</strong>: Use the practical split scheme (Engel's blend of logarithmic and linear) with our tuned values from Section 5. These can be adjusted at runtime via a debug UI.</p>
-<p><strong>Research to resolve</strong>: Decompile <code>FUN_140a45310</code> (cascade setup function referenced in doc 11). Extract the split distance computation. Alternatively, use an Openplanet plugin to read the shadow cascade matrices at runtime and reverse-engineer the split from the projection bounds.</p>
+<p><strong>Research to resolve</strong>: Decompile <span class="named-addr"><span class="addr-name">ShadowCascadeSetup</span><code class="ghidra-ref">FUN_140a45310</code></span> (cascade setup function referenced in doc 11). Extract the split distance computation. Alternatively, use an Openplanet plugin to read the shadow cascade matrices at runtime and reverse-engineer the split from the projection bounds.</p>
 <hr>
 <h4 id="unknown-4-normal-encoding-method"><a class="anchor" href="#unknown-4-normal-encoding-method">#</a>Unknown 4: Normal Encoding Method</h4>
 <p><strong>What we don't know</strong>: Whether TM2020 uses octahedral, spheremap, or another normal encoding (doc 11: "<span class="badge badge-speculative">SPECULATIVE</span> -- decompression shader exists, exact encoding unknown").</p>
@@ -2426,6 +2426,7 @@ Output:
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

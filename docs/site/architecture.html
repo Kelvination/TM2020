@@ -144,9 +144,9 @@
           -&gt; CGameCtnApp::Start         -- Menu/network startup</code></pre></div>
 <h3 id="winmain-sets-up-profiling-first"><a class="anchor" href="#winmain-sets-up-profiling-first">#</a>WinMain sets up profiling first</h3>
 <p>WinMain at <span class="named-addr"><span class="addr-name">WinMain</span><code class="addr">0x140aa7470</code></span> is only 202 bytes. It sets the default window to 640x480, initializes the hierarchical profiling system (75 slots, 128 KB buffer), and transfers control to <code>CGbxApp::Init1</code>.</p>
-<p>The profiling system instruments nearly every engine function. Each significant function starts with <code>FUN_140117690(local_buf, "FunctionName")</code> and ends with <code>FUN_1401176a0(local_buf, tag_id)</code>.</p>
+<p>The profiling system instruments nearly every engine function. Each significant function starts with <code><span class="named-addr"><span class="addr-name">ProfilingScope_Begin</span><span class="ghidra-ref">FUN_140117690</span></span>(local_buf, "FunctionName")</code> and ends with <code><span class="named-addr"><span class="addr-name">ProfilingScope_End</span><span class="ghidra-ref">FUN_1401176a0</span></span>(local_buf, tag_id)</code>.</p>
 <h3 id="init1-registers-16-engine-subsystems"><a class="anchor" href="#init1-registers-16-engine-subsystems">#</a>Init1 registers 16 engine subsystems</h3>
-<p><code>CGbxApp::Init1</code> at <span class="named-addr"><span class="addr-name">CGbxApp::Init1_actual</span><code class="addr">0x140aa3220</code></span> (7,401 bytes) registers engine subsystems into a slot-based manager at <code>DAT_141f9f018</code>:</p>
+<p><code>CGbxApp::Init1</code> at <span class="named-addr"><span class="addr-name">CGbxApp::Init1_actual</span><code class="addr">0x140aa3220</code></span> (7,401 bytes) registers engine subsystems into a slot-based manager at <span class="named-addr"><span class="addr-name">DAT_engineSubsystemTable</span><code class="ghidra-ref">DAT_141f9f018</code></span>:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -161,67 +161,67 @@
   <td style="text-align:left">0x01</td>
   <td style="text-align:left">Core/Memory</td>
   <td style="text-align:left">0x20</td>
-  <td style="text-align:left">FUN_141473190</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Core_Init</span><span class="ghidra-ref">FUN_141473190</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x03</td>
   <td style="text-align:left">Game Engine</td>
   <td style="text-align:left">0x28</td>
-  <td style="text-align:left">FUN_140b48230</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Game_Init</span><span class="ghidra-ref">FUN_140b48230</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x05</td>
   <td style="text-align:left">Network</td>
   <td style="text-align:left">0x20</td>
-  <td style="text-align:left">FUN_1413fdc70</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Network_Init</span><span class="ghidra-ref">FUN_1413fdc70</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x06</td>
   <td style="text-align:left">Input</td>
   <td style="text-align:left">0x30</td>
-  <td style="text-align:left">FUN_1401ffd60</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Input_Init</span><span class="ghidra-ref">FUN_1401ffd60</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x07</td>
   <td style="text-align:left">Plug/Resource</td>
   <td style="text-align:left">0xA8</td>
-  <td style="text-align:left">FUN_140155410</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Plug_Init</span><span class="ghidra-ref">FUN_140155410</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x09</td>
   <td style="text-align:left">Audio</td>
   <td style="text-align:left">0x30</td>
-  <td style="text-align:left">FUN_140466440</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Audio_Init</span><span class="ghidra-ref">FUN_140466440</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x0A</td>
   <td style="text-align:left">Audio Manager</td>
   <td style="text-align:left">0x30</td>
-  <td style="text-align:left">FUN_1406d3b90</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_AudioManager_Init</span><span class="ghidra-ref">FUN_1406d3b90</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x0B</td>
   <td style="text-align:left">System Config</td>
   <td style="text-align:left">0xE0</td>
-  <td style="text-align:left">FUN_1408f0720</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_SystemConfig_Init</span><span class="ghidra-ref">FUN_1408f0720</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x0C</td>
   <td style="text-align:left">Vision/Render</td>
   <td style="text-align:left">0x38</td>
-  <td style="text-align:left">FUN_140941ee0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Vision_Init</span><span class="ghidra-ref">FUN_140941ee0</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x11</td>
   <td style="text-align:left">Script</td>
   <td style="text-align:left">0xD8</td>
-  <td style="text-align:left">FUN_14086e700</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Script_Init</span><span class="ghidra-ref">FUN_14086e700</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x13</td>
   <td style="text-align:left">Control/UI</td>
   <td style="text-align:left">0x30</td>
-  <td style="text-align:left">FUN_1402ab310</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Control_Init</span><span class="ghidra-ref">FUN_1402ab310</span></span></td>
 </tr>
 </tbody>
 </table></div>
@@ -247,7 +247,7 @@
       CGameCtnApp                   -- Creation (CTN) application
         CGameManiaPlanet            -- ManiaPlanet platform layer
           CTrackMania               -- TrackMania-specific logic</code></pre></div>
-<p><strong>Evidence</strong>: <code>CGbxApp::Init1</code>/<code>Init2</code> provide base initialization. <code>CGbxGame::InitApp</code>/<code>PreInitApp</code>/<code>DestroyApp()</code> manage the lifecycle. <code>CGameManiaPlanet::Start</code> calls <code>CGameCtnApp::Start</code> (confirmed: <code>FUN_140b4eba0</code> called from <code>FUN_140cb8870</code>).</p>
+<p><strong>Evidence</strong>: <code>CGbxApp::Init1</code>/<code>Init2</code> provide base initialization. <code>CGbxGame::InitApp</code>/<code>PreInitApp</code>/<code>DestroyApp()</code> manage the lifecycle. <code>CGameManiaPlanet::Start</code> calls <code>CGameCtnApp::Start</code> (confirmed: <span class="named-addr"><span class="addr-name">CGameCtnApp::Start</span><code class="ghidra-ref">FUN_140b4eba0</code></span> called from <span class="named-addr"><span class="addr-name">CGameManiaPlanet::Start</span><code class="ghidra-ref">FUN_140cb8870</code></span>).</p>
 <h2 id="how-the-game-state-machine-works"><a class="anchor" href="#how-the-game-state-machine-works">#</a>How the game state machine works</h2>
 <p>The central state machine lives in <code>CGameCtnApp::UpdateGame</code>. This function runs every frame with two parameters: the <code>CGameCtnApp</code> instance and a coroutine/fiber context pointer. The context is a 0x380-byte heap object.</p>
 <p>The current state ID lives at <code>context + 0x08</code>. State transitions write new IDs to this location. A sub-coroutine pointer at <code>context + 0x10</code> enables nested state machines.</p>
@@ -281,7 +281,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tr>
   <td style="text-align:left"><code>0x000</code></td>
   <td style="text-align:left"><strong>Game Init</strong> -- Logs <code>"[Game] starting game."</code>, allocates context, calls <code>UpdateGame_Init</code>.</td>
-  <td style="text-align:left"><code>FUN_140b76b20(param_1)</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">CGameCtnApp::UpdateGame_Init</span><span class="ghidra-ref">FUN_140b76b20</span></span>(param_1)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">MAX_SUBSTEP_COUNT_999</span><code class="addr">0x3E7</code></span> (999)</td>
@@ -291,7 +291,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_STARTUP_SEQUENCE</span><code class="addr">0x402</code></span></td>
   <td style="text-align:left"><strong>Startup Sequence</strong> -- Runs startup tasks, logs <code>"[Startup]InitBeforeProfiles"</code>.</td>
-  <td style="text-align:left"><code>FUN_140b63ef0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">Startup_InitBeforeProfiles</span><code class="ghidra-ref">FUN_140b63ef0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_INIT_BEFORE_PROFILES</span><code class="addr">0x406</code></span></td>
@@ -318,11 +318,11 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_LOGIN_TIMEOUT</span><code class="addr">0x488</code></span></td>
   <td style="text-align:left"><strong>Login Timeout Check</strong> -- Verifies login completed within 1000ms.</td>
-  <td style="text-align:left"><code>DAT_141ffad50 < <em>(int </em>)(uVar16 + 0xc) + 1000U</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><span class="ghidra-ref">DAT_141ffad50</span></span> < <em>(int </em>)(uVar16 + 0xc) + 1000U</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_NETWORK_PROBE1</span><code class="addr">0x496</code></span></td>
-  <td style="text-align:left"><strong>Network Connection Test</strong> -- Calls <code>FUN_140b00500</code>.</td>
+  <td style="text-align:left"><strong>Network Connection Test</strong> -- Calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork::ConnectToInternet</span><code class="ghidra-ref">FUN_140b00500</code></span>.</td>
   <td style="text-align:left">State set at line 1540</td>
 </tr>
 <tr>
@@ -345,7 +345,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <h4 id="phase-2-4-connection-and-online-flow-0x501-0x852"><a class="anchor" href="#phase-2-4-connection-and-online-flow-0x501-0x852">#</a>Phase 2-4: Connection and online flow (0x501 - 0x852)</h4>
 <p>These states handle master server connection, dialog waits, online data fetching, and profile initialization. Key states include 0x509 (network probe), 0x6AB (online data fetch), and 0x7DD (profile init).</p>
 <h4 id="phase-5-main-menu-label-lab_140b7cdcc"><a class="anchor" href="#phase-5-main-menu-label-lab_140b7cdcc">#</a>Phase 5: Main menu (label LAB_140b7cdcc)</h4>
-<p>The main menu is reached by many state transitions. It calls <code>FUN_140b54b90(param_1, 2)</code> to set phase 2 ("MainMenu") and logs <code>"[Game] main menu."</code>.</p>
+<p>The main menu is reached by many state transitions. It calls <code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 2)</code> to set phase 2 ("MainMenu") and logs <code>"[Game] main menu."</code>.</p>
 <h4 id="phase-6-menu-result-dispatch-0x9a5-0xaff"><a class="anchor" href="#phase-6-menu-result-dispatch-0x9a5-0xaff">#</a>Phase 6: Menu result dispatch (0x9A5 - 0xAFF)</h4>
 <p>Menu results dispatch from <code>*param_2 + 0x174</code>:</p>
 <div class="table-wrapper"><table>
@@ -411,17 +411,17 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tbody>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_LOAD_MAP</span><code class="addr">0xBF6</code></span></td>
-  <td style="text-align:left"><strong>Load Map</strong> -- Calls <code>FUN_140b57d10</code> with map data.</td>
+  <td style="text-align:left"><strong>Load Map</strong> -- Calls <span class="named-addr"><span class="addr-name">GameState_LoadMap</span><code class="ghidra-ref">FUN_140b57d10</code></span> with map data.</td>
   <td style="text-align:left">Line 3033-3047</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xC12</code></td>
-  <td style="text-align:left"><strong>Map Load for Play</strong> -- Calls <code>FUN_140c0dcc0</code>, creates gameplay context.</td>
+  <td style="text-align:left"><strong>Map Load for Play</strong> -- Calls <span class="named-addr"><span class="addr-name">GameplayContext_CreateForPlay</span><code class="ghidra-ref">FUN_140c0dcc0</code></span>, creates gameplay context.</td>
   <td style="text-align:left">Line 538-583</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xC22</code></td>
-  <td style="text-align:left"><strong>Wait for Play Ready</strong> -- Polls <code>FUN_140b76aa0</code>.</td>
+  <td style="text-align:left"><strong>Wait for Play Ready</strong> -- Polls <span class="named-addr"><span class="addr-name">GameplayPoll_CheckStatus</span><code class="ghidra-ref">FUN_140b76aa0</code></span>.</td>
   <td style="text-align:left">Line 585-597</td>
 </tr>
 </tbody>
@@ -443,7 +443,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_LOAD_CHALLENGE_EXECUTE</span><code class="addr">0xCD2</code></span></td>
-  <td style="text-align:left"><strong>Load Challenge Execute</strong> -- Calls <code>FUN_140b58530</code> with map list.</td>
+  <td style="text-align:left"><strong>Load Challenge Execute</strong> -- Calls <span class="named-addr"><span class="addr-name">GameState_LoadChallenge_Execute</span><code class="ghidra-ref">FUN_140b58530</code></span> with map list.</td>
   <td style="text-align:left">Line 769-778</td>
 </tr>
 <tr>
@@ -458,7 +458,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_MAP_EDITOR</span><code class="addr">0xDE5</code></span></td>
-  <td style="text-align:left"><strong>Editor Session</strong> -- Calls <code>FUN_140b827b0</code> for editor loop.</td>
+  <td style="text-align:left"><strong>Editor Session</strong> -- Calls <span class="named-addr"><span class="addr-name">GameState_EditorSession</span><code class="ghidra-ref">FUN_140b827b0</code></span> for editor loop.</td>
   <td style="text-align:left">Line 2332-2348</td>
 </tr>
 </tbody>
@@ -495,7 +495,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x10C2</code></td>
-  <td style="text-align:left"><strong>Quit to Menu</strong> -- Sets phase 5, calls <code>FUN_140b4d110</code>.</td>
+  <td style="text-align:left"><strong>Quit to Menu</strong> -- Sets phase 5, calls <span class="named-addr"><span class="addr-name">GameState_QuitToMenu</span><code class="ghidra-ref">FUN_140b4d110</code></span>.</td>
   <td style="text-align:left">Line 1756-1761</td>
 </tr>
 </tbody>
@@ -520,7 +520,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tbody>
 </table></div>
 <h3 id="game-phase-values"><a class="anchor" href="#game-phase-values">#</a>Game phase values</h3>
-<p><code>FUN_140b54b90</code> sets a high-level phase integer:</p>
+<p><span class="named-addr"><span class="addr-name">GamePhase_Set</span><code class="ghidra-ref">FUN_140b54b90</code></span> sets a high-level phase integer:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -657,7 +657,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </details>
 <h3 id="cgamectnnetworkmainloop_setup-0x140afc320"><a class="anchor" href="#cgamectnnetworkmainloop_setup-0x140afc320">#</a>CGameCtnNetwork::MainLoop_SetUp (<span class="named-addr"><span class="addr-name">CGameCtnNetwork::MainLoop_SetUp</span><code class="addr">0x140afc320</code></span>)</h3></summary>
 <div class="collapsible-content">
-<p>This 812-byte function prepares the game session after you select a server. It runs through: map preparation (<code>FUN_140bd1180</code>), resource loading (<code>FUN_140b28fa0</code>), network sync, and final sync.</p>
+<p>This 812-byte function prepares the game session after you select a server. It runs through: map preparation (<span class="named-addr"><span class="addr-name">NetworkSetup_MapPreparation</span><code class="ghidra-ref">FUN_140bd1180</code></span>), resource loading (<span class="named-addr"><span class="addr-name">NetworkSetup_ResourceLoading</span><code class="ghidra-ref">FUN_140b28fa0</code></span>), network sync, and final sync.</p>
 <details class="collapsible collapsed-by-default">
 <summary></div>
 </details>
@@ -800,11 +800,11 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <p>Collection operations available via dot syntax: <code>add</code>, <code>remove_key</code>, <code>exists_elem</code>, <code>count</code>, <code>clear</code>, <code>sort</code>, <code>sort_rev</code>, <code>sortkey</code>, <code>from_json</code>, <code>to_json</code>, <code>slice</code>, and more.</p>
 <h2 id="what-happens-during-one-frame"><a class="anchor" href="#what-happens-during-one-frame">#</a>What happens during one frame</h2>
 <h3 id="frame-begin"><a class="anchor" href="#frame-begin">#</a>Frame begin</h3>
-<p>Every frame starts in <code>FUN_140117840</code>:</p>
+<p>Every frame starts in <span class="named-addr"><span class="addr-name">FrameBegin</span><code class="ghidra-ref">FUN_140117840</code></span>:</p>
 <ol>
   <li>The profiling context loads from TLS at <code>+0x1B8</code>.</li>
   <li>Per-frame buffers clear.</li>
-  <li>The global frame counter <code>DAT_141f9cfd0</code> increments.</li>
+  <li>The global frame counter <span class="named-addr"><span class="addr-name">DAT_globalFrameCounter</span><code class="ghidra-ref">DAT_141f9cfd0</code></span> increments.</li>
   <li>Delta time computes from the previous frame timestamp.</li>
   <li>The "Total" profiling tag begins.</li>
 </ol>
@@ -861,7 +861,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+0x00: vtable pointer (8 bytes)
 +0x08: [UNKNOWN - possibly class ID or flags] (8 bytes)
 +0x10: reference count (4 bytes, int32)</code></pre></div>
-<p>AddRef increments <code>*(object + 0x10)</code>. Release decrements it and calls <code>FUN_1402cfae0()</code> (destructor chain) when it reaches zero. This is a classic COM-style pattern.</p>
+<p>AddRef increments <code>*(object + 0x10)</code>. Release decrements it and calls <code><span class="named-addr"><span class="addr-name">CMwNod_DestructorChain</span><span class="ghidra-ref">FUN_1402cfae0</span></span>()</code> (destructor chain) when it reaches zero. This is a classic COM-style pattern.</p>
 <h3 id="allocator-hierarchy"><a class="anchor" href="#allocator-hierarchy">#</a>Allocator hierarchy</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -872,7 +872,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>thunk_FUN_1408de480</code></td>
+  <td style="text-align:left"><code>thunk_<span class="named-addr"><span class="addr-name">Engine_MemoryAllocator</span><span class="ghidra-ref">FUN_1408de480</span></span></code></td>
   <td style="text-align:left">Primary object allocator (called hundreds of times)</td>
 </tr>
 <tr>
@@ -931,8 +931,8 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <p>Two thread pool systems exist: the Windows ThreadPool API (timers, waits, work items) and a custom <code>NClassicThreadPool</code> (fork-join pattern via <code>AddJobs</code>/<code>TaskWaitComplete</code>).</p>
 <p>Two global flags control execution mode:</p>
 <ul>
-  <li><code>DAT_141fbbee8</code>: Headless mode (skip all rendering)</li>
-  <li><code>DAT_141fbbf0c</code>: Dedicated server mode</li>
+  <li><span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span>: Headless mode (skip all rendering)</li>
+  <li><span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span>: Dedicated server mode</li>
 </ul>
 <p>Both skip viewport config, render callbacks, and UI operations when set.</p>
 <h2 id="how-errors-are-handled"><a class="anchor" href="#how-errors-are-handled">#</a>How errors are handled</h2>
@@ -1018,27 +1018,27 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>DAT_141fbbf90</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_engineStartupTimestamp</span><code class="ghidra-ref">DAT_141fbbf90</code></span></td>
   <td style="text-align:left">Engine startup timestamp</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141fbbee8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span></td>
   <td style="text-align:left">Headless mode flag</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141fbbf0c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span></td>
   <td style="text-align:left">Dedicated server flag</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141f9f018</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_engineSubsystemTable</span><code class="ghidra-ref">DAT_141f9f018</code></span></td>
   <td style="text-align:left">Engine subsystem table pointer</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141ffad50</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><code class="ghidra-ref">DAT_141ffad50</code></span></td>
   <td style="text-align:left">Global tick counter</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>DAT_141f9cfd0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_globalFrameCounter</span><code class="ghidra-ref">DAT_141f9cfd0</code></span></td>
   <td style="text-align:left">Global frame counter</td>
 </tr>
 </tbody>
@@ -1105,7 +1105,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tr>
   <td style="text-align:left"><code>0x000</code></td>
   <td style="text-align:left"><strong>Game Init</strong> - Initial state after context allocation. Logs <code>"[Game] starting game."</code> (line 1107), initializes context fields (0x78, 0x140, 0x148, 0x160, 0x2C0-0x310), calls <code>UpdateGame_Init</code> sub-coroutine.</td>
-  <td style="text-align:left"><code>FUN_140b76b20(param_1)</code> at line 1144/1151</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">CGameCtnApp::UpdateGame_Init</span><span class="ghidra-ref">FUN_140b76b20</span></span>(param_1)</code> at line 1144/1151</td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">MAX_SUBSTEP_COUNT_999</span><code class="addr">0x3E7</code></span> (999)</td>
@@ -1114,8 +1114,8 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_STARTUP_SEQUENCE</span><code class="addr">0x402</code></span></td>
-  <td style="text-align:left"><strong>Startup Sequence</strong> - Calls <code>FUN_140b63ef0</code> (startup tasks), then logs <code>"[Startup]InitBeforeProfiles"</code> (line 1195). Falls through to 0x406.</td>
-  <td style="text-align:left"><code>FUN_140117790("[Startup]InitBeforeProfiles",1,0);</code></td>
+  <td style="text-align:left"><strong>Startup Sequence</strong> - Calls <span class="named-addr"><span class="addr-name">Startup_InitBeforeProfiles</span><code class="ghidra-ref">FUN_140b63ef0</code></span> (startup tasks), then logs <code>"[Startup]InitBeforeProfiles"</code> (line 1195). Falls through to 0x406.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">LogStartupMessage</span><span class="ghidra-ref">FUN_140117790</span></span>("[Startup]InitBeforeProfiles",1,0);</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_INIT_BEFORE_PROFILES</span><code class="addr">0x406</code></span></td>
@@ -1142,11 +1142,11 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_LOGIN_TIMEOUT</span><code class="addr">0x488</code></span></td>
   <td style="text-align:left"><strong>Login Timeout Check</strong> - Checks if login timer exceeded (current_time < login_time + 1000). If OK, logs <code>"...OK"</code>. If error, logs <code>"...ERROR: %1"</code>.</td>
-  <td style="text-align:left"><code>DAT_141ffad50 < <em>(int </em>)(uVar16 + 0xc) + 1000U</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><span class="ghidra-ref">DAT_141ffad50</span></span> < <em>(int </em>)(uVar16 + 0xc) + 1000U</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_NETWORK_PROBE1</span><code class="addr">0x496</code></span></td>
-  <td style="text-align:left"><strong>Network Connection Test</strong> - Calls <code>FUN_140b00500</code> (network validation). Sub-coroutine based.</td>
+  <td style="text-align:left"><strong>Network Connection Test</strong> - Calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork::ConnectToInternet</span><code class="ghidra-ref">FUN_140b00500</code></span> (network validation). Sub-coroutine based.</td>
   <td style="text-align:left">State set at line 1540</td>
 </tr>
 <tr>
@@ -1156,7 +1156,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_NETWORK_PROBE2</span><code class="addr">0x499</code></span></td>
-  <td style="text-align:left"><strong>Network Validation 2</strong> - Secondary network check via <code>FUN_140b00ce0</code>.</td>
+  <td style="text-align:left"><strong>Network Validation 2</strong> - Secondary network check via <span class="named-addr"><span class="addr-name">SecondaryNetworkCheck</span><code class="ghidra-ref">FUN_140b00ce0</code></span>.</td>
   <td style="text-align:left">State set at line 1579</td>
 </tr>
 <tr>
@@ -1166,12 +1166,12 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_SMOKE_TEST_CHECK</span><code class="addr">0x4E3</code></span></td>
-  <td style="text-align:left"><strong>Smoke Test Check</strong> - Checks for <code>/smoketest</code> command-line arg. If present or <code>FUN_1401dd960</code> returns true, sets <code>context + 100 = 1</code>.</td>
+  <td style="text-align:left"><strong>Smoke Test Check</strong> - Checks for <code>/smoketest</code> command-line arg. If present or <span class="named-addr"><span class="addr-name">CheckSmokeTestMode</span><code class="ghidra-ref">FUN_1401dd960</code></span> returns true, sets <code>context + 100 = 1</code>.</td>
   <td style="text-align:left"><code>/smoketest</code> string at line 1597</td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_MASTER_SERVER</span><code class="addr">0x4F9</code></span></td>
-  <td style="text-align:left"><strong>Master Server Connection</strong> - Calls <code>FUN_140bc6c40</code> (network client connect). Displays dialog: <code>"Checking the connection to the game master server.\nPlease wait..."</code> with Cancel button (line 1073).</td>
+  <td style="text-align:left"><strong>Master Server Connection</strong> - Calls <span class="named-addr"><span class="addr-name">MasterServerConnect</span><code class="ghidra-ref">FUN_140bc6c40</code></span> (network client connect). Displays dialog: <code>"Checking the connection to the game master server.\nPlease wait..."</code> with Cancel button (line 1073).</td>
   <td style="text-align:left">String evidence at line 1073</td>
 </tr>
 </tbody>
@@ -1188,7 +1188,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tbody>
 <tr>
   <td style="text-align:left"><code>0x501</code></td>
-  <td style="text-align:left"><strong>Master Server Wait</strong> - Waits for dialog result. Calls <code>FUN_140b00500</code> for network probe.</td>
+  <td style="text-align:left"><strong>Master Server Wait</strong> - Waits for dialog result. Calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork::ConnectToInternet</span><code class="ghidra-ref">FUN_140b00500</code></span> for network probe.</td>
   <td style="text-align:left">Transition from 0x4F9</td>
 </tr>
 <tr>
@@ -1203,7 +1203,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x521</code></td>
-  <td style="text-align:left"><strong>Dialog Wait (Connection)</strong> - Waits for <code>FUN_140aee0e0</code> dialog result (offset <code>+0x98</code>).</td>
+  <td style="text-align:left"><strong>Dialog Wait (Connection)</strong> - Waits for <span class="named-addr"><span class="addr-name">GetDialogState</span><code class="ghidra-ref">FUN_140aee0e0</code></span> dialog result (offset <code>+0x98</code>).</td>
   <td style="text-align:left"><code><em>(int </em>)(lVar15 + 0x98) == 0</code></td>
 </tr>
 <tr>
@@ -1233,8 +1233,8 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x5FD</code></td>
-  <td style="text-align:left"><strong>Async Load Complete</strong> - Checks async resource via <code>FUN_14031b300</code>. If not done, stays. If done, cleans up and falls through.</td>
-  <td style="text-align:left"><code>iVar12 = FUN_14031b300(uVar17)</code></td>
+  <td style="text-align:left"><strong>Async Load Complete</strong> - Checks async resource via <span class="named-addr"><span class="addr-name">CheckAsyncResourceStatus</span><code class="ghidra-ref">FUN_14031b300</code></span>. If not done, stays. If done, cleans up and falls through.</td>
+  <td style="text-align:left"><code>iVar12 = <span class="named-addr"><span class="addr-name">CheckAsyncResourceStatus</span><span class="ghidra-ref">FUN_14031b300</span></span>(uVar17)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x61D</code></td>
@@ -1270,7 +1270,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x6AB</code></td>
-  <td style="text-align:left"><strong>Online Data Fetch</strong> - Fetches multiple data objects via <code>FUN_140103e50</code> from <code>DAT_141fbd4d8</code>. Calls <code>_guard_check_icall</code> for validation.</td>
+  <td style="text-align:left"><strong>Online Data Fetch</strong> - Fetches multiple data objects via <span class="named-addr"><span class="addr-name">OnlineDataFetch</span><code class="ghidra-ref">FUN_140103e50</code></span> from <span class="named-addr"><span class="addr-name">DAT_OnlineDataSourceArray</span><code class="ghidra-ref">DAT_141fbd4d8</code></span>. Calls <code>_guard_check_icall</code> for validation.</td>
   <td style="text-align:left">Complex multi-object fetch at line 943-971</td>
 </tr>
 <tr>
@@ -1280,8 +1280,8 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x6BC</code></td>
-  <td style="text-align:left"><strong>Online Join</strong> - Calls <code>FUN_140b00ce0</code> with connection parameters.</td>
-  <td style="text-align:left"><code>FUN_140b00ce0(uVar17,*param_2 + 0x10,uVar13,1)</code></td>
+  <td style="text-align:left"><strong>Online Join</strong> - Calls <span class="named-addr"><span class="addr-name">SecondaryNetworkCheck</span><code class="ghidra-ref">FUN_140b00ce0</code></span> with connection parameters.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">SecondaryNetworkCheck</span><span class="ghidra-ref">FUN_140b00ce0</span></span>(uVar17,*param_2 + 0x10,uVar13,1)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x6D7</code></td>
@@ -1302,7 +1302,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tbody>
 <tr>
   <td style="text-align:left"><code>0x733</code></td>
-  <td style="text-align:left"><strong>Dialog Pending</strong> - Waits for <code>aee0e0</code> dialog result. If answered, calls <code>FUN_140b4d110</code> and transitions to 0x736.</td>
+  <td style="text-align:left"><strong>Dialog Pending</strong> - Waits for <code>aee0e0</code> dialog result. If answered, calls <span class="named-addr"><span class="addr-name">GameState_QuitToMenu</span><code class="ghidra-ref">FUN_140b4d110</code></span> and transitions to 0x736.</td>
   <td style="text-align:left">Dialog check pattern</td>
 </tr>
 <tr>
@@ -1312,13 +1312,13 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x78A</code></td>
-  <td style="text-align:left"><strong>Replay/Update Check</strong> - Calls <code>FUN_140b02150</code>, then <code>FUN_140c12350</code> for version data. Compares against stored versions at <code>+0x170</code>, <code>+0x174</code>.</td>
+  <td style="text-align:left"><strong>Replay/Update Check</strong> - Calls <span class="named-addr"><span class="addr-name">CheckReplayUpdateVersion</span><code class="ghidra-ref">FUN_140b02150</code></span>, then <span class="named-addr"><span class="addr-name">GetVersionData</span><code class="ghidra-ref">FUN_140c12350</code></span> for version data. Compares against stored versions at <code>+0x170</code>, <code>+0x174</code>.</td>
   <td style="text-align:left">Version comparison at line 1724-1727</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x794</code></td>
-  <td style="text-align:left"><strong>Download/Update</strong> - Calls <code>FUN_140ca44a0</code> for content download. If <code>+0x17c == 0</code>, transitions to 0x10C2.</td>
-  <td style="text-align:left"><code>FUN_140ca44a0(uVar17, uVar16+0x10, uVar16+0x180, uVar16+0x198)</code></td>
+  <td style="text-align:left"><strong>Download/Update</strong> - Calls <span class="named-addr"><span class="addr-name">ContentDownloadUpdate</span><code class="ghidra-ref">FUN_140ca44a0</code></span> for content download. If <code>+0x17c == 0</code>, transitions to 0x10C2.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">ContentDownloadUpdate</span><span class="ghidra-ref">FUN_140ca44a0</span></span>(uVar17, uVar16+0x10, uVar16+0x180, uVar16+0x198)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x7C5</code></td>
@@ -1327,8 +1327,8 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x7D1</code></td>
-  <td style="text-align:left"><strong>Display Info Wait</strong> - Calls <code>FUN_140b77df0</code> (display update).</td>
-  <td style="text-align:left"><code>FUN_140b77df0(*param_2 + 0x10, uVar17)</code></td>
+  <td style="text-align:left"><strong>Display Info Wait</strong> - Calls <span class="named-addr"><span class="addr-name">DisplayInfoUpdate</span><code class="ghidra-ref">FUN_140b77df0</code></span> (display update).</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DisplayInfoUpdate</span><span class="ghidra-ref">FUN_140b77df0</span></span>(*param_2 + 0x10, uVar17)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x7D9</code></td>
@@ -1338,12 +1338,12 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 <tr>
   <td style="text-align:left"><code>0x7DD</code></td>
   <td style="text-align:left"><strong>Profile Init</strong> - Calls virtual <code>(*param_1 + 0x270)</code> with headless mode check.</td>
-  <td style="text-align:left"><code>DAT_141fbbee8 == 0</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><span class="ghidra-ref">DAT_141fbbee8</span></span> == 0</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x7E7</code></td>
-  <td style="text-align:left"><strong>Network Client Disconnect</strong> - Calls <code>FUN_140b05270</code> for network disconnect.</td>
-  <td style="text-align:left"><code>FUN_140b05270(uVar17, *param_2+0x10, uVar13)</code></td>
+  <td style="text-align:left"><strong>Network Client Disconnect</strong> - Calls <span class="named-addr"><span class="addr-name">NetworkClientDisconnect</span><code class="ghidra-ref">FUN_140b05270</code></span> for network disconnect.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">NetworkClientDisconnect</span><span class="ghidra-ref">FUN_140b05270</span></span>(uVar17, *param_2+0x10, uVar13)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x7F6</code></td>
@@ -1352,7 +1352,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x800</code></td>
-  <td style="text-align:left"><strong>Post-Cleanup Wait</strong> - 2000ms timer check (same pattern as 0x523). Calls <code>FUN_140bbcb70</code> to check readiness.</td>
+  <td style="text-align:left"><strong>Post-Cleanup Wait</strong> - 2000ms timer check (same pattern as 0x523). Calls <span class="named-addr"><span class="addr-name">CheckPostCleanupReadiness</span><code class="ghidra-ref">FUN_140bbcb70</code></span> to check readiness.</td>
   <td style="text-align:left"><code>uVar14 < <em>(int </em>)(*param_2 + 0xc) + 2000U</code></td>
 </tr>
 <tr>
@@ -1362,8 +1362,8 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 </tr>
 <tr>
   <td style="text-align:left"><code>0x81F</code></td>
-  <td style="text-align:left"><strong>Wait for Sync</strong> - Calls <code>FUN_140bbcbd0</code> to wait for sync completion. Then calls <code>FUN_140c7beb0</code> and <code>FUN_140cd9080</code>.</td>
-  <td style="text-align:left"><code>iVar12 = FUN_140bbcbd0(uVar17)</code></td>
+  <td style="text-align:left"><strong>Wait for Sync</strong> - Calls <span class="named-addr"><span class="addr-name">WaitForSyncCompletion</span><code class="ghidra-ref">FUN_140bbcbd0</code></span> to wait for sync completion. Then calls <span class="named-addr"><span class="addr-name">PostSyncCallback1</span><code class="ghidra-ref">FUN_140c7beb0</code></span> and <span class="named-addr"><span class="addr-name">PostSyncCallback2</span><code class="ghidra-ref">FUN_140cd9080</code></span>.</td>
+  <td style="text-align:left"><code>iVar12 = <span class="named-addr"><span class="addr-name">WaitForSyncCompletion</span><span class="ghidra-ref">FUN_140bbcbd0</span></span>(uVar17)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x852</code></td>
@@ -1382,7 +1382,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 <p>After reaching main menu, it:</p>
 <ol>
   <li>Clears game state flags (<code>param_1 + 0x3f = 0</code>)</li>
-  <li>Resets display mode (<code>FUN_140be08c0(param_1[3], 0)</code>)</li>
+  <li>Resets display mode (<code><span class="named-addr"><span class="addr-name">ResetDisplayMode</span><span class="ghidra-ref">FUN_140be08c0</span></span>(param_1[3], 0)</code>)</li>
   <li>Clears network settings</li>
   <li>Processes pending navigation commands (e.g., <code>/startuptitle</code> from URL)</li>
 </ol>
@@ -1407,26 +1407,26 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 <tr>
   <td style="text-align:left"><code>0x07</code></td>
   <td style="text-align:left"><strong>Open Map Browser</strong></td>
-  <td style="text-align:left">Phase 0x10, loads via <code>FUN_140b57d10</code></td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x10)</code></td>
+  <td style="text-align:left">Phase 0x10, loads via <span class="named-addr"><span class="addr-name">GameState_LoadMap</span><code class="ghidra-ref">FUN_140b57d10</code></span></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x10)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x08</code></td>
   <td style="text-align:left"><strong>Load Map From List</strong></td>
   <td style="text-align:left">Phase 0x0D</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0xd)</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0xd)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x09</code></td>
   <td style="text-align:left"><strong>Play Map</strong></td>
   <td style="text-align:left">Phase 0x0E, resolves map path</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0xe)</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0xe)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x0A</code></td>
   <td style="text-align:left"><strong>Official Campaign Map</strong></td>
   <td style="text-align:left">Phase 0x0F</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0xf)</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0xf)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">COLLISION_SHAPE_COMPOUND</span><code class="addr">0x0D</code></span></td>
@@ -1521,7 +1521,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 <tr>
   <td style="text-align:left"><code>0x20</code></td>
   <td style="text-align:left"><strong>Skin Manager</strong></td>
-  <td style="text-align:left">Calls <code>FUN_140e28d40</code></td>
+  <td style="text-align:left">Calls <span class="named-addr"><span class="addr-name">CGameCtnApp::SkinManager</span><code class="ghidra-ref">FUN_140e28d40</code></span></td>
   <td style="text-align:left">line 2514-2532</td>
 </tr>
 <tr>
@@ -1557,19 +1557,19 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 <tr>
   <td style="text-align:left"><code>0x26</code></td>
   <td style="text-align:left"><strong>Config Edit</strong></td>
-  <td style="text-align:left">Calls <code>FUN_140ca3a70</code></td>
+  <td style="text-align:left">Calls <span class="named-addr"><span class="addr-name">CGameCtnApp::ConfigEdit</span><code class="ghidra-ref">FUN_140ca3a70</code></span></td>
   <td style="text-align:left">State 0xAF4</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x27</code></td>
   <td style="text-align:left"><strong>Settings</strong></td>
-  <td style="text-align:left">Calls <code>FUN_140b688b0</code></td>
+  <td style="text-align:left">Calls <span class="named-addr"><span class="addr-name">CGameCtnApp::SettingsMenu</span><code class="ghidra-ref">FUN_140b688b0</code></span></td>
   <td style="text-align:left">State 0xAEF</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x28</code></td>
   <td style="text-align:left"><strong>Input Config</strong></td>
-  <td style="text-align:left">Calls <code>FUN_140b67c40</code></td>
+  <td style="text-align:left">Calls <span class="named-addr"><span class="addr-name">CGameCtnApp::InputConfig</span><code class="ghidra-ref">FUN_140b67c40</code></span></td>
   <td style="text-align:left">State 0xAF9</td>
 </tr>
 <tr>
@@ -1626,7 +1626,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0xBD9</code></td>
-  <td style="text-align:left"><strong>Load Map for Editor</strong> - Calls <code>FUN_140b57d10</code> with map data.</td>
+  <td style="text-align:left"><strong>Load Map for Editor</strong> - Calls <span class="named-addr"><span class="addr-name">GameState_LoadMap</span><code class="ghidra-ref">FUN_140b57d10</code></span> with map data.</td>
   <td style="text-align:left">Line 3201-3210</td>
 </tr>
 <tr>
@@ -1637,21 +1637,21 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 <tr>
   <td style="text-align:left"><code>0xBFC</code></td>
   <td style="text-align:left"><strong>Gameplay Event Poll</strong> - Polls for game events (0x64=loading, 0x69=cancel, 0x7D=play, 0x7C=edit).</td>
-  <td style="text-align:left"><code>FUN_140af0e90(param_1[0x6a], eventId)</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GameplayEventPoll</span><span class="ghidra-ref">FUN_140af0e90</span></span>(param_1[0x6a], eventId)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xC12</code></td>
-  <td style="text-align:left"><strong>Map Load for Play</strong> - Complex setup: calls <code>FUN_140c0dcc0</code>, creates editor context (0xD8 bytes), starts gameplay.</td>
+  <td style="text-align:left"><strong>Map Load for Play</strong> - Complex setup: calls <span class="named-addr"><span class="addr-name">GameplayContext_CreateForPlay</span><code class="ghidra-ref">FUN_140c0dcc0</code></span>, creates editor context (0xD8 bytes), starts gameplay.</td>
   <td style="text-align:left">Line 538-583</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xC22</code></td>
-  <td style="text-align:left"><strong>Wait for Play Ready</strong> - Calls <code>FUN_140b76aa0</code> to check readiness. On ready, cleans up and calls <code>FUN_140c0e290</code>.</td>
+  <td style="text-align:left"><strong>Wait for Play Ready</strong> - Calls <span class="named-addr"><span class="addr-name">GameplayPoll_CheckStatus</span><code class="ghidra-ref">FUN_140b76aa0</code></span> to check readiness. On ready, cleans up and calls <span class="named-addr"><span class="addr-name">ExitArena</span><code class="ghidra-ref">FUN_140c0e290</code></span>.</td>
   <td style="text-align:left">Line 585-597</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xC6E</code></td>
-  <td style="text-align:left"><strong>Dialog Wait (Load Map)</strong> - Waits for dialog, then calls <code>FUN_140b4d110</code>. Transitions to 0xC70.</td>
+  <td style="text-align:left"><strong>Dialog Wait (Load Map)</strong> - Waits for dialog, then calls <span class="named-addr"><span class="addr-name">GameState_QuitToMenu</span><code class="ghidra-ref">FUN_140b4d110</code></span>. Transitions to 0xC70.</td>
   <td style="text-align:left">Line 599-608</td>
 </tr>
 <tr>
@@ -1661,12 +1661,12 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0xC79</code></td>
-  <td style="text-align:left"><strong>Map Path Resolution</strong> - Calls <code>FUN_140b57d10</code> with path resolver at <code>+0x1710</code> and <code>+0x100</code>.</td>
+  <td style="text-align:left"><strong>Map Path Resolution</strong> - Calls <span class="named-addr"><span class="addr-name">GameState_LoadMap</span><code class="ghidra-ref">FUN_140b57d10</code></span> with path resolver at <code>+0x1710</code> and <code>+0x100</code>.</td>
   <td style="text-align:left">Line 2626-2640</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xC93</code></td>
-  <td style="text-align:left"><strong>Post-Load Ghost</strong> - Calls <code>FUN_140ef83f0</code> for ghost replay processing.</td>
+  <td style="text-align:left"><strong>Post-Load Ghost</strong> - Calls <span class="named-addr"><span class="addr-name">GhostProcessingFunction</span><code class="ghidra-ref">FUN_140ef83f0</code></span> for ghost replay processing.</td>
   <td style="text-align:left">Line 2721-2735</td>
 </tr>
 <tr>
@@ -1693,7 +1693,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_LOAD_CHALLENGE_EXECUTE</span><code class="addr">0xCD2</code></span></td>
-  <td style="text-align:left"><strong>Load Challenge (Execute)</strong> - Calls <code>FUN_140b58530</code> with map list at <code>param_1[0x6a] + 0x1710</code>.</td>
+  <td style="text-align:left"><strong>Load Challenge (Execute)</strong> - Calls <span class="named-addr"><span class="addr-name">GameState_LoadChallenge_Execute</span><code class="ghidra-ref">FUN_140b58530</code></span> with map list at <code>param_1[0x6a] + 0x1710</code>.</td>
   <td style="text-align:left">Line 769-778</td>
 </tr>
 <tr>
@@ -1708,22 +1708,22 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0xD0C</code></td>
-  <td style="text-align:left"><strong>Multi-Map Load</strong> - Iterates over map list, calls <code>FUN_140b785c0</code> for each.</td>
+  <td style="text-align:left"><strong>Multi-Map Load</strong> - Iterates over map list, calls <span class="named-addr"><span class="addr-name">MultiMapLoad_PerMap</span><code class="ghidra-ref">FUN_140b785c0</code></span> for each.</td>
   <td style="text-align:left">Line 2887-2908</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xD10</code></td>
-  <td style="text-align:left"><strong>Map Path Resolve</strong> - Calls <code>FUN_140b78450</code> for path resolution.</td>
+  <td style="text-align:left"><strong>Map Path Resolve</strong> - Calls <span class="named-addr"><span class="addr-name">MapPathResolve</span><code class="ghidra-ref">FUN_140b78450</code></span> for path resolution.</td>
   <td style="text-align:left">Line 2845-2856</td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_GAMEPLAY_START</span><code class="addr">0xD2D</code></span></td>
-  <td style="text-align:left"><strong>Gameplay Start (From Map)</strong> - Calls <code>FUN_140c0dcc0</code>, creates gameplay context. Checks event flags 0x7D, 0x7E, 0x80.</td>
+  <td style="text-align:left"><strong>Gameplay Start (From Map)</strong> - Calls <span class="named-addr"><span class="addr-name">GameplayContext_CreateForPlay</span><code class="ghidra-ref">FUN_140c0dcc0</code></span>, creates gameplay context. Checks event flags 0x7D, 0x7E, 0x80.</td>
   <td style="text-align:left">Line 804-866</td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_GAMEPLAY_ACTIVE</span><code class="addr">0xD45</code></span></td>
-  <td style="text-align:left"><strong>Gameplay Active</strong> - Calls <code>FUN_140b76aa0</code> to check play readiness. On timeout/quit, calls <code>FUN_140dd3330</code>.</td>
+  <td style="text-align:left"><strong>Gameplay Active</strong> - Calls <span class="named-addr"><span class="addr-name">GameplayPoll_CheckStatus</span><code class="ghidra-ref">FUN_140b76aa0</code></span> to check play readiness. On timeout/quit, calls <span class="named-addr"><span class="addr-name">GameplayCleanup</span><code class="ghidra-ref">FUN_140dd3330</code></span>.</td>
   <td style="text-align:left">Line 867-905</td>
 </tr>
 <tr>
@@ -1753,12 +1753,12 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0xDDD</code></td>
-  <td style="text-align:left"><strong>Post-Load Setup</strong> - Calls <code>FUN_140c0dcc0</code> with map data from <code>DAT_142076cf0</code>.</td>
+  <td style="text-align:left"><strong>Post-Load Setup</strong> - Calls <span class="named-addr"><span class="addr-name">GameplayContext_CreateForPlay</span><code class="ghidra-ref">FUN_140c0dcc0</code></span> with map data from <span class="named-addr"><span class="addr-name">DAT_MapDataGlobal</span><code class="ghidra-ref">DAT_142076cf0</code></span>.</td>
   <td style="text-align:left">Line 746-762</td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">STATE_MAP_EDITOR</span><code class="addr">0xDE5</code></span></td>
-  <td style="text-align:left"><strong>Editor Session</strong> - Calls <code>FUN_140b827b0</code> for editor loop. On completion, calls <code>FUN_140b62070</code>.</td>
+  <td style="text-align:left"><strong>Editor Session</strong> - Calls <span class="named-addr"><span class="addr-name">GameState_EditorSession</span><code class="ghidra-ref">FUN_140b827b0</code></span> for editor loop. On completion, calls <span class="named-addr"><span class="addr-name">EditorSession_OnComplete</span><code class="ghidra-ref">FUN_140b62070</code></span>.</td>
   <td style="text-align:left">Line 2332-2348</td>
 </tr>
 </tbody>
@@ -1785,7 +1785,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0xF3D</code></td>
-  <td style="text-align:left"><strong>Replay/Editor Finish</strong> - Calls <code>FUN_140b769f0 -> +0x1A8</code>. Checks ghost data at <code>+0x5F8</code>.</td>
+  <td style="text-align:left"><strong>Replay/Editor Finish</strong> - Calls <code><span class="named-addr"><span class="addr-name">ReplayGhostDataAccess</span><span class="ghidra-ref">FUN_140b769f0</span></span> -> +0x1A8</code>. Checks ghost data at <code>+0x5F8</code>.</td>
   <td style="text-align:left">Line 3914-3937</td>
 </tr>
 </tbody>
@@ -1807,22 +1807,22 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0xF9A</code></td>
-  <td style="text-align:left"><strong>Pre-Play Setup</strong> - Calls <code>FUN_140b827b0</code> for preparation.</td>
+  <td style="text-align:left"><strong>Pre-Play Setup</strong> - Calls <span class="named-addr"><span class="addr-name">GameState_EditorSession</span><code class="ghidra-ref">FUN_140b827b0</code></span> for preparation.</td>
   <td style="text-align:left">Line 3412-3425</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xFA7</code></td>
-  <td style="text-align:left"><strong>Download Content</strong> - Calls <code>FUN_140b78da0</code> with download params.</td>
+  <td style="text-align:left"><strong>Download Content</strong> - Calls <span class="named-addr"><span class="addr-name">DownloadContent</span><code class="ghidra-ref">FUN_140b78da0</code></span> with download params.</td>
   <td style="text-align:left">Line 3561-3574</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xFD3</code></td>
-  <td style="text-align:left"><strong>Input Remap</strong> - Calls <code>FUN_140bb1140</code> with input device.</td>
+  <td style="text-align:left"><strong>Input Remap</strong> - Calls <span class="named-addr"><span class="addr-name">InputDeviceRemap</span><code class="ghidra-ref">FUN_140bb1140</code></span> with input device.</td>
   <td style="text-align:left">Line 3484-3500</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xFE4</code></td>
-  <td style="text-align:left"><strong>Join/Create Game</strong> - Calls virtual <code>(*param_1 + 0x350)</code> with game parameters. On completion, transitions to 0xFE8 via <code>FUN_140b54b90(param_1, 6)</code>.</td>
+  <td style="text-align:left"><strong>Join/Create Game</strong> - Calls virtual <code>(*param_1 + 0x350)</code> with game parameters. On completion, transitions to 0xFE8 via <code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 6)</code>.</td>
   <td style="text-align:left">Line 687-704</td>
 </tr>
 <tr>
@@ -1842,7 +1842,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0x1024</code></td>
-  <td style="text-align:left"><strong>Map Change</strong> - Calls <code>FUN_140c4aa60</code> for map transition.</td>
+  <td style="text-align:left"><strong>Map Change</strong> - Calls <span class="named-addr"><span class="addr-name">MidSessionMapTransition</span><code class="ghidra-ref">FUN_140c4aa60</code></span> for map transition.</td>
   <td style="text-align:left">Line 4261-4271</td>
 </tr>
 <tr>
@@ -1857,27 +1857,27 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0x105F</code></td>
-  <td style="text-align:left"><strong>Network Replay</strong> - Calls <code>FUN_140b769f0 -> +0x1A8</code>.</td>
+  <td style="text-align:left"><strong>Network Replay</strong> - Calls <code><span class="named-addr"><span class="addr-name">ReplayGhostDataAccess</span><span class="ghidra-ref">FUN_140b769f0</span></span> -> +0x1A8</code>.</td>
   <td style="text-align:left">Line 3584-3597</td>
 </tr>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">gameState_replayValidation2</span><code class="addr">0x1072</code></span></td>
-  <td style="text-align:left"><strong>Validation Loop</strong> - Calls <code>FUN_140eb3d60</code> for validation.</td>
+  <td style="text-align:left"><strong>Validation Loop</strong> - Calls <span class="named-addr"><span class="addr-name">ReplayValidationFunc</span><code class="ghidra-ref">FUN_140eb3d60</code></span> for validation.</td>
   <td style="text-align:left">Line 4178-4193</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x1096</code></td>
-  <td style="text-align:left"><strong>Server Connection Active</strong> - Calls <code>FUN_140bcdf80</code> for server main loop. Logs <code>"Connecting to server..."</code>.</td>
+  <td style="text-align:left"><strong>Server Connection Active</strong> - Calls <span class="named-addr"><span class="addr-name">ServerMainLoop</span><code class="ghidra-ref">FUN_140bcdf80</code></span> for server main loop. Logs <code>"Connecting to server..."</code>.</td>
   <td style="text-align:left">Line 4044-4089</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x109A</code></td>
-  <td style="text-align:left"><strong>Server Disconnect</strong> - Calls <code>FUN_140bcdf80</code>, then logs <code>"... Disconnected"</code>.</td>
+  <td style="text-align:left"><strong>Server Disconnect</strong> - Calls <span class="named-addr"><span class="addr-name">ServerMainLoop</span><code class="ghidra-ref">FUN_140bcdf80</code></span>, then logs <code>"... Disconnected"</code>.</td>
   <td style="text-align:left">Line 4108</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x10C2</code></td>
-  <td style="text-align:left"><strong>Quit to Menu</strong> - <code>FUN_140b54b90(param_1, 5)</code>, <code>FUN_140b4d110</code>.</td>
+  <td style="text-align:left"><strong>Quit to Menu</strong> - <code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 5)</code>, <span class="named-addr"><span class="addr-name">GameState_QuitToMenu</span><code class="ghidra-ref">FUN_140b4d110</code></span>.</td>
   <td style="text-align:left">Line 1756-1761</td>
 </tr>
 </tbody>
@@ -1894,7 +1894,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 <tbody>
 <tr>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span></td>
-  <td style="text-align:left"><strong>Shutdown</strong> - Calls <code>FUN_140aefef0(param_1, 1, 0)</code>, <code>FUN_140dd2e40</code>, <code>FUN_140dd2e90</code>. Cleans up editor context. Calls virtual <code>(<em>param_1 + 0x550)</code> and <code>(</em>param_1 + 0x548)</code>.</td>
+  <td style="text-align:left"><strong>Shutdown</strong> - Calls <code><span class="named-addr"><span class="addr-name">CGameCtnApp::Shutdown_Cleanup</span><span class="ghidra-ref">FUN_140aefef0</span></span>(param_1, 1, 0)</code>, <span class="named-addr"><span class="addr-name">Shutdown_EditorCleanup1</span><code class="ghidra-ref">FUN_140dd2e40</code></span>, <span class="named-addr"><span class="addr-name">Shutdown_EditorCleanup2</span><code class="ghidra-ref">FUN_140dd2e90</code></span>. Cleans up editor context. Calls virtual <code>(<em>param_1 + 0x550)</code> and <code>(</em>param_1 + 0x548)</code>.</td>
   <td style="text-align:left">Line 644-660</td>
 </tr>
 <tr>
@@ -1957,7 +1957,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
     Quit_0x10C2 --&gt; Shutdown_0xFFFF
     Shutdown_0xFFFF --&gt; [*]</code></pre></div>
 <h3 id="game-phase-values-1"><a class="anchor" href="#game-phase-values-1">#</a>Game phase values</h3>
-<p>The function <code>FUN_140b54b90</code> is called with a "phase" integer that represents the high-level game phase. Observed values:</p>
+<p>The function <span class="named-addr"><span class="addr-name">GamePhase_Set</span><code class="ghidra-ref">FUN_140b54b90</code></span> is called with a "phase" integer that represents the high-level game phase. Observed values:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1970,97 +1970,97 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 <tr>
   <td style="text-align:left">0</td>
   <td style="text-align:left">Starting game</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0)</code> at line 1119</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0)</code> at line 1119</td>
 </tr>
 <tr>
   <td style="text-align:left">1</td>
   <td style="text-align:left">Post-init</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 1)</code> at line 1161</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 1)</code> at line 1161</td>
 </tr>
 <tr>
   <td style="text-align:left">2</td>
   <td style="text-align:left">Main Menu</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 2)</code> at line 2019</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 2)</code> at line 2019</td>
 </tr>
 <tr>
   <td style="text-align:left">3</td>
   <td style="text-align:left">Path validation</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 3)</code> at line 4172</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 3)</code> at line 4172</td>
 </tr>
 <tr>
   <td style="text-align:left">4</td>
   <td style="text-align:left">Validate path mode</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 4)</code> at line 1912</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 4)</code> at line 1912</td>
 </tr>
 <tr>
   <td style="text-align:left">5</td>
   <td style="text-align:left">Quit/shutdown</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 5)</code> at line 1757</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 5)</code> at line 1757</td>
 </tr>
 <tr>
   <td style="text-align:left">6</td>
   <td style="text-align:left">Multiplayer active</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 6)</code> at line 699</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 6)</code> at line 699</td>
 </tr>
 <tr>
   <td style="text-align:left">10 (0xA)</td>
   <td style="text-align:left">Local play</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 10)</code> at line 2609</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 10)</code> at line 2609</td>
 </tr>
 <tr>
   <td style="text-align:left">13 (0xD)</td>
   <td style="text-align:left">Map load from list</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0xd)</code> at line 3195</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0xd)</code> at line 3195</td>
 </tr>
 <tr>
   <td style="text-align:left">14 (0xE)</td>
   <td style="text-align:left">Play map</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0xe)</code> at line 3233</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0xe)</code> at line 3233</td>
 </tr>
 <tr>
   <td style="text-align:left">15 (0xF)</td>
   <td style="text-align:left">Campaign</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0xf)</code> at line 3740</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0xf)</code> at line 3740</td>
 </tr>
 <tr>
   <td style="text-align:left">16 (0x10)</td>
   <td style="text-align:left">Map browser</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x10)</code> at line 3018</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x10)</code> at line 3018</td>
 </tr>
 <tr>
   <td style="text-align:left">17 (0x11)</td>
   <td style="text-align:left">Multiplayer local</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x11)</code> at line 3129</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x11)</code> at line 3129</td>
 </tr>
 <tr>
   <td style="text-align:left">18 (0x12)</td>
   <td style="text-align:left">Podium setup</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x12)</code> at line 2323</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x12)</code> at line 2323</td>
 </tr>
 <tr>
   <td style="text-align:left">19 (0x13)</td>
   <td style="text-align:left">Join online</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x13)</code> at line 2497</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x13)</code> at line 2497</td>
 </tr>
 <tr>
   <td style="text-align:left">20 (0x14)</td>
   <td style="text-align:left">Join game</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x14)</code> at line 2962</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x14)</code> at line 2962</td>
 </tr>
 <tr>
   <td style="text-align:left">22 (0x16)</td>
   <td style="text-align:left">Map editor</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x16)</code> at line 3939</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x16)</code> at line 3939</td>
 </tr>
 <tr>
   <td style="text-align:left">25 (0x19)</td>
   <td style="text-align:left">New editor</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x19)</code> at line 3871</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x19)</code> at line 3871</td>
 </tr>
 <tr>
   <td style="text-align:left">26 (0x1A)</td>
   <td style="text-align:left">Item editor</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x1a)</code> at line 2973</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x1a)</code> at line 2973</td>
 </tr>
 <tr>
   <td style="text-align:left">28 (0x1C)</td>
@@ -2080,17 +2080,17 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 <tr>
   <td style="text-align:left">34 (0x22)</td>
   <td style="text-align:left">New editor (alt)</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x22)</code> at line 2947</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x22)</code> at line 2947</td>
 </tr>
 <tr>
   <td style="text-align:left">35 (0x23)</td>
   <td style="text-align:left">Gameplay loop enter</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x23)</code> at line 2324/3401</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x23)</code> at line 2324/3401</td>
 </tr>
 <tr>
   <td style="text-align:left">256 (0x100)</td>
   <td style="text-align:left">Server connection</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 0x100)</code> at line 4019</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 0x100)</code> at line 4019</td>
 </tr>
 </tbody>
 </table></div>
@@ -2117,23 +2117,23 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0xEA5</code></td>
-  <td style="text-align:left"><strong>Join Processing</strong> - Calls <code>FUN_140afa950</code> with join parameters from <code>param_1 + 0x5C</code>.</td>
-  <td style="text-align:left"><code>FUN_140afa950(param_1, puVar3+2, ...)</code></td>
+  <td style="text-align:left"><strong>Join Processing</strong> - Calls <span class="named-addr"><span class="addr-name">NetworkJoinProcessing</span><code class="ghidra-ref">FUN_140afa950</code></span> with join parameters from <code>param_1 + 0x5C</code>.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">NetworkJoinProcessing</span><span class="ghidra-ref">FUN_140afa950</span></span>(param_1, puVar3+2, ...)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xEA9</code></td>
-  <td style="text-align:left"><strong>Menu Command</strong> - Calls <code>FUN_140afa000</code> with server params. On completion, checks <code>+0x30</code> for result: 0=stay, 1=connect, 2=quit.</td>
+  <td style="text-align:left"><strong>Menu Command</strong> - Calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork_MainLoop_Menus_SubState</span><code class="ghidra-ref">FUN_140afa000</code></span> with server params. On completion, checks <code>+0x30</code> for result: 0=stay, 1=connect, 2=quit.</td>
   <td style="text-align:left">Three-way branch on <code>+0x30</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xEAE</code></td>
-  <td style="text-align:left"><strong>Menu Polling</strong> - Calls <code>FUN_140afa480</code> for menu refresh. Loops until sub-coroutine completes.</td>
+  <td style="text-align:left"><strong>Menu Polling</strong> - Calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork::MenuPolling</span><code class="ghidra-ref">FUN_140afa480</code></span> for menu refresh. Loops until sub-coroutine completes.</td>
   <td style="text-align:left"><code>do { ... } while (<em>(longlong </em>)(lVar4 + 0x10) == -1);</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0xEC1</code></td>
-  <td style="text-align:left"><strong>Active Connection</strong> - Calls <code>FUN_140afb0a0</code> with connection params including <code>FUN_140bc2a20</code> result. Checks <code>+0x40</code> for pending actions.</td>
-  <td style="text-align:left"><code>FUN_140afb0a0(param_1, puVar9, ...)</code></td>
+  <td style="text-align:left"><strong>Active Connection</strong> - Calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork::ActiveConnection</span><code class="ghidra-ref">FUN_140afb0a0</code></span> with connection params including <span class="named-addr"><span class="addr-name">GetConnectionResult</span><code class="ghidra-ref">FUN_140bc2a20</code></span> result. Checks <code>+0x40</code> for pending actions.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">CGameCtnNetwork::ActiveConnection</span><span class="ghidra-ref">FUN_140afb0a0</span></span>(param_1, puVar9, ...)</code></td>
 </tr>
 </tbody>
 </table></div>
@@ -2173,29 +2173,29 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 </tr>
 <tr>
   <td style="text-align:left"><code>0x125F</code></td>
-  <td style="text-align:left"><strong>Prepare</strong> - Calls <code>FUN_140bd1180</code> (map preparation). Checks <code><em>param_3 == 0</code> for success. On success, calls <code>(</em>param_1 + 0x1800 -> +0x4D8)()</code> and checks <code>param_1 + 0x3220</code>.</td>
-  <td style="text-align:left"><code>FUN_140bd1180(param_1, puVar8+2, param_3)</code></td>
+  <td style="text-align:left"><strong>Prepare</strong> - Calls <span class="named-addr"><span class="addr-name">NetworkSetup_MapPreparation</span><code class="ghidra-ref">FUN_140bd1180</code></span> (map preparation). Checks <code><em>param_3 == 0</code> for success. On success, calls <code>(</em>param_1 + 0x1800 -> +0x4D8)()</code> and checks <code>param_1 + 0x3220</code>.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">NetworkSetup_MapPreparation</span><span class="ghidra-ref">FUN_140bd1180</span></span>(param_1, puVar8+2, param_3)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x1271</code></td>
-  <td style="text-align:left"><strong>Load</strong> - Calls <code>FUN_140b28fa0</code> (resource loading). Then checks <code>FUN_140b29740</code> and <code>FUN_140b2a8f0</code> for additional resources.</td>
-  <td style="text-align:left"><code>FUN_140b28fa0(param_1, puVar8+2)</code></td>
+  <td style="text-align:left"><strong>Load</strong> - Calls <span class="named-addr"><span class="addr-name">NetworkSetup_ResourceLoading</span><code class="ghidra-ref">FUN_140b28fa0</code></span> (resource loading). Then checks <span class="named-addr"><span class="addr-name">ResourceSyncHelper1</span><code class="ghidra-ref">FUN_140b29740</code></span> and <span class="named-addr"><span class="addr-name">ResourceSyncHelper2</span><code class="ghidra-ref">FUN_140b2a8f0</code></span> for additional resources.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">NetworkSetup_ResourceLoading</span><span class="ghidra-ref">FUN_140b28fa0</span></span>(param_1, puVar8+2)</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x1292</code></td>
-  <td style="text-align:left"><strong>Network Sync</strong> - Calls <code>FUN_140affcf0</code> with headless/dedicated flags. If <code>+0x18 != 0</code>, calls <code>FUN_140bc2a50(param_1, 0)</code> and sets <code>*param_3 = 1</code>.</td>
-  <td style="text-align:left">`DAT_141fbbee8 != 0</td>
+  <td style="text-align:left"><strong>Network Sync</strong> - Calls <span class="named-addr"><span class="addr-name">CGameCtnNetwork::NetworkSync</span><code class="ghidra-ref">FUN_140affcf0</code></span> with headless/dedicated flags. If <code>+0x18 != 0</code>, calls <code><span class="named-addr"><span class="addr-name">NetworkSyncConfirm</span><span class="ghidra-ref">FUN_140bc2a50</span></span>(param_1, 0)</code> and sets <code>*param_3 = 1</code>.</td>
+  <td style="text-align:left">`<span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><span class="ghidra-ref">DAT_141fbbee8</span></span> != 0</td>
   <td style="text-align:left"></td>
-  <td style="text-align:left">DAT_141fbbf0c != 0`</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><span class="ghidra-ref">DAT_141fbbf0c</span></span> != 0`</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>0x129D</code></td>
-  <td style="text-align:left"><strong>Final Sync</strong> - Calls <code>FUN_140b00240</code>.</td>
-  <td style="text-align:left"><code>FUN_140b00240(param_1, puVar8+2, puVar7)</code></td>
+  <td style="text-align:left"><strong>Final Sync</strong> - Calls <span class="named-addr"><span class="addr-name">FinalSyncComplete</span><code class="ghidra-ref">FUN_140b00240</code></span>.</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">FinalSyncComplete</span><span class="ghidra-ref">FUN_140b00240</span></span>(param_1, puVar8+2, puVar7)</code></td>
 </tr>
 </tbody>
 </table></div>
-<p>After all states complete, cleanup: <code>FUN_140bc1a90</code>, <code>FUN_140bc5a00</code>, <code>FUN_140bc29b0</code>, <code>FUN_140af9900</code>.</p>
+<p>After all states complete, cleanup: <span class="named-addr"><span class="addr-name">NetworkSetup_Completion</span><code class="ghidra-ref">FUN_140bc1a90</code></span>, <span class="named-addr"><span class="addr-name">NetworkSubsystem_Init</span><code class="ghidra-ref">FUN_140bc5a00</code></span>, <span class="named-addr"><span class="addr-name">CGameCtnNetwork::SetUp_Cleanup3</span><code class="ghidra-ref">FUN_140bc29b0</code></span>, <span class="named-addr"><span class="addr-name">CGameCtnNetwork::PostCleanup</span><code class="ghidra-ref">FUN_140af9900</code></span>.</p>
 <details class="collapsible collapsed-by-default">
 <summary></div>
 </details>
@@ -2321,7 +2321,7 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
       - &quot;JoinServerLan&quot; -&gt; FUN_140b648f0
       - &quot;JoinServerInternet&quot; -&gt; FUN_140b64750
     - Logs &quot;Game Starting&quot; tag</code></pre></div>
-<h3 id="subsystem-slot-map-dat_141f9f018"><a class="anchor" href="#subsystem-slot-map-dat_141f9f018">#</a>Subsystem slot map (DAT_141f9f018)</h3>
+<h3 id="subsystem-slot-map-dat_141f9f018"><a class="anchor" href="#subsystem-slot-map-dat_141f9f018">#</a>Subsystem slot map (<span class="named-addr"><span class="addr-name">DAT_engineSubsystemTable</span><span class="ghidra-ref">DAT_141f9f018</span></span>)</h3>
 <p>The engine uses a slot-based subsystem manager stored at a global pointer. Each subsystem is registered with a slot ID:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -2337,91 +2337,91 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
   <td style="text-align:left">0x01</td>
   <td style="text-align:left">Core/Memory</td>
   <td style="text-align:left">0x20</td>
-  <td style="text-align:left">FUN_141473190</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Core_Init</span><span class="ghidra-ref">FUN_141473190</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x03</td>
   <td style="text-align:left">Game Engine</td>
   <td style="text-align:left">0x28</td>
-  <td style="text-align:left">FUN_140b48230</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Game_Init</span><span class="ghidra-ref">FUN_140b48230</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x05</td>
   <td style="text-align:left">Network</td>
   <td style="text-align:left">0x20</td>
-  <td style="text-align:left">FUN_1413fdc70</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Network_Init</span><span class="ghidra-ref">FUN_1413fdc70</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x06</td>
   <td style="text-align:left">Input</td>
   <td style="text-align:left">0x30</td>
-  <td style="text-align:left">FUN_1401ffd60</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Input_Init</span><span class="ghidra-ref">FUN_1401ffd60</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x07</td>
   <td style="text-align:left">Plug/Resource</td>
   <td style="text-align:left">0xA8</td>
-  <td style="text-align:left">FUN_140155410</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Plug_Init</span><span class="ghidra-ref">FUN_140155410</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x09</td>
   <td style="text-align:left">Audio</td>
   <td style="text-align:left">0x30</td>
-  <td style="text-align:left">FUN_140466440</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Audio_Init</span><span class="ghidra-ref">FUN_140466440</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x0A</td>
   <td style="text-align:left">Audio Manager</td>
   <td style="text-align:left">0x30</td>
-  <td style="text-align:left">FUN_1406d3b90</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_AudioManager_Init</span><span class="ghidra-ref">FUN_1406d3b90</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x0B</td>
   <td style="text-align:left">System Config</td>
   <td style="text-align:left">0xE0</td>
-  <td style="text-align:left">FUN_1408f0720</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_SystemConfig_Init</span><span class="ghidra-ref">FUN_1408f0720</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x0C</td>
   <td style="text-align:left">Vision/Render</td>
   <td style="text-align:left">0x38</td>
-  <td style="text-align:left">FUN_140941ee0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Vision_Init</span><span class="ghidra-ref">FUN_140941ee0</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x10</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">0x28</td>
-  <td style="text-align:left">FUN_1413861f0</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">InitUnknownSubsystem_0x10</span><span class="ghidra-ref">FUN_1413861f0</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x11</td>
   <td style="text-align:left">Script</td>
   <td style="text-align:left">0xD8</td>
-  <td style="text-align:left">FUN_14086e700</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Script_Init</span><span class="ghidra-ref">FUN_14086e700</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x12</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">0x38</td>
-  <td style="text-align:left">FUN_140311510</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">InitUnknownSubsystem_0x12</span><span class="ghidra-ref">FUN_140311510</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x13</td>
   <td style="text-align:left">Control/UI</td>
   <td style="text-align:left">0x30</td>
-  <td style="text-align:left">FUN_1402ab310</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">EngineSubsystem_Control_Init</span><span class="ghidra-ref">FUN_1402ab310</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x14</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">0x20</td>
-  <td style="text-align:left">FUN_1402f6d20</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">InitUnknownSubsystem_0x14</span><span class="ghidra-ref">FUN_1402f6d20</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x2E</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">0x20</td>
-  <td style="text-align:left">FUN_140ab0410</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">InitUnknownSubsystem_0x2E</span><span class="ghidra-ref">FUN_140ab0410</span></span></td>
 </tr>
 </tbody>
 </table></div>
@@ -2438,9 +2438,9 @@ FUN_1402d3df0(&amp;DAT_141ffacd0, 1);        // Reset frame timer
 }</code></pre></div>
 <p><strong>Evidence</strong>:</p>
 <ul>
-  <li>Registers <code>"CMwCmdFiber"</code> class with the engine's class system at <code>DAT_141ffe4d0</code></li>
+  <li>Registers <code>"CMwCmdFiber"</code> class with the engine's class system at <span class="named-addr"><span class="addr-name">DAT_CMwCmdFiber_classData</span><code class="ghidra-ref">DAT_141ffe4d0</code></span></li>
   <li>Class ID: <code>0x101e000</code> (this is the MwClassId for CMwCmdFiber)</li>
-  <li>Parent class data at <code>DAT_141ffe240</code></li>
+  <li>Parent class data at <span class="named-addr"><span class="addr-name">DAT_CMwCmdFiber_parentClassData</span><code class="ghidra-ref">DAT_141ffe240</code></span></li>
   <li>Object size: <span class="named-addr"><span class="addr-name">CONTACT_POINT_STRIDE</span><code class="addr">0x58</code></span> (88 bytes per fiber object)</li>
   <li>Registers an <code>atexit</code> cleanup handler at <code>LAB_141960430</code></li>
 </ul>
@@ -2465,7 +2465,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
     *(undefined4 *)(*param_2 + 8) = CURRENT_STATE;  // yield, resume here
 }</code></pre></div>
 <ol>
-  <li><strong>Fiber Allocation</strong>: Sub-fiber contexts are allocated via <code>thunk_FUN_1408de480</code> (which wraps the engine's memory allocator):</li>
+  <li><strong>Fiber Allocation</strong>: Sub-fiber contexts are allocated via <code>thunk_<span class="named-addr"><span class="addr-name">Engine_MemoryAllocator</span><span class="ghidra-ref">FUN_1408de480</span></span></code> (which wraps the engine's memory allocator):</li>
 </ol>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// From UpdateGame_Init:
 puVar5 = (undefined8 *)thunk_FUN_1408de480(0x20);  // 32-byte fiber context
@@ -2571,15 +2571,15 @@ if ((plVar20 != (longlong *)0xffffffffffffffff) &amp;&amp; (plVar20 != (longlong
 <ol>
   <li>Store script context in engine's "current" slot</li>
   <li>Copy debug mode from engine to context</li>
-  <li>Resolve entry point via <code>FUN_14018cb30</code></li>
+  <li>Resolve entry point via <span class="named-addr"><span class="addr-name">ResolveScriptEntryPoint</span><code class="ghidra-ref">FUN_14018cb30</code></span></li>
   <li>Clear output buffer</li>
   <li>Record timestamp</li>
-  <li>Call <code>FUN_1408d1ea0</code> - the actual bytecode interpreter</li>
+  <li>Call <span class="named-addr"><span class="addr-name">CScriptEngine_ExecuteScript</span><code class="ghidra-ref">FUN_1408d1ea0</code></span> - the actual bytecode interpreter</li>
   <li>Clear current context</li>
   <li>If execution returned -1, mark error state (code 2 at error context + 400)</li>
 </ol>
 <h3 id="script-error-handling"><a class="anchor" href="#script-error-handling">#</a>Script error handling</h3>
-<p>If the script interpreter (<code>FUN_1408d1ea0</code>) returns -1:</p>
+<p>If the script interpreter (<span class="named-addr"><span class="addr-name">CScriptEngine_ExecuteScript</span><code class="ghidra-ref">FUN_1408d1ea0</code></span>) returns -1:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (iVar2 == -1) {
     *(undefined4 *)(*(longlong *)(param_2 + 200) + 400) = 2;
 }</code></pre></div>
@@ -2746,7 +2746,7 @@ if ((plVar20 != (longlong *)0xffffffffffffffff) &amp;&amp; (plVar20 != (longlong
 <h2 id="how-memory-management-works"><a class="anchor" href="#how-memory-management-works">#</a>How memory management works</h2>
 <p>The engine uses a custom allocator, reference counting for object lifetimes, and Small String Optimization (SSO) for strings.</p>
 <h3 id="custom-allocator"><a class="anchor" href="#custom-allocator">#</a>Custom allocator</h3>
-<p>The engine uses a custom memory allocator accessed through <code>thunk_FUN_1408de480</code>:</p>
+<p>The engine uses a custom memory allocator accessed through <code>thunk_<span class="named-addr"><span class="addr-name">Engine_MemoryAllocator</span><span class="ghidra-ref">FUN_1408de480</span></span></code>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Allocation pattern seen throughout:
 lVar = thunk_FUN_1408de480(size);  // allocate &#x27;size&#x27; bytes
 if (lVar != 0) {
@@ -2851,7 +2851,7 @@ if (*(int *)(lVar7 + 0x2c) != 0) {
         **(undefined1 **)(lVar7 + 0x20) = 0;  // clear heap string
     }
 }</code></pre></div>
-<p>The console callback is at <code>DAT_141f9cfe0</code> and is called with severity levels:</p>
+<p>The console callback is at <span class="named-addr"><span class="addr-name">DAT_ConsoleCallback</span><code class="ghidra-ref">DAT_141f9cfe0</code></span> and is called with severity levels:</p>
 <ul>
   <li>Level 1: Error (<code>"Console"</code>, severity 1)</li>
   <li>Level 2: Info</li>
@@ -2860,8 +2860,8 @@ if (*(int *)(lVar7 + 0x2c) != 0) {
 <h3 id="headlessdedicated-server-mode"><a class="anchor" href="#headlessdedicated-server-mode">#</a>Headless/dedicated server mode</h3>
 <p>Two global flags control the execution mode:</p>
 <ul>
-  <li><code>DAT_141fbbee8</code>: Headless mode (no rendering)</li>
-  <li><code>DAT_141fbbf0c</code>: Dedicated server mode</li>
+  <li><span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span>: Headless mode (no rendering)</li>
+  <li><span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span>: Dedicated server mode</li>
 </ul>
 <p>These are checked throughout the code to skip rendering and UI operations:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if ((DAT_141fbbee8 == 0) &amp;&amp; (DAT_141fbbf0c == 0)) {
@@ -3030,7 +3030,7 @@ const threadLocal = {
   <li><strong>Profiling</strong> - Performance monitoring via browser Performance API</li>
 </ol>
 <h3 id="headless-mode-as-server"><a class="anchor" href="#headless-mode-as-server">#</a>Headless mode as server</h3>
-<p>The <code>DAT_141fbbee8</code> (headless) and <code>DAT_141fbbf0c</code> (dedicated) flags suggest the same binary runs both client and server. For a browser recreation, the server component could run in Node.js using the same state machine code with rendering disabled -- exactly mirroring the original architecture.</p>
+<p>The <span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span> (headless) and <span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span> (dedicated) flags suggest the same binary runs both client and server. For a browser recreation, the server component could run in Node.js using the same state machine code with rendering disabled -- exactly mirroring the original architecture.</p>
 <hr>
 <h2 id="what-happens-from-launch-to-quit"><a class="anchor" href="#what-happens-from-launch-to-quit">#</a>What happens from launch to quit</h2>
 <p>This section traces the exact sequence of events from double-clicking Trackmania.exe to exiting the game.</p>
@@ -3211,7 +3211,7 @@ Phase 7: Game State Machine Begins (per-frame from here)
 <tr>
   <td style="text-align:left">CSystemEngine creation</td>
   <td style="text-align:left">Error code 0x66 (102)</td>
-  <td style="text-align:left">Falls back to simplified init via FUN_140aa9320</td>
+  <td style="text-align:left">Falls back to simplified init via <span class="named-addr"><span class="addr-name">SimplifiedInit</span><span class="ghidra-ref">FUN_140aa9320</span></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Login timeout</td>
@@ -3386,12 +3386,12 @@ State 0xD45: Gameplay Active
      3. FUN_140c0e290(param_1) [Exit arena]
      -&gt; Return to main menu (LAB_140b7cdcc)</code></pre></div>
 <h3 id="physics-initialization"><a class="anchor" href="#physics-initialization">#</a>Physics initialization</h3>
-<p>Physics setup happens inside <code>FUN_140c0dcc0</code> (arena setup) and <code>FUN_140dd2c70</code> (gameplay dispatch). The sequence:</p>
+<p>Physics setup happens inside <span class="named-addr"><span class="addr-name">GameplayContext_CreateForPlay</span><code class="ghidra-ref">FUN_140c0dcc0</code></span> (arena setup) and <span class="named-addr"><span class="addr-name">GameplayDispatch</span><code class="ghidra-ref">FUN_140dd2c70</code></span> (gameplay dispatch). The sequence:</p>
 <ol>
-  <li><code>FUN_140c0dcc0</code> creates the arena context with mode=1, type=3, flags=6</li>
-  <li>An editor context (0xD8 bytes via <code>FUN_140e622d0</code> or 0x60 bytes via <code>FUN_140eb0d50</code>) is created for managing the play session</li>
-  <li><code>FUN_140dd2f10</code> starts the gameplay dispatch which initializes the physics simulation</li>
-  <li><code>FUN_140c4e3d0</code> links the arena to the camera system</li>
+  <li><span class="named-addr"><span class="addr-name">GameplayContext_CreateForPlay</span><code class="ghidra-ref">FUN_140c0dcc0</code></span> creates the arena context with mode=1, type=3, flags=6</li>
+  <li>An editor context (0xD8 bytes via <span class="named-addr"><span class="addr-name">CreateEditorContext_D8byte</span><code class="ghidra-ref">FUN_140e622d0</code></span> or 0x60 bytes via <span class="named-addr"><span class="addr-name">CreateEditorContext_60byte</span><code class="ghidra-ref">FUN_140eb0d50</code></span>) is created for managing the play session</li>
+  <li><span class="named-addr"><span class="addr-name">GameplayUpdate</span><code class="ghidra-ref">FUN_140dd2f10</code></span> starts the gameplay dispatch which initializes the physics simulation</li>
+  <li><span class="named-addr"><span class="addr-name">BindArenaToCamera</span><code class="ghidra-ref">FUN_140c4e3d0</code></span> links the arena to the camera system</li>
   <li>Camera type is set at <code>editor_context + 0x70 = 3</code> (follow car camera)</li>
 </ol>
 <h3 id="camera-setup"><a class="anchor" href="#camera-setup">#</a>Camera setup</h3>
@@ -3401,12 +3401,12 @@ FUN_140e62500(editor_ctx, render_data, camera, 0);        // Link to editor cont
 FUN_140c4e3d0(arena_data, camera_sub);                     // Bind to arena
 *(editor_ctx + 0x70) = 3;                                  // Camera mode: follow car</code></pre></div>
 <h3 id="countdown-and-race-start"><a class="anchor" href="#countdown-and-race-start">#</a>Countdown and race start</h3>
-<p>The countdown is managed by <code>FUN_140b76aa0</code> (play readiness check). This function returns 0 while the countdown is active, keeping the state machine in state 0xD45 (or 0xC22 for the alternate path). Once the countdown completes and the race starts, <code>FUN_140b76aa0</code> returns non-zero, but the state machine stays in 0xD45 for the duration of gameplay, polling each frame.</p>
+<p>The countdown is managed by <span class="named-addr"><span class="addr-name">GameplayPoll_CheckStatus</span><code class="ghidra-ref">FUN_140b76aa0</code></span> (play readiness check). This function returns 0 while the countdown is active, keeping the state machine in state 0xD45 (or 0xC22 for the alternate path). Once the countdown completes and the race starts, <span class="named-addr"><span class="addr-name">GameplayPoll_CheckStatus</span><code class="ghidra-ref">FUN_140b76aa0</code></span> returns non-zero, but the state machine stays in 0xD45 for the duration of gameplay, polling each frame.</p>
 <hr>
 <h2 id="what-happens-during-one-frame-of-gameplay"><a class="anchor" href="#what-happens-during-one-frame-of-gameplay">#</a>What happens during one frame of gameplay</h2>
 <p>This section traces one complete frame of gameplay from profiling start to render present.</p>
 <h3 id="frame-begin-1"><a class="anchor" href="#frame-begin-1">#</a>Frame begin</h3>
-<p>Every frame starts in <code>FUN_140117840</code> (startup_frame_begin.c):</p>
+<p>Every frame starts in <span class="named-addr"><span class="addr-name">FrameBegin</span><code class="ghidra-ref">FUN_140117840</code></span> (startup_frame_begin.c):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// 1. Get profiling context from TLS
 lVar1 = *(TLS + 0x1B8);
 
@@ -3511,8 +3511,8 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <h3 id="frame-budget-1"><a class="anchor" href="#frame-budget-1">#</a>Frame budget</h3>
 <p>The profiling system defines two budgets:</p>
 <ul>
-  <li><strong>Outer budget</strong>: <code>DAT_141fbf78c = 20000</code> microseconds (20ms = 50 FPS minimum)</li>
-  <li><strong>Inner budget</strong>: <code>DAT_141fbf788 = 10000</code> microseconds (10ms)</li>
+  <li><strong>Outer budget</strong>: <code><span class="named-addr"><span class="addr-name">DAT_OuterFrameBudget_20000us</span><span class="ghidra-ref">DAT_141fbf78c</span></span> = 20000</code> microseconds (20ms = 50 FPS minimum)</li>
+  <li><strong>Inner budget</strong>: <code><span class="named-addr"><span class="addr-name">DAT_InnerFrameBudget_10000us</span><span class="ghidra-ref">DAT_141fbf788</span></span> = 10000</code> microseconds (10ms)</li>
 </ul>
 <p>The profiling system tracks nesting depth via <code>*(lVar4 + 0x2C)</code> (incremented in <code>profile_tag_begin</code>) and can have up to 75 active timing slots (0x4B, set in <code>startup_init_profiling</code>).</p>
 <h3 id="what-gets-skipped-under-load"><a class="anchor" href="#what-gets-skipped-under-load">#</a>What gets skipped under load</h3>
@@ -3523,7 +3523,7 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
     // UI updates
     // Audio device detection
 }</code></pre></div>
-<p>The rendering callback at <code>+0x90</code> and the frame callback at <code>+0x70</code> are only installed when <code>DAT_141fbbee8 == 0</code> (non-headless). The <code>UpdateAsync</code> functions on worker threads may also be skipped or reduced - the pattern <code>if ((DAT_141fbbee8 != 0) || (DAT_141fbbf0c != 0))</code> appears in the network setup path, suggesting server mode simplifies the per-frame work.</p>
+<p>The rendering callback at <code>+0x90</code> and the frame callback at <code>+0x70</code> are only installed when <code><span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><span class="ghidra-ref">DAT_141fbbee8</span></span> == 0</code> (non-headless). The <code>UpdateAsync</code> functions on worker threads may also be skipped or reduced - the pattern <code>if ((<span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><span class="ghidra-ref">DAT_141fbbee8</span></span> != 0) || (<span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><span class="ghidra-ref">DAT_141fbbf0c</span></span> != 0))</code> appears in the network setup path, suggesting server mode simplifies the per-frame work.</p>
 <p>Additionally, the <code>"!! InRender => Run delayed to fiber\n"</code> message shows that operations detected during rendering are deferred to a fiber for execution on the next safe frame, preventing render stalls.</p>
 <hr>
 <h2 id="complete-state-machine-diagram"><a class="anchor" href="#complete-state-machine-diagram">#</a>Complete state machine diagram</h2>
@@ -3666,7 +3666,7 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <tr>
   <td style="text-align:left">0x402</td>
   <td style="text-align:left">0x406</td>
-  <td style="text-align:left">FUN_140b63ef0 completes</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">Startup_InitBeforeProfiles</span><span class="ghidra-ref">FUN_140b63ef0</span></span> completes</td>
   <td style="text-align:left"><code>"[Startup]InitBeforeProfiles"</code> line 1195</td>
 </tr>
 <tr>
@@ -3690,7 +3690,7 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <tr>
   <td style="text-align:left">0x488</td>
   <td style="text-align:left">0x496</td>
-  <td style="text-align:left"><code>DAT_141ffad50 >= *(ctx+0xC) + 1000</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><span class="ghidra-ref">DAT_141ffad50</span></span> >= *(ctx+0xC) + 1000</code></td>
   <td style="text-align:left">Timeout check line 1462</td>
 </tr>
 <tr>
@@ -3720,14 +3720,14 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <tr>
   <td style="text-align:left">0xD45</td>
   <td style="text-align:left">Menu</td>
-  <td style="text-align:left"><code>FUN_140b76aa0 != 0</code> OR <code>param_1+0x7BC != 0</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GameplayPoll_CheckStatus</span><span class="ghidra-ref">FUN_140b76aa0</span></span> != 0</code> OR <code>param_1+0x7BC != 0</code></td>
   <td style="text-align:left">line 870</td>
 </tr>
 <tr>
   <td style="text-align:left">0xFE4</td>
   <td style="text-align:left">0xFE8</td>
   <td style="text-align:left">Virtual +0x350 completes</td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 6)</code> line 699</td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 6)</code> line 699</td>
 </tr>
 <tr>
   <td style="text-align:left">Any</td>
@@ -3738,7 +3738,7 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <tr>
   <td style="text-align:left">0x10C2</td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span></td>
-  <td style="text-align:left"><code>FUN_140b54b90(param_1, 5)</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 5)</code></td>
   <td style="text-align:left">line 1757</td>
 </tr>
 </tbody>
@@ -3761,7 +3761,7 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <tr>
   <td style="text-align:left">0x733</td>
   <td style="text-align:left">Dialog pending (generic)</td>
-  <td style="text-align:left">Waits for dialog <code>+0x98 != 0</code>, then calls <code>FUN_140b4d110</code></td>
+  <td style="text-align:left">Waits for dialog <code>+0x98 != 0</code>, then calls <span class="named-addr"><span class="addr-name">GameState_QuitToMenu</span><code class="ghidra-ref">FUN_140b4d110</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0x7C5</td>
@@ -3771,12 +3771,12 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <tr>
   <td style="text-align:left">0xC6E</td>
   <td style="text-align:left">Dialog during map load</td>
-  <td style="text-align:left">Waits, then <code>FUN_140b4d110</code> -> state 0xC70</td>
+  <td style="text-align:left">Waits, then <span class="named-addr"><span class="addr-name">GameState_QuitToMenu</span><code class="ghidra-ref">FUN_140b4d110</code></span> -> state 0xC70</td>
 </tr>
 <tr>
   <td style="text-align:left">0xD54</td>
   <td style="text-align:left">Dialog during gameplay</td>
-  <td style="text-align:left">Waits, then cleanup via <code>FUN_140dd2de0</code></td>
+  <td style="text-align:left">Waits, then cleanup via <span class="named-addr"><span class="addr-name">GameplayDialogCleanup</span><code class="ghidra-ref">FUN_140dd2de0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">0xBC6</td>
@@ -3837,8 +3837,8 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <h3 id="sleep-yield-wait"><a class="anchor" href="#sleep-yield-wait">#</a>SLEEP / YIELD / WAIT</h3>
 <p>These ManiaScript keywords (identified as lexer tokens at <span class="named-addr"><span class="addr-name">str_ManiaScript_SLEEP</span><code class="addr">0x141c023a8</code></span>, <span class="named-addr"><span class="addr-name">str_ManiaScript_WAIT</span><code class="addr">0x141c024c8</code></span>, <span class="named-addr"><span class="addr-name">str_ManiaScript_YIELD</span><code class="addr">0x141c024b0</code></span>) map to the fiber/coroutine yield mechanism:</p>
 <ul>
-  <li><strong>YIELD</strong>: The script sets its return state and returns from <code>FUN_1408d1ea0</code>. The script engine re-enters the same context on the next frame.</li>
-  <li><strong>SLEEP(duration)</strong>: Sets a timer in the script context. On each frame, the engine checks if the timer has expired before resuming execution. The timestamp at <code>*(context+0xC4)</code> is compared against <code>DAT_141ffad50</code> (global tick counter).</li>
+  <li><strong>YIELD</strong>: The script sets its return state and returns from <span class="named-addr"><span class="addr-name">CScriptEngine_ExecuteScript</span><code class="ghidra-ref">FUN_1408d1ea0</code></span>. The script engine re-enters the same context on the next frame.</li>
+  <li><strong>SLEEP(duration)</strong>: Sets a timer in the script context. On each frame, the engine checks if the timer has expired before resuming execution. The timestamp at <code>*(context+0xC4)</code> is compared against <span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><code class="ghidra-ref">DAT_141ffad50</code></span> (global tick counter).</li>
   <li><strong>WAIT(condition)</strong>: Evaluates the condition expression each frame. If false, the script yields. If true, execution continues.</li>
   <li><strong>MEANWHILE</strong>: Creates a parallel execution branch within the script, using the same fiber mechanism but with additional context for tracking multiple execution points.</li>
 </ul>
@@ -3908,7 +3908,7 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
   <li><strong>State 0x101C (Post-Round)</strong>: Calls <code>virtual (*param_1 + 0x408)</code> for round-end processing, including score synchronization.</li>
 </ol>
 <ol>
-  <li><strong>State 0x1024 (Map Change)</strong>: Calls <code>FUN_140c4aa60</code> for mid-session map transitions.</li>
+  <li><strong>State 0x1024 (Map Change)</strong>: Calls <span class="named-addr"><span class="addr-name">MidSessionMapTransition</span><code class="ghidra-ref">FUN_140c4aa60</code></span> for mid-session map transitions.</li>
 </ol>
 <ol>
   <li><strong>State 0x1057 (Score/Timer)</strong>: Calls <code>virtual (*param_1 + 0x3D8)</code> for score and timer synchronization.</li>
@@ -3919,8 +3919,8 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 <h3 id="what-gets-replicated"><a class="anchor" href="#what-gets-replicated">#</a>What gets replicated</h3>
 <p>Based on the network state machine structure:</p>
 <ul>
-  <li><strong>Map data</strong>: Loaded during <code>MainLoop_SetUp</code> state 0x125F via <code>FUN_140bd1180</code></li>
-  <li><strong>Resources</strong>: Synced in state 0x1271 via <code>FUN_140b28fa0</code></li>
+  <li><strong>Map data</strong>: Loaded during <code>MainLoop_SetUp</code> state 0x125F via <span class="named-addr"><span class="addr-name">NetworkSetup_MapPreparation</span><code class="ghidra-ref">FUN_140bd1180</code></span></li>
+  <li><strong>Resources</strong>: Synced in state 0x1271 via <span class="named-addr"><span class="addr-name">NetworkSetup_ResourceLoading</span><code class="ghidra-ref">FUN_140b28fa0</code></span></li>
   <li><strong>Game mode/script</strong>: State 0x1032 for network script execution</li>
   <li><strong>Scores/timers</strong>: State 0x1057 via virtual +0x3D8</li>
   <li><strong>Round state</strong>: State 0x101C for post-round processing</li>
@@ -3960,13 +3960,13 @@ FUN_140117690(lVar1 + 0x40, &quot;Total&quot;);</code></pre></div>
 }</code></pre></div>
 <p>This is a classic COM-style reference counting pattern with strong ownership semantics.</p>
 <h3 id="object-creationdestruction-lifecycle"><a class="anchor" href="#object-creationdestruction-lifecycle">#</a>Object creation/destruction lifecycle</h3>
-<p>Objects are created via the custom allocator <code>thunk_FUN_1408de480(size)</code>:</p>
+<p>Objects are created via the custom allocator <code>thunk_<span class="named-addr"><span class="addr-name">Engine_MemoryAllocator</span><span class="ghidra-ref">FUN_1408de480</span></span>(size)</code>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">lVar = thunk_FUN_1408de480(0x188);  // allocate
 if (lVar != 0) {
     puVar = FUN_140dfcf00(lVar);     // constructor (returns same ptr)
 }
 param_1[0x79] = (longlong)puVar;     // store</code></pre></div>
-<p>Destruction happens when refcount reaches zero through <code>FUN_1402cfae0()</code>, which chains to the virtual destructor.</p>
+<p>Destruction happens when refcount reaches zero through <code><span class="named-addr"><span class="addr-name">CMwNod_DestructorChain</span><span class="ghidra-ref">FUN_1402cfae0</span></span>()</code>, which chains to the virtual destructor.</p>
 <h3 id="allocator-hierarchy-1"><a class="anchor" href="#allocator-hierarchy-1">#</a>Allocator hierarchy</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -3978,7 +3978,7 @@ param_1[0x79] = (longlong)puVar;     // store</code></pre></div>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>thunk_FUN_1408de480</code></td>
+  <td style="text-align:left"><code>thunk_<span class="named-addr"><span class="addr-name">Engine_MemoryAllocator</span><span class="ghidra-ref">FUN_1408de480</span></span></code></td>
   <td style="text-align:left">Primary object allocator</td>
   <td style="text-align:left">Called hundreds of times</td>
 </tr>
@@ -4041,7 +4041,7 @@ length = *(int*)(str + 0x0C);</code></pre></div>
 <tr>
   <td style="text-align:left"><code>/smoketest</code></td>
   <td style="text-align:left">Automated test mode - skips UI, runs test sequence</td>
-  <td style="text-align:left">State 0x4E3: <code>FUN_1408f85c0(param_1[0x3e], "/smoketest")</code>, sets <code>*(ctx+100)=1</code>, triggers <code>goto LAB_140b8185e</code> (quit) from main menu</td>
+  <td style="text-align:left">State 0x4E3: <code><span class="named-addr"><span class="addr-name">CheckCommandLineArg</span><span class="ghidra-ref">FUN_1408f85c0</span></span>(param_1[0x3e], "/smoketest")</code>, sets <code>*(ctx+100)=1</code>, triggers <code>goto LAB_140b8185e</code> (quit) from main menu</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>/validatepath</code></td>
@@ -4051,12 +4051,12 @@ length = *(int*)(str + 0x0C);</code></pre></div>
 <tr>
   <td style="text-align:left"><code>/startuptitle</code></td>
   <td style="text-align:left">Set initial title/mode at startup</td>
-  <td style="text-align:left">Read via <code>FUN_1408f8940</code> in CGameManiaPlanet::Start, stored at <code>param_1 + 300</code></td>
+  <td style="text-align:left">Read via <span class="named-addr"><span class="addr-name">ReadStartupTitle</span><code class="ghidra-ref">FUN_1408f8940</code></span> in CGameManiaPlanet::Start, stored at <code>param_1 + 300</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>/title</code></td>
   <td style="text-align:left">Set game title</td>
-  <td style="text-align:left">Read via <code>FUN_1408f8540</code> in CGameManiaPlanet::Start</td>
+  <td style="text-align:left">Read via <span class="named-addr"><span class="addr-name">ReadTitleConfig</span><code class="ghidra-ref">FUN_1408f8540</code></span> in CGameManiaPlanet::Start</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>/parsegbx</code></td>
@@ -4093,21 +4093,21 @@ length = *(int*)(str + 0x0C);</code></pre></div>
 <tbody>
 <tr>
   <td style="text-align:left">Headless mode</td>
-  <td style="text-align:left"><code>DAT_141fbbee8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><code class="ghidra-ref">DAT_141fbbee8</code></span></td>
   <td style="text-align:left">Skip all rendering and UI</td>
-  <td style="text-align:left">Checked throughout: <code>if (DAT_141fbbee8 == 0) { /<em> render </em>/ }</code></td>
+  <td style="text-align:left">Checked throughout: <code>if (<span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><span class="ghidra-ref">DAT_141fbbee8</span></span> == 0) { /<em> render </em>/ }</code></td>
 </tr>
 <tr>
   <td style="text-align:left">Dedicated server</td>
-  <td style="text-align:left"><code>DAT_141fbbf0c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><code class="ghidra-ref">DAT_141fbbf0c</code></span></td>
   <td style="text-align:left">Server-only mode</td>
-  <td style="text-align:left">Often paired with headless: `if (DAT_141fbbee8 != 0 \</td>
+  <td style="text-align:left">Often paired with headless: `if (<span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><span class="ghidra-ref">DAT_141fbbee8</span></span> != 0 \</td>
   <td style="text-align:left">\</td>
-  <td style="text-align:left">DAT_141fbbf0c != 0)`</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_dedicatedServerFlag</span><span class="ghidra-ref">DAT_141fbbf0c</span></span> != 0)`</td>
 </tr>
 <tr>
   <td style="text-align:left">Luna Mode</td>
-  <td style="text-align:left"><code>DAT_141f9cff4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_LunaMode</span><code class="ghidra-ref">DAT_141f9cff4</code></span></td>
   <td style="text-align:left">Accessibility mode (triggered by UUID check)</td>
   <td style="text-align:left">Logs <code>"[Sys] Luna Mode enabled."</code></td>
 </tr>
@@ -4125,7 +4125,7 @@ length = *(int*)(str + 0x0C);</code></pre></div>
   <li>State 0x4E3 sets <code>*(context + 100) = 1</code></li>
   <li>The startup continues normally through connection</li>
   <li>At main menu (LAB_140b7cdcc), the check <code>if (iVar12 != 0) goto LAB_140b8185e</code> triggers</li>
-  <li>LAB_140b8185e calls <code>FUN_140b54b90(param_1, 5)</code> (phase = quit) and transitions to state 0x10C2</li>
+  <li>LAB_140b8185e calls <code><span class="named-addr"><span class="addr-name">GamePhase_Set</span><span class="ghidra-ref">FUN_140b54b90</span></span>(param_1, 5)</code> (phase = quit) and transitions to state 0x10C2</li>
   <li>State 0x10C2 runs <code>CGameApp::QuitGameAndExit</code> and the process exits</li>
 </ol>
 <p>This allows CI systems to verify the game launches successfully without human interaction.</p>
@@ -4271,15 +4271,15 @@ function updateGame(app, ctx) {
 <h2 id="open-questions-and-unknowns"><a class="anchor" href="#open-questions-and-unknowns">#</a>Open questions and unknowns</h2>
 <ol>
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The entry point at <span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span> uses obfuscated code. The unpacking/code protection mechanism has not been analyzed.</li>
-  <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The exact mechanism that bridges from WinMain (<code>FUN_140aa7470</code>) to <code>CGbxApp::Init1</code> / <code>CGbxApp::Init2</code>. The function ends with <code>halt_baddata()</code> in Ghidra after <code>FUN_142279568(0,2)</code>, suggesting indirect control flow or code protection.</li>
+  <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The exact mechanism that bridges from WinMain (<span class="named-addr"><span class="addr-name">WinMain</span><code class="ghidra-ref">FUN_140aa7470</code></span>) to <code>CGbxApp::Init1</code> / <code>CGbxApp::Init2</code>. The function ends with <code>halt_baddata()</code> in Ghidra after <code><span class="named-addr"><span class="addr-name">CGbxApp::Init_CodeProtected</span><span class="ghidra-ref">FUN_142279568</span></span>(0,2)</code>, suggesting indirect control flow or code protection.</li>
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> No function symbols were recovered for any Nadeo class methods. All functions are unnamed <code>FUN_*</code> -- the binary appears fully stripped of debug symbols. Class identification relies entirely on string cross-references.</li>
   <li><strong>[RESOLVED]</strong> The fiber system uses the "stackless coroutine" pattern, NOT Windows fibers. Each state is an integer, local variables persist in heap-allocated context objects (0x18 to 0x380 bytes). Evidence: no calls to ConvertThreadToFiber/SwitchToFiber; the pattern is identical across all decompiled functions.</li>
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The exact vtable layout and virtual function dispatch for the class hierarchy. Virtual calls are observed as <code>(<em>(</em>object + offset))(object, ...)</code> but offsets have not been mapped to method names systematically.</li>
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> <code>CGameManiaTitleFlow</code> -- no functions found despite string references to "TitleFlow" and "CTitleFlow".</li>
-  <li><strong>[PARTIALLY RESOLVED]</strong> Rendering is driven through the engine callback at <code>+0x90</code> (FUN_140aa93b0) registered during <code>CGbxGame::InitApp</code>. The frame callback at <code>+0x70</code> (FUN_140101a40) drives per-frame updates. Both are installed only when <code>DAT_141fbbee8 == 0</code> (non-headless).</li>
-  <li><strong>[PARTIALLY RESOLVED]</strong> Headless mode skips: DirectX init, viewport config, render waiting frame, audio device detection, all engine callbacks at +0x70/+0x80/+0x90, and the app callback at DAT_141fc03d0/d8.</li>
-  <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The exact physics timestep and how it interacts with the variable frame rate. The <code>FUN_140dd2f10</code> (gameplay dispatch) and <code>FUN_140dd2c70</code> (gameplay update) are the entry points but their internal structure has not been decompiled.</li>
-  <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The bytecode interpreter <code>FUN_1408d1ea0</code> -- how ManiaScript bytecode is structured, what opcodes exist, and how the SLEEP/YIELD/WAIT mechanisms are implemented at the bytecode level.</li>
+  <li><strong>[PARTIALLY RESOLVED]</strong> Rendering is driven through the engine callback at <code>+0x90</code><span class="ghidra-ref"> (FUN_140aa93b0)</span> registered during <code>CGbxGame::InitApp</code>. The frame callback at <code>+0x70</code><span class="ghidra-ref"> (FUN_140101a40)</span> drives per-frame updates. Both are installed only when <code><span class="named-addr"><span class="addr-name">DAT_headlessModeFlag</span><span class="ghidra-ref">DAT_141fbbee8</span></span> == 0</code> (non-headless).</li>
+  <li><strong>[PARTIALLY RESOLVED]</strong> Headless mode skips: DirectX init, viewport config, render waiting frame, audio device detection, all engine callbacks at +0x70/+0x80/+0x90, and the app callback at <span class="named-addr"><span class="addr-name">DAT_AppCallbackObject</span><span class="ghidra-ref">DAT_141fc03d0</span></span>/d8.</li>
+  <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The exact physics timestep and how it interacts with the variable frame rate. The <span class="named-addr"><span class="addr-name">GameplayUpdate</span><code class="ghidra-ref">FUN_140dd2f10</code></span> (gameplay dispatch) and <span class="named-addr"><span class="addr-name">GameplayDispatch</span><code class="ghidra-ref">FUN_140dd2c70</code></span> (gameplay update) are the entry points but their internal structure has not been decompiled.</li>
+  <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The bytecode interpreter <span class="named-addr"><span class="addr-name">CScriptEngine_ExecuteScript</span><code class="ghidra-ref">FUN_1408d1ea0</code></span> -- how ManiaScript bytecode is structured, what opcodes exist, and how the SLEEP/YIELD/WAIT mechanisms are implemented at the bytecode level.</li>
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> Input synchronization in multiplayer -- how client inputs are buffered, timestamped, and reconciled with the server's authoritative state.</li>
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The exact mapping between <code>CSmArenaClient::MainLoop_*</code> states and the physics/rendering pipeline within a single frame.</li>
 </ol>
@@ -4452,6 +4452,7 @@ function updateGame(app, ctx) {
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

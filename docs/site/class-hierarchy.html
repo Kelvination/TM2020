@@ -5206,8 +5206,8 @@ CVehicleSettings                          -- Vehicle settings</code></pre></div>
 <ol>
   <li>Sets script context pointer at <code>param_1 + 0x60</code></li>
   <li>Initializes profiling label: <code>"CScriptEngine::Run(%s)"</code> with script name</li>
-  <li>Reads global tick counter (<code>DAT_141ffad50</code>) into execution context at <code>+0xc4</code></li>
-  <li>Calls script execution function <code>FUN_1408d1ea0</code></li>
+  <li>Reads global tick counter (<span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><code class="ghidra-ref">DAT_141ffad50</code></span>) into execution context at <code>+0xc4</code></li>
+  <li>Calls script execution function <span class="named-addr"><span class="addr-name">CScriptEngine_ExecuteScript</span><code class="ghidra-ref">FUN_1408d1ea0</code></span></li>
   <li>On error (<code>iVar2 == -1</code>): sets error flag at offset +400 of the script result object to value 2</li>
 </ol>
 <hr>
@@ -6740,6 +6740,7 @@ CVehicleSettings                          -- Vehicle settings</code></pre></div>
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

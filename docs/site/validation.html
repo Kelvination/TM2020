@@ -140,11 +140,11 @@
 <p><strong>Fix</strong>: Doc 14 must note TM2020's turbo force increases linearly, not decreases.</p>
 <h3 id="sleep-threshold-is-linear-not-pre-squared-major"><a class="anchor" href="#sleep-threshold-is-linear-not-pre-squared-major">#</a>Sleep Threshold Is Linear, Not Pre-Squared (MAJOR)</h3>
 <p><strong>Affects</strong>: Doc 10 Section 7.2</p>
-<p>Doc 10 says "DAT_141ebcd04: Sleep velocity threshold (compared squared)" -- implying the value is already in squared units. The code squares it before comparison:</p>
+<p>Doc 10 says "<span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><span class="ghidra-ref">DAT_141ebcd04</span></span>: Sleep velocity threshold (compared squared)" -- implying the value is already in squared units. The code squares it before comparison:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">fVar12 = DAT_141ebcd04 * DAT_141ebcd04;
 // ...
 if (fVar10 * fVar10 + fVar1 * fVar1 + fVar11 * fVar11 &lt; fVar12) {</code></pre></div>
-<p><code>DAT_141ebcd04</code> is a linear velocity threshold (m/s). The comparison is <code>speed_sq < DAT_141ebcd04^2</code>. Getting this wrong makes sleep detection activate at the wrong speed.</p>
+<p><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="ghidra-ref">DAT_141ebcd04</code></span> is a linear velocity threshold (m/s). The comparison is <code>speed_sq < DAT_141ebcd04^2</code>. Getting this wrong makes sleep detection activate at the wrong speed.</p>
 <p><strong>Fix</strong>: Change description to "Sleep velocity threshold (linear, squared by code before comparison)."</p>
 <h3 id="fragile-check-passes-for-nibble-values-0-and-1-too-major"><a class="anchor" href="#fragile-check-passes-for-nibble-values-0-and-1-too-major">#</a>Fragile Check Passes for Nibble Values 0 and 1 Too (MAJOR)</h3>
 <p><strong>Affects</strong>: Doc 10 Section 6.4</p>
@@ -192,7 +192,7 @@ if (fVar10 * fVar10 + fVar1 * fVar1 + fVar11 * fVar11 &lt; fVar12) {</code></pre
 <p><strong>Fix</strong>: Reconcile the counts or explain inclusion criteria.</p>
 <h3 id="facade01-function-is-a-class-id-checker-minor"><a class="anchor" href="#facade01-function-is-a-class-id-checker-minor">#</a>FACADE01 Function Is a Class ID Checker (MINOR)</h3>
 <p><strong>Affects</strong>: Doc 16 Section 7</p>
-<p>The document conflates two uses of <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span>. Function <code>FUN_1402d0c40</code> checks class IDs (returns 1 for end-class, non-1 otherwise). The <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel in the actual file stream should be cited from community documentation or a different code path.</p>
+<p>The document conflates two uses of <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span>. Function <span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="ghidra-ref">FUN_1402d0c40</code></span> checks class IDs (returns 1 for end-class, non-1 otherwise). The <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel in the actual file stream should be cited from community documentation or a different code path.</p>
 <p><strong>Fix</strong>: Clarify the function's role and cite the sentinel separately.</p>
 <h3 id="lookbackstring-flags-are-community-sourced-minor"><a class="anchor" href="#lookbackstring-flags-are-community-sourced-minor">#</a>LookbackString Flags Are Community-Sourced (MINOR)</h3>
 <p><strong>Affects</strong>: Doc 16 Section 13</p>
@@ -408,6 +408,7 @@ if (fVar10 * fVar10 + fVar1 * fVar1 + fVar11 * fVar11 &lt; fVar12) {</code></pre
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

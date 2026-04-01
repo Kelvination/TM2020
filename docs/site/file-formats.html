@@ -131,10 +131,10 @@
 <p>The GBX format supports three file variants:</p>
 <ul>
   <li><strong>Binary GBX</strong> (<code>.gbx</code>) -- primary format, chunk-based binary serialization</li>
-  <li><strong>XML GBX</strong> (<code>.gbx.xml</code>) -- XML representation, loaded via <code>FUN_140925fa0</code></li>
-  <li><strong>JSON</strong> (<code>.json</code>) -- JSON import, loaded via <code>FUN_140934b80</code></li>
+  <li><strong>XML GBX</strong> (<code>.gbx.xml</code>) -- XML representation, loaded via <span class="named-addr"><span class="addr-name">GBX_LoadXml</span><code class="ghidra-ref">FUN_140925fa0</code></span></li>
+  <li><strong>JSON</strong> (<code>.json</code>) -- JSON import, loaded via <span class="named-addr"><span class="addr-name">GBX_LoadJson</span><code class="ghidra-ref">FUN_140934b80</code></span></li>
 </ul>
-<p><strong>Loading entry point</strong>: <code>FUN_140904730</code> (CSystemArchiveNod::LoadGbx)</p>
+<p><strong>Loading entry point</strong>: <span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><code class="ghidra-ref">FUN_140904730</code></span> (CSystemArchiveNod::LoadGbx)</p>
 <hr>
 <h2 id="how-gbx-files-are-structured"><a class="anchor" href="#how-gbx-files-are-structured">#</a>How GBX files are structured</h2>
 <p>Every GBX file follows a header-references-body layout. The header identifies the file type and provides quick-access metadata. The reference table lists external dependencies. The body carries the serialized data.</p>
@@ -163,7 +163,7 @@
 </ul>
 <hr>
 <h2 id="how-the-header-is-parsed"><a class="anchor" href="#how-the-header-is-parsed">#</a>How the header is parsed</h2>
-<p>The header parser (<code>FUN_140900e60</code> at <span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="addr">0x140900e60</code></span>) reads the magic bytes and version, then hands off to version-specific logic.</p>
+<p>The header parser (<span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="ghidra-ref">FUN_140900e60</code></span> at <span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="addr">0x140900e60</code></span>) reads the magic bytes and version, then hands off to version-specific logic.</p>
 <h3 id="magic-and-version"><a class="anchor" href="#magic-and-version">#</a>Magic and version</h3>
 <p>The first 5 bytes identify the file:</p>
 <ol>
@@ -211,9 +211,9 @@
 </tr>
 </tbody>
 </table></div>
-<p>For versions 3-6, parsing continues in <code>FUN_140901850</code>.</p>
+<p>For versions 3-6, parsing continues in <span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="ghidra-ref">FUN_140901850</code></span>.</p>
 <h3 id="format-flags-version-6"><a class="anchor" href="#format-flags-version-6">#</a>Format flags (version 6+)</h3>
-<p><code>FUN_140901850</code> at <span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="addr">0x140901850</code></span> reads a 4-character format descriptor after the version field.</p>
+<p><span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="ghidra-ref">FUN_140901850</code></span> at <span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="addr">0x140901850</code></span> reads a 4-character format descriptor after the version field.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -253,7 +253,7 @@
 <ul>
   <li><strong>Byte 0</strong>: Only <code>'B'</code> (binary) proceeds to full parsing. <code>'T'</code> (text) is recognized but <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> if fully supported in TM2020]</span>.</li>
   <li><strong>Byte 1</strong>: Stored at archive offset <code>+0xD8</code>. Controls body decompression.</li>
-  <li><strong>Byte 2</strong>: Stored at archive offset <code>+0xDC</code>. Controls body stream decompression (LZO/zlib). When set, body data is decompressed via <code>FUN_140127aa0</code> before chunk parsing.</li>
+  <li><strong>Byte 2</strong>: Stored at archive offset <code>+0xDC</code>. Controls body stream decompression (LZO/zlib). When set, body data is decompressed via <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> before chunk parsing.</li>
   <li><strong>Byte 3</strong>: <code>'R'</code> = file contains external references to other GBX files; <code>'E'</code> = self-contained.</li>
 </ul>
 <p>Common format strings: <code>"BUCR"</code> (Binary, Uncompressed body, Compressed <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>, with References) and <code>"BUCE"</code> (no external refs).</p>
@@ -264,12 +264,12 @@
 </ul>
 <p>The reference table is allocated as an array of 0x10-byte entries at archive offset <code>+0x50</code>.</p>
 <h3 id="decompiled-code"><a class="anchor" href="#decompiled-code">#</a>Decompiled code</h3>
-<p>See <code>decompiled/fileformats/FUN_140900e60_LoadHeader.c</code> and <code>FUN_140901850_ParseVersionHeader.c</code>.</p>
+<p>See <code>decompiled/fileformats/<span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><span class="ghidra-ref">FUN_140900e60</span></span>_LoadHeader.c</code> and <code><span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><span class="ghidra-ref">FUN_140901850</span></span>_ParseVersionHeader.c</code>.</p>
 <hr>
 <h2 id="how-the-body-and-chunk-system-work"><a class="anchor" href="#how-the-body-and-chunk-system-work">#</a>How the body and chunk system work</h2>
 <p>The body contains all serialized data for the root node. It is organized as a sequential stream of chunks.</p>
 <h3 id="reference-table-loading"><a class="anchor" href="#reference-table-loading">#</a>Reference table loading</h3>
-<p><code>FUN_140902530</code> at <span class="named-addr"><span class="addr-name">GBX_ReferenceTableLoading</span><code class="addr">0x140902530</code></span> loads the reference table after the header. This resolves external dependencies (other GBX files referenced by this one).</p>
+<p><span class="named-addr"><span class="addr-name">GBX_ReferenceTableLoading</span><code class="ghidra-ref">FUN_140902530</code></span> at <span class="named-addr"><span class="addr-name">GBX_ReferenceTableLoading</span><code class="addr">0x140902530</code></span> loads the reference table after the header. This resolves external dependencies (other GBX files referenced by this one).</p>
 <p><strong>Profiling marker</strong>: <code>"NSys::ArLoadRef_Gbx"</code> (version 7) or <code>"NSys::ArLoadRef"</code> (others)</p>
 <p>The function:</p>
 <ol>
@@ -286,29 +286,29 @@
   <li>The special value <span class="named-addr"><span class="addr-name">GBX_REFERENCE_PLACEHOLDER_SENTINEL</span><code class="addr">0xDEADBEEF</code></span> is written as a placeholder during reference resolution (visible at address <span class="named-addr"><span class="addr-name">GBX_DeadBeefWriteLocation</span><code class="addr">0x140902994</code></span>)</li>
 </ol>
 <h3 id="body-chunk-loading"><a class="anchor" href="#body-chunk-loading">#</a>Body chunk loading</h3>
-<p><code>FUN_1409031d0</code> at <span class="named-addr"><span class="addr-name">ArchiveNod::ReadChunks</span><code class="addr">0x1409031d0</code></span> loads the main serialized data from the body.</p>
-<p><strong>Profiling marker</strong>: Uses the output of <code>FUN_140903140</code> (e.g., <code>"ArchiveNod::LoadGbx_Body(Challenge)"</code>)</p>
+<p><span class="named-addr"><span class="addr-name">ArchiveNod::ReadChunks</span><code class="ghidra-ref">FUN_1409031d0</code></span> at <span class="named-addr"><span class="addr-name">ArchiveNod::ReadChunks</span><code class="addr">0x1409031d0</code></span> loads the main serialized data from the body.</p>
+<p><strong>Profiling marker</strong>: Uses the output of <span class="named-addr"><span class="addr-name">GBX_ClassIdToBodyTypeLabel</span><code class="ghidra-ref">FUN_140903140</code></span> (e.g., <code>"ArchiveNod::LoadGbx_Body(Challenge)"</code>)</p>
 <p>Flow:</p>
 <ol>
   <li>Gets a profiling label based on class ID (see table below)</li>
   <li>Records stream position and body size at archive offsets <code>+0x120</code> (body size) and <code>+0x124</code> (end position)</li>
   <li><strong>If version == 3</strong>: Reads body as raw blob, stores in a buffer</li>
   <li><strong>If version > 3</strong> and body is compressed (offset <code>+0xDC</code> != 0):</li>
-  <li>Decompresses body via <code>FUN_140127aa0</code> into a memory buffer</li>
-  <li>The decompression buffer is pooled (reused from <code>DAT_14205c280</code>)</li>
+  <li>Decompresses body via <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> into a memory buffer</li>
+  <li>The decompression buffer is pooled (reused from <span class="named-addr"><span class="addr-name">DAT_decompressionBufferPool</span><code class="ghidra-ref">DAT_14205c280</code></span>)</li>
   <li>Max decompressed size of 0xFFFFF (~1MB) before pool reuse</li>
   <li>Resolves <strong>internal references</strong> -- iterates the reference table connecting nodes</li>
-  <li>Calls <code>FUN_140900560</code> to associate the main node with the archive</li>
+  <li>Calls <span class="named-addr"><span class="addr-name">GBX_AssociateNodeWithArchive</span><code class="ghidra-ref">FUN_140900560</code></span> to associate the main node with the archive</li>
 </ol>
 <h3 id="how-chunks-end"><a class="anchor" href="#how-chunks-end">#</a>How chunks end</h3>
-<p><code>FUN_1402d0c40</code> at <span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="addr">0x1402d0c40</code></span> detects the end-of-chunks marker.</p>
+<p><span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="ghidra-ref">FUN_1402d0c40</code></span> at <span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="addr">0x1402d0c40</code></span> detects the end-of-chunks marker.</p>
 <ul>
   <li><strong>Chunk ID <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span></strong>: Signals end of chunks (returned by this function for all non-terminal chunk IDs)</li>
   <li><strong>Chunk ID <span class="named-addr"><span class="addr-name">CMwNod_End_CHUNK_ID</span><code class="addr">0x01001000</code></span></strong>: The actual end-of-chunks marker (CMwNod_End), returns 1</li>
 </ul>
-<p>When an unknown chunk ID is encountered, <code>FUN_1402d0c80</code> logs: <code>"Unknown ChunkId: %08X"</code> at <span class="named-addr"><span class="addr-name">str_UnknownChunkId</span><code class="addr">0x141b72000</code></span></p>
+<p>When an unknown chunk ID is encountered, <span class="named-addr"><span class="addr-name">GBX_UnknownChunkIdHandler</span><code class="ghidra-ref">FUN_1402d0c80</code></span> logs: <code>"Unknown ChunkId: %08X"</code> at <span class="named-addr"><span class="addr-name">str_UnknownChunkId</span><code class="addr">0x141b72000</code></span></p>
 <h3 id="body-type-labels-class-id-to-profile-label"><a class="anchor" href="#body-type-labels-class-id-to-profile-label">#</a>Body type labels (class ID to profile label)</h3>
-<p>From <code>FUN_140903140</code> at <span class="named-addr"><span class="addr-name">GBX_ClassIdToBodyTypeLabel</span><code class="addr">0x140903140</code></span>:</p>
+<p>From <span class="named-addr"><span class="addr-name">GBX_ClassIdToBodyTypeLabel</span><code class="ghidra-ref">FUN_140903140</code></span> at <span class="named-addr"><span class="addr-name">GBX_ClassIdToBodyTypeLabel</span><code class="addr">0x140903140</code></span>:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -374,13 +374,13 @@
   <li><code>"CClassicArchive::ReadData() failed on \""</code> at <span class="named-addr"><span class="addr-name">str_CClassicArchive_ReadDataFailed</span><code class="addr">0x141b58200</code></span></li>
   <li><code>"[Archive] SAVING ERROR: Saving skipped datas => data may be lost !!"</code> at <span class="named-addr"><span class="addr-name">str_Archive_SavingErrorSkippedData</span><code class="addr">0x141b582c0</code></span></li>
 </ul>
-<p><strong>ReadData function</strong> (<code>FUN_14012ba00</code> at <span class="named-addr"><span class="addr-name">CClassicArchive::ReadData</span><code class="addr">0x14012ba00</code></span>):</p>
+<p><strong>ReadData function</strong> (<span class="named-addr"><span class="addr-name">CClassicArchive::ReadData</span><code class="ghidra-ref">FUN_14012ba00</code></span> at <span class="named-addr"><span class="addr-name">CClassicArchive::ReadData</span><code class="addr">0x14012ba00</code></span>):</p>
 <ul>
   <li>Reads raw bytes from the stream via vtable call at <code><em>(</em>(param_1[1]) + 8)</code></li>
   <li>Validates the number of bytes actually read matches the requested count</li>
   <li>On mismatch: logs the error with the archive name (obtained via vtable call at <code><em>(</em>param_1 + 0x30)</code>)</li>
   <li>Sets error flag at <code>param_1+0x28</code> (offset 5 from base) on failure</li>
-  <li>Calls <code>DAT_141f9d088</code> callback on error (if set) -- used for crash reporting</li>
+  <li>Calls <span class="named-addr"><span class="addr-name">DAT_archiveErrorCallback</span><code class="ghidra-ref">DAT_141f9d088</code></span> callback on error (if set) -- used for crash reporting</li>
 </ul>
 <p>The archive object layout (partial, from decompilation):</p>
 <div class="table-wrapper"><table>
@@ -590,13 +590,13 @@
 </tbody>
 </table></div>
 <h3 id="registration-and-lookup"><a class="anchor" href="#registration-and-lookup">#</a>Registration and lookup</h3>
-<p><strong>Global class table</strong>: <code>DAT_141ff9d58</code></p>
+<p><strong>Global class table</strong>: <span class="named-addr"><span class="addr-name">DAT_globalClassRegistry</span><code class="ghidra-ref">DAT_141ff9d58</code></span></p>
 <p>The table uses a two-level hierarchy:</p>
 <ol>
   <li><strong>Level 1</strong>: Array of engine pointers, indexed by engine ID (<code>class_id >> 24</code>)</li>
   <li><strong>Level 2</strong>: Each engine has an array of class info pointers, indexed by class index (<code>(class_id >> 12) & 0xFFF</code>)</li>
 </ol>
-<p>Each class info entry (from <code>FUN_1402f20a0</code>):</p>
+<p>Each class info entry (from <span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><code class="ghidra-ref">FUN_1402f20a0</code></span>):</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -627,15 +627,15 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Factory function</strong> (<code>FUN_1402cf380</code> / CreateByMwClassId):</p>
+<p><strong>Factory function</strong> (<span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><code class="ghidra-ref">FUN_1402cf380</code></span> / CreateByMwClassId):</p>
 <ul>
-  <li>Looks up class info via <code>FUN_1402f20a0</code></li>
+  <li>Looks up class info via <span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><code class="ghidra-ref">FUN_1402f20a0</code></span></li>
   <li>If factory pointer at <code>+0x30</code> exists: calls it to create a new instance</li>
   <li>If factory is NULL: logs <code>"[MwNod] Trying to CreateByMwClassId('<classname>') which is pure..."</code></li>
   <li>If class unknown: logs <code>"[MwNod] Trying to CreateByMwClassId(<id>) which is unknown..."</code></li>
 </ul>
 <h3 id="class-id-remapping-backward-compatibility"><a class="anchor" href="#class-id-remapping-backward-compatibility">#</a>Class ID remapping (backward compatibility)</h3>
-<p><code>FUN_1402f2610</code> at <span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="addr">0x1402f2610</code></span> is a massive lookup table that converts legacy class IDs to their modern equivalents. This enables reading GBX files from older ManiaPlanet/Trackmania versions.</p>
+<p><span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="ghidra-ref">FUN_1402f2610</code></span> at <span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="addr">0x1402f2610</code></span> is a massive lookup table that converts legacy class IDs to their modern equivalents. This enables reading GBX files from older ManiaPlanet/Trackmania versions.</p>
 <p>Key remappings (selected from ~200+ entries):</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -688,9 +688,9 @@
 <h3 id="decompiled-code-1"><a class="anchor" href="#decompiled-code-1">#</a>Decompiled code</h3>
 <p>See:</p>
 <ul>
-  <li><code>decompiled/fileformats/FUN_1402cf380_CreateByMwClassId.c</code></li>
-  <li><code>decompiled/fileformats/FUN_1402f20a0_ClassIdLookup.c</code></li>
-  <li><code>decompiled/fileformats/FUN_1402f2610_ClassIdRemap.c</code></li>
+  <li><code>decompiled/fileformats/<span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><span class="ghidra-ref">FUN_1402cf380</span></span>_CreateByMwClassId.c</code></li>
+  <li><code>decompiled/fileformats/<span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><span class="ghidra-ref">FUN_1402f20a0</span></span>_ClassIdLookup.c</code></li>
+  <li><code>decompiled/fileformats/<span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><span class="ghidra-ref">FUN_1402f2610</span></span>_ClassIdRemap.c</code></li>
 </ul>
 <hr>
 <h2 id="what-gbx-file-types-exist"><a class="anchor" href="#what-gbx-file-types-exist">#</a>What GBX file types exist</h2>
@@ -917,11 +917,11 @@
 <h3 id="key-operations"><a class="anchor" href="#key-operations">#</a>Key operations</h3>
 <ul>
   <li><strong><code>CSystemFidsFolder::BrowsePath</code></strong> (string at <span class="named-addr"><span class="addr-name">str_CSystemFidsFolder_BrowsePath</span><code class="addr">0x141c08d88</code></span>): Directory traversal</li>
-  <li><strong><code>CSystemFidContainer::InstallFids</code></strong> (<code>FUN_14092bec0</code> at <span class="named-addr"><span class="addr-name">CSystemFidContainer::InstallFids</span><code class="addr">0x14092bec0</code></span>): Registers files from a container (pack) into the virtual file system</li>
+  <li><strong><code>CSystemFidContainer::InstallFids</code></strong> (<span class="named-addr"><span class="addr-name">CSystemFidContainer::InstallFids</span><code class="ghidra-ref">FUN_14092bec0</code></span> at <span class="named-addr"><span class="addr-name">CSystemFidContainer::InstallFids</span><code class="addr">0x14092bec0</code></span>): Registers files from a container (pack) into the virtual file system</li>
   <li>Takes a parent folder, container, and various parameters</li>
   <li>Iterates entries (stride 0x20 per entry) at container offset <code>+0x18</code></li>
-  <li>Creates FidFile entries for each file via <code>FUN_1408fa7b0</code></li>
-  <li>Associates files with their parent container via <code>FUN_1402cfa80</code></li>
+  <li>Creates FidFile entries for each file via <span class="named-addr"><span class="addr-name">FidFile_CreateEntry</span><code class="ghidra-ref">FUN_1408fa7b0</code></span></li>
+  <li>Associates files with their parent container via <span class="named-addr"><span class="addr-name">FidFile_AssociateWithContainer</span><code class="ghidra-ref">FUN_1402cfa80</code></span></li>
   <li>Sets up file watching if <code>container+0x80</code> is non-null</li>
   <li>Updates folder indices at <code>container+0x38</code></li>
 </ul>
@@ -1197,77 +1197,77 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>FUN_140900e60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="ghidra-ref">FUN_140900e60</code></span></td>
   <td style="text-align:left">GBX magic + version validation</td>
   <td style="text-align:left">Reads "GBX", version uint16</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140901850</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="ghidra-ref">FUN_140901850</code></span></td>
   <td style="text-align:left">Version 6+ format flag parsing</td>
   <td style="text-align:left">Reads BUCE/BUCR flags</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140902530</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_ReferenceTableLoading</span><code class="ghidra-ref">FUN_140902530</code></span></td>
   <td style="text-align:left">Reference table loading</td>
   <td style="text-align:left">External dependency resolution</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140903140</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_ClassIdToBodyTypeLabel</span><code class="ghidra-ref">FUN_140903140</code></span></td>
   <td style="text-align:left">Class ID -> body type label</td>
   <td style="text-align:left">Profiling/logging labels</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140903d30</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ArchiveNod::LoadBody</span><code class="ghidra-ref">FUN_140903d30</code></span></td>
   <td style="text-align:left">Load header + body orchestrator</td>
   <td style="text-align:left">Calls header, body, chunk loaders</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140904730</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><code class="ghidra-ref">FUN_140904730</code></span></td>
   <td style="text-align:left">CSystemArchiveNod::LoadGbx</td>
   <td style="text-align:left">Main GBX load entry point</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402cf380</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><code class="ghidra-ref">FUN_1402cf380</code></span></td>
   <td style="text-align:left">CreateByMwClassId</td>
   <td style="text-align:left">Factory for CMwNod subclasses</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402f20a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><code class="ghidra-ref">FUN_1402f20a0</code></span></td>
   <td style="text-align:left">Class ID table lookup</td>
   <td style="text-align:left">Two-level hierarchical lookup with TLS cache</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402f2610</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="ghidra-ref">FUN_1402f2610</code></span></td>
   <td style="text-align:left">Class ID remapping</td>
   <td style="text-align:left">Legacy -> modern class ID conversion</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402d0c40</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="ghidra-ref">FUN_1402d0c40</code></span></td>
   <td style="text-align:left">Chunk end marker check</td>
   <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel detection</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402d0c80</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_UnknownChunkIdHandler</span><code class="ghidra-ref">FUN_1402d0c80</code></span></td>
   <td style="text-align:left">Unknown chunk ID handler</td>
   <td style="text-align:left">Logs "Unknown ChunkId: %08X"</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_14012ba00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CClassicArchive::ReadData</span><code class="ghidra-ref">FUN_14012ba00</code></span></td>
   <td style="text-align:left">CClassicArchive::ReadData</td>
   <td style="text-align:left">Core binary read with validation</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1409031d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ArchiveNod::ReadChunks</span><code class="ghidra-ref">FUN_1409031d0</code></span></td>
   <td style="text-align:left">Body chunk loader</td>
   <td style="text-align:left">Decompresses and processes body chunks</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_14092bec0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSystemFidContainer::InstallFids</span><code class="ghidra-ref">FUN_14092bec0</code></span></td>
   <td style="text-align:left">CSystemFidContainer::InstallFids</td>
   <td style="text-align:left">Registers pack contents in VFS</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140901a70</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_HeaderChunkReader</span><code class="ghidra-ref">FUN_140901a70</code></span></td>
   <td style="text-align:left">Header chunk reader</td>
   <td style="text-align:left">Reads individual header chunk entries</td>
 </tr>
@@ -1335,11 +1335,11 @@
 |   (If uncompressed):                  |
 |     Body Chunk Stream                 |
 +=======================================+</code></pre></div>
-<p><strong>Code evidence</strong>: Entry point is <code>FUN_140904730</code> (<code>CSystemArchiveNod::LoadGbx</code>). The loading pipeline supports three file variants:</p>
+<p><strong>Code evidence</strong>: Entry point is <span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><code class="ghidra-ref">FUN_140904730</code></span> (<code>CSystemArchiveNod::LoadGbx</code>). The loading pipeline supports three file variants:</p>
 <ul>
   <li>Binary GBX (<code>.gbx</code>) -- primary format</li>
-  <li>XML GBX (<code>.gbx.xml</code>) -- loaded via <code>FUN_140925fa0</code></li>
-  <li>JSON (<code>.json</code>) -- loaded via <code>FUN_140934b80</code></li>
+  <li>XML GBX (<code>.gbx.xml</code>) -- loaded via <span class="named-addr"><span class="addr-name">GBX_LoadXml</span><code class="ghidra-ref">FUN_140925fa0</code></span></li>
+  <li>JSON (<code>.json</code>) -- loaded via <span class="named-addr"><span class="addr-name">GBX_LoadJson</span><code class="ghidra-ref">FUN_140934b80</code></span></li>
 </ul>
 <p><strong>Error strings confirming format</strong>:</p>
 <ul>
@@ -1366,7 +1366,7 @@
 var     var     ...       header_chunk_data    Concatenated header chunk payloads
 var     4       uint32    num_nodes            Total node count (for reference table sizing)</code></pre></div>
 <p>Note: For versions 3-5, <code>format_flags</code> is absent and offset shifts accordingly. Version 6 is standard for TM2020.</p>
-<p><strong>Code evidence</strong> (<code>FUN_140900e60</code>):</p>
+<p><strong>Code evidence</strong> (<span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="ghidra-ref">FUN_140900e60</code></span>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Read 3 bytes: expects &#x27;G&#x27;, &#x27;B&#x27;, &#x27;X&#x27;
 iVar3 = vtable_read(stream, &amp;local_1c8, 3);
 if ((iVar3 == 3) &amp;&amp; (local_1c8 == &#x27;G&#x27;) &amp;&amp; (local_1c7 == &#x27;B&#x27;) &amp;&amp; (local_1c6 == &#x27;X&#x27;)) {
@@ -1439,7 +1439,7 @@ if ((iVar3 == 3) &amp;&amp; (local_1c8 == &#x27;G&#x27;) &amp;&amp; (local_1c7 =
 1     +0x06   &#x27;C&#x27; / &#x27;U&#x27;    param_1+0xD8     Body compression: Compressed / Uncompressed
 2     +0x07   &#x27;C&#x27; / &#x27;U&#x27;    param_1+0xDC     Body stream compression: Compressed / Uncompressed
 3     +0x08   &#x27;R&#x27; / &#x27;E&#x27;    (controls flow)  With References / No External Refs</code></pre></div>
-<p><strong>Code evidence</strong> (<code>FUN_140901850</code>):</p>
+<p><strong>Code evidence</strong> (<span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="ghidra-ref">FUN_140901850</code></span>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Read 4-byte format descriptor
 FUN_14012ba00(param_1, &amp;local_res10, 4);
 
@@ -1482,7 +1482,7 @@ if (((char)local_res10 == &#x27;T&#x27;) || (iVar3 = 0, (char)local_res10 == &#x
 <p>Based on decompilation evidence:</p>
 <ul>
   <li><strong>Byte 1</strong> (stored at <code>+0xD8</code>): Controls whether the body data region as a whole is compressed</li>
-  <li><strong>Byte 2</strong> (stored at <code>+0xDC</code>): Controls whether the body chunk stream is decompressed via <code>FUN_140127aa0</code> before chunk parsing. When the body loader (<code>FUN_1409031d0</code>) runs, it checks <code>param_1+0xDC</code> to determine if decompression is needed.</li>
+  <li><strong>Byte 2</strong> (stored at <code>+0xDC</code>): Controls whether the body chunk stream is decompressed via <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> before chunk parsing. When the body loader (<span class="named-addr"><span class="addr-name">ArchiveNod::ReadChunks</span><code class="ghidra-ref">FUN_1409031d0</code></span>) runs, it checks <code>param_1+0xDC</code> to determine if decompression is needed.</li>
 </ul>
 <p>In practice, most TM2020 <code>.Gbx</code> files use <code>'U'</code> for byte 1 and <code>'C'</code> for byte 2, meaning the body itself is wrapped in a compression envelope but the individual chunks within are not further compressed.</p>
 <hr>
@@ -1516,7 +1516,7 @@ for i in range(num_chunks):
 for (chunk_id, chunk_size, is_heavy) in chunk_entries:
     chunk_data = read_bytes(chunk_size)
     # Dispatch chunk_data based on chunk_id</code></pre></div>
-<p><strong>Code evidence</strong>: Header chunk reading is handled by <code>FUN_140901a70</code>. The "heavy" bit (bit 31) allows a parser to skip expensive header chunks that are not immediately needed (e.g., thumbnail data in map files).</p>
+<p><strong>Code evidence</strong>: Header chunk reading is handled by <span class="named-addr"><span class="addr-name">GBX_HeaderChunkReader</span><code class="ghidra-ref">FUN_140901a70</code></span>. The "heavy" bit (bit 31) allows a parser to skip expensive header chunks that are not immediately needed (e.g., thumbnail data in map files).</p>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="known-header-chunk-ids-cgamectnchallenge-0x03043000"><a class="anchor" href="#known-header-chunk-ids-cgamectnchallenge-0x03043000">#</a>Known Header Chunk IDs (CGameCtnChallenge / <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span>)</h3></summary>
 <div class="collapsible-content">
@@ -1587,11 +1587,11 @@ For each reference entry (num_ref_entries times):
 
 For each external node (num_external_nodes times):
 +0x00   4       uint32      class_id               Class ID of the referenced node</code></pre></div>
-<p><strong>Code evidence</strong>: Reference table is loaded by <code>FUN_140902530</code>.</p>
+<p><strong>Code evidence</strong>: Reference table is loaded by <span class="named-addr"><span class="addr-name">GBX_ReferenceTableLoading</span><code class="ghidra-ref">FUN_140902530</code></span>.</p>
 <ul>
   <li>Profiling marker: <code>"NSys::ArLoadRef_Gbx"</code> (version 7) or <code>"NSys::ArLoadRef"</code> (others)</li>
   <li>The sentinel value <span class="named-addr"><span class="addr-name">GBX_REFERENCE_PLACEHOLDER_SENTINEL</span><code class="addr">0xDEADBEEF</code></span> is written as a placeholder during reference resolution (visible at address <span class="named-addr"><span class="addr-name">GBX_DeadBeefWriteLocation</span><code class="addr">0x140902994</code></span>)</li>
-  <li>Maximum 50,000 entries enforced by sanity check in <code>FUN_140901850</code>:</li>
+  <li>Maximum 50,000 entries enforced by sanity check in <span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="ghidra-ref">FUN_140901850</code></span>:</li>
 </ul>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">  if (local_res18[0] - 1 &lt; 50000) {
       // Initialize reference table (array of 0x10-byte entries)</code></pre></div>
@@ -1614,7 +1614,7 @@ For each external node (num_external_nodes times):
 <h2 id="how-the-body-chunk-system-works"><a class="anchor" href="#how-the-body-chunk-system-works">#</a>How the Body Chunk System Works</h2>
 <p>The body section contains the actual serialized data for the root node and all inline sub-nodes. It is organized as a sequential stream of chunks.</p>
 <h3 id="body-loading-flow"><a class="anchor" href="#body-loading-flow">#</a>Body Loading Flow</h3>
-<p><strong>Code evidence</strong> (<code>FUN_140903d30</code> / <code>FUN_1409031d0</code>):</p>
+<p><strong>Code evidence</strong> (<span class="named-addr"><span class="addr-name">ArchiveNod::LoadBody</span><code class="ghidra-ref">FUN_140903d30</code></span> / <span class="named-addr"><span class="addr-name">ArchiveNod::ReadChunks</span><code class="ghidra-ref">FUN_1409031d0</code></span>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. FUN_14012b990(archive, 0)       -- Reset stream position
 2. FUN_140900e60(archive)          -- Load header (magic, version, flags, class ID, refs)
 3. FUN_1402cf380(class_id)         -- Create root node instance via class factory
@@ -1630,7 +1630,7 @@ For each external node (num_external_nodes times):
 +0x04   4       uint32    compressed_size      Size of the compressed blob
 +0x08   var     bytes     compressed_data      Compressed body (compressed_size bytes)</code></pre></div>
 <p>After decompression, the result is a flat byte stream of body chunks.</p>
-<p><strong>Code evidence</strong> (<code>FUN_1409031d0</code>):</p>
+<p><strong>Code evidence</strong> (<span class="named-addr"><span class="addr-name">ArchiveNod::ReadChunks</span><code class="ghidra-ref">FUN_1409031d0</code></span>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// If body is compressed (offset +0xDC != 0):
 // Decompresses body via FUN_140127aa0 into a memory buffer
 // The decompression buffer is pooled (reused from DAT_14205c280)
@@ -1675,7 +1675,7 @@ if (chunk_version &gt; MAX_KNOWN_VERSION) {
 <summary><h3 id="end-of-body-sentinel-0xfacade01"><a class="anchor" href="#end-of-body-sentinel-0xfacade01">#</a>End-of-Body Sentinel: <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span></h3></summary>
 <div class="collapsible-content">
 <p>The body chunk stream terminates when the reader encounters the chunk ID <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span>.</p>
-<p><strong>Code evidence</strong> (<code>FUN_1402d0c40</code>):</p>
+<p><strong>Code evidence</strong> (<span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><code class="ghidra-ref">FUN_1402d0c40</code></span>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">undefined8 FUN_1402d0c40(int param_1)
 {
     undefined8 uVar1;
@@ -1699,7 +1699,7 @@ if (chunk_version &gt; MAX_KNOWN_VERSION) {
 </div>
 </details>
 <h3 id="unknown-chunk-handling"><a class="anchor" href="#unknown-chunk-handling">#</a>Unknown Chunk Handling</h3>
-<p>When an unknown chunk ID is encountered, <code>FUN_1402d0c80</code> logs: <code>"Unknown ChunkId: %08X"</code> at <span class="named-addr"><span class="addr-name">str_UnknownChunkId</span><code class="addr">0x141b72000</code></span></p>
+<p>When an unknown chunk ID is encountered, <span class="named-addr"><span class="addr-name">GBX_UnknownChunkIdHandler</span><code class="ghidra-ref">FUN_1402d0c80</code></span> logs: <code>"Unknown ChunkId: %08X"</code> at <span class="named-addr"><span class="addr-name">str_UnknownChunkId</span><code class="addr">0x141b72000</code></span></p>
 <p>For skippable chunks, the parser can safely skip <code>chunk_size</code> bytes. For non-skippable unknown chunks, parsing fails.</p>
 <hr>
 <h2 id="how-compression-works-lzo1x"><a class="anchor" href="#how-compression-works-lzo1x">#</a>How Compression Works (LZO1X)</h2>
@@ -1707,9 +1707,9 @@ if (chunk_version &gt; MAX_KNOWN_VERSION) {
 <p>The compression algorithm used in GBX files is <strong>LZO1X</strong> (Lempel-Ziv-Oberhumer). This is confirmed by multiple evidence sources:</p>
 <p>Evidence:</p>
 <ul>
-  <li>The decompression function <code>FUN_140127aa0</code> is called from the body loader when <code>param_1+0xDC</code> is non-zero</li>
+  <li>The decompression function <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> is called from the body loader when <code>param_1+0xDC</code> is non-zero</li>
   <li>The <code>CClassicBuffer</code> class has an <code>UncompressBlock</code> method (from class hierarchy: <code>"CClassicBuffer": ["UncompressBlock"]</code>)</li>
-  <li>The compression buffer pool at <code>DAT_14205c280</code> with max decompressed size <code>0xFFFFF</code> (~1MB) is consistent with LZO's streaming decompression model</li>
+  <li>The compression buffer pool at <span class="named-addr"><span class="addr-name">DAT_decompressionBufferPool</span><code class="ghidra-ref">DAT_14205c280</code></span> with max decompressed size <code>0xFFFFF</code> (~1MB) is consistent with LZO's streaming decompression model</li>
   <li><strong>Real file validation</strong>: Compressed body data in TechFlow.Map.Gbx starts with byte 0x1A (26), which in LZO1X means "initial literal run of 9 bytes" (26-17=9). The Item.Gbx starts with 0x34 (52), meaning "initial literal of 35 bytes" (52-17=35). Both patterns are consistent with LZO1X encoding.</li>
   <li>Community tools (GBX.NET, gbx-py) all use LZO for decompression</li>
   <li>It is NOT zlib (tested: both zlib and raw deflate fail on the compressed data)</li>
@@ -1756,11 +1756,11 @@ if format_flags[2] == &#x27;C&#x27;:  // Byte at archive+0xDC
     body_data = lzo_decompress(compressed_data, uncompressed_size)
 else:
     body_data = read_remaining()  // Read body directly</code></pre></div>
-<p>The decompression buffer is pooled and reused from <code>DAT_14205c280</code>. When <code>uncompressed_size > 0xFFFFF</code> (~1MB), the pool is bypassed and a fresh allocation is made.</p>
+<p>The decompression buffer is pooled and reused from <span class="named-addr"><span class="addr-name">DAT_decompressionBufferPool</span><code class="ghidra-ref">DAT_14205c280</code></span>. When <code>uncompressed_size > 0xFFFFF</code> (~1MB), the pool is bypassed and a fresh allocation is made.</p>
 <hr>
 <h2 id="how-the-class-factory-instantiates-nodes"><a class="anchor" href="#how-the-class-factory-instantiates-nodes">#</a>How the Class Factory Instantiates Nodes</h2>
 <h3 id="overview"><a class="anchor" href="#overview">#</a>Overview</h3>
-<p><code>FUN_1402cf380</code> (<code>CMwNod::CreateByMwClassId</code>) is the factory function that instantiates GBX node objects during deserialization. It is called after the header is parsed to create the root object, and recursively for embedded objects.</p>
+<p><span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><code class="ghidra-ref">FUN_1402cf380</code></span> (<code>CMwNod::CreateByMwClassId</code>) is the factory function that instantiates GBX node objects during deserialization. It is called after the header is parsed to create the root object, and recursively for embedded objects.</p>
 <h3 id="factory-pipeline"><a class="anchor" href="#factory-pipeline">#</a>Factory Pipeline</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. Input: class_id (uint32)
 2. Lookup class_info = FUN_1402f20a0(DAT_141ff9d58, class_id)
@@ -1776,7 +1776,7 @@ else:
 5. If class_info == NULL:
      - Log: &quot;[MwNod] Trying to CreateByMwClassId(&lt;id&gt;) which is unknown...&quot;
      - Return NULL (unknown class)</code></pre></div>
-<p><strong>Code evidence</strong> (<code>FUN_1402cf380</code>):</p>
+<p><strong>Code evidence</strong> (<span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><code class="ghidra-ref">FUN_1402cf380</code></span>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">lVar3 = FUN_1402f20a0(&amp;DAT_141ff9d58, param_1);
 if ((lVar3 != 0) &amp;&amp; (*(code **)(lVar3 + 0x30) != (code *)0x0)) {
     uVar4 = (**(code **)(lVar3 + 0x30))();
@@ -1797,8 +1797,8 @@ if ((lVar3 != 0) &amp;&amp; (*(code **)(lVar3 + 0x30) != (code *)0x0)) {
 <hr>
 <h2 id="how-the-two-level-class-id-registry-works"><a class="anchor" href="#how-the-two-level-class-id-registry-works">#</a>How the Two-Level Class ID Registry Works</h2>
 <h3 id="global-registry-structure"><a class="anchor" href="#global-registry-structure">#</a>Global Registry Structure</h3>
-<p>The global class table lives at <code>DAT_141ff9d58</code>. It is organized as a two-level hierarchy for efficient O(1) lookup by class ID.</p>
-<p><strong>Code evidence</strong> (<code>FUN_1402f20a0</code>):</p>
+<p>The global class table lives at <span class="named-addr"><span class="addr-name">DAT_globalClassRegistry</span><code class="ghidra-ref">DAT_141ff9d58</code></span>. It is organized as a two-level hierarchy for efficient O(1) lookup by class ID.</p>
+<p><strong>Code evidence</strong> (<span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><code class="ghidra-ref">FUN_1402f20a0</code></span>):</p>
 <h3 id="registry-layout"><a class="anchor" href="#registry-layout">#</a>Registry Layout</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>DAT_141ff9d58 (Global Class Table):
   +0x00   8     ptr         [UNKNOWN]
@@ -1866,8 +1866,8 @@ if (param_2 == *(int *)(tls + 0x11ac))
 <hr>
 <h2 id="how-legacy-class-ids-are-remapped"><a class="anchor" href="#how-legacy-class-ids-are-remapped">#</a>How Legacy Class IDs Are Remapped</h2>
 <h3 id="overview-1"><a class="anchor" href="#overview-1">#</a>Overview</h3>
-<p><code>FUN_1402f2610</code> is a massive switch/lookup table that converts legacy class IDs to their modern equivalents. This is the backward compatibility layer enabling TM2020 to read GBX files from all previous ManiaPlanet and Trackmania versions.</p>
-<p>The remapping is applied during the class ID lookup in <code>FUN_1402f20a0</code>, before the two-level table lookup.</p>
+<p><span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="ghidra-ref">FUN_1402f2610</code></span> is a massive switch/lookup table that converts legacy class IDs to their modern equivalents. This is the backward compatibility layer enabling TM2020 to read GBX files from all previous ManiaPlanet and Trackmania versions.</p>
+<p>The remapping is applied during the class ID lookup in <span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><code class="ghidra-ref">FUN_1402f20a0</code></span>, before the two-level table lookup.</p>
 <h3 id="remapping-groups"><a class="anchor" href="#remapping-groups">#</a>Remapping Groups</h3>
 <h4 id="engine-0x24-old-game-engine-0x03-modern-game"><a class="anchor" href="#engine-0x24-old-game-engine-0x03-modern-game">#</a>Engine 0x24 (Old Game) -> Engine 0x03 (Modern Game)</h4>
 <p>The bulk of remappings convert the old <code>0x24xxx</code> Game engine namespace to the modern <code>0x03xxx</code> namespace:</p>
@@ -2378,7 +2378,7 @@ normalized_chunk_id = normalized_class_id | chunk_index</code></pre></div>
   <td style="text-align:left"><code>+0x60</code></td>
   <td style="text-align:left">uint16</td>
   <td style="text-align:left">GBX version number</td>
-  <td style="text-align:left">Set by <code>FUN_140900e60</code></td>
+  <td style="text-align:left">Set by <span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="ghidra-ref">FUN_140900e60</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x64</code></td>
@@ -2467,7 +2467,7 @@ normalized_chunk_id = normalized_class_id | chunk_index</code></pre></div>
 </tbody>
 </table></div>
 <h3 id="core-read-functions"><a class="anchor" href="#core-read-functions">#</a>Core Read Functions</h3>
-<h4 id="readdata-fun_14012ba00"><a class="anchor" href="#readdata-fun_14012ba00">#</a>ReadData (<code>FUN_14012ba00</code>)</h4>
+<h4 id="readdata-fun_14012ba00"><a class="anchor" href="#readdata-fun_14012ba00">#</a>ReadData (<span class="named-addr"><span class="addr-name">CClassicArchive::ReadData</span><code class="ghidra-ref">FUN_14012ba00</code></span>)</h4>
 <p>The fundamental binary read operation:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Reads exactly &#x27;size&#x27; bytes from the stream into &#x27;buffer&#x27;
 // On failure, sets error flag at param_1+0x28
@@ -3654,11 +3654,11 @@ For each node:
   <li>Directory structure mirroring the virtual filesystem paths</li>
 </ol>
 <p>The <code>CPlugFilePack</code> class (from hierarchy) and <code>CPlugFileFidContainer</code> handle pack file I/O.</p>
-<p>The <code>CSystemFidContainer::InstallFids</code> function (<code>FUN_14092bec0</code>) registers files from a pack into the VFS:</p>
+<p>The <code>CSystemFidContainer::InstallFids</code> function (<span class="named-addr"><span class="addr-name">CSystemFidContainer::InstallFids</span><code class="ghidra-ref">FUN_14092bec0</code></span>) registers files from a pack into the VFS:</p>
 <ul>
   <li>Iterates entries at stride 0x20 per entry from <code>container+0x18</code></li>
-  <li>Creates <code>CSystemFidFile</code> entries via <code>FUN_1408fa7b0</code></li>
-  <li>Associates files with their parent container via <code>FUN_1402cfa80</code></li>
+  <li>Creates <code>CSystemFidFile</code> entries via <span class="named-addr"><span class="addr-name">FidFile_CreateEntry</span><code class="ghidra-ref">FUN_1408fa7b0</code></span></li>
+  <li>Associates files with their parent container via <span class="named-addr"><span class="addr-name">FidFile_AssociateWithContainer</span><code class="ghidra-ref">FUN_1402cfa80</code></span></li>
   <li>Updates folder indices at <code>container+0x38</code></li>
 </ul>
 <h3 id="pack-loading-order-unknown"><a class="anchor" href="#pack-loading-order-unknown">#</a>Pack Loading Order <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></h3>
@@ -3786,7 +3786,7 @@ For each node:
 </tr>
 <tr>
   <td style="text-align:left"><code>CSystemFidContainer::InstallFids</code></td>
-  <td style="text-align:left"><code>FUN_14092bec0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSystemFidContainer::InstallFids</span><code class="ghidra-ref">FUN_14092bec0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugFileFidCache::LoadAndRefreshFidCache</code></td>
@@ -3798,7 +3798,7 @@ For each node:
 <p><code>CPlugFileFidCache</code> (string at <span class="named-addr"><span class="addr-name">str_CPlugFileFidCache</span><code class="addr">0x141bc4ec8</code></span>) maintains a persistent cache of file lookups in <code>User.FidCache.Gbx</code> at <span class="named-addr"><span class="addr-name">str_User_FidCache_Gbx</span><code class="addr">0x141c30fe0</code></span>. This accelerates startup by avoiding re-scanning the entire file tree.</p>
 <hr>
 <h2 id="complete-class-id-remap-table"><a class="anchor" href="#complete-class-id-remap-table">#</a>Complete Class ID Remap Table</h2>
-<p>This table contains every legacy-to-modern class ID remapping extracted from <code>FUN_1402f2610</code>. It is critical for reading GBX files from older game versions.</p>
+<p>This table contains every legacy-to-modern class ID remapping extracted from <span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="ghidra-ref">FUN_1402f2610</code></span>. It is critical for reading GBX files from older game versions.</p>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="engine-0x24-engine-0x03-old-game-modern-game"><a class="anchor" href="#engine-0x24-engine-0x03-old-game-modern-game">#</a>Engine 0x24 -> Engine 0x03 (Old Game -> Modern Game)</h3></summary>
 <div class="collapsible-content">
@@ -4168,7 +4168,7 @@ For each node:
 </tr>
 </tbody>
 </table></div>
-<p><strong>Note</strong>: The decompiled function <code>FUN_1402f2610</code> contains a massive switch/if-else tree. The entries above are those explicitly identified in the annotated decompilation. The actual function likely contains additional entries (estimated 200+ total based on function size of the switch table). A complete extraction would require decompiling every branch of the switch statement.</p>
+<p><strong>Note</strong>: The decompiled function <span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="ghidra-ref">FUN_1402f2610</code></span> contains a massive switch/if-else tree. The entries above are those explicitly identified in the annotated decompilation. The actual function likely contains additional entries (estimated 200+ total based on function size of the switch table). A complete extraction would require decompiling every branch of the switch statement.</p>
 <hr>
 <h2 id="complete-engine-id-table"><a class="anchor" href="#complete-engine-id-table">#</a>Complete Engine ID Table</h2>
 <h3 id="known-engine-ids"><a class="anchor" href="#known-engine-ids">#</a>Known Engine IDs</h3>
@@ -5478,7 +5478,7 @@ function remapClassId(id: number): number {
 <h3 id="decompression-notes"><a class="anchor" href="#decompression-notes">#</a>Decompression Notes</h3>
 <p>The body compression in GBX files uses <strong>LZO1X</strong> (not zlib). This is confirmed by:</p>
 <ol>
-  <li>The decompression function <code>FUN_140127aa0</code> in the binary</li>
+  <li>The decompression function <span class="named-addr"><span class="addr-name">GBX_BodyDecompress</span><code class="ghidra-ref">FUN_140127aa0</code></span> in the binary</li>
   <li>Community tools (GBX.NET) use LZO</li>
   <li>The compressed data structure matches LZO1X (first byte 0x1A = 26, meaning initial literal of 9 bytes for the map file; first byte 0x34 = 52, meaning initial literal of 35 bytes for the item file -- both consistent with LZO1X encoding)</li>
 </ol>
@@ -6134,47 +6134,47 @@ value encoding:
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>FUN_140904730_LoadGbx.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><span class="ghidra-ref">FUN_140904730</span></span>_LoadGbx.c</code></td>
   <td style="text-align:left">CSystemArchiveNod::LoadGbx</td>
   <td style="text-align:left">Loading pipeline, format dispatch</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140900e60_LoadHeader.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><span class="ghidra-ref">FUN_140900e60</span></span>_LoadHeader.c</code></td>
   <td style="text-align:left">Header magic/version</td>
   <td style="text-align:left">Magic bytes, version switch</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140901850_ParseVersionHeader.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><span class="ghidra-ref">FUN_140901850</span></span>_ParseVersionHeader.c</code></td>
   <td style="text-align:left">Format flags v6</td>
   <td style="text-align:left">BUCE/BUCR parsing, compression flags</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140903140_BodyTypeLabel.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GBX_ClassIdToBodyTypeLabel</span><span class="ghidra-ref">FUN_140903140</span></span>_BodyTypeLabel.c</code></td>
   <td style="text-align:left">Body type labels</td>
   <td style="text-align:left">Class ID to profiling label mapping</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_140903d30_LoadHeaderAndBody.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">ArchiveNod::LoadBody</span><span class="ghidra-ref">FUN_140903d30</span></span>_LoadHeaderAndBody.c</code></td>
   <td style="text-align:left">Load orchestrator</td>
   <td style="text-align:left">Header+body+ref coordination</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402cf380_CreateByMwClassId.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><span class="ghidra-ref">FUN_1402cf380</span></span>_CreateByMwClassId.c</code></td>
   <td style="text-align:left">Class factory</td>
   <td style="text-align:left">Object instantiation from class IDs</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402f20a0_ClassIdLookup.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">ClassIdTableLookup</span><span class="ghidra-ref">FUN_1402f20a0</span></span>_ClassIdLookup.c</code></td>
   <td style="text-align:left">Two-level lookup</td>
   <td style="text-align:left">Registry structure, TLS cache</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402f2610_ClassIdRemap.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><span class="ghidra-ref">FUN_1402f2610</span></span>_ClassIdRemap.c</code></td>
   <td style="text-align:left">Legacy ID remap</td>
   <td style="text-align:left">Complete remap table</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>FUN_1402d0c40_ChunkEndMarker.c</code></td>
+  <td style="text-align:left"><code><span class="named-addr"><span class="addr-name">GBX_ChunkEndMarkerCheck</span><span class="ghidra-ref">FUN_1402d0c40</span></span>_ChunkEndMarker.c</code></td>
   <td style="text-align:left">End sentinel</td>
   <td style="text-align:left">FACADE01 and 01001000 handling</td>
 </tr>
@@ -6435,6 +6435,7 @@ value encoding:
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

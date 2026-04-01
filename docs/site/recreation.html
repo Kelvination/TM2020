@@ -257,7 +257,7 @@
 </ul>
 <p><strong>What you do not know</strong>:</p>
 <ul>
-  <li><strong>Internal force computation formulas</strong>: The 7 force model functions (FUN_140869cd0 through FUN_14086d3b0) have NOT been decompiled internally. You know which function handles which model and the parameter signatures, but not the actual math. This is the single largest physics unknown.</li>
+  <li><strong>Internal force computation formulas</strong>: The 7 force model functions (<span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><span class="ghidra-ref">FUN_140869cd0</span></span> through <span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><span class="ghidra-ref">FUN_14086d3b0</span></span>) have NOT been decompiled internally. You know which function handles which model and the parameter signatures, but not the actual math. This is the single largest physics unknown.</li>
   <li><strong>Tire contact model</strong>: Slip angle, camber, load transfer, combined slip -- none of the tire force curves are documented.</li>
   <li><strong>Turbo force direction</strong>: Decompiled code shows <code>(elapsed/duration) <em> strength </em> modelScale</code> -- a linear ramp UP, not decay (<a href="18-validation-review.md">18-validation-review.md</a> Issue 6). This contradicts TMNF behavior. Needs verification.</li>
   <li><strong>Exact floating-point determinism strategy</strong>: How cross-platform bit-exact replay is achieved.</li>
@@ -1016,7 +1016,7 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 <p>Replay data flow from <a href="architecture.html">12-architecture-deep-dive.md</a>:</p>
 <ul>
   <li>States 0xC74 (replay validation), 0xC93 (post-load ghost), 0xCEF-0xCF0 (load replay).</li>
-  <li>Ghost processing via FUN_140ef83f0.</li>
+  <li>Ghost processing via <span class="named-addr"><span class="addr-name">GhostProcessingFunction</span><span class="ghidra-ref">FUN_140ef83f0</span></span>.</li>
 </ul>
 <p>Input recording from <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Section 1:</p>
 <ul>
@@ -1155,7 +1155,7 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 <p>Block grid from <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Section 8: 32 meters per block unit.</p>
 <p>State machine from <a href="architecture.html">12-architecture-deep-dive.md</a>:</p>
 <ul>
-  <li>Editor session at state 0xDE5, calls FUN_140b827b0 for editor loop.</li>
+  <li>Editor session at state 0xDE5, calls <span class="named-addr"><span class="addr-name">GameState_EditorSession</span><span class="ghidra-ref">FUN_140b827b0</span></span> for editor loop.</li>
   <li>Menu results: 0x10 (old editor), 0x11 (new editor), 0x12 (item editor).</li>
 </ul>
 <p><strong>What you do not know</strong>:</p>
@@ -1392,7 +1392,7 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 <h4 id="physics-feel-very-hard"><a class="anchor" href="#physics-feel-very-hard">#</a>Physics Feel (VERY HARD)</h4>
 <p>The 7 force model functions have NOT been decompiled internally. Getting the car to feel like TM2020 requires either:</p>
 <ul>
-  <li>(a) Decompiling FUN_140851f00 (CarSport model, ~estimated 2000+ lines of C) and porting it exactly.</li>
+  <li>(a) Decompiling <span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><span class="ghidra-ref">FUN_140851f00</span></span> (CarSport model, ~estimated 2000+ lines of C) and porting it exactly.</li>
   <li>(b) Iterative tuning against TMInterface validation data (tedious but possible).</li>
   <li>(c) Using TMNF community physics documentation as a starting point and adapting.</li>
 </ul>
@@ -3191,6 +3191,7 @@ function orthogonalizeRotation(loc: Iso4): void {
     <button class="scroll-top" id="scroll-top" title="Scroll to top">&uarr;</button>
     <div class="overlay" id="overlay"></div>
 
+    <script src="address_map.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

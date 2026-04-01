@@ -469,6 +469,30 @@ body.show-addresses .named-addr .addr {
     display: inline;
 }
 
+/* Ghidra references (FUN_/DAT_ patterns) - hidden by default */
+.ghidra-ref {
+    display: none;
+    margin-left: 3px;
+    font-size: 0.85em;
+    opacity: 0.6;
+    font-family: var(--font-mono);
+}
+
+body.show-addresses .ghidra-ref {
+    display: inline;
+}
+
+/* Named addresses inside code blocks */
+pre code .addr-name {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+pre code .ghidra-ref {
+    font-size: inherit;
+}
+
 .addr-name {
     font-family: var(--font-mono);
     font-size: 0.88em;
