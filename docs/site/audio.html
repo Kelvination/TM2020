@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item active" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item active" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -112,34 +120,11 @@
                 <div class="content-body">
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
-                        <h1 id="24-trackmania-2020-audio-system-deep-dive"><a class="anchor" href="#24-trackmania-2020-audio-system-deep-dive">#</a>24 - Trackmania 2020 Audio System Deep Dive</h1>
-<p>> Comprehensive reverse-engineering analysis of TM2020's audio architecture, for the purpose of recreating it with the Web Audio API. > > <strong>Date</strong>: 2026-03-27 > <strong>Sources</strong>: Ghidra decompilation, DLL string extraction, class hierarchy analysis, game configuration, Openplanet plugin intelligence</p>
+                        <h1 id="trackmania-2020-audio-system-deep-dive"><a class="anchor" href="#trackmania-2020-audio-system-deep-dive">#</a>Trackmania 2020 Audio System Deep Dive</h1>
+<p>TM2020 uses <strong>OpenAL Soft</strong> via <code>OpenAL64_bundled.dll</code> for all spatial and gameplay audio. Voice chat uses a separate <strong>Vivox SDK</strong> (v5.19.2) pipeline. Audio files are decoded with <strong>libVorbis 1.3.5</strong> (<code>vorbis64.dll</code>). This document maps TM2020's audio architecture for recreation with the Web Audio API.</p>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-architecture-overview">Architecture Overview</a></li>
-  <li><a href="#2-openal-integration-details">OpenAL Integration Details</a></li>
-  <li><a href="#3-sound-type-catalog">Sound Type Catalog</a></li>
-  <li><a href="#4-engine-sound-model">Engine Sound Model</a></li>
-  <li><a href="#5-spatial-audio-system">Spatial Audio System</a></li>
-  <li><a href="#6-music-system">Music System</a></li>
-  <li><a href="#7-voice-chat">Voice Chat</a></li>
-  <li><a href="#8-web-audio-api-mapping">Web Audio API Mapping</a></li>
-  <li><a href="#9-complete-audio-class-catalog">Complete Audio Class Catalog</a></li>
-  <li><a href="#10-audio-configuration-reference">Audio Configuration Reference</a></li>
-</ol>
-<hr>
-<h2 id="1-architecture-overview"><a class="anchor" href="#1-architecture-overview">#</a>1. Architecture Overview</h2>
-<h3 id="q-what-audio-engine-does-tm2020-use"><a class="anchor" href="#q-what-audio-engine-does-tm2020-use">#</a>Q: What audio engine does TM2020 use?</h3>
-<p><strong>Answer</strong>: TM2020 uses <strong>OpenAL Soft</strong> via <code>OpenAL64_bundled.dll</code> (1.38 MB) for all spatial and gameplay audio. Voice chat uses a separate <strong>Vivox SDK</strong> (v5.19.2) pipeline. Audio files are decoded with <strong>libVorbis 1.3.5</strong> (<code>vorbis64.dll</code>).</p>
-<p><strong>Evidence</strong>:</p>
-<ul>
-  <li><code>COalAudioPort::InitImplem</code> decompiled at address <code class="addr">0x14138c090</code> (see <code>decompiled/audio/COalAudioPort_InitImplem.c</code>)</li>
-  <li><code>strings OpenAL64_bundled.dll</code> yields <code>OpenAL Soft</code> and <code>openal-soft</code></li>
-  <li><code>strings vorbis64.dll</code> yields <code>Xiph.Org libVorbis 1.3.5</code></li>
-  <li><code>strings vivoxsdk.dll</code> yields <code><VivoxSDK><SDK_VERSION>5.19.2.33478.213423bef1</SDK_VERSION></code></li>
-</ul>
-<h3 id="high-level-audio-pipeline"><a class="anchor" href="#high-level-audio-pipeline">#</a>High-Level Audio Pipeline</h3>
+<h2 id="how-the-audio-pipeline-works"><a class="anchor" href="#how-the-audio-pipeline-works">#</a>How the Audio Pipeline Works</h2>
+<h3 id="high-level-architecture"><a class="anchor" href="#high-level-architecture">#</a>High-Level Architecture</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CAudioManager (orchestrator)
   |
   +-- CAudioPort (abstract output port)
@@ -159,32 +144,29 @@
   +-- CAudioBufferKeeper         (buffer lifecycle management)
   +-- CAudioSettings             (volume, quality configuration)
   +-- CAudioScriptManager        (ManiaScript audio API)</code></pre></div>
-<p><strong>Evidence</strong>: Class hierarchy extracted from <code>class_hierarchy.json</code> (2,027 Nadeo classes total, 30 in Audio category) and the subsystem class map (<code>13-subsystem-class-map.md</code> Section 1).</p>
+<p><strong>Evidence</strong>: Class hierarchy from <code>class_hierarchy.json</code> (2,027 Nadeo classes, 30 in Audio category).</p>
 <h3 id="audio-file-format-pipeline"><a class="anchor" href="#audio-file-format-pipeline">#</a>Audio File Format Pipeline</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>.ogg (Ogg Vorbis) --[CPlugFileOggVorbis]--&gt; CPlugSound --&gt; CAudioSource --&gt; OpenAL Buffer
 .wav              --[CPlugFileWav]--------&gt; CPlugSound --&gt; CAudioSource --&gt; OpenAL Buffer
 .snd              --[CPlugFileSnd]--------&gt; CPlugSound --&gt; CAudioSource --&gt; OpenAL Buffer
 (procedural)      --[CPlugFileSndGen]-----&gt; CPlugSound --&gt; CAudioSource --&gt; OpenAL Buffer
 .AudioMotors      --[CPlugFileAudioMotors]-&gt; CPlugSoundEngine / CPlugSoundEngine2 --&gt; OpenAL Buffer</code></pre></div>
-<p><strong>Evidence</strong>: File handler classes from <code>class_hierarchy.json</code>: <code>CPlugFileOggVorbis</code>, <code>CPlugFileWav</code>, <code>CPlugFileSnd</code>, <code>CPlugFileSndGen</code>, <code>CPlugFileAudioMotors</code>.</p>
 <hr>
-<h2 id="2-openal-integration-details"><a class="anchor" href="#2-openal-integration-details">#</a>2. OpenAL Integration Details</h2>
-<h3 id="initialization-sequence"><a class="anchor" href="#initialization-sequence">#</a>Initialization Sequence</h3>
+<h2 id="how-openal-is-initialized"><a class="anchor" href="#how-openal-is-initialized">#</a>How OpenAL Is Initialized</h2>
 <p>The decompiled <code>COalAudioPort::InitImplem</code> (at <code class="addr">0x14138c090</code>) reveals the exact initialization:</p>
 <ol>
   <li><strong>Dynamic loading</strong>: <code>LoadLibrary("OpenAL64_bundled.dll")</code></li>
   <li><strong>Function resolution</strong>: Resolves <code>alcOpenDevice</code>, <code>alcGetProcAddress</code>, <code>alcGetError</code>, <code>alcIsExtensionPresent</code>, <code>alcGetString</code>, <code>alcCloseDevice</code></li>
   <li><strong>Device opening</strong>: Tries named device first (from config <code>AudioDevice_Oal</code>), falls back to <code>ALC_DEFAULT_DEVICE_SPECIFIER</code> (<code>0x1005</code>)</li>
   <li><strong>Context creation</strong>: <code>alcCreateContext</code> on the opened device</li>
-  <li><strong>Version query</strong>: <code>alcGetIntegerv</code> with <code>ALC_MAJOR_VERSION</code> (<code>0x1000</code>) and <code>ALC_MINOR_VERSION</code> (<code>0x1001</code>) -- expects ALC 1.x</li>
-  <li><strong>Source count query</strong>: <code>alcGetIntegerv</code> with <code>ALC_MONO_SOURCES</code> (<code>0x1010</code>) and <code>ALC_STEREO_SOURCES</code> (<code>0x1011</code>)</li>
-  <li><strong>String queries</strong>: <code>alGetString</code> for <code>AL_VERSION</code> (<code>0xB002</code>), <code>AL_RENDERER</code> (<code>0xB003</code>), <code>AL_EXTENSIONS</code> (<code>0xB004</code>), <code>AL_VENDOR</code> (<code>0xB001</code>)</li>
+  <li><strong>Version query</strong>: <code>alcGetIntegerv</code> with <code>ALC_MAJOR_VERSION</code>/<code>ALC_MINOR_VERSION</code> -- expects ALC 1.x</li>
+  <li><strong>Source count query</strong>: <code>ALC_MONO_SOURCES</code> (<code>0x1010</code>) and <code>ALC_STEREO_SOURCES</code> (<code>0x1011</code>)</li>
+  <li><strong>String queries</strong>: <code>AL_VERSION</code>, <code>AL_RENDERER</code>, <code>AL_EXTENSIONS</code>, <code>AL_VENDOR</code></li>
   <li><strong>EFX check</strong>: <code>alcIsExtensionPresent</code> for EFX support</li>
   <li><strong>Log output</strong>: <code>"[Audio] Initialized, using device '<name>', sources = N+M, EFX enabled/disabled"</code></li>
 </ol>
-<p><strong>Evidence</strong>: <code>decompiled/audio/COalAudioPort_InitImplem.c</code>, <code>15-ghidra-research-findings.md</code> Section 1.</p>
 <h3 id="anti-tamper-obfuscation"><a class="anchor" href="#anti-tamper-obfuscation">#</a>Anti-Tamper Obfuscation</h3>
-<p>Function pointers stored in the <code>COalAudioPort</code> struct are XOR/ADD obfuscated:</p>
+<p>Function pointers in the <code>COalAudioPort</code> struct are XOR/ADD obfuscated:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -215,16 +197,6 @@
   <td style="text-align:left"><code>alcGetError</code> (XOR obfuscated)</td>
 </tr>
 <tr>
-  <td style="text-align:left">+0x2B9</td>
-  <td style="text-align:left">ptr</td>
-  <td style="text-align:left"><code>alcGetString</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">+0x2C1</td>
-  <td style="text-align:left">ptr</td>
-  <td style="text-align:left"><code>alcIsExtensionPresent</code> (XOR obfuscated)</td>
-</tr>
-<tr>
   <td style="text-align:left">+0x2C8</td>
   <td style="text-align:left">ptr</td>
   <td style="text-align:left">OpenAL DLL handle</td>
@@ -233,11 +205,6 @@
   <td style="text-align:left">+0x2D9</td>
   <td style="text-align:left">str</td>
   <td style="text-align:left">Device name string</td>
-</tr>
-<tr>
-  <td style="text-align:left">+0x2F9</td>
-  <td style="text-align:left">4x short</td>
-  <td style="text-align:left">DLL version</td>
 </tr>
 <tr>
   <td style="text-align:left">+0x31D</td>
@@ -256,83 +223,29 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Evidence</strong>: Decompiled struct offsets from <code>COalAudioPort_InitImplem.c</code>.</p>
 <h3 id="simultaneous-source-count"><a class="anchor" href="#simultaneous-source-count">#</a>Simultaneous Source Count</h3>
-<p>The game queries <code>ALC_MONO_SOURCES</code> and <code>ALC_STEREO_SOURCES</code> at init and logs them as <code>"sources = N+M"</code>. The exact count depends on the audio device and OpenAL Soft configuration, but OpenAL Soft typically supports <strong>256 mono sources</strong> and <strong>256 stereo sources</strong> by default.</p>
-<p>The actual log format is <code>sources = <mono>+<stereo></code>, so on a typical system this would be <code>sources = 256+256</code>.</p>
-<p><strong>Evidence</strong>: ALC constants <code>0x1010</code> and <code>0x1011</code> in the decompiled init code.</p>
+<p>The game queries <code>ALC_MONO_SOURCES</code> and <code>ALC_STEREO_SOURCES</code> at init. OpenAL Soft typically supports <strong>256 mono + 256 stereo sources</strong>.</p>
 <h3 id="efx-environmental-effects-support"><a class="anchor" href="#efx-environmental-effects-support">#</a>EFX (Environmental Effects) Support</h3>
-<p>The game checks for EFX support during initialization. When enabled (<code>AudioAllowEFX = true</code> in config), the following effects are available via OpenAL Soft:</p>
-<p><strong>Effects available</strong> (from <code>strings OpenAL64_bundled.dll</code>):</p>
+<p>When <code>AudioAllowEFX = true</code>, these effects are available:</p>
 <ul>
-  <li><code>AL_EFFECT_REVERB</code> -- Standard reverb</li>
-  <li><code>AL_EFFECT_EAXREVERB</code> -- EAX reverb (22 parameters: density, diffusion, gain, gainHF, gainLF, decay time, decay HF/LF ratio, reflections gain/delay/pan, late reverb gain/delay/pan, echo time/depth, modulation time/depth, air absorption, room rolloff, HF reference, LF reference)</li>
-  <li><code>AL_EFFECT_CHORUS</code> -- Chorus effect</li>
-  <li><code>AL_EFFECT_DISTORTION</code> -- Distortion</li>
-  <li><code>AL_EFFECT_ECHO</code> -- Echo (damping, delay, feedback, LR delay, spread)</li>
-  <li><code>AL_EFFECT_FLANGER</code> -- Flanger</li>
-  <li><code>AL_EFFECT_FREQUENCY_SHIFTER</code> -- Frequency shift</li>
-  <li><code>AL_EFFECT_VOCAL_MORPHER</code> -- Vocal morph</li>
-  <li><code>AL_EFFECT_PITCH_SHIFTER</code> -- Pitch shift</li>
-  <li><code>AL_EFFECT_RING_MODULATOR</code> -- Ring modulation</li>
-  <li><code>AL_EFFECT_AUTOWAH</code> -- Auto-wah</li>
-  <li><code>AL_EFFECT_COMPRESSOR</code> -- Dynamic range compressor</li>
-  <li><code>AL_EFFECT_EQUALIZER</code> -- 4-band parametric EQ</li>
-  <li><code>AL_EFFECT_DEDICATED_DIALOGUE</code> -- Dedicated dialogue channel</li>
-  <li><code>AL_EFFECT_DEDICATED_LOW_FREQUENCY_EFFECT</code> -- Dedicated LFE</li>
-  <li><code>AL_EFFECT_CONVOLUTION_SOFT</code> -- Convolution reverb (OpenAL Soft extension)</li>
+  <li><code>AL_EFFECT_REVERB</code> / <code>AL_EFFECT_EAXREVERB</code> (22 parameters)</li>
+  <li><code>AL_EFFECT_CHORUS</code>, <code>AL_EFFECT_DISTORTION</code>, <code>AL_EFFECT_ECHO</code></li>
+  <li><code>AL_EFFECT_FLANGER</code>, <code>AL_EFFECT_FREQUENCY_SHIFTER</code></li>
+  <li><code>AL_EFFECT_PITCH_SHIFTER</code>, <code>AL_EFFECT_RING_MODULATOR</code></li>
+  <li><code>AL_EFFECT_COMPRESSOR</code>, <code>AL_EFFECT_EQUALIZER</code></li>
+  <li><code>AL_EFFECT_DEDICATED_DIALOGUE</code>, <code>AL_EFFECT_DEDICATED_LOW_FREQUENCY_EFFECT</code></li>
+  <li><code>AL_EFFECT_CONVOLUTION_SOFT</code> (OpenAL Soft extension)</li>
 </ul>
-<p><strong>Filters available</strong>:</p>
-<ul>
-  <li><code>AL_FILTER_LOWPASS</code> -- Low-pass filter (gain, gainHF)</li>
-  <li><code>AL_FILTER_HIGHPASS</code> -- High-pass filter (gain, gainLF)</li>
-  <li><code>AL_FILTER_BANDPASS</code> -- Band-pass filter (gain, gainHF, gainLF)</li>
-</ul>
-<p>The game's <code>CPlugAudioEnvironment</code> class maps to these EFX reverb presets per audio zone. The <code>CPlugAudioBalance</code> class handles channel panning and balance.</p>
-<p><strong>Evidence</strong>: All effect/filter strings extracted from <code>OpenAL64_bundled.dll</code>. The <code>AudioAllowEFX</code> config key from <code>Default.json</code>.</p>
+<p><strong>Filters</strong>: <code>AL_FILTER_LOWPASS</code>, <code>AL_FILTER_HIGHPASS</code>, <code>AL_FILTER_BANDPASS</code></p>
+<p><code>CPlugAudioEnvironment</code> maps to EFX reverb presets per audio zone. <code>CPlugAudioBalance</code> handles channel panning.</p>
 <h3 id="hrtf-head-related-transfer-function"><a class="anchor" href="#hrtf-head-related-transfer-function">#</a>HRTF (Head-Related Transfer Function)</h3>
-<p>OpenAL Soft includes full HRTF support for binaural 3D audio:</p>
-<p><strong>HRTF-related ALC extensions</strong> (from <code>strings OpenAL64_bundled.dll</code>):</p>
-<ul>
-  <li><code>ALC_SOFT_HRTF</code> -- HRTF extension</li>
-  <li><code>ALC_HRTF_SOFT</code> -- HRTF enable attribute</li>
-  <li><code>ALC_HRTF_STATUS_SOFT</code> -- Query HRTF status</li>
-  <li><code>ALC_HRTF_ID_SOFT</code> -- Select HRTF dataset</li>
-  <li><code>ALC_HRTF_SPECIFIER_SOFT</code> -- HRTF dataset name</li>
-  <li><code>ALC_NUM_HRTF_SPECIFIERS_SOFT</code> -- Number of available HRTF datasets</li>
-  <li><code>ALC_STEREO_HRTF_SOFT</code> -- Stereo HRTF output mode</li>
-</ul>
-<p><strong>HRTF status values</strong>:</p>
-<ul>
-  <li><code>ALC_HRTF_ENABLED_SOFT</code> -- Active</li>
-  <li><code>ALC_HRTF_DISABLED_SOFT</code> -- Disabled</li>
-  <li><code>ALC_HRTF_DENIED_SOFT</code> -- Denied by system</li>
-  <li><code>ALC_HRTF_REQUIRED_SOFT</code> -- Required by system</li>
-  <li><code>ALC_HRTF_HEADPHONES_DETECTED_SOFT</code> -- Headphones auto-detected</li>
-  <li><code>ALC_HRTF_UNSUPPORTED_FORMAT_SOFT</code> -- Format incompatible</li>
-</ul>
-<p>The log message <code>%u%s order %sHRTF rendering enabled, using "%s"</code> confirms HRTF is actively used when enabled.</p>
-<p>The game config has <code>AudioAllowHRTF = true</code> (boolean toggle in <code>Default.json</code>). When headphones are detected, OpenAL Soft can automatically enable HRTF for proper 3D audio spatialization.</p>
-<p><strong>Evidence</strong>: ALC extension strings from the DLL. Config key <code>AudioAllowHRTF</code> from <code>Default.json</code>. Log format string from DLL.</p>
+<p>OpenAL Soft includes full HRTF support for binaural 3D audio. Config: <code>AudioAllowHRTF = true</code> in <code>Default.json</code>. When headphones are detected, OpenAL Soft automatically enables HRTF.</p>
+<p>HRTF-related extensions: <code>ALC_SOFT_HRTF</code>, <code>ALC_HRTF_STATUS_SOFT</code>, <code>ALC_HRTF_SPECIFIER_SOFT</code>, <code>ALC_STEREO_HRTF_SOFT</code>.</p>
 <h3 id="supported-output-modes"><a class="anchor" href="#supported-output-modes">#</a>Supported Output Modes</h3>
-<p>From the OpenAL Soft DLL strings:</p>
-<ul>
-  <li>Mono (<code>ALC_MONO_SOFT</code>)</li>
-  <li>Stereo (<code>ALC_STEREO_SOFT</code>, <code>ALC_STEREO_BASIC_SOFT</code>)</li>
-  <li>Stereo HRTF (<code>ALC_STEREO_HRTF_SOFT</code>)</li>
-  <li>Stereo UHJ (<code>ALC_STEREO_UHJ_SOFT</code>)</li>
-  <li>Quad (<code>ALC_QUAD_SOFT</code>)</li>
-  <li>5.1 Surround (<code>ALC_5POINT1_SOFT</code>, <code>ALC_SURROUND_5_1_SOFT</code>)</li>
-  <li>6.1 Surround (<code>ALC_6POINT1_SOFT</code>, <code>ALC_SURROUND_6_1_SOFT</code>)</li>
-  <li>7.1 Surround (<code>ALC_7POINT1_SOFT</code>, <code>ALC_SURROUND_7_1_SOFT</code>)</li>
-  <li>7.1.4 Surround (from <code>strings</code>: <code>7.1.4 Surround</code>, <code>7.1.4.4 Surround</code>)</li>
-  <li>B-Format 3D (<code>ALC_BFORMAT3D_SOFT</code>) -- Ambisonics</li>
-</ul>
-<p><strong>Evidence</strong>: <code>strings OpenAL64_bundled.dll</code> output.</p>
+<p>Mono, Stereo, Stereo HRTF, Quad, 5.1, 6.1, 7.1, 7.1.4 Surround, and B-Format 3D (Ambisonics).</p>
 <hr>
-<h2 id="3-sound-type-catalog"><a class="anchor" href="#3-sound-type-catalog">#</a>3. Sound Type Catalog</h2>
-<h3 id="sound-categories-from-class-hierarchy"><a class="anchor" href="#sound-categories-from-class-hierarchy">#</a>Sound Categories (from class hierarchy)</h3>
-<p>Each sound category has a paired <strong>source</strong> class (runtime audio emitter) and <strong>resource</strong> class (loadable sound data):</p>
+<h2 id="sound-type-catalog"><a class="anchor" href="#sound-type-catalog">#</a>Sound Type Catalog</h2>
+<p>Each category has a <strong>source</strong> class (runtime emitter) and <strong>resource</strong> class (loadable data):</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -399,9 +312,8 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Evidence</strong>: <code>class_hierarchy.json</code> Audio category, <code>13-subsystem-class-map.md</code> Section 1.</p>
 <h3 id="audio-events-by-gameplay-context"><a class="anchor" href="#audio-events-by-gameplay-context">#</a>Audio Events by Gameplay Context</h3>
-<h4 id="car-sounds"><a class="anchor" href="#car-sounds">#</a>Car Sounds</h4>
+<p><strong>Car Sounds:</strong></p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -413,47 +325,37 @@
 <tbody>
 <tr>
   <td style="text-align:left">Engine idle/rev</td>
-  <td style="text-align:left"><code>CPlugSoundEngine</code> / <code>CPlugSoundEngine2</code></td>
-  <td style="text-align:left">Dedicated class exists; RPM field (0-11000) in vehicle state</td>
+  <td style="text-align:left"><code>CPlugSoundEngine2</code></td>
+  <td style="text-align:left">RPM field (0-11000) in vehicle state</td>
 </tr>
 <tr>
   <td style="text-align:left">Tire rolling</td>
   <td style="text-align:left"><code>CPlugSoundSurface</code></td>
-  <td style="text-align:left">Per-material surface sounds; 19 surface IDs (Asphalt, Dirt, Grass, Ice, etc.)</td>
+  <td style="text-align:left">19 surface IDs (Asphalt, Dirt, Grass, Ice, etc.)</td>
 </tr>
 <tr>
   <td style="text-align:left">Tire screech/slip</td>
   <td style="text-align:left"><code>CPlugSoundSurface</code></td>
-  <td style="text-align:left"><code>SlipCoef</code> (0-1) available per wheel in vehicle state</td>
+  <td style="text-align:left"><code>SlipCoef</code> (0-1) per wheel</td>
 </tr>
 <tr>
   <td style="text-align:left">Wind noise</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>CameraWooshVolumedB</code>, <code>CameraWooshMinSpeedKmh</code> strings found -- speed-dependent wind sound tied to camera</td>
-</tr>
-<tr>
-  <td style="text-align:left">Collision/impact</td>
-  <td style="text-align:left"><code>CPlugSoundMulti</code> (<span class="badge badge-plausible">PLAUSIBLE</span>)</td>
-  <td style="text-align:left">Multi-sound likely crossfades impact layers by severity</td>
+  <td style="text-align:left"><code>CameraWooshVolumedB</code>, <code>CameraWooshMinSpeedKmh</code> strings</td>
 </tr>
 <tr>
   <td style="text-align:left">Turbo activation</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>, likely <code>CPlugSoundMulti</code>]</span></td>
-  <td style="text-align:left"><code>IsTurbo</code>, <code>TurboTime</code> fields exist in vehicle state; distinct turbo levels (None, Normal, Super, Roulette variants)</td>
+  <td style="text-align:left"><code>IsTurbo</code>, <code>TurboTime</code> fields</td>
 </tr>
 <tr>
   <td style="text-align:left">Gear shift</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>CurGear</code> (0-7) tracked in vehicle state</td>
-</tr>
-<tr>
-  <td style="text-align:left">Burnout</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>IsWheelsBurning</code> bool in vehicle state</td>
+  <td style="text-align:left"><code>CurGear</code> (0-7) tracked</td>
 </tr>
 </tbody>
 </table></div>
-<h4 id="environment-sounds"><a class="anchor" href="#environment-sounds">#</a>Environment Sounds</h4>
+<p><strong>Environment Sounds:</strong></p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -466,330 +368,96 @@
 <tr>
   <td style="text-align:left">Map ambient</td>
   <td style="text-align:left"><code>CPlugSoundMood</code></td>
-  <td style="text-align:left">Dedicated mood/ambient class; <code>CGameCtnDecorationAudio</code> for map-level audio settings</td>
+  <td style="text-align:left"><code>CGameCtnDecorationAudio</code> for map audio</td>
 </tr>
 <tr>
-  <td style="text-align:left">Water splash/submersion</td>
+  <td style="text-align:left">Water splash</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>WaterImmersionCoef</code> (0-1) and <code>WaterOverSurfacePos</code> in vehicle state</td>
+  <td style="text-align:left"><code>WaterImmersionCoef</code> (0-1) in vehicle state</td>
 </tr>
 <tr>
-  <td style="text-align:left">Zone-based ambience</td>
+  <td style="text-align:left">Zone ambience</td>
   <td style="text-align:left"><code>CAudioZone</code> / <code>CAudioZoneSource</code></td>
-  <td style="text-align:left">Spatial audio zone classes exist</td>
+  <td style="text-align:left">Spatial zone classes exist</td>
 </tr>
 </tbody>
 </table></div>
-<h4 id="ui-sounds"><a class="anchor" href="#ui-sounds">#</a>UI Sounds</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Event</th>
-  <th style="text-align:left">Likely Sound Type</th>
-  <th style="text-align:left">Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Checkpoint</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>, likely <code>CPlugSound</code>]</span></td>
-  <td style="text-align:left">No dedicated class; generic sound resource</td>
-</tr>
-<tr>
-  <td style="text-align:left">Finish line</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>, likely <code>CPlugSound</code>]</span></td>
-  <td style="text-align:left">No dedicated class</td>
-</tr>
-<tr>
-  <td style="text-align:left">Menu interactions</td>
-  <td style="text-align:left"><code>CAudioScriptSound</code></td>
-  <td style="text-align:left">ManiaScript audio API for UI</td>
-</tr>
-<tr>
-  <td style="text-align:left">Countdown</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">No dedicated class</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="mediatracker-sounds"><a class="anchor" href="#mediatracker-sounds">#</a>MediaTracker Sounds</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Event</th>
-  <th style="text-align:left">Likely Sound Type</th>
-  <th style="text-align:left">Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Music effect</td>
-  <td style="text-align:left"><code>CGameCtnMediaBlockMusicEffect</code></td>
-  <td style="text-align:left">Dedicated class with <code>SKeyVal</code> method (keyframe values)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Sound effect</td>
-  <td style="text-align:left"><code>CGameCtnMediaBlockSound</code></td>
-  <td style="text-align:left">Dedicated class with <code>SuperSKeyVal</code> method</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Evidence</strong>: Vehicle state fields from <code>19-openplanet-intelligence.md</code>, camera strings from <code>15-ghidra-research-findings.md</code>, surface materials from <code>09-game-files-analysis.md</code>.</p>
 <hr>
-<h2 id="4-engine-sound-model"><a class="anchor" href="#4-engine-sound-model">#</a>4. Engine Sound Model</h2>
-<h3 id="q-how-does-the-engine-sound-work"><a class="anchor" href="#q-how-does-the-engine-sound-work">#</a>Q: How does the engine sound work?</h3>
-<p><strong>Answer</strong>: TM2020 has TWO engine sound systems -- <code>CPlugSoundEngine</code> (v1) and <code>CPlugSoundEngine2</code> (v2). The engine sound is <strong>sample-based with RPM-mapped crossfading</strong>, not pure synthesis. A dedicated file format (<code>CPlugFileAudioMotors</code>) stores motor sound profiles.</p>
-<h3 id="evidence-for-sample-based-not-synthesized-engine-sound"><a class="anchor" href="#evidence-for-sample-based-not-synthesized-engine-sound">#</a>Evidence for Sample-Based (Not Synthesized) Engine Sound</h3>
-<ol>
-  <li><code>CPlugFileAudioMotors</code> -- A dedicated file format class exists for motor audio, implying pre-recorded/processed samples</li>
-  <li><code>CPlugSoundEngine</code> and <code>CPlugSoundEngine2</code> -- Two generations of engine sound, suggesting iterative improvement of a sample-based system</li>
-  <li><code>CPlugSoundComponent</code> and <code>CPlugSoundMulti</code> -- Component-based layered sound architecture, consistent with crossfading between RPM-layer samples</li>
-</ol>
+<h2 id="how-engine-sound-works"><a class="anchor" href="#how-engine-sound-works">#</a>How Engine Sound Works</h2>
+<p>TM2020 has TWO engine sound systems -- <code>CPlugSoundEngine</code> (v1) and <code>CPlugSoundEngine2</code> (v2). The engine sound is <strong>sample-based with RPM-mapped crossfading</strong>, not pure synthesis. <code>CPlugFileAudioMotors</code> stores motor sound profiles.</p>
 <h3 id="rpm-to-pitch-mapping"><a class="anchor" href="#rpm-to-pitch-mapping">#</a>RPM-to-Pitch Mapping</h3>
-<p>From the vehicle state (<code>19-openplanet-intelligence.md</code>):</p>
+<p>From the vehicle state:</p>
 <ul>
-  <li><code>RPM</code>: float, range 0-11000 (via custom Openplanet offset, not default exposed)</li>
+  <li><code>RPM</code>: float, range 0-11000</li>
   <li><code>CurGear</code>: uint, range 0-7</li>
-  <li><code>FrontSpeed</code>: float, m/s (multiply by 3.6 for km/h)</li>
+  <li><code>FrontSpeed</code>: float, m/s</li>
   <li><code>InputGasPedal</code>: float, 0.0-1.0</li>
 </ul>
-<p><strong>Probable model</strong> (<span class="badge badge-plausible">PLAUSIBLE</span>, not directly confirmed):</p>
+<p><strong>Probable model</strong> (<span class="badge badge-plausible">PLAUSIBLE</span>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>For each gear:
   1. Select RPM-appropriate sample layers from CPlugFileAudioMotors
   2. Crossfade between adjacent RPM layers based on current RPM
   3. Adjust playback rate (pitch) proportional to RPM within each layer&#x27;s range
-  4. Apply load modulation based on InputGasPedal (throttle position)
+  4. Apply load modulation based on InputGasPedal
   5. On gear change, crossfade between gear-specific sound sets</code></pre></div>
 <h3 id="load-dependent-sound-changes"><a class="anchor" href="#load-dependent-sound-changes">#</a>Load-Dependent Sound Changes</h3>
 <ul>
-  <li><code>InputGasPedal</code> (0-1) likely modulates engine sound character (on-throttle vs. coasting)</li>
-  <li><code>InputIsBraking</code> likely triggers engine braking / deceleration sound</li>
-  <li><code>IsTurbo</code> and <code>TurboTime</code> (0-1) likely overlay a turbo/boost sound effect</li>
-  <li><code>ReactorBoostLvl</code> triggers reactor boost audio overlay</li>
+  <li><code>InputGasPedal</code> (0-1) modulates engine character (on-throttle vs coasting)</li>
+  <li><code>InputIsBraking</code> triggers engine braking sound</li>
+  <li><code>IsTurbo</code> and <code>TurboTime</code> (0-1) overlay boost effect</li>
+  <li><code>ReactorBoostLvl</code> triggers reactor audio</li>
 </ul>
-<h3 id="cplugsoundengine-vs-cplugsoundengine2"><a class="anchor" href="#cplugsoundengine-vs-cplugsoundengine2">#</a>CPlugSoundEngine vs CPlugSoundEngine2</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Feature</th>
-  <th style="text-align:left">CPlugSoundEngine (v1)</th>
-  <th style="text-align:left">CPlugSoundEngine2 (v2)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Purpose</td>
-  <td style="text-align:left">Legacy engine sound</td>
-  <td style="text-align:left">Current engine sound</td>
-</tr>
-<tr>
-  <td style="text-align:left">Relationship</td>
-  <td style="text-align:left">Base engine class</td>
-  <td style="text-align:left">Extended engine class</td>
-</tr>
-<tr>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">Simpler RPM mapping?</td>
-  <td style="text-align:left">Multi-layer crossfade?</td>
-</tr>
-<tr>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">Single sample?</td>
-  <td style="text-align:left">Per-gear sample sets?</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>What we do NOT know</strong>:</p>
+<h3 id="open-questions"><a class="anchor" href="#open-questions">#</a>Open Questions</h3>
 <ul>
-  <li>The exact crossfade algorithm between RPM layers</li>
-  <li>How many RPM sample layers exist per gear</li>
-  <li>The <code>CPlugFileAudioMotors</code> file format specification</li>
+  <li>Exact crossfade algorithm between RPM layers</li>
+  <li>How many RPM sample layers per gear</li>
+  <li><code>CPlugFileAudioMotors</code> file format specification</li>
   <li>Whether v1 and v2 are used for different vehicle types (CarSport vs CarSnow vs CarRally vs CarDesert)</li>
-  <li>The specific pitch curve shape (linear? exponential?)</li>
+  <li>Pitch curve shape (linear? exponential?)</li>
 </ul>
-<p><strong>Evidence</strong>: Class names from <code>class_hierarchy.json</code>. Vehicle state fields from <code>19-openplanet-intelligence.md</code>. The existence of <code>CPlugFileAudioMotors</code> as a dedicated format.</p>
 <hr>
-<h2 id="5-spatial-audio-system"><a class="anchor" href="#5-spatial-audio-system">#</a>5. Spatial Audio System</h2>
-<h3 id="q-how-does-3d-spatial-audio-work"><a class="anchor" href="#q-how-does-3d-spatial-audio-work">#</a>Q: How does 3D spatial audio work?</h3>
+<h2 id="how-3d-spatial-audio-works"><a class="anchor" href="#how-3d-spatial-audio-works">#</a>How 3D Spatial Audio Works</h2>
 <h3 id="listener-position"><a class="anchor" href="#listener-position">#</a>Listener Position</h3>
-<p><code>CAudioListener</code> represents the 3D audio listener (microphone). It is almost certainly tied to the active camera position and orientation.</p>
-<p><strong>Evidence for camera-audio coupling</strong>:</p>
-<ul>
-  <li><code>CameraWooshVolumedB</code> and <code>CameraWooshMinSpeedKmh</code> strings found in the binary (from <code>15-ghidra-research-findings.md</code> Section 3) -- these are camera-speed-dependent audio parameters</li>
-  <li>The camera system has 12 camera types; the listener would follow whichever is active (Race, FirstPerson, Free, etc.)</li>
-  <li><code>CAudioListener</code> is a standalone class (not a subclass of any camera), so it likely receives position updates from the camera system each frame</li>
-</ul>
+<p><code>CAudioListener</code> tracks the 3D audio listener. It is almost certainly tied to the active camera position and orientation.</p>
+<p><strong>Evidence</strong>: <code>CameraWooshVolumedB</code> and <code>CameraWooshMinSpeedKmh</code> strings confirm camera-audio coupling. The camera system has 12 types; the listener follows whichever is active.</p>
 <h3 id="distance-attenuation-models"><a class="anchor" href="#distance-attenuation-models">#</a>Distance Attenuation Models</h3>
-<p>OpenAL Soft supports all three standard distance models (all confirmed in <code>OpenAL64_bundled.dll</code> strings):</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Model</th>
-  <th style="text-align:left">OpenAL Constant</th>
-  <th style="text-align:left">Formula</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Inverse Distance</td>
-  <td style="text-align:left"><code>AL_INVERSE_DISTANCE</code></td>
-  <td style="text-align:left"><code>gain = refDist / (refDist + rolloff * (dist - refDist))</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">Inverse Distance Clamped</td>
-  <td style="text-align:left"><code>AL_INVERSE_DISTANCE_CLAMPED</code></td>
-  <td style="text-align:left">Same, but <code>dist</code> clamped to <code>[refDist, maxDist]</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">Linear Distance</td>
-  <td style="text-align:left"><code>AL_LINEAR_DISTANCE</code></td>
-  <td style="text-align:left"><code>gain = 1 - rolloff * (dist - refDist) / (maxDist - refDist)</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">Linear Distance Clamped</td>
-  <td style="text-align:left"><code>AL_LINEAR_DISTANCE_CLAMPED</code></td>
-  <td style="text-align:left">Same, clamped</td>
-</tr>
-<tr>
-  <td style="text-align:left">Exponent Distance</td>
-  <td style="text-align:left"><code>AL_EXPONENT_DISTANCE</code></td>
-  <td style="text-align:left"><code>gain = (dist / refDist) ^ (-rolloff)</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">Exponent Distance Clamped</td>
-  <td style="text-align:left"><code>AL_EXPONENT_DISTANCE_CLAMPED</code></td>
-  <td style="text-align:left">Same, clamped</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Which model does TM2020 use?</strong> <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> -- The default OpenAL distance model is <code>AL_INVERSE_DISTANCE_CLAMPED</code>. Without decompiling the source setup code, we cannot confirm which model TM2020 selects. However, <code>AL_INVERSE_DISTANCE_CLAMPED</code> is the most common choice for games and is the OpenAL default.</p>
-<p><strong>Per-source attenuation parameters</strong> (from OpenAL API, all available):</p>
-<ul>
-  <li><code>AL_REFERENCE_DISTANCE</code> -- Distance at which gain is 1.0</li>
-  <li><code>AL_MAX_DISTANCE</code> -- Maximum distance (clamped models)</li>
-  <li><code>AL_ROLLOFF_FACTOR</code> -- Rolloff rate multiplier</li>
-  <li><code>AL_CONE_INNER_ANGLE</code> / <code>AL_CONE_OUTER_ANGLE</code> / <code>AL_CONE_OUTER_GAIN</code> -- Directional sound cones</li>
-  <li><code>AL_AIR_ABSORPTION_FACTOR</code> -- High-frequency absorption over distance (EFX)</li>
-</ul>
-<p><strong>Evidence</strong>: All distance model strings from <code>OpenAL64_bundled.dll</code>. <code>AL_EXT_source_distance_model</code> extension present, allowing per-source distance models.</p>
+<p>OpenAL Soft supports inverse, linear, and exponent distance models (clamped and unclamped variants). <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> which model TM2020 selects. The default <code>AL_INVERSE_DISTANCE_CLAMPED</code> is most common.</p>
+<p>Per-source parameters: <code>AL_REFERENCE_DISTANCE</code>, <code>AL_MAX_DISTANCE</code>, <code>AL_ROLLOFF_FACTOR</code>, cone angles, <code>AL_AIR_ABSORPTION_FACTOR</code>.</p>
 <h3 id="doppler-effect"><a class="anchor" href="#doppler-effect">#</a>Doppler Effect</h3>
-<p>The game supports Doppler effect and provides a user toggle:</p>
-<ul>
-  <li>Config: <code>AudioDisableDoppler = false</code> (enabled by default in <code>Default.json</code>)</li>
-  <li>OpenAL provides: <code>AL_DOPPLER_FACTOR</code>, <code>AL_SPEED_OF_SOUND</code> (default 343.3 m/s)</li>
-  <li>Per-source: <code>AL_VELOCITY</code> (3D velocity vector) and <code>AL_POSITION</code> (3D position)</li>
-  <li>The deprecated <code>AL_DOPPLER_VELOCITY</code> is also present in the DLL with a warning message: <code>"AL_DOPPLER_VELOCITY is deprecated in AL 1.1, use AL_SPEED_OF_SOUND; AL_DOPPLER_VELOCITY -> AL_SPEED_OF_SOUND / 343.3f"</code></li>
-</ul>
-<p><strong>Doppler formula</strong> (OpenAL standard):</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>shift = SPEED_OF_SOUND / (SPEED_OF_SOUND + DOPPLER_FACTOR * listener_velocity_toward_source)
-      * (SPEED_OF_SOUND + DOPPLER_FACTOR * source_velocity_toward_listener) / SPEED_OF_SOUND</code></pre></div>
-<p>Given that vehicle <code>WorldVel</code> (vec3, m/s) is available from the physics system, each car's sound sources likely have their velocity set to <code>WorldVel</code> each frame.</p>
-<p><strong>Evidence</strong>: <code>AudioDisableDoppler</code> in <code>Default.json</code>. Doppler strings from <code>OpenAL64_bundled.dll</code>. <code>WorldVel</code> from <code>19-openplanet-intelligence.md</code>.</p>
+<p>Enabled by default (<code>AudioDisableDoppler = false</code>). OpenAL provides <code>AL_DOPPLER_FACTOR</code> and <code>AL_SPEED_OF_SOUND</code> (default 343.3 m/s). Vehicle <code>WorldVel</code> (vec3, m/s) from the physics system likely sets each car's source velocity.</p>
 <h3 id="audio-zones"><a class="anchor" href="#audio-zones">#</a>Audio Zones</h3>
-<p><code>CAudioZone</code> and <code>CAudioZoneSource</code> provide zone-based spatial audio:</p>
-<ul>
-  <li>Zones define spatial regions in the map where different audio environments apply</li>
-  <li><code>CPlugAudioEnvironment</code> stores per-zone reverb/effect settings</li>
-  <li><code>CGameCtnDecorationAudio</code> stores decoration-level (map theme) audio settings</li>
-  <li><code>CPlugSoundMood</code> provides ambient sounds per mood/zone</li>
-</ul>
-<p><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong>: How zones blend at boundaries (crossfade? hard cut?), zone shape (box? sphere? convex hull?), how many zones a typical map has.</p>
+<p><code>CAudioZone</code> and <code>CAudioZoneSource</code> provide zone-based spatial audio. <code>CPlugAudioEnvironment</code> stores per-zone reverb settings. <code>CPlugSoundMood</code> provides ambient sounds per zone.</p>
+<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>: Zone blending at boundaries, zone shape, and typical zone count per map.</p>
 <h3 id="occlusionobstruction"><a class="anchor" href="#occlusionobstruction">#</a>Occlusion/Obstruction</h3>
-<p><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong>: No direct evidence of audio occlusion/obstruction was found. OpenAL EFX supports <code>AL_DIRECT_FILTER</code> and <code>AL_AUXILIARY_SEND_FILTER</code> which can implement occlusion by applying a lowpass filter to occluded sources. The <code>AL_FILTER_LOWPASS</code> filter is present in the DLL. However, whether TM2020 performs any raycast-based occlusion is unconfirmed.</p>
-<p><strong>Evidence</strong>: Filter strings from <code>OpenAL64_bundled.dll</code>. Absence of evidence for occlusion-specific code.</p>
+<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>: No direct evidence of audio occlusion found. OpenAL EFX supports occlusion via <code>AL_DIRECT_FILTER</code>, and <code>AL_FILTER_LOWPASS</code> is available. Whether TM2020 performs raycast-based occlusion is unconfirmed.</p>
 <hr>
-<h2 id="6-music-system"><a class="anchor" href="#6-music-system">#</a>6. Music System</h2>
-<h3 id="q-how-does-music-work"><a class="anchor" href="#q-how-does-music-work">#</a>Q: How does music work?</h3>
-<h3 id="music-architecture"><a class="anchor" href="#music-architecture">#</a>Music Architecture</h3>
+<h2 id="how-music-works"><a class="anchor" href="#how-music-works">#</a>How Music Works</h2>
 <ul>
-  <li><code>CPlugMusic</code> -- Music track resource (loadable from pack files)</li>
-  <li><code>CPlugMusicType</code> -- Music genre/type classification (menu music, race music, etc.)</li>
-  <li><code>CAudioSourceMusic</code> -- Runtime music playback source</li>
-  <li><code>CAudioScriptMusic</code> -- ManiaScript-accessible music control</li>
+  <li><code>CPlugMusic</code> -- Music track resource</li>
+  <li><code>CPlugMusicType</code> -- Genre/type classification</li>
+  <li><code>CAudioSourceMusic</code> -- Runtime playback</li>
+  <li><code>CAudioScriptMusic</code> -- ManiaScript control</li>
 </ul>
-<h3 id="music-in-mediatracker"><a class="anchor" href="#music-in-mediatracker">#</a>Music in MediaTracker</h3>
-<p><code>CGameCtnMediaBlockMusicEffect</code> (with <code>SKeyVal</code> method) suggests music can be keyframed in MediaTracker clips:</p>
-<ul>
-  <li>Volume changes over time</li>
-  <li>Potentially tempo/effect changes synchronized to replay events</li>
-</ul>
-<p><code>CGameCtnMediaBlockSound</code> (with <code>SuperSKeyVal</code> method) handles sound effects in MediaTracker.</p>
-<h3 id="dynamic-music"><a class="anchor" href="#dynamic-music">#</a>Dynamic Music</h3>
-<p><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong>: Whether TM2020 has dynamic music that changes with gameplay state (e.g., different intensity near finish line, music reacting to speed). The <code>CPlugMusicType</code> class suggests at least categorization of music types, but dynamic layering is not confirmed.</p>
-<h3 id="track-transitions-crossfades"><a class="anchor" href="#track-transitions-crossfades">#</a>Track Transitions / Crossfades</h3>
-<p><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong>: No direct evidence of crossfade logic was found in the decompiled code. The <code>CAudioSourceMusic</code> class handles playback, but transition behavior between tracks is not decompiled.</p>
-<h3 id="volume-ducking"><a class="anchor" href="#volume-ducking">#</a>Volume Ducking</h3>
-<p>The config separates:</p>
-<ul>
-  <li><code>AudioSoundVolume</code> (0-1) -- Master SFX volume</li>
-  <li><code>AudioSoundLimit_Scene</code> (0-1) -- Scene/gameplay sound limit</li>
-  <li><code>AudioSoundLimit_Ui</code> (0-1) -- UI sound limit</li>
-  <li><code>AudioMusicVolume</code> (0-1) -- Music volume (independent)</li>
-</ul>
-<p>This separation enables music ducking when gameplay sounds are important, but whether automatic ducking occurs is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>.</p>
-<p><strong>Evidence</strong>: Config keys from <code>Default.json</code>. Class names from <code>class_hierarchy.json</code>.</p>
+<p><code>CGameCtnMediaBlockMusicEffect</code> (with <code>SKeyVal</code>) supports keyframed music in MediaTracker clips. <code>CGameCtnMediaBlockSound</code> (with <code>SuperSKeyVal</code>) handles sound effects in MediaTracker.</p>
+<p>Volume channels are separated: <code>AudioSoundVolume</code> (SFX), <code>AudioSoundLimit_Scene</code>, <code>AudioSoundLimit_Ui</code>, <code>AudioMusicVolume</code> (independent).</p>
+<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>: Dynamic music that changes with gameplay, crossfade logic between tracks, and automatic ducking.</p>
 <hr>
-<h2 id="7-voice-chat"><a class="anchor" href="#7-voice-chat">#</a>7. Voice Chat</h2>
-<h3 id="q-how-does-voice-chat-work"><a class="anchor" href="#q-how-does-voice-chat-work">#</a>Q: How does voice chat work?</h3>
+<h2 id="how-voice-chat-works"><a class="anchor" href="#how-voice-chat-works">#</a>How Voice Chat Works</h2>
 <h3 id="vivox-sdk-integration"><a class="anchor" href="#vivox-sdk-integration">#</a>Vivox SDK Integration</h3>
-<p>TM2020 uses a three-layer voice chat architecture:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Game (Trackmania.exe)
   |
   +-- VoiceChat.dll (Nadeo&#x27;s &quot;Harbour&quot; framework wrapper, 1.24 MB)
         |
         +-- vivoxsdk.dll (Vivox SDK v5.19.2, 11.87 MB)</code></pre></div>
-<p><strong>Evidence</strong>: DLL analysis from <code>09-game-files-analysis.md</code> Sections 1.10-1.11. <code>VoiceChat.dll</code> strings include <code>D:\Codebase\Nadeo\Out\x64_Release_ImportLib_Harbour\VoiceChat.pdb</code>.</p>
-<h3 id="vivox-sdk-details"><a class="anchor" href="#vivox-sdk-details">#</a>Vivox SDK Details</h3>
-<ul>
-  <li><strong>Version</strong>: 5.19.2.33478.213423bef1</li>
-  <li><strong>Protocol</strong>: SIP (Session Initiation Protocol) with STUN, RTP for media</li>
-  <li><strong>Server</strong>: <code>https://hyxd.www.vivox.com/api2</code></li>
-  <li><strong>Log file</strong>: <code>VivoxTrackmania</code></li>
-</ul>
+<p><strong>Protocol</strong>: SIP with STUN, RTP for media. <strong>Server</strong>: <code>https://hyxd.www.vivox.com/api2</code>.</p>
 <h3 id="channel-types"><a class="anchor" href="#channel-types">#</a>Channel Types</h3>
-<p>From <code>vivoxsdk.dll</code> strings:</p>
-<ul>
-  <li><code>sip:confctl-e-</code> -- Echo test channels</li>
-  <li><code>sip:confctl-g-</code> -- Group voice channels</li>
-  <li><code>sip:confctl-d-</code> -- Direct (1-to-1) voice channels</li>
-</ul>
+<p>From <code>vivoxsdk.dll</code>: echo test (<code>sip:confctl-e-</code>), group voice (<code>sip:confctl-g-</code>), direct 1-to-1 (<code>sip:confctl-d-</code>).</p>
 <h3 id="3d-positional-voice"><a class="anchor" href="#3d-positional-voice">#</a>3D Positional Voice</h3>
-<p>The config key <code>voicechat.vivox.3d</code> enables 3D positional voice chat. Vivox supports three rolloff curve types:</p>
-<ul>
-  <li><code>channel_rolloff_curve_type_inverse_distance_clamped</code></li>
-  <li><code>channel_rolloff_curve_type_linear_distance_clamped</code></li>
-  <li><code>channel_rolloff_curve_type_exponential_distance_clamped</code></li>
-</ul>
-<p>The <code>VoiceChat.dll</code> string <code>Fail send update 3D position.</code> confirms that 3D position updates are sent during gameplay. The Vivox SDK has <code>vx_req_session_set_3d_position</code> and <code>vx_req_sessiongroup_set_session_3d_position</code> commands.</p>
+<p>Config <code>voicechat.vivox.3d</code> enables positional voice. The string <code>Fail send update 3D position.</code> confirms position updates during gameplay.</p>
 <h3 id="push-to-talk-vs-open-mic"><a class="anchor" href="#push-to-talk-vs-open-mic">#</a>Push-to-Talk vs Open Mic</h3>
-<p>From <code>Default.json</code>:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-json">&quot;VoiceChat_VoiceDetection_Mode&quot;: &quot;pushtotalk&quot;,
-&quot;VoiceChat_VoiceDetection_Sensitivity&quot;: 1,
-&quot;VoiceChat_VoiceDetection_Auto&quot;: false,
-&quot;VoiceChat_VoiceDetection&quot;: 1</code></pre></div>
-<p>Both modes are supported:</p>
-<ul>
-  <li><strong>Push-to-talk</strong> (default): Manual activation</li>
-  <li><strong>Voice Activity Detection (VAD)</strong>: Automatic, with configurable sensitivity</li>
-</ul>
-<p>Vivox audio processing features (can be toggled via environment variables):</p>
-<ul>
-  <li><code>VIVOX_FORCE_NO_AEC</code> -- Acoustic Echo Cancellation</li>
-  <li><code>VIVOX_FORCE_NO_AGC</code> -- Automatic Gain Control</li>
-  <li><code>VIVOX_FORCE_NO_VAD</code> -- Voice Activity Detection</li>
-</ul>
-<h3 id="voice-chat-operations"><a class="anchor" href="#voice-chat-operations">#</a>Voice Chat Operations</h3>
-<p>From <code>VoiceChat.dll</code>: <code>MuteLocal</code>, <code>MuteRemote</code>, <code>Unmute</code>, <code>SetVoiceDetection</code>, <code>ChannelJoin</code>, <code>ChannelLeave</code>, <code>adjustMicVolume</code></p>
-<p>From <code>Default.json</code>:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-json">&quot;VoiceChat_Device_In&quot;: &quot;default&quot;,
-&quot;VoiceChat_Device_Out&quot;: &quot;default&quot;,
-&quot;VoiceChat_SpeakerVolume&quot;: 1</code></pre></div>
-<h3 id="when-is-voice-chat-active"><a class="anchor" href="#when-is-voice-chat-active">#</a>When Is Voice Chat Active?</h3>
-<p><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong>: Likely active in multiplayer lobbies and during online races. The <code>voicechat.vivox.delay_connect</code> key suggests connection can be deferred. Channel join/leave operations are explicit.</p>
-<p><strong>Evidence</strong>: All config keys from <code>Default.json</code>. DLL strings from <code>vivoxsdk.dll</code> and <code>VoiceChat.dll</code>. Analysis from <code>09-game-files-analysis.md</code>.</p>
+<p>Default: push-to-talk. Both modes supported. Vivox audio processing features: AEC, AGC, VAD (togglable via environment variables).</p>
 <hr>
-<h2 id="8-web-audio-api-mapping"><a class="anchor" href="#8-web-audio-api-mapping">#</a>8. Web Audio API Mapping</h2>
-<h3 id="q-how-would-i-recreate-this-in-web-audio-api"><a class="anchor" href="#q-how-would-i-recreate-this-in-web-audio-api">#</a>Q: How would I recreate this in Web Audio API?</h3>
+<h2 id="mapping-to-web-audio-api"><a class="anchor" href="#mapping-to-web-audio-api">#</a>Mapping to Web Audio API</h2>
 <h3 id="architecture-mapping"><a class="anchor" href="#architecture-mapping">#</a>Architecture Mapping</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -808,12 +476,12 @@
 <tr>
   <td style="text-align:left"><code>CAudioListener</code> / <code>alListenerfv</code></td>
   <td style="text-align:left"><code>AudioContext.listener</code></td>
-  <td style="text-align:left">Built-in listener with position/orientation</td>
+  <td style="text-align:left">Built-in listener</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>alGenSources</code> / <code>alSourcefv</code></td>
   <td style="text-align:left"><code>new PannerNode()</code></td>
-  <td style="text-align:left">One PannerNode per 3D sound source</td>
+  <td style="text-align:left">One PannerNode per 3D source</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>alGenBuffers</code> / <code>alBufferData</code></td>
@@ -823,27 +491,22 @@
 <tr>
   <td style="text-align:left"><code>alSourcePlay</code></td>
   <td style="text-align:left"><code>AudioBufferSourceNode.start()</code></td>
-  <td style="text-align:left">Note: Web Audio sources are one-shot; create new node per play</td>
+  <td style="text-align:left">Web Audio sources are one-shot</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AL_GAIN</code></td>
   <td style="text-align:left"><code>GainNode</code></td>
-  <td style="text-align:left">Per-source volume control</td>
+  <td style="text-align:left">Per-source volume</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AL_PITCH</code></td>
   <td style="text-align:left"><code>AudioBufferSourceNode.playbackRate</code></td>
-  <td style="text-align:left">Pitch shift via playback rate</td>
+  <td style="text-align:left">Pitch via playback rate</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AL_POSITION</code> / <code>AL_VELOCITY</code></td>
   <td style="text-align:left"><code>PannerNode.positionX/Y/Z</code></td>
   <td style="text-align:left">3D position per source</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>AL_DIRECTION</code> / <code>AL_CONE_*</code></td>
-  <td style="text-align:left"><code>PannerNode.coneInnerAngle</code> etc.</td>
-  <td style="text-align:left">Directional sound cones</td>
 </tr>
 <tr>
   <td style="text-align:left">EFX Reverb</td>
@@ -853,22 +516,17 @@
 <tr>
   <td style="text-align:left">EFX Lowpass Filter</td>
   <td style="text-align:left"><code>BiquadFilterNode</code> (type: 'lowpass')</td>
-  <td style="text-align:left">Built-in filter types</td>
+  <td style="text-align:left">Built-in</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AL_DOPPLER_FACTOR</code></td>
-  <td style="text-align:left"><code>PannerNode</code> with velocity</td>
-  <td style="text-align:left">[LIMITATION] Web Audio PannerNode does not natively support Doppler; must be manually computed via <code>playbackRate</code> adjustment</td>
+  <td style="text-align:left">Manual computation via <code>playbackRate</code></td>
+  <td style="text-align:left">[LIMITATION] PannerNode lacks native Doppler</td>
 </tr>
 <tr>
   <td style="text-align:left">HRTF</td>
   <td style="text-align:left"><code>PannerNode.panningModel = 'HRTF'</code></td>
-  <td style="text-align:left">Built-in HRTF in Web Audio</td>
-</tr>
-<tr>
-  <td style="text-align:left">Source pooling</td>
-  <td style="text-align:left">Custom pool of AudioBufferSourceNodes</td>
-  <td style="text-align:left">Create/recycle nodes; ~100+ concurrent sources in modern browsers</td>
+  <td style="text-align:left">Built-in</td>
 </tr>
 </tbody>
 </table></div>
@@ -884,16 +542,8 @@
                                                                               |
                                                                               v
                                                                     [AudioContext.destination]</code></pre></div>
-<p><strong>Per frame</strong>:</p>
-<ol>
-  <li>Read <code>RPM</code> from vehicle state</li>
-  <li>Determine which two RPM layers bracket the current RPM</li>
-  <li>Calculate crossfade weight (linear interpolation between layers)</li>
-  <li>Set <code>GainNode</code> values for crossfade</li>
-  <li>Adjust <code>AudioBufferSourceNode.playbackRate</code> to fine-tune pitch within layer</li>
-  <li>Update <code>PannerNode</code> position from vehicle <code>Position</code> (vec3)</li>
-</ol>
-<p><strong>Alternative approach (simpler, for MVP)</strong>:</p>
+<p><strong>Per frame</strong>: Read RPM, determine bracketing layers, calculate crossfade weight, set GainNode values, adjust playback rate, update PannerNode position.</p>
+<p><strong>Simpler MVP approach</strong>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>[AudioBufferSourceNode: Single engine sample, looping]
   .playbackRate = map(RPM, 0, 11000, 0.5, 2.5)  // pitch shift
       |
@@ -905,20 +555,6 @@
       |
       v
   [AudioContext.destination]</code></pre></div>
-<h3 id="surface-sound-node-graph"><a class="anchor" href="#surface-sound-node-graph">#</a>Surface Sound Node Graph</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>For each surface type (Asphalt, Dirt, Grass, Ice, etc.):
-
-[AudioBufferSourceNode: Surface loop] --&gt; [GainNode: Volume based on SlipCoef + FrontSpeed]
-                                                    |
-                                                    v
-                                          [PannerNode: Car position]
-                                                    |
-                                                    v
-                                          [AudioContext.destination]
-
-// Active surface determined by wheel.GroundContactMaterial (ESurfId)
-// Volume scales with FrontSpeed (no sound when stopped)
-// SlipCoef &gt; threshold triggers screech overlay</code></pre></div>
 <h3 id="spatial-audio-with-pannernode"><a class="anchor" href="#spatial-audio-with-pannernode">#</a>Spatial Audio with PannerNode</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">const panner = new PannerNode(ctx, {
   panningModel: &#x27;HRTF&#x27;,           // or &#x27;equalpower&#x27; for non-HRTF
@@ -946,23 +582,7 @@ ctx.listener.forwardZ.value = camDir.z;
 ctx.listener.upX.value = camUp.x;
 ctx.listener.upY.value = camUp.y;
 ctx.listener.upZ.value = camUp.z;</code></pre></div>
-<h3 id="windcamera-woosh-sound"><a class="anchor" href="#windcamera-woosh-sound">#</a>Wind/Camera Woosh Sound</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">// CameraWooshVolumedB and CameraWooshMinSpeedKmh from binary strings
-const WOOSH_MIN_SPEED_KMH = 50;  // [UNKNOWN exact value, placeholder]
-const WOOSH_MAX_DB = -6;          // [UNKNOWN exact value, placeholder]
-
-function updateWindSound(speedKmh) {
-  if (speedKmh &lt; WOOSH_MIN_SPEED_KMH) {
-    windGainNode.gain.value = 0;
-    return;
-  }
-  // Map speed to volume (dB scale)
-  const t = Math.min((speedKmh - WOOSH_MIN_SPEED_KMH) / 300, 1.0);
-  const db = WOOSH_MAX_DB * t;
-  windGainNode.gain.value = Math.pow(10, db / 20);
-}</code></pre></div>
 <h3 id="manual-doppler-effect-web-audio-workaround"><a class="anchor" href="#manual-doppler-effect-web-audio-workaround">#</a>Manual Doppler Effect (Web Audio Workaround)</h3>
-<p>Web Audio's PannerNode does not implement Doppler natively in most browsers. Manual implementation:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">function computeDopplerShift(sourcePos, sourceVel, listenerPos, listenerVel) {
   const SPEED_OF_SOUND = 343.3;
   const toListener = vec3.subtract(listenerPos, sourcePos);
@@ -970,8 +590,8 @@ function updateWindSound(speedKmh) {
   if (dist &lt; 0.001) return 1.0;
 
   const dir = vec3.scale(toListener, 1.0 / dist);
-  const vl = vec3.dot(listenerVel, dir);   // listener velocity toward source
-  const vs = vec3.dot(sourceVel, dir);      // source velocity toward listener
+  const vl = vec3.dot(listenerVel, dir);
+  const vs = vec3.dot(sourceVel, dir);
 
   return (SPEED_OF_SOUND - vl) / (SPEED_OF_SOUND - vs);
 }
@@ -979,8 +599,7 @@ function updateWindSound(speedKmh) {
 // Apply to playback rate:
 source.playbackRate.value = basePitch * computeDopplerShift(carPos, carVel, camPos, camVel);</code></pre></div>
 <h3 id="reverb-via-convolvernode"><a class="anchor" href="#reverb-via-convolvernode">#</a>Reverb via ConvolverNode</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">// Replace OpenAL EFX reverb with impulse response convolution
-const convolver = new ConvolverNode(ctx);
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">const convolver = new ConvolverNode(ctx);
 const irBuffer = await fetch(&#x27;impulse-response-tunnel.wav&#x27;)
   .then(r =&gt; r.arrayBuffer())
   .then(b =&gt; ctx.decodeAudioData(b));
@@ -992,27 +611,6 @@ const dryGain = new GainNode(ctx, { gain: 0.7 });
 const wetGain = new GainNode(ctx, { gain: 0.3 });
 source.connect(dryGain).connect(ctx.destination);
 source.connect(wetGain).connect(convolver).connect(ctx.destination);</code></pre></div>
-<h3 id="streaming-music-with-mediaelementaudiosourcenode"><a class="anchor" href="#streaming-music-with-mediaelementaudiosourcenode">#</a>Streaming Music with MediaElementAudioSourceNode</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">// For long music tracks, use streaming instead of full decode
-const audio = new Audio(&#x27;music-track.ogg&#x27;);
-audio.loop = true;
-const source = ctx.createMediaElementSource(audio);
-const musicGain = new GainNode(ctx, { gain: audioMusicVolume });
-source.connect(musicGain).connect(ctx.destination);
-audio.play();
-
-// Crossfade between tracks:
-function crossfadeTo(newTrackUrl, duration = 2.0) {
-  const newAudio = new Audio(newTrackUrl);
-  const newSource = ctx.createMediaElementSource(newAudio);
-  const newGain = new GainNode(ctx, { gain: 0 });
-  newSource.connect(newGain).connect(ctx.destination);
-
-  const now = ctx.currentTime;
-  musicGain.gain.linearRampToValueAtTime(0, now + duration);
-  newGain.gain.linearRampToValueAtTime(audioMusicVolume, now + duration);
-  newAudio.play();
-}</code></pre></div>
 <h3 id="complete-audio-system-node-graph"><a class="anchor" href="#complete-audio-system-node-graph">#</a>Complete Audio System Node Graph</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>GAMEPLAY AUDIO (OpenAL replacement):
 =====================================
@@ -1047,9 +645,8 @@ VOICE CHAT (separate system, WebRTC):
 ======================================
 [RTCPeerConnection] --&gt; [MediaStreamAudioSourceNode] --&gt; [PannerNode (3D)] --&gt; [destination]</code></pre></div>
 <hr>
-<h2 id="9-complete-audio-class-catalog"><a class="anchor" href="#9-complete-audio-class-catalog">#</a>9. Complete Audio Class Catalog</h2>
-<h3 id="from-class_hierarchyjson-52-audio-related-classes-total"><a class="anchor" href="#from-class_hierarchyjson-52-audio-related-classes-total">#</a>From class_hierarchy.json (52 audio-related classes total)</h3>
-<h4 id="core-audio-classes-19-classes-audio-category"><a class="anchor" href="#core-audio-classes-19-classes-audio-category">#</a>Core Audio Classes (19 classes, "Audio" category)</h4>
+<h2 id="complete-audio-class-catalog"><a class="anchor" href="#complete-audio-class-catalog">#</a>Complete Audio Class Catalog</h2>
+<h3 id="core-audio-classes-19-classes"><a class="anchor" href="#core-audio-classes-19-classes">#</a>Core Audio Classes (19 classes)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1061,32 +658,32 @@ VOICE CHAT (separate system, WebRTC):
 <tbody>
 <tr>
   <td style="text-align:left"><code>CAudioManager</code></td>
-  <td style="text-align:left">Top-level audio orchestrator</td>
+  <td style="text-align:left">Top-level orchestrator</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioPort</code></td>
-  <td style="text-align:left">Audio output port abstraction</td>
+  <td style="text-align:left">Output port abstraction</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioPortNull</code></td>
-  <td style="text-align:left">Null/silent audio port (disabled audio)</td>
+  <td style="text-align:left">Null/silent port</td>
   <td style="text-align:left">CAudioPort</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioBufferKeeper</code></td>
-  <td style="text-align:left">Audio buffer lifecycle management</td>
+  <td style="text-align:left">Buffer lifecycle</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioListener</code></td>
-  <td style="text-align:left">3D audio listener position/orientation</td>
+  <td style="text-align:left">3D listener</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioSettings</code></td>
-  <td style="text-align:left">Audio configuration (volume, quality)</td>
+  <td style="text-align:left">Volume/quality config</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
@@ -1096,22 +693,22 @@ VOICE CHAT (separate system, WebRTC):
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioScriptMusic</code></td>
-  <td style="text-align:left">Script-accessible music control</td>
+  <td style="text-align:left">Script music control</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioScriptSound</code></td>
-  <td style="text-align:left">Script-accessible sound control</td>
+  <td style="text-align:left">Script sound control</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioSoundImplem</code></td>
-  <td style="text-align:left">Sound implementation (platform-specific)</td>
+  <td style="text-align:left">Platform-specific impl</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioSource</code></td>
-  <td style="text-align:left">Base audio source</td>
+  <td style="text-align:left">Base source</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
@@ -1121,59 +718,42 @@ VOICE CHAT (separate system, WebRTC):
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioSourceGauge</code></td>
-  <td style="text-align:left">Gauge/meter UI sounds</td>
+  <td style="text-align:left">Gauge UI sounds</td>
   <td style="text-align:left">CAudioSource</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioSourceMood</code></td>
-  <td style="text-align:left">Ambient mood sounds</td>
+  <td style="text-align:left">Ambient mood</td>
   <td style="text-align:left">CAudioSource</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioSourceMulti</code></td>
-  <td style="text-align:left">Multi-layered composite sounds</td>
+  <td style="text-align:left">Multi-layered sounds</td>
   <td style="text-align:left">CAudioSource</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioSourceMusic</code></td>
-  <td style="text-align:left">Music playback source</td>
+  <td style="text-align:left">Music playback</td>
   <td style="text-align:left">CAudioSource</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioSourceSurface</code></td>
-  <td style="text-align:left">Surface-contact sounds (tires)</td>
+  <td style="text-align:left">Tire sounds</td>
   <td style="text-align:left">CAudioSource</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioZone</code></td>
-  <td style="text-align:left">Spatial audio zone definition</td>
+  <td style="text-align:left">Spatial zone</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CAudioZoneSource</code></td>
-  <td style="text-align:left">Sound source within a zone</td>
+  <td style="text-align:left">Source within zone</td>
   <td style="text-align:left">CMwNod</td>
 </tr>
 </tbody>
 </table></div>
-<h4 id="openal-implementation-1-class"><a class="anchor" href="#openal-implementation-1-class">#</a>OpenAL Implementation (1 class)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Class</th>
-  <th style="text-align:left">Description</th>
-  <th style="text-align:left">Methods</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>COalAudioPort</code></td>
-  <td style="text-align:left">OpenAL audio port implementation</td>
-  <td style="text-align:left"><code>PushData</code></td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="sound-resource-classes-12-classes-plug-category"><a class="anchor" href="#sound-resource-classes-12-classes-plug-category">#</a>Sound Resource Classes (12 classes, "Plug" category)</h4>
+<h3 id="sound-resource-classes-12-classes"><a class="anchor" href="#sound-resource-classes-12-classes">#</a>Sound Resource Classes (12 classes)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1188,11 +768,11 @@ VOICE CHAT (separate system, WebRTC):
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugAudioBalance</code></td>
-  <td style="text-align:left">Audio channel balance/panning</td>
+  <td style="text-align:left">Channel balance/panning</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugAudioEnvironment</code></td>
-  <td style="text-align:left">Audio environment (reverb presets, etc.)</td>
+  <td style="text-align:left">Reverb presets</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSound</code></td>
@@ -1200,31 +780,31 @@ VOICE CHAT (separate system, WebRTC):
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSoundComponent</code></td>
-  <td style="text-align:left">Sound component within a composite</td>
+  <td style="text-align:left">Component in composite</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSoundEngine</code></td>
-  <td style="text-align:left">Engine sound resource (v1)</td>
+  <td style="text-align:left">Engine sound v1</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSoundEngine2</code></td>
-  <td style="text-align:left">Engine sound resource (v2, current)</td>
+  <td style="text-align:left">Engine sound v2 (current)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSoundGauge</code></td>
-  <td style="text-align:left">Gauge sound resource</td>
+  <td style="text-align:left">Gauge sound</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSoundMood</code></td>
-  <td style="text-align:left">Mood/ambient sound resource</td>
+  <td style="text-align:left">Mood/ambient sound</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSoundMulti</code></td>
-  <td style="text-align:left">Multi-layered sound resource</td>
+  <td style="text-align:left">Multi-layered sound</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSoundSurface</code></td>
-  <td style="text-align:left">Surface-dependent sound resource</td>
+  <td style="text-align:left">Surface-dependent sound</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugSoundVideo</code></td>
@@ -1232,41 +812,7 @@ VOICE CHAT (separate system, WebRTC):
 </tr>
 </tbody>
 </table></div>
-<h4 id="locatedspatial-sound-1-class"><a class="anchor" href="#locatedspatial-sound-1-class">#</a>Located/Spatial Sound (1 class)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Class</th>
-  <th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>CPlugLocatedSound</code></td>
-  <td style="text-align:left">3D-positioned sound resource</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="music-resources-2-classes"><a class="anchor" href="#music-resources-2-classes">#</a>Music Resources (2 classes)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Class</th>
-  <th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>CPlugMusic</code></td>
-  <td style="text-align:left">Music track resource</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CPlugMusicType</code></td>
-  <td style="text-align:left">Music genre/type classification</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="audio-file-handlers-5-classes"><a class="anchor" href="#audio-file-handlers-5-classes">#</a>Audio File Handlers (5 classes)</h4>
+<h3 id="audio-file-handlers-5-classes"><a class="anchor" href="#audio-file-handlers-5-classes">#</a>Audio File Handlers (5 classes)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1277,27 +823,27 @@ VOICE CHAT (separate system, WebRTC):
 <tbody>
 <tr>
   <td style="text-align:left"><code>CPlugFileAudioMotors</code></td>
-  <td style="text-align:left">Motor sound file format (.AudioMotors)</td>
+  <td style="text-align:left">Motor sound format (.AudioMotors)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugFileOggVorbis</code></td>
-  <td style="text-align:left">OGG Vorbis audio file handler</td>
+  <td style="text-align:left">OGG Vorbis handler</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugFileSnd</code></td>
-  <td style="text-align:left">Generic sound file handler</td>
+  <td style="text-align:left">Generic sound handler</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugFileSndGen</code></td>
-  <td style="text-align:left">Generated/procedural sound file</td>
+  <td style="text-align:left">Generated/procedural sound</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugFileWav</code></td>
-  <td style="text-align:left">WAV audio file handler</td>
+  <td style="text-align:left">WAV handler</td>
 </tr>
 </tbody>
 </table></div>
-<h4 id="game-integration-classes-7-classes"><a class="anchor" href="#game-integration-classes-7-classes">#</a>Game Integration Classes (7 classes)</h4>
+<h3 id="game-integration-classes-7-classes"><a class="anchor" href="#game-integration-classes-7-classes">#</a>Game Integration Classes (7 classes)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1308,111 +854,42 @@ VOICE CHAT (separate system, WebRTC):
 <tbody>
 <tr>
   <td style="text-align:left"><code>CGameCtnDecorationAudio</code></td>
-  <td style="text-align:left">Map decoration audio settings</td>
+  <td style="text-align:left">Map decoration audio</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CGameAudioSettingsWrapper</code></td>
-  <td style="text-align:left">Script-accessible audio settings</td>
+  <td style="text-align:left">Script audio settings</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CGameCtnMediaBlockMusicEffect</code></td>
-  <td style="text-align:left">MediaTracker music effect block (method: <code>SKeyVal</code>)</td>
+  <td style="text-align:left">MediaTracker music (method: <code>SKeyVal</code>)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CGameCtnMediaBlockSound</code></td>
-  <td style="text-align:left">MediaTracker sound block (method: <code>SuperSKeyVal</code>)</td>
+  <td style="text-align:left">MediaTracker sound (method: <code>SuperSKeyVal</code>)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CGameCtnDecorationMood</code></td>
-  <td style="text-align:left">Map decoration mood (includes audio atmosphere)</td>
+  <td style="text-align:left">Map mood (includes audio)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugFxSystemNode_SoundEmitter</code></td>
-  <td style="text-align:left">Particle/FX system sound emitter</td>
+  <td style="text-align:left">FX system emitter</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugMoodSetting</code></td>
-  <td style="text-align:left">Mood configuration (visual + audio)</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="mood-system-classes-audio-adjacent-5-classes"><a class="anchor" href="#mood-system-classes-audio-adjacent-5-classes">#</a>Mood System Classes (audio-adjacent, 5 classes)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Class</th>
-  <th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>CPlugMoodAtmo</code></td>
-  <td style="text-align:left">Atmosphere mood settings</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CPlugMoodBlender</code></td>
-  <td style="text-align:left">Mood transition blending</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CPlugMoodCurve</code></td>
-  <td style="text-align:left">Mood parameter curves</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CHmsLightMapMood</code></td>
-  <td style="text-align:left">Lightmap mood settings</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CHmsMoodBlender</code></td>
-  <td style="text-align:left">HMS-level mood blender</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="caudioport-methods"><a class="anchor" href="#caudioport-methods">#</a>CAudioPort Methods</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Method</th>
-  <th style="text-align:left">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>ApplySystemConfig</code></td>
-  <td style="text-align:left">Apply audio system configuration changes</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CaptureUpdate</code></td>
-  <td style="text-align:left">Update audio capture (recording)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>PreloadResources</code></td>
-  <td style="text-align:left">Preload audio resources into memory</td>
+  <td style="text-align:left">Mood config (visual + audio)</td>
 </tr>
 </tbody>
 </table></div>
 <hr>
-<h2 id="10-audio-configuration-reference"><a class="anchor" href="#10-audio-configuration-reference">#</a>10. Audio Configuration Reference</h2>
-<h3 id="from-defaultjson-actual-game-configuration-file"><a class="anchor" href="#from-defaultjson-actual-game-configuration-file">#</a>From Default.json (actual game configuration file)</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-json">{
-  &quot;AudioEnabled&quot;: false,
-  &quot;AudioDevice_Oal&quot;: &quot;MacBook Pro Speakers [OpenAL Soft]&quot;,
-  &quot;AudioMuteWhenAppUnfocused&quot;: true,
-  &quot;AudioSoundVolume&quot;: 0.146386,
-  &quot;AudioSoundLimit_Scene&quot;: 1,
-  &quot;AudioSoundLimit_Ui&quot;: 0.0479181,
-  &quot;AudioMusicVolume&quot;: 0,
-  &quot;AudioGlobalQuality&quot;: &quot;normal&quot;,
-  &quot;AudioAllowEFX&quot;: true,
-  &quot;AudioAllowHRTF&quot;: true,
-  &quot;AudioDisableDoppler&quot;: false
-}</code></pre></div>
-<h3 id="parameter-details"><a class="anchor" href="#parameter-details">#</a>Parameter Details</h3>
+<h2 id="audio-configuration-reference"><a class="anchor" href="#audio-configuration-reference">#</a>Audio Configuration Reference</h2>
+<h3 id="defaultjson-parameters"><a class="anchor" href="#defaultjson-parameters">#</a>Default.json Parameters</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Parameter</th>
   <th style="text-align:left">Type</th>
-  <th style="text-align:left">Default</th>
   <th style="text-align:left">Range</th>
   <th style="text-align:left">Description</th>
 </tr>
@@ -1421,82 +898,76 @@ VOICE CHAT (separate system, WebRTC):
 <tr>
   <td style="text-align:left"><code>AudioEnabled</code></td>
   <td style="text-align:left">bool</td>
-  <td style="text-align:left">true</td>
   <td style="text-align:left">true/false</td>
-  <td style="text-align:left">Master audio on/off (this config has it false -- audio is disabled in this CrossOver install)</td>
+  <td style="text-align:left">Master audio on/off</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioDevice_Oal</code></td>
   <td style="text-align:left">string</td>
-  <td style="text-align:left">(system default)</td>
-  <td style="text-align:left">Device name string</td>
-  <td style="text-align:left">OpenAL device name. Format: <code>"<device> [OpenAL Soft]"</code>. Empty string = system default</td>
+  <td style="text-align:left">Device name</td>
+  <td style="text-align:left">OpenAL device. Format: <code>"<device> [OpenAL Soft]"</code></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioMuteWhenAppUnfocused</code></td>
   <td style="text-align:left">bool</td>
-  <td style="text-align:left">true</td>
   <td style="text-align:left">true/false</td>
-  <td style="text-align:left">Mute audio when game window loses focus</td>
+  <td style="text-align:left">Mute when window loses focus</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioSoundVolume</code></td>
   <td style="text-align:left">float</td>
-  <td style="text-align:left">~0.8</td>
-  <td style="text-align:left">0.0 - 1.0</td>
-  <td style="text-align:left">Master sound effects volume. Maps to overall gain multiplier</td>
+  <td style="text-align:left">0.0-1.0</td>
+  <td style="text-align:left">Master SFX volume</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioSoundLimit_Scene</code></td>
   <td style="text-align:left">float</td>
-  <td style="text-align:left">1.0</td>
-  <td style="text-align:left">0.0 - 1.0</td>
-  <td style="text-align:left">Scene/gameplay sound volume limit. Multiplied with AudioSoundVolume for final scene gain</td>
+  <td style="text-align:left">0.0-1.0</td>
+  <td style="text-align:left">Scene sound limit</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioSoundLimit_Ui</code></td>
   <td style="text-align:left">float</td>
-  <td style="text-align:left">~0.5</td>
-  <td style="text-align:left">0.0 - 1.0</td>
-  <td style="text-align:left">UI sound volume limit. Multiplied with AudioSoundVolume for final UI gain</td>
+  <td style="text-align:left">0.0-1.0</td>
+  <td style="text-align:left">UI sound limit</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioMusicVolume</code></td>
   <td style="text-align:left">float</td>
-  <td style="text-align:left">~0.5</td>
-  <td style="text-align:left">0.0 - 1.0</td>
-  <td style="text-align:left">Music volume (independent from SFX). 0 = music off</td>
+  <td style="text-align:left">0.0-1.0</td>
+  <td style="text-align:left">Music volume (independent)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioGlobalQuality</code></td>
   <td style="text-align:left">string</td>
   <td style="text-align:left">"normal"</td>
-  <td style="text-align:left">"normal" (others <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>)</td>
-  <td style="text-align:left">Overall audio quality setting. May affect sample rate, source count, or processing quality</td>
+  <td style="text-align:left">Audio quality setting</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioAllowEFX</code></td>
   <td style="text-align:left">bool</td>
-  <td style="text-align:left">true</td>
   <td style="text-align:left">true/false</td>
-  <td style="text-align:left">Enable OpenAL EFX environmental effects (reverb, filters). Disable for lower CPU usage</td>
+  <td style="text-align:left">Enable environmental effects</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioAllowHRTF</code></td>
   <td style="text-align:left">bool</td>
-  <td style="text-align:left">true</td>
   <td style="text-align:left">true/false</td>
-  <td style="text-align:left">Enable Head-Related Transfer Function for binaural 3D audio. Best with headphones</td>
+  <td style="text-align:left">Enable binaural 3D audio</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AudioDisableDoppler</code></td>
   <td style="text-align:left">bool</td>
-  <td style="text-align:left">false</td>
   <td style="text-align:left">true/false</td>
-  <td style="text-align:left">Disable Doppler effect. When false (default), moving sound sources shift in pitch</td>
+  <td style="text-align:left">Disable Doppler pitch shift</td>
 </tr>
 </tbody>
 </table></div>
+<h3 id="volume-hierarchy"><a class="anchor" href="#volume-hierarchy">#</a>Volume Hierarchy</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Final Scene Sound Volume  = AudioSoundVolume * AudioSoundLimit_Scene
+Final UI Sound Volume     = AudioSoundVolume * AudioSoundLimit_Ui
+Final Music Volume        = AudioMusicVolume (independent)
+Final Voice Chat Volume   = VoiceChat_SpeakerVolume (independent)</code></pre></div>
 <h3 id="voice-chat-configuration"><a class="anchor" href="#voice-chat-configuration">#</a>Voice Chat Configuration</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -1512,542 +983,196 @@ VOICE CHAT (separate system, WebRTC):
   <td style="text-align:left"><code>VoiceChat_Device_In</code></td>
   <td style="text-align:left">string</td>
   <td style="text-align:left">"default"</td>
-  <td style="text-align:left">Microphone input device</td>
+  <td style="text-align:left">Microphone</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>VoiceChat_Device_Out</code></td>
   <td style="text-align:left">string</td>
   <td style="text-align:left">"default"</td>
-  <td style="text-align:left">Speaker output device</td>
+  <td style="text-align:left">Speaker</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>VoiceChat_SpeakerVolume</code></td>
   <td style="text-align:left">float</td>
   <td style="text-align:left">1.0</td>
-  <td style="text-align:left">Voice chat speaker volume (0-1)</td>
+  <td style="text-align:left">Voice volume</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>VoiceChat_VoiceDetection_Mode</code></td>
   <td style="text-align:left">string</td>
   <td style="text-align:left">"pushtotalk"</td>
-  <td style="text-align:left">Voice activation mode: "pushtotalk" or <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> VAD mode string]</span></td>
+  <td style="text-align:left">Activation mode</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>VoiceChat_VoiceDetection_Sensitivity</code></td>
   <td style="text-align:left">float</td>
   <td style="text-align:left">1.0</td>
-  <td style="text-align:left">VAD sensitivity (0-1, higher = more sensitive)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>VoiceChat_VoiceDetection_Auto</code></td>
-  <td style="text-align:left">bool</td>
-  <td style="text-align:left">false</td>
-  <td style="text-align:left">Automatic voice detection</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>VoiceChat_VoiceDetection</code></td>
-  <td style="text-align:left">int</td>
-  <td style="text-align:left">1</td>
-  <td style="text-align:left">Voice detection enabled (1) / disabled (0)</td>
+  <td style="text-align:left">VAD sensitivity</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="volume-hierarchy"><a class="anchor" href="#volume-hierarchy">#</a>Volume Hierarchy</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Final Scene Sound Volume  = AudioSoundVolume * AudioSoundLimit_Scene
-Final UI Sound Volume     = AudioSoundVolume * AudioSoundLimit_Ui
-Final Music Volume        = AudioMusicVolume (independent)
-Final Voice Chat Volume   = VoiceChat_SpeakerVolume (independent)
-
-Example from this config:
-  Scene: 0.146386 * 1.0 = 0.146386 (14.6%)
-  UI:    0.146386 * 0.0479181 = 0.00701 (0.7%)
-  Music: 0.0 (muted)
-  Voice: 1.0 (100%)</code></pre></div>
-<h3 id="vivox-configuration-keys-from-voicechatdll-strings"><a class="anchor" href="#vivox-configuration-keys-from-voicechatdll-strings">#</a>Vivox Configuration Keys (from VoiceChat.dll strings)</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Key</th>
-  <th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.server_url</code></td>
-  <td style="text-align:left">Vivox backend server URL (default: <code>https://hyxd.www.vivox.com/api2</code>)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.token_issuer</code></td>
-  <td style="text-align:left">Token authentication issuer</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.access_token_key</code></td>
-  <td style="text-align:left">Access token key for auth</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.domain</code></td>
-  <td style="text-align:left">Vivox domain</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.channel_uri</code></td>
-  <td style="text-align:left">Channel URI for current session</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.account_uri</code></td>
-  <td style="text-align:left">Account URI</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.profile_id</code></td>
-  <td style="text-align:left">User profile ID</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.token</code></td>
-  <td style="text-align:left">Auth token</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.token_type</code></td>
-  <td style="text-align:left">Token type</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.account_name</code></td>
-  <td style="text-align:left">Account name</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.3d</code></td>
-  <td style="text-align:left">Enable 3D positional voice</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.log_level</code></td>
-  <td style="text-align:left">Log verbosity</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.delay_connect</code></td>
-  <td style="text-align:left">Deferred connection</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.logfileName</code></td>
-  <td style="text-align:left">Log file name (<code>VivoxTrackmania</code>)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.default_language.text_chat</code></td>
-  <td style="text-align:left">Default text language</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.default_language.voice_chat</code></td>
-  <td style="text-align:left">Default voice language</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.default_language.text_to_speech</code></td>
-  <td style="text-align:left">TTS language</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.default_language.speech_to_text</code></td>
-  <td style="text-align:left">STT language</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>voicechat.vivox.platform_check_permission</code></td>
-  <td style="text-align:left">Permission checks</td>
-</tr>
-</tbody>
-</table></div>
-<hr>
-<h2 id="appendix-a-openal-soft-extensions-available-in-tm2020"><a class="anchor" href="#appendix-a-openal-soft-extensions-available-in-tm2020">#</a>Appendix A: OpenAL Soft Extensions Available in TM2020</h2>
-<p>The bundled <code>OpenAL64_bundled.dll</code> exposes the following ALC extension string (from <code>strings</code> extraction):</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ALC_ENUMERATE_ALL_EXT
-ALC_ENUMERATION_EXT
-ALC_EXT_CAPTURE
-ALC_EXT_debug
-ALC_EXT_DEDICATED
-ALC_EXT_direct_context
-ALC_EXT_disconnect
-ALC_EXT_EFX
-ALC_EXT_thread_local_context
-ALC_SOFT_device_clock
-ALC_SOFT_HRTF
-ALC_SOFT_loopback
-ALC_SOFT_loopback_bformat
-ALC_SOFT_output_limiter
-ALC_SOFT_output_mode
-ALC_SOFT_pause_device
-ALC_SOFT_reopen_device
-ALC_SOFT_system_events</code></pre></div>
-<p>Key AL extensions:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>AL_EXT_ALAW, AL_EXT_BFORMAT, AL_EXT_DOUBLE, AL_EXT_EXPONENT_DISTANCE,
-AL_EXT_FLOAT32, AL_EXT_IMA4, AL_EXT_LINEAR_DISTANCE, AL_EXT_MCFORMATS,
-AL_EXT_MULAW, AL_EXT_MULAW_BFORMAT, AL_EXT_MULAW_MCFORMATS, AL_EXT_OFFSET,
-AL_EXT_source_distance_model, AL_EXT_SOURCE_RADIUS, AL_EXT_STATIC_BUFFER,
-AL_EXT_STEREO_ANGLES, AL_EXT_debug, AL_EXT_direct_context,
-AL_SOFT_bformat_ex, AL_SOFT_block_alignment, AL_SOFT_buffer_length_query,
-AL_SOFT_buffer_sub_data, AL_SOFT_callback_buffer, AL_SOFT_deferred_updates,
-AL_SOFT_direct_channels, AL_SOFT_direct_channels_remix, AL_SOFT_effect_target,
-AL_SOFT_events, AL_SOFT_gain_clamp_ex, AL_SOFT_loop_points, AL_SOFT_MSADPCM,
-AL_SOFT_source_latency, AL_SOFT_source_length, AL_SOFT_source_resampler,
-AL_SOFT_source_spatialize, AL_SOFT_source_start_delay, AL_SOFT_UHJ,
-AL_SOFT_UHJ_ex, AL_SOFTX_bformat_hoa, AL_SOFTX_convolution_effect,
-AL_SOFTX_hold_on_disconnect, AL_SOFTX_map_buffer, AL_SOFTX_source_panning</code></pre></div>
-<hr>
-<h2 id="appendix-b-audio-format-support"><a class="anchor" href="#appendix-b-audio-format-support">#</a>Appendix B: Audio Format Support</h2>
-<h3 id="confirmed-via-dll-strings"><a class="anchor" href="#confirmed-via-dll-strings">#</a>Confirmed via DLL Strings</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Format</th>
-  <th style="text-align:left">DLL</th>
-  <th style="text-align:left">Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Ogg Vorbis</td>
-  <td style="text-align:left"><code>vorbis64.dll</code></td>
-  <td style="text-align:left"><code>Xiph.Org libVorbis 1.3.5</code> -- full encode/decode</td>
-</tr>
-<tr>
-  <td style="text-align:left">WAV (PCM)</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_MONO8</code>, <code>AL_FORMAT_MONO16</code>, <code>AL_FORMAT_STEREO8</code>, <code>AL_FORMAT_STEREO16</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">WAV (Float32)</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_MONO_FLOAT32</code>, <code>AL_FORMAT_STEREO_FLOAT32</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">IMA ADPCM</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_MONO_IMA4</code>, <code>AL_FORMAT_STEREO_IMA4</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">MS ADPCM</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_MONO_MSADPCM_SOFT</code>, <code>AL_FORMAT_STEREO_MSADPCM_SOFT</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">A-Law</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_MONO_ALAW_EXT</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">mu-Law</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_MONO_MULAW</code>, <code>AL_EXT_MULAW</code></td>
-</tr>
-<tr>
-  <td style="text-align:left">Multi-channel (5.1/6.1/7.1)</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_51CHN16</code>, <code>AL_FORMAT_61CHN16</code>, <code>AL_FORMAT_71CHN16</code> (and float/int/mulaw variants)</td>
-</tr>
-<tr>
-  <td style="text-align:left">B-Format (Ambisonics)</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_BFORMAT2D_<em></code>, <code>AL_FORMAT_BFORMAT3D_</em></code></td>
-</tr>
-<tr>
-  <td style="text-align:left">UHJ Stereo</td>
-  <td style="text-align:left"><code>OpenAL64_bundled.dll</code></td>
-  <td style="text-align:left"><code>AL_FORMAT_UHJ2CHN<em></code>, <code>AL_FORMAT_UHJ3CHN</em></code>, <code>AL_FORMAT_UHJ4CHN*</code></td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="confirmed-via-class-hierarchy"><a class="anchor" href="#confirmed-via-class-hierarchy">#</a>Confirmed via Class Hierarchy</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Handler Class</th>
-  <th style="text-align:left">Format</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>CPlugFileOggVorbis</code></td>
-  <td style="text-align:left">.ogg (Ogg Vorbis)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CPlugFileWav</code></td>
-  <td style="text-align:left">.wav (RIFF WAVE)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CPlugFileSnd</code></td>
-  <td style="text-align:left">.snd (generic sound, <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> internal format]</span>)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CPlugFileSndGen</code></td>
-  <td style="text-align:left">(procedural/generated, no file)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CPlugFileAudioMotors</code></td>
-  <td style="text-align:left">.AudioMotors (motor profile, <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> internal format]</span>)</td>
-</tr>
-</tbody>
-</table></div>
-<hr>
-<h2 id="appendix-c-surface-id-to-audio-mapping"><a class="anchor" href="#appendix-c-surface-id-to-audio-mapping">#</a>Appendix C: Surface ID to Audio Mapping</h2>
-<p>Surface materials affect tire/surface sounds. <code>CPlugSoundSurface</code> + <code>CAudioSourceSurface</code> select the appropriate tire sound based on <code>GroundContactMaterial</code> (ESurfId, uint16) from each wheel's state.</p>
+<h3 id="surface-id-to-audio-mapping"><a class="anchor" href="#surface-id-to-audio-mapping">#</a>Surface ID to Audio Mapping</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Surface ID</th>
-  <th style="text-align:left">Physics Character</th>
   <th style="text-align:left">Expected Audio</th>
 </tr>
 </thead>
 <tbody>
 <tr>
   <td style="text-align:left"><code>Asphalt</code></td>
-  <td style="text-align:left">Road surface, high grip</td>
   <td style="text-align:left">Clean rolling, loud screech on slip</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Concrete</code></td>
-  <td style="text-align:left">Structural surface</td>
   <td style="text-align:left">Similar to asphalt, harder tone</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Dirt</code></td>
-  <td style="text-align:left">Off-road, lower grip</td>
   <td style="text-align:left">Gravel crunch, loose surface spray</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Grass</code></td>
-  <td style="text-align:left">Natural ground, low grip</td>
   <td style="text-align:left">Soft swishing, muted rolling</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>Green</code></td>
-  <td style="text-align:left">Vegetation surface</td>
-  <td style="text-align:left">Similar to grass</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Ice</code></td>
-  <td style="text-align:left">Very low grip</td>
-  <td style="text-align:left">Smooth sliding, minimal friction sound</td>
+  <td style="text-align:left"><code>Ice</code> / <code>RoadIce</code></td>
+  <td style="text-align:left">Smooth sliding, minimal friction</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Metal</code></td>
-  <td style="text-align:left">Metallic surface</td>
   <td style="text-align:left">Metallic ringing/clang</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>MetalTrans</code></td>
-  <td style="text-align:left">Transparent metal</td>
-  <td style="text-align:left">Similar to metal</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Pavement</code></td>
-  <td style="text-align:left">Sidewalk/paved</td>
-  <td style="text-align:left">Between asphalt and concrete</td>
-</tr>
-<tr>
   <td style="text-align:left"><code>Plastic</code></td>
-  <td style="text-align:left">Inflatable/obstacle</td>
   <td style="text-align:left">Soft impact, bouncy</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>ResonantMetal</code></td>
-  <td style="text-align:left">Resonant metallic</td>
-  <td style="text-align:left">Metallic resonance, ringing</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>RoadIce</code></td>
-  <td style="text-align:left">Icy road surface</td>
-  <td style="text-align:left">Mix of road and ice sounds</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>RoadSynthetic</code></td>
-  <td style="text-align:left">Synthetic road</td>
-  <td style="text-align:left">Distinct synthetic surface texture</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Rock</code></td>
-  <td style="text-align:left">Natural rock</td>
-  <td style="text-align:left">Rocky crunch</td>
-</tr>
-<tr>
   <td style="text-align:left"><code>Rubber</code></td>
-  <td style="text-align:left">Bouncy rubber</td>
   <td style="text-align:left">Rubber squeak, bouncy</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Sand</code></td>
-  <td style="text-align:left">Sandy surface</td>
-  <td style="text-align:left">Soft granular sound</td>
+  <td style="text-align:left">Soft granular</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Snow</code></td>
-  <td style="text-align:left">Snow surface</td>
   <td style="text-align:left">Crunchy, muffled</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Wood</code></td>
-  <td style="text-align:left">Wooden surface</td>
   <td style="text-align:left">Wooden clatter</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NotCollidable</code></td>
-  <td style="text-align:left">Pass-through</td>
-  <td style="text-align:left">No sound (no contact)</td>
+  <td style="text-align:left">No sound</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Evidence</strong>: 19 surface types from <code>NadeoImporterMaterialLib.txt</code> analysis in <code>09-game-files-analysis.md</code>. Wheel <code>GroundContactMaterial</code> field from <code>19-openplanet-intelligence.md</code>.</p>
-<hr>
-<h2 id="appendix-d-open-questions-and-unknowns"><a class="anchor" href="#appendix-d-open-questions-and-unknowns">#</a>Appendix D: Open Questions and Unknowns</h2>
+<h3 id="open-questions-1"><a class="anchor" href="#open-questions-1">#</a>Open Questions</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Question</th>
-  <th style="text-align:left">Status</th>
   <th style="text-align:left">What Would Resolve It</th>
 </tr>
 </thead>
 <tbody>
 <tr>
   <td style="text-align:left">Which OpenAL distance model does TM2020 use?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Decompile source setup code (where <code>alDistanceModel</code> or <code>alSourcei(AL_DISTANCE_MODEL)</code> is called)</td>
+  <td style="text-align:left">Decompile source setup code</td>
 </tr>
 <tr>
   <td style="text-align:left">CPlugSoundEngine vs CPlugSoundEngine2 differences?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Decompile both class vtables and compare update methods</td>
+  <td style="text-align:left">Decompile both vtables</td>
 </tr>
 <tr>
-  <td style="text-align:left">CPlugFileAudioMotors format specification?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Extract .AudioMotors files from pack files and analyze binary format</td>
+  <td style="text-align:left">CPlugFileAudioMotors format?</td>
+  <td style="text-align:left">Extract .AudioMotors from packs</td>
 </tr>
 <tr>
   <td style="text-align:left">How many RPM sample layers per engine?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Extract motor audio data from game packs</td>
+  <td style="text-align:left">Extract motor audio data</td>
 </tr>
 <tr>
   <td style="text-align:left">Audio zone blending algorithm?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Decompile CAudioZone update method</td>
+  <td style="text-align:left">Decompile CAudioZone update</td>
 </tr>
 <tr>
-  <td style="text-align:left">Audio zone shape (box/sphere/etc.)?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Decompile CAudioZone geometry</td>
-</tr>
-<tr>
-  <td style="text-align:left">Does TM2020 use audio occlusion/obstruction?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Search for raycast + filter combination in audio update code</td>
-</tr>
-<tr>
-  <td style="text-align:left">Music crossfade/transition logic?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Decompile CAudioSourceMusic state machine</td>
+  <td style="text-align:left">Does TM2020 use audio occlusion?</td>
+  <td style="text-align:left">Search for raycast + filter in audio code</td>
 </tr>
 <tr>
   <td style="text-align:left">Dynamic/adaptive music system?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Analyze CPlugMusicType categorization</td>
-</tr>
-<tr>
-  <td style="text-align:left">AudioGlobalQuality "normal" vs other values?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Search for quality enum in binary strings</td>
-</tr>
-<tr>
-  <td style="text-align:left">Exact CameraWoosh parameters?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Decompile camera audio coupling code</td>
-</tr>
-<tr>
-  <td style="text-align:left">Source priority/virtualization system?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Decompile CAudioManager source management</td>
-</tr>
-<tr>
-  <td style="text-align:left">CPlugFileSndGen procedural generation?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Decompile the SndGen class</td>
-</tr>
-<tr>
-  <td style="text-align:left">Per-vehicle-type sound differences?</td>
-  <td style="text-align:left"><span class="badge badge-unknown">UNKNOWN</span></td>
-  <td style="text-align:left">Compare audio resources for CarSport/CarSnow/CarRally/CarDesert</td>
+  <td style="text-align:left">Analyze CPlugMusicType</td>
 </tr>
 </tbody>
 </table></div>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="game-files.html">09-game-files-analysis.md</a> -- Game file analysis including DLL strings</li>
+  <li><a href="class-hierarchy.html">13-subsystem-class-map.md</a> -- Subsystem class catalog</li>
+  <li><a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> -- Ghidra findings including audio strings</li>
+  <li><a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> -- Vehicle state fields (RPM, speed, etc.)</li>
+  <li><a href="27-dll-intelligence.md">27-dll-intelligence.md</a> -- DLL analysis including OpenAL and Vivox</li>
+  <li><a href="20-browser-recreation-guide.md">20-browser-recreation-guide.md</a> -- Browser recreation architecture</li>
+</ul>
+<details><summary>Analysis metadata</summary>
+<p><strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: Ghidra decompilation, DLL string extraction, class hierarchy analysis, game configuration, Openplanet plugin intelligence <strong>Purpose</strong>: Reverse-engineering analysis of TM2020's audio architecture for Web Audio API recreation</p>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="competitive.html">&larr; Competitive Mechanics</a><a class="next" href="openplanet-mining.html">Openplanet Deep Mining &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="networking.html">&larr; Networking</a><a class="next" href="maniascript.html">ManiaScript Reference &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-architecture-overview">1. Architecture Overview</a></li>
-  <li class="toc-h3"><a href="#q-what-audio-engine-does-tm2020-use">Q: What audio engine does TM2020 use?</a></li>
-  <li class="toc-h3"><a href="#high-level-audio-pipeline">High-Level Audio Pipeline</a></li>
+<li class=""><a href="#how-the-audio-pipeline-works">How the Audio Pipeline Works</a></li>
+  <li class="toc-h3"><a href="#high-level-architecture">High-Level Architecture</a></li>
   <li class="toc-h3"><a href="#audio-file-format-pipeline">Audio File Format Pipeline</a></li>
-<li class=""><a href="#2-openal-integration-details">2. OpenAL Integration Details</a></li>
-  <li class="toc-h3"><a href="#initialization-sequence">Initialization Sequence</a></li>
+<li class=""><a href="#how-openal-is-initialized">How OpenAL Is Initialized</a></li>
   <li class="toc-h3"><a href="#anti-tamper-obfuscation">Anti-Tamper Obfuscation</a></li>
   <li class="toc-h3"><a href="#simultaneous-source-count">Simultaneous Source Count</a></li>
   <li class="toc-h3"><a href="#efx-environmental-effects-support">EFX (Environmental Effects) Support</a></li>
   <li class="toc-h3"><a href="#hrtf-head-related-transfer-function">HRTF (Head-Related Transfer Function)</a></li>
   <li class="toc-h3"><a href="#supported-output-modes">Supported Output Modes</a></li>
-<li class=""><a href="#3-sound-type-catalog">3. Sound Type Catalog</a></li>
-  <li class="toc-h3"><a href="#sound-categories-from-class-hierarchy">Sound Categories (from class hierarchy)</a></li>
+<li class=""><a href="#sound-type-catalog">Sound Type Catalog</a></li>
   <li class="toc-h3"><a href="#audio-events-by-gameplay-context">Audio Events by Gameplay Context</a></li>
-<li class=""><a href="#4-engine-sound-model">4. Engine Sound Model</a></li>
-  <li class="toc-h3"><a href="#q-how-does-the-engine-sound-work">Q: How does the engine sound work?</a></li>
-  <li class="toc-h3"><a href="#evidence-for-sample-based-not-synthesized-engine-sound">Evidence for Sample-Based (Not Synthesized) Engine Sound</a></li>
+<li class=""><a href="#how-engine-sound-works">How Engine Sound Works</a></li>
   <li class="toc-h3"><a href="#rpm-to-pitch-mapping">RPM-to-Pitch Mapping</a></li>
   <li class="toc-h3"><a href="#load-dependent-sound-changes">Load-Dependent Sound Changes</a></li>
-  <li class="toc-h3"><a href="#cplugsoundengine-vs-cplugsoundengine2">CPlugSoundEngine vs CPlugSoundEngine2</a></li>
-<li class=""><a href="#5-spatial-audio-system">5. Spatial Audio System</a></li>
-  <li class="toc-h3"><a href="#q-how-does-3d-spatial-audio-work">Q: How does 3D spatial audio work?</a></li>
+  <li class="toc-h3"><a href="#open-questions">Open Questions</a></li>
+<li class=""><a href="#how-3d-spatial-audio-works">How 3D Spatial Audio Works</a></li>
   <li class="toc-h3"><a href="#listener-position">Listener Position</a></li>
   <li class="toc-h3"><a href="#distance-attenuation-models">Distance Attenuation Models</a></li>
   <li class="toc-h3"><a href="#doppler-effect">Doppler Effect</a></li>
   <li class="toc-h3"><a href="#audio-zones">Audio Zones</a></li>
   <li class="toc-h3"><a href="#occlusionobstruction">Occlusion/Obstruction</a></li>
-<li class=""><a href="#6-music-system">6. Music System</a></li>
-  <li class="toc-h3"><a href="#q-how-does-music-work">Q: How does music work?</a></li>
-  <li class="toc-h3"><a href="#music-architecture">Music Architecture</a></li>
-  <li class="toc-h3"><a href="#music-in-mediatracker">Music in MediaTracker</a></li>
-  <li class="toc-h3"><a href="#dynamic-music">Dynamic Music</a></li>
-  <li class="toc-h3"><a href="#track-transitions-crossfades">Track Transitions / Crossfades</a></li>
-  <li class="toc-h3"><a href="#volume-ducking">Volume Ducking</a></li>
-<li class=""><a href="#7-voice-chat">7. Voice Chat</a></li>
-  <li class="toc-h3"><a href="#q-how-does-voice-chat-work">Q: How does voice chat work?</a></li>
+<li class=""><a href="#how-music-works">How Music Works</a></li>
+<li class=""><a href="#how-voice-chat-works">How Voice Chat Works</a></li>
   <li class="toc-h3"><a href="#vivox-sdk-integration">Vivox SDK Integration</a></li>
-  <li class="toc-h3"><a href="#vivox-sdk-details">Vivox SDK Details</a></li>
   <li class="toc-h3"><a href="#channel-types">Channel Types</a></li>
   <li class="toc-h3"><a href="#3d-positional-voice">3D Positional Voice</a></li>
   <li class="toc-h3"><a href="#push-to-talk-vs-open-mic">Push-to-Talk vs Open Mic</a></li>
-  <li class="toc-h3"><a href="#voice-chat-operations">Voice Chat Operations</a></li>
-  <li class="toc-h3"><a href="#when-is-voice-chat-active">When Is Voice Chat Active?</a></li>
-<li class=""><a href="#8-web-audio-api-mapping">8. Web Audio API Mapping</a></li>
-  <li class="toc-h3"><a href="#q-how-would-i-recreate-this-in-web-audio-api">Q: How would I recreate this in Web Audio API?</a></li>
+<li class=""><a href="#mapping-to-web-audio-api">Mapping to Web Audio API</a></li>
   <li class="toc-h3"><a href="#architecture-mapping">Architecture Mapping</a></li>
   <li class="toc-h3"><a href="#engine-sound-synthesis-node-graph">Engine Sound Synthesis Node Graph</a></li>
-  <li class="toc-h3"><a href="#surface-sound-node-graph">Surface Sound Node Graph</a></li>
   <li class="toc-h3"><a href="#spatial-audio-with-pannernode">Spatial Audio with PannerNode</a></li>
-  <li class="toc-h3"><a href="#windcamera-woosh-sound">Wind/Camera Woosh Sound</a></li>
   <li class="toc-h3"><a href="#manual-doppler-effect-web-audio-workaround">Manual Doppler Effect (Web Audio Workaround)</a></li>
   <li class="toc-h3"><a href="#reverb-via-convolvernode">Reverb via ConvolverNode</a></li>
-  <li class="toc-h3"><a href="#streaming-music-with-mediaelementaudiosourcenode">Streaming Music with MediaElementAudioSourceNode</a></li>
   <li class="toc-h3"><a href="#complete-audio-system-node-graph">Complete Audio System Node Graph</a></li>
-<li class=""><a href="#9-complete-audio-class-catalog">9. Complete Audio Class Catalog</a></li>
-  <li class="toc-h3"><a href="#from-class_hierarchyjson-52-audio-related-classes-total">From class_hierarchy.json (52 audio-related classes total)</a></li>
-<li class=""><a href="#10-audio-configuration-reference">10. Audio Configuration Reference</a></li>
-  <li class="toc-h3"><a href="#from-defaultjson-actual-game-configuration-file">From Default.json (actual game configuration file)</a></li>
-  <li class="toc-h3"><a href="#parameter-details">Parameter Details</a></li>
-  <li class="toc-h3"><a href="#voice-chat-configuration">Voice Chat Configuration</a></li>
+<li class=""><a href="#complete-audio-class-catalog">Complete Audio Class Catalog</a></li>
+  <li class="toc-h3"><a href="#core-audio-classes-19-classes">Core Audio Classes (19 classes)</a></li>
+  <li class="toc-h3"><a href="#sound-resource-classes-12-classes">Sound Resource Classes (12 classes)</a></li>
+  <li class="toc-h3"><a href="#audio-file-handlers-5-classes">Audio File Handlers (5 classes)</a></li>
+  <li class="toc-h3"><a href="#game-integration-classes-7-classes">Game Integration Classes (7 classes)</a></li>
+<li class=""><a href="#audio-configuration-reference">Audio Configuration Reference</a></li>
+  <li class="toc-h3"><a href="#defaultjson-parameters">Default.json Parameters</a></li>
   <li class="toc-h3"><a href="#volume-hierarchy">Volume Hierarchy</a></li>
-  <li class="toc-h3"><a href="#vivox-configuration-keys-from-voicechatdll-strings">Vivox Configuration Keys (from VoiceChat.dll strings)</a></li>
-<li class=""><a href="#appendix-a-openal-soft-extensions-available-in-tm2020">Appendix A: OpenAL Soft Extensions Available in TM2020</a></li>
-<li class=""><a href="#appendix-b-audio-format-support">Appendix B: Audio Format Support</a></li>
-  <li class="toc-h3"><a href="#confirmed-via-dll-strings">Confirmed via DLL Strings</a></li>
-  <li class="toc-h3"><a href="#confirmed-via-class-hierarchy">Confirmed via Class Hierarchy</a></li>
-<li class=""><a href="#appendix-c-surface-id-to-audio-mapping">Appendix C: Surface ID to Audio Mapping</a></li>
-<li class=""><a href="#appendix-d-open-questions-and-unknowns">Appendix D: Open Questions and Unknowns</a></li>
+  <li class="toc-h3"><a href="#voice-chat-configuration">Voice Chat Configuration</a></li>
+  <li class="toc-h3"><a href="#surface-id-to-audio-mapping">Surface ID to Audio Mapping</a></li>
+  <li class="toc-h3"><a href="#open-questions-1">Open Questions</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

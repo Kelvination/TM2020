@@ -1,44 +1,16 @@
 # Trackmania 2020 Architecture Deep Dive
 
-**Binary**: `Trackmania.exe` (Trackmania 2020 by Nadeo/Ubisoft)
-**Date**: 2026-03-27
-**Sources**: Decompiled architecture functions via Ghidra (34,959-byte `CGameCtnApp::UpdateGame` + 22 supporting functions)
-**Purpose**: Exhaustive documentation for browser engine recreation
+This document maps the full game architecture of Trackmania 2020 from decompiled code. It covers the state machine, initialization sequence, fiber system, ManiaScript engine, frame loop, memory management, and networking -- all extracted from `CGameCtnApp::UpdateGame` (34,959 bytes) and 22 supporting functions.
 
 ---
 
-## Table of Contents
+## How the game state machine works
 
-1. [Complete Game State Machine](#1-complete-game-state-machine)
-2. [Network State Machine](#2-network-state-machine)
-3. [Initialization Sequence](#3-initialization-sequence)
-4. [Fiber/Coroutine System](#4-fibercoroutine-system)
-5. [ManiaScript Engine](#5-maniascript-engine)
-6. [Frame Loop Execution Order](#6-frame-loop-execution-order)
-7. [Memory Management](#7-memory-management)
-8. [Thread Model](#8-thread-model)
-9. [Error Handling](#9-error-handling)
-10. [Browser Recreation Implications](#10-browser-recreation-implications)
-11. [Life of a Session (Launch to Quit)](#11-life-of-a-session-launch-to-quit)
-12. [Life of a Map Session (Click 'Play' to Driving)](#12-life-of-a-map-session-click-play-to-driving)
-13. [Life of a Frame](#13-life-of-a-frame)
-14. [Complete State Machine Diagram](#14-complete-state-machine-diagram)
-15. [ManiaScript Execution Model](#15-maniascript-execution-model)
-16. [Network State Machine During Gameplay](#16-network-state-machine-during-gameplay)
-17. [Memory Model](#17-memory-model)
-18. [Command-Line Arguments](#18-command-line-arguments)
-19. [Browser Architecture Mapping](#19-browser-architecture-mapping)
-20. [Open Questions and Unknowns](#20-open-questions-and-unknowns)
+### Architecture overview
 
----
-
-## 1. Complete Game State Machine
-
-### 1.1 Architecture Overview
-
-The game's central state machine lives in `CGameCtnApp::UpdateGame` at address `0x140b78f10` (34,959 bytes / ~35KB of decompiled C). The function is called every frame with two parameters:
+The game's central state machine lives in `CGameCtnApp::UpdateGame` at address `0x140b78f10` (34,959 bytes / ~35KB of decompiled C). The engine calls this function every frame with two parameters:
 - `param_1` (longlong*): the `CGameCtnApp` instance (`this` pointer)
-- `param_2` (ulonglong*): a coroutine/fiber context pointer
+- `param_2` (ulonglong*): a coroutine/fiber context pointer (a heap-allocated object that stores the current state ID and sub-fiber pointers)
 
 **Evidence**: The function begins with profiling instrumentation:
 ```c
@@ -60,7 +32,7 @@ The context object is allocated as 0x380 bytes:
 lVar15 = thunk_FUN_1408de480(0x380);  // line 453
 ```
 
-### 1.2 Coroutine-Based State Machine Pattern
+### How the coroutine-based state machine yields and resumes
 
 Every state follows the same pattern for yielding and resuming. The pattern uses a sub-coroutine pointer at `*param_2 + 0x10`:
 
@@ -81,7 +53,7 @@ if (*(longlong *)(*param_2 + 0x10) != -1) {
 
 When `*param_2 + 0x10` == -1, the sub-coroutine has finished. When it is non-zero/non-negative-one, it is still running. State value -1 (0xFFFFFFFF) means "terminated."
 
-### 1.3 Complete State Map
+### Complete state map
 
 The following states were extracted from the massive switch statement in `CGameCtnApp::UpdateGame`. State IDs are hexadecimal values stored at `context + 0x08`.
 
@@ -289,7 +261,7 @@ These states handle the result of menu interactions. The menu result value is st
 | `0xFFFFFFFF` | **Shutdown** - Calls `FUN_140aefef0(param_1, 1, 0)`, `FUN_140dd2e40`, `FUN_140dd2e90`. Cleans up editor context. Calls virtual `(*param_1 + 0x550)` and `(*param_1 + 0x548)`. | Line 644-660 |
 | `0x403` (default) | **Invalid State** - Destroys context and sets `*param_2 = -1`. This is the error/reset handler. | Line 1628-1634 |
 
-### 1.4 State Diagram (Mermaid)
+### State diagram
 
 ```mermaid
 stateDiagram-v2
@@ -345,7 +317,7 @@ stateDiagram-v2
     Shutdown_0xFFFF --> [*]
 ```
 
-### 1.5 Game Phase Values
+### Game phase values
 
 The function `FUN_140b54b90` is called with a "phase" integer that represents the high-level game phase. Observed values:
 
@@ -379,9 +351,9 @@ The function `FUN_140b54b90` is called with a "phase" integer that represents th
 
 ---
 
-## 2. Network State Machine
+## How the network state machine operates
 
-### 2.1 CGameCtnNetwork::MainLoop_Menus (0x140af9a40)
+### CGameCtnNetwork::MainLoop_Menus (0x140af9a40)
 
 Size: 1383 bytes. Profiling tag: `"CGameCtnNetwork::MainLoop_Menus"`
 
@@ -405,7 +377,7 @@ The menu network loop can output three signals to the parent:
 2. `*param_3 = 1` - Server selected (address in `*param_4`, name in `param_6`)
 3. `*param_3 = 2` - Exit menus (back to main)
 
-### 2.2 CGameCtnNetwork::MainLoop_SetUp (0x140afc320)
+### CGameCtnNetwork::MainLoop_SetUp (0x140afc320)
 
 Size: 812 bytes. Profiling tag: `"CGameCtnNetwork::MainLoop_Prepare"`
 
@@ -423,7 +395,7 @@ Sub-states:
 
 After all states complete, cleanup: `FUN_140bc1a90`, `FUN_140bc5a00`, `FUN_140bc29b0`, `FUN_140af9900`.
 
-### 2.3 CGameCtnNetwork::MainLoop_PlaygroundPlay (0x140aff380)
+### CGameCtnNetwork::MainLoop_PlaygroundPlay (0x140aff380)
 
 Size: 172 bytes. Profiling tag: `"CGameCtnNetwork::MainLoop_PlaygroundPlay"`
 
@@ -434,7 +406,7 @@ This is a surprisingly thin function. It:
 
 This suggests the actual gameplay network loop runs inside the arena client's main loop, not at this level. The PlaygroundPlay network function is essentially a pass-through.
 
-### 2.4 Network State Diagram
+### Network state diagram
 
 ```mermaid
 stateDiagram-v2
@@ -460,9 +432,11 @@ stateDiagram-v2
 
 ---
 
-## 3. Initialization Sequence
+## How the initialization sequence boots the engine
 
-### 3.1 Complete Boot Chain
+The game boots through 10 phases from CRT startup to the game state machine. Each phase initializes a layer of the engine.
+
+### Complete boot chain
 
 ```
 1. entry (0x14291e317)
@@ -553,7 +527,7 @@ stateDiagram-v2
     - Logs "Game Starting" tag
 ```
 
-### 3.2 Subsystem Slot Map (DAT_141f9f018)
+### Subsystem slot map (DAT_141f9f018)
 
 The engine uses a slot-based subsystem manager stored at a global pointer. Each subsystem is registered with a slot ID:
 
@@ -577,9 +551,11 @@ The engine uses a slot-based subsystem manager stored at a global pointer. Each 
 
 ---
 
-## 4. Fiber/Coroutine System
+## How the fiber/coroutine system works
 
-### 4.1 CMwCmdFiber::StaticInit (0x14002e300)
+The engine uses stackless coroutines (heap-allocated state objects, not OS fibers) to implement cooperative multitasking. Each "state" in the state machine is a fiber yield point.
+
+### CMwCmdFiber::StaticInit (0x14002e300)
 
 Size: 68 bytes. This is the static initializer for the fiber system:
 
@@ -597,7 +573,7 @@ void FUN_14002e300(void) {
 - Object size: `0x58` (88 bytes per fiber object)
 - Registers an `atexit` cleanup handler at `LAB_141960430`
 
-### 4.2 Fiber Usage Pattern
+### Fiber usage pattern
 
 Throughout the codebase, the fiber system is used via the coroutine pattern visible in UpdateGame. Each "state" in the state machine is actually a fiber yield point:
 
@@ -634,7 +610,7 @@ if ((plVar20 != (longlong *)0xffffffffffffffff) && (plVar20 != (longlong *)0x0))
 *param_2 = -1;  // mark as terminated
 ```
 
-### 4.3 Fiber Stack Allocation
+### Fiber stack allocation
 
 The fibers in this engine do NOT appear to use separate OS fiber stacks. Instead, they use the "stackless coroutine" pattern:
 - Each fiber stores its state as an integer
@@ -651,18 +627,20 @@ The Menus network context is 0x48 bytes (line 38 of MainLoop_Menus):
 puVar3 = (undefined8 *)thunk_FUN_1408de480(0x48);
 ```
 
-### 4.4 Browser Recreation Implications
+### Browser recreation implications
 
-For a browser engine, this coroutine system maps naturally to:
+For a browser engine, this coroutine system maps to:
 - **JavaScript `async/await`**: Each state transition is an `await` point
 - **JavaScript generators**: Each `yield` returns the state ID
-- The "fiber context" is just a closure/object capturing local state
+- The "fiber context" is a closure/object capturing local state
 
 ---
 
-## 5. ManiaScript Engine
+## How the ManiaScript engine executes scripts
 
-### 5.1 CScriptEngine::Run (0x140874270)
+ManiaScript is the embedded scripting language that drives game rules, UI, and editor logic. `CScriptEngine::Run` is the entry point for all script execution.
+
+### CScriptEngine::Run (0x140874270)
 
 Size: 316 bytes. Profiling tag: `"CScriptEngine::Run"` or `"CScriptEngine::Run(%s)"` (with script name).
 
@@ -700,7 +678,7 @@ void FUN_140874270(longlong param_1, longlong param_2, undefined4 param_3) {
 }
 ```
 
-### 5.2 Script Engine Architecture
+### Script engine architecture
 
 **Key offsets in the script engine** (`param_1` = CScriptEngine):
 - `+0x20`: Debug mode flag (int)
@@ -727,7 +705,7 @@ void FUN_140874270(longlong param_1, longlong param_2, undefined4 param_3) {
 - `+0xF4`: Filename length
 - `+0xF8`: Cached profiling tag
 
-### 5.3 Script Execution Flow
+### Script execution flow
 
 1. Store script context in engine's "current" slot
 2. Copy debug mode from engine to context
@@ -738,7 +716,7 @@ void FUN_140874270(longlong param_1, longlong param_2, undefined4 param_3) {
 7. Clear current context
 8. If execution returned -1, mark error state (code 2 at error context + 400)
 
-### 5.4 Error Handling
+### Script error handling
 
 If the script interpreter (`FUN_1408d1ea0`) returns -1:
 ```c
@@ -751,9 +729,11 @@ This sets an error code of 2 at offset 400 (0x190) of the error context object s
 
 ---
 
-## 6. Frame Loop Execution Order
+## How the frame loop executes each tick
 
-### 6.1 Per-Frame Flow
+Each frame runs the full game tick inside `CGameCtnApp::UpdateGame`, followed by rendering via engine callbacks.
+
+### Per-frame flow
 
 Based on the profiling tags and function call patterns across all decompiled files, the per-frame execution order is:
 
@@ -805,7 +785,7 @@ Based on the profiling tags and function call patterns across all decompiled fil
    - Calculate frame duration
 ```
 
-### 6.2 Update Sub-Phase Tags
+### Update sub-phase tags
 
 The following profiling tags are used within the frame:
 
@@ -833,9 +813,11 @@ The following profiling tags are used within the frame:
 
 ---
 
-## 7. Memory Management
+## How memory management works
 
-### 7.1 Custom Allocator
+The engine uses a custom allocator, reference counting for object lifetimes, and Small String Optimization (SSO) for strings.
+
+### Custom allocator
 
 The engine uses a custom memory allocator accessed through `thunk_FUN_1408de480`:
 
@@ -849,7 +831,7 @@ if (lVar != 0) {
 
 This function is called hundreds of times across the codebase with various sizes.
 
-### 7.2 Reference Counting
+### Reference counting
 
 Objects use reference counting for lifecycle management. The pattern is consistent across all decompiled files:
 
@@ -881,7 +863,7 @@ The reference count is stored at **offset +0x10** (16 bytes from object start), 
 
 This matches the known `CMwNod` base class layout.
 
-### 7.3 String Management (SSO)
+### String management (SSO)
 
 Strings use Small String Optimization (SSO). The pattern for checking SSO:
 
@@ -896,7 +878,7 @@ length = *(int *)(obj + 0xc);    // string length
 
 String objects are 16 bytes: 8 bytes for pointer/inline buffer, 1 byte SSO flag at +0xb, 4 bytes length at +0xc.
 
-### 7.4 String Cleanup
+### String cleanup
 
 String deallocation:
 ```c
@@ -905,7 +887,7 @@ if (local_4d != '\0') {       // SSO flag
 }
 ```
 
-### 7.5 Profiling Buffer
+### Profiling buffer
 
 The profiling system allocates a 128KB buffer:
 ```c
@@ -915,9 +897,11 @@ FUN_14011d700(&DAT_141fbd4e8, uVar3, 0x20000);
 
 ---
 
-## 8. Thread Model
+## How the thread model uses TLS and locks
 
-### 8.1 Thread-Local Storage
+The engine uses Thread-Local Storage extensively and runs rendering callbacks, async updates, and script execution across multiple threads.
+
+### Thread-local storage
 
 The engine makes extensive use of Thread-Local Storage (TLS). The pattern appears in nearly every function:
 
@@ -939,7 +923,7 @@ if (*(char *)(lVar15 + 0x10) == '\0') {
 | `+0x150` | [UNKNOWN] thread-local data | Used in profile lookups |
 | `+0x1B8` | Profiling context | Used by profile_tag_begin |
 
-### 8.2 Console/Logging System
+### Console/logging system
 
 The console output system is TLS-based:
 
@@ -961,7 +945,7 @@ The console callback is at `DAT_141f9cfe0` and is called with severity levels:
 - Level 2: Info
 - Level 4: Debug/Verbose
 
-### 8.3 Headless/Dedicated Server Mode
+### Headless/dedicated server mode
 
 Two global flags control the execution mode:
 - `DAT_141fbbee8`: Headless mode (no rendering)
@@ -976,7 +960,7 @@ if ((DAT_141fbbee8 == 0) && (DAT_141fbbf0c == 0)) {
 }
 ```
 
-### 8.4 Lock Primitives
+### Lock primitives
 
 The profiling system uses LOCK/UNLOCK instructions:
 ```c
@@ -989,9 +973,11 @@ This maps to x86 `lock` prefix instructions for atomic operations.
 
 ---
 
-## 9. Error Handling
+## How error handling and recovery work
 
-### 9.1 Assertion System
+The engine uses assertions, error strings, a default error handler for invalid states, and an orderly shutdown sequence.
+
+### Assertion system
 
 The profiling system has special handling for assertions:
 ```c
@@ -1003,7 +989,7 @@ if (*(int *)(lVar4 + 0x3c) != 0) {
 
 This shows that the engine has an `"AssertDialog"` special case that bypasses normal profiling when an assertion fires.
 
-### 9.2 Error Strings
+### Error strings
 
 Key error messages found in the decompiled code:
 
@@ -1019,7 +1005,7 @@ Key error messages found in the decompiled code:
 | `"This score is not valid:\n%1\nNickname, score or map name are incorrect."` | Score validation | UpdateGame.c line 3324 |
 | `"%1 is not part of the official campaign."` | Non-campaign map | UpdateGame.c line 3758 |
 
-### 9.3 Recovery Mechanisms
+### Recovery mechanisms
 
 The state machine has a default error handler at `switchD_140b79353_caseD_403`:
 ```c
@@ -1032,7 +1018,7 @@ if ((plVar20 != -1) && (plVar20 != NULL)) {
 
 This ensures that any unrecognized state cleanly destroys the fiber and terminates the state machine, preventing infinite loops.
 
-### 9.4 Shutdown Sequence
+### Shutdown sequence
 
 `CGameApp::QuitGameAndExit` (0x140b4d140) performs orderly shutdown:
 
@@ -1048,9 +1034,9 @@ This ensures that any unrecognized state cleanly destroys the fiber and terminat
 
 ---
 
-## 10. Browser Recreation Implications
+## How to map this architecture to a browser
 
-### 10.1 State Machine -> async/await
+### State machine maps to async/await
 
 The entire game state machine can be reimplemented using JavaScript's async/await:
 
@@ -1078,11 +1064,11 @@ async function updateGame(app, ctx) {
 }
 ```
 
-### 10.2 Reference Counting -> JavaScript GC
+### Reference counting maps to JavaScript GC
 
-The engine's reference counting maps directly to JavaScript's garbage collection. No manual ref counting needed -- just let the JS GC handle object lifetimes. However, the explicit release patterns indicate where resources should be cleaned up (WebGL textures, audio buffers, etc.).
+The engine's reference counting maps directly to JavaScript's garbage collection. No manual ref counting is needed -- let the JS GC handle object lifetimes. The explicit release patterns indicate where you should clean up resources (WebGL textures, audio buffers, etc.).
 
-### 10.3 TLS -> Module-Scoped State
+### TLS maps to module-scoped state
 
 Thread-local storage maps to module-scoped variables in a single-threaded browser environment:
 
@@ -1095,7 +1081,7 @@ const threadLocal = {
 };
 ```
 
-### 10.4 Fiber System -> Promise/Generator
+### Fiber system maps to Promise/Generator
 
 The stackless coroutine pattern maps perfectly to JavaScript generators:
 
@@ -1116,7 +1102,7 @@ function* networkMainLoopMenus(network) {
 }
 ```
 
-### 10.5 Critical Subsystems for Recreation
+### Critical subsystems for recreation
 
 Based on the initialization sequence and state machine analysis, a browser recreation needs these core systems (in priority order):
 
@@ -1131,17 +1117,17 @@ Based on the initialization sequence and state machine analysis, a browser recre
 9. **Physics** - Car physics simulation (see separate physics docs)
 10. **Profiling** - Performance monitoring via browser Performance API
 
-### 10.6 Headless Mode as Server
+### Headless mode as server
 
 The `DAT_141fbbee8` (headless) and `DAT_141fbbf0c` (dedicated) flags suggest the same binary runs both client and server. For a browser recreation, the server component could run in Node.js using the same state machine code with rendering disabled -- exactly mirroring the original architecture.
 
 ---
 
-## 11. Life of a Session (Launch to Quit)
+## What happens from launch to quit
 
-This section traces the exact sequence of events from double-clicking Trackmania.exe to exiting the game, answering: "What happens when I launch Trackmania?"
+This section traces the exact sequence of events from double-clicking Trackmania.exe to exiting the game.
 
-### 11.1 Complete Boot Sequence
+### Complete boot sequence
 
 ```
 Phase 0: CRT Bootstrap (< 1ms)
@@ -1304,7 +1290,7 @@ Phase 7: Game State Machine Begins (per-frame from here)
       -> Log "[Game] main menu."
 ```
 
-### 11.2 What Can Go Wrong
+### What can go wrong
 
 | Failure Point | Error Message | Recovery |
 |--------------|---------------|----------|
@@ -1317,7 +1303,7 @@ Phase 7: Game State Machine Begins (per-frame from here)
 | Memory exhaustion | `"!! Out of memory error !!"` | Retry dialog with Cancel option (game becomes unstable) |
 | Fiber exhaustion | `"Resource exhaust in fiber enter !!\n"` | [UNKNOWN - likely crashes] |
 
-### 11.3 Estimated Phase Timing
+### Estimated phase timing
 
 Based on profiling tag structure and the frame budget values (20ms outer, 10ms inner):
 
@@ -1335,11 +1321,11 @@ Based on profiling tag structure and the frame budget values (20ms outer, 10ms i
 
 ---
 
-## 12. Life of a Map Session (Click 'Play' to Driving)
+## What happens from clicking Play to driving
 
-This section traces what happens when a player selects a map and clicks Play.
+This section traces what happens when you select a map and click Play.
 
-### 12.1 Menu Result Dispatch
+### Menu result dispatch
 
 When the player makes a selection in the main menu, the menu system returns a result code stored at `*param_2 + 0x174`. The game logs `"[Game] exec MenuResult: "` followed by the numeric result, then dispatches:
 
@@ -1359,7 +1345,7 @@ Key result codes for playing a map:
 | 0x0D | Local play | -> 0xD2D | 0x0A |
 | 0x07 | Open map browser | -> 0xBD9 | 0x10 |
 
-### 12.2 Map Loading Sequence
+### Map loading sequence
 
 ```
 State 0xBF6 / 0xBD9: Load Map
@@ -1399,7 +1385,7 @@ State 0xD45: Gameplay Active
      -> Return to main menu (LAB_140b7cdcc)
 ```
 
-### 12.3 Physics Initialization
+### Physics initialization
 
 Physics setup happens inside `FUN_140c0dcc0` (arena setup) and `FUN_140dd2c70` (gameplay dispatch). The sequence:
 
@@ -1409,7 +1395,7 @@ Physics setup happens inside `FUN_140c0dcc0` (arena setup) and `FUN_140dd2c70` (
 4. `FUN_140c4e3d0` links the arena to the camera system
 5. Camera type is set at `editor_context + 0x70 = 3` (follow car camera)
 
-### 12.4 Camera Setup
+### Camera setup
 
 The camera is configured through:
 ```c
@@ -1419,17 +1405,17 @@ FUN_140c4e3d0(arena_data, camera_sub);                     // Bind to arena
 *(editor_ctx + 0x70) = 3;                                  // Camera mode: follow car
 ```
 
-### 12.5 Countdown and Race Start
+### Countdown and race start
 
 The countdown is managed by `FUN_140b76aa0` (play readiness check). This function returns 0 while the countdown is active, keeping the state machine in state 0xD45 (or 0xC22 for the alternate path). Once the countdown completes and the race starts, `FUN_140b76aa0` returns non-zero, but the state machine stays in 0xD45 for the duration of gameplay, polling each frame.
 
 ---
 
-## 13. Life of a Frame
+## What happens during one frame of gameplay
 
-This section answers: "What happens during exactly one frame of gameplay?"
+This section traces one complete frame of gameplay from profiling start to render present.
 
-### 13.1 Frame Begin
+### Frame begin
 
 Every frame starts in `FUN_140117840` (startup_frame_begin.c):
 
@@ -1457,7 +1443,7 @@ DAT_141fbf778 = now;
 FUN_140117690(lVar1 + 0x40, "Total");
 ```
 
-### 13.2 Main Update Tick
+### Main update tick
 
 The entire game tick runs inside `CGameCtnApp::UpdateGame`:
 
@@ -1542,7 +1528,7 @@ Frame Execution Order (during gameplay, state 0xD45):
    FUN_1401176a0("CGameCtnApp::UpdateGame")
 ```
 
-### 13.3 Frame Budget
+### Frame budget
 
 The profiling system defines two budgets:
 - **Outer budget**: `DAT_141fbf78c = 20000` microseconds (20ms = 50 FPS minimum)
@@ -1550,7 +1536,7 @@ The profiling system defines two budgets:
 
 The profiling system tracks nesting depth via `*(lVar4 + 0x2C)` (incremented in `profile_tag_begin`) and can have up to 75 active timing slots (0x4B, set in `startup_init_profiling`).
 
-### 13.4 What Gets Skipped Under Load
+### What gets skipped under load
 
 Based on the headless/dedicated server checks throughout the code:
 
@@ -1569,9 +1555,9 @@ Additionally, the `"!! InRender => Run delayed to fiber\n"` message shows that o
 
 ---
 
-## 14. Complete State Machine Diagram
+## Complete state machine diagram
 
-### 14.1 State Groups
+### State groups
 
 The 60+ states in `CGameCtnApp::UpdateGame` organize into clear groups:
 
@@ -1689,7 +1675,7 @@ stateDiagram-v2
     Shutdown --> S_FFFF
 ```
 
-### 14.2 State Transition Triggers
+### State transition triggers
 
 | From State | To State | Trigger | Evidence |
 |-----------|----------|---------|----------|
@@ -1709,7 +1695,7 @@ stateDiagram-v2
 | Any | 0x10C2 | Quit selected (result 0x01) | `goto LAB_140b8185e` |
 | 0x10C2 | 0xFFFFFFFF | `FUN_140b54b90(param_1, 5)` | line 1757 |
 
-### 14.3 Error/Recovery States
+### Error/recovery states
 
 | State | Purpose | Recovery |
 |-------|---------|----------|
@@ -1723,9 +1709,9 @@ stateDiagram-v2
 
 ---
 
-## 15. ManiaScript Execution Model
+## How ManiaScript executes within the frame
 
-### 15.1 When Does Script Run?
+### When script runs
 
 ManiaScript runs at specific points within the frame, always on the main thread:
 
@@ -1735,7 +1721,7 @@ ManiaScript runs at specific points within the frame, always on the main thread:
 
 3. **Relative to physics**: Script runs AFTER the physics step within the arena client's main loop. The arena client (`CSmArenaClient::MainLoop_*`) processes physics first, then dispatches script events.
 
-### 15.2 Script Execution Flow (CScriptEngine::Run)
+### Script execution flow (CScriptEngine::Run)
 
 ```
 FUN_140874270(engine, context, mode):
@@ -1770,7 +1756,7 @@ FUN_140874270(engine, context, mode):
   14. End profiling
 ```
 
-### 15.3 SLEEP / YIELD / WAIT
+### SLEEP / YIELD / WAIT
 
 These ManiaScript keywords (identified as lexer tokens at `0x141c023a8`, `0x141c024c8`, `0x141c024b0`) map to the fiber/coroutine yield mechanism:
 
@@ -1779,15 +1765,15 @@ These ManiaScript keywords (identified as lexer tokens at `0x141c023a8`, `0x141c
 - **WAIT(condition)**: Evaluates the condition expression each frame. If false, the script yields. If true, execution continues.
 - **MEANWHILE**: Creates a parallel execution branch within the script, using the same fiber mechanism but with additional context for tracking multiple execution points.
 
-### 15.4 Script-to-Engine Function Calls
+### Script-to-engine function calls
 
 ManiaScript calls engine functions through a binding layer. The `_guard_check_icall` function appears at critical dispatch points (e.g., line 971 of UpdateGame where it processes online data fetch results). This is the MSVC Control Flow Guard mechanism, used to validate function pointer targets before indirect calls -- including script-to-engine bindings.
 
 ---
 
-## 16. Network State Machine During Gameplay
+## How the network state machine runs during gameplay
 
-### 16.1 CGameCtnNetwork MainLoop Architecture
+### CGameCtnNetwork MainLoop architecture
 
 The network subsystem has its own state machine that runs in parallel with the game state machine. It is structured as three major phases:
 
@@ -1842,7 +1828,7 @@ stateDiagram-v2
     MainLoop_PlaygroundPlay --> MainLoop_Menus : Exit game
 ```
 
-### 16.2 How Multiplayer Changes the Frame Loop
+### How multiplayer changes the frame loop
 
 In multiplayer, the game state machine uses state 0xFE8 (Multiplayer Active) which dispatches to sub-states. Key differences from solo play:
 
@@ -1858,11 +1844,11 @@ In multiplayer, the game state machine uses state 0xFE8 (Multiplayer Active) whi
 
 The session context is initialized at state 0xFE8 with fields at `+0x31C`, `+0x320`, `+0x328-0x358` tracking connection state, player list, and round information.
 
-### 16.3 Input Synchronization
+### Input synchronization
 
 [UNKNOWN] The exact input synchronization mechanism has not been identified in the decompiled code. However, the `CSmArenaClient::UpdateAsync` function running on a worker thread suggests that input collection may happen asynchronously, with the main thread consuming buffered inputs during the physics step.
 
-### 16.4 What Gets Replicated
+### What gets replicated
 
 Based on the network state machine structure:
 - **Map data**: Loaded during `MainLoop_SetUp` state 0x125F via `FUN_140bd1180`
@@ -1873,9 +1859,11 @@ Based on the network state machine structure:
 
 ---
 
-## 17. Memory Model
+## How the memory model manages object lifetimes
 
-### 17.1 CMwNod Reference Counting
+All engine objects inherit from CMwNod (the universal base class for all GBX engine objects). CMwNod provides reference counting and serialization.
+
+### CMwNod reference counting
 
 All engine objects inherit from `CMwNod` with this base layout:
 
@@ -1921,7 +1909,7 @@ if (new_obj != old_obj) {
 
 This is a classic COM-style reference counting pattern with strong ownership semantics.
 
-### 17.2 Object Creation/Destruction Lifecycle
+### Object creation/destruction lifecycle
 
 Objects are created via the custom allocator `thunk_FUN_1408de480(size)`:
 ```c
@@ -1934,7 +1922,7 @@ param_1[0x79] = (longlong)puVar;     // store
 
 Destruction happens when refcount reaches zero through `FUN_1402cfae0()`, which chains to the virtual destructor.
 
-### 17.3 Allocator Hierarchy
+### Allocator hierarchy
 
 | Allocator | Purpose | Evidence |
 |-----------|---------|----------|
@@ -1945,7 +1933,7 @@ Destruction happens when refcount reaches zero through `FUN_1402cfae0()`, which 
 | `CFastLinearAllocator` | Linear/bump allocator | Overflow: `"CFastLinearAllocator::Alloc overflow: %d + (%d+%d) > %d"` |
 | Frame allocator | Per-frame temporaries | `"FrameAllocator Decommit unused: "` at `0x141c32908` |
 
-### 17.4 SSO String Optimization
+### SSO string optimization
 
 Strings use a 16-byte structure with Small String Optimization:
 
@@ -1975,9 +1963,9 @@ if (*(char*)(str + 0x0B) != '\0') {
 
 ---
 
-## 18. Command-Line Arguments
+## What command-line arguments are available
 
-### 18.1 Documented Arguments
+### Documented arguments
 
 | Argument | Purpose | Evidence |
 |----------|---------|----------|
@@ -1990,7 +1978,7 @@ if (*(char*)(str + 0x0B) != '\0') {
 | `/optimizeskin` | Optimize skin resources | Checked in CGbxApp::Init1 |
 | `/strippack` | Strip resource packs | Checked in CGbxApp::Init1 |
 
-### 18.2 Debug/Development Flags
+### Debug/development flags
 
 | Flag | Address | Purpose | Evidence |
 |------|---------|---------|----------|
@@ -1999,7 +1987,7 @@ if (*(char*)(str + 0x0B) != '\0') {
 | Luna Mode | `DAT_141f9cff4` | Accessibility mode (triggered by UUID check) | Logs `"[Sys] Luna Mode enabled."` |
 | Force quit | `param_1+0x7BC` | Force exit from gameplay | Checked in states 0xD45, 0xC22, main menu |
 
-### 18.3 Smoke Test Flow
+### Smoke test flow
 
 When `/smoketest` is detected:
 1. State 0x4E3 sets `*(context + 100) = 1`
@@ -2012,9 +2000,9 @@ This allows CI systems to verify the game launches successfully without human in
 
 ---
 
-## 19. Browser Architecture Mapping
+## How the native architecture maps to browser APIs
 
-### 19.1 requestAnimationFrame Mapping
+### requestAnimationFrame mapping
 
 The native frame loop is driven by the engine's render callback system. In a browser:
 
@@ -2042,7 +2030,7 @@ function gameLoop(timestamp) {
 requestAnimationFrame(gameLoop);
 ```
 
-### 19.2 Web Workers Mapping
+### Web Workers mapping
 
 The native `UpdateAsync` functions map to Web Workers:
 
@@ -2062,7 +2050,7 @@ physicsWorker.onmessage = (e) => {
 };
 ```
 
-### 19.3 State Machine in JavaScript
+### State machine in JavaScript
 
 The coroutine-based state machine maps to async generators:
 
@@ -2106,7 +2094,7 @@ async function* playMap(app) {
 }
 ```
 
-### 19.4 Asset Loading with Fetch/Streams
+### Asset loading with Fetch/Streams
 
 The native GBX file loading (states 0xCD1/0xCD2) maps to fetch with streaming:
 
@@ -2130,7 +2118,7 @@ async function* loadChallenge(app) {
 }
 ```
 
-### 19.5 Frame Budget in Browser
+### Frame budget in browser
 
 The native 20ms/10ms budget maps to the browser's ~16.67ms frame budget (60 FPS):
 
@@ -2153,7 +2141,7 @@ function updateGame(app, ctx) {
 
 ---
 
-## 20. Open Questions and Unknowns
+## Open questions and unknowns
 
 1. **[UNKNOWN]** The entry point at `0x14291e317` uses obfuscated code. The unpacking/code protection mechanism has not been analyzed.
 2. **[UNKNOWN]** The exact mechanism that bridges from WinMain (`FUN_140aa7470`) to `CGbxApp::Init1` / `CGbxApp::Init2`. The function ends with `halt_baddata()` in Ghidra after `FUN_142279568(0,2)`, suggesting indirect control flow or code protection.
@@ -2167,3 +2155,23 @@ function updateGame(app, ctx) {
 10. **[UNKNOWN]** The bytecode interpreter `FUN_1408d1ea0` -- how ManiaScript bytecode is structured, what opcodes exist, and how the SLEEP/YIELD/WAIT mechanisms are implemented at the bytecode level.
 11. **[UNKNOWN]** Input synchronization in multiplayer -- how client inputs are buffered, timestamped, and reconciled with the server's authoritative state.
 12. **[UNKNOWN]** The exact mapping between `CSmArenaClient::MainLoop_*` states and the physics/rendering pipeline within a single frame.
+
+## Related Pages
+
+- [08-game-architecture.md](08-game-architecture.md) -- High-level game architecture overview
+- [10-physics-deep-dive.md](10-physics-deep-dive.md) -- Physics engine deep dive
+- [13-subsystem-class-map.md](13-subsystem-class-map.md) -- Complete class map for all 2,027 engine classes
+- [20-browser-recreation-guide.md](20-browser-recreation-guide.md) -- Browser recreation guide
+- [31-maniascript-reference.md](31-maniascript-reference.md) -- ManiaScript language reference
+- [07-networking.md](07-networking.md) -- Networking overview
+- [17-networking-deep-dive.md](17-networking-deep-dive.md) -- Network deep dive
+
+<details>
+<summary>Analysis metadata</summary>
+
+**Binary**: `Trackmania.exe` (Trackmania 2020 by Nadeo/Ubisoft)
+**Date**: 2026-03-27
+**Sources**: Decompiled architecture functions via Ghidra (34,959-byte `CGameCtnApp::UpdateGame` + 22 supporting functions)
+**Purpose**: Exhaustive documentation for browser engine recreation
+
+</details>

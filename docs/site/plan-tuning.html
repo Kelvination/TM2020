@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -112,12 +120,9 @@
                 <div class="content-body">
                     <div class="content-main">
                         
-                        <h1 id="tm2020-tuning-data-extraction-plan"><a class="anchor" href="#tm2020-tuning-data-extraction-plan">#</a>TM2020 Tuning Data Extraction Plan</h1>
-<p><strong>Date</strong>: 2026-03-27 <strong>Status</strong>: CRITICAL PATH -- Physics engine cannot function without tuning constants <strong>Predecessor</strong>: <code>07-physics-constants.md</code> (confirmed all tuning is data-driven)</p>
-<hr>
-<h2 id="executive-summary"><a class="anchor" href="#executive-summary">#</a>Executive Summary</h2>
-<p>TM2020's physics constants (gravity, friction curves, engine curves, suspension parameters, gear ratios) are NOT hardcoded in <code>Trackmania.exe</code>. They are loaded at runtime from GBX resource files embedded within encrypted <code>.pak</code> archives. This document identifies exactly where these files live, how to extract them, what parameters they contain, and fallback strategies.</p>
-<p><strong>The key class chain is:</strong></p>
+                        <h1 id="tuning-data-extraction-plan"><a class="anchor" href="#tuning-data-extraction-plan">#</a>Tuning Data Extraction Plan</h1>
+<p>TM2020's physics constants (gravity, friction curves, engine curves, suspension parameters, gear ratios) are NOT hardcoded in <code>Trackmania.exe</code>. They load at runtime from GBX resource files inside encrypted <code>.pak</code> archives. The physics engine cannot function without these values.</p>
+<p>The key class chain is:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameItemModel (StadiumCar.ObjectInfo.Gbx)
   -&gt; CPlugVehiclePhyModelCustom (VehiclePhyModelCustom.Gbx)
     -&gt; CPlugVehicleCarPhyTuning (the 106-chunk tuning blob, class ID 0x090ED)
@@ -126,9 +131,9 @@
   -&gt; CPlugSpawnModel (Spawn.Gbx -- contains DefaultGravitySpawn)
   -&gt; CPlugDynaObjectModel (DynaObject.Gbx -- collision/dynamics model)</code></pre></div>
 <hr>
-<h2 id="1-where-tuning-files-live"><a class="anchor" href="#1-where-tuning-files-live">#</a>1. Where Tuning Files Live</h2>
-<h3 id="11-primary-location-inside-pack-files"><a class="anchor" href="#11-primary-location-inside-pack-files">#</a>1.1 Primary Location: Inside Pack Files</h3>
-<p>The tuning data lives inside encrypted <code>.pak</code> archives in the game's <code>Packs/</code> directory. Based on NadeoImporter string analysis, the vehicle data follows this path hierarchy:</p>
+<h2 id="where-tuning-files-live"><a class="anchor" href="#where-tuning-files-live">#</a>Where Tuning Files Live</h2>
+<h3 id="inside-pack-files"><a class="anchor" href="#inside-pack-files">#</a>Inside Pack Files</h3>
+<p>The tuning data resides inside encrypted <code>.pak</code> archives in the game's <code>Packs/</code> directory:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Packs/
   Maniaplanet_ModelsSport.pak     (129 MB -- contains CarSport vehicle data)
     Vehicles/Cars/CarSport/       (confirmed via strings)
@@ -143,65 +148,27 @@
 <ul>
   <li><code>\Trackmania\Items\Vehicles\StadiumCar.ObjectInfo.Gbx</code></li>
   <li><code>\Trackmania\Items\Vehicles\BayCar.ObjectInfo.Gbx</code></li>
-  <li><code>\Trackmania\Items\Vehicles\CoastCar.ObjectInfo.Gbx</code></li>
-  <li><code>\Trackmania\Items\Vehicles\DesertCar.ObjectInfo.Gbx</code></li>
-  <li><code>\Trackmania\Items\Vehicles\RallyCar.ObjectInfo.Gbx</code></li>
-  <li><code>\Trackmania\Items\Vehicles\SnowCar.ObjectInfo.Gbx</code></li>
-  <li>(plus Bay, Canyon, Island, Lagoon, Valley from older environments)</li>
+  <li><code>\Trackmania\Items\Vehicles\CoastCar.ObjectInfo.Gbx</code> (plus Desert, Rally, Snow, and older environments)</li>
 </ul>
-<p>And these component GBX files:</p>
-<ul>
-  <li><code>VehiclePhyModelCustom.Gbx</code> -- the physics model with tuning data</li>
-  <li><code>VehicleVisModel.Gbx</code> -- visual model</li>
-  <li><code>VehicleStyles.gbx</code> -- skin/style data</li>
-  <li><code>VehicleCameraRace2Model.gbx</code> / <code>VehicleCameraRace3Model.gbx</code> -- camera</li>
-  <li><code>DynaObject.Gbx</code> -- dynamic object model</li>
-  <li><code>GameObjectPhyModel.Gbx</code> -- game object physics</li>
-</ul>
-<h3 id="12-pak-file-encryption"><a class="anchor" href="#12-pak-file-encryption">#</a>1.2 PAK File Encryption</h3>
-<p>PAK files use <strong>Blowfish cipher in CBC mode</strong> with a 16-byte key:</p>
-<ul>
-  <li>Keys are derived from server-provided "sub-keys" stored in profile chunks</li>
-  <li>Key derivation: <code>md5("[sub-key]" + "NadeoPak")</code></li>
-  <li>Files within PAKs may be zlib-compressed (check <code>FileDesc.flags & 0x7C</code>)</li>
-  <li>A non-standard CBC modification XORs the IV every 256 bytes</li>
-</ul>
-<h3 id="13-secondary-locations-not-confirmed-to-contain-tuning"><a class="anchor" href="#13-secondary-locations-not-confirmed-to-contain-tuning">#</a>1.3 Secondary Locations (Not Confirmed to Contain Tuning)</h3>
-<ul>
-  <li><strong>User data</strong>: <code>/Users/kelvinnewton/Library/Application Support/CrossOver/Bottles/Steam/drive_c/users/crossover/Documents/Trackmania/Items/zzz_ImportedItems/Vehicles/Vehicles/</code> -- only contains custom items (e.g., <code>Bus.Item.Gbx</code>)</li>
-  <li><strong>Openplanet cache</strong>: No extracted GBX files found in the Openplanet directory</li>
-  <li><strong>No standalone tuning files</strong>: Unlike TMNF which had <code>StadiumCar.VehicleTunings.Gbx</code> as a discrete file, TM2020 restructured vehicle data into the <code>VehiclePhyModelCustom.Gbx</code> container</li>
-</ul>
+<p>Component GBX files include VehiclePhyModelCustom.Gbx, VehicleVisModel.Gbx, VehicleStyles.gbx, VehicleCameraRace2Model.gbx / VehicleCameraRace3Model.gbx, DynaObject.Gbx, and GameObjectPhyModel.Gbx.</p>
+<h3 id="pak-file-encryption"><a class="anchor" href="#pak-file-encryption">#</a>PAK File Encryption</h3>
+<p>PAK files use Blowfish cipher in CBC mode with a 16-byte key. Key derivation: <code>md5("[sub-key]" + "NadeoPak")</code>. Files within PAKs may be zlib-compressed. A non-standard CBC modification XORs the IV every 256 bytes.</p>
 <hr>
-<h2 id="2-how-to-extract-tuning-data"><a class="anchor" href="#2-how-to-extract-tuning-data">#</a>2. How to Extract Tuning Data</h2>
-<h3 id="21-method-a-openplanet-fid-loader-recommended-runtime-extraction"><a class="anchor" href="#21-method-a-openplanet-fid-loader-recommended-runtime-extraction">#</a>2.1 Method A: Openplanet Fid Loader (RECOMMENDED -- Runtime Extraction)</h3>
-<p>The <strong>Fid Loader</strong> Openplanet plugin (by AurisTFG) can extract files from the running game by file path. This bypasses PAK encryption entirely because the game has already decrypted the files in memory.</p>
-<p><strong>Steps:</strong></p>
+<h2 id="extraction-methods"><a class="anchor" href="#extraction-methods">#</a>Extraction Methods</h2>
+<h3 id="method-a-openplanet-fid-loader-recommended-runtime-extraction"><a class="anchor" href="#method-a-openplanet-fid-loader-recommended-runtime-extraction">#</a>Method A: Openplanet Fid Loader (RECOMMENDED -- Runtime Extraction)</h3>
+<p>The Fid Loader Openplanet plugin (by AurisTFG) extracts files from the running game by file path. This bypasses PAK encryption because the game has already decrypted the files in memory.</p>
 <ol>
-  <li>Install Fid Loader from Openplanet: https://openplanet.dev/plugin/fidloader</li>
+  <li>Install Fid Loader from https://openplanet.dev/plugin/fidloader</li>
   <li>Launch TM2020 with Openplanet</li>
-  <li>Open Openplanet overlay (F3)</li>
-  <li>Use Fid Loader to request these paths:</li>
-  <li><code>Trackmania\Items\Vehicles\StadiumCar.ObjectInfo.Gbx</code></li>
-  <li><code>Vehicles\Cars\CarSport\VehiclePhyModelCustom.Gbx</code></li>
-  <li><code>Vehicles\Cars\CarSport\DynaObject.Gbx</code></li>
-  <li><code>Vehicles\Cars\CarSport\GameObjectPhyModel.Gbx</code></li>
+  <li>Use Fid Loader to request paths like <code>Vehicles\Cars\CarSport\VehiclePhyModelCustom.Gbx</code></li>
   <li>Extract to filesystem</li>
-  <li>Parse with GBX.NET (see Method C)</li>
+  <li>Parse with GBX.NET</li>
 </ol>
-<p><strong>Alternative</strong>: Use Openplanet's built-in Pack Explorer (System -> Packs) to browse and extract files. Note that many filenames in packs are hashed; the Pack Explorer resolves names using <code>FileHashes.txt</code> cache plus community hash lists available at https://openplanet.dev/file/21.</p>
-<h3 id="22-method-b-tmpaktool-offline-extraction"><a class="anchor" href="#22-method-b-tmpaktool-offline-extraction">#</a>2.2 Method B: TMPakTool (Offline Extraction)</h3>
-<p>TMPakTool is an open-source C# tool that can open and edit <code>.pak</code> files.</p>
-<p><strong>Challenges:</strong></p>
-<ul>
-  <li>Requires the correct Blowfish decryption key for TM2020 packs</li>
-  <li>TM2020 uses newer PAK format versions that may need key derivation from profile data</li>
-  <li>May not support the newest PAK version used by TM2020</li>
-</ul>
-<p><strong>Repository</strong>: Available as open-source with C# library</p>
-<h3 id="23-method-c-gbxnet-parsing-after-extraction"><a class="anchor" href="#23-method-c-gbxnet-parsing-after-extraction">#</a>2.3 Method C: GBX.NET Parsing (After Extraction)</h3>
-<p>Once the GBX files are extracted, use <strong>GBX.NET</strong> (https://github.com/BigBang1112/gbx-net) to parse them.</p>
-<p><strong>GBX.NET support status for relevant classes:</strong></p>
+<p>Alternative: Use Openplanet's Pack Explorer (System -> Packs) to browse and extract files. Filenames in packs are hashed; the Pack Explorer resolves names using <code>FileHashes.txt</code> cache plus community hash lists at https://openplanet.dev/file/21.</p>
+<h3 id="method-b-tmpaktool-offline-extraction"><a class="anchor" href="#method-b-tmpaktool-offline-extraction">#</a>Method B: TMPakTool (Offline Extraction)</h3>
+<p>TMPakTool is an open-source C# tool for opening <code>.pak</code> files. It requires the correct Blowfish decryption key for TM2020 packs and may not support the newest PAK version.</p>
+<h3 id="method-c-gbxnet-parsing-after-extraction"><a class="anchor" href="#method-c-gbxnet-parsing-after-extraction">#</a>Method C: GBX.NET Parsing (After Extraction)</h3>
+<p>Once extracted, GBX.NET (https://github.com/BigBang1112/gbx-net) parses the files.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -232,113 +199,58 @@
   <td style="text-align:left">Partial</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>CPlugVehiclePhyModel</code></td>
-  <td style="text-align:left">varies</td>
-  <td style="text-align:left">Partial</td>
-</tr>
-<tr>
   <td style="text-align:left"><code>CPlugVehicleWheelPhyModel</code></td>
   <td style="text-align:left"><code class="addr">0x0912E000</code></td>
   <td style="text-align:left">Partial (IsDriving, IsSteering, WheelId)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CPlugVehicleCarPhyShape</code></td>
-  <td style="text-align:left">varies</td>
-  <td style="text-align:left">Unknown</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CGameSpawnModel</code></td>
   <td style="text-align:left">varies</td>
   <td style="text-align:left">Read/Write</td>
 </tr>
-<tr>
-  <td style="text-align:left"><code>CSceneVehicleCar</code></td>
-  <td style="text-align:left">varies</td>
-  <td style="text-align:left">Read/Write (TMUF only)</td>
-</tr>
 </tbody>
 </table></div>
-<p><strong>IMPORTANT</strong>: GBX.NET's <code>VehicleTunings.Gbx</code> support ends at TM2 (TrackMania 2). TM2020 files may use newer chunk versions that GBX.NET does not fully parse. However, the chunk format is backward-compatible (class ID remapping from <code>0x0A029</code> to <code>0x090ED</code> is confirmed), so partial parsing should work.</p>
+<p>GBX.NET's <code>VehicleTunings.Gbx</code> support ends at TM2. TM2020 files may use newer chunk versions. The chunk format is backward-compatible (class ID remapping from <code>0x0A029</code> to <code>0x090ED</code> is confirmed).</p>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="24-method-d-openplanet-memory-dump-runtime-sniffing"><a class="anchor" href="#24-method-d-openplanet-memory-dump-runtime-sniffing">#</a>2.4 Method D: Openplanet Memory Dump (Runtime Sniffing)</h3></summary>
+<summary><h3 id="method-d-openplanet-memory-dump-runtime-sniffing"><a class="anchor" href="#method-d-openplanet-memory-dump-runtime-sniffing">#</a>Method D: Openplanet Memory Dump (Runtime Sniffing)</h3></summary>
 <div class="collapsible-content">
-<p>Write a custom Openplanet plugin that reads tuning values directly from game memory at runtime using <code>Dev::GetOffsetFloat()</code>. The VehicleState plugin already demonstrates this technique for visual state data.</p>
-<p><strong>Key offsets from binary analysis</strong> (relative to physics model pointer at <code>car_state+0x88</code>):</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Parameter</th>
-  <th style="text-align:left">Model Offset</th>
-  <th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">MaxSpeed</td>
-  <td style="text-align:left">+0x2F0</td>
-  <td style="text-align:left">Speed cap (m/s)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Engine force</td>
-  <td style="text-align:left">+0x308</td>
-  <td style="text-align:left">Absolute engine force value</td>
-</tr>
-<tr>
-  <td style="text-align:left">Engine accel curve</td>
-  <td style="text-align:left">+0xAB8</td>
-  <td style="text-align:left">CFuncKeysReal curve</td>
-</tr>
-<tr>
-  <td style="text-align:left">Grip multiplier</td>
-  <td style="text-align:left">+0x18D0</td>
-  <td style="text-align:left">Main tire grip force</td>
-</tr>
-<tr>
-  <td style="text-align:left">Lateral grip curve</td>
-  <td style="text-align:left">+0x1AC0</td>
-  <td style="text-align:left">Slip angle to lateral force</td>
-</tr>
-<tr>
-  <td style="text-align:left">Brake linear coef</td>
-  <td style="text-align:left">+0x1798</td>
-  <td style="text-align:left">Brake force coefficient</td>
-</tr>
-<tr>
-  <td style="text-align:left">Turbo duration</td>
-  <td style="text-align:left">+0x16E0</td>
-  <td style="text-align:left">Boost effect duration</td>
-</tr>
-<tr>
-  <td style="text-align:left">Turbo force</td>
-  <td style="text-align:left">+0x16E4</td>
-  <td style="text-align:left">Boost force multiplier</td>
-</tr>
-<tr>
-  <td style="text-align:left">Force model type</td>
-  <td style="text-align:left">+0x1790</td>
-  <td style="text-align:left">ESteerModel enum value</td>
-</tr>
-<tr>
-  <td style="text-align:left">Steer reduction start</td>
-  <td style="text-align:left">+0x19E4</td>
-  <td style="text-align:left">Speed for steer reduction</td>
-</tr>
-<tr>
-  <td style="text-align:left">Spring icing threshold</td>
-  <td style="text-align:left">+0xCD8</td>
-  <td style="text-align:left">Speed threshold for grip loss</td>
-</tr>
-</tbody>
-</table></div>
-<p>This method extracts exact runtime values but requires the game to be running with a loaded vehicle.</p>
+<p>Write a custom Openplanet plugin that reads tuning values from game memory using <code>Dev::GetOffsetFloat()</code>.</p>
+<p>Key offsets to dump (relative to physics model pointer at <code>car_state+0x88</code>):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>model+0x2F0   MaxSpeed
+model+0x308   EngineForce
+model+0x1790  SteerModel (int)
+model+0x1798  BrakeLinearCoef
+model+0x179C  BrakeSpeedSlope
+model+0x17A0  MaxBrakeForceSliding
+model+0x17A4  MaxBrakeForceGrounded
+model+0x18D0  GripMultiplier
+model+0x192C  FrictionSmoothBlend
+model+0x19D0  EngineTorqueY
+model+0x19E4  SteerReductionStart
+model+0x19E8  SteerReductionEnd
+model+0x19EC  AccelReductionStart
+model+0x19F0  AccelReductionEnd
+model+0x19F4  SlideFrictionBlend
+model+0x1A5C  LateralForceLinearCoef
+model+0x1A60  LateralForceQuadCoef
+model+0xAB0   EngineBrakeForce
+model+0xAB4   EngineReverseForce
+model+0xCD4   FrictionBlendThreshold
+model+0xCD8   SpeedThresholdGrip
+model+0xCDC   GripRecoveryRate
+model+0xCE0   GripDecayGrounded
+model+0xCE4   GripDecayRate2
+model+0xCE8   GripDecayAirborne
+model+0x16E0  TurboStartDuration
+model+0x16E4  TurboForceValue</code></pre></div>
+<p>Also dump the gravity vector from the spawn model (CPlugSpawnModel+0x54).</p>
 </div>
 </details>
-<h3 id="25-method-e-gbx-explorer-web-tool"><a class="anchor" href="#25-method-e-gbx-explorer-web-tool">#</a>2.5 Method E: GBX Explorer Web Tool</h3>
-<p>The online GBX Explorer at https://explorer.gbx.tools/ can analyze extracted GBX files in the browser. Upload extracted files to view their structure, chunk contents, and field values.</p>
+<h3 id="method-e-gbx-explorer-web-tool"><a class="anchor" href="#method-e-gbx-explorer-web-tool">#</a>Method E: GBX Explorer Web Tool</h3>
+<p>The online GBX Explorer at https://explorer.gbx.tools/ analyzes extracted GBX files in the browser. Upload extracted files to view structure, chunk contents, and field values.</p>
 <hr>
-<h2 id="3-what-parameters-exist"><a class="anchor" href="#3-what-parameters-exist">#</a>3. What Parameters Exist</h2>
-<h3 id="31-cplugvehiclecarphytuning-106-chunks-150-parameters"><a class="anchor" href="#31-cplugvehiclecarphytuning-106-chunks-150-parameters">#</a>3.1 CPlugVehicleCarPhyTuning (106 Chunks, ~150+ Parameters)</h3>
-<p>This is the core tuning class. From GBX.NET's <code>.chunkl</code> definition and TMNF cross-reference, the chunks map to these parameter categories:</p>
+<h2 id="parameter-catalog"><a class="anchor" href="#parameter-catalog">#</a>Parameter Catalog</h2>
+<h3 id="cplugvehiclecarphytuning-106-chunks-150-parameters"><a class="anchor" href="#cplugvehiclecarphytuning-106-chunks-150-parameters">#</a>CPlugVehicleCarPhyTuning (106 Chunks, ~150+ Parameters)</h3>
 <h4 id="core-physics-chunks-0x000-0x00b"><a class="anchor" href="#core-physics-chunks-0x000-0x00b">#</a>Core Physics (Chunks 0x000-0x00B)</h4>
 <div class="table-wrapper"><table>
 <thead>
@@ -398,56 +310,6 @@
 </tr>
 </tbody>
 </table></div>
-<h4 id="steering-braking-chunks-0x007-0x010"><a class="anchor" href="#steering-braking-chunks-0x007-0x010">#</a>Steering & Braking (Chunks 0x007-0x010)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Chunk</th>
-  <th style="text-align:left">Parameters</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">0x010</td>
-  <td style="text-align:left">ESteerModel (enum: Steer01-Steer06)</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="friction-suspension-chunks-0x011-0x028"><a class="anchor" href="#friction-suspension-chunks-0x011-0x028">#</a>Friction & Suspension (Chunks 0x011-0x028)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Chunk</th>
-  <th style="text-align:left">Parameters</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">0x011-0x014</td>
-  <td style="text-align:left">TireMaterial references</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x015-0x018</td>
-  <td style="text-align:left">GroundFriction coefficients</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x019-0x01C</td>
-  <td style="text-align:left">Lateral adherence curves</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x01D-0x020</td>
-  <td style="text-align:left">Rollover parameters</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x021-0x024</td>
-  <td style="text-align:left">Suspension spring/damper (Ki, Ka, Rest)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x025-0x028</td>
-  <td style="text-align:left">Shock absorber parameters</td>
-</tr>
-</tbody>
-</table></div>
 <h4 id="suspension-springdamper-model"><a class="anchor" href="#suspension-springdamper-model">#</a>Suspension (Spring/Damper Model)</h4>
 <div class="table-wrapper"><table>
 <thead>
@@ -473,112 +335,9 @@
   <td style="text-align:left">0.2</td>
   <td style="text-align:left">Spring.Length</td>
 </tr>
-<tr>
-  <td style="text-align:left">ShockModel</td>
-  <td style="text-align:left">Demo03 (=2)</td>
-  <td style="text-align:left">[Likely same model]</td>
-</tr>
 </tbody>
 </table></div>
-<h4 id="audio-chunks-0x012-0x032"><a class="anchor" href="#audio-chunks-0x012-0x032">#</a>Audio (Chunks 0x012-0x032)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Chunk</th>
-  <th style="text-align:left">Parameters</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">0x012-0x016</td>
-  <td style="text-align:left">Engine volume, RPM curves</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x017-0x01C</td>
-  <td style="text-align:left">Skid sound thresholds</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x01D-0x022</td>
-  <td style="text-align:left">Impact thresholds</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="m6steer06-model-chunks-0x030-0x05d"><a class="anchor" href="#m6steer06-model-chunks-0x030-0x05d">#</a>M6/Steer06 Model (Chunks 0x030-0x05D)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Chunk</th>
-  <th style="text-align:left">Parameters</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">0x030-0x038</td>
-  <td style="text-align:left">Burnout mechanics, slip angles</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x039-0x042</td>
-  <td style="text-align:left">Air control coefficients</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x043-0x048</td>
-  <td style="text-align:left">Water physics (gravity, rebound, friction)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x049-0x056</td>
-  <td style="text-align:left">Engine RPM curves, gear simulation</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x057-0x05D</td>
-  <td style="text-align:left">Gear ratios, brake modulation, RPM management</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="camera-visual-chunks-0x05e-0x088"><a class="anchor" href="#camera-visual-chunks-0x05e-0x088">#</a>Camera & Visual (Chunks 0x05E-0x088)</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Chunk</th>
-  <th style="text-align:left">Parameters</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">0x05E-0x068</td>
-  <td style="text-align:left">Air control coefficients</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x069-0x088</td>
-  <td style="text-align:left">Visual steering angle representation</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="32-cplugvehiclephymodelcustom"><a class="anchor" href="#32-cplugvehiclephymodelcustom">#</a>3.2 CPlugVehiclePhyModelCustom</h3>
-<p>From GBX.NET source (class ID <code class="addr">0x0911E000</code>, chunk <code>0x000</code>):</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>version   -- format version
-AccelCoef -- float, acceleration multiplier (default 1.0)
-ControlCoef -- float, control/steering multiplier (default 1.0)
-GravityCoef -- float, gravity multiplier (default 1.0)</code></pre></div>
-<p>These are the runtime modifier coefficients exposed via ManiaScript <code>SetPlayer_Delayed_*</code> functions.</p>
-<h3 id="33-cplugvehiclegearbox"><a class="anchor" href="#33-cplugvehiclegearbox">#</a>3.3 CPlugVehicleGearBox</h3>
-<p>From GBX.NET source (class ID <code class="addr">0x09094000</code>, chunk <code>0x001</code>):</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>version
-float[]   -- gear ratio array
-bool      -- [unknown flag]
-int       -- [unknown, likely gear count]
-int       -- [unknown]
-float     -- [unknown, likely idle RPM]
-float     -- [unknown, likely max RPM]
-float     -- [unknown]
-float     -- [unknown]
-float     -- [unknown]
-float     -- [unknown]
-v1+: float? -- [optional field added in v1]
-v2+: float? -- [optional field added in v2]</code></pre></div>
-<h3 id="34-cplugspawnmodel-gravity-source"><a class="anchor" href="#34-cplugspawnmodel-gravity-source">#</a>3.4 CPlugSpawnModel (Gravity Source)</h3>
-<p>Contains <code>DefaultGravitySpawn</code> at offset +0x54 -- this is the Vec3 gravity vector loaded at map start. The base gravity constant (likely 9.81 m/s^2 or similar) is stored here, NOT in the executable.</p>
-<h3 id="35-speed-dependent-curves-cfunckeysreal"><a class="anchor" href="#35-speed-dependent-curves-cfunckeysreal">#</a>3.5 Speed-Dependent Curves (CFuncKeysReal)</h3>
-<p>All speed-dependent parameters use piecewise linear curves with keyframes in km/h:</p>
+<h4 id="speed-dependent-curves-cfunckeysreal"><a class="anchor" href="#speed-dependent-curves-cfunckeysreal">#</a>Speed-Dependent Curves (CFuncKeysReal)</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -616,14 +375,13 @@ v2+: float? -- [optional field added in v2]</code></pre></div>
 </tbody>
 </table></div>
 <hr>
-<h2 id="4-knowninferred-values"><a class="anchor" href="#4-knowninferred-values">#</a>4. Known/Inferred Values</h2>
-<h3 id="41-confirmed-from-tmnf-likely-similar-in-tm2020-stadium"><a class="anchor" href="#41-confirmed-from-tmnf-likely-similar-in-tm2020-stadium">#</a>4.1 Confirmed from TMNF (Likely Similar in TM2020 Stadium)</h3>
+<h2 id="known-and-inferred-values"><a class="anchor" href="#known-and-inferred-values">#</a>Known and Inferred Values</h2>
+<h3 id="confirmed-from-tmnf-likely-similar-in-tm2020-stadium"><a class="anchor" href="#confirmed-from-tmnf-likely-similar-in-tm2020-stadium">#</a>Confirmed from TMNF (Likely Similar in TM2020 Stadium)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Parameter</th>
   <th style="text-align:left">TMNF Value</th>
-  <th style="text-align:left">TM2020 Status</th>
   <th style="text-align:left">Confidence</th>
 </tr>
 </thead>
@@ -631,132 +389,37 @@ v2+: float? -- [optional field added in v2]</code></pre></div>
 <tr>
   <td style="text-align:left">Base gravity</td>
   <td style="text-align:left">9.81 m/s^2 (stored in GBX)</td>
-  <td style="text-align:left">Same engine, likely same</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
 </tr>
 <tr>
   <td style="text-align:left">GravityCoef (ground)</td>
   <td style="text-align:left">3.0</td>
-  <td style="text-align:left">Unknown, likely similar</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">GravityCoef (air)</td>
-  <td style="text-align:left">2.5</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
 </tr>
 <tr>
   <td style="text-align:left">Effective gravity (ground)</td>
   <td style="text-align:left">~29.43 m/s^2</td>
-  <td style="text-align:left">~29.4 m/s^2 (from doc 10)</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">Mass</td>
-  <td style="text-align:left">1.0 (normalized)</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
 </tr>
 <tr>
   <td style="text-align:left">MaxSpeed</td>
   <td style="text-align:left">277.778 m/s (1000 km/h)</td>
-  <td style="text-align:left">Community consensus ~1000 km/h</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">SideFriction1</td>
-  <td style="text-align:left">40.0</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">BrakeBase</td>
-  <td style="text-align:left">1.0</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">Spring stiffness (Ki)</td>
-  <td style="text-align:left">40.0</td>
-  <td style="text-align:left">Reparameterized as FreqHz</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">Damping (Ka)</td>
-  <td style="text-align:left">1.0</td>
-  <td style="text-align:left">Reparameterized as DampingRatio</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">Spring rest length</td>
-  <td style="text-align:left">0.2</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">MaxSideFrictionBlendCoef</td>
-  <td style="text-align:left">0.018</td>
-  <td style="text-align:left">Unknown (iterative solver now)</td>
-  <td style="text-align:left">UNCERTAIN</td>
 </tr>
 <tr>
   <td style="text-align:left">ESteerModel</td>
   <td style="text-align:left">Steer06 (M6)</td>
-  <td style="text-align:left">Likely case 5</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">TurboBoost</td>
-  <td style="text-align:left">5.0</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">TurboDuration</td>
-  <td style="text-align:left">250 ms</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">Turbo2Boost</td>
-  <td style="text-align:left">20.0</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">Turbo2Duration</td>
-  <td style="text-align:left">100 ms</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">WaterGravity</td>
-  <td style="text-align:left">1.0</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">WaterReboundMinHSpeed</td>
-  <td style="text-align:left">55.556 m/s (200 km/h)</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
-  <td style="text-align:left">WaterAngularFriction</td>
-  <td style="text-align:left">0.1</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">UNCERTAIN</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="42-confirmed-from-tm2020-binary-analysis"><a class="anchor" href="#42-confirmed-from-tm2020-binary-analysis">#</a>4.2 Confirmed from TM2020 Binary Analysis</h3>
+<h3 id="confirmed-from-tm2020-binary-analysis"><a class="anchor" href="#confirmed-from-tm2020-binary-analysis">#</a>Confirmed from TM2020 Binary Analysis</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Parameter</th>
   <th style="text-align:left">Source</th>
-  <th style="text-align:left">Value/Nature</th>
+  <th style="text-align:left">Value</th>
 </tr>
 </thead>
 <tbody>
@@ -781,35 +444,19 @@ v2+: float? -- [optional field added in v2]</code></pre></div>
   <td style="text-align:left">0.01 m/s</td>
 </tr>
 <tr>
-  <td style="text-align:left">Max ground detection</td>
-  <td style="text-align:left">.rdata <code class="addr">0x141d1f81c</code></td>
-  <td style="text-align:left">15.0 units</td>
-</tr>
-<tr>
   <td style="text-align:left">Brake/reverse threshold</td>
   <td style="text-align:left">.rdata <code class="addr">0x141d1f624</code></td>
   <td style="text-align:left">2.0 m/s</td>
 </tr>
-<tr>
-  <td style="text-align:left">Sliding detection threshold</td>
-  <td style="text-align:left">.rdata <code class="addr">0x141d1ef7c</code></td>
-  <td style="text-align:left">0.1 m/s</td>
-</tr>
-<tr>
-  <td style="text-align:left">All tuning coefficients</td>
-  <td style="text-align:left">Default</td>
-  <td style="text-align:left">1.0 (CoefFriction, CoefAcceleration, etc.)</td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="43-confirmed-differences-from-tmnf"><a class="anchor" href="#43-confirmed-differences-from-tmnf">#</a>4.3 Confirmed Differences from TMNF</h3>
+<h3 id="confirmed-differences-from-tmnf"><a class="anchor" href="#confirmed-differences-from-tmnf">#</a>Confirmed Differences from TMNF</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Aspect</th>
   <th style="text-align:left">TMNF</th>
   <th style="text-align:left">TM2020</th>
-  <th style="text-align:left">Source</th>
 </tr>
 </thead>
 <tbody>
@@ -817,123 +464,52 @@ v2+: float? -- [optional field added in v2]</code></pre></div>
   <td style="text-align:left">Turbo force direction</td>
   <td style="text-align:left">Decays from max to 0</td>
   <td style="text-align:left">Ramps UP from 0 to max</td>
-  <td style="text-align:left">Decompiled code verified</td>
 </tr>
 <tr>
   <td style="text-align:left">Max sub-steps</td>
   <td style="text-align:left">10,000</td>
   <td style="text-align:left">1,000</td>
-  <td style="text-align:left">Binary analysis verified</td>
 </tr>
 <tr>
   <td style="text-align:left">Suspension parameterization</td>
   <td style="text-align:left">Ki/Ka/Rest (game-specific)</td>
   <td style="text-align:left">FreqHz/DampingRatio/Length (engineering)</td>
-  <td style="text-align:left">String evidence</td>
 </tr>
 <tr>
   <td style="text-align:left">Friction solver</td>
   <td style="text-align:left">Per-wheel analytical</td>
   <td style="text-align:left">Iterative Gauss-Seidel-style</td>
-  <td style="text-align:left">Iteration count fields</td>
 </tr>
 <tr>
   <td style="text-align:left">Force model count</td>
   <td style="text-align:left">4 (cases 3/4/5/default)</td>
   <td style="text-align:left">7+ (cases 0-6, 0xB)</td>
-  <td style="text-align:left">Switch statement</td>
 </tr>
 </tbody>
 </table></div>
 <hr>
-<h2 id="5-extraction-action-plan"><a class="anchor" href="#5-extraction-action-plan">#</a>5. Extraction Action Plan</h2>
+<h2 id="action-plan"><a class="anchor" href="#action-plan">#</a>Action Plan</h2>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="phase-1-runtime-memory-dump-fastest-this-week"><a class="anchor" href="#phase-1-runtime-memory-dump-fastest-this-week">#</a>Phase 1: Runtime Memory Dump (Fastest, This Week)</h3></summary>
 <div class="collapsible-content">
-<p><strong>Tool</strong>: Custom Openplanet plugin using <code>Dev::GetOffset*()</code> calls</p>
-<ol>
-  <li>Write an Openplanet AngelScript plugin that:</li>
-  <li>Gets the vehicle physics model pointer from <code>car_state+0x88</code></li>
-  <li>Reads all known offsets from doc 07-physics-constants.md</li>
-  <li>Dumps values to a JSON file</li>
-  <li>Run in-game on a Stadium map</li>
-  <li>Capture values for all 4 vehicle types (CarSport, CarSnow, CarRally, CarDesert)</li>
-</ol>
-<p><strong>Output</strong>: JSON with ~80 float values per vehicle type</p>
-<p><strong>Key offsets to dump</strong>:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>model+0x2F0   MaxSpeed
-model+0x308   EngineForce
-model+0x1790  SteerModel (int)
-model+0x1798  BrakeLinearCoef
-model+0x179C  BrakeSpeedSlope
-model+0x17A0  MaxBrakeForceSliding
-model+0x17A4  MaxBrakeForceGrounded
-model+0x18D0  GripMultiplier
-model+0x192C  FrictionSmoothBlend
-model+0x19D0  EngineTorqueY
-model+0x19E4  SteerReductionStart
-model+0x19E8  SteerReductionEnd
-model+0x19EC  AccelReductionStart
-model+0x19F0  AccelReductionEnd
-model+0x19F4  SlideFrictionBlend
-model+0x1A5C  LateralForceLinearCoef
-model+0x1A60  LateralForceQuadCoef
-model+0xAB0   EngineBrakeForce
-model+0xAB4   EngineReverseForce
-model+0xCD4   FrictionBlendThreshold
-model+0xCD8   SpeedThresholdGrip
-model+0xCDC   GripRecoveryRate
-model+0xCE0   GripDecayGrounded
-model+0xCE4   GripDecayRate2
-model+0xCE8   GripDecayAirborne
-model+0x16E0  TurboStartDuration
-model+0x16E4  TurboForceValue</code></pre></div>
-<p>Also dump the gravity vector from the spawn model (CPlugSpawnModel+0x54).</p>
+<p>Write an Openplanet AngelScript plugin that gets the vehicle physics model pointer from <code>car_state+0x88</code>, reads all known offsets, and dumps values to JSON. Run in-game on a Stadium map. Capture values for all 4 vehicle types (CarSport, CarSnow, CarRally, CarDesert). Output: JSON with ~80 float values per vehicle type.</p>
 </div>
 </details>
 <h3 id="phase-2-gbx-file-extraction-this-week"><a class="anchor" href="#phase-2-gbx-file-extraction-this-week">#</a>Phase 2: GBX File Extraction (This Week)</h3>
-<p><strong>Tool</strong>: Openplanet Fid Loader or Pack Explorer</p>
-<ol>
-  <li>Install Fid Loader plugin</li>
-  <li>Extract <code>VehiclePhyModelCustom.Gbx</code> for CarSport</li>
-  <li>Extract <code>StadiumCar.ObjectInfo.Gbx</code></li>
-  <li>Extract the spawn model GBX</li>
-  <li>Parse with GBX.NET or manual hex analysis</li>
-</ol>
+<p>Install Fid Loader plugin. Extract VehiclePhyModelCustom.Gbx for CarSport, StadiumCar.ObjectInfo.Gbx, and the spawn model GBX. Parse with GBX.NET or manual hex analysis.</p>
 <h3 id="phase-3-full-tuning-parse-next-week"><a class="anchor" href="#phase-3-full-tuning-parse-next-week">#</a>Phase 3: Full Tuning Parse (Next Week)</h3>
-<p><strong>Tool</strong>: GBX.NET with custom extensions</p>
-<ol>
-  <li>If GBX.NET's TM2 support covers the chunk format (which uses backward-compatible IDs):</li>
-  <li>Parse <code>CPlugVehicleCarPhyTuning</code> chunks 0x000-0x09F</li>
-  <li>Extract all 150+ parameter values</li>
-  <li>Extract all CFuncKeysReal curve keyframes</li>
-  <li>If GBX.NET fails on TM2020 version chunks:</li>
-  <li>Use hex editor on extracted GBX</li>
-  <li>Match chunk IDs against the known <code class="addr">0x0A029000</code>-<code class="addr">0x0A029069</code> range</li>
-  <li>Manually deserialize using TMNF field-to-chunk mapping</li>
-</ol>
+<p>If GBX.NET's TM2 support covers the chunk format, parse CPlugVehicleCarPhyTuning chunks 0x000-0x09F and extract all 150+ parameter values plus CFuncKeysReal curve keyframes. If GBX.NET fails on TM2020 chunks, use hex editor and manually deserialize using TMNF field-to-chunk mapping.</p>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="phase-4-community-cross-validation-ongoing"><a class="anchor" href="#phase-4-community-cross-validation-ongoing">#</a>Phase 4: Community Cross-Validation (Ongoing)</h3></summary>
 <div class="collapsible-content">
-<ol>
-  <li>Compare extracted values against TMInterface (TMNF) known-good physics</li>
-  <li>Use Openplanet's Record Raw Vehicle Data plugin to capture telemetry</li>
-  <li>Validate extracted gravity by measuring free-fall time in-game</li>
-  <li>Validate max speed by recording top speed on a long straight</li>
-</ol>
+<p>Compare extracted values against TMInterface (TMNF) known-good physics. Use Openplanet's Record Raw Vehicle Data plugin for telemetry. Validate extracted gravity by measuring free-fall time in-game. Validate max speed on a long straight.</p>
 <hr>
 </div>
 </details>
-<h2 id="6-fallback-strategy"><a class="anchor" href="#6-fallback-strategy">#</a>6. Fallback Strategy</h2>
-<p>If we cannot extract exact TM2020 tuning values, we have these fallbacks in decreasing order of fidelity:</p>
+<h2 id="fallback-strategy"><a class="anchor" href="#fallback-strategy">#</a>Fallback Strategy</h2>
 <h3 id="fallback-a-tmnf-values-tm2020-behavioral-calibration"><a class="anchor" href="#fallback-a-tmnf-values-tm2020-behavioral-calibration">#</a>Fallback A: TMNF Values + TM2020 Behavioral Calibration</h3>
-<p>Use TMNF StadiumCar values as starting point, then calibrate against recorded TM2020 telemetry:</p>
-<ul>
-  <li>Record position/velocity traces using Record Raw Vehicle Data plugin</li>
-  <li>Run identical inputs through TMNF-parameterized physics</li>
-  <li>Adjust parameters to minimize position error</li>
-</ul>
-<p><strong>TMNF baseline values</strong> (from cross-reference doc 14):</p>
+<p>Use TMNF StadiumCar values as starting point, then calibrate against recorded TM2020 telemetry. Record position/velocity traces, run identical inputs through TMNF-parameterized physics, adjust parameters to minimize position error.</p>
+<p>TMNF baseline values:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Mass = 1.0
 GravityCoef = 3.0 (ground), 2.5 (air)
 SideFriction1 = 40.0
@@ -945,19 +521,18 @@ ESteerModel = Steer06 (5)
 TurboBoost = 5.0, Duration = 250ms
 Turbo2Boost = 20.0, Duration = 100ms</code></pre></div>
 <h3 id="fallback-b-behavioral-measurement"><a class="anchor" href="#fallback-b-behavioral-measurement">#</a>Fallback B: Behavioral Measurement</h3>
-<p>Empirically measure physics parameters through controlled experiments:</p>
+<p>Measure physics parameters through controlled experiments:</p>
 <ul>
   <li><strong>Gravity</strong>: Drop car from known height, measure fall time -> g = 2h/t^2</li>
   <li><strong>Max speed</strong>: Long flat straight, measure terminal velocity</li>
   <li><strong>Friction</strong>: Coast on flat surface, measure deceleration rate</li>
-  <li><strong>Steer rate</strong>: Full steer input, measure angular velocity</li>
   <li><strong>Spring frequency</strong>: Drive off small bump, measure oscillation period</li>
   <li><strong>Turbo force</strong>: Measure speed delta from turbo pad</li>
 </ul>
 <h3 id="fallback-c-community-tas-data"><a class="anchor" href="#fallback-c-community-tas-data">#</a>Fallback C: Community TAS Data</h3>
-<p>The TMInterface community (donadigo et al.) has extensive replay analysis tools and may have already measured some physics parameters empirically. TMInterface is TMNF-only, but the Openplanet community has equivalent tools for TM2020.</p>
+<p>The TMInterface community has extensive replay analysis tools. The Openplanet community has equivalent tools for TM2020.</p>
 <hr>
-<h2 id="7-gbx-class-hierarchy-for-vehicle-data"><a class="anchor" href="#7-gbx-class-hierarchy-for-vehicle-data">#</a>7. GBX Class Hierarchy for Vehicle Data</h2>
+<h2 id="gbx-class-hierarchy-for-vehicle-data"><a class="anchor" href="#gbx-class-hierarchy-for-vehicle-data">#</a>GBX Class Hierarchy for Vehicle Data</h2>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameItemModel (ObjectInfo.Gbx)
  |-- EntityModelEdition
  |-- EntityModel
@@ -982,7 +557,7 @@ Turbo2Boost = 20.0, Duration = 100ms</code></pre></div>
  |-- SpawnModel (CGameSpawnModel -&gt; Spawn.Gbx / CPlugSpawnModel)
  |    |-- DefaultGravitySpawn (+0x54, Vec3)</code></pre></div>
 <hr>
-<h2 id="8-critical-findings-summary"><a class="anchor" href="#8-critical-findings-summary">#</a>8. Critical Findings Summary</h2>
+<h2 id="critical-findings"><a class="anchor" href="#critical-findings">#</a>Critical Findings</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1003,8 +578,8 @@ Turbo2Boost = 20.0, Duration = 100ms</code></pre></div>
   <td style="text-align:left">Start with GBX.NET, fall back to hex</td>
 </tr>
 <tr>
-  <td style="text-align:left">Openplanet Fid Loader can extract from running game</td>
-  <td style="text-align:left">Bypasses PAK encryption</td>
+  <td style="text-align:left">Openplanet Fid Loader bypasses PAK encryption</td>
+  <td style="text-align:left">Extracts from running game</td>
   <td style="text-align:left">Use as primary extraction method</td>
 </tr>
 <tr>
@@ -1020,7 +595,7 @@ Turbo2Boost = 20.0, Duration = 100ms</code></pre></div>
 <tr>
   <td style="text-align:left">Turbo force direction REVERSED from TMNF</td>
   <td style="text-align:left">Critical behavioral difference</td>
-  <td style="text-align:left">Must verify via extraction, not assume TMNF values</td>
+  <td style="text-align:left">Verify via extraction, not assume TMNF values</td>
 </tr>
 <tr>
   <td style="text-align:left">TM2020 suspension uses FreqHz/DampingRatio</td>
@@ -1035,68 +610,73 @@ Turbo2Boost = 20.0, Duration = 100ms</code></pre></div>
 </tbody>
 </table></div>
 <hr>
-<h2 id="9-priority-order"><a class="anchor" href="#9-priority-order">#</a>9. Priority Order</h2>
+<h2 id="priority-order"><a class="anchor" href="#priority-order">#</a>Priority Order</h2>
 <ol>
-  <li><strong>IMMEDIATE</strong>: Write Openplanet memory dump plugin to extract all known model offsets at runtime</li>
+  <li><strong>IMMEDIATE</strong>: Write Openplanet memory dump plugin for all known model offsets at runtime</li>
   <li><strong>THIS WEEK</strong>: Use Fid Loader to extract VehiclePhyModelCustom.Gbx and parse with GBX.NET</li>
   <li><strong>THIS WEEK</strong>: Start physics engine with TMNF baseline values as placeholder constants</li>
-  <li><strong>NEXT WEEK</strong>: Parse full CPlugVehicleCarPhyTuning blob (106 chunks) for complete parameter set</li>
-  <li><strong>NEXT WEEK</strong>: Extract and parse all CFuncKeysReal curves (accel, grip, steer torque, etc.)</li>
+  <li><strong>NEXT WEEK</strong>: Parse full CPlugVehicleCarPhyTuning blob (106 chunks)</li>
+  <li><strong>NEXT WEEK</strong>: Extract and parse all CFuncKeysReal curves</li>
   <li><strong>ONGOING</strong>: Validate extracted values against in-game telemetry recordings</li>
-  <li><strong>ONGOING</strong>: Compare all 4 vehicle types (CarSport, CarSnow, CarRally, CarDesert)</li>
+  <li><strong>ONGOING</strong>: Compare all 4 vehicle types</li>
 </ol>
 <hr>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="07-physics-constants.md">Physics Constants</a> -- Confirmed data-driven architecture</li>
+  <li><a href="10-tuning-loading-analysis.md">Tuning Loading Analysis</a> -- GBX to runtime data flow</li>
+  <li><a href="02-physics-engine.md">Physics Engine</a> -- Force model using these parameters</li>
+  <li><a href="05-block-mesh-research.md">Block Mesh Research</a> -- Same PAK extraction pipeline</li>
+</ul>
 <h2 id="references"><a class="anchor" href="#references">#</a>References</h2>
 <ul>
-  <li><code>/Users/kelvinnewton/Projects/tm/TM2020/docs/plan/07-physics-constants.md</code> -- Confirmed data-driven architecture</li>
-  <li><code>/Users/kelvinnewton/Projects/tm/TM2020/docs/re/14-tmnf-crossref.md</code> -- TMNF/TM2020 tuning comparison</li>
-  <li><code>/Users/kelvinnewton/Projects/tm/TM2020/docs/re/10-physics-deep-dive.md</code> -- Physics model offsets</li>
-  <li><code>/Users/kelvinnewton/Projects/tm/TM2020/docs/re/21-competitive-mechanics.md</code> -- Gravity/suspension analysis</li>
   <li>GBX.NET: https://github.com/BigBang1112/gbx-net</li>
   <li>Fid Loader: https://github.com/AurisTFG/tm-fid-loader</li>
   <li>PAK format: https://wiki.xaseco.org/wiki/PAK</li>
   <li>GBX Explorer: https://explorer.gbx.tools/</li>
   <li>Openplanet: https://openplanet.dev/</li>
 </ul>
+<details><summary>Document metadata</summary>
+<ul>
+  <li><strong>Date</strong>: 2026-03-27</li>
+  <li><strong>Status</strong>: CRITICAL PATH -- Physics engine cannot function without tuning constants</li>
+  <li><strong>Predecessor</strong>: <code>07-physics-constants.md</code> (confirmed all tuning is data-driven)</li>
+</ul>
+</details>
 
                         <nav class="prev-next"><a class="prev" href="plan-mvp.html">&larr; MVP Task Breakdown</a><a class="next" href="plan-tuning-loading.html">Tuning Loading Analysis &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#executive-summary">Executive Summary</a></li>
-<li class=""><a href="#1-where-tuning-files-live">1. Where Tuning Files Live</a></li>
-  <li class="toc-h3"><a href="#11-primary-location-inside-pack-files">1.1 Primary Location: Inside Pack Files</a></li>
-  <li class="toc-h3"><a href="#12-pak-file-encryption">1.2 PAK File Encryption</a></li>
-  <li class="toc-h3"><a href="#13-secondary-locations-not-confirmed-to-contain-tuning">1.3 Secondary Locations (Not Confirmed to Contain Tuning)</a></li>
-<li class=""><a href="#2-how-to-extract-tuning-data">2. How to Extract Tuning Data</a></li>
-  <li class="toc-h3"><a href="#21-method-a-openplanet-fid-loader-recommended-runtime-extraction">2.1 Method A: Openplanet Fid Loader (RECOMMENDED -- Runtime Extraction)</a></li>
-  <li class="toc-h3"><a href="#22-method-b-tmpaktool-offline-extraction">2.2 Method B: TMPakTool (Offline Extraction)</a></li>
-  <li class="toc-h3"><a href="#23-method-c-gbxnet-parsing-after-extraction">2.3 Method C: GBX.NET Parsing (After Extraction)</a></li>
-  <li class="toc-h3"><a href="#24-method-d-openplanet-memory-dump-runtime-sniffing">2.4 Method D: Openplanet Memory Dump (Runtime Sniffing)</a></li>
-  <li class="toc-h3"><a href="#25-method-e-gbx-explorer-web-tool">2.5 Method E: GBX Explorer Web Tool</a></li>
-<li class=""><a href="#3-what-parameters-exist">3. What Parameters Exist</a></li>
-  <li class="toc-h3"><a href="#31-cplugvehiclecarphytuning-106-chunks-150-parameters">3.1 CPlugVehicleCarPhyTuning (106 Chunks, ~150+ Parameters)</a></li>
-  <li class="toc-h3"><a href="#32-cplugvehiclephymodelcustom">3.2 CPlugVehiclePhyModelCustom</a></li>
-  <li class="toc-h3"><a href="#33-cplugvehiclegearbox">3.3 CPlugVehicleGearBox</a></li>
-  <li class="toc-h3"><a href="#34-cplugspawnmodel-gravity-source">3.4 CPlugSpawnModel (Gravity Source)</a></li>
-  <li class="toc-h3"><a href="#35-speed-dependent-curves-cfunckeysreal">3.5 Speed-Dependent Curves (CFuncKeysReal)</a></li>
-<li class=""><a href="#4-knowninferred-values">4. Known/Inferred Values</a></li>
-  <li class="toc-h3"><a href="#41-confirmed-from-tmnf-likely-similar-in-tm2020-stadium">4.1 Confirmed from TMNF (Likely Similar in TM2020 Stadium)</a></li>
-  <li class="toc-h3"><a href="#42-confirmed-from-tm2020-binary-analysis">4.2 Confirmed from TM2020 Binary Analysis</a></li>
-  <li class="toc-h3"><a href="#43-confirmed-differences-from-tmnf">4.3 Confirmed Differences from TMNF</a></li>
-<li class=""><a href="#5-extraction-action-plan">5. Extraction Action Plan</a></li>
+<li class=""><a href="#where-tuning-files-live">Where Tuning Files Live</a></li>
+  <li class="toc-h3"><a href="#inside-pack-files">Inside Pack Files</a></li>
+  <li class="toc-h3"><a href="#pak-file-encryption">PAK File Encryption</a></li>
+<li class=""><a href="#extraction-methods">Extraction Methods</a></li>
+  <li class="toc-h3"><a href="#method-a-openplanet-fid-loader-recommended-runtime-extraction">Method A: Openplanet Fid Loader (RECOMMENDED -- Runtime Extraction)</a></li>
+  <li class="toc-h3"><a href="#method-b-tmpaktool-offline-extraction">Method B: TMPakTool (Offline Extraction)</a></li>
+  <li class="toc-h3"><a href="#method-c-gbxnet-parsing-after-extraction">Method C: GBX.NET Parsing (After Extraction)</a></li>
+  <li class="toc-h3"><a href="#method-d-openplanet-memory-dump-runtime-sniffing">Method D: Openplanet Memory Dump (Runtime Sniffing)</a></li>
+  <li class="toc-h3"><a href="#method-e-gbx-explorer-web-tool">Method E: GBX Explorer Web Tool</a></li>
+<li class=""><a href="#parameter-catalog">Parameter Catalog</a></li>
+  <li class="toc-h3"><a href="#cplugvehiclecarphytuning-106-chunks-150-parameters">CPlugVehicleCarPhyTuning (106 Chunks, ~150+ Parameters)</a></li>
+<li class=""><a href="#known-and-inferred-values">Known and Inferred Values</a></li>
+  <li class="toc-h3"><a href="#confirmed-from-tmnf-likely-similar-in-tm2020-stadium">Confirmed from TMNF (Likely Similar in TM2020 Stadium)</a></li>
+  <li class="toc-h3"><a href="#confirmed-from-tm2020-binary-analysis">Confirmed from TM2020 Binary Analysis</a></li>
+  <li class="toc-h3"><a href="#confirmed-differences-from-tmnf">Confirmed Differences from TMNF</a></li>
+<li class=""><a href="#action-plan">Action Plan</a></li>
   <li class="toc-h3"><a href="#phase-1-runtime-memory-dump-fastest-this-week">Phase 1: Runtime Memory Dump (Fastest, This Week)</a></li>
   <li class="toc-h3"><a href="#phase-2-gbx-file-extraction-this-week">Phase 2: GBX File Extraction (This Week)</a></li>
   <li class="toc-h3"><a href="#phase-3-full-tuning-parse-next-week">Phase 3: Full Tuning Parse (Next Week)</a></li>
   <li class="toc-h3"><a href="#phase-4-community-cross-validation-ongoing">Phase 4: Community Cross-Validation (Ongoing)</a></li>
-<li class=""><a href="#6-fallback-strategy">6. Fallback Strategy</a></li>
+<li class=""><a href="#fallback-strategy">Fallback Strategy</a></li>
   <li class="toc-h3"><a href="#fallback-a-tmnf-values-tm2020-behavioral-calibration">Fallback A: TMNF Values + TM2020 Behavioral Calibration</a></li>
   <li class="toc-h3"><a href="#fallback-b-behavioral-measurement">Fallback B: Behavioral Measurement</a></li>
   <li class="toc-h3"><a href="#fallback-c-community-tas-data">Fallback C: Community TAS Data</a></li>
-<li class=""><a href="#7-gbx-class-hierarchy-for-vehicle-data">7. GBX Class Hierarchy for Vehicle Data</a></li>
-<li class=""><a href="#8-critical-findings-summary">8. Critical Findings Summary</a></li>
-<li class=""><a href="#9-priority-order">9. Priority Order</a></li>
+<li class=""><a href="#gbx-class-hierarchy-for-vehicle-data">GBX Class Hierarchy for Vehicle Data</a></li>
+<li class=""><a href="#critical-findings">Critical Findings</a></li>
+<li class=""><a href="#priority-order">Priority Order</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 <li class=""><a href="#references">References</a></li>
 </ul>
 </nav>

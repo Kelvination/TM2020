@@ -1,26 +1,18 @@
 # Professor Chen's Lecture Series: Trackmania 2020 Physics Engine
-# From Decompiled Code to Understanding
 
-**Lecturer**: Professor Chen, Vehicle Dynamics Simulation Laboratory
-**Course**: Advanced Game Physics -- Reverse Engineering a Commercial Racing Engine
-**Binary**: Trackmania.exe (Trackmania 2020, Nadeo/Ubisoft)
-**Tools**: Ghidra 12.0.4 via PyGhidra
-**Primary Sources**: 40 decompiled C files, Openplanet live memory readings, hex-verified file analysis
-**Date**: 2026-03-27
-
-**Cardinal Rule**: Every fact has a citation. Speculation is labeled. "I don't know" is an acceptable answer.
+Students, this lecture series covers the TM2020 physics engine from decompiled code to understanding. Every fact has a citation. Speculation is labeled. "I don't know" is an acceptable answer.
 
 ---
 
 ## Lecture 1: What We KNOW vs What We THINK We Know
 
-### 1.0 Opening Remarks
+### Auditing Our Sources
 
-Students, before we dive into any equations or diagrams, we must do something that most textbooks skip: we must audit our own sources. We have two categories of documentation about Trackmania 2020's physics -- the analysis documents (docs 10 and 22), and the actual decompiled C code. Where these disagree, the code wins. Where we cannot verify a claim, we say so.
+Students, before we dive into equations or diagrams, we must audit our own sources. We have two categories of documentation -- the analysis documents (docs 10 and 22), and the actual decompiled C code. Where these disagree, the code wins. Where we cannot verify a claim, we say so.
 
-I have read every one of the 40 decompiled source files in our repository. I have cross-referenced every major claim in the documentation against those files. Here is what I found.
+I have read every one of the 40 decompiled source files in our repository. I have cross-referenced every major claim against those files. Here is what I found.
 
-### 1.1 Verification Audit Table
+### Verification Audit Table
 
 | # | Claim (from docs 10/22) | Source Doc | Verified? | Evidence | Notes |
 |---|---|---|---|---|---|
@@ -55,53 +47,53 @@ I have read every one of the 40 decompiled source files in our repository. I hav
 | 29 | Air resistance is proportional to v^2 | Doc 22 header for 4-wheel model | INFERENCE | `force_model_case4_FUN_14086bc50.c:569-570`: `((float)(*(uint *)(param_2[8] + 0x17b0) ^ uVar31) * *(float *)((longlong)param_2 + 0x24)) / (fVar24 * *(float *)(param_2[8] + 0x310))` This divides a tuning constant times delta_time by (friction * another constant). It is NOT a simple v^2 drag -- it is a force that depends on friction and tuning parameters. | The "v^2" claim from the header annotation is NOT directly visible in the case 4 code. The actual formula is more complex. **ERRATA** item. |
 | 30 | Turbo force is "linear ramp-up" | Doc 10 S6.2 | **VERIFIED** | `NSceneVehiclePhy__ComputeForces.c:105`: `((float)(param_5 - uVar2) / (float)*(uint *)(lVar6 + 0x16e0)) * strength * scale` | The formula `(elapsed / duration) * strength` is definitionally linear. |
 
-### 1.2 Errata: Documentation Errors Found
+### Errata: Documentation Errors
 
-Students, here are the cases where the documentation says one thing and the code says another, or where the documentation overstates its confidence.
+Students, here are the cases where the documentation says one thing and the code says another.
 
-#### ERRATUM 1: Air Resistance Is NOT Simply v^2
+#### Air Resistance Is NOT Simply v^2
 
 **Doc 22 header for `force_model_4wheel_FUN_140869cd0.c`** states: "Air resistance force (proportional to v^2)."
 
-**What the code actually shows** (`force_model_case4_FUN_14086bc50.c:567-570`):
+**What the code shows** (`force_model_case4_FUN_14086bc50.c:567-570`):
 ```c
 local_168 = ((float)(*(uint *)(param_2[8] + 0x17b0) ^ uVar31) *
             *(float *)((longlong)param_2 + 0x24)) / (fVar24 * *(float *)(param_2[8] + 0x310));
 ```
 
-This is a force computed from: `(-tuning_0x17B0 * delta_time) / (friction_coef * tuning_0x310)`. There is no velocity-squared term visible here. The force appears to be a constant retarding force scaled by friction, not an aerodynamic drag proportional to v^2.
+This computes: `(-tuning_0x17B0 * delta_time) / (friction_coef * tuning_0x310)`. No velocity-squared term is visible. The force appears to be a constant retarding force scaled by friction, not aerodynamic drag proportional to v^2.
 
 **Correction**: The "air resistance" in the case 4 model is better described as a **constant retarding force inversely proportional to friction**. Whether a separate v^2 drag exists in one of the sub-functions called earlier is UNKNOWN.
 
-#### ERRATUM 2: Vehicle-to-Model Mapping Is Speculative
+#### Vehicle-to-Model Mapping Is Speculative
 
-**Doc 10 S2.6** presents a table mapping vehicles to force models (e.g., "CarSport = model 5", "RallyCar = model 6"). This table is labeled SPECULATIVE in the doc, but the file headers in the decompiled directory use definitive names like "CarSport Full Model" for case 6.
+**Doc 10 S2.6** presents a table mapping vehicles to force models (e.g., "CarSport = model 5"). The file headers in the decompiled directory use definitive names like "CarSport Full Model" for case 6.
 
-**What we can actually verify**: The `VehicleRegistry.c` file confirms the four vehicle names and their GBX paths. The force model switch confirms seven model types. **But no decompiled code links a specific vehicle name to a specific switch case value.** The mapping would require either:
+**What we can verify**: `VehicleRegistry.c` confirms the four vehicle names and their GBX paths. The force model switch confirms seven model types. **No decompiled code links a specific vehicle name to a specific switch case value.** Verification requires either:
 - Reading the `+0x1790` value from a loaded vehicle's GBX data at runtime (Openplanet could do this)
 - Finding the GBX loader that writes to offset `+0x1790`
 
 Until then, all vehicle-to-model mappings are INFERENCE.
 
-#### ERRATUM 3: The "2-Wheel Model" May Have 4 Visual Wheels
+#### The "2-Wheel Model" Has 4 Visual Wheels
 
-**Doc 22** labels FUN_14086b060 as a "2-wheel model" and states it uses "a single front/rear contact pair instead of 4 independent wheels."
+**Doc 22** labels FUN_14086b060 as a "2-wheel model" with "a single front/rear contact pair instead of 4 independent wheels."
 
-**What the code header says** (`force_model_2wheel_FUN_14086b060.c:54`): "Update wheel slip states for all 4 visual wheels."
+**The code header says** (`force_model_2wheel_FUN_14086b060.c:54`): "Update wheel slip states for all 4 visual wheels."
 
-This suggests the model uses 2-point force calculation (front/rear axle) but still updates 4 visual wheel states. The "2-wheel" label describes the physics model, not the visual representation. This distinction matters for students building their own implementations.
+The model uses 2-point force calculation (front/rear axle) but updates 4 visual wheel states. The "2-wheel" label describes the physics model, not the visual representation. This distinction matters for your own implementations.
 
-#### ERRATUM 4: Boost Event Magic Number
+#### Boost Event Magic Number
 
-**Doc 10 S12** describes a "magic float 1.12104e-44" in the boost event dispatch as "likely a type indicator, possibly IEEE representation of an integer."
+**Doc 10 S12** describes a "magic float 1.12104e-44" as "likely a type indicator."
 
 **Verification** (`NSceneVehiclePhy__ComputeForces.c:95`): `local_b8 = 1.12104e-44;`
 
-The IEEE 754 representation of 1.12104e-44 as a 32-bit float is approximately `0x00000008`. As a reinterpreted integer, this is 8. This is likely an event type code (8 = boost event), passed via a float parameter for ABI reasons. **Confidence: PLAUSIBLE** -- the integer reinterpretation is consistent but unverified.
+The IEEE 754 representation of 1.12104e-44 as a 32-bit float is approximately `0x00000008`. As a reinterpreted integer, this is 8 -- likely an event type code (8 = boost event), passed via a float parameter for ABI reasons. **Confidence: PLAUSIBLE**.
 
-### 1.3 What I Am Confident Teaching You
+### What I Am Confident Teaching
 
-Based on this audit, here is what I will teach as verified fact:
+Based on this audit, here is what I teach as verified fact:
 
 1. The simulation pipeline: PhysicsStep_TM iterates vehicles, performs adaptive sub-stepping, calls ComputeForces per sub-step
 2. The force model dispatch mechanism (switch on +0x1790)
@@ -117,10 +109,10 @@ Based on this audit, here is what I will teach as verified fact:
 12. The transform copy pattern (112 bytes, current-to-previous)
 13. Integer-based timing for determinism
 
-### 1.4 What I Am NOT Confident Teaching
+### What I Am NOT Confident Teaching
 
 1. Which vehicle uses which force model number
-2. The exact values of any tuning constants (they are loaded from GBX data files)
+2. The exact values of any tuning constants (loaded from GBX data files)
 3. The full behavior of any un-decompiled sub-function
 4. Whether the simulation is truly 100Hz (highly likely but not code-proven)
 5. The complete behavior of the airborne control model (partially decompiled)
@@ -130,24 +122,24 @@ Based on this audit, here is what I will teach as verified fact:
 
 ## Lecture 2: The Physics Tick (VERIFIED ONLY)
 
-### 2.0 Scope
+### Scope
 
-We will walk through `PhysicsStep_TM.c` (FUN_141501800, 224 lines) line by line. I will only state facts visible in the code.
+This lecture walks through `PhysicsStep_TM.c` (FUN_141501800, 224 lines) line by line. You will learn the complete per-tick vehicle iteration, adaptive sub-stepping, and the sub-step loop. I state only facts visible in the code.
 
-### 2.1 Function Signature
+### Function Signature
 
 **Source**: `PhysicsStep_TM.c:7`
 ```c
 void FUN_141501800(undefined8 *param_1, undefined8 *param_2, undefined8 *param_3, uint *param_4)
 ```
 
-Four parameters. From usage analysis:
-- `param_1`: Arena physics context (8-byte pointer array). Used at lines 141, 161-162, 189-190, 194. Offsets accessed: `param_1[0x3f]`, `param_1[0x40]`, `param_1[1]`. **VERIFIED** from code.
+Four parameters, from usage analysis:
+- `param_1`: Arena physics context (8-byte pointer array). Offsets accessed: `param_1[0x3f]`, `param_1[0x40]`, `param_1[1]`. **VERIFIED**.
 - `param_2`: Physics manager (NSceneVehiclePhy). Confirmed by calls to `FUN_1407bea40` (entity lookup) and `FUN_1407be690` (slot lookup). **VERIFIED**.
 - `param_3`: Vehicle entity list. `*param_3` = array of entity pointers, `*(uint*)(param_3 + 1)` = count. **VERIFIED** from lines 62, 65-67.
 - `param_4`: Tick parameters. `*param_4` = tick number (line 63), `param_4[2]` = delta time in some unit (line 73). **VERIFIED**.
 
-### 2.2 Profiling and Initialization
+### Profiling and Initialization
 
 **Source**: `PhysicsStep_TM.c:58-63`
 ```c
@@ -161,7 +153,7 @@ lVar18 = (ulonglong)*param_4 * 1000000;           // Tick -> microseconds
 
 **VERIFIED**: The string "PhysicsStep_TM" at line 59 confirms this function's identity. The microsecond conversion at line 63 uses integer multiplication. **No floating-point drift** in the timestamp.
 
-### 2.3 Vehicle Iteration Loop
+### Vehicle Iteration Loop
 
 **Source**: `PhysicsStep_TM.c:64-220`
 
@@ -178,9 +170,9 @@ if (*(uint *)(param_3 + 1) != 0) {       // if entity count > 0
 }
 ```
 
-**VERIFIED**: Sequential iteration, no parallelism. Entities processed in array order. This is critical for determinism.
+**VERIFIED**: Sequential iteration, no parallelism. Entities process in array order. This is critical for determinism.
 
-### 2.4 Entity State Filter
+### Entity State Filter
 
 **Source**: `PhysicsStep_TM.c:68-70`
 ```c
@@ -189,15 +181,15 @@ if (((byte)*(undefined4 *)(lVar9 + 0x128c) & 0xf) != 2) {
     if ((*(int *)(lVar9 + 0x1c90) == 0) || (*(int *)(lVar9 + 0x1c90) == 3)) {
 ```
 
-Three checks before physics runs:
+Three checks gate physics execution:
 
-1. **Status nibble at +0x128C**: The low 4 bits must NOT equal 2. State 2 = "excluded" -- these entities skip straight to the transform copy (lines 199-215). **VERIFIED**.
+1. **Status nibble at +0x128C**: The low 4 bits must NOT equal 2. State 2 = "excluded" -- these entities skip to the transform copy (lines 199-215). **VERIFIED**.
 
-2. **Flag clearing at +0x1C7C**: Bits 9 and 10 are cleared (`& 0xFFFFF5FF`). These are per-tick physics flags reset at the start of each step. **VERIFIED**.
+2. **Flag clearing at +0x1C7C**: Bits 9 and 10 clear (`& 0xFFFFF5FF`). These are per-tick physics flags reset at each step start. **VERIFIED**.
 
 3. **Simulation mode at +0x1C90**: Must be 0 or 3. Mode 0 = normal simulation, mode 3 = "normal-alt" (exact semantics unknown). Modes 1 and 2 (likely replay and spectator) skip physics entirely. **VERIFIED** for the check; **INFERENCE** for mode meanings.
 
-### 2.5 The Friction Coefficient and Delta Time
+### The Friction Coefficient and Delta Time
 
 **Source**: `PhysicsStep_TM.c:71-73`
 ```c
@@ -206,15 +198,15 @@ iVar7 = *(int *)(lVar9 + 0x10);
 fVar25 = fVar21 * (float)param_4[2];
 ```
 
-- `FUN_14083dca0`: Takes entity+0x1280 (vehicle unique ID area) and entity+0x88 (physics model pointer). Returns a float. From context in the tuning system (`Tunings_CoefFriction_CoefAcceleration.c`), this likely returns the friction coefficient. **INFERENCE** -- the function is not decompiled.
+- `FUN_14083dca0`: Takes entity+0x1280 (vehicle unique ID area) and entity+0x88 (physics model pointer). Returns a float. From context in `Tunings_CoefFriction_CoefAcceleration.c`, this likely returns the friction coefficient. **INFERENCE** -- the function is not decompiled.
 - `iVar7`: The dynamics body ID from entity+0x10. Compared to -1 at line 74 (invalid body check). **VERIFIED**.
-- `fVar25`: Product of the friction coefficient and the delta time. This is the "scaled timestep" used throughout the sub-stepping computation. **VERIFIED** from arithmetic.
+- `fVar25`: Product of the friction coefficient and the delta time -- the "scaled timestep" used throughout sub-stepping. **VERIFIED** from arithmetic.
 
-### 2.6 Adaptive Sub-Stepping Computation
+### Adaptive Sub-Stepping Computation
 
 **Source**: `PhysicsStep_TM.c:74-128`
 
-This is the most complex part. The code computes how many sub-steps to use based on the vehicle's current velocity:
+This is the most complex part. The code computes sub-step count based on current velocity:
 
 ```c
 // Get dynamics slot curves (line 75)
@@ -225,13 +217,13 @@ plVar10 = *(longlong **)(*(longlong *)(lVar9 + 0x1bb0) + 0x2b0);
 lVar15 = FUN_1407be690(param_2, iVar7);
 ```
 
-Then four velocity magnitudes are computed (lines 78-116):
+Four velocity magnitudes are computed (lines 78-116):
 1. Body linear velocity from `lVar15 + 0x40..0x48` (3 floats)
 2. Body angular velocity from `lVar15 + 0x4C..0x54` (3 floats)
 3. Vehicle velocity 1 from entity `+0x1348..0x1350` (3 floats)
 4. Vehicle velocity 2 from entity `+0x1354..0x135C` (3 floats)
 
-Each magnitude is computed as: `sqrt(x*x + y*y + z*z)` with a negative-guard:
+Each magnitude uses: `sqrt(x*x + y*y + z*z)` with a negative-guard:
 ```c
 if (fVar24 < 0.0) {
     fVar24 = (float)FUN_14195dd00(fVar24);  // safe sqrt for negative
@@ -257,9 +249,9 @@ if (uVar16 < 0x3e9) {
 }
 ```
 
-**VERIFIED**: The formula is `num_substeps = floor(total_speed * scaled_dt / step_size_param) + 1`, clamped to maximum 1000. The divisor at `lVar15 + 0x54` is a **data-loaded constant**, not hardcoded. **UNKNOWN**: Its actual value.
+**VERIFIED**: The formula is `num_substeps = floor(total_speed * scaled_dt / step_size_param) + 1`, clamped to maximum 1000. The divisor at `lVar15 + 0x54` is a **data-loaded constant**, not hardcoded. Its actual value is **UNKNOWN**.
 
-### 2.7 The Sub-Step Loop
+### The Sub-Step Loop
 
 **Source**: `PhysicsStep_TM.c:137-167`
 
@@ -301,9 +293,9 @@ do {
 } while (uVar20 != 0);                                      // line 167
 ```
 
-**VERIFIED**: Each sub-step follows the sequence: collision check, set time, compute forces, post-update, step, integrate, advance timestamp. The loop runs `uVar17` times (N-1 iterations), then a final step with the remainder runs after the loop (lines 169-195).
+**VERIFIED**: Each sub-step follows: collision check, set time, compute forces, post-update, step, integrate, advance timestamp. The loop runs `uVar17` times (N-1 iterations), then a final step with the remainder runs after the loop (lines 169-195).
 
-### 2.8 The Final Step (Remainder)
+### The Final Step (Remainder)
 
 **Source**: `PhysicsStep_TM.c:169-195`
 
@@ -320,9 +312,9 @@ FUN_1415009d0(..., fVar25, ...);
 FUN_14083df50(..., fVar25, ...);
 ```
 
-This ensures the total simulated time exactly equals the tick period: `(N-1) * sub_dt + remainder = total_dt`. **VERIFIED**.
+This ensures total simulated time exactly equals the tick period: `(N-1) * sub_dt + remainder = total_dt`. **VERIFIED**.
 
-### 2.9 Fragile Check and Stunt Detection
+### Fragile Check and Stunt Detection
 
 **Source**: `PhysicsStep_TM.c:191-195`
 ```c
@@ -333,18 +325,18 @@ if (((*(uint *)(lVar9 + 0x1c7c) & 0x1800) == 0x1800) &&
 }
 ```
 
-Three conditions for fragile crash:
+Three conditions trigger fragile crash:
 1. Both bits 11 and 12 of +0x1C7C must be set (0x1800)
 2. Float at +0x1C8C must exceed threshold `DAT_141d1ef7c`
 3. Status nibble minus 2, as unsigned, must be > 1
 
 The unsigned arithmetic means nibble values 2 and 3 evaluate to 0 and 1 respectively (`1 < 0` is false, `1 < 1` is false), so they are EXCLUDED from fragile. Values 0 and 1 wrap to large unsigned numbers and pass. Values 4+ also pass. **VERIFIED**.
 
-### 2.10 State 2 Entity Path (Transform Copy Only)
+### State 2 Entity Path (Transform Copy Only)
 
 **Source**: `PhysicsStep_TM.c:198-216`
 
-Entities in state 2 skip all physics and just copy their current transform to the previous transform slot:
+Entities in state 2 skip all physics and copy their current transform to the previous transform slot:
 
 ```c
 // 28 values copied (112 bytes): entity+0x90..0x100 -> entity+0x104..0x174
@@ -354,19 +346,9 @@ Entities in state 2 skip all physics and just copy their current transform to th
 *(undefined4 *)(lVar9 + 0x174) = *(undefined4 *)(lVar9 + 0x100);
 ```
 
-**VERIFIED**: 112 bytes copied. This represents the vehicle's world transform (likely a 3x4 matrix plus additional state). The copy preserves the "previous frame" state for rendering interpolation.
+**VERIFIED**: 112 bytes copied. This represents the vehicle's world transform (likely a 3x4 matrix plus additional state). The copy preserves "previous frame" state for rendering interpolation.
 
-### 2.11 Function Epilogue
-
-**Source**: `PhysicsStep_TM.c:222-223`
-```c
-FUN_1401176a0(local_108, local_f8);  // Profile scope end
-return;
-```
-
-**VERIFIED**: Clean exit with profiling scope closure.
-
-### 2.12 Summary: What Is Hardcoded vs Data-Loaded
+### Hardcoded vs Data-Loaded Summary
 
 | Item | Hardcoded | Data-Loaded |
 |---|---|---|
@@ -384,11 +366,11 @@ return;
 
 ## Lecture 3: Force Model Dispatch (VERIFIED ONLY)
 
-### 3.0 Scope
+### Scope
 
-We will walk through `NSceneVehiclePhy__ComputeForces.c` (FUN_1408427d0, 235 lines). This is the function that dispatches to the specific force model for each vehicle type.
+This lecture walks through `NSceneVehiclePhy__ComputeForces.c` (FUN_1408427d0, 235 lines). You will learn the force model switch, boost system, and speed clamping. This is the function that dispatches to the specific force model for each vehicle type.
 
-### 3.1 Function Signature and Profiling
+### Function Signature and Profiling
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:7-8,50`
 ```c
@@ -403,7 +385,7 @@ void FUN_1408427d0(longlong param_1, undefined4 param_2, undefined8 param_3,
 
 Profiling string: `"NSceneVehiclePhy::ComputeForces"` (line 50). **VERIFIED**.
 
-### 3.2 Entity Resolution
+### Entity Resolution
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:51-59`
 ```c
@@ -418,12 +400,12 @@ local_148 = *(undefined4 *)(lVar6 + 0x10);                   // body ID
 
 Key struct pointers established:
 - `lVar6`: The vehicle entity (~7300+ bytes)
-- `local_110` (entity+0x1BB0): Vehicle model class data (contains visual/model parameters)
-- `local_118` (entity+0x88): Physics model data (contains all tuning curves and offsets)
+- `local_110` (entity+0x1BB0): Vehicle model class data (visual/model parameters)
+- `local_118` (entity+0x88): Physics model data (all tuning curves and offsets)
 
 **VERIFIED**: Every pointer dereference matches the offset table in doc 10 S3.1.
 
-### 3.3 Velocity Retrieval and Speed Clamping
+### Velocity Retrieval and Speed Clamping
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:60-126`
 
@@ -449,9 +431,9 @@ if ((fVar9 * fVar9 < fVar8) && (DAT_141d1ed34 < fVar9)) {
 }
 ```
 
-**VERIFIED**: Speed is clamped to max_speed from model+0x2F0. The clamping preserves velocity direction (scales all three components equally). The threshold check `DAT_141d1ed34 < fVar9` prevents clamping when max_speed is near-zero (avoids division issues).
+**VERIFIED**: Speed clamps to max_speed from model+0x2F0. The clamping preserves velocity direction (scales all three components equally). The threshold check `DAT_141d1ed34 < fVar9` prevents clamping when max_speed is near-zero (avoids division issues).
 
-### 3.4 State 1 Early Exit (Force Zeroing)
+### State 1 Early Exit (Force Zeroing)
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:65-87`
 
@@ -474,9 +456,9 @@ Two conditions trigger force zeroing:
 1. Status nibble == 1 (inactive/reset state)
 2. Model class field at +0x278 is strictly negative (not zero, not positive)
 
-**VERIFIED**: Four force/torque vectors are zeroed. This is the "dead vehicle" path.
+**VERIFIED**: Four force/torque vectors zeroed. This is the "dead vehicle" path.
 
-### 3.5 Boost Force System
+### Boost Force System
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:89-111`
 
@@ -504,12 +486,10 @@ if (uVar2 <= param_5 && param_5 <= uVar2 + *(uint *)(lVar6 + 0x16e0)) {
 
 **VERIFIED**: The boost force is:
 - **Linear ramp-up**: `force = (elapsed_ticks / total_duration) * strength * model_scale`
-- NOT a decay. NOT a ramp-down. The force starts at 0 and increases to maximum at the end of the boost period.
+- NOT a decay. NOT a ramp-down. Force starts at 0 and increases to maximum at boost end.
 - Applied as a torque (via FUN_1407bdf40), not a linear force.
 
-This is confirmed by the formula: `(param_5 - uVar2)` is elapsed time, divided by duration `*(lVar6 + 0x16e0)`, multiplied by strength `*(lVar6 + 0x16e4)`.
-
-### 3.6 Pre-Dispatch Setup
+### Pre-Dispatch Setup
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:127-141`
 
@@ -535,9 +515,9 @@ FUN_140841f40(param_1, uVar3, lVar6, &local_b8);    // suspension pre-computatio
 FUN_1408426e0(lVar6, param_5);                        // wheel state update
 ```
 
-**VERIFIED**: Models 0-5 use force accumulator at entity+0x144C. Models 6+ use entity+0x1534. The 0xE8-byte gap (232 bytes) between these locations suggests entirely different internal layouts for the newer models.
+**VERIFIED**: Models 0-5 use force accumulator at entity+0x144C. Models 6+ use entity+0x1534. The 0xE8-byte gap (232 bytes) suggests entirely different internal layouts for the newer models.
 
-### 3.7 The Switch Statement
+### The Switch Statement
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:142-162`
 
@@ -566,13 +546,13 @@ case 0xb:
 }
 ```
 
-**VERIFIED**: This is the exact switch from the decompiled code. Note:
+**VERIFIED**: This is the exact switch from decompiled code. Key observations:
 - Cases 0/1/2 fall through to the same function
 - Cases 0-4 pass 2 arguments; cases 5/6/0xB pass 3 (adding `param_4`)
 - `local_158` is a struct containing: param_1 (context), lVar6 (entity), local_118 (model), local_110 (model class), local_108 (arena), local_148 (body ID), param_5 (tick), param_4 (time param)
 - There is **no default case**. Model values not in {0,1,2,3,4,5,6,11} silently skip force computation.
 
-### 3.8 What Each Case Calls (Summary from Decompiled Files)
+### What Each Case Calls
 
 | Case | Function | Key Sub-Functions Called | Notes |
 |---|---|---|---|
@@ -583,9 +563,7 @@ case 0xb:
 | 6 | FUN_14085c9e0 | FUN_1408570e0 (per-wheel), FUN_14085ad30 (steering), FUN_14085a0d0 (suspension), FUN_14085ba50 (anti-roll), FUN_140858c90 (damping), FUN_140857380 (drift), FUN_140857b20 (boost/reactor), FUN_14085c1b0 (airborne), FUN_14085b600 (integration) | Decompiled as annotated stub with 12 sub-functions identified. |
 | 0xB | FUN_14086d3b0 | FUN_140843150, FUN_140845220, FUN_140858660, FUN_14018d310, FUN_1408581d0, FUN_1408570e0, FUN_14085ad30, FUN_140858c90, FUN_14086cc60, FUN_140857b20, FUN_14085b600, FUN_14085a920/FUN_140858e70, FUN_140855ea0, FUN_1408562d0 | **Fully decompiled** (302 lines). Two code paths based on `*(int *)(plVar3 + 0x157c)`. Post-respawn force fade system visible. |
 
-### 3.9 The Turbo Force Computation: Is It REALLY a Ramp-Up?
-
-The documentation claims the turbo force ramps up. Let me verify this directly.
+### Turbo Force: Confirmed Ramp-Up
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:105-106`
 ```c
@@ -599,16 +577,15 @@ Breaking this down:
 - `* *(float*)(lVar6 + 0x16e4)` = * strength
 - `* *(float*)(model + 0xe0)` = * model_scale
 
-At the START of the boost: elapsed = 0, so force = 0.
-At the END of the boost: elapsed = duration, so force = strength * scale.
+At boost START: elapsed = 0, so force = 0. At boost END: elapsed = duration, so force = strength * scale.
 
-**VERIFIED**: The turbo force IS a linear ramp-up from 0 to maximum. This is confirmed beyond doubt from the arithmetic.
+**VERIFIED**: The turbo force IS a linear ramp-up from 0 to maximum. Confirmed beyond doubt from the arithmetic.
 
-### 3.10 Post-Dispatch: Checkpoint Reset Logic
+### Post-Dispatch: Checkpoint Reset Logic
 
 **Source**: `NSceneVehiclePhy__ComputeForces.c:173-199`
 
-After the force model runs, the code checks if per-wheel state should be reset:
+After the force model runs, the code checks for per-wheel state reset:
 
 ```c
 if ((1 < *(int *)(local_118 + 0x238) - 5U) &&
@@ -618,13 +595,11 @@ if ((1 < *(int *)(local_118 + 0x238) - 5U) &&
 }
 ```
 
-The condition `(value - 5) > 1` in unsigned arithmetic passes for values 0-4 and 7+, fails for 5 and 6. Combined with the FUN_14083db20 check, this resets wheel state for certain vehicle/mode combinations.
+The condition `(value - 5) > 1` in unsigned arithmetic passes for values 0-4 and 7+, fails for 5 and 6. The 4-block reset pattern at stride 0xB8 is consistent with 4 wheels of 184-byte state each. **VERIFIED**.
 
-**VERIFIED**: The 4-block reset pattern at stride 0xB8 is consistent with 4 wheels of 184-byte state each.
+### Speed Clamping Inside Force Models
 
-### 3.11 Speed Clamping Mechanism (In Force Models)
-
-Within the force model case 4 (the fully decompiled one), there is an additional speed clamping layer:
+Within force model case 4 (fully decompiled), an additional speed clamping layer exists:
 
 **Source**: `force_model_case4_FUN_14086bc50.c:533-538`
 ```c
@@ -637,27 +612,27 @@ if (fVar16 < (float)((uint)((float)local_120 * *(float *)(lVar12 + 0xab4)) ^ uVa
 ```
 
 Two speed limits from tuning data:
-- `tuning+0xAB0`: Forward speed cap. If speed exceeds this, force is clamped to `-tuning+0x308` (braking force).
-- `tuning+0xAB4`: Reverse speed cap. If speed is below the negative of this, force is clamped to `+tuning+0x308` (acceleration force).
+- `tuning+0xAB0`: Forward speed cap. Speed exceeding this applies `-tuning+0x308` (braking force).
+- `tuning+0xAB4`: Reverse speed cap. Speed below the negative of this applies `+tuning+0x308` (acceleration force).
 
-**VERIFIED**: The speed clamping applies a fixed retarding/accelerating force at the speed limits, creating hard speed boundaries in both directions.
+**VERIFIED**: Speed clamping applies fixed retarding/accelerating force at the limits, creating hard speed boundaries in both directions.
 
 ---
 
-## Lecture 4: What We Cannot Determine From Available Evidence
+## Lecture 4: What We Cannot Determine
 
-### 4.0 An Honest Assessment
+### An Honest Assessment
 
-Students, this lecture is about intellectual honesty. For every verified fact we have, there are gaps we cannot fill from the available decompiled code. Here is a complete accounting.
+Students, this lecture is about intellectual honesty. You will learn the exact boundaries of our knowledge: un-decompiled functions, unresolved constants, and the gap between code and runtime behavior. For every verified fact we have, there are gaps we cannot fill.
 
-### 4.1 Un-Decompiled Sub-Functions
+### Un-Decompiled Sub-Functions
 
-The following critical functions are called from the code we have but have NOT been decompiled:
+These critical functions are called from verified code but have NOT been decompiled:
 
 | Function | Called From | Purpose (Inferred) | Impact |
 |---|---|---|---|
-| FUN_14083dca0 | PhysicsStep_TM:71 | Get friction coefficient for vehicle | We know WHAT it returns (a float used as a timestep scale) but not HOW it computes it |
-| FUN_1414ffee0 | PhysicsStep_TM:155 | Core force computation dispatch | This is the wrapper that calls ComputeForces. Its internal logic is unknown. |
+| FUN_14083dca0 | PhysicsStep_TM:71 | Get friction coefficient for vehicle | We know WHAT it returns (a float used as timestep scale) but not HOW it computes it |
+| FUN_1414ffee0 | PhysicsStep_TM:155 | Core force computation dispatch | Wrapper that calls ComputeForces. Internal logic unknown. |
 | FUN_1414ff9d0 | PhysicsStep_TM:157 | Post-force state update | Unknown what state it modifies |
 | FUN_1415009d0 | PhysicsStep_TM:159 | Physics step dispatch | The actual rigid body integration step |
 | FUN_14083df50 | PhysicsStep_TM:162 | Integration | Final velocity/position integration |
@@ -668,9 +643,9 @@ The following critical functions are called from the code we have but have NOT b
 | FUN_1408426e0 | ComputeForces:141 | Wheel state tick update | Calls tire grip state machine internally |
 | FUN_1408025a0 | PhysicsStep_V2:201 | Internal physics step (the solver itself) | The actual constraint solver is un-decompiled |
 
-### 4.2 Magic Constants Without Context
+### Magic Constants Without Context
 
-Throughout the decompiled code, there are global constants referenced by address (e.g., `DAT_141d1f3c8`, `DAT_141d1f71c`). From the annotation in the case 4 model header:
+Global constants referenced by address throughout the decompiled code:
 
 | Constant | Likely Value | Evidence | Confidence |
 |---|---|---|---|
@@ -685,37 +660,36 @@ Throughout the decompiled code, there are global constants referenced by address
 | DAT_141d1ecc4 | Very small epsilon | Min normal length squared | Exact value UNKNOWN |
 | DAT_141d1fc24 | Large number | Max normal length squared sanity | Exact value UNKNOWN |
 
-**UNKNOWN**: The actual float values of these constants. They could be extracted by reading the binary's .rdata section at these addresses, but this has not been done for all of them.
+**UNKNOWN**: The actual float values of these constants. They could be extracted by reading the binary's .rdata section at these addresses.
 
-### 4.3 Struct Offsets We Cannot Name
+### Unnamed Struct Offsets
 
-The vehicle entity struct has hundreds of fields accessed by numeric offset. Many have been identified from context, but many remain unknown. From the offset table in doc 10 S3.1, fields marked [UNKNOWN] include:
-
+The vehicle entity struct has hundreds of fields accessed by numeric offset. Many remain unknown, including:
 - entity+0x1794 through +0x17A8 (wheel block 1 unknowns)
 - entity+0x1848 through +0x185C (wheel block 2 unknowns)
 - entity+0x1900 through +0x191C (wheel block 3 unknowns)
 - entity+0x19B8 through +0x19D4 (wheel block 4 unknowns)
 - Many fields in the 0x1280-0x1600 range (vehicle-specific state)
 
-### 4.4 The Gap Between Decompiled Code and Runtime Behavior
+### The Gap Between Decompiled Code and Runtime
 
 Several important caveats:
 
-1. **Ghidra decompilation artifacts**: The decompiled C code is Ghidra's best guess at the original source. Variable types may be wrong (Ghidra often uses `undefined4` where the original was `float`). Control flow may be restructured. The `CONCAT44` calls are Ghidra's representation of 64-bit register packing, not original code.
+1. **Ghidra decompilation artifacts**: Variable types may be wrong (Ghidra often uses `undefined4` where the original was `float`). The `CONCAT44` calls are Ghidra's representation of 64-bit register packing, not original code.
 
-2. **Compiler optimizations**: The original code likely used vector intrinsics (SSE/AVX) that Ghidra decompiles into sequential scalar operations. The actual execution may use SIMD instructions that process 4 floats simultaneously.
+2. **Compiler optimizations**: The original code likely used vector intrinsics (SSE/AVX) that Ghidra decompiles into sequential scalar operations. Actual execution may use SIMD processing 4 floats simultaneously.
 
-3. **Inlining**: Small functions may have been inlined by the compiler. What appears as inline code in the decompilation may have been a separate function in the source.
+3. **Inlining**: Small functions may have been inlined by the compiler. Inline code in the decompilation may have been a separate function in the source.
 
-4. **Data-driven behavior**: Most physics parameters come from GBX data files loaded at runtime. The code we see is the ENGINE; the actual vehicle BEHAVIOR depends on the data. Two vehicles using the same force model case can behave very differently based on their loaded tuning curves.
+4. **Data-driven behavior**: Most physics parameters come from GBX data files loaded at runtime. The code is the ENGINE; the BEHAVIOR depends on data. Two vehicles using the same force model case can behave very differently.
 
-5. **We cannot observe initialization**: We can see what the code DOES with values, but for data-loaded constants, we cannot see what values are loaded. The curve sample function (`FUN_14042bcb0`) is well understood, but we do not have the actual keyframe data for any curve.
+5. **Invisible initialization**: We see what the code DOES with values, but for data-loaded constants, we cannot see what values load. The curve sample function (`FUN_14042bcb0`) is well understood, but we have zero keyframe data for any curve.
 
-### 4.5 Specific Open Questions
+### Open Questions
 
-1. **Which vehicle uses which force model?** We know CarSport, CarSnow, CarRally, CarDesert exist. We know models 0-4, 5, 6, 0xB exist. The mapping is UNKNOWN from code alone.
+1. **Which vehicle uses which force model?** CarSport, CarSnow, CarRally, CarDesert exist. Models 0-4, 5, 6, 0xB exist. The mapping is UNKNOWN from code alone.
 
-2. **What are the actual tuning curve values?** Every speed-dependent coefficient (friction, grip, engine torque, drag) is stored as a keyframe curve. We have the curve evaluation code but zero curve data.
+2. **What are the actual tuning curve values?** Every speed-dependent coefficient (friction, grip, engine torque, drag) is stored as a keyframe curve. We have the evaluation code but zero curve data.
 
 3. **How does the constraint solver work internally?** We have SSolverParams (iteration counts) but FUN_1408025a0 (the actual solver) is not decompiled.
 
@@ -723,32 +697,32 @@ Several important caveats:
 
 5. **How does vehicle transformation work at runtime?** Surface IDs 15-17 and 20 trigger vehicle transforms (CarRally, CarSnow, CarDesert, Reset). The mechanics of swapping the physics model mid-drive are UNKNOWN.
 
-6. **What are the reactor boost physics?** We see `FUN_140857b20` handles spring/damper + reactor forces, but the reactor-specific force curve is not fully traced.
+6. **What are the reactor boost physics?** `FUN_140857b20` handles spring/damper + reactor forces, but the reactor-specific force curve is not fully traced.
 
 ---
 
-## Lecture 5: Recommendations for Students Building a Racing Game
+## Lecture 5: Recommendations for Building a Racing Game
 
-### 5.0 Approach
+### Approach
 
-Everything in this lecture is grounded in verified findings. Where I make recommendations, I will state which verified facts support them.
+Everything in this lecture is grounded in verified findings. You will learn what to replicate exactly, where you have freedom to innovate, and what NOT to assume transfers from TMNF.
 
-### 5.1 What to Replicate Exactly
+### What to Replicate Exactly
 
-#### 5.1.1 Fixed-Timestep with Integer Time
+#### Fixed-Timestep with Integer Time
 
 **Based on**: PhysicsStep_TM.c:63 (VERIFIED)
 
-Use integer tick counters and convert to time units via integer multiplication. Do NOT use `accumulated_time += delta_time` with floating point. The TM2020 approach:
+Use integer tick counters and convert to time units via integer multiplication. Do NOT use `accumulated_time += delta_time` with floating point:
 
 ```
 tick_counter += 1    // integer, exact
 timestamp_us = tick_counter * 1000000   // integer multiplication
 ```
 
-This guarantees your replays will be deterministic. It is the single most important architectural decision.
+This guarantees deterministic replays. It is the single most important architectural decision.
 
-#### 5.1.2 Adaptive Sub-Stepping Based on Velocity
+#### Adaptive Sub-Stepping Based on Velocity
 
 **Based on**: PhysicsStep_TM.c:71-167 (VERIFIED)
 
@@ -759,13 +733,13 @@ total_speed = |linear_vel| + |angular_vel| + ... (sum of relevant speeds)
 num_substeps = clamp(floor(total_speed * dt_scaled / step_size) + 1, 1, MAX_SUBSTEPS)
 ```
 
-Key: process N-1 equal sub-steps, then one remainder step. This ensures total simulated time equals exactly the tick period.
+Process N-1 equal sub-steps, then one remainder step. Total simulated time equals exactly the tick period.
 
-#### 5.1.3 Curve-Based Tuning System
+#### Curve-Based Tuning System
 
 **Based on**: curve_sample_FUN_14042bcb0.c (VERIFIED)
 
-Every speed-dependent parameter should be a sampled curve, not a single value. The TM2020 curve format supports:
+Every speed-dependent parameter should be a sampled curve, not a single value. TM2020's curve format supports:
 - Linear interpolation (default)
 - Smoothstep: `3t^2 - 2t^3` (for S-shaped transitions)
 - Step mode (discontinuous jumps)
@@ -773,58 +747,49 @@ Every speed-dependent parameter should be a sampled curve, not a single value. T
 
 This makes tuning extremely flexible without code changes.
 
-#### 5.1.4 Sequential Entity Processing
+#### Sequential Entity Processing
 
 **Based on**: PhysicsStep_TM.c:64-220 (VERIFIED)
 
 Process vehicles in deterministic array order. No parallel physics dispatch. Determinism requires identical processing order across all runs.
 
-#### 5.1.5 Per-Wheel Surface Material Lookup
+#### Per-Wheel Surface Material Lookup
 
 **Based on**: force_model_case4_FUN_14086bc50.c:160-169 (VERIFIED)
 
-Each wheel independently looks up its surface material. A car can have different wheels on different surfaces simultaneously. The lookup is: `material_table[surface_id]`, where the surface ID comes from the wheel's contact point.
+Each wheel independently looks up its surface material. A car can have different wheels on different surfaces simultaneously. The lookup: `material_table[surface_id]`, where the surface ID comes from the wheel's contact point.
 
-### 5.2 Where You Have Freedom to Innovate
+### Where You Have Freedom
 
-#### 5.2.1 The Force Model Architecture
+#### The Force Model Architecture
 
 TM2020 uses 7 different force models selected by a switch statement. You do NOT need 7. You could:
 - Use a single configurable force model with feature flags
-- Use a component system (mix and match: 2-wheel vs 4-wheel, drift enabled/disabled, etc.)
+- Use a component system (mix and match: 2-wheel vs 4-wheel, drift enabled/disabled)
 - Use the same model with different data for each vehicle
 
 The switch-based dispatch is an engineering choice, not a physics requirement.
 
-#### 5.2.2 The Tire Model
+#### The Tire Model
 
 The decompiled code shows two approaches:
 - **4-wheel model (case 4)**: Per-wheel friction force from curve, sliding detection via force-vs-grip comparison
 - **2-wheel model (case 3)**: Simplified lateral grip with linear + quadratic terms
 
-Neither is a full Pacejka Magic Formula. You can use ANY tire model that gives you the feel you want. What matters is:
-- A speed-dependent grip curve (VERIFIED: all models use FUN_14042bcb0 for this)
-- A sliding/grip threshold (VERIFIED: the case 4 model explicitly compares force against grip limit)
+Neither is a full Pacejka Magic Formula (the standard academic tire model using sin/atan/cos terms). Use ANY tire model that gives you the feel you want. What matters:
+- A speed-dependent grip curve (VERIFIED: all models use FUN_14042bcb0)
+- A sliding/grip threshold (VERIFIED: case 4 explicitly compares force against grip limit)
 - Surface-dependent coefficients (VERIFIED: material lookup per wheel)
 
-#### 5.2.3 The Constraint Solver
+#### The Constraint Solver
 
-We know TM2020 uses a sequential-impulse solver with configurable iteration counts (VERIFIED from SSolverParams). You can use:
-- Bullet Physics
-- Box2D-style solver
-- Your own Gauss-Seidel implementation
-- Any solver that gives deterministic results
+TM2020 uses a sequential-impulse solver with configurable iteration counts (VERIFIED from SSolverParams). You can use Bullet Physics, Box2D-style solver, your own Gauss-Seidel implementation, or any solver that gives deterministic results.
 
-#### 5.2.4 The Boost/Turbo System
+#### The Boost/Turbo System
 
-TM2020 uses linear ramp-up (VERIFIED). You could use:
-- Constant force (simpler)
-- Exponential decay (TMNF style)
-- Any curve you want
+TM2020 uses linear ramp-up (VERIFIED). You could use constant force (simpler), exponential decay (TMNF style), or any curve you want. Ramp-up vs decay is a game design choice, not a physics necessity.
 
-The ramp-up vs decay is a game design choice, not a physics necessity.
-
-### 5.3 What NOT to Assume Transfers from TMNF
+### What NOT to Assume Transfers from TMNF
 
 **Based on**: Doc 10 S11 (VERIFIED differences)
 
@@ -838,25 +803,25 @@ The ramp-up vs decay is a game design choice, not a physics necessity.
 | Time conversion | tick * 0.001 (float ms) | tick * 1000000 (integer us) | PhysicsStep_TM.c:63 (VERIFIED) |
 | Pair physics | Not observed | Explicit PairComputeForces | PairComputeForces.c (VERIFIED) |
 
-**Critical warning**: Do NOT port TMNF physics formulas to a TM2020-like engine without verifying each one. The boost direction change alone would make every turbo pad behave differently.
+**Critical warning**: Do NOT port TMNF physics formulas to a TM2020-like engine without verifying each one. The boost direction change alone makes every turbo pad behave differently.
 
-### 5.4 What Needs Empirical Testing Against the Real Game
+### What Needs Empirical Testing
 
-These aspects cannot be determined from decompilation alone and require live testing:
+These aspects cannot be determined from decompilation alone:
 
-1. **Actual tuning curve values**: Record vehicle speed under controlled conditions (straight road, specific surface) using Openplanet's VehicleState plugin. Compare acceleration profiles to reconstruct the engine torque curve.
+1. **Actual tuning curve values**: Record vehicle speed under controlled conditions using Openplanet's VehicleState plugin. Compare acceleration profiles to reconstruct the engine torque curve.
 
-2. **Vehicle-to-model mapping**: Use Openplanet to read the `+0x1790` offset on each vehicle type's physics model data while each car is active.
+2. **Vehicle-to-model mapping**: Use Openplanet to read the `+0x1790` offset on each vehicle type's physics model data.
 
-3. **Grip curve shape**: Test grip at various speeds on different surfaces. The grip state machine (tire_grip_state_machine) shows buildup/decay rates come from tuning+0xCDC/CE0/CE4/CE8, but the actual tick counts are data-loaded.
+3. **Grip curve shape**: Test grip at various speeds on different surfaces. The grip state machine shows buildup/decay rates come from tuning+0xCDC/CE0/CE4/CE8, but actual tick counts are data-loaded.
 
-4. **Slope thresholds**: Test acceleration on inclines of known angles to determine the four slope threshold values (tuning+0x19E4/E8/EC/F0).
+4. **Slope thresholds**: Test acceleration on known-angle inclines to determine the four slope threshold values (tuning+0x19E4/E8/EC/F0).
 
-5. **Reactor boost behavior**: The reactor force model involves spring/damper physics at hardpoints plus differential torque steering. The formulas are visible but the tuning data determines the feel.
+5. **Reactor boost behavior**: The reactor force model involves spring/damper physics at hardpoints plus differential torque steering. Formulas are visible but tuning data determines the feel.
 
-6. **Sleep detection thresholds**: The sleep damping factor and velocity threshold (DAT_141ebcd00, DAT_141ebcd04) are global constants. Their values could be measured by observing when a stationary vehicle stops micro-updating.
+6. **Sleep detection thresholds**: The sleep damping factor and velocity threshold (DAT_141ebcd00, DAT_141ebcd04) are global constants. Measure by observing when a stationary vehicle stops micro-updating.
 
-### 5.5 Summary: Build vs Buy
+### Build vs Buy
 
 | Component | Build from Scratch | Use Existing Library | Notes |
 |---|---|---|---|
@@ -870,9 +835,9 @@ These aspects cannot be determined from decompilation alone and require live tes
 | Adaptive sub-stepping | Build | | Custom to your speed range |
 | Replay system | Build | | Must record inputs, not state |
 
-### 5.6 Final Exam Question
+### Final Exam Question
 
-If you take away one lesson from this course, it is this: **the code is the authority, not the documentation about the code**. I found at least one error in the existing documentation (the "v^2 air resistance" claim). I found several places where documentation confidence levels were too high. In your own reverse engineering work, always check the primary source.
+Students, if you take away one lesson from this course: **the code is the authority, not the documentation about the code**. I found at least one error in the existing documentation (the "v^2 air resistance" claim). I found several places where documentation confidence levels were too high.
 
 The physics engine of Trackmania 2020 is not magic. It is approximately 40 functions totaling perhaps 15,000 lines of C code, operating on data-driven curves and a standard rigid body solver. What makes it excellent is the tuning data, not the code complexity.
 
@@ -960,3 +925,26 @@ All decompiled source files referenced in these lectures:
 | **PLAUSIBLE** | Consistent with evidence but alternative explanations exist | Multiple independent sources agree but no single proof |
 | **SPECULATIVE** | Educated guess based on limited evidence | Should not be taught as fact |
 | **UNKNOWN** | Cannot determine from available evidence | Honest acknowledgment of limits |
+
+---
+
+## Related Pages
+
+- [Physics Deep Dive](../re/10-physics-deep-dive.md) -- primary physics analysis document
+- [Ghidra Gap Findings](../re/22-ghidra-gap-findings.md) -- decompilation analysis and force models
+- [Openplanet Intelligence](../re/19-openplanet-intelligence.md) -- live memory readings and VisState
+- [Competitive Mechanics](../re/21-competitive-mechanics.md) -- timing verification and gameplay mechanics
+- [TMNF Cross-Reference](../re/14-tmnf-crossref.md) -- TMNF vs TM2020 comparison
+
+<details>
+<summary>Document metadata</summary>
+
+**Lecturer**: Professor Chen, Vehicle Dynamics Simulation Laboratory
+**Course**: Advanced Game Physics -- Reverse Engineering a Commercial Racing Engine
+**Binary**: Trackmania.exe (Trackmania 2020, Nadeo/Ubisoft)
+**Tools**: Ghidra 12.0.4 via PyGhidra
+**Primary Sources**: 40 decompiled C files, Openplanet live memory readings, hex-verified file analysis
+**Date**: 2026-03-27
+**Cardinal Rule**: Every fact has a citation. Speculation is labeled. "I don't know" is an acceptable answer.
+
+</details>

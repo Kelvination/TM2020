@@ -1,25 +1,24 @@
 # Jordan's Systems Architecture Notes: TM2020 Deep Dive
 
-**Author**: Jordan (PhD student, game engine architecture)
-**Date**: 2026-03-27
-**Focus**: How everything CONNECTS -- data flow, state machines, lifecycle, and browser translation
-**Method**: Read every decompiled function, every RE document, every plan document. Every claim is sourced.
+This document traces TM2020's architecture end-to-end: boot sequence, state machines, file loading, networking, scripting, and UI. Every claim is sourced from decompiled code or validated RE docs. Where I recommend browser translation strategies, I explain why.
 
 ---
 
-## Chapter 1: Game Lifecycle
+## Game Lifecycle
 
-### From Double-Click to Driving: The Complete Boot Sequence
+### From Double-Click to Driving
 
-This is the question that defines a game engine: what happens between `entry()` and the first rendered frame? TM2020 has a **10-phase boot sequence** before the player sees the main menu, and then another **5-phase sequence** before they're driving on a map. Let me trace the entire thing.
+This section covers TM2020's complete boot pipeline. You'll learn the 10-phase startup sequence, the 60+ state coroutine machine, and three strategies for translating it to JavaScript.
 
-#### Phase 0: Anti-Tamper + CRT Bootstrap (< 1ms)
+The defining question of any game engine: what happens between `entry()` and the first rendered frame? TM2020 runs 10 phases before showing the main menu, then 5 more before you drive.
 
-The entry point at `0x14291e317` lives in a section called `.D."` -- an obfuscated, anti-tamper protected region. It calls `FUN_1428eb7e6()` (an unpacker/decoder loop), then transfers to `FUN_14291da78()` which jumps to the real code. After that, standard MSVC CRT initialization runs: `__scrt_common_main_seh` calls `_initterm` for C++ static constructors, then dispatches to `WinMain` at `FUN_140aa7470`.
+#### Anti-Tamper + CRT Bootstrap (< 1ms)
+
+The entry point at `0x14291e317` lives in `.D."` -- an obfuscated, anti-tamper protected region. It calls `FUN_1428eb7e6()` (unpacker/decoder loop), then transfers to `FUN_14291da78()` which jumps to real code. Standard MSVC CRT initialization runs: `__scrt_common_main_seh` calls `_initterm` for C++ static constructors, then dispatches to `WinMain` at `FUN_140aa7470`.
 
 *Source: doc 12 Section 3.1, decompiled boot chain*
 
-#### Phase 1: WinMain Early Init (< 10ms)
+#### WinMain Early Init (< 10ms)
 
 ```
 FUN_140aa7470 (WinMain, 202 bytes):
@@ -31,13 +30,13 @@ FUN_140aa7470 (WinMain, 202 bytes):
   6. Transfer to CGbxApp::Init1
 ```
 
-**Why 75 profiling slots?** The engine has ~75 distinct profiling regions. Each slot is 0x70 bytes (112 bytes). That's `75 * 112 = 8,400 bytes` for profiling metadata, plus the 128KB buffer. Nadeo clearly takes performance instrumentation seriously.
+**Why 75 profiling slots?** The engine has ~75 distinct profiling regions. Each slot is 0x70 bytes (112 bytes). That's `75 * 112 = 8,400 bytes` for profiling metadata, plus the 128KB buffer. Nadeo takes performance instrumentation seriously.
 
 *Source: doc 12 Section 3.1, startup_frame_begin.c*
 
-#### Phase 2: Engine Subsystem Init (100-500ms)
+#### Engine Subsystem Init (100-500ms)
 
-`CGbxApp::Init1` at `FUN_140aa3220` is **7,401 bytes** of initialization code. That's enormous for a single function. It registers **16 engine subsystems** into a slot-based manager at `DAT_141f9f018`:
+`CGbxApp::Init1` at `FUN_140aa3220` is **7,401 bytes** of initialization code. It registers **16 engine subsystems** into a slot-based manager at `DAT_141f9f018`:
 
 ```
 SUBSYSTEM SLOT MAP (DAT_141f9f018)
@@ -62,26 +61,26 @@ SUBSYSTEM SLOT MAP (DAT_141f9f018)
 +------+------------------+-------+
 ```
 
-**Architectural observation**: This is a **service locator pattern** with fixed numeric slots. Not dependency injection, not a registry with string keys -- integer slots. This is a C++ game engine pattern optimized for cache-line-friendly lookups. The slot IDs are not contiguous (0x01, 0x03, 0x05... 0x2E), suggesting they correspond to engine ID constants defined elsewhere.
+**Architectural observation**: This is a **service locator pattern** (a design pattern where subsystems are registered into a global lookup table) with fixed numeric slots. Not dependency injection, not string-keyed -- integer slots optimized for cache-line-friendly lookups. The non-contiguous slot IDs (0x01, 0x03, 0x05... 0x2E) suggest engine ID constants defined elsewhere.
 
-Also notable: the Luna Mode accessibility check looks for UUID `41958b32-a08c-4313-a6c0-f49d4fb5a91e`. If matched, `DAT_141f9cff4 = 1` and it logs `"[Sys] Luna Mode enabled."` This is an accessibility feature I haven't seen documented elsewhere.
+The Luna Mode accessibility check looks for UUID `41958b32-a08c-4313-a6c0-f49d4fb5a91e`. If matched, `DAT_141f9cff4 = 1` and it logs `"[Sys] Luna Mode enabled."` This accessibility feature isn't documented elsewhere.
 
 *Source: doc 12 Section 3.1, Subsystem Slot Map*
 
-#### Phase 3-4: Graphics + Game App Init (300-2500ms)
+#### Graphics + Game App Init (300-2500ms)
 
-`CGbxApp::Init2` creates the DirectX viewport. If DirectX initialization fails, the player sees: `"Could not start the game!\r\n  System error, initialization of DirectX failed."` -- that's the only fatal error in the entire boot sequence. Everything else has fallback paths.
+`CGbxApp::Init2` creates the DirectX viewport. DirectX failure produces the only fatal boot error: `"Could not start the game!\r\n  System error, initialization of DirectX failed."` Everything else has fallback paths.
 
 Then `CGbxGame::InitApp` creates the `CSystemEngine` and installs three critical callbacks:
 - `+0x70`: Frame callback (`FUN_140101a40`) -- drives per-frame input
 - `+0x80`: Security callback (`_guard_check_icall`) -- MSVC Control Flow Guard
 - `+0x90`: Render callback (`FUN_140aa93b0`) -- drives the rendering pipeline
 
-These callbacks are **only installed when `DAT_141fbbee8 == 0`** (non-headless mode). The same binary runs both client and dedicated server by toggling this flag. That's elegant.
+These callbacks install **only when `DAT_141fbbee8 == 0`** (non-headless mode). The same binary runs both client and dedicated server by toggling this flag. That's elegant.
 
 *Source: doc 12 Section 3.1, CGbxApp__Init2.c, CGbxGame__InitApp.c*
 
-#### Phase 5-6: System Engine + Platform Start (150-500ms)
+#### System Engine + Platform Start (150-500ms)
 
 `CSystemEngine::InitForGbxGame` reads config strings: `"Distro"`, `"WindowTitle"`, `"DataDir"` (default: `"GameData\\"`). Then `CGameManiaPlanet::Start` registers playground types and sets the game name to `"Trackmania"`.
 
@@ -99,13 +98,13 @@ CGameCtnApp::Start() subsystem allocations:
   param_1[0x116] = 0x250 bytes -- scene manager
 ```
 
-I verified this in the decompiled `CGameCtnApp__Start.c`. Line 92: `FUN_140117690(local_1c8,"CGameCtnApp::Start()");` -- the profiling tag. The reference counting pattern is visible throughout: `*(puVar8 + 2) = *(puVar8 + 2) + 1` for AddRef, with the refcount at offset `+0x10` from every object's base, matching the `CMwNod` base class layout: `[vtable(8)][unknown(8)][refcount(4)]`.
+I verified this in the decompiled `CGameCtnApp__Start.c`. Line 92: `FUN_140117690(local_1c8,"CGameCtnApp::Start()");` -- the profiling tag. The reference counting pattern appears throughout: `*(puVar8 + 2) = *(puVar8 + 2) + 1` for AddRef, with the refcount at offset `+0x10` from every object's base, matching the `CMwNod` base class layout: `[vtable(8)][unknown(8)][refcount(4)]`.
 
 *Source: doc 12 Section 3.1, CGameCtnApp__Start.c lines 92-200*
 
-#### Phase 7: The 60+ State Machine Begins
+#### The 60+ State Machine
 
-Now we enter `CGameCtnApp::UpdateGame` at `FUN_140b78f10`. This function is **34,959 bytes** of decompiled C. It is called **every single frame** with `(CGameCtnApp* this, ulonglong* fiberContext)`.
+`CGameCtnApp::UpdateGame` at `FUN_140b78f10` is **34,959 bytes** of decompiled C. It runs **every single frame** with `(CGameCtnApp* this, ulonglong* fiberContext)`.
 
 The state machine has **60+ states** organized into 11 phases:
 
@@ -127,7 +126,7 @@ Phase 10: Multiplayer      (0xF85 - 0x109A)   10 states
 Phase 11: Special          (0xFFFFFFFF)        shutdown
 ```
 
-**The coroutine pattern**: Every state uses the same yield mechanism. The fiber context at `*param_2` stores the current state at `+0x08`, and a sub-fiber pointer at `+0x10`. When a state needs to wait for an async operation, it sets the sub-fiber, writes its own state ID back to `+0x08`, and returns. Next frame, the switch statement jumps back to the same case, checks if the sub-fiber is done (`+0x10 == -1`), and either waits again or proceeds.
+**The coroutine pattern**: Every state uses the same yield mechanism. A **stackless coroutine** (a cooperative multitasking pattern where persistent state lives on the heap, not on separate OS stacks) stores the current state at `+0x08` in the fiber context, and a sub-fiber pointer at `+0x10`. When a state waits for an async operation, it sets the sub-fiber, writes its state ID back to `+0x08`, and returns. Next frame, the switch jumps back, checks if the sub-fiber is done (`+0x10 == -1`), and either waits again or proceeds.
 
 ```
 THE YIELD PATTERN (appears hundreds of times):
@@ -143,7 +142,7 @@ THE YIELD PATTERN (appears hundreds of times):
   // Sub-coroutine done, proceed to next state
 ```
 
-This is a **stackless coroutine** -- no separate OS fiber stacks. All persistent state is stored in the heap-allocated context (0x380 bytes for the main UpdateGame context). This is important for the browser translation: JavaScript `async/await` maps perfectly to this pattern.
+All persistent state occupies a 0x380-byte heap-allocated context. This matters for browser translation: JavaScript `async/await` maps perfectly to this pattern.
 
 *Source: doc 12 Sections 1.2-1.3, 4.1-4.3*
 
@@ -183,7 +182,7 @@ LAB_140b7cdcc  [MAIN MENU] -- FUN_140b54b90(param_1, 2), "[Game] main menu."
 
 #### From Main Menu to Driving: 6 More States
 
-When a player clicks Play, the menu returns a result code at `*param_2 + 0x174`. The game logs `"[Game] exec MenuResult: {result}"`. For playing a specific map (result 0x09):
+When you click Play, the menu returns a result code at `*param_2 + 0x174`. The game logs `"[Game] exec MenuResult: {result}"`. For playing a specific map (result 0x09):
 
 ```
 0x9A5  [Menu Result Dispatch] -- read *(ctx+0x174)
@@ -203,13 +202,13 @@ When a player clicks Play, the menu returns a result code at `*param_2 + 0x174`.
   |     returns non-0: race complete, return to menu
 ```
 
-**Key insight**: State 0xD45 is where the player LIVES during gameplay. Every frame, the state machine enters 0xD45, calls `FUN_140b76aa0` to check if gameplay is over, and if not, yields. Meanwhile, the actual gameplay (physics, input, script, rendering) runs through the engine callbacks installed at Phase 4. The state machine is not driving gameplay frame-by-frame -- it's just monitoring for completion.
+**Key insight**: State 0xD45 is where you LIVE during gameplay. Every frame, the state machine enters 0xD45, calls `FUN_140b76aa0` to check if gameplay is over, and if not, yields. The actual gameplay (physics, input, script, rendering) runs through the engine callbacks installed at Phase 4. The state machine monitors for completion -- it does not drive gameplay frame-by-frame.
 
 *Source: doc 12 Sections 12.1-12.5*
 
-### "How Would I Implement This as a Browser App?"
+### Browser Translation Strategies
 
-The coroutine-based state machine maps to JavaScript in three natural ways:
+The coroutine-based state machine maps to JavaScript in three ways:
 
 **Option 1: async/await** (recommended)
 ```javascript
@@ -256,7 +255,7 @@ class GameStateMachine {
 }
 ```
 
-I'd go with Option 1. The `async/await` approach loses the explicit state IDs but gains readability. Since we're not trying to be bug-compatible with the original state machine (just behaviorally equivalent), the async approach is cleaner.
+I'd go with Option 1. The `async/await` approach loses explicit state IDs but gains readability. We're not trying to be bug-compatible -- just behaviorally equivalent.
 
 The headless/dedicated server pattern (`DAT_141fbbee8` / `DAT_141fbbf0c`) maps to a Node.js server running the same state machine with rendering disabled. The original binary does exactly this.
 
@@ -264,11 +263,13 @@ The headless/dedicated server pattern (`DAT_141fbbee8` / `DAT_141fbbf0c`) maps t
 
 ---
 
-## Chapter 2: Loading a Map
+## Loading a Map
 
-### GBX File Format: Byte by Byte
+### GBX File Format
 
-Every piece of content in TM2020 is stored as a GBX (GameBox) file. Maps, items, ghosts, replays, materials, meshes -- all GBX. The entry point for loading is `FUN_140904730` (`CSystemArchiveNod::LoadGbx`), which I read in the decompiled code. It checks for three formats: `.gbx` (binary), `.gbx.xml` (XML), `.json` (JSON import), then orchestrates: header parse, class instantiation via factory, body decompress, chunk dispatch, reference resolution.
+This section covers the GBX binary format byte-by-byte, LZO1X compression, the LookbackString interning system, and the 22-stage map initialization pipeline.
+
+Every piece of content in TM2020 is a GBX (GameBox) file. Maps, items, ghosts, replays, materials, meshes -- all GBX. The entry point for loading is `FUN_140904730` (`CSystemArchiveNod::LoadGbx`). It checks for three formats: `.gbx` (binary), `.gbx.xml` (XML), `.json` (JSON import), then orchestrates: header parse, class instantiation via factory, body decompress, chunk dispatch, reference resolution.
 
 *Source: FUN_140904730_LoadGbx.c, doc 16 Section 1*
 
@@ -290,13 +291,13 @@ var     [chunk data]       concatenated        all header chunk payloads
 var     XX XX XX XX        num_nodes           node count for reference sizing
 ```
 
-**Format flags "BUCR"** -- every real TM2020 file I've seen uses this:
+**Format flags "BUCR"** -- every real TM2020 file uses this:
 - B = Binary (not Text)
 - U = Body wrapper uncompressed
 - C = Body stream compressed (LZO1X)
 - R = With external references
 
-These flags are parsed at `FUN_140901850`:
+These flags parse at `FUN_140901850`:
 ```c
 // Byte 0: 'T' (text=1) or 'B' (binary=0)
 // Byte 1: 'C' (compressed=1) or 'U' (uncompressed=0) -> stored at +0xD8
@@ -308,23 +309,23 @@ These flags are parsed at `FUN_140901850`:
 
 #### LZO1X Decompression (NOT zlib!)
 
-This was a critical correction. The body compression is **LZO1X**, not zlib. Evidence:
+Body compression uses **LZO1X**, not zlib. Evidence:
 - Real file validation: compressed body data starts with bytes consistent with LZO1X encoding (0x1A in TechFlow.Map.Gbx means "initial literal run of 9 bytes")
 - Both zlib and raw deflate FAIL on the compressed data
 - Community tools (GBX.NET, gbx-py) all use LZO
-- The decompression function `FUN_140127aa0` is called when `param_1+0xDC` is non-zero
+- The decompression function `FUN_140127aa0` fires when `param_1+0xDC` is non-zero
 
-However, **zlib IS used** for ghost sample data within replays. So there are two compression layers:
+**zlib IS used** for ghost sample data within replays. Two compression layers exist:
 1. Outer: GBX body = LZO1X
 2. Inner: Ghost samples within body = zlib deflate
 
-The decompression buffer is pooled at `DAT_14205c280` with max size `0xFFFFF` (~1MB). Anything larger gets a fresh allocation.
+The decompression buffer pools at `DAT_14205c280` with max size `0xFFFFF` (~1MB). Anything larger gets a fresh allocation.
 
 *Source: doc 16 Section 8, validated in doc 26 Section 2*
 
 #### The LookbackString System
 
-This is the cleverest optimization in the format. Block names like `"StadiumRoadMainStraight"` appear hundreds of times in a map file. Instead of repeating the full string, GBX uses a per-archive string interning table.
+This is the cleverest optimization in the format. **LookbackString** is a per-archive string interning table that replaces repeated strings (like `"StadiumRoadMainStraight"`) with compact back-references.
 
 ```
 LOOKBACKSTRING READ ALGORITHM:
@@ -360,13 +361,13 @@ BODY CHUNK FORMAT:
     +0x04  bytes   chunk_data    Must be fully understood to continue!
 ```
 
-The `0xFACADE01` sentinel is confirmed in `FUN_1402d0c40`. The "SKIP" marker is ASCII `S-K-I-P` = `0x534B4950`. Skippable chunks are safe to skip when you don't understand them. Non-skippable chunks are the parser's nightmare -- if you can't parse one, you can't find the next chunk boundary.
+The `0xFACADE01` sentinel is confirmed in `FUN_1402d0c40`. The "SKIP" marker is ASCII `S-K-I-P` = `0x534B4950`. Skippable chunks are safe to skip. Non-skippable chunks are the parser's nightmare -- if you can't parse one, you can't find the next chunk boundary.
 
 *Source: doc 16 Sections 6-7*
 
 ### The 22-Stage Map Loading Pipeline
 
-After GBX deserialization, the map undergoes a 22-stage initialization pipeline. Each stage has a dedicated profiling marker in the binary:
+After GBX deserialization, the map undergoes a 22-stage initialization pipeline. Each stage has a dedicated profiling marker:
 
 ```
 STAGE  METHOD                                          COST
@@ -395,19 +396,21 @@ STAGE  METHOD                                          COST
  22    RemoveNonBlocksFromBlockStock                   Fast
 ```
 
-**What takes the longest?** Stages 1 (decoration/pack loading -- megabytes of 3D assets), 5 (block instantiation -- proportional to block count), and 18 (embedded items -- each is a full GBX sub-file). Lightmap generation, if not pre-baked, is the slowest of all.
+**Bottlenecks**: Stages 1 (decoration/pack loading), 5 (block instantiation), and 18 (embedded items). Lightmap generation, if not pre-baked, is the slowest of all.
 
-**What can be parallelized?** Stages 3-4 (lightmap IDs), 9 (genealogy), 10 (pylons), and 15 (pylon list) are independent data transforms. Stages 11-14 (clip connectivity) form a dependency chain but could run on a worker. The real bottleneck is stage 1 -- decoration loading -- which blocks everything else.
+**Parallelization opportunities**: Stages 3-4 (lightmap IDs), 9 (genealogy), 10 (pylons), and 15 (pylon list) are independent transforms. Stages 11-14 (clip connectivity) form a dependency chain but could run on a worker. Stage 1 (decoration loading) blocks everything else.
 
 *Source: doc 28 Section 6.2-6.5*
 
 ---
 
-## Chapter 3: The Block/Item System
+## The Block/Item System
 
 ### The 32-Meter Grid
 
-TM2020 maps exist on a discrete 3D grid. The numbers:
+This section covers TM2020's block coordinate system, naming conventions, waypoint connectivity, and how items differ from blocks.
+
+TM2020 maps exist on a discrete 3D grid:
 
 ```
 COORDINATE SYSTEM:
@@ -432,7 +435,7 @@ CONVERSION:
 
 *Source: doc 28 Section 1.2, confirmed by Openplanet Finetuner using Math::Ceil(distance/32.0f)*
 
-### Block Naming Convention: Decoding the Pattern
+### Block Naming Convention
 
 Block names follow a strict hierarchy: `{Environment}{Category}{Shape}{Variant}{Modifier}`
 
@@ -461,7 +464,7 @@ MODIFIERS:
 
 *Source: doc 28 Section 9, real map exports*
 
-### Waypoints: How Connectivity Works
+### Waypoints and Connectivity
 
 Waypoints define the race route. Four types exist, stored as `CGameWaypointSpecialProperty` on blocks:
 
@@ -472,13 +475,13 @@ Waypoints define the race route. Four types exist, stored as `CGameWaypointSpeci
 | Checkpoint | Timing gate | 0 or more, all must be reachable |
 | StartFinish | Multilap combined | Exactly 1 (replaces Start+Finish) |
 
-Detection uses trigger volumes (`CSceneTriggerAction`, `CGameTriggerGate`). When the car's bounding volume intersects the gate's trigger zone, the checkpoint/finish is registered.
+Detection uses trigger volumes (`CSceneTriggerAction`, `CGameTriggerGate`). When the car's bounding volume intersects the gate's trigger zone, the checkpoint/finish registers.
 
-Route validation is performed by `CGameEditorPluginMapConnectResults` -- the editor simulates whether a car can physically drive from Start through all Checkpoints to Finish via connected road surfaces.
+Route validation runs via `CGameEditorPluginMapConnectResults` -- the editor simulates whether a car can drive from Start through all Checkpoints to Finish via connected road surfaces.
 
 *Source: doc 28 Sections 3.1-3.4, binary strings `|BlockInfo|Start`, `|BlockInfo|Finish`, etc.*
 
-### Items vs Blocks: What's Different?
+### Items vs Blocks
 
 | Aspect | Blocks | Items |
 |--------|--------|-------|
@@ -489,17 +492,19 @@ Route validation is performed by `CGameEditorPluginMapConnectResults` -- the edi
 | Storage chunk | `0x03043011` | `0x03043040` |
 | Collision | Built into block model | Defined by `CPlugStaticObjectModel` |
 
-**"This is basically Minecraft with racing -- am I wrong?"**
+**"This is Minecraft with racing -- am I wrong?"**
 
-Not entirely wrong. Like Minecraft: discrete grid, block types with specific behaviors, automated support generation (pylons = pillar blocks auto-placed under air variants). Unlike Minecraft: the grid is 32 meters not 1 meter, blocks are complex pre-built 3D models not cubes, and the clip system enforces connectivity rules that Minecraft doesn't have. Items are the escape hatch from the grid -- they're what make TM2020 maps look organic rather than blocky.
+Not entirely. Like Minecraft: discrete grid, block types with specific behaviors, automated support generation (pylons = pillar blocks auto-placed under air variants). Unlike Minecraft: the grid is 32 meters not 1 meter, blocks are complex pre-built 3D models not cubes, and the clip system enforces connectivity rules. Items are the escape hatch from the grid -- they make TM2020 maps look organic rather than blocky.
 
 *Source: doc 28 Sections 2.1, 4.1*
 
 ---
 
-## Chapter 4: Ghost & Replay System
+## Ghost and Replay System
 
 ### The Recording Pipeline
+
+This section covers ghost sample encoding, input recording, and server-side replay validation for anti-cheat.
 
 ```
 DURING GAMEPLAY (per frame):
@@ -512,7 +517,7 @@ DURING GAMEPLAY (per frame):
 
 ### 50ms Samples, 22 Bytes Each
 
-Ghost samples are visual snapshots -- NOT physics state. They're recorded at **20 samples per second** (50ms period), much coarser than the 100Hz physics tick. This is because ghosts exist for visual playback, not deterministic re-simulation.
+Ghost samples are visual snapshots -- NOT physics state. They record at **20 samples per second** (50ms period), much coarser than the 100Hz physics tick. Ghosts exist for visual playback, not deterministic re-simulation.
 
 ```
 PER-SAMPLE ENCODING (22 bytes):
@@ -542,7 +547,7 @@ PER-SAMPLE ENCODING (22 bytes):
 
 ### Input Recording at 100Hz
 
-Separate from visual ghost data, `CInputReplay` captures raw inputs at the full physics tick rate:
+`CInputReplay` captures raw inputs at the full physics tick rate, separate from visual ghost data:
 
 ```
 INPUT FIELDS (per tick):
@@ -554,7 +559,7 @@ INPUT FIELDS (per tick):
   Conversion: float_value = int_value / 65536.0
 ```
 
-Input recording is likely **event-based** (only state changes stored), not every-tick. For a 38-second run, this produces ~200-500 events rather than 3,800 ticks of data.
+Input recording is likely **event-based** (only state changes stored). For a 38-second run, this produces ~200-500 events rather than 3,800 ticks of data.
 
 *Source: doc 30 Section 8, community (TMInterface/donadigo)*
 
@@ -580,7 +585,7 @@ The server checks: deterministic re-simulation matches claimed time, no impossib
 
 *Source: doc 30 Section 14, doc 17 Section 13*
 
-### "How Would I Implement This for My Own Game?"
+### Building Your Own Replay System
 
 **For custom replays** (recommended approach):
 ```typescript
@@ -601,15 +606,17 @@ interface SimpleReplay {
 }
 ```
 
-Record only when input changes. Playback by feeding into deterministic physics at 100Hz. If physics is bit-identical, the replay is exact. For visual-only ghosts (opponent display), sample position at 20Hz and interpolate -- exactly what TM2020 does.
+Record only when input changes. Play back by feeding into deterministic physics at 100Hz. If physics is bit-identical, the replay is exact. For visual-only ghosts (opponent display), sample position at 20Hz and interpolate -- exactly what TM2020 does.
 
 *Source: doc 30 Section 16*
 
 ---
 
-## Chapter 5: Networking
+## Networking
 
 ### The Authentication Chain
+
+This section covers TM2020's 4-step token exchange, the 11-layer network stack, and minimum viable browser networking.
 
 TM2020 uses a 4-step token exchange:
 
@@ -632,9 +639,7 @@ AUTH DATA FLOW:
 | `NadeoLiveServices` | `live-services.trackmania.nadeo.live` | Leaderboards, competitions, clubs |
 | `NadeoLiveServices` | `meet.trackmania.nadeo.club` | Matchmaking, ranked |
 
-JWT token lifetime: 55 minutes + random 1-60 seconds jitter before refresh (confirmed from Openplanet source).
-
-The `Ubi-AppId` for TM2020 is `86263886-327a-4328-ac69-527f0d20a237`.
+JWT token lifetime: 55 minutes + random 1-60 seconds jitter before refresh (confirmed from Openplanet source). The `Ubi-AppId` for TM2020 is `86263886-327a-4328-ac69-527f0d20a237`.
 
 *Source: doc 17 Sections 2-3, verified from Openplanet NadeoServices plugin and decompiled function at 0x140356160*
 
@@ -656,7 +661,7 @@ NETWORK ARCHITECTURE (from binary):
   Layer  0: External (UPC SDK DLL, Vivox VoiceChat.dll, XMPP)
 ```
 
-**562 total networking classes**. The HTTP client uses libcurl's multi interface for non-blocking I/O. Each request is a 0x1A8-byte structure. There's one shared `curl_multi_handle` at `DAT_1420ba2f8`. The web services layer uses a dedicated background thread (`CWebServices::Update_WebServicesThread`) with results dispatched to the main thread.
+**562 total networking classes**. The HTTP client uses libcurl's multi interface for non-blocking I/O. Each request is a 0x1A8-byte structure. One shared `curl_multi_handle` lives at `DAT_1420ba2f8`. The web services layer uses a dedicated background thread (`CWebServices::Update_WebServicesThread`) with results dispatched to the main thread.
 
 *Source: doc 17 Sections 1, 4, 6*
 
@@ -673,9 +678,7 @@ TCP Channel:                    UDP Channel:
   - Serialized objects (Nods)     - Voice chat frames
 ```
 
-UDP probing happens after TCP handshake. If UDP hole-punching fails, it falls back to TCP-only. The connection uses `CNetConnection` with metrics tracking for both channels: sending/receiving data rates, packet counts, nod (serialized object) counts.
-
-The per-frame network update follows a strict deterministic order:
+UDP probing happens after TCP handshake. If UDP hole-punching fails, it falls back to TCP-only. Per-frame network updates follow a strict deterministic order:
 1. `NetUpdate_BeforePhy` -- receive remote inputs
 2. Physics step (deterministic -- all clients simulate identically)
 3. `NetUpdate_AfterPhy` -- send local results
@@ -683,11 +686,11 @@ The per-frame network update follows a strict deterministic order:
 
 *Source: doc 17 Sections 7-8, debug strings at 0x141c2b348-0x141c49c28*
 
-### "What's the Minimum for Online Features in a Browser?"
+### Minimum Browser Online Stack
 
 For a browser client, the minimum viable online stack is:
 
-1. **Auth proxy server** (Node.js): handles UPC/Ubisoft auth (can't do from browser due to CORS)
+1. **Auth proxy server** (Node.js): handles UPC/Ubisoft auth (can't run from browser due to CORS)
 2. **Token management** (client): store JWT, refresh every 55 minutes, use `nadeo_v1 t=<token>` header
 3. **Map download**: `GET /maps/{mapId}` from Core API
 4. **Leaderboard read**: `GET /map-records` from Live API
@@ -699,11 +702,13 @@ Total: ~4 API endpoints. No WebSocket needed for single-player. For multiplayer,
 
 ---
 
-## Chapter 6: ManiaScript
+## ManiaScript
 
 ### The Engine's Built-in Scripting Language
 
-ManiaScript is interpreted by `CScriptEngine`, a singleton at binary address `0x140874270` (`CScriptEngine::Run`). I read the decompiled code:
+This section covers `CScriptEngine`, ManiaScript's type system, coroutine primitives, and whether to replicate it in a browser project.
+
+ManiaScript is interpreted by `CScriptEngine`, a singleton at `0x140874270` (`CScriptEngine::Run`):
 
 ```c
 // CScriptEngine::Run (316 bytes):
@@ -772,21 +777,23 @@ Built-in modes: `TM_TimeAttack_Online`, `TM_Rounds_Online`, `TM_Cup_Online`, `TM
 
 *Source: doc 31 Sections 19.1-19.4*
 
-### "Would I Build a Scripting Language or Use Lua/JS?"
+### Should You Build a Scripting Language?
 
 **For the MVP**: Skip scripting entirely. Hardcode TimeAttack rules (start timer on first input, record checkpoints, stop on finish). This covers 90% of single-player use.
 
-**If scripting is needed**: Use JavaScript directly. ManiaScript's coroutine model (`yield`/`sleep`/`wait`) maps to async generators. The 12 types map to JS primitives. The main reason Nadeo built their own language was sandboxing user-created content -- but in a browser, you already have the sandboxing (Web Workers with controlled APIs).
+**If scripting is needed**: Use JavaScript directly. ManiaScript's coroutine model (`yield`/`sleep`/`wait`) maps to async generators. The 12 types map to JS primitives. Nadeo built their own language for sandboxing user-created content -- but in a browser, you already have sandboxing (Web Workers with controlled APIs).
 
-Building a ManiaScript interpreter (~10,000 LOC) is only necessary if you need to run existing TM2020 game mode scripts verbatim. For a fresh project, that's a bad ROI.
+Building a ManiaScript interpreter (~10,000 LOC) is only necessary to run existing TM2020 game mode scripts verbatim. For a fresh project, that's a bad ROI.
 
 *Source: plan doc 01 (@opentm/scripting section)*
 
 ---
 
-## Chapter 7: The UI System
+## The UI System
 
 ### ManiaLink: XML UI in a 320x180 Coordinate Space
+
+This section covers TM2020's three-layer UI architecture, native controls, and why HTML/CSS replaces all of it.
 
 TM2020's UI system has three layers:
 
@@ -832,21 +839,21 @@ CControlLayout, CControlStyle, CControlStyleSheet
 CControlSimi2, CControlEngine
 ```
 
-The `CControlEngine` singleton drives 7 per-frame update phases: `ContainersDoLayout`, `ContainersEffects`, `ContainersFocus`, `ContainersValues`, `ControlsEffects`, `ControlsFocus`, `ControlsValues`.
+`CControlEngine` singleton drives 7 per-frame update phases: `ContainersDoLayout`, `ContainersEffects`, `ContainersFocus`, `ContainersValues`, `ControlsEffects`, `ControlsFocus`, `ControlsValues`.
 
 *Source: doc 34 Section 2.1-2.2*
 
-### HUD Elements in TM2020
+### HUD Elements
 
 The in-game HUD uses `CUILayer` objects attached via `UIManager.UIAll.UILayers` in ManiaScript. Each layer is a ManiaLink page. The speedometer, timer, checkpoint display -- all ManiaLink XML with ManiaScript event handlers updating `CMlLabel.Value` every frame.
 
-Standard HUD modules are loaded from `CGamePlaygroundModulePlaygroundScriptHandler` subclasses, with 12 module types in the binary class hierarchy.
+Standard HUD modules load from `CGamePlaygroundModulePlaygroundScriptHandler` subclasses, with 12 module types in the binary class hierarchy.
 
 *Source: doc 34 Section 10, doc 31 Section 19.7*
 
-### "HTML/CSS Can Replace All of This"
+### HTML/CSS Replaces All of This
 
-Yes. Every ManiaLink element has a direct HTML equivalent:
+Every ManiaLink element has a direct HTML equivalent:
 
 ```
 ManiaLink              HTML/CSS
@@ -882,17 +889,19 @@ The 320x180 coordinate space with centered origin maps to CSS transforms:
 }
 ```
 
-The 65+ built-in quad styles (Bgs1, Icons64x64_1, etc.) would need to be re-created as CSS classes or sprite sheets. The plan document recommends Svelte for minimal bundle size and fast reactivity.
+The 65+ built-in quad styles (Bgs1, Icons64x64_1, etc.) would need re-creation as CSS classes or sprite sheets.
 
-**My recommendation**: Do NOT replicate ManiaLink for the UI. Build native web UI. Only implement ManiaLink parsing if you need to load community-created game mode UIs.
+**My recommendation**: Do NOT replicate ManiaLink for UI. Build native web UI. Only implement ManiaLink parsing if you need to load community-created game mode UIs.
 
 *Source: doc 34 Section 14, plan doc 01 (@opentm/ui section)*
 
 ---
 
-## Chapter 8: My Architecture Plan
+## My Architecture Plan
 
-### What I'd Build the SAME Way as TM2020
+### What I'd Build the Same Way
+
+This section covers my architectural recommendations: what to keep from TM2020, what to change, and the feasibility of the 68-task MVP.
 
 1. **Coroutine-based state machine**: The fiber/yield pattern is perfect. `async/await` maps directly. The 60+ states become ~20 async functions.
 
@@ -902,27 +911,27 @@ The 65+ built-in quad styles (Bgs1, Icons64x64_1, etc.) would need to be re-crea
 
 4. **Deterministic physics for replay validation**: Input-based replay is the right approach. Record inputs at tick rate, re-simulate for validation. The 100Hz physics tick with adaptive sub-stepping is well-designed.
 
-5. **Chunk-based file format**: GBX's chunk system with skippable chunks is forward-compatible and parseable. I'd use a similar design (though I'd pick a standard container like FlatBuffers or MessagePack rather than inventing a new binary format).
+5. **Chunk-based file format**: GBX's chunk system with skippable chunks is forward-compatible and parseable. I'd use a similar design (though I'd pick a standard container like FlatBuffers or MessagePack).
 
 6. **Ghost system with dual representation**: Visual ghosts at 20Hz for rendering, input ghosts at 100Hz for validation. Different use cases, different fidelity requirements.
 
-### What I'd Do DIFFERENTLY and Why
+### What I'd Do Differently
 
-1. **NOT LZO for compression**: Use zstd or brotli. LZO is fast but produces larger output. Brotli is standard in browsers (built into `Accept-Encoding`). The 1MB decompression pool limit suggests LZO was chosen for memory-constrained environments (consoles), not relevant for browsers.
+1. **NOT LZO for compression**: Use zstd or brotli. LZO is fast but produces larger output. Brotli is standard in browsers (built into `Accept-Encoding`). The 1MB decompression pool limit suggests LZO was chosen for memory-constrained environments (consoles).
 
-2. **NOT a custom scripting language**: Use JavaScript/TypeScript directly. ManiaScript's 12 types and coroutine model can be replicated with TypeScript's type system and async generators. The ~10,000 LOC interpreter is complexity that doesn't add value unless you need TM2020 script compatibility.
+2. **NOT a custom scripting language**: Use JavaScript/TypeScript directly. ManiaScript's 12 types and coroutine model replicate with TypeScript's type system and async generators. The ~10,000 LOC interpreter adds no value unless you need TM2020 script compatibility.
 
 3. **NOT ManiaLink XML for UI**: Use HTML/CSS/Svelte. The 320x180 coordinate space with manual positioning is 2008-era UI technology. CSS Grid + Flexbox + media queries give better results with less effort.
 
 4. **NOT custom binary file format**: Use standard formats (glTF for meshes, JSON for metadata, standard image formats) with optional binary packing for performance. GBX is powerful but the 200+ class ID remapping table and LookbackString complexity are self-inflicted wounds.
 
-5. **NOT TCP+UDP dual stack**: Use WebSocket + WebRTC DataChannel. Same reliable/unreliable split, but browser-native. No need for UDP hole-punching or Winsock.
+5. **NOT TCP+UDP dual stack**: Use WebSocket + WebRTC DataChannel. Same reliable/unreliable split, but browser-native. No UDP hole-punching or Winsock needed.
 
-6. **NOT 22-stage map loading**: Lazy-load blocks on demand. The 22-stage pipeline is sequential because of 2004-era engine constraints. With WebGPU, block meshes can be streamed and instantiated progressively.
+6. **NOT 22-stage map loading**: Lazy-load blocks on demand. The 22-stage pipeline is sequential because of 2004-era engine constraints. With WebGPU, block meshes stream and instantiate progressively.
 
 ### The 68-Task MVP: Is It Realistic?
 
-The plan document breaks the MVP into 68 tasks across 12 weeks, one developer. Let me assess:
+The plan document breaks the MVP into 68 tasks across 12 weeks, one developer:
 
 ```
 GROUP                TASKS   WEEKS   RISK LEVEL
@@ -939,41 +948,41 @@ Polish                 8    10-12    Low
 ```
 
 **Critical blockers**:
-1. **Block mesh extraction** (MVP-021): Block geometry lives in encrypted `.pak` files. NadeoImporter may not export built-in blocks. This is the single highest-risk task.
+1. **Block mesh extraction** (MVP-021): Block geometry lives in encrypted `.pak` files. NadeoImporter may not export built-in blocks. Highest-risk task.
 2. **Physics force model** (MVP-040+): Only the CarSport model (case 5) is decompiled. CarRally and CarSnow are NOT decompiled. You can't drive those cars without the force model.
-3. **GBX non-skippable chunks**: If you hit an unknown non-skippable chunk, parsing halts. Need to test against many real maps.
+3. **GBX non-skippable chunks**: Unknown non-skippable chunks halt parsing. Must test against many real maps.
 
-**My verdict**: 12 weeks is **optimistic but achievable** for a stripped-down MVP (one car type, placeholder block meshes, no multiplayer). A realistic estimate with mesh extraction risk factored in: 16-20 weeks.
+**My verdict**: 12 weeks is **optimistic but achievable** for a stripped-down MVP (one car type, placeholder block meshes, no multiplayer). Realistic estimate with mesh extraction risk: 16-20 weeks.
 
 *Source: plan doc 08, risk register*
 
-### My Top 10 Architecture Lessons from TM2020
+### Top 10 Architecture Lessons from TM2020
 
-1. **State machines scale to 60+ states if you use coroutines**. The fiber/yield pattern keeps each state's logic self-contained. Without coroutines, this would be unmaintainable spaghetti.
+1. **State machines scale to 60+ states with coroutines.** The fiber/yield pattern keeps each state's logic self-contained. Without coroutines, this would be unmaintainable spaghetti.
 
-2. **Two compression layers is normal**. LZO for the container, zlib for inner data. Different algorithms optimize for different data patterns.
+2. **Two compression layers is normal.** LZO for the container, zlib for inner data. Different algorithms optimize for different data patterns.
 
-3. **String interning (LookbackString) saves enormous space** in binary formats. A map with 1000 blocks uses maybe 100 unique block names. Interning turns 23-byte strings into 4-byte indices after first occurrence.
+3. **String interning saves enormous space.** A map with 1000 blocks uses maybe 100 unique block names. Interning turns 23-byte strings into 4-byte indices after first occurrence.
 
-4. **The same binary should run client and server**. TM2020's headless mode flag (`DAT_141fbbee8`) eliminates an entire class of "works on client, breaks on server" bugs.
+4. **The same binary should run client and server.** TM2020's headless mode flag (`DAT_141fbbee8`) eliminates an entire class of "works on client, breaks on server" bugs.
 
-5. **Ghost != Physics Replay**. Visual ghosts (50ms, 22 bytes) and input replays (10ms, event-based) serve different purposes. Conflating them leads to either wasted bandwidth or inaccurate playback.
+5. **Ghost != Physics Replay.** Visual ghosts (50ms, 22 bytes) and input replays (10ms, event-based) serve different purposes. Conflating them leads to wasted bandwidth or inaccurate playback.
 
-6. **Authentication requires a proxy for browsers**. The UPC SDK is a Windows DLL. Any browser client needs a backend for the initial auth step. Plan for this from day one.
+6. **Authentication requires a proxy for browsers.** The UPC SDK is a Windows DLL. Any browser client needs a backend for the initial auth step. Plan for this from day one.
 
-7. **The file format should be forward-compatible**. GBX's skippable chunk marker ("SKIP") means old parsers can skip new chunks. Every binary format should have this escape hatch.
+7. **File formats should be forward-compatible.** GBX's skippable chunk marker ("SKIP") lets old parsers skip new chunks. Every binary format needs this escape hatch.
 
-8. **Profiling is infrastructure, not afterthought**. TM2020 allocates 75 profiling slots and a 128KB buffer at the very start of `WinMain`, before any game code runs. Performance measurement is baked into the engine's DNA.
+8. **Profiling is infrastructure, not afterthought.** TM2020 allocates 75 profiling slots and a 128KB buffer at the very start of `WinMain`, before any game code runs. Performance measurement is baked into the engine's DNA.
 
-9. **UI should not be coupled to the game engine**. ManiaLink is XML parsed and rendered by the engine. In a browser, HTML/CSS already IS the UI engine -- don't rebuild it.
+9. **UI should not be coupled to the game engine.** ManiaLink is XML parsed and rendered by the engine. In a browser, HTML/CSS already IS the UI engine.
 
-10. **562 networking classes is not overengineered -- it's layered**. Each layer (transport, services, facade, game logic) is independently testable. The web services task/result pattern gives type-safe async operations. This is good architecture, just a LOT of it.
+10. **562 networking classes is not overengineered -- it's layered.** Each layer (transport, services, facade, game logic) is independently testable. The web services task/result pattern gives type-safe async operations. Good architecture, just a LOT of it.
 
 ---
 
 ## Appendix: Key Data Flow Diagrams
 
-### A: Map Load Data Flow
+### Map Load Data Flow
 
 ```
 .Map.Gbx file (on disk)
@@ -1007,7 +1016,7 @@ Polish                 8    10-12    Low
 [Playable Map in Memory]
 ```
 
-### B: Frame Execution Flow (Gameplay)
+### Frame Execution Flow (Gameplay)
 
 ```
 FRAME BEGIN (FUN_140117840)
@@ -1057,7 +1066,7 @@ FRAME END (FUN_1401176a0)
   |-- budget check: 20ms outer, 10ms inner
 ```
 
-### C: Authentication Data Flow
+### Authentication Data Flow
 
 ```
 Browser Client          Auth Proxy (Node.js)      Ubisoft APIs              Nadeo APIs
@@ -1085,4 +1094,28 @@ Browser Client          Auth Proxy (Node.js)      Ubisoft APIs              Nade
 
 ---
 
+## Related Pages
+
+- [Architecture Deep Dive](../re/12-architecture-deep-dive.md) -- full engine subsystem analysis
+- [File Format Deep Dive](../re/16-fileformat-deep-dive.md) -- GBX format specification
+- [Networking Deep Dive](../re/17-networking-deep-dive.md) -- complete network stack analysis
+- [Map Structure Encyclopedia](../re/28-map-structure-encyclopedia.md) -- block/item system details
+- [Ghost/Replay Format](../re/30-ghost-replay-format.md) -- replay encoding details
+- [ManiaScript Reference](../re/31-maniascript-reference.md) -- scripting engine internals
+- [UI/ManiaLink Reference](../re/34-ui-manialink-reference.md) -- UI system details
+- [Real File Analysis](../re/26-real-file-analysis.md) -- hex-verified file structure
+- [Browser Recreation Guide](../re/20-browser-recreation-guide.md) -- translation strategies
+
+---
+
 **Final thought**: TM2020 is a 20-year-old engine (ManiaPlanet lineage traces to TrackMania Nations circa 2006) that has been continuously evolved. The architecture shows its age in places (integer state IDs, custom binary format, bespoke scripting language) but the core patterns (coroutine state machines, deterministic physics, dual-layer ghost system) are genuinely well-engineered. The challenge for a browser recreation is not "can we match the architecture?" but "where can we skip complexity by leveraging the browser platform?"
+
+<details>
+<summary>Document metadata</summary>
+
+**Author**: Jordan (PhD student, game engine architecture)
+**Date**: 2026-03-27
+**Focus**: How everything CONNECTS -- data flow, state machines, lifecycle, and browser translation
+**Method**: Read every decompiled function, every RE document, every plan document. Every claim is sourced.
+
+</details>

@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -112,12 +120,10 @@
                 <div class="content-body">
                     <div class="content-main">
                         
-                        <h1 id="tm2020-physics-constants-extracted-from-binary"><a class="anchor" href="#tm2020-physics-constants-extracted-from-binary">#</a>TM2020 Physics Constants - Extracted from Binary</h1>
-<p>Extracted from <code>Trackmania.exe</code> via Ghidra decompilation on 2026-03-27.</p>
-<h2 id="key-finding"><a class="anchor" href="#key-finding">#</a>Key Finding</h2>
-<p><strong>TM2020 uses NO hardcoded gravity constant (9.81, 29.43, etc.) in the binary.</strong> The gravity vector is entirely data-driven, loaded from GBX files (DefaultGravitySpawn in CPlugSpawnModel at +0x54). All friction curves, engine curves, and surface parameters are likewise loaded from GBX at runtime. The binary contains only the <strong>code framework</strong> and a handful of <strong>mathematical/utility constants</strong>.</p>
+                        <h1 id="tm2020-physics-constants-extracted-from-binary"><a class="anchor" href="#tm2020-physics-constants-extracted-from-binary">#</a>TM2020 Physics Constants -- Extracted from Binary</h1>
+<p>TM2020 uses NO hardcoded gravity constant (9.81, 29.43, etc.) in the binary. The gravity vector loads entirely from GBX files (DefaultGravitySpawn in CPlugSpawnModel at +0x54). All friction curves, engine curves, and surface parameters likewise load from GBX at runtime. The binary contains only the code framework and a handful of mathematical/utility constants.</p>
 <hr>
-<h2 id="1-hardcoded-mathematical-constants-rdata"><a class="anchor" href="#1-hardcoded-mathematical-constants-rdata">#</a>1. Hardcoded Mathematical Constants (<code>.rdata</code>)</h2>
+<h2 id="hardcoded-mathematical-constants-rdata"><a class="anchor" href="#hardcoded-mathematical-constants-rdata">#</a>Hardcoded Mathematical Constants (<code>.rdata</code>)</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -161,7 +167,7 @@
   <td style="text-align:left">Float 3.6</td>
   <td style="text-align:left">3.6</td>
   <td style="text-align:left"><code class="addr">0x141d1f71c</code></td>
-  <td style="text-align:left"><strong>m/s to km/h conversion factor</strong> (used in speed calcs)</td>
+  <td style="text-align:left">m/s to km/h conversion factor</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
@@ -182,7 +188,7 @@
   <td style="text-align:left">Pi</td>
   <td style="text-align:left">3.14159274</td>
   <td style="text-align:left"><code class="addr">0x141d1f6f8</code></td>
-  <td style="text-align:left">Used in angle calculations</td>
+  <td style="text-align:left">Angle calculations</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
@@ -294,13 +300,13 @@
   <td style="text-align:left">Down Vec4</td>
   <td style="text-align:left">(0.0, 0.0, 0.0, -1.0)</td>
   <td style="text-align:left"><code class="addr">0x141d21d30</code></td>
-  <td style="text-align:left">Used in gravity direction setup</td>
+  <td style="text-align:left">Gravity direction setup</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 </tbody>
 </table></div>
 <hr>
-<h2 id="2-dynamics-sleepdamping-constants"><a class="anchor" href="#2-dynamics-sleepdamping-constants">#</a>2. Dynamics Sleep/Damping Constants</h2>
+<h2 id="dynamics-sleepdamping-constants"><a class="anchor" href="#dynamics-sleepdamping-constants">#</a>Dynamics Sleep/Damping Constants</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -316,7 +322,7 @@
   <td style="text-align:left">Sleep damping</td>
   <td style="text-align:left">0.9</td>
   <td style="text-align:left"><code class="addr">0x141ebcd00</code></td>
-  <td style="text-align:left">Velocity damping when near-sleep (DAT_141ebcd00)</td>
+  <td style="text-align:left">Velocity damping when near-sleep</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
@@ -330,7 +336,7 @@
   <td style="text-align:left">Sleep enable flag</td>
   <td style="text-align:left">1</td>
   <td style="text-align:left"><code class="addr">0x141ebccfc</code></td>
-  <td style="text-align:left">DAT_141ebccfc: sleep system enabled</td>
+  <td style="text-align:left">Sleep system enabled</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
@@ -343,7 +349,7 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="3-tuning-parameters-runtime-coefficients"><a class="anchor" href="#3-tuning-parameters-runtime-coefficients">#</a>3. Tuning Parameters (Runtime Coefficients)</h2>
+<h2 id="tuning-parameters-runtime-coefficients"><a class="anchor" href="#tuning-parameters-runtime-coefficients">#</a>Tuning Parameters (Runtime Coefficients)</h2>
 <p>These are multiplier fields in the vehicle state, not hardcoded constants. Default value is 1.0 for all.</p>
 <h3 id="ngameslotphysmgr-tuning-fun_141071b20"><a class="anchor" href="#ngameslotphysmgr-tuning-fun_141071b20">#</a>NGameSlotPhy::SMgr Tuning (FUN_141071b20)</h3>
 <div class="table-wrapper"><table>
@@ -459,10 +465,10 @@
 </table></div>
 <hr>
 <details class="collapsible collapsed-by-default">
-<summary><h2 id="4-vehicle-physics-model-offsets-from-gbx-data-at-car_state0x88"><a class="anchor" href="#4-vehicle-physics-model-offsets-from-gbx-data-at-car_state0x88">#</a>4. Vehicle Physics Model Offsets (from GBX data at <code>car_state+0x88</code>)</h2></summary>
+<summary><h2 id="vehicle-physics-model-offsets-from-gbx-data-at-car_state0x88"><a class="anchor" href="#vehicle-physics-model-offsets-from-gbx-data-at-car_state0x88">#</a>Vehicle Physics Model Offsets (from GBX data at <code>car_state+0x88</code>)</h2></summary>
 <div class="collapsible-content">
-<p>These are offsets within the physics model struct loaded from GBX. Values are data-driven (not hardcoded).</p>
-<h3 id="speed-acceleration-curves"><a class="anchor" href="#speed-acceleration-curves">#</a>Speed & Acceleration Curves</h3>
+<p>All values are data-driven (not hardcoded). Offsets are within the physics model struct loaded from GBX.</p>
+<h3 id="speed-and-acceleration-curves"><a class="anchor" href="#speed-and-acceleration-curves">#</a>Speed and Acceleration Curves</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -517,7 +523,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="friction-grip"><a class="anchor" href="#friction-grip">#</a>Friction & Grip</h3>
+<h3 id="friction-and-grip"><a class="anchor" href="#friction-and-grip">#</a>Friction and Grip</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -633,7 +639,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="steering-control"><a class="anchor" href="#steering-control">#</a>Steering & Control</h3>
+<h3 id="steering-and-control"><a class="anchor" href="#steering-and-control">#</a>Steering and Control</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -744,7 +750,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="air-control-reactor"><a class="anchor" href="#air-control-reactor">#</a>Air Control & Reactor</h3>
+<h3 id="air-control-and-reactor"><a class="anchor" href="#air-control-and-reactor">#</a>Air Control and Reactor</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -797,7 +803,7 @@
 <hr>
 </div>
 </details>
-<h2 id="5-springdamper-constraint-model-nplugdynasconstraintmodel"><a class="anchor" href="#5-springdamper-constraint-model-nplugdynasconstraintmodel">#</a>5. Spring/Damper Constraint Model (NPlugDyna::SConstraintModel)</h2>
+<h2 id="springdamper-constraint-model-nplugdynasconstraintmodel"><a class="anchor" href="#springdamper-constraint-model-nplugdynasconstraintmodel">#</a>Spring/Damper Constraint Model (NPlugDyna::SConstraintModel)</h2>
 <p>Loaded from GBX, size 0x74 bytes.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -830,7 +836,7 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="6-solver-parameters-nscenedynassolverparams"><a class="anchor" href="#6-solver-parameters-nscenedynassolverparams">#</a>6. Solver Parameters (NSceneDyna::SSolverParams)</h2>
+<h2 id="solver-parameters-nscenedynassolverparams"><a class="anchor" href="#solver-parameters-nscenedynassolverparams">#</a>Solver Parameters (NSceneDyna::SSolverParams)</h2>
 <p>Size 0x2C bytes. All loaded from GBX.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -912,9 +918,9 @@
 </table></div>
 <hr>
 <details class="collapsible collapsed-by-default">
-<summary><h2 id="7-cscenevehiclevisstate-layout-size-0x360"><a class="anchor" href="#7-cscenevehiclevisstate-layout-size-0x360">#</a>7. CSceneVehicleVisState Layout (size 0x360)</h2></summary>
+<summary><h2 id="cscenevehiclevisstate-layout-size-0x360"><a class="anchor" href="#cscenevehiclevisstate-layout-size-0x360">#</a>CSceneVehicleVisState Layout (size 0x360)</h2></summary>
 <div class="collapsible-content">
-<p>This is the per-frame visual/physics output state.</p>
+<p>The per-frame visual/physics output state.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1158,7 +1164,7 @@
 <hr>
 </div>
 </details>
-<h2 id="8-surface-gameplay-ids-eplugsurfacegameplayid"><a class="anchor" href="#8-surface-gameplay-ids-eplugsurfacegameplayid">#</a>8. Surface Gameplay IDs (EPlugSurfaceGameplayId)</h2>
+<h2 id="surface-gameplay-ids-eplugsurfacegameplayid"><a class="anchor" href="#surface-gameplay-ids-eplugsurfacegameplayid">#</a>Surface Gameplay IDs (EPlugSurfaceGameplayId)</h2>
 <p>Enum table at <code class="addr">0x141eb2f60</code>, 25 values. These IDs map to surface physics via <code>car_state+0x6B8</code> pointer table.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1251,7 +1257,7 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="9-physics-model-type-switch"><a class="anchor" href="#9-physics-model-type-switch">#</a>9. Physics Model Type Switch</h2>
+<h2 id="physics-model-type-switch"><a class="anchor" href="#physics-model-type-switch">#</a>Physics Model Type Switch</h2>
 <p>In <code>NSceneVehiclePhy::ComputeForces</code> (FUN_1408427d0), the physics model type at <code>model+0x1790</code> selects the force computation:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1265,7 +1271,7 @@
 <tr>
   <td style="text-align:left">0, 1, 2</td>
   <td style="text-align:left">FUN_140869cd0</td>
-  <td style="text-align:left"><strong>Standard car physics</strong> (4-wheel)</td>
+  <td style="text-align:left">Standard car physics (4-wheel)</td>
 </tr>
 <tr>
   <td style="text-align:left">3</td>
@@ -1295,7 +1301,7 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="10-tire-force-model-fun_14086af20-lateral-grip"><a class="anchor" href="#10-tire-force-model-fun_14086af20-lateral-grip">#</a>10. Tire Force Model (FUN_14086af20 - Lateral Grip)</h2>
+<h2 id="tire-force-model-fun_14086af20-lateral-grip"><a class="anchor" href="#tire-force-model-fun_14086af20-lateral-grip">#</a>Tire Force Model (FUN_14086af20 -- Lateral Grip)</h2>
 <p>The tire force model uses a slip-angle based friction curve, not a direct Pacejka formula:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>slip_dot = dot(velocity, contact_normal)
 force_linear = abs(slip_dot) * model[+0x1A5C] - slip_dot^2 * model[+0x1A60]
@@ -1312,20 +1318,20 @@ max_force = grip_from_curve * param_5 * param_4[+0xC] * friction_coef</code></pr
   <li><code>friction_coef</code> is 1.0 normally, or <code>model[+0x1B10]</code> when braking</li>
 </ul>
 <hr>
-<h2 id="11-gravity-system"><a class="anchor" href="#11-gravity-system">#</a>11. Gravity System</h2>
-<p><strong>No hardcoded gravity constant exists in the binary.</strong> The gravity:</p>
+<h2 id="gravity-system"><a class="anchor" href="#gravity-system">#</a>Gravity System</h2>
+<p>No hardcoded gravity constant exists in the binary. The gravity:</p>
 <ol>
-  <li>Is loaded as a Vec3 from <code>CPlugSpawnModel.DefaultGravitySpawn</code> (+0x54)</li>
-  <li>Is stored in the scene dynamics manager at offset <code>*param_1 + 0xA10</code> (3 floats)</li>
-  <li>Is passed to <code>NSceneDyna::ComputeGravityAndSleepStateAndNewVels</code> as <code>param_8</code></li>
+  <li>Loads as a Vec3 from <code>CPlugSpawnModel.DefaultGravitySpawn</code> (+0x54)</li>
+  <li>Stores in the scene dynamics manager at offset <code>*param_1 + 0xA10</code> (3 floats)</li>
+  <li>Passes to <code>NSceneDyna::ComputeGravityAndSleepStateAndNewVels</code> as <code>param_8</code></li>
   <li>Can be modified at runtime via <code>GravityCoef</code> multiplier (default 1.0)</li>
 </ol>
-<p>The gravity vector is multiplied by <code>fVar8 = extraout_XMM0_Da <em> </em>pfVar4</code> (mass * inverse_mass_scale) before application.</p>
+<p>The gravity vector is multiplied by mass * inverse_mass_scale before application.</p>
 <h3 id="sleep-state"><a class="anchor" href="#sleep-state">#</a>Sleep State</h3>
-<p>When velocity < <code>0.01</code> m/s, the damping factor <code>0.9</code> is applied to velocities each tick, gradually bringing the body to rest.</p>
+<p>When velocity < <code>0.01</code> m/s, the damping factor <code>0.9</code> applies to velocities each tick, gradually bringing the body to rest.</p>
 <hr>
 <details class="collapsible collapsed-by-default">
-<summary><h2 id="12-key-function-addresses"><a class="anchor" href="#12-key-function-addresses">#</a>12. Key Function Addresses</h2></summary>
+<summary><h2 id="key-function-addresses"><a class="anchor" href="#key-function-addresses">#</a>Key Function Addresses</h2></summary>
 <div class="collapsible-content">
 <div class="table-wrapper"><table>
 <thead>
@@ -1418,7 +1424,21 @@ max_force = grip_from_curve * param_5 * param_4[+0xC] * friction_coef</code></pr
 </tr>
 </tbody>
 </table></div>
+<hr>
 </div>
+</details>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="02-physics-engine.md">Physics Engine</a> -- Force model implementation using these constants</li>
+  <li><a href="09-tuning-data-extraction.md">Tuning Data Extraction</a> -- How to extract the GBX files containing tuning values</li>
+  <li><a href="10-tuning-loading-analysis.md">Tuning Loading Analysis</a> -- How values flow from GBX to runtime</li>
+  <li><a href="06-determinism-analysis.md">Determinism Analysis</a> -- Float determinism for these constants</li>
+</ul>
+<details><summary>Document metadata</summary>
+<ul>
+  <li><strong>Date</strong>: 2026-03-27</li>
+  <li><strong>Source</strong>: Extracted from <code>Trackmania.exe</code> via Ghidra decompilation</li>
+</ul>
 </details>
 
                         <nav class="prev-next"><a class="prev" href="plan-determinism.html">&larr; Determinism Analysis</a><a class="next" href="plan-mvp.html">MVP Task Breakdown &rarr;</a></nav>
@@ -1426,33 +1446,33 @@ max_force = grip_from_curve * param_5 * param_4[+0xC] * friction_coef</code></pr
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#key-finding">Key Finding</a></li>
-<li class=""><a href="#1-hardcoded-mathematical-constants-rdata">1. Hardcoded Mathematical Constants (`.rdata`)</a></li>
+<li class=""><a href="#hardcoded-mathematical-constants-rdata">Hardcoded Mathematical Constants (`.rdata`)</a></li>
   <li class="toc-h3"><a href="#bit-manipulation-masks">Bit Manipulation Masks</a></li>
   <li class="toc-h3"><a href="#vector-constants">Vector Constants</a></li>
-<li class=""><a href="#2-dynamics-sleepdamping-constants">2. Dynamics Sleep/Damping Constants</a></li>
-<li class=""><a href="#3-tuning-parameters-runtime-coefficients">3. Tuning Parameters (Runtime Coefficients)</a></li>
+<li class=""><a href="#dynamics-sleepdamping-constants">Dynamics Sleep/Damping Constants</a></li>
+<li class=""><a href="#tuning-parameters-runtime-coefficients">Tuning Parameters (Runtime Coefficients)</a></li>
   <li class="toc-h3"><a href="#ngameslotphysmgr-tuning-fun_141071b20">NGameSlotPhy::SMgr Tuning (FUN_141071b20)</a></li>
   <li class="toc-h3"><a href="#cplugvehiclephymodelcustom-modifiers-fun_14061abb0">CPlugVehiclePhyModelCustom Modifiers (FUN_14061abb0)</a></li>
   <li class="toc-h3"><a href="#cgamevehiclephy-state-fields">CGameVehiclePhy State Fields</a></li>
-<li class=""><a href="#4-vehicle-physics-model-offsets-from-gbx-data-at-car_state0x88">4. Vehicle Physics Model Offsets (from GBX data at `car_state+0x88`)</a></li>
-  <li class="toc-h3"><a href="#speed-acceleration-curves">Speed &amp; Acceleration Curves</a></li>
-  <li class="toc-h3"><a href="#friction-grip">Friction &amp; Grip</a></li>
+<li class=""><a href="#vehicle-physics-model-offsets-from-gbx-data-at-car_state0x88">Vehicle Physics Model Offsets (from GBX data at `car_state+0x88`)</a></li>
+  <li class="toc-h3"><a href="#speed-and-acceleration-curves">Speed and Acceleration Curves</a></li>
+  <li class="toc-h3"><a href="#friction-and-grip">Friction and Grip</a></li>
   <li class="toc-h3"><a href="#tire-icinggrip-state-machine">Tire Icing/Grip State Machine</a></li>
-  <li class="toc-h3"><a href="#steering-control">Steering &amp; Control</a></li>
+  <li class="toc-h3"><a href="#steering-and-control">Steering and Control</a></li>
   <li class="toc-h3"><a href="#turbo-system">Turbo System</a></li>
   <li class="toc-h3"><a href="#braking">Braking</a></li>
-  <li class="toc-h3"><a href="#air-control-reactor">Air Control &amp; Reactor</a></li>
+  <li class="toc-h3"><a href="#air-control-and-reactor">Air Control and Reactor</a></li>
   <li class="toc-h3"><a href="#suspension">Suspension</a></li>
-<li class=""><a href="#5-springdamper-constraint-model-nplugdynasconstraintmodel">5. Spring/Damper Constraint Model (NPlugDyna::SConstraintModel)</a></li>
-<li class=""><a href="#6-solver-parameters-nscenedynassolverparams">6. Solver Parameters (NSceneDyna::SSolverParams)</a></li>
-<li class=""><a href="#7-cscenevehiclevisstate-layout-size-0x360">7. CSceneVehicleVisState Layout (size 0x360)</a></li>
-<li class=""><a href="#8-surface-gameplay-ids-eplugsurfacegameplayid">8. Surface Gameplay IDs (EPlugSurfaceGameplayId)</a></li>
-<li class=""><a href="#9-physics-model-type-switch">9. Physics Model Type Switch</a></li>
-<li class=""><a href="#10-tire-force-model-fun_14086af20-lateral-grip">10. Tire Force Model (FUN_14086af20 - Lateral Grip)</a></li>
-<li class=""><a href="#11-gravity-system">11. Gravity System</a></li>
+<li class=""><a href="#springdamper-constraint-model-nplugdynasconstraintmodel">Spring/Damper Constraint Model (NPlugDyna::SConstraintModel)</a></li>
+<li class=""><a href="#solver-parameters-nscenedynassolverparams">Solver Parameters (NSceneDyna::SSolverParams)</a></li>
+<li class=""><a href="#cscenevehiclevisstate-layout-size-0x360">CSceneVehicleVisState Layout (size 0x360)</a></li>
+<li class=""><a href="#surface-gameplay-ids-eplugsurfacegameplayid">Surface Gameplay IDs (EPlugSurfaceGameplayId)</a></li>
+<li class=""><a href="#physics-model-type-switch">Physics Model Type Switch</a></li>
+<li class=""><a href="#tire-force-model-fun_14086af20-lateral-grip">Tire Force Model (FUN_14086af20 -- Lateral Grip)</a></li>
+<li class=""><a href="#gravity-system">Gravity System</a></li>
   <li class="toc-h3"><a href="#sleep-state">Sleep State</a></li>
-<li class=""><a href="#12-key-function-addresses">12. Key Function Addresses</a></li>
+<li class=""><a href="#key-function-addresses">Key Function Addresses</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

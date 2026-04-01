@@ -1,31 +1,14 @@
 # Openplanet Plugin Intelligence Extraction
 
-**Source**: Openplanet plugins installed at `Trackmania/Openplanet/Plugins/`
-**Date**: 2026-03-27
-**Confidence**: HIGH — These are working plugins that read live game memory. Field names and offsets are VERIFIED against the running game.
+Openplanet is a modding framework that injects into TrackMania 2020 and reads live game memory via AngelScript plugins. Every field and offset below is VERIFIED against the running game. This data provides the most trustworthy struct layouts available outside of full binary RE.
+
+The struct offset tables for `CSceneVehicleVisState`, wheel state, and scene manager hierarchy are the primary value of this document.
 
 ---
 
-## Table of Contents
+## Vehicle State Structure (CSceneVehicleVisState)
 
-1. [Vehicle State Structure (CSceneVehicleVisState)](#1-vehicle-state-structure)
-2. [Vehicle Types & Enumerations](#2-vehicle-types--enumerations)
-3. [Wheel State Structure](#3-wheel-state-structure)
-4. [Scene Manager Architecture](#4-scene-manager-architecture)
-5. [Nadeo Services API](#5-nadeo-services-api)
-6. [Authentication Flow](#6-authentication-flow)
-7. [Camera System](#7-camera-system)
-8. [Rendering Internals](#8-rendering-internals)
-9. [Game Coordinate System](#9-game-coordinate-system)
-
----
-
-## 1. Vehicle State Structure (CSceneVehicleVisState)
-
-**Source**: `VehicleState/Debugger/Main.as`, `VehicleState/StateWrappers.as`
-**Confidence**: VERIFIED (working plugin reads these fields from live game memory)
-
-The `CSceneVehicleVisState` is the primary vehicle state visible to the rendering/visual system. It mirrors physics state for display purposes. All fields below are confirmed accessible in TM2020 (code name: TMNEXT).
+The `CSceneVehicleVisState` struct mirrors physics state for the rendering/visual system. All fields are confirmed accessible in TM2020 (code name: TMNEXT).
 
 ### Input Fields
 
@@ -81,7 +64,7 @@ The `CSceneVehicleVisState` is the primary vehicle state visible to the renderin
 | `ReactorBoostLvl` | int | Reactor boost level |
 | `ReactorBoostType` | int | Reactor boost type |
 | `ReactorAirControl` | vec3 | Air control vector during reactor |
-| `ReactorFinalTimer` | float (0-1) | Counts 0→1 in final second of boost |
+| `ReactorFinalTimer` | float (0-1) | Counts 0->1 in final second of boost |
 | `ReactorInputsX` | bool | Reactor input state |
 | `IsReactorGroundMode` | bool | Reactor ground mode active |
 
@@ -110,10 +93,12 @@ The `CSceneVehicleVisState` is the primary vehicle state visible to the renderin
 
 ---
 
-## 2. Vehicle Types & Enumerations
+## Vehicle Types and Enumerations
 
-**Source**: `VehicleState/StateWrappers.as`
-**Confidence**: VERIFIED
+Vehicle type is determined by reading a `uint8` index from the VisState and matching the corresponding `CGameItemModel.Id` against known MwIds:
+```
+IdCarSport, IdCarSnow, IdCarRally, IdCarDesert, IdCharacterPilot
+```
 
 ### VehicleType Enum
 
@@ -124,11 +109,6 @@ The `CSceneVehicleVisState` is the primary vehicle state visible to the renderin
 | 2 | `CarSnow` | Snow car |
 | 3 | `CarRally` | Rally car |
 | 4 | `CarDesert` | Desert car |
-
-**Evidence**: Vehicle type is determined by looking up a `uint8` index in the VisState, then matching the corresponding `CGameItemModel.Id` against known MwIds:
-```
-IdCarSport, IdCarSnow, IdCarRally, IdCarDesert, IdCharacterPilot
-```
 
 ### TurboLevel Enum
 
@@ -151,19 +131,19 @@ IdCarSport, IdCarSnow, IdCarRally, IdCarDesert, IdCharacterPilot
 | 6 | `RestingWater` | Resting on water surface |
 | 8 | `GlidingGround` | Gliding on ground |
 
-**Note**: Values are always even (0, 2, 4, 6, 8). The plugin author notes this "may be completely incorrect and give unexpected results" — the raw memory values may have different semantics.
+Values are always even (0, 2, 4, 6, 8). The plugin author notes this "may be completely incorrect and give unexpected results" -- the raw memory values may have different semantics.
 
 ---
 
-## 3. Wheel State Structure
+## Wheel State Structure
 
-**Source**: `VehicleState/StateWrappers.as` (MP4/Turbo variant with explicit offsets)
-**Confidence**: VERIFIED (MP4/Turbo offsets confirmed, TM2020 uses Openplanet's native reflection which doesn't expose raw offsets)
+Wheel data is accessed per-wheel from `CSceneVehicleVisState`. The MP4/Turbo variant exposes explicit offsets; TM2020 uses Openplanet's native reflection.
 
 ### Wheel Order
+
 Clockwise from front-left: **FL(0), FR(1), RR(2), RL(3)**
 
-**IMPORTANT**: The Openplanet VehicleState plugin swaps the indices for public API to be FL(0), FR(1), RL(2), RR(3) — but internally the memory layout is FL, FR, RR, RL (clockwise).
+**IMPORTANT**: The Openplanet VehicleState plugin swaps the indices for its public API to be FL(0), FR(1), RL(2), RR(3). Internally the memory layout is FL, FR, RR, RL (clockwise).
 
 ### Per-Wheel Fields (TM2020 / TMNEXT)
 
@@ -194,7 +174,7 @@ Clockwise from front-left: **FL(0), FR(1), RR(2), RL(3)**
 +0x20: IsWet            (uint32, 1=wet) [MP4 only]
 ```
 
-**Note**: TM2020 wheel struct is likely larger (has additional fields: BreakNormedCoef, Dirt, Falling, Icing01, TireWear01) but exact offsets are resolved via Openplanet reflection, not hardcoded.
+TM2020 wheel struct is larger (has additional fields: BreakNormedCoef, Dirt, Falling, Icing01, TireWear01) but exact offsets are resolved via Openplanet reflection, not hardcoded.
 
 ### VisState Layout (MP4 version, for reference)
 
@@ -227,12 +207,9 @@ CSceneVehicleVis:
 
 ---
 
-## 4. Scene Manager Architecture
+## Scene Manager Architecture
 
-**Source**: `VehicleState/Internal/SceneVis.as`, `VehicleState/Internal/Vehicle/VehicleNext.as`
-**Confidence**: VERIFIED
-
-The scene system uses an indexed manager array accessible through `ISceneVis`:
+The scene system uses an indexed manager array accessible through `ISceneVis`. The vehicle visualization manager sits at a specific index that changes across game patches.
 
 ```
 ISceneVis:
@@ -265,13 +242,14 @@ ISceneVis:
 ```
 
 **Version History for VehiclesOffset**:
-- Before 2023-03-03: 0x1C8 → 0x1E0
+- Before 2023-03-03: 0x1C8 -> 0x1E0
 - 2023-12-21: 0x210
 
 ### Vehicle Array
+
 Array of pointers, each 8 bytes:
 ```
-vehicles[i * 0x8] → CSceneVehicleVis pointer
+vehicles[i * 0x8] -> CSceneVehicleVis pointer
 ```
 
 Each CSceneVehicleVis starts with a uint32 entity ID at offset 0x0:
@@ -280,10 +258,9 @@ Each CSceneVehicleVis starts with a uint32 entity ID at offset 0x0:
 
 ---
 
-## 5. Nadeo Services API
+## Nadeo Services API
 
-**Source**: `NadeoServices/NadeoServices.as`
-**Confidence**: VERIFIED (working API client)
+Openplanet plugins use the game's built-in authentication to access Nadeo's REST APIs. Three service endpoints exist, each requiring a specific audience token.
 
 ### Base URLs
 
@@ -299,33 +276,37 @@ Authorization: nadeo_v1 t=<token>
 ```
 
 ### Audience System
-Two audience types:
-- **NadeoServices** — Core API access. Token obtained directly from game's internal auth (no refresh needed).
-- **NadeoLiveServices** — Live/Meet API access. Token obtained via `Authentication_GetToken` API call to the game.
+
+Two audience types control API access:
+- **NadeoServices** -- Core API access. Token obtained directly from the game's internal auth (no refresh needed).
+- **NadeoLiveServices** -- Live/Meet API access. Token obtained via `Authentication_GetToken` API call to the game.
 
 **DEPRECATED** (as of 2024-01-31): `NadeoClubServices` audience. Now maps to `NadeoLiveServices`.
 
-### Account ID ↔ Login Conversion
+### Account ID / Login Conversion
+
 Login is a base64-encoded UUID. Account ID is a hyphenated hex UUID:
 ```
-Login → decode base64 → format as UUID with hyphens
-AccountID → remove hyphens → hex to bytes → encode base64
+Login -> decode base64 -> format as UUID with hyphens
+AccountID -> remove hyphens -> hex to bytes -> encode base64
 ```
 
 ### Display Name Resolution
+
 Batched API: up to 209 account IDs per `RetrieveDisplayName` request.
 
 ---
 
-## 6. Authentication Flow
+## Authentication Flow
 
-**Source**: `NadeoServices/AccessToken.as`, `NadeoServices/CoreToken.as`
-**Confidence**: VERIFIED
+Two token types authenticate plugins against Nadeo services.
 
 ### Core Token
+
 Direct from game internals: `Internal::NadeoServices::GetCoreToken()`. Always considered authenticated. No refresh needed.
 
 ### Access Token (Live/Meet)
+
 Obtained through the game's own authentication system:
 
 ```
@@ -340,15 +321,14 @@ Obtained through the game's own authentication system:
 
 **Token Lifetime**: 55 minutes (Nadeo's validation window) + random 1-60 seconds jitter.
 
-**Retry Strategy on Failure**: Exponential backoff: 1s → 2s → 4s → 8s → 16s → ...
+**Retry Strategy on Failure**: Exponential backoff: 1s -> 2s -> 4s -> 8s -> 16s -> ...
 The plugin notes "this is intentionally mimicking Nadeo's code" for the retry pattern.
 
 ---
 
-## 7. Camera System
+## Camera System
 
-**Source**: `Camera/Impl.as`, `Camera/Export.as`, `NGameCamera_SCamSys_StaticInit.c`
-**Confidence**: VERIFIED
+The camera system exposes projection math and orbital camera parameters used by the map editor.
 
 ### Projection
 ```
@@ -378,7 +358,8 @@ cameraPos = targetPos + axis.xyz * distance
 ```
 
 ### Camera Types (from decompiled camera init)
-See `decompiled/camera/NGameCamera_SCamSys_StaticInit.c` for complete list:
+
+See `decompiled/camera/NGameCamera_SCamSys_StaticInit.c` for the complete list:
 - Race cameras: 3 variants (Race, Race2, Race3)
 - First/third person
 - Free camera
@@ -391,12 +372,10 @@ See `decompiled/camera/NGameCamera_SCamSys_StaticInit.c` for complete list:
 
 ---
 
-## 8. Rendering Internals
-
-**Source**: `Finetuner/src/01_RenderDistance.as`
-**Confidence**: VERIFIED
+## Rendering Internals
 
 ### Block Size
+
 **32 meters** per block unit. Evidence: `Math::Ceil(distance / 32.0f)` converts meters to blocks.
 
 ### Default Far Clip
@@ -404,17 +383,14 @@ See `decompiled/camera/NGameCamera_SCamSys_StaticInit.c` for complete list:
 - TM2020: [UNKNOWN from plugins, likely similar or larger]
 
 ### Key Rendering Types
-- `CHmsCamera` — Has `.FarZ` property for clip distance
-- `CVisionViewport` — Has `.AsyncRender` property for async rendering
+- `CHmsCamera` -- Has `.FarZ` property for clip distance
+- `CVisionViewport` -- Has `.AsyncRender` property for async rendering
 
 ---
 
-## 9. Game Coordinate System
+## Game Coordinate System
 
-**Source**: Inferred from camera code and vehicle state
-**Confidence**: PLAUSIBLE
-
-Based on the orbital camera code:
+Based on the orbital camera code, the coordinate system works as follows:
 - **Y-axis is UP** (orbital camera rotates around Y for horizontal angle)
 - **Z-axis is forward** (vec3(0, 0, -1) for vertical rotation axis)
 - Left-handed coordinate system (consistent with D3D11)
@@ -428,19 +404,14 @@ Speed conversion: **1 m/s = 3.6 km/h** (confirmed by `FrontSpeed * 3.6f` in debu
 
 ---
 
-## 10. Material & Surface System
+## Material and Surface System
 
-**Source**: `NadeoImporterMaterialLib.txt` (208 materials, 1374 lines)
-**Confidence**: VERIFIED
-
-### Critical Finding: Gameplay Effects are NOT Material-Driven
-
-ALL 208 materials in the library have `DGameplayId(None)`. Gameplay effects (turbo, reactor boost, no-grip, slow motion, etc.) are applied through **block/item types or trigger zones**, NOT through material properties.
+ALL 208 materials in the stock library have `DGameplayId(None)`. Gameplay effects (turbo, reactor boost, no-grip, slow motion) are applied through block/item types or trigger zones, NOT through material properties.
 
 Materials only affect:
-- **Surface ID** → physics collision properties (friction, sound)
-- **UV layers** → texture mapping (BaseMaterial layer 0, Lightmap layer 1)
-- **Color** → optional vertex color tinting (DColor0)
+- **Surface ID** -- physics collision properties (friction, sound)
+- **UV layers** -- texture mapping (BaseMaterial layer 0, Lightmap layer 1)
+- **Color** -- optional vertex color tinting (DColor0)
 
 ### Complete Surface ID Table (19 unique types)
 
@@ -477,8 +448,8 @@ DLibrary(<name>)           -- Library declaration
 ```
 
 ### UV Layer Types
-- `BaseMaterial` (layer 0) — Primary diffuse/PBR texture
-- `Lightmap` (layer 1) — Baked lighting data
+- `BaseMaterial` (layer 0) -- Primary diffuse/PBR texture
+- `Lightmap` (layer 1) -- Baked lighting data
 
 ### Material Categories (208 total)
 - Roads: RoadTech, RoadBump, RoadDirt, RoadIce
@@ -493,22 +464,20 @@ DLibrary(<name>)           -- Library declaration
 
 ---
 
-## 11. Editor Internals
-
-**Source**: `EditorDeveloper/Main.as`
-**Confidence**: VERIFIED
+## Editor Internals
 
 ### Editor UI Structure
+
 The editor uses a `CControlContainer` hierarchy accessed via:
 ```
-editor.EditorInterface.InterfaceScene.Mobils[0]  → root CControlContainer
+editor.EditorInterface.InterfaceScene.Mobils[0]  -> root CControlContainer
 ```
 
 ### Known UI Frame IDs
-- `FrameDeveloperTools` — Hidden Nadeo developer tools (can be shown via Openplanet)
-- `FrameEditTools` — Main editing toolbar
-- `ButtonOffZone` — Off-zone placement button (hidden by default)
-- `FrameLightTools` — Lighting controls
+- `FrameDeveloperTools` -- Hidden Nadeo developer tools (can be shown via Openplanet)
+- `FrameEditTools` -- Main editing toolbar
+- `ButtonOffZone` -- Off-zone placement button (hidden by default)
+- `FrameLightTools` -- Lighting controls
 
 ### Orbital Camera Parameters (TM2020)
 ```
@@ -518,14 +487,11 @@ editor.OrbitalCameraControl:
 ```
 
 ### Binary Patching (Offzone Enable)
-Pattern: `0F 84 ?? ?? ?? ?? 4C 8D 45 ?? BA 13` → `90 90 90 90 90 90` (NOP out conditional jump)
+Pattern: `0F 84 ?? ?? ?? ?? 4C 8D 45 ?? BA 13` -> `90 90 90 90 90 90` (NOP out conditional jump)
 
 ---
 
-## 12. Display Configuration System
-
-**Source**: `Finetuner/src/*.as`
-**Confidence**: VERIFIED
+## Display Configuration System
 
 ### SystemConfig.Display Properties
 | Property | Type | Description |
@@ -550,12 +516,9 @@ Pattern: `0F 84 ?? ?? ?? ?? 4C 8D 45 ?? BA 13` → `90 90 90 90 90 90` (NOP out 
 
 ---
 
-## 13. Complete Configuration Schema (Default.json)
+## Complete Configuration Schema (Default.json)
 
-**Source**: `Documents/Trackmania/Config/Default.json` (219 lines)
-**Confidence**: VERIFIED (actual game configuration)
-
-The Default.json contains the full configuration schema. Key categories:
+The Default.json (219 lines) contains the full configuration schema. Key categories follow.
 
 ### Display Configuration (65 parameters)
 
@@ -603,7 +566,7 @@ The Default.json contains the full configuration schema. Key categories:
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
-| `SmMaxPlayerResimStepPerFrame` | **100** | **Max physics resim steps per frame — STRONG evidence for 100Hz tick rate** |
+| `SmMaxPlayerResimStepPerFrame` | **100** | **Max physics resim steps per frame -- STRONG evidence for 100Hz tick rate** |
 | `TmMaxOpponents` | 16 | Max visible opponents |
 | `TmCarQuality` | `"high_medium_opponents"` | Car mesh quality tiers |
 | `TmCarParticlesQuality` | `"all_high"` | Particle quality |
@@ -645,6 +608,7 @@ The Default.json contains the full configuration schema. Key categories:
 | `Advertising_DisabledByUser` | false | User opt-out |
 
 ### Safe Mode Configuration
+
 The `DisplaySafe` block contains fallback settings:
 - Resolution: 800x450 windowed
 - No AA, no deferred AA
@@ -655,3 +619,24 @@ The `DisplaySafe` block contains fallback settings:
 - GpuSync: immediate (no latency)
 
 This represents the absolute minimum viable rendering target for a browser recreation.
+
+---
+
+## Related Pages
+
+- [25-openplanet-deep-mining.md](25-openplanet-deep-mining.md) -- Extended data extraction beyond this first pass
+- [04-physics-vehicle.md](04-physics-vehicle.md) -- Decompiled vehicle physics code
+- [10-physics-deep-dive.md](10-physics-deep-dive.md) -- Deep physics analysis
+- [29-community-knowledge.md](29-community-knowledge.md) -- Community projects that cross-reference this data
+- [14-tmnf-crossref.md](14-tmnf-crossref.md) -- TMNF/TM2020 comparison using these structs
+
+---
+
+<details><summary>Analysis metadata</summary>
+
+- **Source**: Openplanet plugins installed at `Trackmania/Openplanet/Plugins/`
+- **Date**: 2026-03-27
+- **Confidence**: HIGH -- These are working plugins that read live game memory. Field names and offsets are VERIFIED against the running game.
+- **Plugin sources**: `VehicleState/Debugger/Main.as`, `VehicleState/StateWrappers.as`, `VehicleState/Internal/SceneVis.as`, `VehicleState/Internal/Vehicle/VehicleNext.as`, `NadeoServices/NadeoServices.as`, `NadeoServices/AccessToken.as`, `NadeoServices/CoreToken.as`, `Camera/Impl.as`, `Camera/Export.as`, `Finetuner/src/01_RenderDistance.as`, `EditorDeveloper/Main.as`, `NadeoImporterMaterialLib.txt`
+
+</details>

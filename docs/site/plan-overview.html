@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item active" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,13 +121,10 @@
                     <div class="content-main">
                         
                         <h1 id="opentm-executive-summary"><a class="anchor" href="#opentm-executive-summary">#</a>OpenTM Executive Summary</h1>
-<p><strong>READ THIS FIRST</strong> -- This document synthesizes all 8 plan documents into a single starting point.</p>
-<p><strong>Date</strong>: 2026-03-27 <strong>Status</strong>: Pre-implementation design review complete</p>
+<p>OpenTM recreates Trackmania 2020's core gameplay in the browser. Load official TM2020 map files, render them with WebGPU, and drive on them with physics that approximate the original game. The physics engine compiles Rust to WASM for determinism and performance. Ghost recording uses input-based deterministic simulation, matching TM2020's architecture.</p>
+<p>The project targets a 12-week MVP (load map, render, drive, checkpoints, finish). A 6-month path covers full feature parity including multiplayer, editor, and audio.</p>
 <hr>
-<h2 id="1-project-vision"><a class="anchor" href="#1-project-vision">#</a>1. Project Vision</h2>
-<p>OpenTM is a browser-based recreation of Trackmania 2020's core gameplay: load official TM2020 map files, render them in 3D with WebGPU, and drive on them with physics that approximate the original game. The physics engine runs as Rust compiled to WASM for determinism and performance. Ghost recording/replay uses input-based deterministic simulation, matching TM2020's architecture. The project targets a 12-week MVP (load map, render, drive, checkpoints, finish) with a 6-month path to full feature parity including multiplayer, editor, and audio.</p>
-<hr>
-<h2 id="2-architecture-overview"><a class="anchor" href="#2-architecture-overview">#</a>2. Architecture Overview</h2>
+<h2 id="architecture-overview"><a class="anchor" href="#architecture-overview">#</a>Architecture Overview</h2>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>                        @opentm/core (TS, math types, constants)
                                 |
         +-------+-------+------+------+-------+-------+
@@ -135,7 +140,6 @@
             |       |                          |
           ghost   editor  -------- ui (Svelte) +
            (TS)    (TS)</code></pre></div>
-<p><strong>Key architectural decisions</strong>:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -150,23 +154,23 @@
 </tr>
 <tr>
   <td style="text-align:left">WebGPU deferred renderer</td>
-  <td style="text-align:left">Matches TM2020's 19-pass deferred pipeline; 4-tier progressive quality (forward -> full deferred)</td>
+  <td style="text-align:left">Matches TM2020's 19-pass deferred pipeline; 4-tier progressive quality (forward to full deferred)</td>
 </tr>
 <tr>
   <td style="text-align:left">TypeScript GBX parser</td>
-  <td style="text-align:left">Runs in browser; loads official .Map.Gbx files directly from user's disk</td>
+  <td style="text-align:left">Runs in browser; loads official .Map.Gbx files directly from disk</td>
 </tr>
 <tr>
-  <td style="text-align:left">SharedArrayBuffer for physics<->render</td>
+  <td style="text-align:left">SharedArrayBuffer for physics-render</td>
   <td style="text-align:left">Zero-copy 100Hz physics communication; avoids postMessage overhead</td>
 </tr>
 <tr>
-  <td style="text-align:left">Pre-extracted block meshes served from CDN</td>
+  <td style="text-align:left">Pre-extracted block meshes from CDN</td>
   <td style="text-align:left">PAK files are encrypted; runtime extraction is infeasible</td>
 </tr>
 <tr>
   <td style="text-align:left">Svelte for UI, HTML/CSS overlay</td>
-  <td style="text-align:left">Do NOT replicate ManiaLink; leverage browser's native UI strength</td>
+  <td style="text-align:left">Leverage the browser's native UI strength; do NOT replicate ManiaLink</td>
 </tr>
 <tr>
   <td style="text-align:left">pnpm monorepo + Turborepo</td>
@@ -175,7 +179,7 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="3-implementation-timeline"><a class="anchor" href="#3-implementation-timeline">#</a>3. Implementation Timeline</h2>
+<h2 id="implementation-timeline"><a class="anchor" href="#implementation-timeline">#</a>Implementation Timeline</h2>
 <h3 id="12-week-mvp"><a class="anchor" href="#12-week-mvp">#</a>12-Week MVP</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -199,7 +203,7 @@
 <tr>
   <td style="text-align:left">4-7</td>
   <td style="text-align:left">Renderer</td>
-  <td style="text-align:left">Forward pipeline -> deferred G-buffer (4 MRT), PBR materials, shadows, tone mapping</td>
+  <td style="text-align:left">Forward pipeline to deferred G-buffer (4 MRT), PBR materials, shadows, tone mapping</td>
 </tr>
 <tr>
   <td style="text-align:left">5-8</td>
@@ -223,29 +227,30 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Critical path</strong>: 23 working days through physics chain (monorepo -> WASM -> math -> VehicleState -> timestep -> integration -> collision -> force model -> integration with renderer). Block mesh extraction (MVP-021) is the highest-risk item on the critical path.</p>
+<p>The critical path runs 23 working days through the physics chain (monorepo to WASM to math to VehicleState to timestep to integration to collision to force model to renderer integration). Block mesh extraction (MVP-021) is the highest-risk item on the critical path.</p>
 <h3 id="6-month-full"><a class="anchor" href="#6-month-full">#</a>6-Month Full</h3>
-<p>Post-MVP additions: audio engine, Nadeo API integration, ghost import/export, map editor, ManiaScript interpreter, multiplayer (WebSocket + WebRTC), Tier 2-3 rendering (SSAO, SSR, volumetric fog, TAA), official ghost loading.</p>
+<p>Post-MVP adds: audio engine, Nadeo API integration, ghost import/export, map editor, ManiaScript interpreter, multiplayer (WebSocket + WebRTC), Tier 2-3 rendering (SSAO, SSR, volumetric fog, TAA), official ghost loading.</p>
 <hr>
-<h2 id="4-key-risks"><a class="anchor" href="#4-key-risks">#</a>4. Key Risks</h2>
-<h3 id="risk-1-block-mesh-extraction-critical"><a class="anchor" href="#risk-1-block-mesh-extraction-critical">#</a>Risk 1: Block Mesh Extraction (CRITICAL)</h3>
-<p><strong>Problem</strong>: Block geometry lives in encrypted .pak files (Blowfish CBC, server-derived keys). <strong>Mitigation</strong>: GBX.NET + PAK extraction pipeline (doc 05 recommends this as primary approach, 1-2 week effort). Fallback chain: Openplanet Fid extraction -> Ninja Ripper capture -> procedural placeholder geometry. <strong>Status from doc 05</strong>: GBX.NET.PAK already implements decryption. Nations Converter 2 proves the pipeline works. Keys obtainable from Profile.Gbx.</p>
-<h3 id="risk-2-carsport-physics-feel-high-probability"><a class="anchor" href="#risk-2-carsport-physics-feel-high-probability">#</a>Risk 2: CarSport Physics Feel (HIGH probability)</h3>
-<p><strong>Problem</strong>: Force model is decompiled structurally (500+ lines, 9 sub-functions) but tuning curve data comes from .Gbx files we cannot read. Steering, suspension, anti-roll, and drift sub-functions are referenced but not fully decompiled. <strong>Mitigation</strong>: Use TMInterface to capture reference trajectories. Build tuning workflow comparing position divergence. Accept "approximately right" for MVP.</p>
-<h3 id="risk-3-tuning-data-is-entirely-data-driven-high-impact"><a class="anchor" href="#risk-3-tuning-data-is-entirely-data-driven-high-impact">#</a>Risk 3: Tuning Data is Entirely Data-Driven (HIGH impact)</h3>
-<p><strong>Problem</strong>: Doc 07 proves NO physics constants (gravity, friction, engine curves) are hardcoded in the binary. Everything is loaded from GBX at runtime. Without extracting CPlugSpawnModel, CPlugVehiclePhyModel, and related GBX files, we have zero ground-truth values. <strong>Mitigation</strong>: Extract tuning GBX files via the same PAK pipeline as block meshes. Use TMInterface recordings to reverse-engineer approximate values. This risk compounds Risk 1 -- if PAK extraction fails, both meshes AND physics tuning are blocked.</p>
-<h3 id="risk-4-gbx-parser-completeness-medium"><a class="anchor" href="#risk-4-gbx-parser-completeness-medium">#</a>Risk 4: GBX Parser Completeness (MEDIUM)</h3>
-<p><strong>Problem</strong>: Complex community maps may use chunk versions or features not handled. Non-skippable unknown chunks halt parsing entirely. <strong>Mitigation</strong>: Use gbx-net source as authoritative reference. Target 80%+ map compatibility for MVP.</p>
-<h3 id="risk-5-wasm-transcendental-function-divergence-low-for-cross-browser-medium-for-tm2020-match"><a class="anchor" href="#risk-5-wasm-transcendental-function-divergence-low-for-cross-browser-medium-for-tm2020-match">#</a>Risk 5: WASM Transcendental Function Divergence (LOW for cross-browser, MEDIUM for TM2020 match)</h3>
-<p><strong>Problem</strong>: Compiled libm sin/cos/atan2 will be deterministic across browsers but will NOT match TM2020's MSVC implementation. Over many ticks, trajectories will diverge from official replays. <strong>Mitigation</strong>: Accept divergence for v1. Future: extract TM2020's exact libm or use lookup tables tuned to match.</p>
+<h2 id="key-risks"><a class="anchor" href="#key-risks">#</a>Key Risks</h2>
+<h3 id="block-mesh-extraction-critical"><a class="anchor" href="#block-mesh-extraction-critical">#</a>Block Mesh Extraction (CRITICAL)</h3>
+<p>Block geometry lives in encrypted .pak files (Blowfish CBC, server-derived keys). GBX.NET + PAK extraction pipeline is the primary approach (1-2 week effort). GBX.NET.PAK already implements decryption. Nations Converter 2 proves the pipeline works. Keys are obtainable from Profile.Gbx.</p>
+<p>Fallback chain: Openplanet Fid extraction, Ninja Ripper capture, procedural placeholder geometry.</p>
+<h3 id="carsport-physics-feel-high-probability"><a class="anchor" href="#carsport-physics-feel-high-probability">#</a>CarSport Physics Feel (HIGH probability)</h3>
+<p>The force model is decompiled structurally (500+ lines, 9 sub-functions), but tuning curve data comes from .Gbx files we cannot read. Steering, suspension, anti-roll, and drift sub-functions are referenced but not fully decompiled. TMInterface captures reference trajectories for comparison. Accept "approximately right" for MVP.</p>
+<h3 id="tuning-data-is-entirely-data-driven-high-impact"><a class="anchor" href="#tuning-data-is-entirely-data-driven-high-impact">#</a>Tuning Data is Entirely Data-Driven (HIGH impact)</h3>
+<p>Doc 07 proves NO physics constants (gravity, friction, engine curves) are hardcoded in the binary. Everything loads from GBX at runtime. Without extracting CPlugSpawnModel, CPlugVehiclePhyModel, and related GBX files, we have zero ground-truth values. This risk compounds the block mesh risk -- if PAK extraction fails, both meshes AND physics tuning are blocked.</p>
+<h3 id="gbx-parser-completeness-medium"><a class="anchor" href="#gbx-parser-completeness-medium">#</a>GBX Parser Completeness (MEDIUM)</h3>
+<p>Complex community maps may use chunk versions or features not handled. Non-skippable unknown chunks halt parsing entirely. Use gbx-net source as authoritative reference. Target 80%+ map compatibility for MVP.</p>
+<h3 id="wasm-transcendental-function-divergence-low-cross-browser-medium-tm2020-match"><a class="anchor" href="#wasm-transcendental-function-divergence-low-cross-browser-medium-tm2020-match">#</a>WASM Transcendental Function Divergence (LOW cross-browser, MEDIUM TM2020 match)</h3>
+<p>Compiled libm sin/cos/atan2 produces deterministic results across browsers but does NOT match TM2020's MSVC implementation. Over many ticks, trajectories diverge from official replays. Accept divergence for v1.</p>
 <hr>
-<h2 id="5-technology-stack"><a class="anchor" href="#5-technology-stack">#</a>5. Technology Stack</h2>
+<h2 id="technology-stack"><a class="anchor" href="#technology-stack">#</a>Technology Stack</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Layer</th>
   <th style="text-align:left">Technology</th>
-  <th style="text-align:left">Version/Notes</th>
+  <th style="text-align:left">Notes</th>
 </tr>
 </thead>
 <tbody>
@@ -322,7 +327,7 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="6-getting-started-first-5-tasks-on-day-1"><a class="anchor" href="#6-getting-started-first-5-tasks-on-day-1">#</a>6. Getting Started -- First 5 Tasks on Day 1</h2>
+<h2 id="getting-started-first-5-tasks-on-day-1"><a class="anchor" href="#getting-started-first-5-tasks-on-day-1">#</a>Getting Started -- First 5 Tasks on Day 1</h2>
 <ol>
   <li><strong>MVP-001</strong>: Initialize pnpm monorepo with <code>@opentm/app</code>, <code>@opentm/gbx</code>, <code>@opentm/renderer</code>, <code>@opentm/physics</code> packages. Configure TypeScript strict, ESLint, Prettier.</li>
 </ol>
@@ -340,7 +345,7 @@
 </ol>
 <p>Tasks 1-4 are zero-risk setup. Task 5 is the highest-risk item in the entire project and benefits from early investigation.</p>
 <hr>
-<h2 id="7-open-questions"><a class="anchor" href="#7-open-questions">#</a>7. Open Questions</h2>
+<h2 id="open-questions"><a class="anchor" href="#open-questions">#</a>Open Questions</h2>
 <h3 id="must-answer-before-implementation"><a class="anchor" href="#must-answer-before-implementation">#</a>Must Answer Before Implementation</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -467,44 +472,44 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="8-cross-document-issues"><a class="anchor" href="#8-cross-document-issues">#</a>8. Cross-Document Issues</h2>
+<h2 id="cross-document-issues"><a class="anchor" href="#cross-document-issues">#</a>Cross-Document Issues</h2>
 <h3 id="contradictions-found"><a class="anchor" href="#contradictions-found">#</a>Contradictions Found</h3>
-<p><strong>C1: Module naming inconsistency between doc 01 and doc 08.</strong> Doc 01 defines <code>@opentm/gbx-parser</code> as the GBX parsing module. Doc 08 (MVP tasks) refers to it as module <code>gbx</code> in task descriptions (e.g., MVP-010 through MVP-019 list "Module: gbx"). The Cargo crate is named <code>opentm-physics</code> in doc 01 but the npm package is <code>@opentm/physics</code>. This is cosmetic but should be standardized before implementation. The monorepo directory in doc 01 Section 5.1 uses <code>gbx-parser/</code> which is correct.</p>
-<p><strong>C2: rapier3d vs custom collision.</strong> Doc 01 (Section 1.1, <code>@opentm/physics</code>) declares <code>collision: CollisionWorld, // wraps rapier3d</code> and lists rapier3d in Cargo.toml dependencies. Doc 02 (Section 6) designs a fully custom collision system (broadphase grid, GJK/EPA narrowphase, custom contact merging, custom friction solver) with no mention of rapier3d. Doc 08 (MVP-040 through MVP-042) describes building custom BVH, SAT/GJK narrowphase, and impulse-based solver. These are contradictory approaches. <strong>Resolution needed</strong>: Either use rapier3d (simpler, faster to ship) or build custom (more control, matches TM2020's internal solver). The custom approach in docs 02 and 08 is more aligned with the project's goal of matching TM2020 behavior.</p>
-<p><strong>C3: G-buffer normal format inconsistency.</strong> Doc 03 Section 2 specifies RT2 Normal as <code>rg16float</code> with octahedral encoding (2 channels). Doc 01 Section 2.3 (render frame trace) says <code>RT2: normal (rgba16float) -- camera-space normal from TBN * normal map</code>. Doc 08 MVP-032 says <code>world-space normal (rgba16float)</code>. Three different specifications: <code>rg16float</code> vs <code>rgba16float</code>, and camera-space vs world-space. <strong>Doc 03 is authoritative</strong> (it provides the detailed justification): <code>rg16float</code>, camera-space, octahedral encoded. Docs 01 and 08 should be corrected.</p>
-<p><strong>C4: Gravity constant handling.</strong> Doc 08 MVP-036 says "Apply gravity as a constant downward acceleration (9.81 m/s^2 in -Y direction)." Doc 07 explicitly states "TM2020 uses NO hardcoded gravity constant" -- it is data-driven from CPlugSpawnModel.DefaultGravitySpawn. Doc 08 acknowledges this ("TM2020 uses parameterized gravity with GravityCoef, but start with hardcoded 9.81 for now"), so this is an intentional simplification for MVP, not a true contradiction. However, the actual TM2020 gravity magnitude is <span class="badge badge-unknown">UNKNOWN</span> (not necessarily 9.81). This should be flagged as a tuning risk.</p>
-<p><strong>C5: SharedArrayBuffer layout discrepancy.</strong> Doc 01 Section 3.2 defines a detailed SAB layout with INPUT REGION starting at offset 0x0040 and OUTPUT REGION at 0x0100. Doc 02 Section 9 is titled "WASM Interface (SharedArrayBuffer)" but was not fully readable. The physics Rust struct in doc 02 uses <code>#[wasm_bindgen]</code> with <code>pub fn step(&mut self, input_buffer: &[u8]) -> Box<[u8]></code> which is a byte-buffer interface, NOT a SharedArrayBuffer interface. These are two different communication patterns. <strong>Resolution needed</strong>: The SAB approach (doc 01) is superior for performance. The byte-buffer approach (doc 02) is simpler but involves copying. Pick one.</p>
-<p><strong>C6: Tick microsecond constant.</strong> Doc 01 defines <code>TICK_DT_MICROS = 10_000_000</code> (10 million, which would be 10 seconds, not 10ms). The correct value for 10ms is 10,000 microseconds. Doc 02 correctly uses <code>TICK_US: i64 = 10_000</code> (10,000 microseconds). Doc 01's value appears to be a bug -- it should be <code>10_000</code> not <code>10_000_000</code>.</p>
+<p><strong>C1: Module naming inconsistency between doc 01 and doc 08.</strong> Doc 01 defines <code>@opentm/gbx-parser</code> as the GBX parsing module. Doc 08 refers to it as module <code>gbx</code> in task descriptions. The Cargo crate is named <code>opentm-physics</code> in doc 01 but the npm package is <code>@opentm/physics</code>. Standardize before implementation.</p>
+<p><strong>C2: rapier3d vs custom collision.</strong> Doc 01 declares <code>collision: CollisionWorld, // wraps rapier3d</code> and lists rapier3d in Cargo.toml dependencies. Doc 02 designs a fully custom collision system (broadphase grid, GJK/EPA narrowphase, custom contact merging, custom friction solver). Doc 08 describes building custom BVH, SAT/GJK narrowphase, and impulse-based solver. <strong>Resolution needed</strong>: Either use rapier3d (simpler, faster to ship) or build custom (more control, matches TM2020's internal solver). The custom approach in docs 02 and 08 aligns better with the project's goal.</p>
+<p><strong>C3: G-buffer normal format inconsistency.</strong> Doc 03 specifies RT2 Normal as <code>rg16float</code> with octahedral encoding (2 channels). Doc 01 says <code>rgba16float</code> camera-space normal. Doc 08 says <code>world-space normal (rgba16float)</code>. Three different specifications. <strong>Doc 03 is authoritative</strong>: <code>rg16float</code>, camera-space, octahedral encoded.</p>
+<p><strong>C4: Gravity constant handling.</strong> Doc 08 MVP-036 says "Apply gravity as a constant downward acceleration (9.81 m/s^2)." Doc 07 states "TM2020 uses NO hardcoded gravity constant" -- it is data-driven from CPlugSpawnModel.DefaultGravitySpawn. Doc 08 acknowledges this as an intentional MVP simplification. The actual TM2020 gravity magnitude is <span class="badge badge-unknown">UNKNOWN</span> (not necessarily 9.81).</p>
+<p><strong>C5: SharedArrayBuffer layout discrepancy.</strong> Doc 01 defines a detailed SAB layout with INPUT REGION at offset 0x0040 and OUTPUT REGION at 0x0100. Doc 02's physics Rust struct uses <code>#[wasm_bindgen]</code> with <code>pub fn step(&mut self, input_buffer: &[u8]) -> Box<[u8]></code> -- a byte-buffer interface, NOT a SharedArrayBuffer interface. <strong>Resolution needed</strong>: The SAB approach (doc 01) is superior for performance.</p>
+<p><strong>C6: Tick microsecond constant.</strong> Doc 01 defines <code>TICK_DT_MICROS = 10_000_000</code> (10 million, which equals 10 seconds, not 10ms). The correct value for 10ms is 10,000 microseconds. Doc 02 correctly uses <code>TICK_US: i64 = 10_000</code>. Doc 01's value is a bug.</p>
 <h3 id="gaps-found"><a class="anchor" href="#gaps-found">#</a>Gaps Found</h3>
-<p><strong>G1: No specification for extracting physics tuning data.</strong> Doc 05 covers block mesh extraction in detail (7 approaches evaluated). Doc 07 proves all physics constants are data-driven from GBX. But NO document specifies how to extract the GBX files containing CPlugSpawnModel, CPlugVehiclePhyModel, NPlugDyna::SConstraintModel, or SSolverParams. The mesh extraction pipeline (doc 05) should also extract these files, but this is not called out. A developer would not know which specific GBX files to target or how to parse the tuning curve format (CFuncKeysReal).</p>
-<p><strong>G2: No asset manifest specification.</strong> Doc 01 mentions an "asset manifest JSON" and doc 04 references "asset manifest management," but no document defines the manifest schema (what fields, what URLs, how blocks map to meshes and materials). A developer starting MVP-022 (block mesh registry) would need to invent this format.</p>
-<p><strong>G3: No specification for block variant selection.</strong> Maps contain blocks with ground/air variants, color variants (flags bits 12-14), and free-placement variants. Doc 04 Section 4 titles "The Block Mesh Problem" but focuses on extraction, not on runtime variant resolution. Which mesh file corresponds to "StadiumRoadMainStraight" ground variant vs air variant? How are the ~200 block types mapped to mesh files? This is a gap between doc 04 (asset pipeline) and doc 08 (MVP-020, block data model).</p>
-<p><strong>G4: No multiplayer protocol specification.</strong> Doc 01 mentions "WebSocket + WebRTC" for future multiplayer and explicitly defers it, which is fine for MVP. But there is no placeholder design or even a list of what would need to change in the architecture to support multiplayer (e.g., authoritative server, client prediction, state sync frequency).</p>
-<p><strong>G5: Collision mesh vs visual mesh separation.</strong> Doc 08 MVP-040 acknowledges that "TM2020 separates visual and collision meshes internally" and flags "block meshes may have decorative geometry mixed with collision geometry." No document specifies how to separate collision geometry from visual geometry during extraction. The CPlugSolid2Model contains both visual LODs and a collision shape (CPlugSurface/Shape.Gbx), but the extraction pipeline in doc 05 focuses only on visual meshes. The collision shapes need separate extraction.</p>
-<p><strong>G6: No error recovery or graceful degradation strategy.</strong> What happens when a block mesh is missing? Doc 08 MVP-022 says "substitute a colored wireframe cube," but there is no systematic strategy for: missing textures, unsupported GBX chunk versions, physics solver divergence, WebGPU feature gaps on specific hardware. A resilience/fallback matrix would help.</p>
-<p><strong>G7: Map coordinate system offset ambiguity.</strong> Doc 01 Section 2.1 says <code>world_y = (gridY - 8) <em> 8m</code> with a note about "Y has a -8 offset for maps with grid origin at y=8". Doc 08 MVP-020 says <code>world_y = grid_y </em> 8.0</code> with NO offset. These produce different results. The actual offset depends on the map's <code>MapCoordOrigin</code> field (chunk <code class="addr">0x03043003</code>). This needs to be resolved with a definitive rule.</p>
-<p><strong>G8: Wheel order discrepancy.</strong> Doc 02 Section 2.1 states wheel order as "FL(0), FR(1), RR(2), RL(3) -- clockwise from front-left." Doc 07 Section 7 shows wheel stride offsets but does not confirm this order. The "clockwise from front-left" labeling gives FL, FR, RR, RL which skips the rear-left before rear-right, suggesting it might actually be FL, FR, RL, RR (as in standard automotive convention). This should be verified.</p>
+<p><strong>G1: No specification for extracting physics tuning data.</strong> Doc 05 covers block mesh extraction. Doc 07 proves all physics constants are data-driven from GBX. But NO document specifies how to extract the GBX files containing CPlugSpawnModel, CPlugVehiclePhyModel, NPlugDyna::SConstraintModel, or SSolverParams.</p>
+<p><strong>G2: No asset manifest specification.</strong> Doc 01 mentions an "asset manifest JSON" and doc 04 references "asset manifest management," but no document defines the manifest schema.</p>
+<p><strong>G3: No specification for block variant selection.</strong> Maps contain blocks with ground/air variants, color variants, and free-placement variants. No document specifies how to map block names to mesh files at runtime.</p>
+<p><strong>G4: No multiplayer protocol specification.</strong> Doc 01 mentions "WebSocket + WebRTC" for future multiplayer and explicitly defers it.</p>
+<p><strong>G5: Collision mesh vs visual mesh separation.</strong> Doc 08 acknowledges TM2020 separates visual and collision meshes internally. No document specifies how to separate collision geometry from visual geometry during extraction.</p>
+<p><strong>G6: No error recovery or graceful degradation strategy.</strong> No systematic strategy for missing textures, unsupported GBX chunk versions, physics solver divergence, or WebGPU feature gaps.</p>
+<p><strong>G7: Map coordinate system offset ambiguity.</strong> Doc 01 says <code>world_y = (gridY - 8) <em> 8m</code>. Doc 08 says <code>world_y = grid_y </em> 8.0</code> with NO offset. The actual offset depends on the map's <code>MapCoordOrigin</code> field.</p>
+<p><strong>G8: Wheel order discrepancy.</strong> Doc 02 states wheel order as "FL(0), FR(1), RR(2), RL(3) -- clockwise from front-left." The "clockwise" labeling suggests it might actually be FL, FR, RL, RR (standard automotive convention). Verify.</p>
 <h3 id="things-that-would-surprise-a-developer"><a class="anchor" href="#things-that-would-surprise-a-developer">#</a>Things That Would Surprise a Developer</h3>
 <ol>
-  <li><strong>GBX body uses LZO, not zlib.</strong> Multiple docs emphasize this correction from the initial assumption. The binary contains zlib strings but those are for lightmaps and ghosts, not the main body.</li>
+  <li><strong>GBX body uses LZO, not zlib.</strong> The binary contains zlib strings but those are for lightmaps and ghosts, not the main body.</li>
 </ol>
 <ol>
-  <li><strong>The turbo force ramps UP, not down.</strong> Decompilation shows <code>(elapsed / duration) * strength</code>, meaning the boost gets stronger over time, not weaker. This is counterintuitive and contradicts TMNF behavior.</li>
+  <li><strong>The turbo force ramps UP, not down.</strong> Decompilation shows <code>(elapsed / duration) * strength</code>. The boost gets stronger over time. This contradicts TMNF behavior.</li>
 </ol>
 <ol>
-  <li><strong>All physics tuning is data-driven.</strong> There is no hardcoded 9.81. No hardcoded friction. No hardcoded engine curves. Everything comes from GBX files. If you cannot extract those files, you have zero ground-truth physics values.</li>
+  <li><strong>All physics tuning is data-driven.</strong> No hardcoded 9.81. No hardcoded friction. No hardcoded engine curves. Everything comes from GBX files. Without extracting those files, you have zero ground-truth physics values.</li>
 </ol>
 <ol>
   <li><strong>The TICK_DT_MICROS constant in doc 01 is wrong.</strong> It says 10,000,000 (10 seconds) instead of 10,000 (10ms). Do not copy this value.</li>
 </ol>
 <ol>
-  <li><strong>The <code>@opentm/physics</code> Rust crate has two conflicting interfaces</strong> described across docs: SharedArrayBuffer (doc 01) vs byte-buffer via wasm_bindgen (doc 02). These need to be reconciled.</li>
+  <li><strong>The <code>@opentm/physics</code> Rust crate has two conflicting interfaces</strong> described across docs: SharedArrayBuffer (doc 01) vs byte-buffer via wasm_bindgen (doc 02). Reconcile before implementation.</li>
 </ol>
 <ol>
   <li><strong>208 stock materials all have <code>DGameplayId(None)</code>.</strong> Gameplay effects (turbo, ice, etc.) come from block trigger zones, NOT from material surfaces. The two-ID system (material physics ID vs gameplay ID) is non-obvious.</li>
 </ol>
 <ol>
-  <li><strong>Block mesh extraction is prerequisite for BOTH rendering AND physics.</strong> Without it, you have neither visual meshes nor collision geometry nor physics tuning curves. This single dependency gates three major subsystems.</li>
+  <li><strong>Block mesh extraction gates THREE major subsystems.</strong> Without it, you have neither visual meshes nor collision geometry nor physics tuning curves.</li>
 </ol>
 <hr>
 <h2 id="document-index"><a class="anchor" href="#document-index">#</a>Document Index</h2>
@@ -530,7 +535,7 @@
 <tr>
   <td style="text-align:left">03</td>
   <td style="text-align:left">Renderer Design</td>
-  <td style="text-align:left">4-tier pipeline (forward -> ultra), G-buffer format, 38 uber-shaders replacing 1112 TM2020 shaders, WGSL code</td>
+  <td style="text-align:left">4-tier pipeline (forward to ultra), G-buffer format, 38 uber-shaders replacing 1112 TM2020 shaders, WGSL code</td>
 </tr>
 <tr>
   <td style="text-align:left">04</td>
@@ -559,34 +564,48 @@
 </tr>
 </tbody>
 </table></div>
+<hr>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="01-system-architecture.md">System Architecture</a> -- Full module dependency graph and data flow traces</li>
+  <li><a href="02-physics-engine.md">Physics Engine</a> -- VehicleState struct and force model implementation</li>
+  <li><a href="05-block-mesh-research.md">Block Mesh Research</a> -- Detailed extraction approach comparison</li>
+  <li><a href="08-mvp-tasks.md">MVP Tasks</a> -- Complete task breakdown and critical path</li>
+</ul>
+<details><summary>Document metadata</summary>
+<ul>
+  <li><strong>Date</strong>: 2026-03-27</li>
+  <li><strong>Status</strong>: Pre-implementation design review complete</li>
+</ul>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="shaders.html">&larr; Shader Catalog</a><a class="next" href="plan-architecture.html">System Architecture &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="recreation.html">&larr; Browser Recreation Guide</a><a class="next" href="plan-architecture.html">System Architecture &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#1-project-vision">1. Project Vision</a></li>
-<li class=""><a href="#2-architecture-overview">2. Architecture Overview</a></li>
-<li class=""><a href="#3-implementation-timeline">3. Implementation Timeline</a></li>
+<li class=""><a href="#architecture-overview">Architecture Overview</a></li>
+<li class=""><a href="#implementation-timeline">Implementation Timeline</a></li>
   <li class="toc-h3"><a href="#12-week-mvp">12-Week MVP</a></li>
   <li class="toc-h3"><a href="#6-month-full">6-Month Full</a></li>
-<li class=""><a href="#4-key-risks">4. Key Risks</a></li>
-  <li class="toc-h3"><a href="#risk-1-block-mesh-extraction-critical">Risk 1: Block Mesh Extraction (CRITICAL)</a></li>
-  <li class="toc-h3"><a href="#risk-2-carsport-physics-feel-high-probability">Risk 2: CarSport Physics Feel (HIGH probability)</a></li>
-  <li class="toc-h3"><a href="#risk-3-tuning-data-is-entirely-data-driven-high-impact">Risk 3: Tuning Data is Entirely Data-Driven (HIGH impact)</a></li>
-  <li class="toc-h3"><a href="#risk-4-gbx-parser-completeness-medium">Risk 4: GBX Parser Completeness (MEDIUM)</a></li>
-  <li class="toc-h3"><a href="#risk-5-wasm-transcendental-function-divergence-low-for-cross-browser-medium-for-tm2020-match">Risk 5: WASM Transcendental Function Divergence (LOW for cross-browser, MEDIUM for TM2020 match)</a></li>
-<li class=""><a href="#5-technology-stack">5. Technology Stack</a></li>
-<li class=""><a href="#6-getting-started-first-5-tasks-on-day-1">6. Getting Started -- First 5 Tasks on Day 1</a></li>
-<li class=""><a href="#7-open-questions">7. Open Questions</a></li>
+<li class=""><a href="#key-risks">Key Risks</a></li>
+  <li class="toc-h3"><a href="#block-mesh-extraction-critical">Block Mesh Extraction (CRITICAL)</a></li>
+  <li class="toc-h3"><a href="#carsport-physics-feel-high-probability">CarSport Physics Feel (HIGH probability)</a></li>
+  <li class="toc-h3"><a href="#tuning-data-is-entirely-data-driven-high-impact">Tuning Data is Entirely Data-Driven (HIGH impact)</a></li>
+  <li class="toc-h3"><a href="#gbx-parser-completeness-medium">GBX Parser Completeness (MEDIUM)</a></li>
+  <li class="toc-h3"><a href="#wasm-transcendental-function-divergence-low-cross-browser-medium-tm2020-match">WASM Transcendental Function Divergence (LOW cross-browser, MEDIUM TM2020 match)</a></li>
+<li class=""><a href="#technology-stack">Technology Stack</a></li>
+<li class=""><a href="#getting-started-first-5-tasks-on-day-1">Getting Started -- First 5 Tasks on Day 1</a></li>
+<li class=""><a href="#open-questions">Open Questions</a></li>
   <li class="toc-h3"><a href="#must-answer-before-implementation">Must Answer Before Implementation</a></li>
   <li class="toc-h3"><a href="#should-answer-during-implementation">Should Answer During Implementation</a></li>
   <li class="toc-h3"><a href="#nice-to-know">Nice to Know</a></li>
-<li class=""><a href="#8-cross-document-issues">8. Cross-Document Issues</a></li>
+<li class=""><a href="#cross-document-issues">Cross-Document Issues</a></li>
   <li class="toc-h3"><a href="#contradictions-found">Contradictions Found</a></li>
   <li class="toc-h3"><a href="#gaps-found">Gaps Found</a></li>
   <li class="toc-h3"><a href="#things-that-would-surprise-a-developer">Things That Would Surprise a Developer</a></li>
 <li class=""><a href="#document-index">Document Index</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item active" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item active" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -112,33 +120,18 @@
                 <div class="content-body">
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
-                        <h1 id="file-format-handling-and-gbx-parsing"><a class="anchor" href="#file-format-handling-and-gbx-parsing">#</a>File Format Handling and GBX Parsing</h1>
-<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020) <strong>Date of analysis</strong>: 2026-03-27 <strong>Tools</strong>: Ghidra 11.x via PyGhidra bridge <strong>Note</strong>: All function symbols are stripped. Functions are named by Ghidra convention (FUN_<address>).</p>
-<hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-gbx-file-format-overview">GBX File Format Overview</a></li>
-  <li><a href="#2-gbx-header-parsing">GBX Header Parsing</a></li>
-  <li><a href="#3-gbx-body-and-chunk-system">GBX Body and Chunk System</a></li>
-  <li><a href="#4-the-serialization--archive-system">The Serialization / Archive System</a></li>
-  <li><a href="#5-class-id-system">Class ID System</a></li>
-  <li><a href="#6-file-types-supported">File Types Supported</a></li>
-  <li><a href="#7-the-fid-file-id-system">The Fid (File ID) System</a></li>
-  <li><a href="#8-pack-file-system">Pack File System</a></li>
-  <li><a href="#9-map-loading-pipeline-cgamectnchallenge">Map Loading Pipeline (CGameCtnChallenge)</a></li>
-  <li><a href="#10-key-function-reference-table">Key Function Reference Table</a></li>
-</ol>
-<hr>
-<h2 id="1-gbx-file-format-overview"><a class="anchor" href="#1-gbx-file-format-overview">#</a>1. GBX File Format Overview</h2>
-<p>GBX (GameBox) is Nadeo's proprietary binary serialization format used for all game assets. Every <code>.Gbx</code> file encodes a single CMwNod-derived object tree using a chunk-based serialization protocol.</p>
-<p><strong>Loading entry point</strong>: <code>FUN_140904730</code> (CSystemArchiveNod::LoadGbx)</p>
-<p>The loading pipeline supports three file variants:</p>
+                        <h1 id="gbx-file-format-and-parsing"><a class="anchor" href="#gbx-file-format-and-parsing">#</a>GBX File Format and Parsing</h1>
+<p>GBX (GameBox) is Nadeo's binary serialization format for all Trackmania game assets. Every <code>.Gbx</code> file encodes a single CMwNod-derived object tree using a chunk-based protocol. Understanding GBX is the gateway to reading maps, replays, items, and every other game file.</p>
+<p>The GBX format supports three file variants:</p>
 <ul>
-  <li><strong>Binary GBX</strong> (<code>.gbx</code>) - primary format, chunk-based binary serialization</li>
-  <li><strong>XML GBX</strong> (<code>.gbx.xml</code>) - XML representation, loaded via <code>FUN_140925fa0</code></li>
-  <li><strong>JSON</strong> (<code>.json</code>) - JSON import, loaded via <code>FUN_140934b80</code></li>
+  <li><strong>Binary GBX</strong> (<code>.gbx</code>) -- primary format, chunk-based binary serialization</li>
+  <li><strong>XML GBX</strong> (<code>.gbx.xml</code>) -- XML representation, loaded via <code>FUN_140925fa0</code></li>
+  <li><strong>JSON</strong> (<code>.json</code>) -- JSON import, loaded via <code>FUN_140934b80</code></li>
 </ul>
-<h3 id="gbx-file-structure-binary"><a class="anchor" href="#gbx-file-structure-binary">#</a>GBX File Structure (Binary)</h3>
+<p><strong>Loading entry point</strong>: <code>FUN_140904730</code> (CSystemArchiveNod::LoadGbx)</p>
+<hr>
+<h2 id="how-gbx-files-are-structured"><a class="anchor" href="#how-gbx-files-are-structured">#</a>How GBX files are structured</h2>
+<p>Every GBX file follows a header-references-body layout. The header identifies the file type and provides quick-access metadata. The reference table lists external dependencies. The body carries the serialized data.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+---------------------------+
 | Magic: &quot;GBX&quot; (3 bytes)   |  FUN_140900e60 reads this
 +---------------------------+
@@ -163,13 +156,12 @@
   <li><code>"[Sys] Corrupted data while reading .gbx file"</code> at <code class="addr">0x141c06ac0</code></li>
 </ul>
 <hr>
-<h2 id="2-gbx-header-parsing"><a class="anchor" href="#2-gbx-header-parsing">#</a>2. GBX Header Parsing</h2>
-<details class="collapsible collapsed-by-default">
-<summary><h3 id="magic-and-version-fun_140900e60-at-0x140900e60"><a class="anchor" href="#magic-and-version-fun_140900e60-at-0x140900e60">#</a>Magic and Version (<code>FUN_140900e60</code> at <code class="addr">0x140900e60</code>)</h3></summary>
-<div class="collapsible-content">
-<p>The header loader reads:</p>
+<h2 id="how-the-header-is-parsed"><a class="anchor" href="#how-the-header-is-parsed">#</a>How the header is parsed</h2>
+<p>The header parser (<code>FUN_140900e60</code> at <code class="addr">0x140900e60</code>) reads the magic bytes and version, then hands off to version-specific logic.</p>
+<h3 id="magic-and-version"><a class="anchor" href="#magic-and-version">#</a>Magic and version</h3>
+<p>The first 5 bytes identify the file:</p>
 <ol>
-  <li><strong>3 bytes</strong>: Must be exactly <code>'G'</code>, <code>'B'</code>, <code>'X'</code></li>
+  <li><strong>3 bytes</strong>: Must match <code>'G'</code>, <code>'B'</code>, <code>'X'</code></li>
   <li><strong>2 bytes (uint16)</strong>: Version number</li>
 </ol>
 <div class="table-wrapper"><table>
@@ -214,12 +206,8 @@
 </tbody>
 </table></div>
 <p>For versions 3-6, parsing continues in <code>FUN_140901850</code>.</p>
-<details class="collapsible collapsed-by-default">
-<summary></div>
-</details>
-<h3 id="format-flags-version-6-fun_140901850-at-0x140901850"><a class="anchor" href="#format-flags-version-6-fun_140901850-at-0x140901850">#</a>Format Flags - Version 6+ (<code>FUN_140901850</code> at <code class="addr">0x140901850</code>)</h3></summary>
-<div class="collapsible-content">
-<p>For version 6, a 4-character format descriptor follows the version:</p>
+<h3 id="format-flags-version-6"><a class="anchor" href="#format-flags-version-6">#</a>Format flags (version 6+)</h3>
+<p><code>FUN_140901850</code> at <code class="addr">0x140901850</code> reads a 4-character format descriptor after the version field.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -269,16 +257,13 @@
   <li><strong>Reference count</strong> (uint32): Number of entries in the reference table (max 50,000 enforced)</li>
 </ul>
 <p>The reference table is allocated as an array of 0x10-byte entries at archive offset <code>+0x50</code>.</p>
-</div>
-</details>
 <h3 id="decompiled-code"><a class="anchor" href="#decompiled-code">#</a>Decompiled code</h3>
 <p>See <code>decompiled/fileformats/FUN_140900e60_LoadHeader.c</code> and <code>FUN_140901850_ParseVersionHeader.c</code>.</p>
 <hr>
-<h2 id="3-gbx-body-and-chunk-system"><a class="anchor" href="#3-gbx-body-and-chunk-system">#</a>3. GBX Body and Chunk System</h2>
-<details class="collapsible collapsed-by-default">
-<summary><h3 id="reference-table-loading-fun_140902530-at-0x140902530"><a class="anchor" href="#reference-table-loading-fun_140902530-at-0x140902530">#</a>Reference Table Loading (<code>FUN_140902530</code> at <code class="addr">0x140902530</code>)</h3></summary>
-<div class="collapsible-content">
-<p>After the header, the reference table is loaded. This resolves external dependencies (other GBX files referenced by this one).</p>
+<h2 id="how-the-body-and-chunk-system-work"><a class="anchor" href="#how-the-body-and-chunk-system-work">#</a>How the body and chunk system work</h2>
+<p>The body contains all serialized data for the root node. It is organized as a sequential stream of chunks.</p>
+<h3 id="reference-table-loading"><a class="anchor" href="#reference-table-loading">#</a>Reference table loading</h3>
+<p><code>FUN_140902530</code> at <code class="addr">0x140902530</code> loads the reference table after the header. This resolves external dependencies (other GBX files referenced by this one).</p>
 <p><strong>Profiling marker</strong>: <code>"NSys::ArLoadRef_Gbx"</code> (version 7) or <code>"NSys::ArLoadRef"</code> (others)</p>
 <p>The function:</p>
 <ol>
@@ -294,12 +279,8 @@
   <li>Loads referenced file if needed (recursive loading)</li>
   <li>The special value <code class="addr">0xDEADBEEF</code> is written as a placeholder during reference resolution (visible at address <code class="addr">0x140902994</code>)</li>
 </ol>
-<details class="collapsible collapsed-by-default">
-<summary></div>
-</details>
-<h3 id="body-chunk-loading-fun_1409031d0-at-0x1409031d0"><a class="anchor" href="#body-chunk-loading-fun_1409031d0-at-0x1409031d0">#</a>Body Chunk Loading (<code>FUN_1409031d0</code> at <code class="addr">0x1409031d0</code>)</h3></summary>
-<div class="collapsible-content">
-<p>The body contains the actual serialized data, organized as a sequence of chunks.</p>
+<h3 id="body-chunk-loading"><a class="anchor" href="#body-chunk-loading">#</a>Body chunk loading</h3>
+<p><code>FUN_1409031d0</code> at <code class="addr">0x1409031d0</code> loads the main serialized data from the body.</p>
 <p><strong>Profiling marker</strong>: Uses the output of <code>FUN_140903140</code> (e.g., <code>"ArchiveNod::LoadGbx_Body(Challenge)"</code>)</p>
 <p>Flow:</p>
 <ol>
@@ -310,23 +291,17 @@
   <li>Decompresses body via <code>FUN_140127aa0</code> into a memory buffer</li>
   <li>The decompression buffer is pooled (reused from <code>DAT_14205c280</code>)</li>
   <li>Max decompressed size of 0xFFFFF (~1MB) before pool reuse</li>
-  <li>Resolves <strong>internal references</strong> - iterates the reference table connecting nodes</li>
+  <li>Resolves <strong>internal references</strong> -- iterates the reference table connecting nodes</li>
   <li>Calls <code>FUN_140900560</code> to associate the main node with the archive</li>
 </ol>
-<details class="collapsible collapsed-by-default">
-<summary></div>
-</details>
-<h3 id="end-of-chunks-marker-fun_1402d0c40-at-0x1402d0c40"><a class="anchor" href="#end-of-chunks-marker-fun_1402d0c40-at-0x1402d0c40">#</a>End-of-Chunks Marker (<code>FUN_1402d0c40</code> at <code class="addr">0x1402d0c40</code>)</h3></summary>
-<div class="collapsible-content">
-<p>The body chunk stream ends with a special sentinel:</p>
+<h3 id="how-chunks-end"><a class="anchor" href="#how-chunks-end">#</a>How chunks end</h3>
+<p><code>FUN_1402d0c40</code> at <code class="addr">0x1402d0c40</code> detects the end-of-chunks marker.</p>
 <ul>
   <li><strong>Chunk ID <code class="addr">0xFACADE01</code></strong>: Signals end of chunks (returned by this function for all non-terminal chunk IDs)</li>
   <li><strong>Chunk ID <code class="addr">0x01001000</code></strong>: The actual end-of-chunks marker (CMwNod_End), returns 1</li>
 </ul>
 <p>When an unknown chunk ID is encountered, <code>FUN_1402d0c80</code> logs: <code>"Unknown ChunkId: %08X"</code> at <code class="addr">0x141b72000</code></p>
-</div>
-</details>
-<h3 id="body-type-labels-class-id-profile-label"><a class="anchor" href="#body-type-labels-class-id-profile-label">#</a>Body Type Labels (Class ID -> Profile Label)</h3>
+<h3 id="body-type-labels-class-id-to-profile-label"><a class="anchor" href="#body-type-labels-class-id-to-profile-label">#</a>Body type labels (class ID to profile label)</h3>
 <p>From <code>FUN_140903140</code> at <code class="addr">0x140903140</code>:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -385,9 +360,10 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="4-the-serialization-archive-system"><a class="anchor" href="#4-the-serialization-archive-system">#</a>4. The Serialization / Archive System</h2>
+<h2 id="how-the-serializationarchive-system-works"><a class="anchor" href="#how-the-serializationarchive-system-works">#</a>How the serialization/archive system works</h2>
+<p>CClassicArchive is the core archive reader that handles all binary read/write operations.</p>
 <h3 id="cclassicarchive"><a class="anchor" href="#cclassicarchive">#</a>CClassicArchive</h3>
-<p>The core archive reader. String evidence:</p>
+<p>String evidence:</p>
 <ul>
   <li><code>"CClassicArchive::ReadData() failed on \""</code> at <code class="addr">0x141b58200</code></li>
   <li><code>"[Archive] SAVING ERROR: Saving skipped datas => data may be lost !!"</code> at <code class="addr">0x141b582c0</code></li>
@@ -528,7 +504,7 @@
 </tbody>
 </table></div>
 <h3 id="csystemarchivenod"><a class="anchor" href="#csystemarchivenod">#</a>CSystemArchiveNod</h3>
-<p>The system-level archive that manages loading GBX files from the file system.</p>
+<p>The system-level archive manages loading GBX files from the file system.</p>
 <p>String evidence:</p>
 <ul>
   <li><code>"ArchiveNod::LoadGbx"</code> at <code class="addr">0x141c06b98</code></li>
@@ -545,17 +521,17 @@
   <li><code>"[Sys] Danger: CSystemArchiveNod::DoLoadFromFid(Gbx) called outside MainThread"</code> at <code class="addr">0x141c06be0</code></li>
   <li><code>"[Sys] Danger: CSystemArchiveNod::DoLoadFromFid(Media) called outside MainThread"</code> at <code class="addr">0x141c06a60</code></li>
 </ul>
-<h3 id="archive-version-system"><a class="anchor" href="#archive-version-system">#</a>Archive Version System</h3>
+<h3 id="archive-version-system"><a class="anchor" href="#archive-version-system">#</a>Archive version system</h3>
 <p>String: <code>"%.*sUnknown archive version %d (> %d)"</code> at <code class="addr">0x141b72028</code></p>
 <p>Individual chunks within a GBX body have their own version numbers (independent of the GBX file version). When a chunk's version exceeds what the engine expects, this error is logged. This allows forward compatibility -- newer files can be partially read by older engines.</p>
 <hr>
-<h2 id="5-class-id-system"><a class="anchor" href="#5-class-id-system">#</a>5. Class ID System</h2>
-<h3 id="class-id-structure"><a class="anchor" href="#class-id-structure">#</a>Class ID Structure</h3>
-<p>Class IDs are 32-bit values with a hierarchical structure:</p>
+<h2 id="how-class-ids-identify-node-types"><a class="anchor" href="#how-class-ids-identify-node-types">#</a>How class IDs identify node types</h2>
+<p>Class IDs are 32-bit values encoding the engine namespace, class index, and sub-class information. The engine uses these to look up factory functions that create the correct CMwNod subclass during deserialization.</p>
+<h3 id="class-id-structure"><a class="anchor" href="#class-id-structure">#</a>Class ID structure</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  Bits 31-24: Engine ID (top-level namespace)
   Bits 23-12: Class index within engine
   Bits 11-0:  [UNKNOWN - possibly chunk/sub-class index, always 0x000 for class IDs]</code></pre></div>
-<h3 id="engine-ids-from-string-evidence-and-class-id-remapping-table"><a class="anchor" href="#engine-ids-from-string-evidence-and-class-id-remapping-table">#</a>Engine IDs (from string evidence and class ID remapping table)</h3>
+<h3 id="engine-ids"><a class="anchor" href="#engine-ids">#</a>Engine IDs</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -607,9 +583,9 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="class-registration-and-lookup"><a class="anchor" href="#class-registration-and-lookup">#</a>Class Registration and Lookup</h3>
+<h3 id="registration-and-lookup"><a class="anchor" href="#registration-and-lookup">#</a>Registration and lookup</h3>
 <p><strong>Global class table</strong>: <code>DAT_141ff9d58</code></p>
-<p>The table is organized as a two-level hierarchy:</p>
+<p>The table uses a two-level hierarchy:</p>
 <ol>
   <li><strong>Level 1</strong>: Array of engine pointers, indexed by engine ID (<code>class_id >> 24</code>)</li>
   <li><strong>Level 2</strong>: Each engine has an array of class info pointers, indexed by class index (<code>(class_id >> 12) & 0xFFF</code>)</li>
@@ -652,7 +628,7 @@
   <li>If factory is NULL: logs <code>"[MwNod] Trying to CreateByMwClassId('<classname>') which is pure..."</code></li>
   <li>If class unknown: logs <code>"[MwNod] Trying to CreateByMwClassId(<id>) which is unknown..."</code></li>
 </ul>
-<h3 id="class-id-remapping-backward-compatibility"><a class="anchor" href="#class-id-remapping-backward-compatibility">#</a>Class ID Remapping (Backward Compatibility)</h3>
+<h3 id="class-id-remapping-backward-compatibility"><a class="anchor" href="#class-id-remapping-backward-compatibility">#</a>Class ID remapping (backward compatibility)</h3>
 <p><code>FUN_1402f2610</code> at <code class="addr">0x1402f2610</code> is a massive lookup table that converts legacy class IDs to their modern equivalents. This enables reading GBX files from older ManiaPlanet/Trackmania versions.</p>
 <p>Key remappings (selected from ~200+ entries):</p>
 <div class="table-wrapper"><table>
@@ -711,10 +687,9 @@
   <li><code>decompiled/fileformats/FUN_1402f2610_ClassIdRemap.c</code></li>
 </ul>
 <hr>
-<h2 id="6-file-types-supported"><a class="anchor" href="#6-file-types-supported">#</a>6. File Types Supported</h2>
-<h3 id="gbx-file-extensions-from-binary-strings"><a class="anchor" href="#gbx-file-extensions-from-binary-strings">#</a>GBX File Extensions (from binary strings)</h3>
-<p>The following <code>.Gbx</code> file types were found referenced in the binary. Organized by category:</p>
-<h4 id="map-challenge"><a class="anchor" href="#map-challenge">#</a>Map / Challenge</h4>
+<h2 id="what-gbx-file-types-exist"><a class="anchor" href="#what-gbx-file-types-exist">#</a>What GBX file types exist</h2>
+<p>Over 431 unique <code>.Gbx</code> extension strings appear in the binary. Here are the key categories.</p>
+<h3 id="map-challenge"><a class="anchor" href="#map-challenge">#</a>Map / Challenge</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -734,19 +709,9 @@
   <td style="text-align:left"><code class="addr">0x141c2dc10</code></td>
   <td style="text-align:left">Map files (legacy name, same format)</td>
 </tr>
-<tr>
-  <td style="text-align:left"><code>Map.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c347d8</code></td>
-  <td style="text-align:left">Without leading dot</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>%1%2\%3.Map.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c34f70</code></td>
-  <td style="text-align:left">Map path template</td>
-</tr>
 </tbody>
 </table></div>
-<h4 id="replay-ghost"><a class="anchor" href="#replay-ghost">#</a>Replay / Ghost</h4>
+<h3 id="replay-ghost"><a class="anchor" href="#replay-ghost">#</a>Replay / Ghost</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -767,23 +732,13 @@
   <td style="text-align:left">Ghost data (individual runs)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>.Ghost.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c320f8</code></td>
-  <td style="text-align:left">Ghost (lowercase variant)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Replay.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c49c68</code></td>
-  <td style="text-align:left">Without leading dot</td>
-</tr>
-<tr>
   <td style="text-align:left"><code>.InputsReplay.Gbx</code></td>
   <td style="text-align:left"><code class="addr">0x141cccef0</code></td>
   <td style="text-align:left">Raw input replay</td>
 </tr>
 </tbody>
 </table></div>
-<h4 id="items-blocks"><a class="anchor" href="#items-blocks">#</a>Items / Blocks</h4>
+<h3 id="items-blocks"><a class="anchor" href="#items-blocks">#</a>Items / Blocks</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -808,24 +763,9 @@
   <td style="text-align:left"><code class="addr">0x141c2d708</code></td>
   <td style="text-align:left">Macroblock (multi-block groups)</td>
 </tr>
-<tr>
-  <td style="text-align:left"><code>BlockItem.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c284e0</code></td>
-  <td style="text-align:left">Block-item hybrid</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Item.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c201a0</code></td>
-  <td style="text-align:left">Item base</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>StaticObject.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bc68e8</code></td>
-  <td style="text-align:left">Static 3D object</td>
-</tr>
 </tbody>
 </table></div>
-<h4 id="visual-mesh"><a class="anchor" href="#visual-mesh">#</a>Visual / Mesh</h4>
+<h3 id="visual-mesh"><a class="anchor" href="#visual-mesh">#</a>Visual / Mesh</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -841,56 +781,9 @@
   <td style="text-align:left">3D mesh</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>.Mesh.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd1cc0</code></td>
-  <td style="text-align:left">Mesh (lowercase)</td>
-</tr>
-<tr>
   <td style="text-align:left"><code>.Solid2.gbx</code></td>
   <td style="text-align:left"><code class="addr">0x141bd1cd0</code></td>
   <td style="text-align:left">Solid2 model</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Crystal.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bc2168</code></td>
-  <td style="text-align:left">Crystal geometry</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Visual.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141ba4990</code></td>
-  <td style="text-align:left">Visual representation</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Model.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bc5d90</code></td>
-  <td style="text-align:left">General model</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>GenSolid.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bc69c8</code></td>
-  <td style="text-align:left">Generated solid</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="texture-material"><a class="anchor" href="#texture-material">#</a>Texture / Material</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Extension</th>
-  <th style="text-align:left">Address</th>
-  <th style="text-align:left">Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>Texture.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141ba3768</code></td>
-  <td style="text-align:left">Texture file</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.Texture.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb8e18</code></td>
-  <td style="text-align:left">Texture with dot prefix</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Material.Gbx</code></td>
@@ -898,33 +791,13 @@
   <td style="text-align:left">Material definition</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>.Material.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c99238</code></td>
-  <td style="text-align:left">Material with dot prefix</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.Material.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb8d80</code></td>
-  <td style="text-align:left">Material (lowercase)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Mat.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bbd5a0</code></td>
-  <td style="text-align:left">Short material name</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>TexturePack.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bbdd18</code></td>
-  <td style="text-align:left">Texture atlas pack</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>ImageArray.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb9e50</code></td>
-  <td style="text-align:left">Image array</td>
+  <td style="text-align:left"><code>Texture.Gbx</code></td>
+  <td style="text-align:left"><code class="addr">0x141ba3768</code></td>
+  <td style="text-align:left">Texture file</td>
 </tr>
 </tbody>
 </table></div>
-<h4 id="audio"><a class="anchor" href="#audio">#</a>Audio</h4>
+<h3 id="audio"><a class="anchor" href="#audio">#</a>Audio</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -945,85 +818,13 @@
   <td style="text-align:left">Music</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>SoundMood.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bc2810</code></td>
-  <td style="text-align:left">Sound mood/ambience</td>
-</tr>
-<tr>
   <td style="text-align:left"><code>SoundEngine.Gbx</code></td>
   <td style="text-align:left"><code class="addr">0x141bc2990</code></td>
   <td style="text-align:left">Engine sound model</td>
 </tr>
-<tr>
-  <td style="text-align:left"><code>SoundSurface.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bc2b08</code></td>
-  <td style="text-align:left">Surface-specific sounds</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>AudioEnvironment.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bc31c0</code></td>
-  <td style="text-align:left">Audio environment settings</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>AudioBalance.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bc33a0</code></td>
-  <td style="text-align:left">Audio balance</td>
-</tr>
 </tbody>
 </table></div>
-<h4 id="animation-skeleton"><a class="anchor" href="#animation-skeleton">#</a>Animation / Skeleton</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Extension</th>
-  <th style="text-align:left">Address</th>
-  <th style="text-align:left">Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>.Anim.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd1d08</code></td>
-  <td style="text-align:left">Animation</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.AnimClip.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd1d18</code></td>
-  <td style="text-align:left">Animation clip</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>AnimClip.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd0700</code></td>
-  <td style="text-align:left">Animation clip</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Anim.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd09b0</code></td>
-  <td style="text-align:left">Animation</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.Skel.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd1cb0</code></td>
-  <td style="text-align:left">Skeleton</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Skel.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bba2a8</code></td>
-  <td style="text-align:left">Skeleton</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Rig.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd7980</code></td>
-  <td style="text-align:left">Rig file</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>RigToSkel.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd7b30</code></td>
-  <td style="text-align:left">Rig-to-skeleton mapping</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="vehicle"><a class="anchor" href="#vehicle">#</a>Vehicle</h4>
+<h3 id="vehicle"><a class="anchor" href="#vehicle">#</a>Vehicle</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1043,165 +844,9 @@
   <td style="text-align:left"><code class="addr">0x141bd5b28</code></td>
   <td style="text-align:left">Vehicle physics model</td>
 </tr>
-<tr>
-  <td style="text-align:left"><code>VehicleStyles.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd3188</code></td>
-  <td style="text-align:left">Vehicle style variants</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>VehicleCameraRace3Model.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd3c80</code></td>
-  <td style="text-align:left">Race camera model</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CarMarksModel.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141becc38</code></td>
-  <td style="text-align:left">Tire mark model</td>
-</tr>
 </tbody>
 </table></div>
-<h4 id="lighting-effects"><a class="anchor" href="#lighting-effects">#</a>Lighting / Effects</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Extension</th>
-  <th style="text-align:left">Address</th>
-  <th style="text-align:left">Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>Light.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141babda0</code></td>
-  <td style="text-align:left">Light definition</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>LightMapCache.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141b66db8</code></td>
-  <td style="text-align:left">Lightmap cache</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>LightmapCustom.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd6670</code></td>
-  <td style="text-align:left">Custom lightmap</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>LightMapMood.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141b6b0d8</code></td>
-  <td style="text-align:left">Lightmap mood settings</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>ProbeGrid.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141b668b8</code></td>
-  <td style="text-align:left">Light probe grid</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>SceneFx.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141be5ff0</code></td>
-  <td style="text-align:left">Scene effects</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>FxSys.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd68a0</code></td>
-  <td style="text-align:left">FX system</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>VFX.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb5280</code></td>
-  <td style="text-align:left">Visual effects</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>ParticleModel.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb6d48</code></td>
-  <td style="text-align:left">Particle system</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="ui-control"><a class="anchor" href="#ui-control">#</a>UI / Control</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Extension</th>
-  <th style="text-align:left">Address</th>
-  <th style="text-align:left">Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>Frame.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141b5c318</code></td>
-  <td style="text-align:left">UI frame</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>StyleSheet.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141b5c6c0</code></td>
-  <td style="text-align:left">UI stylesheet</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>ControlStyle.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141b5afb0</code></td>
-  <td style="text-align:left">Control styling</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>ControlLayout.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141b5ca50</code></td>
-  <td style="text-align:left">Control layout</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>ControlEffect.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141b5d830</code></td>
-  <td style="text-align:left">Control effect</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Font.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141ba5490</code></td>
-  <td style="text-align:left">Font</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="campaign-title"><a class="anchor" href="#campaign-title">#</a>Campaign / Title</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Extension</th>
-  <th style="text-align:left">Address</th>
-  <th style="text-align:left">Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>.Campaign.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c35e10</code></td>
-  <td style="text-align:left">Campaign definition</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Title.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c35928</code></td>
-  <td style="text-align:left">Title pack reference</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>TitleCore.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141cea968</code></td>
-  <td style="text-align:left">Title core data</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Collection.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c5f398</code></td>
-  <td style="text-align:left">Block collection</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Decoration.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c3be78</code></td>
-  <td style="text-align:left">Decoration definition</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>DecorationMood.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c3b8b8</code></td>
-  <td style="text-align:left">Decoration mood settings</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="pack-files"><a class="anchor" href="#pack-files">#</a>Pack Files</h4>
+<h3 id="pack-files"><a class="anchor" href="#pack-files">#</a>Pack Files</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1217,166 +862,21 @@
   <td style="text-align:left">Generic pack</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>.skin.pack.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bbba50</code></td>
-  <td style="text-align:left">Skin pack</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.Skin.Pack.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c077e8</code></td>
-  <td style="text-align:left">Skin pack (capitalized)</td>
-</tr>
-<tr>
   <td style="text-align:left"><code>.Title.Pack.Gbx</code></td>
   <td style="text-align:left"><code class="addr">0x141c2f438</code></td>
   <td style="text-align:left">Title pack</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.Media.Pack.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c2f5e0</code></td>
-  <td style="text-align:left">Media pack</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>-Model.Pack.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c8bf00</code></td>
-  <td style="text-align:left">Model pack</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Model.Pack.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c8dbe0</code></td>
-  <td style="text-align:left">Model pack</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Trackmania.Title.Pack.Gbx</code></td>
   <td style="text-align:left"><code class="addr">0x141bcc828</code></td>
   <td style="text-align:left">Main game title pack</td>
 </tr>
-<tr>
-  <td style="text-align:left"><code>Trackmania_Update.Title.Pack.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c584b0</code></td>
-  <td style="text-align:left">Update title pack</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.Title.Pack.Gbx.ref</code></td>
-  <td style="text-align:left"><code class="addr">0x141c58c50</code></td>
-  <td style="text-align:left">Title pack reference file</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>-wip.pack.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c2f818</code></td>
-  <td style="text-align:left">Work-in-progress pack</td>
-</tr>
 </tbody>
 </table></div>
-<h4 id="miscellaneous"><a class="anchor" href="#miscellaneous">#</a>Miscellaneous</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Extension</th>
-  <th style="text-align:left">Address</th>
-  <th style="text-align:left">Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>Prefab.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bcca30</code></td>
-  <td style="text-align:left">Prefab (pre-assembled objects)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>World.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141cf6c88</code></td>
-  <td style="text-align:left">World definition</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.ScriptCache.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c31e50</code></td>
-  <td style="text-align:left">Script cache</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.Profile.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c31e68</code></td>
-  <td style="text-align:left">Player profile</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>User.FidCache.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c30fe0</code></td>
-  <td style="text-align:left">User file cache</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>User.Profile.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c82f68</code></td>
-  <td style="text-align:left">User profile</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>GameCtnApp.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c30710</code></td>
-  <td style="text-align:left">Application state</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.environment.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141c29ac0</code></td>
-  <td style="text-align:left">Environment definition</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>ManiaPlanet.ManiaPlanet.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141a58bd8</code></td>
-  <td style="text-align:left">Root app GBX</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>GpuCache.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bbcf70</code></td>
-  <td style="text-align:left">GPU shader cache</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.GpuCache.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x141bad7f0</code></td>
-  <td style="text-align:left">GPU cache with dot prefix</td>
-</tr>
-</tbody>
-</table></div>
-<h4 id="json-config-files"><a class="anchor" href="#json-config-files">#</a>JSON Config Files</h4>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Extension</th>
-  <th style="text-align:left">Address</th>
-  <th style="text-align:left">Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>.gbx.json</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd1c50</code></td>
-  <td style="text-align:left">GBX in JSON format</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>SkelLodSetup.Gbx.json</code></td>
-  <td style="text-align:left"><code class="addr">0x141bba230</code></td>
-  <td style="text-align:left">Skeleton LOD setup</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>ShootIconSetting.gbx.json</code></td>
-  <td style="text-align:left"><code class="addr">0x141c7b7a0</code></td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>PreloadDesc.gbx.json</code></td>
-  <td style="text-align:left"><code class="addr">0x141c2fca0</code></td>
-  <td style="text-align:left">Preload descriptor</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Default.gbx.json</code></td>
-  <td style="text-align:left"><code class="addr">0x141c05468</code></td>
-  <td style="text-align:left">Default config</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Total unique .Gbx extensions found</strong>: 431 string matches containing ".Gbx" or ".gbx".</p>
 <hr>
-<h2 id="7-the-fid-file-id-system"><a class="anchor" href="#7-the-fid-file-id-system">#</a>7. The Fid (File ID) System</h2>
-<p>The Fid system is Nadeo's virtual file system layer that abstracts file access across different storage backends (disk, packs, network).</p>
-<h3 id="class-hierarchy-from-strings"><a class="anchor" href="#class-hierarchy-from-strings">#</a>Class Hierarchy (from strings)</h3>
+<h2 id="how-the-fid-file-id-system-works"><a class="anchor" href="#how-the-fid-file-id-system-works">#</a>How the Fid (File ID) system works</h2>
+<p>The Fid system is Nadeo's virtual file system layer. It abstracts file access across disk, packs, and network backends.</p>
+<h3 id="class-hierarchy"><a class="anchor" href="#class-hierarchy">#</a>Class hierarchy</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1408,7 +908,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="key-operations"><a class="anchor" href="#key-operations">#</a>Key Operations</h3>
+<h3 id="key-operations"><a class="anchor" href="#key-operations">#</a>Key operations</h3>
 <ul>
   <li><strong><code>CSystemFidsFolder::BrowsePath</code></strong> (string at <code class="addr">0x141c08d88</code>): Directory traversal</li>
   <li><strong><code>CSystemFidContainer::InstallFids</code></strong> (<code>FUN_14092bec0</code> at <code class="addr">0x14092bec0</code>): Registers files from a container (pack) into the virtual file system</li>
@@ -1419,7 +919,7 @@
   <li>Sets up file watching if <code>container+0x80</code> is non-null</li>
   <li>Updates folder indices at <code>container+0x38</code></li>
 </ul>
-<h3 id="fidfile-layout-partial-from-decompilation"><a class="anchor" href="#fidfile-layout-partial-from-decompilation">#</a>FidFile Layout (partial, from decompilation)</h3>
+<h3 id="fidfile-layout-partial"><a class="anchor" href="#fidfile-layout-partial">#</a>FidFile layout (partial)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1445,29 +945,9 @@
   <td style="text-align:left">Flags (bit 0 = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>, bit 2 = <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>+0x24</code></td>
-  <td style="text-align:left">uint</td>
-  <td style="text-align:left">Additional flags</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>+0x48</code></td>
-  <td style="text-align:left">uint</td>
-  <td style="text-align:left">File state flags</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>+0x78</code></td>
-  <td style="text-align:left">uint32</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - possibly file size or class ID]</span></td>
-</tr>
-<tr>
   <td style="text-align:left"><code>+0x80</code></td>
   <td style="text-align:left">ptr</td>
   <td style="text-align:left">Loaded nod pointer (the actual object)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>+0xA8</code></td>
-  <td style="text-align:left">ptr</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0xB0</code></td>
@@ -1479,24 +959,14 @@
   <td style="text-align:left">string</td>
   <td style="text-align:left">File path/name</td>
 </tr>
-<tr>
-  <td style="text-align:left"><code>+0xD8</code></td>
-  <td style="text-align:left">uint32</td>
-  <td style="text-align:left">Path length</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>+0xDC</code></td>
-  <td style="text-align:left">uint32</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> path-related field]</span></td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="cplugfilefidcache"><a class="anchor" href="#cplugfilefidcache">#</a>CPlugFileFidCache</h3>
-<p><code>CPlugFileFidCache</code> (string at <code class="addr">0x141bc4ec8</code>) and <code>User.FidCache.Gbx</code> (at <code class="addr">0x141c30fe0</code>) indicate a caching layer for file lookups. The <code>LoadAndRefreshFidCache</code> operation (string at <code class="addr">0x141c30e70</code>) suggests the cache is persisted to disk and refreshed on startup.</p>
+<h3 id="fidcache"><a class="anchor" href="#fidcache">#</a>FidCache</h3>
+<p><code>CPlugFileFidCache</code> (string at <code class="addr">0x141bc4ec8</code>) and <code>User.FidCache.Gbx</code> (at <code class="addr">0x141c30fe0</code>) indicate a caching layer for file lookups. The <code>LoadAndRefreshFidCache</code> operation (string at <code class="addr">0x141c30e70</code>) suggests the cache persists to disk and refreshes on startup.</p>
 <hr>
-<h2 id="8-pack-file-system"><a class="anchor" href="#8-pack-file-system">#</a>8. Pack File System</h2>
-<h3 id="pack-types"><a class="anchor" href="#pack-types">#</a>Pack Types</h3>
-<p>From binary strings, these pack file types exist:</p>
+<h2 id="how-the-pack-file-system-works"><a class="anchor" href="#how-the-pack-file-system-works">#</a>How the pack file system works</h2>
+<p>Pack files bundle multiple GBX files into archives for distribution.</p>
+<h3 id="pack-types"><a class="anchor" href="#pack-types">#</a>Pack types</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1531,38 +1001,27 @@
   <td style="text-align:left"><code>Model.Pack.Gbx</code> / <code>-Model.Pack.Gbx</code></td>
   <td style="text-align:left">3D model collections</td>
 </tr>
-<tr>
-  <td style="text-align:left">WIP pack</td>
-  <td style="text-align:left"><code>-wip.pack.gbx</code></td>
-  <td style="text-align:left">Work-in-progress content</td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="pack-management"><a class="anchor" href="#pack-management">#</a>Pack Management</h3>
+<h3 id="pack-management"><a class="anchor" href="#pack-management">#</a>Pack management</h3>
 <p><strong>CSystemPackManager</strong> (strings at <code class="addr">0x141c076d8</code>):</p>
 <ul>
   <li><code>CSystemPackManager::UpdatePackDescsAfterLoad</code> (<code class="addr">0x141c07820</code>)</li>
   <li><code>CSystemPackManager::LoadCache</code> (<code class="addr">0x141c078b0</code>)</li>
   <li><code>CSystemPackManager::TrimCacheIfNeeded</code> (<code class="addr">0x141c079b0</code>)</li>
 </ul>
-<p><strong>CSystemPackDesc</strong> (string at <code class="addr">0x141c07270</code>): Describes a pack's metadata.</p>
-<h3 id="title-packs"><a class="anchor" href="#title-packs">#</a>Title Packs</h3>
-<p>The main game content is loaded from:</p>
+<h3 id="title-packs"><a class="anchor" href="#title-packs">#</a>Title packs</h3>
+<p>The main game content loads from:</p>
 <ul>
   <li><code>"Trackmania.Title.Pack.Gbx"</code> at <code class="addr">0x141bcc828</code> / <code class="addr">0x141c58368</code></li>
   <li><code>"Trackmania_Update.Title.Pack.Gbx"</code> at <code class="addr">0x141c584b0</code></li>
   <li><code>".Title.Pack.Gbx.ref"</code> at <code class="addr">0x141c58c50</code> (reference files that point to actual packs)</li>
 </ul>
-<p>Legacy ManiaPlanet title packs are also referenced:</p>
-<ul>
-  <li><code>"ShootMania\ShootMania.TitleCore.Gbx"</code> at <code class="addr">0x141c35c10</code></li>
-  <li><code>"TrackMania.TitleCore.Gbx"</code> at <code class="addr">0x141c35cb8</code></li>
-</ul>
 <hr>
-<h2 id="9-map-loading-pipeline-cgamectnchallenge"><a class="anchor" href="#9-map-loading-pipeline-cgamectnchallenge">#</a>9. Map Loading Pipeline (CGameCtnChallenge)</h2>
+<h2 id="how-the-map-loading-pipeline-works"><a class="anchor" href="#how-the-map-loading-pipeline-works">#</a>How the map loading pipeline works</h2>
 <p>CGameCtnChallenge (class ID <code class="addr">0x03043000</code>) is the main map class. "Challenge" is the legacy internal name; externally these are <code>.Map.Gbx</code> files.</p>
-<h3 id="loading-stages-from-string-evidence"><a class="anchor" href="#loading-stages-from-string-evidence">#</a>Loading Stages (from string evidence)</h3>
-<p>The map loading process follows a defined sequence of stages, each identified by profiling markers:</p>
+<h3 id="loading-stages"><a class="anchor" href="#loading-stages">#</a>Loading stages</h3>
+<p>The map loading process follows a 22-stage sequence, each identified by profiling markers:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1684,151 +1143,43 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="filtered-block-lists"><a class="anchor" href="#filtered-block-lists">#</a>Filtered Block Lists</h3>
+<h3 id="filtered-block-lists"><a class="anchor" href="#filtered-block-lists">#</a>Filtered block lists</h3>
 <p>Maps maintain filtered views of their block data:</p>
 <ul>
-  <li><code>CGameCtnChallenge::SFilteredBlockLists::UpdateFilteredBlocks</code> (<code class="addr">0x141c35110</code>)</li>
   <li><code>CGameCtnChallenge::SFilteredBlockLists::GetClassicBlocks</code> (<code class="addr">0x141c35150</code>)</li>
   <li><code>CGameCtnChallenge::SFilteredBlockLists::GetTerrainBlocks</code> (<code class="addr">0x141c35190</code>)</li>
   <li><code>CGameCtnChallenge::SFilteredBlockLists::GetGhostBlocks</code> (<code class="addr">0x141c351d0</code>)</li>
 </ul>
-<h3 id="related-classes"><a class="anchor" href="#related-classes">#</a>Related Classes</h3>
+<h3 id="vehicle-references-in-maps"><a class="anchor" href="#vehicle-references-in-maps">#</a>Vehicle references in maps</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-  <th style="text-align:left">Class</th>
-  <th style="text-align:left">String Address</th>
-  <th style="text-align:left">Role</th>
+  <th style="text-align:left">Path</th>
+  <th style="text-align:left">Vehicle</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>CGameCtnChallengeInfo</code></td>
-  <td style="text-align:left"><code class="addr">0x141bf9898</code></td>
-  <td style="text-align:left">Map metadata/info</td>
+  <td style="text-align:left"><code>\Vehicles\Items\CarSport.Item.gbx</code></td>
+  <td style="text-align:left">CarSport (Stadium)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>CGameCtnChallengeGroup</code></td>
-  <td style="text-align:left"><code class="addr">0x141bf98d0</code></td>
-  <td style="text-align:left">Group of maps</td>
+  <td style="text-align:left"><code>\Vehicles\Items\CarSnow.Item.gbx</code></td>
+  <td style="text-align:left">CarSnow</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>CGameCtnChallengeParameters</code></td>
-  <td style="text-align:left"><code class="addr">0x141c64f20</code></td>
-  <td style="text-align:left">Map parameters (time limits, etc.)</td>
+  <td style="text-align:left"><code>\Vehicles\Items\CarRally.Item.gbx</code></td>
+  <td style="text-align:left">CarRally</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>CGameCtnReplayRecord</code></td>
-  <td style="text-align:left"><code class="addr">0x141c49c50</code></td>
-  <td style="text-align:left">Replay data</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnReplayRecordInfo</code></td>
-  <td style="text-align:left"><code class="addr">0x141bf98b0</code></td>
-  <td style="text-align:left">Replay metadata</td>
+  <td style="text-align:left"><code>\Vehicles\Items\CarDesert.Item.gbx</code></td>
+  <td style="text-align:left">CarDesert</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="block-system-classes"><a class="anchor" href="#block-system-classes">#</a>Block System Classes</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Class</th>
-  <th style="text-align:left">String Address</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfo</code></td>
-  <td style="text-align:left"><code class="addr">0x141bf88d0</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoVariant</code></td>
-  <td style="text-align:left"><code class="addr">0x141bf88e8</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoVariantAir</code></td>
-  <td style="text-align:left"><code class="addr">0x141bf8890</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoVariantGround</code></td>
-  <td style="text-align:left"><code class="addr">0x141bf88b0</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoClip</code></td>
-  <td style="text-align:left"><code class="addr">0x141bf8860</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoFlat</code></td>
-  <td style="text-align:left"><code class="addr">0x141c62a28</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoFrontier</code></td>
-  <td style="text-align:left"><code class="addr">0x141c62c38</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoTransition</code></td>
-  <td style="text-align:left"><code class="addr">0x141c62e90</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoClassic</code></td>
-  <td style="text-align:left"><code class="addr">0x141c63070</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoRoad</code></td>
-  <td style="text-align:left"><code class="addr">0x141c63390</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoSlope</code></td>
-  <td style="text-align:left"><code class="addr">0x141c63f08</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoPylon</code></td>
-  <td style="text-align:left"><code class="addr">0x141c640b0</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoRectAsym</code></td>
-  <td style="text-align:left"><code class="addr">0x141c64358</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoClipHorizontal</code></td>
-  <td style="text-align:left"><code class="addr">0x141c63a08</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoClipVertical</code></td>
-  <td style="text-align:left"><code class="addr">0x141c63c30</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoMobil</code></td>
-  <td style="text-align:left"><code class="addr">0x141c79260</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>CGameCtnBlockInfoMobilLink</code></td>
-  <td style="text-align:left"><code class="addr">0x141c64db8</code></td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="vehicle-references-in-maps"><a class="anchor" href="#vehicle-references-in-maps">#</a>Vehicle References in Maps</h3>
-<p>Vehicle items referenced by maps:</p>
-<ul>
-  <li><code>\Trackmania\Items\Vehicles\StadiumCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20b98</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\RallyCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20a48</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\SnowCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20a10</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\DesertCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20ab8</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\CanyonCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20940</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\LagoonCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20908</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\CoastCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20af0</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\BayCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20b28</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\ValleyCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20b60</code>)</li>
-  <li><code>\Trackmania\Items\Vehicles\IslandCar.ObjectInfo.Gbx</code> (<code class="addr">0x141c20a80</code>)</li>
-  <li><code>\Vehicles\Items\CarSport.Item.gbx</code> (<code class="addr">0x141c5a398</code>)</li>
-  <li><code>\Vehicles\Items\CarSnow.Item.gbx</code> (<code class="addr">0x141c5a3c0</code>)</li>
-  <li><code>\Vehicles\Items\CarRally.Item.gbx</code> (<code class="addr">0x141c5a3f0</code>)</li>
-  <li><code>\Vehicles\Items\CarDesert.Item.gbx</code> (<code class="addr">0x141c5a428</code>)</li>
-</ul>
 <hr>
 <details class="collapsible collapsed-by-default">
-<summary><h2 id="10-key-function-reference-table"><a class="anchor" href="#10-key-function-reference-table">#</a>10. Key Function Reference Table</h2></summary>
+<summary><h2 id="key-function-reference"><a class="anchor" href="#key-function-reference">#</a>Key function reference</h2></summary>
 <div class="collapsible-content">
 <div class="table-wrapper"><table>
 <thead>
@@ -1919,7 +1270,7 @@
 <hr>
 </div>
 </details>
-<h2 id="unknowns-and-open-questions"><a class="anchor" href="#unknowns-and-open-questions">#</a>Unknowns and Open Questions</h2>
+<h2 id="unknowns-and-open-questions"><a class="anchor" href="#unknowns-and-open-questions">#</a>Unknowns and open questions</h2>
 <ol>
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The exact role of byte 2 in the version 6 format flags (both bytes 1 and 2 seem compression-related, but which is body vs header is not fully confirmed from decompilation alone)</li>
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The complete class info structure layout beyond offsets <code>+0x08</code> (name) and <code>+0x30</code> (factory)</li>
@@ -1933,51 +1284,23 @@
   <li><strong><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></strong> The internal format of pack files (<code>.pack.gbx</code>) -- how they differ from regular GBX in terms of containing multiple files</li>
 </ol>
 <hr>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="file-formats.html">GBX File Format Deep Dive</a> -- byte-level specification and parser pseudocode</li>
+  <li><a href="26-real-file-analysis.md">Real GBX File Analysis</a> -- hex-level validation against live game data</li>
+  <li><a href="game-files.html">Game Files Analysis</a> -- DLL, material, and pack file inventory</li>
+  <li><a href="28-map-structure-encyclopedia.md">Map Structure Encyclopedia</a> -- block, item, and waypoint systems</li>
+  <li><a href="30-ghost-replay-format.md">Ghost & Replay Format</a> -- ghost sample encoding and replay structure</li>
+  <li><a href="class-hierarchy.html">Class Hierarchy</a> -- complete CMwNod class tree</li>
+</ul>
+<details><summary>Analysis metadata</summary>
+<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020) <strong>Date of analysis</strong>: 2026-03-27 <strong>Tools</strong>: Ghidra 11.x via PyGhidra bridge <strong>Note</strong>: All function symbols are stripped. Functions are named by Ghidra convention (FUN_<address>).</p>
+</details>
+<hr>
 <h1 id="gbx-file-format-deep-dive"><a class="anchor" href="#gbx-file-format-deep-dive">#</a>GBX File Format Deep Dive</h1>
-<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020) <strong>Date of analysis</strong>: 2026-03-27 <strong>Tools</strong>: Ghidra 11.x via PyGhidra bridge <strong>Purpose</strong>: Complete GBX format specification sufficient to implement a parser</p>
+<p>GBX (GameBox) is Nadeo's proprietary binary serialization format. Every <code>.Gbx</code> file encodes a single CMwNod-derived object tree using a chunk-based protocol. The format has evolved through 6 major versions; Trackmania 2020 uses version 6. This document provides a complete specification sufficient to implement a parser.</p>
 <hr>
-<h2 id="table-of-contents-1"><a class="anchor" href="#table-of-contents-1">#</a>Table of Contents</h2>
-<p><strong>Reference Sections:</strong></p>
-<ol>
-  <li><a href="#1-gbx-binary-format-overview">GBX Binary Format Overview</a></li>
-  <li><a href="#2-complete-header-specification">Complete Header Specification</a></li>
-  <li><a href="#3-format-flags-version-6">Format Flags (Version 6+)</a></li>
-  <li><a href="#4-header-chunk-table">Header Chunk Table</a></li>
-  <li><a href="#5-reference-table">Reference Table</a></li>
-  <li><a href="#6-body-chunk-system">Body Chunk System</a></li>
-  <li><a href="#7-chunk-dispatch-and-end-sentinel">Chunk Dispatch and End Sentinel</a></li>
-  <li><a href="#8-compression-system">Compression System</a></li>
-  <li><a href="#9-class-factory-createbymwclassid">Class Factory (CreateByMwClassId)</a></li>
-  <li><a href="#10-class-id-two-level-registry">Class ID Two-Level Registry</a></li>
-  <li><a href="#11-class-id-remapping-legacy-compatibility">Class ID Remapping (Legacy Compatibility)</a></li>
-  <li><a href="#12-serialization-system-cclassicarchive">Serialization System (CClassicArchive)</a></li>
-  <li><a href="#13-string-serialization">String Serialization</a></li>
-  <li><a href="#14-array-serialization">Array Serialization</a></li>
-  <li><a href="#15-object-reference-serialization">Object Reference Serialization</a></li>
-  <li><a href="#16-map-file-structure-cgamectnchallenge">Map File Structure (CGameCtnChallenge)</a></li>
-  <li><a href="#17-ghost--replay-structure">Ghost / Replay Structure</a></li>
-  <li><a href="#18-item-file-structure-cgameitemmodel">Item File Structure (CGameItemModel)</a></li>
-  <li><a href="#19-mesh--solid2-structure">Mesh / Solid2 Structure</a></li>
-  <li><a href="#20-material-and-texture-files">Material and Texture Files</a></li>
-  <li><a href="#21-pack-file-system">Pack File System</a></li>
-  <li><a href="#22-fid-virtual-file-system">Fid (Virtual File System)</a></li>
-  <li><a href="#23-complete-class-id-remap-table">Complete Class ID Remap Table</a></li>
-  <li><a href="#24-complete-engine-id-table">Complete Engine ID Table</a></li>
-  <li><a href="#25-parser-pseudocode">Parser Pseudocode</a></li>
-</ol>
-<p><strong>Parsing Tutorial (validated against real files):</strong></p>
-<ol>
-  <li><a href="#26-parsing-tutorial-byte-0-to-parsed-tree">Parsing Tutorial: Byte 0 to Parsed Tree</a></li>
-  <li><a href="#27-hex-dump-walkthrough-real-mapgbx">Hex Dump Walkthrough: Real .Map.Gbx</a></li>
-  <li><a href="#28-data-type-serialization-reference">Data Type Serialization Reference</a></li>
-  <li><a href="#29-lookbackstring-deep-dive-corrected">LookbackString Deep Dive (Corrected)</a></li>
-  <li><a href="#30-typescript-parser-implementation-guide">TypeScript Parser Implementation Guide</a></li>
-  <li><a href="#31-quick-reference-card">Quick Reference Card</a></li>
-  <li><a href="#32-cross-file-validation-results">Cross-File Validation Results</a></li>
-</ol>
-<hr>
-<h2 id="1-gbx-binary-format-overview"><a class="anchor" href="#1-gbx-binary-format-overview">#</a>1. GBX Binary Format Overview</h2>
-<p>GBX (GameBox) is Nadeo's proprietary binary serialization format. Every <code>.Gbx</code> file encodes a single <code>CMwNod</code>-derived object tree using a chunk-based serialization protocol. The format has evolved through 6 major versions; Trackmania 2020 uses version 6.</p>
+<h2 id="how-gbx-files-are-structured-1"><a class="anchor" href="#how-gbx-files-are-structured-1">#</a>How GBX Files Are Structured</h2>
 <h3 id="top-level-file-layout"><a class="anchor" href="#top-level-file-layout">#</a>Top-Level File Layout</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+=======================================+
 | HEADER SECTION                        |
@@ -2019,7 +1342,9 @@
   <li><code>"[Sys] Corrupted data while reading .gbx file"</code> at <code class="addr">0x141c06ac0</code></li>
 </ul>
 <hr>
-<h2 id="2-complete-header-specification"><a class="anchor" href="#2-complete-header-specification">#</a>2. Complete Header Specification</h2>
+<details class="collapsible collapsed-by-default">
+<summary><h2 id="header-byte-by-byte-specification"><a class="anchor" href="#header-byte-by-byte-specification">#</a>Header Byte-by-Byte Specification</h2></summary>
+<div class="collapsible-content">
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="byte-by-byte-header-format"><a class="anchor" href="#byte-by-byte-header-format">#</a>Byte-by-Byte Header Format</h3></summary>
 <div class="collapsible-content">
@@ -2095,7 +1420,9 @@ if ((iVar3 == 3) &amp;&amp; (local_1c8 == &#x27;G&#x27;) &amp;&amp; (local_1c7 =
 </table></div>
 <p>Version stored at archive offset <code>+0x60</code> as <code>uint16</code>.</p>
 <hr>
-<h2 id="3-format-flags-version-6"><a class="anchor" href="#3-format-flags-version-6">#</a>3. Format Flags (Version 6+)</h2>
+</div>
+</details>
+<h2 id="how-format-flags-control-parsing-version-6"><a class="anchor" href="#how-format-flags-control-parsing-version-6">#</a>How Format Flags Control Parsing (Version 6+)</h2>
 <p>For version >= 6, a 4-byte format descriptor immediately follows the version field. This is the most critical part of header parsing for TM2020 files.</p>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="format-flag-bytes"><a class="anchor" href="#format-flag-bytes">#</a>Format Flag Bytes</h3></summary>
@@ -2155,7 +1482,7 @@ if (((char)local_res10 == &#x27;T&#x27;) || (iVar3 = 0, (char)local_res10 == &#x
 <hr>
 </div>
 </details>
-<h2 id="4-header-chunk-table"><a class="anchor" href="#4-header-chunk-table">#</a>4. Header Chunk Table</h2>
+<h2 id="how-header-chunks-are-organized"><a class="anchor" href="#how-header-chunks-are-organized">#</a>How Header Chunks Are Organized</h2>
 <p>After the format flags and class ID, the header contains a chunk table that provides metadata accessible without parsing the body.</p>
 <h3 id="header-chunk-table-format"><a class="anchor" href="#header-chunk-table-format">#</a>Header Chunk Table Format</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Size    Type      Field
@@ -2226,7 +1553,7 @@ for (chunk_id, chunk_size, is_heavy) in chunk_entries:
 <hr>
 </div>
 </details>
-<h2 id="5-reference-table"><a class="anchor" href="#5-reference-table">#</a>5. Reference Table</h2>
+<h2 id="how-external-references-are-stored"><a class="anchor" href="#how-external-references-are-stored">#</a>How External References Are Stored</h2>
 <p>The reference table is located between the header chunks and the body. It lists all external GBX files that this file depends on.</p>
 <h3 id="reference-table-format"><a class="anchor" href="#reference-table-format">#</a>Reference Table Format</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Size    Type        Field
@@ -2278,7 +1605,7 @@ For each external node (num_external_nodes times):
   <li>Look up the file via the Fid (virtual filesystem) system</li>
 </ol>
 <hr>
-<h2 id="6-body-chunk-system"><a class="anchor" href="#6-body-chunk-system">#</a>6. Body Chunk System</h2>
+<h2 id="how-the-body-chunk-system-works"><a class="anchor" href="#how-the-body-chunk-system-works">#</a>How the Body Chunk System Works</h2>
 <p>The body section contains the actual serialized data for the root node and all inline sub-nodes. It is organized as a sequential stream of chunks.</p>
 <h3 id="body-loading-flow"><a class="anchor" href="#body-loading-flow">#</a>Body Loading Flow</h3>
 <p><strong>Code evidence</strong> (<code>FUN_140903d30</code> / <code>FUN_1409031d0</code>):</p>
@@ -2337,7 +1664,7 @@ if (chunk_version &gt; MAX_KNOWN_VERSION) {
 }</code></pre></div>
 <p><strong>Code evidence</strong>: String <code>"%.*sUnknown archive version %d (> %d)"</code> at <code class="addr">0x141b72028</code>.</p>
 <hr>
-<h2 id="7-chunk-dispatch-and-end-sentinel"><a class="anchor" href="#7-chunk-dispatch-and-end-sentinel">#</a>7. Chunk Dispatch and End Sentinel</h2>
+<h2 id="how-chunks-are-dispatched-and-terminated"><a class="anchor" href="#how-chunks-are-dispatched-and-terminated">#</a>How Chunks Are Dispatched and Terminated</h2>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="end-of-body-sentinel-0xfacade01"><a class="anchor" href="#end-of-body-sentinel-0xfacade01">#</a>End-of-Body Sentinel: <code class="addr">0xFACADE01</code></h3></summary>
 <div class="collapsible-content">
@@ -2369,7 +1696,7 @@ if (chunk_version &gt; MAX_KNOWN_VERSION) {
 <p>When an unknown chunk ID is encountered, <code>FUN_1402d0c80</code> logs: <code>"Unknown ChunkId: %08X"</code> at <code class="addr">0x141b72000</code></p>
 <p>For skippable chunks, the parser can safely skip <code>chunk_size</code> bytes. For non-skippable unknown chunks, parsing fails.</p>
 <hr>
-<h2 id="8-compression-system"><a class="anchor" href="#8-compression-system">#</a>8. Compression System</h2>
+<h2 id="how-compression-works-lzo1x"><a class="anchor" href="#how-compression-works-lzo1x">#</a>How Compression Works (LZO1X)</h2>
 <h3 id="algorithm"><a class="anchor" href="#algorithm">#</a>Algorithm</h3>
 <p>The compression algorithm used in GBX files is <strong>LZO1X</strong> (Lempel-Ziv-Oberhumer). This is confirmed by multiple evidence sources:</p>
 <p>Evidence:</p>
@@ -2425,7 +1752,7 @@ else:
     body_data = read_remaining()  // Read body directly</code></pre></div>
 <p>The decompression buffer is pooled and reused from <code>DAT_14205c280</code>. When <code>uncompressed_size > 0xFFFFF</code> (~1MB), the pool is bypassed and a fresh allocation is made.</p>
 <hr>
-<h2 id="9-class-factory-createbymwclassid"><a class="anchor" href="#9-class-factory-createbymwclassid">#</a>9. Class Factory (CreateByMwClassId)</h2>
+<h2 id="how-the-class-factory-instantiates-nodes"><a class="anchor" href="#how-the-class-factory-instantiates-nodes">#</a>How the Class Factory Instantiates Nodes</h2>
 <h3 id="overview"><a class="anchor" href="#overview">#</a>Overview</h3>
 <p><code>FUN_1402cf380</code> (<code>CMwNod::CreateByMwClassId</code>) is the factory function that instantiates GBX node objects during deserialization. It is called after the header is parsed to create the root object, and recursively for embedded objects.</p>
 <h3 id="factory-pipeline"><a class="anchor" href="#factory-pipeline">#</a>Factory Pipeline</h3>
@@ -2462,7 +1789,7 @@ if ((lVar3 != 0) &amp;&amp; (*(code **)(lVar3 + 0x30) != (code *)0x0)) {
 +0x30   8     code*           factory_func     Constructor/factory function (NULL if abstract)
 +0x38   ...   ...             [UNKNOWN additional fields]</code></pre></div>
 <hr>
-<h2 id="10-class-id-two-level-registry"><a class="anchor" href="#10-class-id-two-level-registry">#</a>10. Class ID Two-Level Registry</h2>
+<h2 id="how-the-two-level-class-id-registry-works"><a class="anchor" href="#how-the-two-level-class-id-registry-works">#</a>How the Two-Level Class ID Registry Works</h2>
 <h3 id="global-registry-structure"><a class="anchor" href="#global-registry-structure">#</a>Global Registry Structure</h3>
 <p>The global class table lives at <code>DAT_141ff9d58</code>. It is organized as a two-level hierarchy for efficient O(1) lookup by class ID.</p>
 <p><strong>Code evidence</strong> (<code>FUN_1402f20a0</code>):</p>
@@ -2531,7 +1858,7 @@ if (param_2 == *(int *)(tls + 0x11ac))
 </tbody>
 </table></div>
 <hr>
-<h2 id="11-class-id-remapping-legacy-compatibility"><a class="anchor" href="#11-class-id-remapping-legacy-compatibility">#</a>11. Class ID Remapping (Legacy Compatibility)</h2>
+<h2 id="how-legacy-class-ids-are-remapped"><a class="anchor" href="#how-legacy-class-ids-are-remapped">#</a>How Legacy Class IDs Are Remapped</h2>
 <h3 id="overview-1"><a class="anchor" href="#overview-1">#</a>Overview</h3>
 <p><code>FUN_1402f2610</code> is a massive switch/lookup table that converts legacy class IDs to their modern equivalents. This is the backward compatibility layer enabling TM2020 to read GBX files from all previous ManiaPlanet and Trackmania versions.</p>
 <p>The remapping is applied during the class ID lookup in <code>FUN_1402f20a0</code>, before the two-level table lookup.</p>
@@ -2980,7 +2307,7 @@ normalized_class_id = remap(raw_class_id)
 chunk_index = chunk_id &amp; 0x00000FFF
 normalized_chunk_id = normalized_class_id | chunk_index</code></pre></div>
 <hr>
-<h2 id="12-serialization-system-cclassicarchive"><a class="anchor" href="#12-serialization-system-cclassicarchive">#</a>12. Serialization System (CClassicArchive)</h2>
+<h2 id="how-cclassicarchive-serializes-data"><a class="anchor" href="#how-cclassicarchive-serializes-data">#</a>How CClassicArchive Serializes Data</h2>
 <h3 id="archive-object-layout"><a class="anchor" href="#archive-object-layout">#</a>Archive Object Layout</h3>
 <p>The <code>CClassicArchive</code> (and its subclass <code>CSystemArchiveNod</code>) is the central context object for all GBX read/write operations. Every ReadXxx/WriteXxx call takes the archive as its first parameter.</p>
 <div class="table-wrapper"><table>
@@ -3269,7 +2596,7 @@ void ReadData(archive, buffer, size) {
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>&quot;[Archive] SAVING ERROR: Saving skipped datas =&gt; data may be lost !!&quot; at 0x141b582c0</code></pre></div>
 <p>This confirms that the same archive system handles both read and write operations. The skip mechanism for unknown chunks means that round-tripping (load + save) must preserve unknown chunk data.</p>
 <hr>
-<h2 id="13-string-serialization"><a class="anchor" href="#13-string-serialization">#</a>13. String Serialization</h2>
+<h2 id="how-strings-are-serialized"><a class="anchor" href="#how-strings-are-serialized">#</a>How Strings Are Serialized</h2>
 <h3 id="standard-string-format"><a class="anchor" href="#standard-string-format">#</a>Standard String Format</h3>
 <p>Strings in GBX are length-prefixed:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+0x00   4       uint32    length    String length in bytes (NOT including null terminator)
@@ -3315,7 +2642,7 @@ Subsequent reads in same chunk context:
 </table></div>
 <p>Note: The "Stadium"/"Valley"/"Canyon" collection names are NOT stored as LookbackStrings. They are represented as numeric collection IDs (26 = Stadium) in the CIdent structure's collection field, which is a plain uint32.</p>
 <hr>
-<h2 id="14-array-serialization"><a class="anchor" href="#14-array-serialization">#</a>14. Array Serialization</h2>
+<h2 id="how-arrays-are-serialized"><a class="anchor" href="#how-arrays-are-serialized">#</a>How Arrays Are Serialized</h2>
 <h3 id="standard-array-format"><a class="anchor" href="#standard-array-format">#</a>Standard Array Format</h3>
 <p>Arrays are serialized with a count prefix:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+0x00   4       uint32    count     Number of elements
@@ -3336,7 +2663,7 @@ For each node:
   If class_id != 0xFFFFFFFF:
     +0x04   var   ...     node_data  Serialized node data (chunks)</code></pre></div>
 <hr>
-<h2 id="15-object-reference-serialization"><a class="anchor" href="#15-object-reference-serialization">#</a>15. Object Reference Serialization</h2>
+<h2 id="how-object-references-are-serialized"><a class="anchor" href="#how-object-references-are-serialized">#</a>How Object References Are Serialized</h2>
 <h3 id="internal-node-references"><a class="anchor" href="#internal-node-references">#</a>Internal Node References</h3>
 <p>Within the body, nodes can reference other nodes. Each node in the file is assigned an index (starting from 0 for the root node). References use this index:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+0x00   4       int32     node_index    Index into the node table
@@ -3356,7 +2683,7 @@ For each node:
 </ol>
 <p><strong>Placeholder value</strong>: <code class="addr">0xDEADBEEF</code> is written into the reference table slot during resolution as a sentinel to detect circular references.</p>
 <hr>
-<h2 id="16-map-file-structure-cgamectnchallenge"><a class="anchor" href="#16-map-file-structure-cgamectnchallenge">#</a>16. Map File Structure (CGameCtnChallenge)</h2>
+<h2 id="how-map-files-are-structured-cgamectnchallenge"><a class="anchor" href="#how-map-files-are-structured-cgamectnchallenge">#</a>How Map Files Are Structured (CGameCtnChallenge)</h2>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="class-id-0x03043000"><a class="anchor" href="#class-id-0x03043000">#</a>Class ID: <code class="addr">0x03043000</code></h3></summary>
 <div class="collapsible-content">
@@ -3722,7 +3049,7 @@ For each node:
 </tbody>
 </table></div>
 <hr>
-<h2 id="17-ghost-replay-structure"><a class="anchor" href="#17-ghost-replay-structure">#</a>17. Ghost / Replay Structure</h2>
+<h2 id="how-ghosts-and-replays-are-structured"><a class="anchor" href="#how-ghosts-and-replays-are-structured">#</a>How Ghosts and Replays Are Structured</h2>
 <h3 id="cgamectnghost-class-id-determined-from-hierarchy"><a class="anchor" href="#cgamectnghost-class-id-determined-from-hierarchy">#</a>CGameCtnGhost (Class ID: determined from hierarchy)</h3>
 <p>Ghost files (<code>.Ghost.Gbx</code>) store individual run data -- the recorded positions, rotations, and inputs of a car over time.</p>
 <details class="collapsible collapsed-by-default">
@@ -3772,7 +3099,7 @@ For each node:
 </ul>
 <p>The exact binary layout of ghost samples is class-specific and version-dependent. The <code>CPlugEntRecordData</code> class (from hierarchy) handles the actual recorded entity data.</p>
 <hr>
-<h2 id="18-item-file-structure-cgameitemmodel"><a class="anchor" href="#18-item-file-structure-cgameitemmodel">#</a>18. Item File Structure (CGameItemModel)</h2>
+<h2 id="how-item-files-are-structured-cgameitemmodel"><a class="anchor" href="#how-item-files-are-structured-cgameitemmodel">#</a>How Item Files Are Structured (CGameItemModel)</h2>
 <h3 id="class-cgameitemmodel"><a class="anchor" href="#class-cgameitemmodel">#</a>Class: CGameItemModel</h3>
 <p>Custom items (<code>.Item.Gbx</code>) are the most common user-created asset type. They reference mesh and material data.</p>
 <h3 id="related-classes-from-hierarchy"><a class="anchor" href="#related-classes-from-hierarchy">#</a>Related Classes (from hierarchy)</h3>
@@ -3861,7 +3188,7 @@ For each node:
 </tbody>
 </table></div>
 <hr>
-<h2 id="19-mesh-solid2-structure"><a class="anchor" href="#19-mesh-solid2-structure">#</a>19. Mesh / Solid2 Structure</h2>
+<h2 id="how-meshes-are-structured-cplugsolid2model"><a class="anchor" href="#how-meshes-are-structured-cplugsolid2model">#</a>How Meshes Are Structured (CPlugSolid2Model)</h2>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="cplugsolid2model-class-id-0x090bb000"><a class="anchor" href="#cplugsolid2model-class-id-0x090bb000">#</a>CPlugSolid2Model (Class ID: <code class="addr">0x090BB000</code>)</h3></summary>
 <div class="collapsible-content">
@@ -3978,7 +3305,7 @@ For each node:
 </ul>
 <p>The exact chunk-by-chunk format is class-specific and version-dependent.</p>
 <hr>
-<h2 id="20-material-and-texture-files"><a class="anchor" href="#20-material-and-texture-files">#</a>20. Material and Texture Files</h2>
+<h2 id="how-materials-and-textures-work"><a class="anchor" href="#how-materials-and-textures-work">#</a>How Materials and Textures Work</h2>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="cplugmaterial-class-id-0x09026000-for-shaderapply"><a class="anchor" href="#cplugmaterial-class-id-0x09026000-for-shaderapply">#</a>CPlugMaterial (Class ID: <code class="addr">0x09026000</code> for ShaderApply)</h3></summary>
 <div class="collapsible-content">
@@ -4212,7 +3539,7 @@ For each node:
 </tbody>
 </table></div>
 <hr>
-<h2 id="21-pack-file-system"><a class="anchor" href="#21-pack-file-system">#</a>21. Pack File System</h2>
+<h2 id="how-pack-files-bundle-assets"><a class="anchor" href="#how-pack-files-bundle-assets">#</a>How Pack Files Bundle Assets</h2>
 <h3 id="overview-2"><a class="anchor" href="#overview-2">#</a>Overview</h3>
 <p>Pack files (<code>.pack.gbx</code>) bundle multiple GBX files into a single archive for distribution. They are themselves GBX files with a specialized class.</p>
 <h3 id="pack-types-1"><a class="anchor" href="#pack-types-1">#</a>Pack Types</h3>
@@ -4331,10 +3658,10 @@ For each node:
 <h3 id="pack-loading-order-unknown"><a class="anchor" href="#pack-loading-order-unknown">#</a>Pack Loading Order <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></h3>
 <p>The exact order in which packs are loaded and how conflicts are resolved (when multiple packs contain the same file path) is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>. Evidence suggests title packs are loaded first, then update packs overlay them.</p>
 <hr>
-<h2 id="22-fid-virtual-file-system"><a class="anchor" href="#22-fid-virtual-file-system">#</a>22. Fid (Virtual File System)</h2>
+<h2 id="how-the-fid-virtual-file-system-works"><a class="anchor" href="#how-the-fid-virtual-file-system-works">#</a>How the Fid Virtual File System Works</h2>
 <h3 id="overview-3"><a class="anchor" href="#overview-3">#</a>Overview</h3>
 <p>The Fid system is Nadeo's virtual file system layer abstracting file access across disk, packs, and network sources.</p>
-<h3 id="class-hierarchy"><a class="anchor" href="#class-hierarchy">#</a>Class Hierarchy</h3>
+<h3 id="class-hierarchy-1"><a class="anchor" href="#class-hierarchy-1">#</a>Class Hierarchy</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -4366,7 +3693,7 @@ For each node:
 </tr>
 </tbody>
 </table></div>
-<h3 id="fidfile-layout-partial"><a class="anchor" href="#fidfile-layout-partial">#</a>FidFile Layout (Partial)</h3>
+<h3 id="fidfile-layout-partial-1"><a class="anchor" href="#fidfile-layout-partial-1">#</a>FidFile Layout (Partial)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -4461,10 +3788,10 @@ For each node:
 </tr>
 </tbody>
 </table></div>
-<h3 id="fidcache"><a class="anchor" href="#fidcache">#</a>FidCache</h3>
+<h3 id="fidcache-1"><a class="anchor" href="#fidcache-1">#</a>FidCache</h3>
 <p><code>CPlugFileFidCache</code> (string at <code class="addr">0x141bc4ec8</code>) maintains a persistent cache of file lookups in <code>User.FidCache.Gbx</code> at <code class="addr">0x141c30fe0</code>. This accelerates startup by avoiding re-scanning the entire file tree.</p>
 <hr>
-<h2 id="23-complete-class-id-remap-table"><a class="anchor" href="#23-complete-class-id-remap-table">#</a>23. Complete Class ID Remap Table</h2>
+<h2 id="complete-class-id-remap-table"><a class="anchor" href="#complete-class-id-remap-table">#</a>Complete Class ID Remap Table</h2>
 <p>This table contains every legacy-to-modern class ID remapping extracted from <code>FUN_1402f2610</code>. It is critical for reading GBX files from older game versions.</p>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="engine-0x24-engine-0x03-old-game-modern-game"><a class="anchor" href="#engine-0x24-engine-0x03-old-game-modern-game">#</a>Engine 0x24 -> Engine 0x03 (Old Game -> Modern Game)</h3></summary>
@@ -4837,7 +4164,7 @@ For each node:
 </table></div>
 <p><strong>Note</strong>: The decompiled function <code>FUN_1402f2610</code> contains a massive switch/if-else tree. The entries above are those explicitly identified in the annotated decompilation. The actual function likely contains additional entries (estimated 200+ total based on function size of the switch table). A complete extraction would require decompiling every branch of the switch statement.</p>
 <hr>
-<h2 id="24-complete-engine-id-table"><a class="anchor" href="#24-complete-engine-id-table">#</a>24. Complete Engine ID Table</h2>
+<h2 id="complete-engine-id-table"><a class="anchor" href="#complete-engine-id-table">#</a>Complete Engine ID Table</h2>
 <h3 id="known-engine-ids"><a class="anchor" href="#known-engine-ids">#</a>Known Engine IDs</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -5019,7 +4346,7 @@ For each node:
 </tbody>
 </table></div>
 <hr>
-<h2 id="25-parser-pseudocode"><a class="anchor" href="#25-parser-pseudocode">#</a>25. Parser Pseudocode</h2>
+<h2 id="parser-pseudocode"><a class="anchor" href="#parser-pseudocode">#</a>Parser Pseudocode</h2>
 <h3 id="complete-gbx-parser"><a class="anchor" href="#complete-gbx-parser">#</a>Complete GBX Parser</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-python">class GbxParser:
     def __init__(self):
@@ -5303,7 +4630,7 @@ class GbxStream:
         elif whence == 2:
             self.pos = len(self.data) + offset</code></pre></div>
 <hr>
-<h2 id="26-parsing-tutorial-byte-0-to-parsed-tree"><a class="anchor" href="#26-parsing-tutorial-byte-0-to-parsed-tree">#</a>26. Parsing Tutorial: Byte 0 to Parsed Tree</h2>
+<h2 id="parsing-tutorial-byte-0-to-parsed-tree"><a class="anchor" href="#parsing-tutorial-byte-0-to-parsed-tree">#</a>Parsing Tutorial: Byte 0 to Parsed Tree</h2>
 <p>This section walks through parsing a GBX file from the very first byte, using real hex dumps from actual TM2020 files to validate every claim.</p>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="step-1-read-the-magic-3-bytes"><a class="anchor" href="#step-1-read-the-magic-3-bytes">#</a>Step 1: Read the Magic (3 bytes)</h3></summary>
@@ -5411,7 +4738,7 @@ Offset 0x6320: [21867 bytes of LZO-compressed data]</code></pre></div>
         seek_back(4)
         // MUST parse this chunk (no size to skip over)</code></pre></div>
 <hr>
-<h2 id="27-hex-dump-walkthrough-real-mapgbx"><a class="anchor" href="#27-hex-dump-walkthrough-real-mapgbx">#</a>27. Hex Dump Walkthrough: Real .Map.Gbx</h2>
+<h2 id="hex-dump-walkthrough-real-mapgbx"><a class="anchor" href="#hex-dump-walkthrough-real-mapgbx">#</a>Hex Dump Walkthrough: Real .Map.Gbx</h2>
 <p>The following is a complete annotated hex dump of the first 0x6324 bytes of <code>TechFlow.Map.Gbx</code>, verified by parsing the actual file.</p>
 <h3 id="file-metadata"><a class="anchor" href="#file-metadata">#</a>File Metadata</h3>
 <div class="table-wrapper"><table>
@@ -5577,7 +4904,7 @@ Offset 0x6320: [21867 bytes of LZO-compressed data]</code></pre></div>
 </table></div>
 <p>*The Title Pack uses <code>NadeoPak</code> magic instead of <code>GBX</code> -- it is a different container format entirely.</p>
 <hr>
-<h2 id="28-data-type-serialization-reference"><a class="anchor" href="#28-data-type-serialization-reference">#</a>28. Data Type Serialization Reference</h2>
+<h2 id="data-type-serialization-reference"><a class="anchor" href="#data-type-serialization-reference">#</a>Data Type Serialization Reference</h2>
 <p>All values are little-endian. This table covers every primitive type used in GBX serialization.</p>
 <h3 id="primitive-types"><a class="anchor" href="#primitive-types">#</a>Primitive Types</h3>
 <div class="table-wrapper"><table>
@@ -5758,7 +5085,7 @@ Offset 0x6320: [21867 bytes of LZO-compressed data]</code></pre></div>
   +var    LookbackString    author        Author identifier string</code></pre></div>
 <p><strong>Validated from real data</strong>: In TechFlow.Map.Gbx, the collection field is the raw integer 26 (= Stadium). It does not have lookback string flags.</p>
 <hr>
-<h2 id="29-lookbackstring-deep-dive-corrected"><a class="anchor" href="#29-lookbackstring-deep-dive-corrected">#</a>29. LookbackString Deep Dive (Corrected)</h2>
+<h2 id="how-lookbackstrings-work-corrected"><a class="anchor" href="#how-lookbackstrings-work-corrected">#</a>How LookbackStrings Work (Corrected)</h2>
 <p>The LookbackString system is the most confusing part of GBX parsing. This section corrects errors in earlier documentation based on validation against real file data.</p>
 <h3 id="how-it-works"><a class="anchor" href="#how-it-works">#</a>How It Works</h3>
 <p>Each node's serialization context maintains a <strong>per-chunk lookback string table</strong> (an ordered list of previously-seen strings). The first time a LookbackString is read in a chunk, a version marker is read. Subsequent reads reference this table or add new entries.</p>
@@ -5838,7 +5165,7 @@ Index 4: &quot;Nadeo&quot;</code></pre></div>
   }
 }</code></pre></div>
 <hr>
-<h2 id="30-typescript-parser-implementation-guide"><a class="anchor" href="#30-typescript-parser-implementation-guide">#</a>30. TypeScript Parser Implementation Guide</h2>
+<h2 id="typescript-parser-implementation-guide"><a class="anchor" href="#typescript-parser-implementation-guide">#</a>TypeScript Parser Implementation Guide</h2>
 <h3 id="core-parser-structure"><a class="anchor" href="#core-parser-structure">#</a>Core Parser Structure</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">// === Core types ===
 
@@ -6156,7 +5483,7 @@ function remapClassId(id: number): number {
   <li>Compile <code>minilzo.c</code> to WASM via Emscripten</li>
 </ul>
 <hr>
-<h2 id="31-quick-reference-card"><a class="anchor" href="#31-quick-reference-card">#</a>31. Quick Reference Card</h2>
+<h2 id="quick-reference-card"><a class="anchor" href="#quick-reference-card">#</a>Quick Reference Card</h2>
 <h3 id="file-layout-version-6"><a class="anchor" href="#file-layout-version-6">#</a>File Layout (Version 6)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>&quot;GBX&quot;                    3 bytes    Magic
 uint16                   2 bytes    Version (6)
@@ -6339,7 +5666,7 @@ value encoding:
 </table></div>
 <hr>
 <details class="collapsible collapsed-by-default">
-<summary><h2 id="32-cross-file-validation-results"><a class="anchor" href="#32-cross-file-validation-results">#</a>32. Cross-File Validation Results</h2></summary>
+<summary><h2 id="cross-file-validation-results"><a class="anchor" href="#cross-file-validation-results">#</a>Cross-File Validation Results</h2></summary>
 <div class="collapsible-content">
 <h3 id="files-examined"><a class="anchor" href="#files-examined">#</a>Files Examined</h3>
 <div class="table-wrapper"><table>
@@ -6538,7 +5865,7 @@ value encoding:
 <p>These checks appear to be type validation ensuring the loaded GBX contains the expected asset type.</p>
 <hr>
 <h2 id="appendix-c-complete-file-extension-catalog"><a class="anchor" href="#appendix-c-complete-file-extension-catalog">#</a>Appendix C: Complete File Extension Catalog</h2>
-<h3 id="map-challenge"><a class="anchor" href="#map-challenge">#</a>Map / Challenge</h3>
+<h3 id="map-challenge-1"><a class="anchor" href="#map-challenge-1">#</a>Map / Challenge</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -6557,7 +5884,7 @@ value encoding:
 </tr>
 </tbody>
 </table></div>
-<h3 id="replay-ghost"><a class="anchor" href="#replay-ghost">#</a>Replay / Ghost</h3>
+<h3 id="replay-ghost-1"><a class="anchor" href="#replay-ghost-1">#</a>Replay / Ghost</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -6580,7 +5907,7 @@ value encoding:
 </tr>
 </tbody>
 </table></div>
-<h3 id="items-blocks"><a class="anchor" href="#items-blocks">#</a>Items / Blocks</h3>
+<h3 id="items-blocks-1"><a class="anchor" href="#items-blocks-1">#</a>Items / Blocks</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -6603,7 +5930,7 @@ value encoding:
 </tr>
 </tbody>
 </table></div>
-<h3 id="visual-mesh"><a class="anchor" href="#visual-mesh">#</a>Visual / Mesh</h3>
+<h3 id="visual-mesh-1"><a class="anchor" href="#visual-mesh-1">#</a>Visual / Mesh</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -6649,7 +5976,7 @@ value encoding:
 </tr>
 </tbody>
 </table></div>
-<h3 id="audio"><a class="anchor" href="#audio">#</a>Audio</h3>
+<h3 id="audio-1"><a class="anchor" href="#audio-1">#</a>Audio</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -6668,7 +5995,7 @@ value encoding:
 </tr>
 </tbody>
 </table></div>
-<h3 id="pack-files"><a class="anchor" href="#pack-files">#</a>Pack Files</h3>
+<h3 id="pack-files-1"><a class="anchor" href="#pack-files-1">#</a>Pack Files</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -6710,7 +6037,7 @@ value encoding:
 </tr>
 </tbody>
 </table></div>
-<h3 id="vehicle"><a class="anchor" href="#vehicle">#</a>Vehicle</h3>
+<h3 id="vehicle-1"><a class="anchor" href="#vehicle-1">#</a>Vehicle</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -6847,115 +6174,129 @@ value encoding:
 </tr>
 </tbody>
 </table></div>
+<h2 id="related-pages-1"><a class="anchor" href="#related-pages-1">#</a>Related Pages</h2>
+<ul>
+  <li><a href="file-formats.html">06-file-formats.md</a> -- GBX format overview</li>
+  <li><a href="game-files.html">09-game-files-analysis.md</a> -- Game files and pack analysis</li>
+  <li><a href="tmnf-crossref.html">14-tmnf-crossref.md</a> -- GBX format evolution from TMNF</li>
+  <li><a href="26-real-file-analysis.md">26-real-file-analysis.md</a> -- Real file hex analysis</li>
+  <li><a href="28-map-structure-encyclopedia.md">28-map-structure-encyclopedia.md</a> -- Map structure details</li>
+  <li><a href="30-ghost-replay-format.md">30-ghost-replay-format.md</a> -- Ghost/replay format</li>
+</ul>
+<details><summary>Analysis metadata</summary>
+<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020) <strong>Date of analysis</strong>: 2026-03-27 <strong>Tools</strong>: Ghidra 11.x via PyGhidra bridge <strong>Purpose</strong>: Complete GBX format specification sufficient to implement a parser</p>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="architecture.html">&larr; Architecture</a><a class="next" href="networking.html">Networking &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="shaders.html">&larr; Shader Catalog</a><a class="next" href="game-files.html">Game Files &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-gbx-file-format-overview">1. GBX File Format Overview</a></li>
-  <li class="toc-h3"><a href="#gbx-file-structure-binary">GBX File Structure (Binary)</a></li>
-<li class=""><a href="#2-gbx-header-parsing">2. GBX Header Parsing</a></li>
-  <li class="toc-h3"><a href="#magic-and-version-fun_140900e60-at-0x140900e60">Magic and Version (`FUN_140900e60` at `0x140900e60`)</a></li>
-  <li class="toc-h3"><a href="#format-flags-version-6-fun_140901850-at-0x140901850">Format Flags - Version 6+ (`FUN_140901850` at `0x140901850`)</a></li>
+<li class=""><a href="#how-gbx-files-are-structured">How GBX files are structured</a></li>
+<li class=""><a href="#how-the-header-is-parsed">How the header is parsed</a></li>
+  <li class="toc-h3"><a href="#magic-and-version">Magic and version</a></li>
+  <li class="toc-h3"><a href="#format-flags-version-6">Format flags (version 6+)</a></li>
   <li class="toc-h3"><a href="#decompiled-code">Decompiled code</a></li>
-<li class=""><a href="#3-gbx-body-and-chunk-system">3. GBX Body and Chunk System</a></li>
-  <li class="toc-h3"><a href="#reference-table-loading-fun_140902530-at-0x140902530">Reference Table Loading (`FUN_140902530` at `0x140902530`)</a></li>
-  <li class="toc-h3"><a href="#body-chunk-loading-fun_1409031d0-at-0x1409031d0">Body Chunk Loading (`FUN_1409031d0` at `0x1409031d0`)</a></li>
-  <li class="toc-h3"><a href="#end-of-chunks-marker-fun_1402d0c40-at-0x1402d0c40">End-of-Chunks Marker (`FUN_1402d0c40` at `0x1402d0c40`)</a></li>
-  <li class="toc-h3"><a href="#body-type-labels-class-id-profile-label">Body Type Labels (Class ID -&gt; Profile Label)</a></li>
-<li class=""><a href="#4-the-serialization-archive-system">4. The Serialization / Archive System</a></li>
+<li class=""><a href="#how-the-body-and-chunk-system-work">How the body and chunk system work</a></li>
+  <li class="toc-h3"><a href="#reference-table-loading">Reference table loading</a></li>
+  <li class="toc-h3"><a href="#body-chunk-loading">Body chunk loading</a></li>
+  <li class="toc-h3"><a href="#how-chunks-end">How chunks end</a></li>
+  <li class="toc-h3"><a href="#body-type-labels-class-id-to-profile-label">Body type labels (class ID to profile label)</a></li>
+<li class=""><a href="#how-the-serializationarchive-system-works">How the serialization/archive system works</a></li>
   <li class="toc-h3"><a href="#cclassicarchive">CClassicArchive</a></li>
   <li class="toc-h3"><a href="#csystemarchivenod">CSystemArchiveNod</a></li>
-  <li class="toc-h3"><a href="#archive-version-system">Archive Version System</a></li>
-<li class=""><a href="#5-class-id-system">5. Class ID System</a></li>
-  <li class="toc-h3"><a href="#class-id-structure">Class ID Structure</a></li>
-  <li class="toc-h3"><a href="#engine-ids-from-string-evidence-and-class-id-remapping-table">Engine IDs (from string evidence and class ID remapping table)</a></li>
-  <li class="toc-h3"><a href="#class-registration-and-lookup">Class Registration and Lookup</a></li>
-  <li class="toc-h3"><a href="#class-id-remapping-backward-compatibility">Class ID Remapping (Backward Compatibility)</a></li>
+  <li class="toc-h3"><a href="#archive-version-system">Archive version system</a></li>
+<li class=""><a href="#how-class-ids-identify-node-types">How class IDs identify node types</a></li>
+  <li class="toc-h3"><a href="#class-id-structure">Class ID structure</a></li>
+  <li class="toc-h3"><a href="#engine-ids">Engine IDs</a></li>
+  <li class="toc-h3"><a href="#registration-and-lookup">Registration and lookup</a></li>
+  <li class="toc-h3"><a href="#class-id-remapping-backward-compatibility">Class ID remapping (backward compatibility)</a></li>
   <li class="toc-h3"><a href="#decompiled-code-1">Decompiled code</a></li>
-<li class=""><a href="#6-file-types-supported">6. File Types Supported</a></li>
-  <li class="toc-h3"><a href="#gbx-file-extensions-from-binary-strings">GBX File Extensions (from binary strings)</a></li>
-<li class=""><a href="#7-the-fid-file-id-system">7. The Fid (File ID) System</a></li>
-  <li class="toc-h3"><a href="#class-hierarchy-from-strings">Class Hierarchy (from strings)</a></li>
-  <li class="toc-h3"><a href="#key-operations">Key Operations</a></li>
-  <li class="toc-h3"><a href="#fidfile-layout-partial-from-decompilation">FidFile Layout (partial, from decompilation)</a></li>
-  <li class="toc-h3"><a href="#cplugfilefidcache">CPlugFileFidCache</a></li>
-<li class=""><a href="#8-pack-file-system">8. Pack File System</a></li>
-  <li class="toc-h3"><a href="#pack-types">Pack Types</a></li>
-  <li class="toc-h3"><a href="#pack-management">Pack Management</a></li>
-  <li class="toc-h3"><a href="#title-packs">Title Packs</a></li>
-<li class=""><a href="#9-map-loading-pipeline-cgamectnchallenge">9. Map Loading Pipeline (CGameCtnChallenge)</a></li>
-  <li class="toc-h3"><a href="#loading-stages-from-string-evidence">Loading Stages (from string evidence)</a></li>
-  <li class="toc-h3"><a href="#filtered-block-lists">Filtered Block Lists</a></li>
-  <li class="toc-h3"><a href="#related-classes">Related Classes</a></li>
-  <li class="toc-h3"><a href="#block-system-classes">Block System Classes</a></li>
-  <li class="toc-h3"><a href="#vehicle-references-in-maps">Vehicle References in Maps</a></li>
-<li class=""><a href="#10-key-function-reference-table">10. Key Function Reference Table</a></li>
-<li class=""><a href="#unknowns-and-open-questions">Unknowns and Open Questions</a></li>
-<li class=""><a href="#table-of-contents-1">Table of Contents</a></li>
-<li class=""><a href="#1-gbx-binary-format-overview">1. GBX Binary Format Overview</a></li>
+<li class=""><a href="#what-gbx-file-types-exist">What GBX file types exist</a></li>
+  <li class="toc-h3"><a href="#map-challenge">Map / Challenge</a></li>
+  <li class="toc-h3"><a href="#replay-ghost">Replay / Ghost</a></li>
+  <li class="toc-h3"><a href="#items-blocks">Items / Blocks</a></li>
+  <li class="toc-h3"><a href="#visual-mesh">Visual / Mesh</a></li>
+  <li class="toc-h3"><a href="#audio">Audio</a></li>
+  <li class="toc-h3"><a href="#vehicle">Vehicle</a></li>
+  <li class="toc-h3"><a href="#pack-files">Pack Files</a></li>
+<li class=""><a href="#how-the-fid-file-id-system-works">How the Fid (File ID) system works</a></li>
+  <li class="toc-h3"><a href="#class-hierarchy">Class hierarchy</a></li>
+  <li class="toc-h3"><a href="#key-operations">Key operations</a></li>
+  <li class="toc-h3"><a href="#fidfile-layout-partial">FidFile layout (partial)</a></li>
+  <li class="toc-h3"><a href="#fidcache">FidCache</a></li>
+<li class=""><a href="#how-the-pack-file-system-works">How the pack file system works</a></li>
+  <li class="toc-h3"><a href="#pack-types">Pack types</a></li>
+  <li class="toc-h3"><a href="#pack-management">Pack management</a></li>
+  <li class="toc-h3"><a href="#title-packs">Title packs</a></li>
+<li class=""><a href="#how-the-map-loading-pipeline-works">How the map loading pipeline works</a></li>
+  <li class="toc-h3"><a href="#loading-stages">Loading stages</a></li>
+  <li class="toc-h3"><a href="#filtered-block-lists">Filtered block lists</a></li>
+  <li class="toc-h3"><a href="#vehicle-references-in-maps">Vehicle references in maps</a></li>
+<li class=""><a href="#key-function-reference">Key function reference</a></li>
+<li class=""><a href="#unknowns-and-open-questions">Unknowns and open questions</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
+<li class=""><a href="#how-gbx-files-are-structured-1">How GBX Files Are Structured</a></li>
   <li class="toc-h3"><a href="#top-level-file-layout">Top-Level File Layout</a></li>
-<li class=""><a href="#2-complete-header-specification">2. Complete Header Specification</a></li>
+<li class=""><a href="#header-byte-by-byte-specification">Header Byte-by-Byte Specification</a></li>
   <li class="toc-h3"><a href="#byte-by-byte-header-format">Byte-by-Byte Header Format</a></li>
   <li class="toc-h3"><a href="#version-support-matrix">Version Support Matrix</a></li>
-<li class=""><a href="#3-format-flags-version-6">3. Format Flags (Version 6+)</a></li>
+<li class=""><a href="#how-format-flags-control-parsing-version-6">How Format Flags Control Parsing (Version 6+)</a></li>
   <li class="toc-h3"><a href="#format-flag-bytes">Format Flag Bytes</a></li>
   <li class="toc-h3"><a href="#common-format-strings">Common Format Strings</a></li>
   <li class="toc-h3"><a href="#interpretation-of-bytes-1-and-2">Interpretation of Bytes 1 and 2</a></li>
-<li class=""><a href="#4-header-chunk-table">4. Header Chunk Table</a></li>
+<li class=""><a href="#how-header-chunks-are-organized">How Header Chunks Are Organized</a></li>
   <li class="toc-h3"><a href="#header-chunk-table-format">Header Chunk Table Format</a></li>
   <li class="toc-h3"><a href="#header-chunk-index-parsing-pseudocode">Header Chunk Index Parsing Pseudocode</a></li>
   <li class="toc-h3"><a href="#known-header-chunk-ids-cgamectnchallenge-0x03043000">Known Header Chunk IDs (CGameCtnChallenge / 0x03043000)</a></li>
-<li class=""><a href="#5-reference-table">5. Reference Table</a></li>
+<li class=""><a href="#how-external-references-are-stored">How External References Are Stored</a></li>
   <li class="toc-h3"><a href="#reference-table-format">Reference Table Format</a></li>
   <li class="toc-h3"><a href="#reference-table-entry-layout-internal">Reference Table Entry Layout (Internal)</a></li>
   <li class="toc-h3"><a href="#path-resolution">Path Resolution</a></li>
-<li class=""><a href="#6-body-chunk-system">6. Body Chunk System</a></li>
+<li class=""><a href="#how-the-body-chunk-system-works">How the Body Chunk System Works</a></li>
   <li class="toc-h3"><a href="#body-loading-flow">Body Loading Flow</a></li>
   <li class="toc-h3"><a href="#compressed-body-format">Compressed Body Format</a></li>
   <li class="toc-h3"><a href="#uncompressed-body-format">Uncompressed Body Format</a></li>
   <li class="toc-h3"><a href="#body-chunk-stream-format">Body Chunk Stream Format</a></li>
   <li class="toc-h3"><a href="#chunk-id-structure">Chunk ID Structure</a></li>
   <li class="toc-h3"><a href="#chunk-versioning">Chunk Versioning</a></li>
-<li class=""><a href="#7-chunk-dispatch-and-end-sentinel">7. Chunk Dispatch and End Sentinel</a></li>
+<li class=""><a href="#how-chunks-are-dispatched-and-terminated">How Chunks Are Dispatched and Terminated</a></li>
   <li class="toc-h3"><a href="#end-of-body-sentinel-0xfacade01">End-of-Body Sentinel: 0xFACADE01</a></li>
   <li class="toc-h3"><a href="#unknown-chunk-handling">Unknown Chunk Handling</a></li>
-<li class=""><a href="#8-compression-system">8. Compression System</a></li>
+<li class=""><a href="#how-compression-works-lzo1x">How Compression Works (LZO1X)</a></li>
   <li class="toc-h3"><a href="#algorithm">Algorithm</a></li>
   <li class="toc-h3"><a href="#where-compression-applies">Where Compression Applies</a></li>
   <li class="toc-h3"><a href="#compressed-body-decompression">Compressed Body Decompression</a></li>
-<li class=""><a href="#9-class-factory-createbymwclassid">9. Class Factory (CreateByMwClassId)</a></li>
+<li class=""><a href="#how-the-class-factory-instantiates-nodes">How the Class Factory Instantiates Nodes</a></li>
   <li class="toc-h3"><a href="#overview">Overview</a></li>
   <li class="toc-h3"><a href="#factory-pipeline">Factory Pipeline</a></li>
   <li class="toc-h3"><a href="#class-info-entry-layout">Class Info Entry Layout</a></li>
-<li class=""><a href="#10-class-id-two-level-registry">10. Class ID Two-Level Registry</a></li>
+<li class=""><a href="#how-the-two-level-class-id-registry-works">How the Two-Level Class ID Registry Works</a></li>
   <li class="toc-h3"><a href="#global-registry-structure">Global Registry Structure</a></li>
   <li class="toc-h3"><a href="#registry-layout">Registry Layout</a></li>
   <li class="toc-h3"><a href="#class-id-decomposition">Class ID Decomposition</a></li>
   <li class="toc-h3"><a href="#tls-mru-cache">TLS MRU Cache</a></li>
   <li class="toc-h3"><a href="#special-class-ids">Special Class IDs</a></li>
-<li class=""><a href="#11-class-id-remapping-legacy-compatibility">11. Class ID Remapping (Legacy Compatibility)</a></li>
+<li class=""><a href="#how-legacy-class-ids-are-remapped">How Legacy Class IDs Are Remapped</a></li>
   <li class="toc-h3"><a href="#overview-1">Overview</a></li>
   <li class="toc-h3"><a href="#remapping-groups">Remapping Groups</a></li>
   <li class="toc-h3"><a href="#key-insight-for-parser-implementors">Key Insight for Parser Implementors</a></li>
-<li class=""><a href="#12-serialization-system-cclassicarchive">12. Serialization System (CClassicArchive)</a></li>
+<li class=""><a href="#how-cclassicarchive-serializes-data">How CClassicArchive Serializes Data</a></li>
   <li class="toc-h3"><a href="#archive-object-layout">Archive Object Layout</a></li>
   <li class="toc-h3"><a href="#core-read-functions">Core Read Functions</a></li>
   <li class="toc-h3"><a href="#archive-operation-markers">Archive Operation Markers</a></li>
   <li class="toc-h3"><a href="#save-system">Save System</a></li>
-<li class=""><a href="#13-string-serialization">13. String Serialization</a></li>
+<li class=""><a href="#how-strings-are-serialized">How Strings Are Serialized</a></li>
   <li class="toc-h3"><a href="#standard-string-format">Standard String Format</a></li>
   <li class="toc-h3"><a href="#lookbackstring-id-system">LookbackString (Id) System</a></li>
-<li class=""><a href="#14-array-serialization">14. Array Serialization</a></li>
+<li class=""><a href="#how-arrays-are-serialized">How Arrays Are Serialized</a></li>
   <li class="toc-h3"><a href="#standard-array-format">Standard Array Format</a></li>
   <li class="toc-h3"><a href="#buffer-array-raw-bytes">Buffer Array (Raw Bytes)</a></li>
   <li class="toc-h3"><a href="#array-of-nodes">Array of Nodes</a></li>
-<li class=""><a href="#15-object-reference-serialization">15. Object Reference Serialization</a></li>
+<li class=""><a href="#how-object-references-are-serialized">How Object References Are Serialized</a></li>
   <li class="toc-h3"><a href="#internal-node-references">Internal Node References</a></li>
   <li class="toc-h3"><a href="#external-node-references">External Node References</a></li>
-<li class=""><a href="#16-map-file-structure-cgamectnchallenge">16. Map File Structure (CGameCtnChallenge)</a></li>
+<li class=""><a href="#how-map-files-are-structured-cgamectnchallenge">How Map Files Are Structured (CGameCtnChallenge)</a></li>
   <li class="toc-h3"><a href="#class-id-0x03043000">Class ID: `0x03043000`</a></li>
   <li class="toc-h3"><a href="#22-stage-loading-pipeline">22-Stage Loading Pipeline</a></li>
   <li class="toc-h3"><a href="#known-map-chunks">Known Map Chunks</a></li>
@@ -6964,42 +6305,42 @@ value encoding:
   <li class="toc-h3"><a href="#thumbnail-data">Thumbnail Data</a></li>
   <li class="toc-h3"><a href="#filtered-block-lists-1">Filtered Block Lists</a></li>
   <li class="toc-h3"><a href="#vehicle-references">Vehicle References</a></li>
-<li class=""><a href="#17-ghost-replay-structure">17. Ghost / Replay Structure</a></li>
+<li class=""><a href="#how-ghosts-and-replays-are-structured">How Ghosts and Replays Are Structured</a></li>
   <li class="toc-h3"><a href="#cgamectnghost-class-id-determined-from-hierarchy">CGameCtnGhost (Class ID: determined from hierarchy)</a></li>
   <li class="toc-h3"><a href="#cgamectnreplayrecord-class-id-0x03093000">CGameCtnReplayRecord (Class ID: `0x03093000`)</a></li>
   <li class="toc-h3"><a href="#related-extensions">Related Extensions</a></li>
   <li class="toc-h3"><a href="#ghost-data-format-partial">Ghost Data Format [PARTIAL]</a></li>
-<li class=""><a href="#18-item-file-structure-cgameitemmodel">18. Item File Structure (CGameItemModel)</a></li>
+<li class=""><a href="#how-item-files-are-structured-cgameitemmodel">How Item Files Are Structured (CGameItemModel)</a></li>
   <li class="toc-h3"><a href="#class-cgameitemmodel">Class: CGameItemModel</a></li>
   <li class="toc-h3"><a href="#related-classes-from-hierarchy">Related Classes (from hierarchy)</a></li>
   <li class="toc-h3"><a href="#item-file-references">Item File References</a></li>
   <li class="toc-h3"><a href="#file-extensions">File Extensions</a></li>
-<li class=""><a href="#19-mesh-solid2-structure">19. Mesh / Solid2 Structure</a></li>
+<li class=""><a href="#how-meshes-are-structured-cplugsolid2model">How Meshes Are Structured (CPlugSolid2Model)</a></li>
   <li class="toc-h3"><a href="#cplugsolid2model-class-id-0x090bb000">CPlugSolid2Model (Class ID: `0x090BB000`)</a></li>
   <li class="toc-h3"><a href="#mesh-related-classes-from-hierarchy">Mesh-Related Classes (from hierarchy)</a></li>
   <li class="toc-h3"><a href="#file-extensions-1">File Extensions</a></li>
   <li class="toc-h3"><a href="#mesh-data-structure-partial">Mesh Data Structure [PARTIAL]</a></li>
-<li class=""><a href="#20-material-and-texture-files">20. Material and Texture Files</a></li>
+<li class=""><a href="#how-materials-and-textures-work">How Materials and Textures Work</a></li>
   <li class="toc-h3"><a href="#cplugmaterial-class-id-0x09026000-for-shaderapply">CPlugMaterial (Class ID: `0x09026000` for ShaderApply)</a></li>
   <li class="toc-h3"><a href="#material-classes-from-hierarchy">Material Classes (from hierarchy)</a></li>
   <li class="toc-h3"><a href="#cplugbitmap-class-id-0x09011000">CPlugBitmap (Class ID: `0x09011000`)</a></li>
   <li class="toc-h3"><a href="#texturebitmap-classes">Texture/Bitmap Classes</a></li>
   <li class="toc-h3"><a href="#supported-image-formats">Supported Image Formats</a></li>
   <li class="toc-h3"><a href="#file-extensions-2">File Extensions</a></li>
-<li class=""><a href="#21-pack-file-system">21. Pack File System</a></li>
+<li class=""><a href="#how-pack-files-bundle-assets">How Pack Files Bundle Assets</a></li>
   <li class="toc-h3"><a href="#overview-2">Overview</a></li>
   <li class="toc-h3"><a href="#pack-types-1">Pack Types</a></li>
   <li class="toc-h3"><a href="#core-title-packs">Core Title Packs</a></li>
   <li class="toc-h3"><a href="#pack-management-system">Pack Management System</a></li>
   <li class="toc-h3"><a href="#pack-file-internal-structure-partial">Pack File Internal Structure [PARTIAL]</a></li>
   <li class="toc-h3"><a href="#pack-loading-order-unknown">Pack Loading Order [UNKNOWN]</a></li>
-<li class=""><a href="#22-fid-virtual-file-system">22. Fid (Virtual File System)</a></li>
+<li class=""><a href="#how-the-fid-virtual-file-system-works">How the Fid Virtual File System Works</a></li>
   <li class="toc-h3"><a href="#overview-3">Overview</a></li>
-  <li class="toc-h3"><a href="#class-hierarchy">Class Hierarchy</a></li>
-  <li class="toc-h3"><a href="#fidfile-layout-partial">FidFile Layout (Partial)</a></li>
+  <li class="toc-h3"><a href="#class-hierarchy-1">Class Hierarchy</a></li>
+  <li class="toc-h3"><a href="#fidfile-layout-partial-1">FidFile Layout (Partial)</a></li>
   <li class="toc-h3"><a href="#key-operations-1">Key Operations</a></li>
-  <li class="toc-h3"><a href="#fidcache">FidCache</a></li>
-<li class=""><a href="#23-complete-class-id-remap-table">23. Complete Class ID Remap Table</a></li>
+  <li class="toc-h3"><a href="#fidcache-1">FidCache</a></li>
+<li class=""><a href="#complete-class-id-remap-table">Complete Class ID Remap Table</a></li>
   <li class="toc-h3"><a href="#engine-0x24-engine-0x03-old-game-modern-game">Engine 0x24 -&gt; Engine 0x03 (Old Game -&gt; Modern Game)</a></li>
   <li class="toc-h3"><a href="#engine-0x0a-engine-0x09-old-scene-modern-plug">Engine 0x0A -&gt; Engine 0x09 (Old Scene -&gt; Modern Plug)</a></li>
   <li class="toc-h3"><a href="#engine-0x08-engine-0x09-old-graphic-modern-plug">Engine 0x08 -&gt; Engine 0x09 (Old Graphic -&gt; Modern Plug)</a></li>
@@ -7007,14 +6348,14 @@ value encoding:
   <li class="toc-h3"><a href="#engine-0x07-engine-0x09">Engine 0x07 -&gt; Engine 0x09</a></li>
   <li class="toc-h3"><a href="#engine-0x06-engine-0x09">Engine 0x06 -&gt; Engine 0x09</a></li>
   <li class="toc-h3"><a href="#cross-engine-remappings">Cross-Engine Remappings</a></li>
-<li class=""><a href="#24-complete-engine-id-table">24. Complete Engine ID Table</a></li>
+<li class=""><a href="#complete-engine-id-table">Complete Engine ID Table</a></li>
   <li class="toc-h3"><a href="#known-engine-ids">Known Engine IDs</a></li>
   <li class="toc-h3"><a href="#key-class-ids-quick-reference">Key Class IDs Quick Reference</a></li>
-<li class=""><a href="#25-parser-pseudocode">25. Parser Pseudocode</a></li>
+<li class=""><a href="#parser-pseudocode">Parser Pseudocode</a></li>
   <li class="toc-h3"><a href="#complete-gbx-parser">Complete GBX Parser</a></li>
   <li class="toc-h3"><a href="#decompression-pseudocode">Decompression Pseudocode</a></li>
   <li class="toc-h3"><a href="#stream-helper-class">Stream Helper Class</a></li>
-<li class=""><a href="#26-parsing-tutorial-byte-0-to-parsed-tree">26. Parsing Tutorial: Byte 0 to Parsed Tree</a></li>
+<li class=""><a href="#parsing-tutorial-byte-0-to-parsed-tree">Parsing Tutorial: Byte 0 to Parsed Tree</a></li>
   <li class="toc-h3"><a href="#step-1-read-the-magic-3-bytes">Step 1: Read the Magic (3 bytes)</a></li>
   <li class="toc-h3"><a href="#step-2-read-the-version-uint16-little-endian">Step 2: Read the Version (uint16, little-endian)</a></li>
   <li class="toc-h3"><a href="#step-3-read-format-flags-4-ascii-chars-version-6-only">Step 3: Read Format Flags (4 ASCII chars, version 6+ only)</a></li>
@@ -7027,28 +6368,28 @@ value encoding:
   <li class="toc-h3"><a href="#step-10-read-external-reference-count-and-reference-table-uint32">Step 10: Read External Reference Count and Reference Table (uint32)</a></li>
   <li class="toc-h3"><a href="#step-11-read-the-compressed-body">Step 11: Read the Compressed Body</a></li>
   <li class="toc-h3"><a href="#step-12-parse-body-chunks">Step 12: Parse Body Chunks</a></li>
-<li class=""><a href="#27-hex-dump-walkthrough-real-mapgbx">27. Hex Dump Walkthrough: Real .Map.Gbx</a></li>
+<li class=""><a href="#hex-dump-walkthrough-real-mapgbx">Hex Dump Walkthrough: Real .Map.Gbx</a></li>
   <li class="toc-h3"><a href="#file-metadata">File Metadata</a></li>
   <li class="toc-h3"><a href="#byte-offset-table">Byte Offset Table</a></li>
   <li class="toc-h3"><a href="#header-chunk-0x03043003-parse-common-map-header">Header Chunk 0x03043003 Parse (Common Map Header)</a></li>
   <li class="toc-h3"><a href="#cross-file-comparison">Cross-File Comparison</a></li>
-<li class=""><a href="#28-data-type-serialization-reference">28. Data Type Serialization Reference</a></li>
+<li class=""><a href="#data-type-serialization-reference">Data Type Serialization Reference</a></li>
   <li class="toc-h3"><a href="#primitive-types">Primitive Types</a></li>
   <li class="toc-h3"><a href="#composite-types">Composite Types</a></li>
   <li class="toc-h3"><a href="#string-types">String Types</a></li>
   <li class="toc-h3"><a href="#collection-types">Collection Types</a></li>
   <li class="toc-h3"><a href="#cident">CIdent</a></li>
-<li class=""><a href="#29-lookbackstring-deep-dive-corrected">29. LookbackString Deep Dive (Corrected)</a></li>
+<li class=""><a href="#how-lookbackstrings-work-corrected">How LookbackStrings Work (Corrected)</a></li>
   <li class="toc-h3"><a href="#how-it-works">How It Works</a></li>
   <li class="toc-h3"><a href="#on-wire-format">On-Wire Format</a></li>
   <li class="toc-h3"><a href="#value-encoding-corrected">Value Encoding (CORRECTED)</a></li>
   <li class="toc-h3"><a href="#back-reference-example">Back-Reference Example</a></li>
   <li class="toc-h3"><a href="#scope">Scope</a></li>
   <li class="toc-h3"><a href="#typescript-implementation">TypeScript Implementation</a></li>
-<li class=""><a href="#30-typescript-parser-implementation-guide">30. TypeScript Parser Implementation Guide</a></li>
+<li class=""><a href="#typescript-parser-implementation-guide">TypeScript Parser Implementation Guide</a></li>
   <li class="toc-h3"><a href="#core-parser-structure">Core Parser Structure</a></li>
   <li class="toc-h3"><a href="#decompression-notes">Decompression Notes</a></li>
-<li class=""><a href="#31-quick-reference-card">31. Quick Reference Card</a></li>
+<li class=""><a href="#quick-reference-card">Quick Reference Card</a></li>
   <li class="toc-h3"><a href="#file-layout-version-6">File Layout (Version 6)</a></li>
   <li class="toc-h3"><a href="#body-chunk-format">Body Chunk Format</a></li>
   <li class="toc-h3"><a href="#class-id-decomposition-1">Class ID Decomposition</a></li>
@@ -7056,26 +6397,27 @@ value encoding:
   <li class="toc-h3"><a href="#map-header-chunks-0x03043xxx">Map Header Chunks (0x03043xxx)</a></li>
   <li class="toc-h3"><a href="#lookbackstring-cheat-sheet">LookbackString Cheat Sheet</a></li>
   <li class="toc-h3"><a href="#sentinel-values">Sentinel Values</a></li>
-<li class=""><a href="#32-cross-file-validation-results">32. Cross-File Validation Results</a></li>
+<li class=""><a href="#cross-file-validation-results">Cross-File Validation Results</a></li>
   <li class="toc-h3"><a href="#files-examined">Files Examined</a></li>
   <li class="toc-h3"><a href="#key-findings-from-validation">Key Findings from Validation</a></li>
   <li class="toc-h3"><a href="#format-claims-verification-status">Format Claims Verification Status</a></li>
 <li class=""><a href="#appendix-a-thread-safety">Appendix A: Thread Safety</a></li>
 <li class=""><a href="#appendix-b-isa-checks-during-loading">Appendix B: IsA Checks During Loading</a></li>
 <li class=""><a href="#appendix-c-complete-file-extension-catalog">Appendix C: Complete File Extension Catalog</a></li>
-  <li class="toc-h3"><a href="#map-challenge">Map / Challenge</a></li>
-  <li class="toc-h3"><a href="#replay-ghost">Replay / Ghost</a></li>
-  <li class="toc-h3"><a href="#items-blocks">Items / Blocks</a></li>
-  <li class="toc-h3"><a href="#visual-mesh">Visual / Mesh</a></li>
+  <li class="toc-h3"><a href="#map-challenge-1">Map / Challenge</a></li>
+  <li class="toc-h3"><a href="#replay-ghost-1">Replay / Ghost</a></li>
+  <li class="toc-h3"><a href="#items-blocks-1">Items / Blocks</a></li>
+  <li class="toc-h3"><a href="#visual-mesh-1">Visual / Mesh</a></li>
   <li class="toc-h3"><a href="#texture-material">Texture / Material</a></li>
-  <li class="toc-h3"><a href="#audio">Audio</a></li>
-  <li class="toc-h3"><a href="#pack-files">Pack Files</a></li>
+  <li class="toc-h3"><a href="#audio-1">Audio</a></li>
+  <li class="toc-h3"><a href="#pack-files-1">Pack Files</a></li>
   <li class="toc-h3"><a href="#ui-control">UI / Control</a></li>
-  <li class="toc-h3"><a href="#vehicle">Vehicle</a></li>
+  <li class="toc-h3"><a href="#vehicle-1">Vehicle</a></li>
 <li class=""><a href="#appendix-d-unknowns-and-open-questions">Appendix D: Unknowns and Open Questions</a></li>
   <li class="toc-h3"><a href="#resolved-from-real-file-validation">Resolved (from real file validation)</a></li>
   <li class="toc-h3"><a href="#remaining-unknowns">Remaining Unknowns</a></li>
 <li class=""><a href="#appendix-e-code-evidence-index">Appendix E: Code Evidence Index</a></li>
+<li class=""><a href="#related-pages-1">Related Pages</a></li>
 </ul>
 </nav>
 

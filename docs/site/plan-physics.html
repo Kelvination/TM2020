@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,24 +121,9 @@
                     <div class="content-main">
                         
                         <h1 id="opentm-physics-engine-design"><a class="anchor" href="#opentm-physics-engine-design">#</a>OpenTM Physics Engine Design</h1>
-<p><strong>Version</strong>: 1.0 <strong>Date</strong>: 2026-03-27 <strong>Crate</strong>: <code>opentm-physics</code> <strong>Target</strong>: WASM (wasm32-unknown-unknown), compiled from Rust <strong>Goal</strong>: Bit-for-bit reproduction of TM2020 vehicle physics where decompiled code exists; documented approximations elsewhere</p>
+<p>The physics engine reproduces TM2020 vehicle physics bit-for-bit where decompiled code exists, with documented approximations elsewhere. It compiles from Rust to WASM (wasm32-unknown-unknown) and targets the <code>opentm-physics</code> crate.</p>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-rust-module-structure">Rust Module Structure</a></li>
-  <li><a href="#2-vehiclestate-struct">VehicleState Struct</a></li>
-  <li><a href="#3-physics-step-algorithm">Physics Step Algorithm</a></li>
-  <li><a href="#4-force-model-implementation-strategy">Force Model Implementation Strategy</a></li>
-  <li><a href="#5-determinism-strategy">Determinism Strategy</a></li>
-  <li><a href="#6-collision-system-design">Collision System Design</a></li>
-  <li><a href="#7-surface-effect-system">Surface Effect System</a></li>
-  <li><a href="#8-tuning-parameter-loading">Tuning Parameter Loading</a></li>
-  <li><a href="#9-wasm-interface-sharedarraybuffer">WASM Interface (SharedArrayBuffer)</a></li>
-  <li><a href="#10-test-strategy">Test Strategy</a></li>
-  <li><a href="#11-honest-assessment-of-unknowns">Honest Assessment of Unknowns</a></li>
-</ol>
-<hr>
-<h2 id="1-rust-module-structure"><a class="anchor" href="#1-rust-module-structure">#</a>1. Rust Module Structure</h2>
+<h2 id="rust-module-structure"><a class="anchor" href="#rust-module-structure">#</a>Rust Module Structure</h2>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>opentm-physics/
   Cargo.toml
   src/
@@ -202,9 +195,9 @@
   -&gt; curve.rs
   -&gt; math.rs</code></pre></div>
 <hr>
-<h2 id="2-vehiclestate-struct"><a class="anchor" href="#2-vehiclestate-struct">#</a>2. VehicleState Struct</h2>
+<h2 id="vehiclestate-struct"><a class="anchor" href="#vehiclestate-struct">#</a>VehicleState Struct</h2>
 <p>Derived from aggregated decompiled offsets across all 34 physics .c files, cross-referenced with Openplanet's CSceneVehicleVisState.</p>
-<h3 id="21-complete-rust-definition"><a class="anchor" href="#21-complete-rust-definition">#</a>2.1 Complete Rust Definition</h3>
+<h3 id="complete-rust-definition"><a class="anchor" href="#complete-rust-definition">#</a>Complete Rust Definition</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Complete vehicle entity state. ~7328 bytes in TM2020 (highest known offset: 0x1CA0).
 /// Offsets are from decompiled code; names are best-effort from string analysis.
 ///
@@ -514,7 +507,7 @@ pub struct WheelPhyBlock {
     // Total: 0xB8 = 184 bytes
 }</code></pre></div>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="22-vehicle-model-structure-via-vehicle0x88"><a class="anchor" href="#22-vehicle-model-structure-via-vehicle0x88">#</a>2.2 Vehicle Model Structure (via vehicle+0x88)</h3></summary>
+<summary><h3 id="vehicle-model-structure-via-vehicle0x88"><a class="anchor" href="#vehicle-model-structure-via-vehicle0x88">#</a>Vehicle Model Structure (via vehicle+0x88)</h3></summary>
 <div class="collapsible-content">
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Physics model data. Accessed through VehicleState::phy_model_ptr.
 /// Contains tuning curves, force model parameters, and speed thresholds.
@@ -662,7 +655,7 @@ pub struct VehiclePhyModel {
 }</code></pre></div>
 </div>
 </details>
-<h3 id="23-openplanet-visual-state-mapping"><a class="anchor" href="#23-openplanet-visual-state-mapping">#</a>2.3 Openplanet Visual State Mapping</h3>
+<h3 id="openplanet-visual-state-mapping"><a class="anchor" href="#openplanet-visual-state-mapping">#</a>Openplanet Visual State Mapping</h3>
 <p>The visual state (<code>CSceneVehicleVisState</code>) is a SEPARATE struct from the physics state, populated by <code>ExtractVisStates</code> (FUN_1407d5780). For OpenTM, we copy from our physics state to a vis-state struct at the end of each tick for rendering.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -766,8 +759,8 @@ pub struct VehiclePhyModel {
 </tbody>
 </table></div>
 <hr>
-<h2 id="3-physics-step-algorithm"><a class="anchor" href="#3-physics-step-algorithm">#</a>3. Physics Step Algorithm</h2>
-<h3 id="31-direct-translation-physicsstep_tm-fun_141501800"><a class="anchor" href="#31-direct-translation-physicsstep_tm-fun_141501800">#</a>3.1 Direct Translation: PhysicsStep_TM (FUN_141501800)</h3>
+<h2 id="physics-step-algorithm"><a class="anchor" href="#physics-step-algorithm">#</a>Physics Step Algorithm</h2>
+<h3 id="direct-translation-physicsstep_tm-fun_141501800"><a class="anchor" href="#direct-translation-physicsstep_tm-fun_141501800">#</a>Direct Translation: PhysicsStep_TM (FUN_141501800)</h3>
 <p>Source: <code>decompiled/physics/PhysicsStep_TM.c</code></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// PhysicsStep_TM - per-vehicle main physics loop.
 /// Called once per 100Hz tick for each vehicle.
@@ -902,7 +895,7 @@ pub fn physics_step_tm(
         }
     }
 }</code></pre></div>
-<h3 id="32-guarded-square-root"><a class="anchor" href="#32-guarded-square-root">#</a>3.2 Guarded Square Root</h3>
+<h3 id="guarded-square-root"><a class="anchor" href="#guarded-square-root">#</a>Guarded Square Root</h3>
 <p>Every sqrt in TM2020's physics is guarded against negative inputs:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Exact reproduction of TM2020&#x27;s guarded sqrt pattern.
 /// Maps to: `if (val &lt; 0.0) FUN_14195dd00(val) else SQRT(val)`
@@ -926,7 +919,7 @@ pub fn guarded_magnitude(v: &amp;[f32; 3]) -&gt; f32 {
     let sq = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
     guarded_sqrt(sq)
 }</code></pre></div>
-<h3 id="33-timing-system"><a class="anchor" href="#33-timing-system">#</a>3.3 Timing System</h3>
+<h3 id="timing-system"><a class="anchor" href="#timing-system">#</a>Timing System</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// TM2020 physics timing.
 /// Base tick rate: 100Hz (10ms per tick).
 /// Internal time unit: microseconds (integer).
@@ -956,8 +949,8 @@ impl PhysicsTiming {
     }
 }</code></pre></div>
 <hr>
-<h2 id="4-force-model-implementation-strategy"><a class="anchor" href="#4-force-model-implementation-strategy">#</a>4. Force Model Implementation Strategy</h2>
-<h3 id="41-overview"><a class="anchor" href="#41-overview">#</a>4.1 Overview</h3>
+<h2 id="force-model-implementation-strategy"><a class="anchor" href="#force-model-implementation-strategy">#</a>Force Model Implementation Strategy</h2>
+<h3 id="overview"><a class="anchor" href="#overview">#</a>Overview</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1102,7 +1095,7 @@ impl PhysicsTiming {
 </tr>
 </tbody>
 </table></div>
-<h3 id="42-cases-012-base-4-wheel-model"><a class="anchor" href="#42-cases-012-base-4-wheel-model">#</a>4.2 Cases 0/1/2: Base 4-Wheel Model</h3>
+<h3 id="cases-012-base-4-wheel-model"><a class="anchor" href="#cases-012-base-4-wheel-model">#</a>Cases 0/1/2: Base 4-Wheel Model</h3>
 <p><strong>What we know</strong>: Fully decompiled (force_model_4wheel_FUN_140869cd0.c).</p>
 <ul>
   <li>Iterates 4 wheels at stride 0xB8, starting car_state+0x1780</li>
@@ -1124,7 +1117,7 @@ impl PhysicsTiming {
 </ul>
 <p><strong>Implementation</strong>: Direct port from decompiled C. All control flow, offsets, and arithmetic operations are preserved exactly.</p>
 <p><strong>Expected fidelity</strong>: <strong>Exact match</strong> given correct tuning data.</p>
-<h3 id="43-case-3-bicycle-2-wheel-model"><a class="anchor" href="#43-case-3-bicycle-2-wheel-model">#</a>4.3 Case 3: Bicycle (2-Wheel) Model</h3>
+<h3 id="case-3-bicycle-2-wheel-model"><a class="anchor" href="#case-3-bicycle-2-wheel-model">#</a>Case 3: Bicycle (2-Wheel) Model</h3>
 <p><strong>What we know</strong>: Fully decompiled (force_model_2wheel_FUN_14086b060.c).</p>
 <ul>
   <li>Single front/rear axis force decomposition</li>
@@ -1147,7 +1140,7 @@ impl PhysicsTiming {
 </ul>
 <p><strong>Implementation</strong>: Direct port.</p>
 <p><strong>Expected fidelity</strong>: <strong>Exact match</strong>.</p>
-<h3 id="44-case-4-tmnf-m5-equivalent"><a class="anchor" href="#44-case-4-tmnf-m5-equivalent">#</a>4.4 Case 4: TMNF M5 Equivalent</h3>
+<h3 id="case-4-tmnf-m5-equivalent"><a class="anchor" href="#case-4-tmnf-m5-equivalent">#</a>Case 4: TMNF M5 Equivalent</h3>
 <p><strong>What we know</strong>: Decompiled (force_model_case4_FUN_14086bc50.c).</p>
 <ul>
   <li>Similar structure to cases 0-2 but different coefficient paths</li>
@@ -1159,7 +1152,7 @@ impl PhysicsTiming {
 </ul>
 <p><strong>Implementation</strong>: Direct port.</p>
 <p><strong>Expected fidelity</strong>: <strong>Exact match</strong>.</p>
-<h3 id="45-case-5-carsport-stadium-full-model"><a class="anchor" href="#45-case-5-carsport-stadium-full-model">#</a>4.5 Case 5: CarSport / Stadium Full Model</h3>
+<h3 id="case-5-carsport-stadium-full-model"><a class="anchor" href="#case-5-carsport-stadium-full-model">#</a>Case 5: CarSport / Stadium Full Model</h3>
 <p><strong>What we know</strong>: The largest decompilation (force_model_case5.c, 500+ lines). This is the primary Stadium car model.</p>
 <ul>
   <li>Sub-function breakdown matches the CarSport header documentation:</li>
@@ -1189,7 +1182,7 @@ impl PhysicsTiming {
 </ul>
 <p><strong>Implementation</strong>: Direct port of the main orchestrator. Sub-functions that are decompiled (boost, airborne, per-wheel, curve sampling) are ported directly. Sub-functions that are only referenced require additional Ghidra decompilation.</p>
 <p><strong>Expected fidelity</strong>: <strong>Close match</strong>. The orchestrator and several key sub-functions are exact. Missing sub-function internals (steering, suspension, anti-roll, drift) need decompilation for exact match.</p>
-<h3 id="46-case-6-extended-carsport-rallysnow"><a class="anchor" href="#46-case-6-extended-carsport-rallysnow">#</a>4.6 Case 6: Extended CarSport (Rally/Snow)</h3>
+<h3 id="case-6-extended-carsport-rallysnow"><a class="anchor" href="#case-6-extended-carsport-rallysnow">#</a>Case 6: Extended CarSport (Rally/Snow)</h3>
 <p><strong>What we know</strong>: Header comments document the complete sub-function breakdown (identical to case 5 with additions). The decompiled header at force_model_carsport_FUN_14085c9e0.c confirms:</p>
 <ul>
   <li>Same 12-phase pipeline as case 5</li>
@@ -1206,7 +1199,7 @@ impl PhysicsTiming {
 <p><strong>Implementation</strong>: Start with case 5 as base. Differences are likely in tuning data, not code structure. If decompilation reveals structural differences, fork.</p>
 <p><strong>Expected fidelity</strong>: <strong>Close match</strong> (same confidence as case 5, plus uncertainty about case-6-specific branches).</p>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="47-case-0xb-desertvariant-model"><a class="anchor" href="#47-case-0xb-desertvariant-model">#</a>4.7 Case 0xB: Desert/Variant Model</h3></summary>
+<summary><h3 id="case-0xb-desertvariant-model"><a class="anchor" href="#case-0xb-desertvariant-model">#</a>Case 0xB: Desert/Variant Model</h3></summary>
 <div class="collapsible-content">
 <p><strong>What we know</strong>: Fully decompiled (force_model_case0xB.c, 302 lines). Structural analysis:</p>
 <ul>
@@ -1229,7 +1222,7 @@ impl PhysicsTiming {
 <p><strong>Expected fidelity</strong>: <strong>Close match</strong>. Orchestrator is exact; unique sub-functions are gaps.</p>
 </div>
 </details>
-<h3 id="48-curve-sampling-critical-shared-utility"><a class="anchor" href="#48-curve-sampling-critical-shared-utility">#</a>4.8 Curve Sampling (Critical Shared Utility)</h3>
+<h3 id="curve-sampling-critical-shared-utility"><a class="anchor" href="#curve-sampling-critical-shared-utility">#</a>Curve Sampling (Critical Shared Utility)</h3>
 <p>The curve sampler FUN_14042bcb0 is called hundreds of times per physics tick and is <strong>fully decompiled</strong>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// CFuncKeysReal curve evaluator.
 /// Source: curve_sample_FUN_14042bcb0.c
@@ -1287,8 +1280,8 @@ pub fn sample_curve(curve_ptr: &amp;CurveData, t: f32) -&gt; f32 {
     }
 }</code></pre></div>
 <hr>
-<h2 id="5-determinism-strategy"><a class="anchor" href="#5-determinism-strategy">#</a>5. Determinism Strategy</h2>
-<h3 id="51-the-core-challenge"><a class="anchor" href="#51-the-core-challenge">#</a>5.1 The Core Challenge</h3>
+<h2 id="determinism-strategy"><a class="anchor" href="#determinism-strategy">#</a>Determinism Strategy</h2>
+<h3 id="the-core-challenge"><a class="anchor" href="#the-core-challenge">#</a>The Core Challenge</h3>
 <p>TM2020's determinism relies on:</p>
 <ol>
   <li>Fixed 100Hz integer tick counter (no float accumulation)</li>
@@ -1297,7 +1290,7 @@ pub fn sample_curve(curve_ptr: &amp;CurveData, t: f32) -&gt; f32 {
   <li>Guarded sqrt preventing NaN propagation</li>
 </ol>
 <p>For WASM, we must achieve <strong>identical floating-point results across all browsers</strong>.</p>
-<h3 id="52-wasm-floating-point-guarantees"><a class="anchor" href="#52-wasm-floating-point-guarantees">#</a>5.2 WASM Floating-Point Guarantees</h3>
+<h3 id="wasm-floating-point-guarantees"><a class="anchor" href="#wasm-floating-point-guarantees">#</a>WASM Floating-Point Guarantees</h3>
 <p><strong>What WASM guarantees (IEEE 754)</strong>:</p>
 <ul>
   <li><code>f32.add</code>, <code>f32.sub</code>, <code>f32.mul</code>, <code>f32.div</code>: <strong>Deterministic</strong>. WASM mandates IEEE 754 single-precision with round-to-nearest-even. These produce identical results across V8, SpiderMonkey, and JavaScriptCore.</li>
@@ -1310,7 +1303,7 @@ pub fn sample_curve(curve_ptr: &amp;CurveData, t: f32) -&gt; f32 {
   <li><code>sin</code>, <code>cos</code>, <code>tan</code>, <code>atan2</code>, <code>exp</code>, <code>log</code>: These are NOT WASM opcodes. They are implemented via libm in the Rust standard library, which compiles to WASM as software implementations. The Rust <code>core::f32::sin()</code> etc. use MUSL libm when targeting WASM, which IS deterministic (pure software, no hardware dependency).</li>
   <li><strong>NaN bit patterns</strong>: WASM specifies NaN propagation but allows arithmetic NaN to have non-deterministic payload bits. However, <code>f32.sqrt</code> of a negative number produces a canonical NaN in WASM (the spec mandates this), so our guarded_sqrt avoids this entirely.</li>
 </ul>
-<h3 id="53-f32-vs-f64-decision"><a class="anchor" href="#53-f32-vs-f64-decision">#</a>5.3 f32 vs f64 Decision</h3>
+<h3 id="f32-vs-f64-decision"><a class="anchor" href="#f32-vs-f64-decision">#</a>f32 vs f64 Decision</h3>
 <p><strong>TM2020's actual behavior</strong>:</p>
 <ul>
   <li><strong>Physics computations use f32</strong> (confirmed by decompiled code: <code>float</code> type throughout, SSE <code>sqrtss</code>/<code>addss</code>/<code>mulss</code> instructions).</li>
@@ -1320,7 +1313,7 @@ pub fn sample_curve(curve_ptr: &amp;CurveData, t: f32) -&gt; f32 {
 </ul>
 <p><strong>OpenTM decision</strong>: Use <strong>f32 for all physics math</strong>, matching TM2020. Use <strong>f64 only</strong> for the specific time conversion where TM2020 uses it (sub-dt to microseconds). Use <strong>i64 for tick counters</strong>.</p>
 <p><strong>Implications</strong>: f32 in WASM is IEEE 754 binary32 with round-to-nearest-even, identical to SSE <code>sqrtss</code>. Basic arithmetic will match bit-for-bit. The only divergence risk is in transcendental functions (atan2, sin, cos), which we address below.</p>
-<h3 id="54-transcendental-function-strategy"><a class="anchor" href="#54-transcendental-function-strategy">#</a>5.4 Transcendental Function Strategy</h3>
+<h3 id="transcendental-function-strategy"><a class="anchor" href="#transcendental-function-strategy">#</a>Transcendental Function Strategy</h3>
 <p>TM2020 uses <code>atan2</code> (steering angle computation in the bicycle model, FUN_14018d310) and potentially <code>sin</code>/<code>cos</code>. These map to x87/SSE library functions on x86-64.</p>
 <p><strong>Problem</strong>: WASM's <code>sin</code>/<code>cos</code>/<code>atan2</code> implementations (via MUSL libm) may not produce bit-identical results to MSVC's math library used by TM2020.</p>
 <p><strong>Mitigation</strong>:</p>
@@ -1334,7 +1327,7 @@ pub fn sample_curve(curve_ptr: &amp;CurveData, t: f32) -&gt; f32 {
   <li>Extracting TM2020's exact libm implementation (from MSVC runtime)</li>
   <li>Using a lookup table approximation tuned to match TM2020's output</li>
 </ul>
-<h3 id="55-cross-runtime-determinism"><a class="anchor" href="#55-cross-runtime-determinism">#</a>5.5 Cross-Runtime Determinism</h3>
+<h3 id="cross-runtime-determinism"><a class="anchor" href="#cross-runtime-determinism">#</a>Cross-Runtime Determinism</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1370,15 +1363,15 @@ pub fn sample_curve(curve_ptr: &amp;CurveData, t: f32) -&gt; f32 {
 </tbody>
 </table></div>
 <p>Since we compile transcendentals to WASM bytecode (not native intrinsics), all runtimes execute the same instruction sequence. <strong>Cross-browser determinism is guaranteed</strong>.</p>
-<h3 id="56-sub-step-ordering-guarantees"><a class="anchor" href="#56-sub-step-ordering-guarantees">#</a>5.6 Sub-Step Ordering Guarantees</h3>
+<h3 id="sub-step-ordering-guarantees"><a class="anchor" href="#sub-step-ordering-guarantees">#</a>Sub-Step Ordering Guarantees</h3>
 <p>TM2020 processes vehicles in array order (PhysicsStep_TM.c lines 66-220). Bodies are processed in sorted index order (PhysicsStep_V2.c lines 103-116). OpenTM must preserve this sequential ordering. No parallel dispatch, no shuffling.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">// CRITICAL: process in array order, never parallelize
 for i in 0..vehicle_count {
     physics_step_single_vehicle(&amp;mut vehicles[i], ...);
 }</code></pre></div>
 <hr>
-<h2 id="6-collision-system-design"><a class="anchor" href="#6-collision-system-design">#</a>6. Collision System Design</h2>
-<h3 id="61-architecture-overview"><a class="anchor" href="#61-architecture-overview">#</a>6.1 Architecture Overview</h3>
+<h2 id="collision-system-design"><a class="anchor" href="#collision-system-design">#</a>Collision System Design</h2>
+<h3 id="architecture-overview"><a class="anchor" href="#architecture-overview">#</a>Architecture Overview</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Per-Tick Pipeline:
   StartPhyFrame (FUN_1402a9c60)
     -&gt; Copy current positions to previous
@@ -1397,7 +1390,7 @@ for i in 0..vehicle_count {
   Post-Step:
     -&gt; MergeContacts (FUN_1402a8a70)
     -&gt; ProcessContactPoints (FUN_1407d2b90, 7 contact buffers)</code></pre></div>
-<h3 id="62-broadphase"><a class="anchor" href="#62-broadphase">#</a>6.2 Broadphase</h3>
+<h3 id="broadphase"><a class="anchor" href="#broadphase">#</a>Broadphase</h3>
 <p><strong>TM2020 approach</strong>: Tree-based spatial acceleration (BVH or k-d tree), inferred from <code>NHmsCollision::SMgr</code> namespace and the <code>DynamicCollisionCreateCache</code> function which builds per-body AABB entries.</p>
 <p><strong>OpenTM approach</strong>: Uniform spatial hash grid with 32-meter cells (matching TM2020's block size, confirmed by Openplanet rendering plugin: <code>Math::Ceil(distance / 32.0f)</code>).</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">pub struct SpatialGrid {
@@ -1411,7 +1404,7 @@ impl SpatialGrid {
     }
 }</code></pre></div>
 <p><strong>APPROXIMATION</strong>: TM2020 likely uses a BVH (more efficient for static geometry). Our grid is simpler but may have different performance characteristics. Physics results are unaffected as long as all overlapping pairs are found.</p>
-<h3 id="63-narrowphase"><a class="anchor" href="#63-narrowphase">#</a>6.3 Narrowphase</h3>
+<h3 id="narrowphase"><a class="anchor" href="#narrowphase">#</a>Narrowphase</h3>
 <p>TM2020 uses <code>NHmsCollision::PointCast_FirstClip/AllClips</code> for per-wheel raycasts and a constraint-based solver for body-body collision.</p>
 <p><strong>OpenTM approach</strong>: GJK/EPA for convex hull intersection, plus raycasts for wheel-ground contact.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Per-wheel raycast against terrain.
@@ -1426,7 +1419,7 @@ pub fn wheel_raycast(
     // Returns: hit position, normal, distance, surface_material_id, surface_gameplay_id
 }</code></pre></div>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="64-contact-structure-88-bytes"><a class="anchor" href="#64-contact-structure-88-bytes">#</a>6.4 Contact Structure (88 bytes)</h3></summary>
+<summary><h3 id="contact-structure-88-bytes"><a class="anchor" href="#contact-structure-88-bytes">#</a>Contact Structure (88 bytes)</h3></summary>
 <div class="collapsible-content">
 <p>From MergeContacts decompilation (stride 0x58):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">#[repr(C)]
@@ -1446,7 +1439,7 @@ pub struct ContactPoint {
 // Total: 0x58 = 88 bytes</code></pre></div>
 </div>
 </details>
-<h3 id="65-contact-merging-fun_1402a8a70"><a class="anchor" href="#65-contact-merging-fun_1402a8a70">#</a>6.5 Contact Merging (FUN_1402a8a70)</h3>
+<h3 id="contact-merging-fun_1402a8a70"><a class="anchor" href="#contact-merging-fun_1402a8a70">#</a>Contact Merging (FUN_1402a8a70)</h3>
 <p>Direct port from decompiled code (271 lines):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Merge contacts with similar normals and positions.
 /// Parameters:
@@ -1470,7 +1463,7 @@ pub fn merge_contacts(
 ) {
     // ... exact port of NHmsCollision__MergeContacts.c
 }</code></pre></div>
-<h3 id="66-friction-solver"><a class="anchor" href="#66-friction-solver">#</a>6.6 Friction Solver</h3>
+<h3 id="friction-solver"><a class="anchor" href="#friction-solver">#</a>Friction Solver</h3>
 <p>From FrictionIterCount_Config.c, the solver uses Gauss-Seidel sequential impulses with configurable iteration counts:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// NSceneDyna::SSolverParams (44 bytes / 0x2C).
 #[repr(C)]
@@ -1529,8 +1522,8 @@ pub fn solve_constraints(
     }
 }</code></pre></div>
 <hr>
-<h2 id="7-surface-effect-system"><a class="anchor" href="#7-surface-effect-system">#</a>7. Surface Effect System</h2>
-<h3 id="71-two-id-system"><a class="anchor" href="#71-two-id-system">#</a>7.1 Two-ID System</h3>
+<h2 id="surface-effect-system"><a class="anchor" href="#surface-effect-system">#</a>Surface Effect System</h2>
+<h3 id="two-id-system"><a class="anchor" href="#two-id-system">#</a>Two-ID System</h3>
 <p>TM2020 has two independent surface classification systems:</p>
 <ol>
   <li><strong>EPlugSurfaceMaterialId</strong> (physical properties): Controls friction coefficients, sound, particles, skid marks. Stored per-material in the material library. Per-wheel <code>GroundContactMaterial</code> updated each tick via raycast.</li>
@@ -1538,7 +1531,7 @@ pub fn solve_constraints(
 <ol>
   <li><strong>EPlugSurfaceGameplayId</strong> (gameplay triggers): Controls turbo, reset, no-grip, etc. Applied through block/item trigger zones, NOT through materials. All 208 stock materials have <code>DGameplayId(None)</code>.</li>
 </ol>
-<h3 id="72-complete-gameplay-surface-effects-22-effects"><a class="anchor" href="#72-complete-gameplay-surface-effects-22-effects">#</a>7.2 Complete Gameplay Surface Effects (22 effects)</h3>
+<h3 id="complete-gameplay-surface-effects-22-effects"><a class="anchor" href="#complete-gameplay-surface-effects-22-effects">#</a>Complete Gameplay Surface Effects (22 effects)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1706,7 +1699,7 @@ pub fn solve_constraints(
 </tr>
 </tbody>
 </table></div>
-<h3 id="73-material-surface-physics-19-types"><a class="anchor" href="#73-material-surface-physics-19-types">#</a>7.3 Material Surface Physics (19 types)</h3>
+<h3 id="material-surface-physics-19-types"><a class="anchor" href="#material-surface-physics-19-types">#</a>Material Surface Physics (19 types)</h3>
 <p>From the NadeoImporter material library:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1835,7 +1828,7 @@ pub fn solve_constraints(
 </tbody>
 </table></div>
 <p><strong><span class="badge badge-unknown">UNKNOWN</span></strong>: The exact friction and restitution coefficient values for each material. These are stored in the material property table accessed via <code><em>car_state + 0x6B8 + surface_id </em> 8</code>, which points to a struct with 7 floats at offsets +0x18 through +0x30, plus additional flags. The actual numeric values must be extracted from TM2020's runtime memory or GBX resource files.</p>
-<h3 id="74-surface-material-lookup-from-decompiled-code"><a class="anchor" href="#74-surface-material-lookup-from-decompiled-code">#</a>7.4 Surface Material Lookup (from decompiled code)</h3>
+<h3 id="surface-material-lookup-from-decompiled-code"><a class="anchor" href="#surface-material-lookup-from-decompiled-code">#</a>Surface Material Lookup (from decompiled code)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Per-wheel surface property accumulation.
 /// Source: wheel_contact_surface_FUN_140845b60.c
 ///
@@ -1891,8 +1884,8 @@ pub fn accumulate_wheel_surfaces(
     accum
 }</code></pre></div>
 <hr>
-<h2 id="8-tuning-parameter-loading"><a class="anchor" href="#8-tuning-parameter-loading">#</a>8. Tuning Parameter Loading</h2>
-<h3 id="81-gbx-to-physics-pipeline"><a class="anchor" href="#81-gbx-to-physics-pipeline">#</a>8.1 GBX to Physics Pipeline</h3>
+<h2 id="tuning-parameter-loading"><a class="anchor" href="#tuning-parameter-loading">#</a>Tuning Parameter Loading</h2>
+<h3 id="gbx-to-physics-pipeline"><a class="anchor" href="#gbx-to-physics-pipeline">#</a>GBX to Physics Pipeline</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>.Gbx file (CPlugVehicleCarPhyTuning, class ID 0x090ED)
   |
   v
@@ -1915,7 +1908,7 @@ TuningParams struct (Rust)
 VehiclePhyModel (populated at vehicle spawn)
   -&gt; Offsets match decompiled code exactly
   -&gt; Curves deserialized into CurveData structs</code></pre></div>
-<h3 id="82-known-tuning-parameters"><a class="anchor" href="#82-known-tuning-parameters">#</a>8.2 Known Tuning Parameters</h3>
+<h3 id="known-tuning-parameters"><a class="anchor" href="#known-tuning-parameters">#</a>Known Tuning Parameters</h3>
 <p>From TMNF cross-reference and TM2020 string analysis:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -2042,7 +2035,7 @@ VehiclePhyModel (populated at vehicle spawn)
 </tr>
 </tbody>
 </table></div>
-<h3 id="83-suspension-model-translation"><a class="anchor" href="#83-suspension-model-translation">#</a>8.3 Suspension Model Translation</h3>
+<h3 id="suspension-model-translation"><a class="anchor" href="#suspension-model-translation">#</a>Suspension Model Translation</h3>
 <p>TMNF-to-TM2020 parameter equivalence:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Convert TMNF-style suspension params to TM2020 Spring/Damper.
 /// TMNF: F = Ki * (rest - compression) - Ka * velocity
@@ -2053,7 +2046,7 @@ pub fn tmnf_to_tm2020_suspension(ki: f32, ka: f32, mass: f32) -&gt; (f32, f32) {
     let damping_ratio = ka / (2.0 * (ki * mass).sqrt());
     (freq_hz, damping_ratio)
 }</code></pre></div>
-<h3 id="84-tuning-coefficient-runtime-state"><a class="anchor" href="#84-tuning-coefficient-runtime-state">#</a>8.4 Tuning Coefficient Runtime State</h3>
+<h3 id="tuning-coefficient-runtime-state"><a class="anchor" href="#tuning-coefficient-runtime-state">#</a>Tuning Coefficient Runtime State</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// NGameSlotPhy::SMgr (144 bytes / 0x90).
 /// Per-player tuning modifier state.
 pub struct SlotPhyState {
@@ -2069,9 +2062,9 @@ pub struct SlotPhyState {
     _pad_64: [u8; 0x2C],
 }</code></pre></div>
 <hr>
-<h2 id="9-wasm-interface-sharedarraybuffer"><a class="anchor" href="#9-wasm-interface-sharedarraybuffer">#</a>9. WASM Interface (SharedArrayBuffer)</h2>
+<h2 id="wasm-interface-sharedarraybuffer"><a class="anchor" href="#wasm-interface-sharedarraybuffer">#</a>WASM Interface (SharedArrayBuffer)</h2>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="91-memory-layout"><a class="anchor" href="#91-memory-layout">#</a>9.1 Memory Layout</h3></summary>
+<summary><h3 id="memory-layout"><a class="anchor" href="#memory-layout">#</a>Memory Layout</h3></summary>
 <div class="collapsible-content">
 <p>The physics engine communicates with the JavaScript render thread via a SharedArrayBuffer. The layout is designed for lock-free read (render) / write (physics) with double-buffering.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SharedArrayBuffer Layout (per vehicle):
@@ -2176,7 +2169,7 @@ Offset 0x0014..0x003F: reserved global state
 Per-vehicle data starts at offset 0x0040 + vehicle_index * 512.</code></pre></div>
 </div>
 </details>
-<h3 id="92-double-buffering-protocol"><a class="anchor" href="#92-double-buffering-protocol">#</a>9.2 Double-Buffering Protocol</h3>
+<h3 id="double-buffering-protocol"><a class="anchor" href="#double-buffering-protocol">#</a>Double-Buffering Protocol</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Physics thread writes to buffer[write_idx].
 /// Render thread reads from buffer[1 - write_idx].
 /// Atomics ensure visibility.
@@ -2194,9 +2187,9 @@ pub fn physics_tick_complete(sab: &amp;SharedArrayBuffer, vehicle_idx: usize) {
     Atomics::store_u32(sab, base + OFFSET_BUFFER_INDEX, 1 - old_idx);
 }</code></pre></div>
 <hr>
-<h2 id="10-test-strategy"><a class="anchor" href="#10-test-strategy">#</a>10. Test Strategy</h2>
+<h2 id="test-strategy"><a class="anchor" href="#test-strategy">#</a>Test Strategy</h2>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="101-replay-validation-gold-standard"><a class="anchor" href="#101-replay-validation-gold-standard">#</a>10.1 Replay Validation (Gold Standard)</h3></summary>
+<summary><h3 id="replay-validation-gold-standard"><a class="anchor" href="#replay-validation-gold-standard">#</a>Replay Validation (Gold Standard)</h3></summary>
 <div class="collapsible-content">
 <p>The highest-fidelity test: play a TM2020 ghost replay's inputs through our physics engine and compare the resulting positions frame-by-frame.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Input: TM2020 .Replay.Gbx file
@@ -2217,7 +2210,7 @@ Compare:
 <p><strong>Replay state block</strong>: TM2020 copies 2,168 bytes (0x878) of vehicle state for replay. This block can be compared byte-for-byte.</p>
 </div>
 </details>
-<h3 id="102-unit-tests-per-force-model"><a class="anchor" href="#102-unit-tests-per-force-model">#</a>10.2 Unit Tests Per Force Model</h3>
+<h3 id="unit-tests-per-force-model"><a class="anchor" href="#unit-tests-per-force-model">#</a>Unit Tests Per Force Model</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">#[cfg(test)]
 mod tests {
     /// Test base 4-wheel model (cases 0/1/2):
@@ -2281,7 +2274,7 @@ mod tests {
     #[test]
     fn test_slope_factor() { ... }
 }</code></pre></div>
-<h3 id="103-determinism-regression-tests"><a class="anchor" href="#103-determinism-regression-tests">#</a>10.3 Determinism Regression Tests</h3>
+<h3 id="determinism-regression-tests"><a class="anchor" href="#determinism-regression-tests">#</a>Determinism Regression Tests</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-rust">/// Run the same input sequence twice and verify bit-identical output.
 #[test]
 fn test_determinism_identical_runs() {
@@ -2307,7 +2300,7 @@ fn test_cross_platform_basic_arithmetic() {
     // Test that f32 add/mul/div/sqrt produce identical results
     // across native and WASM builds
 }</code></pre></div>
-<h3 id="104-community-telemetry-comparison"><a class="anchor" href="#104-community-telemetry-comparison">#</a>10.4 Community Telemetry Comparison</h3>
+<h3 id="community-telemetry-comparison"><a class="anchor" href="#community-telemetry-comparison">#</a>Community Telemetry Comparison</h3>
 <p>Using Openplanet telemetry recordings from real TM2020 sessions:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Input: Telemetry JSON from ~/Documents/Trackmania/Telemetry/
   Contains per-tick: InputSteer, InputGasPedal, InputBrakePedal, Position, Velocity, etc.
@@ -2318,8 +2311,8 @@ Compare:
   - Measure drift rate (error per second)
   - Identify systematic biases (e.g., consistently faster/slower)</code></pre></div>
 <hr>
-<h2 id="11-honest-assessment-of-unknowns"><a class="anchor" href="#11-honest-assessment-of-unknowns">#</a>11. Honest Assessment of Unknowns</h2>
-<h3 id="111-critical-unknowns-block-implementation"><a class="anchor" href="#111-critical-unknowns-block-implementation">#</a>11.1 Critical Unknowns (Block Implementation)</h3>
+<h2 id="honest-assessment-of-unknowns"><a class="anchor" href="#honest-assessment-of-unknowns">#</a>Honest Assessment of Unknowns</h2>
+<h3 id="critical-unknowns-block-implementation"><a class="anchor" href="#critical-unknowns-block-implementation">#</a>Critical Unknowns (Block Implementation)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2350,7 +2343,7 @@ Compare:
 </tr>
 </tbody>
 </table></div>
-<h3 id="112-high-impact-unknowns-degrade-quality"><a class="anchor" href="#112-high-impact-unknowns-degrade-quality">#</a>11.2 High-Impact Unknowns (Degrade Quality)</h3>
+<h3 id="high-impact-unknowns-degrade-quality"><a class="anchor" href="#high-impact-unknowns-degrade-quality">#</a>High-Impact Unknowns (Degrade Quality)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2405,7 +2398,7 @@ Compare:
 </tr>
 </tbody>
 </table></div>
-<h3 id="113-medium-impact-unknowns-noticeable-differences"><a class="anchor" href="#113-medium-impact-unknowns-noticeable-differences">#</a>11.3 Medium-Impact Unknowns (Noticeable Differences)</h3>
+<h3 id="medium-impact-unknowns-noticeable-differences"><a class="anchor" href="#medium-impact-unknowns-noticeable-differences">#</a>Medium-Impact Unknowns (Noticeable Differences)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2448,7 +2441,7 @@ Compare:
 </tr>
 </tbody>
 </table></div>
-<h3 id="114-low-impact-unknowns-cosmetic-minor"><a class="anchor" href="#114-low-impact-unknowns-cosmetic-minor">#</a>11.4 Low-Impact Unknowns (Cosmetic / Minor)</h3>
+<h3 id="low-impact-unknowns-cosmetic-minor"><a class="anchor" href="#low-impact-unknowns-cosmetic-minor">#</a>Low-Impact Unknowns (Cosmetic / Minor)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2491,7 +2484,7 @@ Compare:
 </tr>
 </tbody>
 </table></div>
-<h3 id="115-what-makes-tm2020-physics-feel-unique"><a class="anchor" href="#115-what-makes-tm2020-physics-feel-unique">#</a>11.5 What Makes TM2020 Physics FEEL Unique</h3>
+<h3 id="what-makes-tm2020-physics-feel-unique"><a class="anchor" href="#what-makes-tm2020-physics-feel-unique">#</a>What Makes TM2020 Physics FEEL Unique</h3>
 <p>Based on the decompiled code, these are the critical elements that define the "TM feel" and must be preserved:</p>
 <ol>
   <li><strong>Exaggerated gravity</strong> (<code>GravityCoef=3.0</code> in TMNF, likely similar in TM2020): The car feels heavy and responsive because gravity is 3x Earth's. This is the single most important tuning parameter.</li>
@@ -2852,7 +2845,26 @@ Compare:
 </tr>
 </tbody>
 </table></div>
+<hr>
 </div>
+</details>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="07-physics-constants.md">Physics Constants</a> -- All extracted constants and struct layouts</li>
+  <li><a href="06-determinism-analysis.md">Determinism Analysis</a> -- WASM float determinism guarantees</li>
+  <li><a href="09-tuning-data-extraction.md">Tuning Data Extraction</a> -- How to extract GBX tuning files</li>
+  <li><a href="10-tuning-loading-analysis.md">Tuning Loading Analysis</a> -- GBX to runtime data flow</li>
+  <li><a href="01-system-architecture.md">System Architecture</a> -- Threading model and SAB layout</li>
+  <li><a href="08-mvp-tasks.md">MVP Tasks</a> -- Physics task breakdown (MVP-034 through MVP-044)</li>
+</ul>
+<details><summary>Document metadata</summary>
+<ul>
+  <li><strong>Version</strong>: 1.0</li>
+  <li><strong>Date</strong>: 2026-03-27</li>
+  <li><strong>Crate</strong>: <code>opentm-physics</code></li>
+  <li><strong>Target</strong>: WASM (wasm32-unknown-unknown), compiled from Rust</li>
+  <li><strong>Goal</strong>: Bit-for-bit reproduction of TM2020 vehicle physics where decompiled code exists; documented approximations elsewhere</li>
+</ul>
 </details>
 
                         <nav class="prev-next"><a class="prev" href="plan-architecture.html">&larr; System Architecture</a><a class="next" href="plan-renderer.html">Renderer Design &rarr;</a></nav>
@@ -2860,66 +2872,66 @@ Compare:
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-rust-module-structure">1. Rust Module Structure</a></li>
+<li class=""><a href="#rust-module-structure">Rust Module Structure</a></li>
   <li class="toc-h3"><a href="#dependency-graph">Dependency Graph</a></li>
-<li class=""><a href="#2-vehiclestate-struct">2. VehicleState Struct</a></li>
-  <li class="toc-h3"><a href="#21-complete-rust-definition">2.1 Complete Rust Definition</a></li>
-  <li class="toc-h3"><a href="#22-vehicle-model-structure-via-vehicle0x88">2.2 Vehicle Model Structure (via vehicle+0x88)</a></li>
-  <li class="toc-h3"><a href="#23-openplanet-visual-state-mapping">2.3 Openplanet Visual State Mapping</a></li>
-<li class=""><a href="#3-physics-step-algorithm">3. Physics Step Algorithm</a></li>
-  <li class="toc-h3"><a href="#31-direct-translation-physicsstep_tm-fun_141501800">3.1 Direct Translation: PhysicsStep_TM (FUN_141501800)</a></li>
-  <li class="toc-h3"><a href="#32-guarded-square-root">3.2 Guarded Square Root</a></li>
-  <li class="toc-h3"><a href="#33-timing-system">3.3 Timing System</a></li>
-<li class=""><a href="#4-force-model-implementation-strategy">4. Force Model Implementation Strategy</a></li>
-  <li class="toc-h3"><a href="#41-overview">4.1 Overview</a></li>
-  <li class="toc-h3"><a href="#42-cases-012-base-4-wheel-model">4.2 Cases 0/1/2: Base 4-Wheel Model</a></li>
-  <li class="toc-h3"><a href="#43-case-3-bicycle-2-wheel-model">4.3 Case 3: Bicycle (2-Wheel) Model</a></li>
-  <li class="toc-h3"><a href="#44-case-4-tmnf-m5-equivalent">4.4 Case 4: TMNF M5 Equivalent</a></li>
-  <li class="toc-h3"><a href="#45-case-5-carsport-stadium-full-model">4.5 Case 5: CarSport / Stadium Full Model</a></li>
-  <li class="toc-h3"><a href="#46-case-6-extended-carsport-rallysnow">4.6 Case 6: Extended CarSport (Rally/Snow)</a></li>
-  <li class="toc-h3"><a href="#47-case-0xb-desertvariant-model">4.7 Case 0xB: Desert/Variant Model</a></li>
-  <li class="toc-h3"><a href="#48-curve-sampling-critical-shared-utility">4.8 Curve Sampling (Critical Shared Utility)</a></li>
-<li class=""><a href="#5-determinism-strategy">5. Determinism Strategy</a></li>
-  <li class="toc-h3"><a href="#51-the-core-challenge">5.1 The Core Challenge</a></li>
-  <li class="toc-h3"><a href="#52-wasm-floating-point-guarantees">5.2 WASM Floating-Point Guarantees</a></li>
-  <li class="toc-h3"><a href="#53-f32-vs-f64-decision">5.3 f32 vs f64 Decision</a></li>
-  <li class="toc-h3"><a href="#54-transcendental-function-strategy">5.4 Transcendental Function Strategy</a></li>
-  <li class="toc-h3"><a href="#55-cross-runtime-determinism">5.5 Cross-Runtime Determinism</a></li>
-  <li class="toc-h3"><a href="#56-sub-step-ordering-guarantees">5.6 Sub-Step Ordering Guarantees</a></li>
-<li class=""><a href="#6-collision-system-design">6. Collision System Design</a></li>
-  <li class="toc-h3"><a href="#61-architecture-overview">6.1 Architecture Overview</a></li>
-  <li class="toc-h3"><a href="#62-broadphase">6.2 Broadphase</a></li>
-  <li class="toc-h3"><a href="#63-narrowphase">6.3 Narrowphase</a></li>
-  <li class="toc-h3"><a href="#64-contact-structure-88-bytes">6.4 Contact Structure (88 bytes)</a></li>
-  <li class="toc-h3"><a href="#65-contact-merging-fun_1402a8a70">6.5 Contact Merging (FUN_1402a8a70)</a></li>
-  <li class="toc-h3"><a href="#66-friction-solver">6.6 Friction Solver</a></li>
-<li class=""><a href="#7-surface-effect-system">7. Surface Effect System</a></li>
-  <li class="toc-h3"><a href="#71-two-id-system">7.1 Two-ID System</a></li>
-  <li class="toc-h3"><a href="#72-complete-gameplay-surface-effects-22-effects">7.2 Complete Gameplay Surface Effects (22 effects)</a></li>
-  <li class="toc-h3"><a href="#73-material-surface-physics-19-types">7.3 Material Surface Physics (19 types)</a></li>
-  <li class="toc-h3"><a href="#74-surface-material-lookup-from-decompiled-code">7.4 Surface Material Lookup (from decompiled code)</a></li>
-<li class=""><a href="#8-tuning-parameter-loading">8. Tuning Parameter Loading</a></li>
-  <li class="toc-h3"><a href="#81-gbx-to-physics-pipeline">8.1 GBX to Physics Pipeline</a></li>
-  <li class="toc-h3"><a href="#82-known-tuning-parameters">8.2 Known Tuning Parameters</a></li>
-  <li class="toc-h3"><a href="#83-suspension-model-translation">8.3 Suspension Model Translation</a></li>
-  <li class="toc-h3"><a href="#84-tuning-coefficient-runtime-state">8.4 Tuning Coefficient Runtime State</a></li>
-<li class=""><a href="#9-wasm-interface-sharedarraybuffer">9. WASM Interface (SharedArrayBuffer)</a></li>
-  <li class="toc-h3"><a href="#91-memory-layout">9.1 Memory Layout</a></li>
-  <li class="toc-h3"><a href="#92-double-buffering-protocol">9.2 Double-Buffering Protocol</a></li>
-<li class=""><a href="#10-test-strategy">10. Test Strategy</a></li>
-  <li class="toc-h3"><a href="#101-replay-validation-gold-standard">10.1 Replay Validation (Gold Standard)</a></li>
-  <li class="toc-h3"><a href="#102-unit-tests-per-force-model">10.2 Unit Tests Per Force Model</a></li>
-  <li class="toc-h3"><a href="#103-determinism-regression-tests">10.3 Determinism Regression Tests</a></li>
-  <li class="toc-h3"><a href="#104-community-telemetry-comparison">10.4 Community Telemetry Comparison</a></li>
-<li class=""><a href="#11-honest-assessment-of-unknowns">11. Honest Assessment of Unknowns</a></li>
-  <li class="toc-h3"><a href="#111-critical-unknowns-block-implementation">11.1 Critical Unknowns (Block Implementation)</a></li>
-  <li class="toc-h3"><a href="#112-high-impact-unknowns-degrade-quality">11.2 High-Impact Unknowns (Degrade Quality)</a></li>
-  <li class="toc-h3"><a href="#113-medium-impact-unknowns-noticeable-differences">11.3 Medium-Impact Unknowns (Noticeable Differences)</a></li>
-  <li class="toc-h3"><a href="#114-low-impact-unknowns-cosmetic-minor">11.4 Low-Impact Unknowns (Cosmetic / Minor)</a></li>
-  <li class="toc-h3"><a href="#115-what-makes-tm2020-physics-feel-unique">11.5 What Makes TM2020 Physics FEEL Unique</a></li>
+<li class=""><a href="#vehiclestate-struct">VehicleState Struct</a></li>
+  <li class="toc-h3"><a href="#complete-rust-definition">Complete Rust Definition</a></li>
+  <li class="toc-h3"><a href="#vehicle-model-structure-via-vehicle0x88">Vehicle Model Structure (via vehicle+0x88)</a></li>
+  <li class="toc-h3"><a href="#openplanet-visual-state-mapping">Openplanet Visual State Mapping</a></li>
+<li class=""><a href="#physics-step-algorithm">Physics Step Algorithm</a></li>
+  <li class="toc-h3"><a href="#direct-translation-physicsstep_tm-fun_141501800">Direct Translation: PhysicsStep_TM (FUN_141501800)</a></li>
+  <li class="toc-h3"><a href="#guarded-square-root">Guarded Square Root</a></li>
+  <li class="toc-h3"><a href="#timing-system">Timing System</a></li>
+<li class=""><a href="#force-model-implementation-strategy">Force Model Implementation Strategy</a></li>
+  <li class="toc-h3"><a href="#overview">Overview</a></li>
+  <li class="toc-h3"><a href="#cases-012-base-4-wheel-model">Cases 0/1/2: Base 4-Wheel Model</a></li>
+  <li class="toc-h3"><a href="#case-3-bicycle-2-wheel-model">Case 3: Bicycle (2-Wheel) Model</a></li>
+  <li class="toc-h3"><a href="#case-4-tmnf-m5-equivalent">Case 4: TMNF M5 Equivalent</a></li>
+  <li class="toc-h3"><a href="#case-5-carsport-stadium-full-model">Case 5: CarSport / Stadium Full Model</a></li>
+  <li class="toc-h3"><a href="#case-6-extended-carsport-rallysnow">Case 6: Extended CarSport (Rally/Snow)</a></li>
+  <li class="toc-h3"><a href="#case-0xb-desertvariant-model">Case 0xB: Desert/Variant Model</a></li>
+  <li class="toc-h3"><a href="#curve-sampling-critical-shared-utility">Curve Sampling (Critical Shared Utility)</a></li>
+<li class=""><a href="#determinism-strategy">Determinism Strategy</a></li>
+  <li class="toc-h3"><a href="#the-core-challenge">The Core Challenge</a></li>
+  <li class="toc-h3"><a href="#wasm-floating-point-guarantees">WASM Floating-Point Guarantees</a></li>
+  <li class="toc-h3"><a href="#f32-vs-f64-decision">f32 vs f64 Decision</a></li>
+  <li class="toc-h3"><a href="#transcendental-function-strategy">Transcendental Function Strategy</a></li>
+  <li class="toc-h3"><a href="#cross-runtime-determinism">Cross-Runtime Determinism</a></li>
+  <li class="toc-h3"><a href="#sub-step-ordering-guarantees">Sub-Step Ordering Guarantees</a></li>
+<li class=""><a href="#collision-system-design">Collision System Design</a></li>
+  <li class="toc-h3"><a href="#architecture-overview">Architecture Overview</a></li>
+  <li class="toc-h3"><a href="#broadphase">Broadphase</a></li>
+  <li class="toc-h3"><a href="#narrowphase">Narrowphase</a></li>
+  <li class="toc-h3"><a href="#contact-structure-88-bytes">Contact Structure (88 bytes)</a></li>
+  <li class="toc-h3"><a href="#contact-merging-fun_1402a8a70">Contact Merging (FUN_1402a8a70)</a></li>
+  <li class="toc-h3"><a href="#friction-solver">Friction Solver</a></li>
+<li class=""><a href="#surface-effect-system">Surface Effect System</a></li>
+  <li class="toc-h3"><a href="#two-id-system">Two-ID System</a></li>
+  <li class="toc-h3"><a href="#complete-gameplay-surface-effects-22-effects">Complete Gameplay Surface Effects (22 effects)</a></li>
+  <li class="toc-h3"><a href="#material-surface-physics-19-types">Material Surface Physics (19 types)</a></li>
+  <li class="toc-h3"><a href="#surface-material-lookup-from-decompiled-code">Surface Material Lookup (from decompiled code)</a></li>
+<li class=""><a href="#tuning-parameter-loading">Tuning Parameter Loading</a></li>
+  <li class="toc-h3"><a href="#gbx-to-physics-pipeline">GBX to Physics Pipeline</a></li>
+  <li class="toc-h3"><a href="#known-tuning-parameters">Known Tuning Parameters</a></li>
+  <li class="toc-h3"><a href="#suspension-model-translation">Suspension Model Translation</a></li>
+  <li class="toc-h3"><a href="#tuning-coefficient-runtime-state">Tuning Coefficient Runtime State</a></li>
+<li class=""><a href="#wasm-interface-sharedarraybuffer">WASM Interface (SharedArrayBuffer)</a></li>
+  <li class="toc-h3"><a href="#memory-layout">Memory Layout</a></li>
+  <li class="toc-h3"><a href="#double-buffering-protocol">Double-Buffering Protocol</a></li>
+<li class=""><a href="#test-strategy">Test Strategy</a></li>
+  <li class="toc-h3"><a href="#replay-validation-gold-standard">Replay Validation (Gold Standard)</a></li>
+  <li class="toc-h3"><a href="#unit-tests-per-force-model">Unit Tests Per Force Model</a></li>
+  <li class="toc-h3"><a href="#determinism-regression-tests">Determinism Regression Tests</a></li>
+  <li class="toc-h3"><a href="#community-telemetry-comparison">Community Telemetry Comparison</a></li>
+<li class=""><a href="#honest-assessment-of-unknowns">Honest Assessment of Unknowns</a></li>
+  <li class="toc-h3"><a href="#critical-unknowns-block-implementation">Critical Unknowns (Block Implementation)</a></li>
+  <li class="toc-h3"><a href="#high-impact-unknowns-degrade-quality">High-Impact Unknowns (Degrade Quality)</a></li>
+  <li class="toc-h3"><a href="#medium-impact-unknowns-noticeable-differences">Medium-Impact Unknowns (Noticeable Differences)</a></li>
+  <li class="toc-h3"><a href="#low-impact-unknowns-cosmetic-minor">Low-Impact Unknowns (Cosmetic / Minor)</a></li>
+  <li class="toc-h3"><a href="#what-makes-tm2020-physics-feel-unique">What Makes TM2020 Physics FEEL Unique</a></li>
 <li class=""><a href="#appendix-a-global-constants-from-binary">Appendix A: Global Constants (from Binary)</a></li>
 <li class=""><a href="#appendix-b-function-address-reference">Appendix B: Function Address Reference</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

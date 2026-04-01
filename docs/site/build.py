@@ -15,36 +15,53 @@ SEMINAR_DIR = os.path.join(os.path.dirname(SITE_DIR), 'seminar')
 
 # Page definitions: (output_file, title, source_files, nav_icon)
 # Entries with None as output_file are section separators shown in the sidebar.
+# Entries with 'sub:' prefix in output_file are subsection labels within a section.
 PAGES = [
     # --- Reverse Engineering ---
     (None, 'Reverse Engineering', [], None),
+    # Core Systems
+    ('sub:', 'Core Systems', [], None),
     ('index.html', 'Overview', ['00-master-overview.md'], 'home'),
-    ('binary.html', 'Binary Analysis', ['01-binary-overview.md'], 'cpu'),
-    ('class-hierarchy.html', 'Class System', ['02-class-hierarchy.md', '13-subsystem-class-map.md'], 'sitemap'),
-    ('physics.html', 'Physics & Vehicle', ['04-physics-vehicle.md', '10-physics-deep-dive.md'], 'gauge'),
-    ('rendering.html', 'Rendering & Graphics', ['05-rendering-graphics.md', '11-rendering-deep-dive.md'], 'display'),
     ('architecture.html', 'Architecture', ['08-game-architecture.md', '12-architecture-deep-dive.md'], 'diagram'),
-    ('file-formats.html', 'File Formats', ['06-file-formats.md', '16-fileformat-deep-dive.md'], 'file'),
-    ('networking.html', 'Networking', ['07-networking.md', '17-networking-deep-dive.md'], 'network'),
-    ('game-files.html', 'Game Files', ['09-game-files-analysis.md'], 'folder'),
-    ('tmnf-crossref.html', 'TMNF Comparison', ['14-tmnf-crossref.md'], 'compare'),
-    ('ghidra-findings.html', 'Ghidra Research', ['15-ghidra-research-findings.md'], 'search'),
-    ('validation.html', 'Validation Review', ['18-validation-review.md'], 'check'),
-    ('openplanet.html', 'Openplanet Intelligence', ['19-openplanet-intelligence.md'], 'puzzle'),
-    ('recreation.html', 'Browser Recreation Guide', ['20-browser-recreation-guide.md'], 'rocket'),
+    ('class-hierarchy.html', 'Class System', ['02-class-hierarchy.md', '13-subsystem-class-map.md'], 'sitemap'),
+    ('binary.html', 'Binary Analysis', ['01-binary-overview.md'], 'cpu'),
+    # Physics & Driving
+    ('sub:', 'Physics & Driving', [], None),
+    ('physics.html', 'Physics & Vehicle', ['04-physics-vehicle.md', '10-physics-deep-dive.md'], 'gauge'),
     ('competitive.html', 'Competitive Mechanics', ['21-competitive-mechanics.md'], 'timer'),
-    ('audio.html', 'Audio System', ['24-audio-deep-dive.md'], 'speaker'),
-    ('openplanet-mining.html', 'Openplanet Deep Mining', ['25-openplanet-deep-mining.md'], 'gem'),
-    ('visual-reference.html', 'Visual Reference & Glossary', ['23-visual-reference.md'], 'map'),
-    ('real-files.html', 'Real File Analysis', ['26-real-file-analysis.md'], 'inspect'),
-    ('dll-intelligence.html', 'DLL Intelligence', ['27-dll-intelligence.md'], 'library'),
-    ('map-structure.html', 'Map Structure Encyclopedia', ['28-map-structure-encyclopedia.md'], 'grid'),
-    ('community.html', 'Community Knowledge', ['29-community-knowledge.md'], 'users'),
-    ('ghidra-gaps.html', 'Ghidra Gap Research', ['22-ghidra-gap-findings.md'], 'microscope'),
+    # Rendering
+    ('sub:', 'Rendering', [], None),
+    ('rendering.html', 'Rendering & Graphics', ['05-rendering-graphics.md', '11-rendering-deep-dive.md'], 'display'),
+    ('shaders.html', 'Shader Catalog', ['32-shader-catalog.md'], 'palette'),
+    # File Formats & Data
+    ('sub:', 'File Formats & Data', [], None),
+    ('file-formats.html', 'File Formats', ['06-file-formats.md', '16-fileformat-deep-dive.md'], 'file'),
+    ('game-files.html', 'Game Files', ['09-game-files-analysis.md'], 'folder'),
+    ('map-structure.html', 'Map Structure', ['28-map-structure-encyclopedia.md'], 'grid'),
     ('ghost-replay.html', 'Ghost & Replay Format', ['30-ghost-replay-format.md'], 'film'),
+    ('real-files.html', 'Real File Analysis', ['26-real-file-analysis.md'], 'inspect'),
+    # Networking & Audio
+    ('sub:', 'Networking & Audio', [], None),
+    ('networking.html', 'Networking', ['07-networking.md', '17-networking-deep-dive.md'], 'network'),
+    ('audio.html', 'Audio System', ['24-audio-deep-dive.md'], 'speaker'),
+    # Scripting & UI
+    ('sub:', 'Scripting & UI', [], None),
     ('maniascript.html', 'ManiaScript Reference', ['31-maniascript-reference.md'], 'code'),
     ('ui-manialink.html', 'UI & ManiaLink', ['34-ui-manialink-reference.md'], 'layout'),
-    ('shaders.html', 'Shader Catalog', ['32-shader-catalog.md'], 'palette'),
+    # External Intelligence
+    ('sub:', 'External Intelligence', [], None),
+    ('openplanet.html', 'Openplanet Intelligence', ['19-openplanet-intelligence.md'], 'puzzle'),
+    ('openplanet-mining.html', 'Openplanet Deep Mining', ['25-openplanet-deep-mining.md'], 'gem'),
+    ('dll-intelligence.html', 'DLL Intelligence', ['27-dll-intelligence.md'], 'library'),
+    ('community.html', 'Community Knowledge', ['29-community-knowledge.md'], 'users'),
+    ('tmnf-crossref.html', 'TMNF Comparison', ['14-tmnf-crossref.md'], 'compare'),
+    # Research & Validation
+    ('sub:', 'Research & Validation', [], None),
+    ('ghidra-findings.html', 'Ghidra Research', ['15-ghidra-research-findings.md'], 'search'),
+    ('ghidra-gaps.html', 'Ghidra Gap Research', ['22-ghidra-gap-findings.md'], 'microscope'),
+    ('validation.html', 'Errata & Corrections', ['18-validation-review.md'], 'check'),
+    ('visual-reference.html', 'Visual Reference & Glossary', ['23-visual-reference.md'], 'map'),
+    ('recreation.html', 'Browser Recreation Guide', ['20-browser-recreation-guide.md'], 'rocket'),
     # --- Planning ---
     (None, 'Planning', [], None),
     ('plan-overview.html', 'Executive Summary', ['plan:00-executive-summary.md'], 'star'),
@@ -263,6 +280,14 @@ def markdown_to_html(md_text):
 
         if in_code_block:
             code_lines.append(line)
+            i += 1
+            continue
+
+        # HTML passthrough - pass through raw HTML block tags (details, summary, div, etc.)
+        if re.match(r'^\s*<(details|/details|summary|/summary|div|/div)\b', line.strip()):
+            flush_list()
+            flush_table()
+            html_parts.append(line + '\n')
             i += 1
             continue
 
@@ -494,6 +519,10 @@ def build_sidebar(current_page):
             # Section separator
             nav_items.append(f'<div class="nav-section">{escape_html(title)}</div>')
             continue
+        if filename == 'sub:':
+            # Subsection label within a section
+            nav_items.append(f'<div class="nav-subsection">{escape_html(title)}</div>')
+            continue
         active = ' active' if filename == current_page else ''
         nav_items.append(f'<a class="nav-item{active}" href="{filename}"><span class="nav-text">{escape_html(title)}</span></a>')
 
@@ -501,8 +530,8 @@ def build_sidebar(current_page):
 
 def build_prev_next(current_page):
     """Build previous/next navigation."""
-    # Filter out section separators for prev/next navigation
-    real_pages = [p for p in PAGES if p[0] is not None]
+    # Filter out section separators and subsection labels for prev/next navigation
+    real_pages = [p for p in PAGES if p[0] is not None and p[0] != 'sub:']
     filenames = [p[0] for p in real_pages]
     idx = filenames.index(current_page) if current_page in filenames else -1
 
@@ -877,6 +906,21 @@ body {
 .nav-section:first-child {
     border-top: none;
     margin-top: 0;
+}
+
+.nav-subsection {
+    padding: 6px 16px 2px 24px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.nav-subsection + .nav-item {
+    /* No extra margin needed */
 }
 
 .nav-item {
@@ -1802,7 +1846,7 @@ def main():
     # Build each page (skip section separators)
     for page_def in PAGES:
         filename = page_def[0]
-        if filename is None:
+        if filename is None or filename == 'sub:':
             continue
         print(f"Building {filename}...")
         html = build_page(page_def)

@@ -1,31 +1,16 @@
 # OpenTM Asset Pipeline
 
-**Date**: 2026-03-27
-**Status**: Design document
-**Scope**: Complete asset pipeline from .Gbx files on disk to runtime-ready data in the browser
+The asset pipeline transforms .Gbx files on disk into runtime-ready data in the browser. It solves the core challenge: Trackmania stores all game content in a proprietary binary format (GBX) inside encrypted pack files. This pipeline extracts, converts, and serves that content for WebGPU rendering.
+
+The pipeline's critical blocker is block mesh extraction -- the 3D geometry for every road piece, platform, and structure lives inside encrypted `.pak` files. The recommended path: procedural geometry for MVP, community-created assets for post-MVP.
 
 ---
 
-## Table of Contents
+## Asset Type Inventory
 
-1. [Asset Type Inventory](#1-asset-type-inventory)
-2. [GBX Parser Architecture (TypeScript)](#2-gbx-parser-architecture-typescript)
-3. [Map Loading Pipeline (Exact Steps)](#3-map-loading-pipeline-exact-steps)
-4. [The Block Mesh Problem (Detailed Analysis)](#4-the-block-mesh-problem-detailed-analysis)
-5. [Material System](#5-material-system)
-6. [Texture Pipeline](#6-texture-pipeline)
-7. [Ghost/Replay Asset Pipeline](#7-ghostreplay-asset-pipeline)
-8. [Caching Strategy](#8-caching-strategy)
-9. [Pre-processing Pipeline](#9-pre-processing-pipeline)
-10. [Dependency on Community Tools](#10-dependency-on-community-tools)
+Every asset type the game uses, with parsing complexity and priority for OpenTM.
 
----
-
-## 1. Asset Type Inventory
-
-Every asset type the game uses, with parsing complexity assessment and priority for OpenTM.
-
-### 1.1 Primary GBX File Types
+### Primary GBX File Types
 
 | File Extension | GBX Class ID | Class Name | Data Contents | Source | Parser Complexity | Priority |
 |----------------|-------------|------------|---------------|--------|-------------------|----------|
@@ -38,7 +23,7 @@ Every asset type the game uses, with parsing complexity assessment and priority 
 | `.Macroblock.Gbx` | varies | CGameCtnMacroBlockInfo | Group of blocks as a reusable template | User Blocks/ folder | **Medium** | **Nice-to-have** |
 | `.Profile.Gbx` | `0x031CC000` | Profile class | User preferences, garage state, campaign progress | User documents | **Easy** -- no header chunks, just key-value body chunks | **Nice-to-have** |
 
-### 1.2 Internal/Engine GBX Types
+### Internal/Engine GBX Types
 
 | File Extension | GBX Class ID | Class Name | Data Contents | Source | Parser Complexity | Priority |
 |----------------|-------------|------------|---------------|--------|-------------------|----------|
@@ -50,15 +35,15 @@ Every asset type the game uses, with parsing complexity assessment and priority 
 | `FuncCloudsParam.Gbx` | `0x09182000` | FuncCloudsParam | Cloud rendering parameters (altitude, density) | Pack files | **Easy** -- 93 bytes, float values | **Nice-to-have** |
 | `ImageGen.Gbx` | `0x0902F000` | FuncImage | Procedural image generation parameters | Pack files | **Easy** -- small parameter files | **Nice-to-have** |
 
-### 1.3 Pack File Types (Non-GBX)
+### Pack File Types (Non-GBX)
 
 | File Type | Format | Contents | Source | Complexity | Priority |
 |-----------|--------|----------|--------|------------|----------|
-| `.pak` | NadeoPak v18 | Compressed archive of GBX files (blocks, items, textures, materials) | Game installation | **Unknown/Hard** -- encrypted, proprietary format, 32-byte hash keys per file | **Critical blocker** (see Section 4) |
+| `.pak` | NadeoPak v18 | Compressed archive of GBX files (blocks, items, textures, materials) | Game installation | **Unknown/Hard** -- encrypted, proprietary format, 32-byte hash keys per file | **Critical blocker** (see Block Mesh Problem section) |
 | `.Title.Pack.Gbx` | GBX wrapping NadeoPak | Master game content definition | Game installation | **Hard** -- GBX outer shell + NadeoPak inner content | **Critical blocker** |
 | `.zip` | Standard ZIP | Shaders, skins, translations, flags, extras | Game installation | **Easy** -- standard ZIP extraction | **Important** |
 
-### 1.4 Image/Texture Formats (within packs or embedded)
+### Image/Texture Formats
 
 | Format | Usage | Browser Support | Priority |
 |--------|-------|-----------------|----------|
@@ -69,7 +54,7 @@ Every asset type the game uses, with parsing complexity assessment and priority 
 | TGA | Stencil brushes, some legacy textures | Requires custom loader | **Nice-to-have** |
 | EXR | HDR environment maps | Requires decoder library | **Nice-to-have** |
 
-### 1.5 Audio Formats
+### Audio Formats
 
 | Format | Usage | Browser Support | Priority |
 |--------|-------|-----------------|----------|
@@ -79,9 +64,9 @@ Every asset type the game uses, with parsing complexity assessment and priority 
 
 ---
 
-## 2. GBX Parser Architecture (TypeScript)
+## GBX Parser Architecture (TypeScript)
 
-### 2.1 Module Structure
+### Module Structure
 
 ```
 @opentm/gbx-parser/
@@ -115,9 +100,9 @@ Every asset type the game uses, with parsing complexity assessment and priority 
     ghost.test.ts
 ```
 
-### 2.2 Core: BinaryReader (`reader.ts`)
+### BinaryReader (`reader.ts`)
 
-The BinaryReader wraps an `ArrayBuffer` with little-endian read methods matching the exact GBX type system documented in doc 16, section 28.
+Wraps `ArrayBuffer` with little-endian read methods matching the GBX type system from doc 16, section 28.
 
 ```typescript
 export class BinaryReader {
@@ -158,15 +143,13 @@ export class BinaryReader {
 }
 ```
 
-### 2.3 LZO Decompression (`lzo.ts`)
+### LZO Decompression (`lzo.ts`)
 
-LZO1X is confirmed as the body compression algorithm (doc 16 section 8, validated against real files in doc 26). Options for browser implementation:
+LZO1X is the body compression algorithm (doc 16 section 8, validated against real files in doc 26). Three browser options:
 
-1. **WASM port of minilzo** (recommended) -- ~8KB WASM module, fastest execution
-2. **Pure TypeScript port of lzo1x-decompress** -- ~300 lines, no WASM dependency, ~3x slower
-3. **Existing npm packages**: `lzo-ts`, `minilzo-js` -- verify they handle LZO1X-1 correctly
-
-The decompression interface:
+1. **WASM port of minilzo** (recommended) -- ~8KB WASM module, fastest execution.
+2. **Pure TypeScript port of lzo1x-decompress** -- ~300 lines, no WASM dependency, ~3x slower.
+3. **Existing npm packages**: `lzo-ts`, `minilzo-js` -- verify they handle LZO1X-1 correctly.
 
 ```typescript
 export function lzoDecompress(
@@ -177,9 +160,9 @@ export function lzoDecompress(
 
 Validation: test against TechFlow.Map.Gbx body (21,867 compressed -> 170,018 uncompressed).
 
-### 2.4 LookbackString System (`lookback.ts`)
+### LookbackString System (`lookback.ts`)
 
-The lookback string system is the most error-prone part of GBX parsing. Based on corrected analysis from doc 16 section 29 and validated against real files in doc 26:
+The most error-prone part of GBX parsing. Based on corrected analysis from doc 16 section 29 and validated against real files in doc 26.
 
 ```typescript
 export class LookbackStringTable {
@@ -221,13 +204,13 @@ export class LookbackStringTable {
 }
 ```
 
-**Critical**: Both `0b01` and `0b11` flags indicate new inline strings in TM2020 files. The old documentation claiming `0b01` = "well-known string ID" is INCORRECT for TM2020 (corrected in doc 16 section 29, verified in doc 26 hex walkthrough).
+Both `0b01` and `0b11` flags indicate new inline strings in TM2020 files. The old documentation claiming `0b01` = "well-known string ID" is INCORRECT for TM2020 (corrected in doc 16 section 29, verified in doc 26 hex walkthrough).
 
-**Scope rules**: The lookback table is reset for each header chunk, but shared across all body chunks for a single node. Encapsulated chunks (0x03043040, 0x03043043, 0x03043044, 0x0304304E, 0x0304304F, 0x03043054, 0x03043058) reset the lookback table locally.
+Scope rules: the lookback table resets for each header chunk, but is shared across all body chunks for a single node. Encapsulated chunks (0x03043040, 0x03043043, 0x03043044, 0x0304304E, 0x0304304F, 0x03043054, 0x03043058) reset the lookback table locally.
 
-### 2.5 Class Registry (`class-registry.ts`)
+### Class Registry (`class-registry.ts`)
 
-Maps class IDs to chunk parsers, with legacy ID remapping (doc 16 sections 11, 23):
+Maps class IDs to chunk parsers with legacy ID remapping (doc 16 sections 11, 23).
 
 ```typescript
 type ChunkParser = (reader: BinaryReader, context: ParseContext) => void;
@@ -267,9 +250,9 @@ export class ClassRegistry {
 
 The complete remap table includes 80+ entries from doc 16 section 23 (engines 0x24->0x03, 0x0A->0x09, 0x08->0x09, 0x05->0x09, 0x07->0x09, 0x06->0x09, plus cross-engine remaps).
 
-### 2.6 Main GBX Parser (`gbx.ts`)
+### Main GBX Parser (`gbx.ts`)
 
-Follows the exact 12-step parsing tutorial from doc 16 section 26, validated against real files in doc 26:
+Follows the exact 12-step parsing tutorial from doc 16 section 26, validated against real files in doc 26.
 
 ```typescript
 export interface GbxFile<T = unknown> {
@@ -357,7 +340,7 @@ export class GbxParser {
 }
 ```
 
-### 2.7 Map Chunk Parsers (`chunks/map.ts`)
+### Map Chunk Parsers (`chunks/map.ts`)
 
 Priority chunks for CGameCtnChallenge (class 0x03043000):
 
@@ -379,7 +362,7 @@ Priority chunks for CGameCtnChallenge (class 0x03043000):
 | `0x0304304B` | Important | Medal times / objectives | Body chunk |
 | `0x03043054` | Important | Embedded items ZIP | Body chunk, encapsulated, contains custom item GBX files |
 
-### 2.8 Types (`types.ts`)
+### Types (`types.ts`)
 
 ```typescript
 export interface Vec2 { x: number; y: number }
@@ -437,11 +420,9 @@ export interface ParsedMap {
 
 ---
 
-## 3. Map Loading Pipeline (Exact Steps)
+## Map Loading Pipeline
 
-### Overview
-
-From URL to renderable scene, the pipeline has 10 major phases. Each phase is described with its inputs, outputs, failure modes, and estimated timing.
+From URL to renderable scene in 10 phases. Each phase lists inputs, outputs, failure modes, and timing.
 
 ### Step 1: Fetch .Map.Gbx
 
@@ -467,21 +448,21 @@ Sources:
 
 All TM2020 maps use version 6, format "BUCR", class `0x03043000`. The `user_data_size` field encompasses `4 (num_chunks) + 8*num_chunks (index) + sum(chunk_data_sizes)` (correction from doc 26).
 
-### Step 3: Parse Header Chunks (metadata without decompression)
+### Step 3: Parse Header Chunks
 
 **Input**: Header chunk index + data from step 2
 **Output**: Map name, author, UID, thumbnail JPEG, XML metadata, decoration name, medal times
 **Failure modes**: Corrupt lookback strings, unexpected chunk version
 **Timing**: <5ms (parse 6 header chunks, ~25 KB of data)
 
-This step does NOT require body decompression and can provide immediate UI feedback (map name, thumbnail) while the body loads.
+This step does NOT require body decompression. You can provide immediate UI feedback (map name, thumbnail) while the body loads.
 
 Key header chunks parsed:
-- `0x03043002`: UID, environment (lookback string), author login
-- `0x03043003`: CIdent (uid/collection/author), map name, decoration CIdent (e.g. "NoStadium48x48Day", collection 26 = Stadium, author "Nadeo"), map kind
-- `0x03043005`: XML string with full metadata
-- `0x03043007`: JPEG thumbnail (24 KB typical, marked "heavy")
-- `0x03043008`: Author zone ("World|Africa|South Africa")
+- `0x03043002`: UID, environment (lookback string), author login.
+- `0x03043003`: CIdent (uid/collection/author), map name, decoration CIdent (e.g. "NoStadium48x48Day", collection 26 = Stadium, author "Nadeo"), map kind.
+- `0x03043005`: XML string with full metadata.
+- `0x03043007`: JPEG thumbnail (24 KB typical, marked "heavy").
+- `0x03043008`: Author zone ("World|Africa|South Africa").
 
 ### Step 4: Decompress Body (LZO1X)
 
@@ -492,9 +473,9 @@ Key header chunks parsed:
 
 Read `uncompressed_size` (uint32) and `compressed_size` (uint32), then decompress `compressed_size` bytes using LZO1X. Validate output length equals `uncompressed_size`.
 
-For TechFlow.Map.Gbx: 21,867 bytes -> 170,018 bytes. For complex maps with many embedded items: can be 500 KB compressed -> 5 MB decompressed.
+For TechFlow.Map.Gbx: 21,867 bytes -> 170,018 bytes. Complex maps with many embedded items: 500 KB compressed -> 5 MB decompressed.
 
-### Step 5: Parse Body Chunks (blocks, items, MediaTracker)
+### Step 5: Parse Body Chunks
 
 **Input**: Decompressed body byte stream from step 4
 **Output**: Arrays of `MapBlock[]`, `MapItem[]`, vehicle reference, medal times, embedded item data
@@ -508,20 +489,20 @@ Critical body chunks:
 - `0x03043040` (encapsulated): Item array -- for each: lookback model name, Vec3 position, rotation, metadata.
 - `0x03043054` (encapsulated): Embedded items -- ZIP archive of custom .Item.Gbx files.
 
-### Step 6: Resolve Block Definitions (Geometry Lookup)
+### Step 6: Resolve Block Definitions
 
 **Input**: `MapBlock[]` array with block names (e.g., "StadiumRoadMainStraight")
 **Output**: For each block: geometry data (vertices, indices), material assignments, collision mesh
 **Failure modes**: **Unknown block name** (no geometry available), missing variant
 **Timing**: 1-10ms (lookup from pre-loaded block library)
 
-**THIS IS THE PRIMARY BLOCKER. See Section 4 for detailed analysis.**
+**THIS IS THE PRIMARY BLOCKER. See the Block Mesh Problem section for detailed analysis.**
 
-Block names follow the pattern `Stadium{Category}{Shape}{Variant}`. Each block occupies a 32m x 8m x 32m grid cell (some span multiple cells). The engine looks up block definitions from pack files (Stadium.pak) which contain CGameCtnBlockInfo -> CPlugStaticObjectModel -> CPlugSolid2Model mesh data.
+Block names follow the pattern `Stadium{Category}{Shape}{Variant}`. Each block occupies a 32m x 8m x 32m grid cell (some span multiple cells). The engine looks up block definitions from pack files (Stadium.pak) containing CGameCtnBlockInfo -> CPlugStaticObjectModel -> CPlugSolid2Model mesh data.
 
-For OpenTM MVP, this step maps block names to our block mesh library (see Section 4 for how we build it).
+For OpenTM MVP, this step maps block names to the block mesh library.
 
-### Step 7: Resolve Item Models (Geometry Lookup)
+### Step 7: Resolve Item Models
 
 **Input**: `MapItem[]` array with item model references
 **Output**: For each item: mesh data, material assignments
@@ -530,7 +511,7 @@ For OpenTM MVP, this step maps block names to our block mesh library (see Sectio
 
 Items fall into three categories:
 1. **Built-in items**: Referenced by well-known paths (e.g., `\Vehicles\Items\CarSport.Item.gbx`). Must be pre-extracted from pack files.
-2. **Embedded items**: Custom items stored in chunk `0x03043054` as a ZIP. Each entry is a complete .Item.Gbx that must be recursively parsed.
+2. **Embedded items**: Custom items stored in chunk `0x03043054` as a ZIP. Each entry is a complete .Item.Gbx that you recursively parse.
 3. **External items**: Referenced by path in user's Items/ folder. Not available in browser context; must be pre-uploaded.
 
 ### Step 8: Build Collision Mesh
@@ -542,7 +523,7 @@ Items fall into three categories:
 
 Each block has a physics surface type (from NadeoImporterMaterialLib.txt -- 18 surface types). The collision mesh maps each triangle to a surface ID for physics behavior (Asphalt, Dirt, Ice, Grass, etc.).
 
-For MVP: can use simplified box/cylinder collision matching the 32m x 8m x 32m grid, with surface type based on block name pattern matching.
+For MVP: use simplified box/cylinder collision matching the 32m x 8m x 32m grid, with surface type based on block name pattern matching.
 
 ### Step 9: Build Render Scene Graph
 
@@ -552,11 +533,11 @@ For MVP: can use simplified box/cylinder collision matching the 32m x 8m x 32m g
 **Timing**: 20-100ms (batch geometry, create GPU buffers)
 
 Organization:
-1. Group blocks by material for batched rendering
-2. Create instanced draw calls for repeated block types
-3. Assign material/shader to each draw group
-4. Position items with their world-space transforms
-5. Set up lighting (ambient + directional for MVP)
+1. Group blocks by material for batched rendering.
+2. Create instanced draw calls for repeated block types.
+3. Assign material/shader to each draw group.
+4. Position items with their world-space transforms.
+5. Set up lighting (ambient + directional for MVP).
 
 ### Step 10: Load/Generate Lightmaps
 
@@ -566,11 +547,11 @@ Organization:
 **Timing**: 0ms (skip for MVP) to 5-30 seconds (full bake)
 
 Real TM2020 maps have lightmaps pre-baked (stored in body chunks). For MVP, use flat ambient lighting. For quality rendering, either:
-- Extract pre-baked lightmaps from the .Map.Gbx body (if present -- `lightmap="0"` in XML means none)
-- Compute lightmaps server-side as a pre-processing step
-- Use real-time ambient occlusion approximation (SSAO)
+- Extract pre-baked lightmaps from the .Map.Gbx body (if present -- `lightmap="0"` in XML means none).
+- Compute lightmaps server-side as a pre-processing step.
+- Use real-time ambient occlusion approximation (SSAO).
 
-### Step-by-Step Timing Summary
+### Timing Summary
 
 | Step | MVP Time | Full Time | Can Parallelize? |
 |------|----------|-----------|-----------------|
@@ -588,110 +569,37 @@ Real TM2020 maps have lightmaps pre-baked (stored in body chunks). For MVP, use 
 
 ---
 
-## 4. The Block Mesh Problem (Detailed Analysis)
+## The Block Mesh Problem
 
-This is THE make-or-break problem for OpenTM. Block geometry -- the 3D meshes for every road piece, platform, decoration, and structure in Trackmania -- is stored inside encrypted `.pak` files that ship with the game. Without these meshes, we cannot render maps.
+This is THE make-or-break problem for OpenTM. Block geometry -- the 3D meshes for every road piece, platform, decoration, and structure -- is stored inside encrypted `.pak` files. Without these meshes, you cannot render maps.
 
-### 4.1 The Scale of the Problem
+### Scale of the Problem
 
 From NadeoImporterMaterialLib.txt and block naming analysis (doc 28 section 9):
 
-- **~200-300 unique block types** in the Stadium environment
-- Each block type has **2 variants** (ground and air) with different mesh geometry
-- Some blocks have **width multipliers** (x2, x3, x4) and **mirror variants**
-- Total unique meshes: estimated **500-1000**
-- All meshes are inside **Stadium.pak** (1.63 GB, NadeoPak v18 format, encrypted)
+- **~200-300 unique block types** in the Stadium environment.
+- Each block type has **2 variants** (ground and air) with different mesh geometry.
+- Some blocks have **width multipliers** (x2, x3, x4) and **mirror variants**.
+- Total unique meshes: estimated **500-1000**.
+- All meshes are inside **Stadium.pak** (1.63 GB, NadeoPak v18 format, encrypted).
 
-### 4.2 Approach A: Extract from .pak Files
+### Approach A: Extract from .pak Files
 
-#### Technical Assessment
+NadeoPak v18 format (doc 26 section 10): Magic "NadeoPak" (8 bytes), version 18 (uint32), two 16-byte hash/key fields at offsets 0x0C and 0x1C, flags at 0x2C, alignment field at 0x30.
 
-NadeoPak v18 format (doc 26 section 10):
-- Magic: "NadeoPak" (8 bytes)
-- Version: 18 (uint32)
-- Two 16-byte hash/key fields at offsets 0x0C and 0x1C
-- Flags at 0x2C (observed values: 0x00000007)
-- Alignment field at 0x30 (0x00003000 or 0x00004000)
-- String table follows the header
+**The pack files are encrypted.** No community tool reads TM2020 .pak files directly. GBX.NET does NOT support .pak files. Circumventing the encryption raises legal risk under DMCA and EU Copyright Directive.
 
-The SHA-256 checksums at offset 0x0C match those in `updater_files.txt`, confirming these are integrity verification hashes, not encryption keys themselves.
+**Recommendation: DO NOT PURSUE.** Legal risk makes this untenable for an open-source project.
 
-#### Encryption Status
+### Approach B: Use GBX.NET to Pre-Extract
 
-**The pack files are encrypted.** Evidence:
-- No community tool can read TM2020 .pak files directly without the game's decryption keys
-- GBX.NET does NOT support reading .pak files -- it only reads individual .Gbx files
-- The game binary contains the decryption logic but extracting and using those keys would constitute circumventing copy protection
+GBX.NET can parse **individual .Gbx files** that have been extracted from packs. It handles CPlugSolid2Model (vertex positions, normals, UVs, tangent frames, index buffers, material references, LOD levels). But GBX.NET has no NadeoPak parser and no decryption support. This circles back to the pak extraction problem.
 
-#### Existing Tools
+**Recommendation: USE FOR CUSTOM ITEM PARSING.** GBX.NET is the right tool for embedded items and user-created .Item.Gbx files. It does not solve the built-in block mesh problem.
 
-- **GBX.NET**: Can read .Gbx files but NOT .pak archives
-- **NadeoImporter.exe**: The official tool converts FROM external formats (FBX) TO .Gbx -- it does not extract FROM packs
-- **No known public tool** extracts files from TM2020 NadeoPak v18 archives
+### Approach C: Procedural Generation
 
-#### Feasibility Assessment
-
-| Criterion | Assessment |
-|-----------|------------|
-| Technical feasibility | **Uncertain** -- would require reverse-engineering the NadeoPak decryption from Trackmania.exe, which is achievable but laborious |
-| Legal risk | **HIGH** -- circumventing encryption of game assets likely violates the DMCA (US) and EU Copyright Directive, plus Nadeo/Ubisoft EULA |
-| Effort | **Very high** -- weeks of RE work on the decryption subsystem, then building an extractor |
-| Quality | **Perfect** -- original game meshes, textures, and materials |
-| Maintenance | **Poor** -- game updates could change encryption, requiring re-extraction |
-
-**Recommendation: DO NOT PURSUE.** The legal risk alone makes this untenable for an open-source project. Even if technically possible, distributing extracted game assets would expose the project to takedown.
-
-### 4.3 Approach B: Use GBX.NET to Pre-Extract
-
-#### Technical Assessment
-
-GBX.NET (C#/.NET, 400+ class parsers, actively maintained) can parse many GBX formats including:
-- CGameCtnChallenge (maps)
-- CGameCtnGhost (ghosts)
-- CGameCtnReplayRecord (replays)
-- CPlugSolid2Model (mesh geometry)
-- CGameItemModel (items)
-- CGameCtnBlockInfo (block definitions)
-
-#### What GBX.NET CAN Do
-
-GBX.NET can parse **individual .Gbx files** that have been extracted from packs. If we had the raw .Gbx files for each block, GBX.NET could parse CPlugSolid2Model to extract:
-- Vertex positions (R32G32B32_SFLOAT)
-- Normals (R16G16B16A16_SNORM)
-- UV coordinates (R32G32_SFLOAT, dual UV for lightmap)
-- Tangent frames (R16G16B16A16_SNORM)
-- Index buffers (triangle lists)
-- Material references
-- LOD levels
-
-#### What GBX.NET CANNOT Do
-
-- **Read .pak files** -- GBX.NET has no NadeoPak parser
-- **Decrypt game assets** -- no decryption support
-- **Extract block meshes from the running game** -- it is a file parser, not a runtime tool
-
-#### Feasibility Assessment
-
-| Criterion | Assessment |
-|-----------|------------|
-| Technical feasibility | **Only if we have extracted .Gbx files** -- which circles back to the pak extraction problem |
-| Legal risk | **Same as Approach A** if the files were extracted from packs |
-| Effort | **Low** once files are available -- GBX.NET is mature and well-tested |
-| Quality | **Perfect** -- faithful parsing of Nadeo's mesh format |
-
-**Recommendation: USE FOR CUSTOM ITEM PARSING.** GBX.NET (or our own TypeScript parser) is the right tool for parsing embedded items and user-created .Item.Gbx files. But it does not solve the built-in block mesh problem.
-
-### 4.4 Approach C: Procedural Generation
-
-#### Concept
-
-Generate block geometry algorithmically from block metadata:
-- Block name encodes shape (Straight, Curve, Slope, Turn, etc.)
-- Grid dimensions are known (32m x 8m x 32m)
-- Road width and curve radius can be inferred from name
-- Direction and variant are stored in the map data
-
-#### What Can Be Generated
+Generate block geometry algorithmically from block metadata. Block names encode shape (Straight, Curve, Slope, Turn, etc.), grid dimensions are known (32m x 8m x 32m), and road width/curve radius can be inferred.
 
 **Road blocks** (highest visual impact):
 
@@ -708,134 +616,25 @@ Generate block geometry algorithmically from block metadata:
 | Width variants (`x2`, `x3`, `x4`) | Multiply road width by factor |
 | Mirror variants | Mirror geometry on appropriate axis |
 
-**Platform blocks**: Same shapes as road blocks, different texture (no road markings).
+Quality levels range from "Minecraft-style" boxes (1-2 weeks) to high-fidelity per-block hand-modeling (3-6 months).
 
-**Decoration blocks**: Simpler geometry -- rectangular prisms, hillside wedges.
+**Recommendation: USE FOR MVP.** Safest and most maintainable approach. Start with shaped blocks (correct geometry, simple materials), then improve quality over time.
 
-**Support structures**: Pylons as cylinders/boxes, pillars as extruded rectangles.
+### Approach D: Community Asset Creation
 
-#### Quality Assessment
+Engage the Trackmania modding community to create open-source block meshes in Blender matching TM2020's block dimensions.
 
-| Quality Level | Description | Effort | Visual Result |
-|---------------|-------------|--------|---------------|
-| **Minecraft-style** | Pure rectangular prisms, solid colors | 1-2 weeks | Functional but ugly. Recognizable as TM maps but aesthetically poor. |
-| **Shaped blocks** | Correct shapes (curves, slopes) with flat-shaded materials | 3-4 weeks | Good enough for gameplay. Road surfaces match driving feel. |
-| **Textured blocks** | Shaped blocks + procedural textures or community textures | 4-6 weeks | Acceptable quality. Looks like a TM-inspired game. |
-| **High fidelity** | Detailed meshes matching TM2020's visual complexity (railings, road markings, surface detail) | 3-6 months | Very close to original. Would require per-block hand-modeling. |
+Estimated block count: ~370 unique meshes (160 road + 160 platform + 30 decoration + 10 special + 10 support structures). This is achievable for a motivated community over several months.
 
-#### Feasibility Assessment
+**Recommendation: USE FOR POST-MVP QUALITY IMPROVEMENT.** Start a community asset project in parallel with procedural generation.
 
-| Criterion | Assessment |
-|-----------|------------|
-| Technical feasibility | **HIGH** -- all shape information is derivable from block names and grid system |
-| Legal risk | **NONE** -- we are creating original geometry, not copying Nadeo's |
-| Effort | **Medium** (shaped blocks) to **Very high** (high fidelity) |
-| Quality | **Acceptable for MVP** at shaped-block level, **not competitive** with original game |
-| Maintenance | **Excellent** -- no dependency on game files, no encryption to break |
+### Approach E: Runtime Capture via Openplanet
 
-**Recommendation: USE FOR MVP.** This is the safest and most maintainable approach. Start with shaped blocks (correct geometry, simple materials), then improve quality over time.
+Write an Openplanet plugin or D3D11 wrapper DLL to intercept draw calls and capture vertex/index buffers. Openplanet does NOT provide direct D3D11 access or raw mesh extraction through its public API. A custom D3D11 proxy DLL is technically possible but extremely fragile (breaks with every game update).
 
-### 4.5 Approach D: Community Asset Creation
+**Recommendation: DO NOT PURSUE FOR MVP.**
 
-#### Concept
-
-Engage the Trackmania modding community to create open-source block meshes in Blender that match TM2020's block dimensions and visual style.
-
-#### Implementation
-
-1. Define a block specification document: grid dimensions, connection points, naming conventions
-2. Create a Blender template with the 32m x 8m x 32m grid reference
-3. Community contributors model blocks using Blender
-4. Export as glTF 2.0 (browser-native format)
-5. Build an open-source block asset library
-6. Host the library as an npm package or CDN resource
-
-#### Block Count Estimate
-
-To match TM2020's Stadium environment, we need approximately:
-- ~20 road shape templates x 4 rotations x 2 variants (ground/air) = ~160 road blocks
-- ~20 platform shape templates x 4 rotations x 2 variants = ~160 platform blocks
-- ~30 decoration/terrain blocks = ~30
-- ~10 special blocks (gates, checkpoints, finish) = ~10
-- Support structures (pylons, pillars) = ~10
-- **Total: ~370 unique meshes**
-
-This is achievable for a motivated community over several months, but is a significant art pipeline.
-
-#### Feasibility Assessment
-
-| Criterion | Assessment |
-|-----------|------------|
-| Technical feasibility | **HIGH** -- Blender to glTF is a well-established pipeline |
-| Legal risk | **NONE** -- original community-created assets |
-| Effort | **Very high** -- 370+ meshes is a large art project, requires coordination |
-| Quality | **Variable** -- depends on contributor skill; can exceed game quality for individual blocks |
-| Maintenance | **Good** -- community can iterate and improve |
-
-**Recommendation: USE FOR POST-MVP QUALITY IMPROVEMENT.** Start a community asset project in parallel with procedural generation. As community meshes become available, swap them in to replace procedural geometry.
-
-### 4.6 Approach E: Runtime Capture via Openplanet
-
-#### Concept
-
-Write an Openplanet plugin that runs inside TM2020 and intercepts D3D11 draw calls to capture the vertex/index buffers for each block type, then exports them as a mesh library.
-
-#### Technical Analysis
-
-Openplanet provides these relevant capabilities:
-- AngelScript scripting engine with access to game objects
-- Plugin render hooks (`Plugin render early`, `Plugin render interface`, `Plugin render`)
-- Access to `ISceneVis` scene manager and `NSceneVehicleVis_SMgr` vehicle manager
-- ImGui overlay for UI
-- Game hooks for physics, rendering, and script execution
-
-However, Openplanet does **NOT** provide:
-- Direct access to D3D11 device/context
-- Ability to intercept draw calls or read GPU buffers
-- Access to CPlugSolid2Model vertex data through its public API
-- Raw mesh extraction functionality
-
-#### Would a Custom D3D11 Wrapper Work?
-
-A separate DLL (not through Openplanet) could proxy d3d11.dll to intercept:
-- `ID3D11DeviceContext::DrawIndexed()` -- capture vertex/index buffers
-- `ID3D11DeviceContext::Map()` -- read buffer contents
-- `ID3D11Device::CreateBuffer()` -- track buffer creation with vertex/index data
-
-This is technically how tools like RenderDoc and PIX work. However:
-- The game renders many objects per frame; correlating draw calls to specific blocks requires understanding the render pipeline
-- Block meshes are instanced -- a single draw call may render many instances of the same block
-- Material/texture binding would need to be captured alongside geometry
-- This would need to run on a Windows machine with the actual game
-
-#### Can Openplanet Access Block Meshes via Game Objects?
-
-Openplanet can access game objects through reflection. In theory:
-1. Get a `CGameCtnBlock` instance from the map
-2. Navigate to its `CGameCtnBlockInfo` definition
-3. Navigate to its `CPlugStaticObjectModel` mesh
-4. Navigate to its `CPlugSolid2Model` vertex/index data
-
-The obstacle is that Openplanet's reflection exposes ManiaScript-level properties, not raw C++ memory. The mesh data fields (vertex buffers, index buffers) are not exposed through ManiaScript and would require accessing memory at known offsets -- which changes between game versions.
-
-The VehicleState plugin demonstrates that raw memory access IS possible (it reads CSceneVehicleVisState at specific offsets), but:
-- Offsets break with every game update
-- Reading vertex buffer data requires knowing the exact memory layout of CPlugSolid2Model
-- The data may be GPU-resident (not in system memory)
-
-#### Feasibility Assessment
-
-| Criterion | Assessment |
-|-----------|------------|
-| Technical feasibility | **Low-Medium** -- theoretically possible via D3D11 interception or raw memory access, but extremely fragile |
-| Legal risk | **Medium** -- capturing rendered geometry is a gray area; Openplanet's ToS may restrict this use |
-| Effort | **Very high** -- custom D3D11 proxy DLL + block identification + export pipeline |
-| Quality | **Perfect** -- exact game geometry if successfully captured |
-| Maintenance | **Very poor** -- breaks with every game update, memory offsets change |
-
-**Recommendation: DO NOT PURSUE FOR MVP.** Could be explored as a one-time capture tool to bootstrap the community asset library, but not reliable enough for ongoing use.
-
-### 4.7 Recommended Strategy (Phased)
+### Recommended Phased Strategy
 
 ```
 Phase 1 (MVP): Procedural Generation
@@ -859,9 +658,7 @@ Phase 3 (Long-term): Complete Asset Library
   - Result: Visually competitive with TM2020 at medium settings
 ```
 
-### 4.8 Procedural Block Generation Specification
-
-For Phase 1, every procedurally generated block needs:
+### Procedural Block Generation Specification
 
 ```typescript
 interface ProceduralBlock {
@@ -887,25 +684,22 @@ Ice, Rock, Sand, Snow, NotCollidable
 ```
 
 Block name -> surface type mapping examples:
-- `StadiumRoadMain*` -> `Asphalt` (top face), `Metal` (sides)
-- `StadiumPlatform*` -> `Asphalt`
-- `StadiumGrass*` -> `Grass`
-- `StadiumWater*` -> `Plastic` (water borders)
-- `StadiumPillar*` -> `Metal`
-- `StadiumDecoHill*` -> `Grass`
+- `StadiumRoadMain*` -> `Asphalt` (top face), `Metal` (sides).
+- `StadiumPlatform*` -> `Asphalt`.
+- `StadiumGrass*` -> `Grass`.
+- `StadiumWater*` -> `Plastic` (water borders).
+- `StadiumPillar*` -> `Metal`.
+- `StadiumDecoHill*` -> `Grass`.
 
 ---
 
-## 5. Material System
+## Material System
 
-### 5.1 Material Database (NadeoImporterMaterialLib.txt)
+### Material Database
 
-The complete material database from doc 09 section 2 defines **208 materials** in the Stadium library. Each material specifies:
-- **SurfaceId**: Physics behavior (18 types)
-- **GameplayId**: Gameplay modifier (always "None" in the material library -- gameplay effects are block-level)
-- **UV Layers**: Texture channel mapping (BaseMaterial UV0, Lightmap UV1, or DColor0)
+The complete material database from doc 09 section 2 defines **208 materials** in the Stadium library. Each material specifies a SurfaceId (physics behavior, 18 types), GameplayId (always "None" -- gameplay effects are block-level), and UV Layers (BaseMaterial UV0, Lightmap UV1, or DColor0).
 
-### 5.2 Material Categories
+### Material Categories
 
 | Category | Count | Surface Types | UV Pattern |
 |----------|-------|--------------|------------|
@@ -922,9 +716,7 @@ The complete material database from doc 09 section 2 defines **208 materials** i
 | Modable | 14 | Various | Mixed |
 | Modifier Materials | ~70 | NotCollidable, MetalTrans | With DLinkFull references |
 
-### 5.3 Material -> Shader Variant Selection
-
-For the browser renderer, materials map to shader variants:
+### Material to Shader Variant Selection
 
 ```typescript
 type ShaderVariant =
@@ -935,7 +727,7 @@ type ShaderVariant =
   | 'emissive'                // Self-illuminating materials
   | 'water'                   // Water surface shader
   | 'glass'                   // GlassWaterWall
-  | 'grass'                   // Grass with wind animation;
+  | 'grass';                  // Grass with wind animation
 
 function selectShader(material: MaterialDef): ShaderVariant {
   if (material.surfaceId === 'NotCollidable') {
@@ -953,15 +745,9 @@ function selectShader(material: MaterialDef): ShaderVariant {
 }
 ```
 
-### 5.4 PBR Parameter Mapping
+### PBR Parameter Mapping
 
 TM2020 uses PBR materials with texture channels visible in the skin system (doc 09 section 3.4):
-- `_D`: Diffuse / Albedo
-- `_N`: Normal map
-- `_R`: Roughness
-- `_D_HueMask`: Color customization mask (for car paint / colorizable materials)
-
-For the browser renderer, map to standard PBR:
 
 | TM2020 Channel | PBR Parameter | WebGPU Binding |
 |----------------|---------------|----------------|
@@ -971,9 +757,7 @@ For the browser renderer, map to standard PBR:
 | `_D_HueMask` | Custom: hue shift mask | Texture slot 3 (optional) |
 | Lightmap UV1 | `lightMap` | Texture slot 4 |
 
-### 5.5 Surface Type -> Physics Behavior
-
-Each of the 18 surface types maps to a physics behavior coefficient set:
+### Surface Type to Physics Behavior
 
 | Surface | Grip | Rolling Resistance | Sound | Visual |
 |---------|------|--------------------|-------|--------|
@@ -986,36 +770,34 @@ Each of the 18 surface types maps to a physics behavior coefficient set:
 | Wood | Medium | Medium | Wood thud | Brown, grain pattern |
 | Rubber | High | Medium | Rubber squeak | Dark, matte |
 
-For MVP physics, use a simplified grip coefficient table. Full physics matching is a separate effort.
+For MVP physics, use a simplified grip coefficient table.
 
 ---
 
-## 6. Texture Pipeline
+## Texture Pipeline
 
-### 6.1 Texture Formats in TM2020
-
-From the DLL analysis (doc 09) and DXVK log analysis:
+### Texture Formats in TM2020
 
 **Primary format**: DDS (DirectDraw Surface) with BC (Block Compression):
-- BC1 (DXT1): RGB, 4:1 compression -- diffuse textures without alpha
-- BC3 (DXT5): RGBA, 4:1 compression -- diffuse textures with alpha
-- BC5 (ATI2): RG, 4:1 compression -- normal maps (two-channel)
-- BC7: RGBA, variable -- high-quality textures
+- BC1 (DXT1): RGB, 4:1 compression -- diffuse textures without alpha.
+- BC3 (DXT5): RGBA, 4:1 compression -- diffuse textures with alpha.
+- BC5 (ATI2): RG, 4:1 compression -- normal maps (two-channel).
+- BC7: RGBA, variable -- high-quality textures.
 
 The DXVK log confirms `textureCompressionBC = YES` is required.
 
 **Secondary formats**: WebP (via libwebp64.dll), JPEG (thumbnails), PNG (flags/UI).
 
-### 6.2 Browser Texture Loading Strategy
+### Browser Texture Loading Strategy
 
-BC-compressed DDS textures cannot be used directly in WebGL2/WebGPU on all platforms. Strategy:
+BC-compressed DDS textures cannot be used directly in WebGPU on all platforms.
 
-**Option A: Basis Universal Transcoding (Recommended)**
-
-Pre-process textures to Basis Universal (.basis or .ktx2) format. At runtime, the basis_universal transcoder converts to the platform's native compressed format:
-- Desktop Chrome/Firefox: BC7/BC1 (native, zero-cost transcode)
-- Mobile/Apple: ASTC or ETC2 (transcoded)
-- Fallback: RGBA8 (uncompressed)
+**Recommended pipeline**:
+1. Pre-process all textures to KTX2 with Basis Universal (server-side).
+2. At runtime: detect GPU capabilities.
+3. If `texture-compression-bc`: use BC path (fastest, smallest).
+4. Else: transcode from Basis Universal to platform-native format.
+5. Fallback: decompress to RGBA8.
 
 | Metric | Value |
 |--------|-------|
@@ -1023,24 +805,7 @@ Pre-process textures to Basis Universal (.basis or .ktx2) format. At runtime, th
 | Transcode time | 1-5ms per texture |
 | Compression ratio | ~6:1 vs RGBA8 |
 
-**Option B: Runtime DDS Decoding**
-
-Decompress BC textures to RGBA8 in JavaScript/WASM, upload as uncompressed. Simple but uses 4x more GPU memory.
-
-**Option C: WebGPU Compressed Textures**
-
-WebGPU supports `texture-compression-bc` as an optional feature. If available, upload DDS BC data directly. Requires feature detection and fallback.
-
-**Recommended pipeline**:
-1. Pre-process all textures to KTX2 with Basis Universal (server-side)
-2. At runtime: detect GPU capabilities
-3. If `texture-compression-bc`: use BC path (fastest, smallest)
-4. Else: transcode from Basis Universal to platform-native format
-5. Fallback: decompress to RGBA8
-
-### 6.3 Texture Atlas Strategy
-
-For block textures, atlasing reduces draw calls:
+### Texture Atlas Strategy
 
 ```
 Block Texture Atlas Layout:
@@ -1053,31 +818,20 @@ Block Texture Atlas Layout:
 Total GPU memory: ~20 MB compressed (BC7), ~80 MB uncompressed
 ```
 
-UV coordinates in block meshes reference atlas sub-regions. The atlas is generated at build time.
+### Texture Sources for MVP
 
-### 6.4 Mipmap Generation
+Since you cannot extract game textures from pak files:
 
-For procedural block textures (Phase 1), generate mipmaps at build time:
-- Use `generateMipmap()` in WebGPU
-- For pre-processed textures (KTX2/Basis), include mip chain in the file
-- Minimum mip level: 4x4 (prevents texture swimming at distance)
-
-For imported DDS textures, the mip chain is already present in the file.
-
-### 6.5 Texture Sources for MVP
-
-Since we cannot extract game textures from pak files:
-
-1. **Procedural textures**: Generate simple road, grass, metal, etc. textures programmatically
-2. **CC0 texture libraries**: Ambientcg.com, Polyhaven.com for PBR materials (asphalt, grass, concrete, metal, etc.)
-3. **Community-created textures**: As part of the community asset project
-4. **Minimal texture set**: For MVP, 10-15 base textures cover all material categories
+1. **Procedural textures**: Generate simple road, grass, metal textures programmatically.
+2. **CC0 texture libraries**: Ambientcg.com, Polyhaven.com for PBR materials.
+3. **Community-created textures**: Part of the community asset project.
+4. **Minimal texture set**: 10-15 base textures cover all material categories for MVP.
 
 ---
 
-## 7. Ghost/Replay Asset Pipeline
+## Ghost/Replay Asset Pipeline
 
-### 7.1 Replay Parsing Pipeline
+### Replay Parsing Pipeline
 
 ```
 1. Fetch .Replay.Gbx (typical: 1-5 MB)
@@ -1094,9 +848,9 @@ Since we cannot extract game textures from pak files:
    - Extract validation data
 ```
 
-The embedded map means replays are self-contained -- no separate map download needed.
+The embedded map means replays are self-contained.
 
-### 7.2 Ghost Sample Decoding
+### Ghost Sample Decoding
 
 Ghost samples are stored in chunk `0x03092012` (CPlugEntRecordData), zlib-compressed within the LZO-decompressed body. Two compression layers:
 
@@ -1144,9 +898,9 @@ function decodeSample(reader: BinaryReader): GhostSample {
 }
 ```
 
-### 7.3 Sample Interpolation
+### Sample Interpolation
 
-Ghost samples at 50ms intervals (20 Hz) must be interpolated to smooth 60 Hz rendering:
+Ghost samples at 50ms intervals (20 Hz) must be interpolated for 60 Hz rendering:
 
 ```typescript
 function interpolateGhost(
@@ -1177,7 +931,6 @@ function interpolateGhost(
 The axis-angle to quaternion conversion:
 ```typescript
 function axisAngleToQuat(sample: GhostSample): Quat {
-  // Axis direction from heading + pitch (spherical coordinates)
   const cosP = Math.cos(sample.axisPitch);
   const axis = {
     x: cosP * Math.sin(sample.axisHeading),
@@ -1195,9 +948,7 @@ function axisAngleToQuat(sample: GhostSample): Quat {
 }
 ```
 
-### 7.4 Ghost Car Rendering
-
-Ghost cars are rendered as semi-transparent tinted versions of the car model:
+### Ghost Car Rendering
 
 ```
 Car model: Use the same car mesh as the player vehicle
@@ -1212,20 +963,20 @@ Visual effects:
   - Dossard (number bib): Text overlay with ghost player name
 ```
 
-### 7.5 Data Size Estimates
+### Data Size Estimates
 
 For a typical 38-second replay:
-- Ghost samples: 760 samples x 22 bytes = 16.7 KB (uncompressed), ~5-10 KB (zlib compressed)
-- Checkpoint times: 8 checkpoints x 4 bytes = 32 bytes
-- Metadata: ~500 bytes
-- Embedded map: 20-200 KB
-- **Total replay: 100 KB - 5 MB** (depending on map complexity and embedded items)
+- Ghost samples: 760 samples x 22 bytes = 16.7 KB (uncompressed), ~5-10 KB (zlib compressed).
+- Checkpoint times: 8 checkpoints x 4 bytes = 32 bytes.
+- Metadata: ~500 bytes.
+- Embedded map: 20-200 KB.
+- **Total replay: 100 KB - 5 MB** (depending on map complexity and embedded items).
 
 ---
 
-## 8. Caching Strategy
+## Caching Strategy
 
-### 8.1 Cache Layers
+### Cache Layers
 
 ```
 Layer 1: Browser HTTP Cache (automatic)
@@ -1252,12 +1003,10 @@ Layer 4: GPU Resource Cache (in-memory)
   - Re-created from IndexedDB on cache miss
 ```
 
-### 8.2 IndexedDB Schema
+### IndexedDB Schema
 
 ```typescript
-// Database: opentm-assets, version 1
 interface AssetDB {
-  // Object store: maps
   maps: {
     key: string;           // Map UID
     value: {
@@ -1272,7 +1021,6 @@ interface AssetDB {
     };
   };
 
-  // Object store: ghosts
   ghosts: {
     key: string;           // Ghost UID or replay UID + ghost index
     value: {
@@ -1283,7 +1031,6 @@ interface AssetDB {
     };
   };
 
-  // Object store: block-meshes
   blockMeshes: {
     key: string;           // Block name
     value: {
@@ -1296,7 +1043,6 @@ interface AssetDB {
     };
   };
 
-  // Object store: textures
   textures: {
     key: string;           // Texture name/hash
     value: {
@@ -1310,17 +1056,7 @@ interface AssetDB {
 }
 ```
 
-### 8.3 Cache Invalidation
-
-| Asset Type | Invalidation Trigger | Strategy |
-|-----------|---------------------|----------|
-| Map data | Parser version change | Re-parse from rawGbx in IndexedDB |
-| Ghost data | Parser version change | Re-parse from replay file |
-| Block meshes | Asset library version change | Download new asset package |
-| Textures | Asset library version change | Download new texture package |
-| API responses | TTL expiration | Stale-while-revalidate |
-
-### 8.4 Progressive Loading
+### Progressive Loading
 
 Show content as it becomes available:
 
@@ -1334,30 +1070,30 @@ T+500ms:   Lighting computed -> show final quality
 T+1000ms:  Ghost data loaded -> ghost cars appear
 ```
 
-For maps visited previously, IndexedDB cache hits make steps 2-5 near-instant (~50ms total).
+For previously visited maps, IndexedDB cache hits make steps 2-5 near-instant (~50ms total).
 
 ---
 
-## 9. Pre-processing Pipeline
+## Pre-processing Pipeline
 
-### 9.1 Build-Time vs Runtime Processing
+### Build-Time vs Runtime Processing
 
 | Operation | Where | Why |
 |-----------|-------|-----|
 | Block mesh generation | **Build time** | Meshes are static; ship as pre-built assets |
 | Texture atlas creation | **Build time** | Atlas layout is deterministic |
-| Basis Universal texture compression | **Build time** | CPU-intensive compression |
-| Block name -> mesh mapping table | **Build time** | Static lookup table |
+| Basis Universal compression | **Build time** | CPU-intensive compression |
+| Block name -> mesh mapping | **Build time** | Static lookup table |
 | Material parameter database | **Build time** | Parse NadeoImporterMaterialLib.txt once |
 | GBX map parsing | **Runtime** | Maps are user-selected, cannot pre-parse all |
 | LZO decompression | **Runtime** | Part of map parsing |
 | Ghost sample decoding | **Runtime** | Replays loaded on demand |
 | Scene graph construction | **Runtime** | Depends on parsed map data |
-| Lightmap computation | **Server-side** (optional) | Too slow for browser; can pre-compute for popular maps |
+| Lightmap computation | **Server-side** (optional) | Too slow for browser |
 
-### 9.2 Server-Side Pre-Processing Service
+### Server-Side Pre-Processing Service
 
-For popular maps (top 1000 from TMX/Nadeo), a server-side pipeline can pre-process:
+For popular maps (top 1000 from TMX/Nadeo), a server-side pipeline pre-processes:
 
 ```
 Input: .Map.Gbx file
@@ -1374,9 +1110,7 @@ Output: .opentm bundle
   - thumbnail.jpg: Map preview
 ```
 
-The `.opentm` bundle format would be CDN-hosted and fetched instead of the raw .Map.Gbx when available. This bypasses all runtime parsing.
-
-### 9.3 Content Delivery Strategy
+### Content Delivery Strategy
 
 ```
 CDN Structure:
@@ -1400,39 +1134,39 @@ CDN Structure:
 ```
 
 CDN headers:
-- `Cache-Control: public, max-age=31536000, immutable` for versioned assets
-- `Cache-Control: public, max-age=3600, stale-while-revalidate=86400` for map files
+- `Cache-Control: public, max-age=31536000, immutable` for versioned assets.
+- `Cache-Control: public, max-age=3600, stale-while-revalidate=86400` for map files.
 
-### 9.4 Streaming Strategy
+### Streaming Strategy
 
 For large maps with many embedded items, stream the scene:
 
-1. **Immediate**: Load block placements (tiny, <10 KB parsed)
-2. **Priority 1**: Load road block meshes (most visually important)
-3. **Priority 2**: Load platform and structure meshes
-4. **Priority 3**: Load decoration meshes (grass, hills)
-5. **Priority 4**: Load item meshes (embedded custom items)
-6. **Priority 5**: Load high-resolution textures (replace placeholder)
-7. **Background**: Compute lightmaps, load ghost data
+1. **Immediate**: Load block placements (tiny, <10 KB parsed).
+2. **Priority 1**: Load road block meshes (most visually important).
+3. **Priority 2**: Load platform and structure meshes.
+4. **Priority 3**: Load decoration meshes (grass, hills).
+5. **Priority 4**: Load item meshes (embedded custom items).
+6. **Priority 5**: Load high-resolution textures (replace placeholder).
+7. **Background**: Compute lightmaps, load ghost data.
 
-Each priority level renders progressively. The player can start driving as soon as road meshes are loaded (priority 1).
+You can start driving as soon as road meshes load (priority 1).
 
 ---
 
-## 10. Dependency on Community Tools
+## Community Tool Dependencies
 
-### 10.1 What We CANNOT Build Ourselves
+### What You Cannot Build Alone
 
-| Capability | Why We Need External Help | Source |
+| Capability | Why External Help Is Needed | Source |
 |-----------|---------------------------|--------|
 | **GBX format knowledge** | 10+ years of community RE, 400+ class parsers | GBX.NET, Mania Tech Wiki, pygbx |
-| **Block mesh geometry** | Locked in encrypted .pak files | Must create ourselves (procedural or community art) |
-| **Game textures** | Locked in encrypted .pak files | Must create ourselves (procedural or CC0 sources) |
-| **Material parameter values** | Only NadeoImporterMaterialLib.txt is available (surface IDs, UV layers); actual shader parameter values (roughness, metalness, emission) are in pack files | Approximate from visual reference |
+| **Block mesh geometry** | Locked in encrypted .pak files | Must create (procedural or community art) |
+| **Game textures** | Locked in encrypted .pak files | Must create (procedural or CC0 sources) |
+| **Material parameter values** | Only NadeoImporterMaterialLib.txt is available; actual shader values are in pack files | Approximate from visual reference |
 | **Lightmap baking algorithm** | Nadeo's proprietary radiosity implementation | Approximate with standard GI solutions |
 | **Physics coefficient tables** | Exact grip/friction/drag values per surface type | Community has empirical data; TMInterface provides TMNF values |
 
-### 10.2 What We CAN Build Ourselves
+### What You Can Build
 
 | Capability | Approach | Effort |
 |-----------|----------|--------|
@@ -1445,29 +1179,7 @@ Each priority level renders progressively. The player can start driving as soon 
 | **Scene graph renderer** | Standard WebGPU/Three.js rendering pipeline | 4-6 weeks |
 | **IndexedDB caching** | Standard browser API usage | 1 week |
 
-### 10.3 Critical Community Resources
-
-**GBX.NET** (https://github.com/BigBang1112/gbx-net)
-- **What we use it for**: Reference implementation for chunk parsers, class ID registry, data type encoding
-- **Risk if unavailable**: We have our own Ghidra-based spec (doc 16) as backup, but GBX.NET provides tested, working code for 400+ chunk types
-- **Mitigation**: Our parser is TypeScript, independent of GBX.NET's C# code; we reference their logic but don't depend on their runtime
-
-**gbx-ts** (https://github.com/thaumictom/gbx-ts)
-- **What we use it for**: TypeScript GBX parser reference, potentially fork/adapt
-- **Risk**: Smaller project, less maintained than GBX.NET
-- **Mitigation**: Write our own parser from spec, use gbx-ts only as validation reference
-
-**Mania Tech Wiki** (https://wiki.xaseco.org/wiki/GBX)
-- **What we use it for**: Class ID tables, chunk ID reference, format documentation
-- **Risk**: Wiki content could go offline
-- **Mitigation**: We have comprehensive local documentation (doc 16, 26, 28, 29, 30)
-
-**Community Block Meshes** (to be created)
-- **What we use it for**: Post-MVP visual quality improvement
-- **Risk**: Community may not produce enough assets
-- **Mitigation**: Procedural generation provides the baseline; community meshes are additive improvements
-
-### 10.4 Honest Feasibility Summary
+### Feasibility Summary
 
 | Component | Feasibility | Confidence | Biggest Risk |
 |-----------|------------|------------|--------------|
@@ -1478,6 +1190,23 @@ Each priority level renders progressively. The player can start driving as soon 
 | Material system | **Medium** | 70% | Actual shader parameters are unknown; must approximate |
 | Texture quality | **Low-Medium** | 50% | Without game textures, visual fidelity is limited |
 | Full visual parity | **Low** | 20% | Would require encrypted asset extraction or years of community art |
-| Physics accuracy | **Out of scope** | -- | Separate effort; not part of asset pipeline |
 
-The asset pipeline can produce a **functional, recognizable recreation** of TM2020 maps. It will NOT achieve visual parity with the actual game without either extracting game assets (legally risky) or a massive community art effort (years of work). The phased approach -- procedural MVP, then community improvement -- is the realistic path forward.
+The asset pipeline produces a **functional, recognizable recreation** of TM2020 maps. It will NOT achieve visual parity without either extracting game assets (legally risky) or a massive community art effort. The phased approach -- procedural MVP, then community improvement -- is the realistic path forward.
+
+---
+
+## Related Pages
+
+- [20-browser-recreation-guide.md](../re/20-browser-recreation-guide.md) -- Full browser recreation feasibility guide
+- [08-mvp-tasks.md](08-mvp-tasks.md) -- MVP task breakdown
+- [16-fileformat-deep-dive.md](../re/16-fileformat-deep-dive.md) -- GBX file format specification
+- [09-game-files-analysis.md](../re/09-game-files-analysis.md) -- Game files analysis (material library)
+
+<details>
+<summary>Analysis metadata</summary>
+
+**Date**: 2026-03-27
+**Status**: Design document
+**Scope**: Complete asset pipeline from .Gbx files on disk to runtime-ready data in the browser
+
+</details>

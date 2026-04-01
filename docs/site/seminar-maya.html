@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,25 +121,14 @@
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
                         <h1 id="mayas-rendering-notes-trackmania-2020-deep-dive"><a class="anchor" href="#mayas-rendering-notes-trackmania-2020-deep-dive">#</a>Maya's Rendering Notes: Trackmania 2020 Deep Dive</h1>
-<p><strong>Author</strong>: Maya Chen, PhD Student (Real-Time Rendering) <strong>Date</strong>: 2026-03-27 <strong>Goal</strong>: Understand exactly how TM2020 achieves its visual quality at 60+ FPS, and plan a WebGPU recreation.</p>
-<p><strong>Sources studied</strong>:</p>
-<ul>
-  <li>doc 11: Rendering Deep Dive (1823 lines) -- primary reference</li>
-  <li>doc 32: Shader Catalog (1410 lines, 1112 shaders)</li>
-  <li>doc 15: Ghidra Research Findings (deferred pipeline, TXAA)</li>
-  <li>doc 05: Rendering & Graphics Pipeline overview</li>
-  <li>doc 19: Openplanet Intelligence (display config, rendering internals)</li>
-  <li>doc 03: WebGPU Renderer Design (4-tier architecture)</li>
-  <li>5 decompiled C files in <code>decompiled/rendering/</code></li>
-</ul>
-<hr>
-<h2 id="chapter-1-the-deferred-pipeline"><a class="anchor" href="#chapter-1-the-deferred-pipeline">#</a>Chapter 1: The Deferred Pipeline</h2>
+<h2 id="the-deferred-pipeline"><a class="anchor" href="#the-deferred-pipeline">#</a>The Deferred Pipeline</h2>
+<p>This chapter covers deferred rendering fundamentals, the 19-pass pipeline, and the full frame structure. You will understand how TM2020 decouples geometry complexity from lighting complexity.</p>
 <h3 id="what-is-deferred-rendering"><a class="anchor" href="#what-is-deferred-rendering">#</a>What IS Deferred Rendering?</h3>
-<p>Okay, let me make sure I really understand this before writing it down.</p>
-<p>In <strong>forward rendering</strong>, you draw each object and light it on the spot. If you have 100 objects and 50 lights, you either do 100x50 = 5000 shader invocations (multi-pass), or you cram all 50 lights into one uber-shader (single-pass forward). Either way, you pay for lights even when they don't touch a pixel.</p>
+<p>Let me make sure I really understand this before writing it down.</p>
+<p>In <strong>forward rendering</strong>, you draw each object and light it on the spot. 100 objects and 50 lights means 5000 shader invocations (multi-pass) or one uber-shader cramming all 50 lights. Either way, you pay for lights even when they do not touch a pixel.</p>
 <p>In <strong>deferred rendering</strong>, you split the work:</p>
 <ol>
-  <li><strong>G-Buffer Fill</strong>: Draw all geometry ONCE. Instead of computing lighting, just write material properties (albedo, normal, roughness) into multiple render targets.</li>
+  <li><strong>G-Buffer Fill</strong>: Draw all geometry ONCE, writing material properties (albedo, normal, roughness) into multiple render targets. No lighting.</li>
   <li><strong>Lighting Pass</strong>: Read the G-buffer. For each light, shade only the pixels it actually reaches.</li>
 </ol>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FORWARD:
@@ -147,10 +144,10 @@ DEFERRED:
     read_material(G-buffer)
     For each light affecting THIS pixel:
       shade(material, light) -&gt; HDR buffer</code></pre></div>
-<p><strong>Why is this good for a racing game?</strong> TM2020 tracks have LOTS of lights -- checkpoint gates, lamp posts, neon signs, dynamic car headlights. The track geometry is dense (blocks, scenery, trees). Deferred lets you decouple geometry complexity from lighting complexity. Whether you have 5 or 500 lights, the G-buffer fill costs the same.</p>
-<p>The downside? Transparent objects (glass, particles, ghost cars) can't be deferred -- they need blending. TM2020 handles this with a hybrid: deferred for opaques, forward for transparents. That's standard. (Source: doc 05, Section 2; doc 11, Section 4; doc 15, Section 7)</p>
-<h3 id="the-19-deferred-passes-what-does-each-one-do"><a class="anchor" href="#the-19-deferred-passes-what-does-each-one-do">#</a>The 19 Deferred Passes -- What Does Each One DO?</h3>
-<p>This is the verified pass ordering from doc 15, Section 7 and doc 11, Section 4. I'm going to walk through every single one.</p>
+<p><strong>Why is this good for a racing game?</strong> TM2020 tracks have LOTS of lights -- checkpoint gates, lamp posts, neon signs, dynamic car headlights. Deferred lets you decouple geometry from lighting. Whether you have 5 or 500 lights, G-buffer fill costs the same.</p>
+<p>The downside? Transparent objects cannot be deferred. TM2020 uses a hybrid: deferred for opaques, forward for transparents. Standard practice. (Source: doc 05, Section 2; doc 11, Section 4; doc 15, Section 7)</p>
+<h3 id="the-19-deferred-passes"><a class="anchor" href="#the-19-deferred-passes">#</a>The 19 Deferred Passes</h3>
+<p>Verified pass ordering from doc 15, Section 7 and doc 11, Section 4:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>THE FULL DEFERRED PIPELINE (19 PASSES)
 ========================================
 
@@ -176,8 +173,8 @@ DEFERRED:
  18       LensFlares              Occlusion-queried lens flare sprites
  19       FxTXAA                  Temporal anti-aliasing resolve</code></pre></div>
 <p>(Source: doc 15, Section 7; doc 11, Section 4 Phases 1-12)</p>
-<h3 id="the-full-frame-beyond-the-19-deferred-passes"><a class="anchor" href="#the-full-frame-beyond-the-19-deferred-passes">#</a>The Full Frame -- Beyond the 19 Deferred Passes</h3>
-<p>The 19 passes above are just the deferred core. A complete frame is much bigger:</p>
+<h3 id="the-full-frame-beyond-the-19-passes"><a class="anchor" href="#the-full-frame-beyond-the-19-passes">#</a>The Full Frame -- Beyond the 19 Passes</h3>
+<p>The 19 passes are just the deferred core. A complete frame is much bigger:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code> CPU WORK                          GPU WORK
  --------                          --------
  Input polling (100 Hz physics)
@@ -236,8 +233,8 @@ DEFERRED:
                             | GUI / Overlays   |
                             | SwapChainPresent |
                             +------------------+</code></pre></div>
-<p>(Source: doc 11, Section 1 -- the ASCII pipeline overview, which I verified against the full pass ordering in Section 4)</p>
-<h3 id="data-flow-what-goes-into-the-g-buffer-what-comes-out"><a class="anchor" href="#data-flow-what-goes-into-the-g-buffer-what-comes-out">#</a>Data Flow: What Goes Into the G-Buffer, What Comes Out</h3>
+<p>(Source: doc 11, Section 1, verified against pass ordering in Section 4)</p>
+<h3 id="g-buffer-data-flow"><a class="anchor" href="#g-buffer-data-flow">#</a>G-Buffer Data Flow</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>                     +--------+
                      | INPUTS |
                      +--------+
@@ -271,31 +268,24 @@ DEFERRED:
                      |  HDR Color Buffer |
                      |  (lit scene)      |
                      +-------------------+</code></pre></div>
-<p><strong>Inputs</strong>: Geometry with material textures (albedo, specular, normal maps), lightmap UVs. <strong>Outputs</strong>: 9 named render targets (see Chapter 2), consumed by lighting to produce HDR. (Source: doc 11, Sections 3-4)</p>
-<h3 id="i-was-surprised-that-there-are-three-normal-buffers-why"><a class="anchor" href="#i-was-surprised-that-there-are-three-normal-buffers-why">#</a>"I Was Surprised That There Are THREE Normal Buffers -- Why?"</h3>
-<p>This threw me. Most engines I've studied (UE5, Unity HDRP) store ONE normal in the G-buffer. TM2020 stores THREE:</p>
+<p><strong>Inputs</strong>: Geometry with material textures (albedo, specular, normal maps), lightmap UVs. <strong>Outputs</strong>: 9 named render targets (see next chapter), consumed by lighting to produce HDR. (Source: doc 11, Sections 3-4)</p>
+<h3 id="three-normal-buffers-why"><a class="anchor" href="#three-normal-buffers-why">#</a>Three Normal Buffers -- Why?</h3>
+<p>This threw me. Most engines store ONE normal in the G-buffer. TM2020 stores THREE:</p>
 <ol>
-  <li><strong>PixelNormalInC</strong> -- The bump-mapped per-pixel normal in camera space. This is the "real" normal used for lighting. Written during DeferredWrite from tangent-space normal maps.</li>
+  <li><strong>PixelNormalInC</strong> -- Bump-mapped per-pixel normal in camera space. The "real" normal for lighting. Written during DeferredWrite from tangent-space normal maps.</li>
 </ol>
 <ol>
-  <li><strong>FaceNormalInC</strong> -- The flat geometric face normal. Uses:</li>
-  <li>HBAO+ needs geometric normals for stable AO (bump maps would cause flickering)</li>
-  <li>FXAA/TXAA edge detection uses geometric discontinuities for silhouette finding</li>
-  <li>Shadow bias needs the true surface angle, not the bumped one</li>
-  <li>Can be reconstructed from depth via <code>DeferredFaceNormalFromDepth_p.hlsl</code></li>
+  <li><strong>FaceNormalInC</strong> -- Flat geometric face normal. HBAO+ needs it for stable AO (bump maps cause flickering). FXAA uses it for silhouette edge detection. Shadow bias needs the true surface angle. Can be reconstructed from depth via <code>DeferredFaceNormalFromDepth_p.hlsl</code>.</li>
 </ol>
 <ol>
-  <li><strong>VertexNormalInC</strong> -- Smooth vertex-interpolated normal. Uses:</li>
-  <li>Bilateral blur edge detection (smooth normals find surface boundaries without bump noise)</li>
-  <li>Subsurface scattering direction needs the smooth surface normal</li>
+  <li><strong>VertexNormalInC</strong> -- Smooth vertex-interpolated normal. Bilateral blur edge detection uses it. Subsurface scattering direction needs the smooth surface normal.</li>
 </ol>
-<p><strong>My thought</strong>: For a WebGPU recreation, I'd probably reconstruct face normals from depth derivatives in-shader (like TM2020 already can with <code>DeferredFaceNormalFromDepth_p.hlsl</code>) instead of storing a separate buffer. That saves a full RT at 4 bytes/pixel. The vertex normal buffer is harder to skip if you want SSS, but maybe I can use the pixel normal with a blur pass?</p>
-<p><strong>Question</strong>: Is there a quality difference between "reconstructed from depth" vs "stored as a separate pass" for face normals? The depth derivative approach can have artifacts at silhouette edges...</p>
+<p><strong>My thought</strong>: For WebGPU, I would reconstruct face normals from depth derivatives in-shader instead of a separate buffer. Saves a full RT at 4 bytes/pixel. The vertex normal buffer is harder to skip if you want SSS.</p>
 <p>(Source: doc 11, Section 3 "Why Three Normal Buffers?"; doc 15, Section 7)</p>
 <hr>
-<h2 id="chapter-2-g-buffer-anatomy"><a class="anchor" href="#chapter-2-g-buffer-anatomy">#</a>Chapter 2: G-Buffer Anatomy</h2>
+<h2 id="g-buffer-anatomy"><a class="anchor" href="#g-buffer-anatomy">#</a>G-Buffer Anatomy</h2>
+<p>This chapter covers the 9 named render targets, format choices, and memory budget. You will understand what data flows through each G-buffer channel.</p>
 <h3 id="9-named-render-targets"><a class="anchor" href="#9-named-render-targets">#</a>9 Named Render Targets</h3>
-<p>Here's every render target I found, with what's stored in each channel:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>G-BUFFER MEMORY LAYOUT
 ===========================================================================================
  #  Target              | Channels           | Format (likely)          | Written In
@@ -336,9 +326,8 @@ DEFERRED:
                         | A: [unknown]       |                          |
 ===========================================================================================</code></pre></div>
 <p>(Source: doc 15, Section 7; doc 11, Section 3; doc 05, Section 2)</p>
-<p><strong>Important</strong>: Not all 9 are bound simultaneously as MRT outputs. The core MRT during DeferredWrite is <strong>4 targets + depth</strong> (RT0-RT3 + depth). The additional targets (face normal, vertex normal, PreShade, DiffuseAmbient) are written in separate sub-passes.</p>
+<p>Not all 9 are bound simultaneously as MRT outputs. The core MRT during DeferredWrite is <strong>4 targets + depth</strong> (RT0-RT3 + depth). Face normal, vertex normal, PreShade, and DiffuseAmbient are written in separate sub-passes.</p>
 <h3 id="format-choices-from-doc-03"><a class="anchor" href="#format-choices-from-doc-03">#</a>Format Choices (from doc 03)</h3>
-<p>The WebGPU renderer design document (doc 03) justifies every format choice against the RE evidence:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -353,25 +342,25 @@ DEFERRED:
   <td style="text-align:left">Albedo (RT0)</td>
   <td style="text-align:left"><code>rgba8unorm-srgb</code></td>
   <td style="text-align:left">4 bytes</td>
-  <td style="text-align:left">sRGB matches perceptual color; 8-bit is sufficient for albedo from 8-bit textures</td>
+  <td style="text-align:left">sRGB matches perceptual color; 8-bit sufficient for albedo</td>
 </tr>
 <tr>
   <td style="text-align:left">Specular (RT1)</td>
   <td style="text-align:left"><code>rgba8unorm</code></td>
   <td style="text-align:left">4 bytes</td>
-  <td style="text-align:left">F0 ranges 0.02-0.05 for dielectrics, maps to 8-bit [5-13]; roughness is perceptually non-linear so 256 levels works</td>
+  <td style="text-align:left">F0 ranges 0.02-0.05 for dielectrics, maps to 8-bit [5-13]</td>
 </tr>
 <tr>
   <td style="text-align:left">Normal (RT2)</td>
   <td style="text-align:left"><code>rg16float</code></td>
   <td style="text-align:left">4 bytes</td>
-  <td style="text-align:left">Octahedral encoding needs 2 channels; 16-bit float gives ~0.001 angular precision; Z is reconstructable</td>
+  <td style="text-align:left">Octahedral encoding needs 2 channels; 16-bit gives ~0.001 angular precision</td>
 </tr>
 <tr>
   <td style="text-align:left">LightMask (RT3)</td>
   <td style="text-align:left"><code>rgba8unorm</code></td>
   <td style="text-align:left">4 bytes</td>
-  <td style="text-align:left">Flag buffer, not color; 4 independent channels for LM tier, self-illum, shadow receive, LM receive</td>
+  <td style="text-align:left">Flag buffer, 4 independent channels</td>
 </tr>
 <tr>
   <td style="text-align:left">Depth</td>
@@ -389,7 +378,6 @@ DEFERRED:
 </table></div>
 <p>(Source: doc 03, Section 2)</p>
 <h3 id="memory-cost-at-different-resolutions"><a class="anchor" href="#memory-cost-at-different-resolutions">#</a>Memory Cost at Different Resolutions</h3>
-<p>From doc 03, Section 2 -- the G-buffer memory budget at Tier 2:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>                  1280x720    1920x1080   2560x1440   3840x2160
                   --------    ---------   ---------   ---------
 Albedo (4B)       3.5 MB      7.9 MB      14.1 MB     31.6 MB
@@ -408,31 +396,24 @@ Plus bloom:       ~2 MB       ~4 MB       ~7 MB       ~16 MB
 Plus TAA history: 7.0 MB      15.8 MB     28.1 MB     63.3 MB
                   --------    ---------   ---------   ---------
 TOTAL RT memory:  ~53 MB      ~148 MB     ~213 MB     ~398 MB</code></pre></div>
-<p>That 148 MB at 1080p is significant. On a phone browser, I'd need to cut this hard.</p>
-<p>(Source: doc 03, Section 2 "G-Buffer Memory Budget")</p>
-<h3 id="preshade-vs-diffuseambient-vs-mdiffuse-whats-the-difference"><a class="anchor" href="#preshade-vs-diffuseambient-vs-mdiffuse-whats-the-difference">#</a>"PreShade" vs "DiffuseAmbient" vs "MDiffuse" -- What's the Difference?</h3>
-<p>This confused me at first. Let me draw it out:</p>
+<p>That 148 MB at 1080p is significant. On a phone browser, I would need to cut this hard. (Source: doc 03, Section 2 "G-Buffer Memory Budget")</p>
+<h3 id="preshade-vs-diffuseambient-vs-mdiffuse"><a class="anchor" href="#preshade-vs-diffuseambient-vs-mdiffuse">#</a>PreShade vs DiffuseAmbient vs MDiffuse</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>TIMELINE OF A PIXEL&#x27;S COLOR:
 
 1. MDiffuse        = raw albedo from texture. &quot;M&quot; means &quot;Material.&quot;
-                     This is the BASE COLOR. Written during G-buffer fill.
-                     Input data, not lit.
+                     BASE COLOR. Written during G-buffer fill. Input data, not lit.
 
 2. PreShade        = [UNKNOWN] -- possibly pre-computed BRDF response,
-                     emissive term, or simplified pre-lit diffuse for
-                     static geometry. (Source: doc 11, Section 3 &quot;What PreShade Means&quot;)
+                     emissive term, or simplified pre-lit diffuse.
 
 3. DiffuseAmbient  = MDiffuse * (ambient + lightmap + indirect lighting).
-                     This is the LIGHTING RESULT -- accumulated diffuse irradiance.
-                     Computed during DeferredRead/DeferredReadFull.
-                     HDR output.
+                     LIGHTING RESULT -- accumulated diffuse irradiance. HDR output.
 
 In equation form:
    MDiffuse         = texture_sample(albedo_map, uv)
    DiffuseAmbient   = MDiffuse * (Ambient + Lightmap + IndirectLight)</code></pre></div>
-<p>So: MDiffuse is an INPUT (material property), DiffuseAmbient is an OUTPUT (lighting result), and PreShade is somewhere in between (still unclear exactly what).</p>
-<p>(Source: doc 11, Section 3 "DiffuseAmbient vs MDiffuse")</p>
-<h3 id="how-does-this-compare-to-other-engines"><a class="anchor" href="#how-does-this-compare-to-other-engines">#</a>How Does This Compare to Other Engines?</h3>
+<p>MDiffuse is an INPUT (material property). DiffuseAmbient is an OUTPUT (lighting result). PreShade is somewhere in between. (Source: doc 11, Section 3)</p>
+<h3 id="comparison-to-other-engines"><a class="anchor" href="#comparison-to-other-engines">#</a>Comparison to Other Engines</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -456,12 +437,6 @@ In equation form:
   <td style="text-align:left">Metallic/Roughness</td>
 </tr>
 <tr>
-  <td style="text-align:left">Specular storage</td>
-  <td style="text-align:left">RGB F0 + roughness</td>
-  <td style="text-align:left">GBufferA.a = metallic</td>
-  <td style="text-align:left">SpecularBuffer</td>
-</tr>
-<tr>
   <td style="text-align:left">G-buffer MRT count</td>
   <td style="text-align:left">4 + depth (core)</td>
   <td style="text-align:left">6 + depth</td>
@@ -477,17 +452,17 @@ In equation form:
   <td style="text-align:left">Light mask</td>
   <td style="text-align:left">Dedicated RT3</td>
   <td style="text-align:left">Uses stencil bits</td>
-  <td style="text-align:left">Uses material flags in GBuffer</td>
+  <td style="text-align:left">Material flags in GBuffer</td>
 </tr>
 </tbody>
 </table></div>
-<p>TM2020's specular/glossiness workflow is less common in modern engines but has a real advantage: metals have colored F0 reflectance (copper is orange, gold is yellow), which spec/gloss stores directly in RGB. Metallic/roughness has to reconstruct this from the albedo when metallic=1. For a racing game with lots of metallic surfaces (car bodies, railings, chrome), spec/gloss is arguably a better fit.</p>
-<p><strong>My question</strong>: Should I use spec/gloss in my WebGPU engine for consistency with TM2020, or metallic/roughness for compatibility with the broader tooling ecosystem (Blender, Substance)?</p>
+<p>TM2020's specular/glossiness workflow is less common but has a real advantage: metals have colored F0 reflectance (copper is orange, gold is yellow), stored directly in RGB. Metallic/roughness reconstructs this from albedo when metallic=1.</p>
 <p>(Source: doc 11, Section 10; doc 03, Section 2)</p>
 <hr>
-<h2 id="chapter-3-shaders"><a class="anchor" href="#chapter-3-shaders">#</a>Chapter 3: Shaders</h2>
-<h3 id="1112-shaders-collapse-to-38-uber-shaders-how"><a class="anchor" href="#1112-shaders-collapse-to-38-uber-shaders-how">#</a>1,112 Shaders Collapse to ~38 Uber-Shaders -- How?</h3>
-<p>The shader cache (<code>GpuCache_D3D11_SM5.zip</code>) contains 1,112 compiled DXBC shader stages. But when I analyzed the naming patterns, I found massive combinatorial explosion from a small number of core programs.</p>
+<h2 id="shaders"><a class="anchor" href="#shaders">#</a>Shaders</h2>
+<p>This chapter covers the 1,112-shader inventory, the Tech3 naming convention, and the uber-shader collapse. You will understand how 6 core block programs produce 180 shader permutations.</p>
+<h3 id="1112-shaders-collapse-to-38-uber-shaders"><a class="anchor" href="#1112-shaders-collapse-to-38-uber-shaders">#</a>1,112 Shaders Collapse to ~38 Uber-Shaders</h3>
+<p>The shader cache (<code>GpuCache_D3D11_SM5.zip</code>) contains 1,112 compiled DXBC shader stages. Naming pattern analysis reveals massive combinatorial explosion from a small core:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SHADER STAGE BREAKDOWN:
   515 Pixel (Fragment) shaders    (_p.hlsl)
   388 Vertex shaders              (_v.hlsl)
@@ -499,7 +474,7 @@ In equation form:
     4 Hull (tessellation ctrl)    (_h.hlsl)
   ----
   1,112 total</code></pre></div>
-<p>The block shader family ALONE accounts for 180 entries, all derived from ~6 core programs:</p>
+<p>The block shader family ALONE accounts for 180 entries from ~6 core programs:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>6 CORE BLOCK SHADER PROGRAMS:
   1. Block_TDSN          -- Standard PBR (single UV mapping)
   2. Block_PyPxz         -- Triplanar Y + XZ projection
@@ -522,8 +497,7 @@ x MODIFIERS (COut, CIn, DispIn, Hue, X2H2, ids, SI, OpBlend...)
 
 = 180 block shaders!</code></pre></div>
 <p>(Source: doc 32, Section 5; doc 11, Section 7)</p>
-<h3 id="the-tech3-naming-convention-decode-it"><a class="anchor" href="#the-tech3-naming-convention-decode-it">#</a>The Tech3 Naming Convention -- Decode It!</h3>
-<p>Let me decode an actual shader name:</p>
+<h3 id="the-tech3-naming-convention"><a class="anchor" href="#the-tech3-naming-convention">#</a>The Tech3 Naming Convention</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Tech3/Block_TDSN_Py_Pxz_DefWrite_p.hlsl
 |     |     |    |   |   |        |
 |     |     |    |   |   |        +-- Stage: p = pixel (fragment) shader
@@ -533,7 +507,7 @@ x MODIFIERS (COut, CIn, DispIn, Hue, X2H2, ids, SI, OpBlend...)
 |     |     +-- TDSN = Texture + Diffuse + Specular + Normal
 |     +-- Block = track block geometry
 +-- Tech3 = Nadeo&#x27;s 3rd-gen shader framework</code></pre></div>
-<p>Full naming convention:</p>
+<p>Full convention:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Tech3/&lt;ObjectType&gt;_&lt;TextureSlots&gt;_&lt;Projection&gt;_&lt;Modifier&gt;_&lt;Pipeline&gt;_&lt;Stage&gt;.hlsl
 
 Object Types:    Block, CarSkin, CarDetails, CarGems, CarGlass, CarGhost,
@@ -556,117 +530,43 @@ Pipeline:        DefWrite=G-buffer, DefRead/DefReadP1=deferred lighting,
 
 Stage:           _p=pixel, _v=vertex, _c=compute, _g=geometry, _h=hull, _d=domain</code></pre></div>
 <p>(Source: doc 32, Section 5; doc 05, Section 6; doc 11, Section 7)</p>
-<h3 id="material-shader-variants-how-does-one-block-material-become-5-shaders"><a class="anchor" href="#material-shader-variants-how-does-one-block-material-become-5-shaders">#</a>Material Shader Variants -- How Does One Block Material Become 5+ Shaders?</h3>
-<p>Take the simplest block material, <code>Block_TDSN</code>:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Block_TDSN_p.hlsl                 -- Forward rendering (fallback)
-Block_TDSN_v.hlsl                 -- Forward vertex shader
-Block_TDSN_DefWrite_p.hlsl        -- G-buffer fill pixel shader
-Block_TDSN_DefWrite_v.hlsl        -- G-buffer fill vertex shader
-Block_DefReadP1_LM0_p.hlsl        -- Deferred read, lightmap tier 0
-Block_DefReadP1_LM1_p.hlsl        -- Deferred read, lightmap tier 1
-Block_DefReadP1_LM2_p.hlsl        -- Deferred read, lightmap tier 2
-Block_DefReadP1_COut_p.hlsl       -- Deferred read, color output (stickers)
-Block_DefReadP1_SI_p.hlsl         -- Deferred read, self-illumination
-Block_TDSN_Anim_v.hlsl            -- Animated UV coordinates vertex
-Block_TDSN_Shadow_v.hlsl          -- Shadow caster depth-only
-Block_TDSN_ZOnly_p.hlsl           -- Z-prepass pixel
-Block_TDSN_ZOnly_v.hlsl           -- Z-prepass vertex
-Block_TDSN_PeelDiff_p.hlsl        -- Depth peeling for lightmap bake
-Block_TDSN_PeelDiff_v.hlsl        -- Depth peeling vertex</code></pre></div>
-<p>That's 15+ shaders from ONE material! And this is the simplest case.</p>
-<p>(Source: doc 32, Section 5 "Variant Explosion Analysis")</p>
-<h3 id="what-the-core-deferred-write-shader-does-conceptually"><a class="anchor" href="#what-the-core-deferred-write-shader-does-conceptually">#</a>What the CORE Deferred Write Shader Does (Conceptually)</h3>
-<p>The G-buffer fill shader does this, conceptually:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>VERTEX STAGE:
-  1. Transform vertex position: world -&gt; clip space (with TAA jitter on projection)
-  2. Transform TBN vectors (tangent, bitangent, normal) to CAMERA SPACE
-     using: view_matrix * normal_matrix * tangent
-  3. Pass through UV0 (material) and UV1 (lightmap)
-  4. For triplanar projection modes, compute UVs from world position
-
-FRAGMENT STAGE:
-  1. Sample albedo texture (or triplanar blend for Py/Pxz modes)
-  2. Apply vertex color tint and material diffuse tint
-  3. Sample specular texture -&gt; F0 (RGB) + roughness (A)
-  4. Sample normal map -&gt; transform from tangent space to camera space
-  5. Encode camera-space normal to octahedral 2-channel format
-  6. Build light mask flags (LM tier, self-illum, shadow receive)
-
-  OUTPUT (4 MRT):
-    RT0 = vec4(albedo.rgb, material_id / 255.0)
-    RT1 = vec4(F0.rgb * spec_scale, roughness * rough_scale)
-    RT2 = vec2(octahedral_normal.xy)
-    RT3 = vec4(lm_tier_flag, self_illum_amount, shadow_flag, lm_receive_flag)</code></pre></div>
-<p>The WGSL implementation from doc 03 (Section 3) gives exact code for this, including octahedral encoding (Cigolle et al. 2014) and triplanar sampling for PyPxz projection modes.</p>
-<p>(Source: doc 03, Section 3 "Core WGSL Shader Code"; doc 11, Section 1 Phase 3)</p>
-<h3 id="whats-the-minimum-set-of-shaders-for-a-playable-game"><a class="anchor" href="#whats-the-minimum-set-of-shaders-for-a-playable-game">#</a>"What's the Minimum Set of Shaders for a Playable Game?"</h3>
+<h3 id="minimum-shader-set-for-a-playable-game"><a class="anchor" href="#minimum-shader-set-for-a-playable-game">#</a>Minimum Shader Set for a Playable Game</h3>
 <p>From doc 32, Section 3:</p>
-<p><strong>Tier 1 -- Absolutely Required (renders a visible scene)</strong>: 12 shaders</p>
+<p><strong>Tier 1 -- Required</strong> (renders a visible scene): 12 shaders</p>
 <ul>
-  <li>G-buffer fill for blocks</li>
-  <li>Depth-only pass</li>
-  <li>Deferred ambient/indirect lighting</li>
-  <li>Point light and spot light</li>
-  <li>PSSM shadow sampling</li>
-  <li>Fullscreen triangle utility</li>
-  <li>Face normal reconstruction</li>
-  <li>Linear depth conversion</li>
-  <li>Tone mapping + auto-exposure</li>
-  <li>Sky dome</li>
-  <li>Motion vectors</li>
+  <li>G-buffer fill, depth-only, deferred lighting, PSSM shadows, fullscreen utility, face normal, linear depth, tone mapping, sky, motion vectors</li>
 </ul>
-<p><strong>Tier 2 -- Visual Quality (needed for acceptable appearance)</strong>: +12 = 24 total</p>
+<p><strong>Tier 2 -- Visual Quality</strong>: +12 = 24 total</p>
 <ul>
-  <li>Car skin/details/glass</li>
-  <li>Deferred decals</li>
-  <li>Global fog</li>
-  <li>Bloom</li>
-  <li>FXAA</li>
-  <li>Color grading</li>
-  <li>SSAO</li>
-  <li>GPU culling</li>
-  <li>Trees</li>
-  <li>Grass</li>
+  <li>Car skin/details/glass, decals, fog, bloom, FXAA, color grading, SSAO, GPU culling, trees, grass</li>
 </ul>
 <p><strong>Tier 3 -- Full Feature Set</strong>: +14 = 38 total</p>
 <ul>
-  <li>SSR, TAA, particles, volumetric fog, fog boxes, water, clouds, DoF, motion blur, lens flares, ghost car, burn marks, impostors, PBR precompute</li>
+  <li>SSR, TAA, particles, volumetric fog, water, clouds, DoF, motion blur, lens flares, ghost car, burn marks, impostors, PBR precompute</li>
 </ul>
-<p>The massive 1,112 count collapses because most TM2020 shaders are permutations of the same logic with different texture slot configurations.</p>
-<p>(Source: doc 32, Section 3)</p>
+<p>1,112 collapses because most shaders are permutations of the same logic with different texture slot configurations. (Source: doc 32, Section 3)</p>
 <hr>
-<h2 id="chapter-4-lighting-shadows"><a class="anchor" href="#chapter-4-lighting-shadows">#</a>Chapter 4: Lighting & Shadows</h2>
+<h2 id="lighting-and-shadows"><a class="anchor" href="#lighting-and-shadows">#</a>Lighting and Shadows</h2>
+<p>This chapter covers the PBR model, PSSM shadow cascades, and lightmap integration. You will understand why TM2020 uses specular/glossiness instead of metallic/roughness.</p>
 <h3 id="pbr-model-specularglossiness-not-metallicroughness"><a class="anchor" href="#pbr-model-specularglossiness-not-metallicroughness">#</a>PBR Model: Specular/Glossiness (NOT Metallic/Roughness!)</h3>
-<p>This was surprising. Most modern engines use metallic/roughness. TM2020 uses <strong>specular/glossiness</strong>.</p>
-<p><strong>Evidence</strong>:</p>
+<p>Most modern engines use metallic/roughness. TM2020 uses <strong>specular/glossiness</strong>.</p>
+<p>Evidence:</p>
 <ul>
-  <li><code>Engines/Pbr_Spec_to_Roughness_c.hlsl</code> -- converts specular to roughness (specular workflow INPUT)</li>
-  <li>Separate <code>MDiffuse</code> and <code>MSpecular</code> G-buffer targets -- in spec/gloss, specular F0 is a full RGB color</li>
-  <li><code>Pbr_IntegrateBRDF_GGX_c.hlsl</code> -- GGX BRDF LUT (standard Cook-Torrance)</li>
+  <li><code>Engines/Pbr_Spec_to_Roughness_c.hlsl</code> converts specular to roughness (specular workflow INPUT)</li>
+  <li>Separate <code>MDiffuse</code> and <code>MSpecular</code> G-buffer targets</li>
+  <li><code>Pbr_IntegrateBRDF_GGX_c.hlsl</code> -- GGX BRDF LUT</li>
 </ul>
-<p><strong>Why spec/gloss?</strong> For a racing game, I think this is a good call:</p>
-<ul>
-  <li>Metal surfaces (car chrome, railings, checkpoint gates) have COLORED reflections. In spec/gloss, you store this directly: copper F0 = (0.95, 0.64, 0.54). In metallic/roughness, you'd need the albedo for metal color, which requires the shader to branch on metallic=1.</li>
-  <li>The TM2020 content pipeline uses NadeoImporter which outputs spec/gloss textures natively.</li>
-  <li>Legacy compatibility with the ManiaPlanet engine lineage.</li>
-</ul>
-<p><strong>The tradeoff</strong>: Most external tools (Substance Painter, Blender) use metallic/roughness by default. If I'm building my own game with community-created content, metallic/roughness has better tooling support.</p>
+<p><strong>Why spec/gloss for a racing game?</strong> Metal surfaces (chrome, railings, checkpoint gates) have COLORED reflections. In spec/gloss, store directly: copper F0 = (0.95, 0.64, 0.54). In metallic/roughness, you need the albedo for metal color, requiring shader branching on metallic=1.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SPECULAR/GLOSSINESS:
   MDiffuse  = RGB albedo (for dielectrics AND metals)
   MSpecular = RGB F0 reflectance + A glossiness
 
-  Metal: F0 = metal_color (RGB), diffuse = black
-  Dielectric: F0 = ~0.04 (grey), diffuse = albedo
-
 METALLIC/ROUGHNESS:
-  Albedo    = RGB base color (albedo for dielectrics, F0 for metals)
-  MetalRough = R metallic (0/1), G roughness
-
-  Metal: F0 = albedo, diffuse = black
-  Dielectric: F0 = lerp(0.04, albedo, metallic), diffuse = albedo * (1-metallic)</code></pre></div>
-<p>(Source: doc 11, Section 10; doc 32, Section 2.2 "PBR / IBL Tooling")</p>
-<h3 id="ggx-brdf-what-is-it-how-does-it-create-realistic-reflections"><a class="anchor" href="#ggx-brdf-what-is-it-how-does-it-create-realistic-reflections">#</a>GGX BRDF -- What Is It? How Does It Create Realistic Reflections?</h3>
-<p>GGX (Trowbridge-Reitz) is the microfacet distribution function used in TM2020's specular BRDF. Here's what that means visually:</p>
+  Albedo    = RGB base color
+  MetalRough = R metallic (0/1), G roughness</code></pre></div>
+<p>(Source: doc 11, Section 10; doc 32, Section 2.2)</p>
+<h3 id="ggx-brdf"><a class="anchor" href="#ggx-brdf">#</a>GGX BRDF</h3>
+<p>GGX (Trowbridge-Reitz) is the microfacet distribution function for specular BRDF:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>INCOMING LIGHT               CAMERA
        \                      /
         \     HIGHLIGHT      /
@@ -685,36 +585,24 @@ The highlight shape depends on:
   F (Fresnel): How much light reflects vs refracts at each angle?
      Schlick approximation: F = F0 + (1-F0)(1-cos(theta))^5
      At grazing angles, EVERYTHING becomes a mirror (even asphalt!)</code></pre></div>
-<p>The actual specular BRDF is:</p>
+<p>The specular BRDF is:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>specular = (D * G * F) / (4 * NdotV * NdotL)</code></pre></div>
-<p>TM2020 pre-computes a <strong>BRDF integration LUT</strong> via <code>Pbr_IntegrateBRDF_GGX_c.hlsl</code> -- a 2D texture indexed by (NdotV, roughness) that stores the integral of the BRDF over all directions. This is the "split-sum" approximation for image-based lighting (IBL).</p>
-<p>The doc 03 WGSL deferred lighting shader (Section 3) implements this exactly:</p>
-<ul>
-  <li><code>distribution_ggx()</code> for the D term</li>
-  <li><code>geometry_smith_ggx()</code> for the G term</li>
-  <li><code>fresnel_schlick()</code> for the F term</li>
-  <li><code>brdf_lut</code> texture for IBL split-sum</li>
-</ul>
-<p>(Source: doc 11, Section 10; doc 03, Section 3; doc 32, Section 2.2 "Pbr_IntegrateBRDF_GGX_c")</p>
+<p>TM2020 pre-computes a <strong>BRDF integration LUT</strong> via <code>Pbr_IntegrateBRDF_GGX_c.hlsl</code> -- a 2D texture indexed by (NdotV, roughness). This is the "split-sum" approximation for image-based lighting. (Source: doc 11, Section 10; doc 03, Section 3; doc 32, Section 2.2)</p>
 <h3 id="pssm-shadow-cascades"><a class="anchor" href="#pssm-shadow-cascades">#</a>PSSM Shadow Cascades</h3>
-<p>PSSM = Parallel Split Shadow Maps. The idea: close objects need high-resolution shadows, distant objects can get away with lower resolution.</p>
+<p>PSSM (Parallel Split Shadow Maps) gives close objects high-resolution shadows and distant objects lower resolution:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>PSSM CASCADE LAYOUT (from camera):
 
 Camera  Cascade 0   Cascade 1    Cascade 2      Cascade 3
   |     (near)      (mid-near)   (mid-far)      (far)
   |&lt;---&gt;|&lt;---------&gt;|&lt;----------&gt;|&lt;------------&gt;|
-  |  highest res    medium res    lower res       lowest res
-  |  MapShadowSplit0             MapShadowSplit2
-  |          MapShadowSplit1              MapShadowSplit3</code></pre></div>
-<p><strong>Configuration from decompiled code</strong> (<code>CVisionViewport::VisibleZonePrepareShadowAndProjectors</code> at <code class="addr">0x14095d430</code>):</p>
+  |  highest res    medium res    lower res       lowest res</code></pre></div>
+<p>Configuration from decompiled code (<code>CVisionViewport::VisibleZonePrepareShadowAndProjectors</code> at <code class="addr">0x14095d430</code>):</p>
 <ul>
-  <li>Default: <strong>4 cascades</strong> (when <code><em>(int </em>)(param_1 + 0x680) < 2</code> or standard path)</li>
-  <li>Simplified: <strong>1 cascade</strong> (when <code>flag & 0x40</code> at offset <code>0x5d0</code> -- "Minimum" shadow quality)</li>
-  <li>Shadow map format: likely <code>DXGI_FORMAT_D16_UNORM</code> or <code>D24_UNORM</code> (standard practice)</li>
-  <li>Resolution: configurable via <code>"ShadowMapTexelSize"</code> setting</li>
-  <li>Filtering: PCF baseline + <code>"HqSoftShadows"</code> toggle for higher quality</li>
+  <li>Default: <strong>4 cascades</strong></li>
+  <li>Simplified: <strong>1 cascade</strong> (when <code>flag & 0x40</code> -- "Minimum" shadow quality)</li>
+  <li>Filtering: PCF baseline + <code>"HqSoftShadows"</code> toggle</li>
+  <li>Shadow cache: Static geometry cached via <code>ShadowCacheUpdate</code> compute shader</li>
 </ul>
-<p><strong>Shadow quality tiers</strong>:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -732,7 +620,7 @@ Camera  Cascade 0   Cascade 1    Cascade 2      Cascade 3
 <tr>
   <td style="text-align:left">Minimum</td>
   <td style="text-align:left">1</td>
-  <td style="text-align:left"><code>flag & 0x40</code> triggers single cascade</td>
+  <td style="text-align:left">Single cascade</td>
 </tr>
 <tr>
   <td style="text-align:left">Medium</td>
@@ -751,11 +639,8 @@ Camera  Cascade 0   Cascade 1    Cascade 2      Cascade 3
 </tr>
 </tbody>
 </table></div>
-<p><strong>Shadow cache</strong>: Static geometry shadows are cached (<code>ShadowCacheUpdate</code> pass + <code>ShadowCache/UpdateShadowIndex_c.hlsl</code> compute shader) and only re-rendered when geometry changes.</p>
-<p><strong>Fake shadows</strong>: For distant objects, <code>ShaderGeomFakeShadows</code> / <code>ShaderShadowFakeQuad</code> / <code>FlatCubeShadow</code> project simple darkened shapes -- virtually free compared to real shadow maps.</p>
-<p>(Source: doc 11, Section 5; decompiled <code>CVisionViewport_PrepareShadowAndProjectors_14095d430.c</code>)</p>
+<p>Fake shadows (<code>ShaderGeomFakeShadows</code>, <code>FlatCubeShadow</code>) project simple darkened shapes for distant objects. Virtually free compared to real shadow maps. (Source: doc 11, Section 5; decompiled <code>CVisionViewport_PrepareShadowAndProjectors_14095d430.c</code>)</p>
 <h3 id="lightmap-integration-baked-dynamic"><a class="anchor" href="#lightmap-integration-baked-dynamic">#</a>Lightmap Integration: Baked + Dynamic</h3>
-<p>TM2020 uses a sophisticated lightmap system:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>LIGHTMAP PIPELINE:
 
 BAKED (offline):
@@ -771,21 +656,13 @@ RUNTIME (DeferredRead phase):
   4. Deferred_SetLDirFromMask_p.hlsl -- Derive light direction from LightMask buffer
 
   RESULT: DiffuseAmbient = MDiffuse * (ambient + lightmap + indirect)</code></pre></div>
-<p><strong>H-basis encoding</strong> means the lightmap stores directional information, not just flat irradiance. This allows per-pixel directional lighting from the lightmap when combined with bump-mapped normals -- you get the visual richness of dynamic lighting from baked data.</p>
-<p><strong>For dynamic objects</strong> (cars): <code>LightFromMap</code> pass samples the baked lightmap AT the car's position to approximate environment lighting. Light probe grid (<code>ProbeGrid_Sample_c.hlsl</code>) provides SH-based indirect lighting.</p>
-<p>(Source: doc 11, Section 10 "Lightmap Integration"; doc 32, Section 2.4)</p>
-<h3 id="how-would-i-simplify-this-for-a-browser"><a class="anchor" href="#how-would-i-simplify-this-for-a-browser">#</a>"How Would I Simplify This for a Browser?"</h3>
-<p>For my WebGPU racing game, I'd simplify shadows and lighting:</p>
-<ol>
-  <li><strong>Shadows</strong>: Start with 2 cascades instead of 4 (doc 03 Tier 1 uses 2). PCF with 4 taps (matches TM2020's baseline). Skip shadow cache -- less important for smaller scenes.</li>
-  <li><strong>Lightmaps</strong>: Standard flat irradiance instead of H-basis. Skip YCbCr compression -- just store RGB8.</li>
-  <li><strong>PBR</strong>: Use the split-sum approximation but with a smaller BRDF LUT (128x128 instead of 256x256). One environment probe instead of a grid.</li>
-  <li><strong>Lights</strong>: Cap at 16 point/spot lights. Use Forward+ tile culling only for the forward transparent pass.</li>
-</ol>
+<p><strong>H-basis encoding</strong> stores directional information, not flat irradiance. This enables per-pixel directional lighting from baked data when combined with bump-mapped normals.</p>
+<p>For dynamic objects (cars): <code>LightFromMap</code> samples the baked lightmap AT the car's position. Light probe grid (<code>ProbeGrid_Sample_c.hlsl</code>) provides SH-based indirect lighting. (Source: doc 11, Section 10; doc 32, Section 2.4)</p>
 <hr>
-<h2 id="chapter-5-post-processing"><a class="anchor" href="#chapter-5-post-processing">#</a>Chapter 5: Post-Processing</h2>
-<h3 id="the-14-step-post-processing-chain-in-order"><a class="anchor" href="#the-14-step-post-processing-chain-in-order">#</a>The 14-Step Post-Processing Chain (In Order)</h3>
-<p>The order matters! Here's the verified sequence from doc 11, Section 4 Phase 9 + doc 32, Section 6:</p>
+<h2 id="post-processing"><a class="anchor" href="#post-processing">#</a>Post-Processing</h2>
+<p>This chapter covers the 14-step post-processing chain, TXAA, bloom, and tone mapping. You will understand the ordering dependencies and which effects are essential.</p>
+<h3 id="the-14-step-chain"><a class="anchor" href="#the-14-step-chain">#</a>The 14-Step Chain</h3>
+<p>Order matters. Verified sequence from doc 11, Section 4 Phase 9 + doc 32, Section 6:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>POST-PROCESSING CHAIN (after deferred lighting)
 ================================================
 
@@ -795,21 +672,19 @@ RUNTIME (DeferredRead phase):
                         3DFog_RayMarching_c (volumetric)
 
  2.  Global Fog         DeferredFogGlobal_p                  ESSENTIAL
-                        DeferredFog_p                        (without fog,
-                                                              distance = ugly)
+                        DeferredFog_p
 
  3.  Lens Flares        LensFlareOccQuery_v                  LUXURY
                         2dFlareAdd_Hdr_p (HDR composite)
-                        2dLensDirtAdd_p (lens dirt)
 
  4.  Depth of Field     DoF_T3_BlurAtDepth_p                 LUXURY
                                                               (only in replays)
 
  5.  Motion Blur        MotionBlur2d_p                       LUXURY
-                        (default intensity: 0.35)             (player pref)
+                        (default intensity: 0.35)
 
  6.  General Blur       BlurHV_p (separable Gaussian)        INTERNAL
-                        BilateralBlur_p                       (used by other FX)
+                        BilateralBlur_p
 
  7.  Colors             Colors_p (brightness/contrast/sat)   ESSENTIAL
 
@@ -817,33 +692,30 @@ RUNTIME (DeferredRead phase):
                         ColorBlindnessCorrection_p            (accessibility!)
 
  9.  Tone Mapping       TM_GetLumi_p -&gt; ...chain...          ESSENTIAL
-                        TM_GlobalFilmCurve_p                  (HDR -&gt; LDR)
+                        TM_GlobalFilmCurve_p
 
 10.  Bloom              BloomSelectFilterDown2_p -&gt; chain     ESSENTIAL
-                        Bloom_HorizonBlur_p -&gt; chain           (defines the &quot;look&quot;)
+                        Bloom_HorizonBlur_p -&gt; chain
                         Bloom_StreaksWorkDir_p (anamorphic)
                         Bloom_Final_p
 
 11.  Anti-Aliasing      FXAA_p  OR  TemporalAA_p            ESSENTIAL
-                        (NVIDIA GFSDK TXAA as hardware path)   (aliasing = ugly)
+                        (NVIDIA GFSDK TXAA as hardware path)
 
 12.  SSR                SSReflect_Deferred_p                 NICE-TO-HAVE
-                        SSReflect_Deferred_LastFrames_p
                         SSReflect_UpSample_p
 
 13.  SSS                SeparableSSS_p (Jimenez technique)   LUXURY
-                        (car paint, translucent materials)
 
 14.  Final Blit         RasterBitmapBlend*_p -&gt; back buffer  ESSENTIAL
                         DownSSAA if supersampling</code></pre></div>
-<p>(Source: doc 32, Section 6; doc 11, Section 4 Phases 9-13; doc 11, Section 9)</p>
-<h3 id="txaa-how-does-temporal-aa-work"><a class="anchor" href="#txaa-how-does-temporal-aa-work">#</a>TXAA -- How Does Temporal AA Work?</h3>
+<p>(Source: doc 32, Section 6; doc 11, Section 4 Phases 9-13)</p>
+<h3 id="txaa-temporal-anti-aliasing"><a class="anchor" href="#txaa-temporal-anti-aliasing">#</a>TXAA -- Temporal Anti-Aliasing</h3>
 <p>TM2020 has TWO implementations:</p>
 <ol>
-  <li><strong>NVIDIA GFSDK TXAA</strong> -- hardware vendor SDK, uses <code>GFSDK_TXAA_DX11_ResolveFromMotionVectors</code> (at <code class="addr">0x141c0f178</code>). Optimized for NVIDIA GPUs.</li>
+  <li><strong>NVIDIA GFSDK TXAA</strong> -- hardware vendor SDK, at <code class="addr">0x141c0f178</code>. Optimized for NVIDIA GPUs.</li>
   <li><strong>Ubisoft Custom TXAA</strong> (<code>UBI_TXAA</code>) -- software fallback via <code>TemporalAA_p.hlsl</code>. Cross-vendor.</li>
 </ol>
-<p>The principle:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>TEMPORAL AA:
 
   Frame N-1 (history)     Frame N (current, with sub-pixel jitter)
@@ -862,106 +734,51 @@ RUNTIME (DeferredRead phase):
                         v
                   RESULT: smooth
                   AND temporally stable</code></pre></div>
-<p>Each frame, the projection matrix gets a tiny sub-pixel offset (<code>PosOffsetAA</code> / <code>PosOffsetAAInW</code>). Over multiple frames, different sub-pixel locations are sampled. The TAA shader blends the current frame with the reprojected previous frame (typically 90-95% history, 5-10% current).</p>
-<p><strong>Ghost rejection</strong>: When an object moves or gets disoccluded, the history is wrong. Standard approaches:</p>
-<ul>
-  <li>Neighborhood clamping: clamp history to the min/max of the current frame's 3x3 neighborhood</li>
-  <li>Motion rejection: discard history in high-velocity regions</li>
-</ul>
-<p>The <code>CameraMotion</code> pass generates motion vectors via <code>DeferredCameraMotion_p.hlsl</code> -- per-pixel reprojection using the previous frame's view-projection matrix.</p>
-<p>(Source: doc 15, Section 8; doc 11, Section 11)</p>
+<p>Each frame, the projection matrix gets a tiny sub-pixel offset. Over multiple frames, different sub-pixel locations are sampled. TAA blends current frame with reprojected history (typically 90-95% history, 5-10% current).</p>
+<p>Ghost rejection uses neighborhood clamping and motion rejection. (Source: doc 15, Section 8; doc 11, Section 11)</p>
 <h3 id="bloom"><a class="anchor" href="#bloom">#</a>Bloom</h3>
-<p>The bloom pipeline from doc 32/doc 11:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>HDR Scene Buffer
       |
       v
-BloomSelectFilterDown2_p    -- Threshold: keep only pixels above brightness cutoff
-      |                        + 2x downsample
-      v
-BloomSelectFilterDown4_p    -- Additional 4x downsample
+BloomSelectFilterDown2_p    -- Threshold + 2x downsample
       |
       v
-Bloom_HorizonBlur_p         -- Horizontal Gaussian blur at each mip level
-      |                        (done at multiple resolution levels)
-      v
-Bloom_StreaksWorkDir_p       -- Directional streaks (anamorphic lens effect!)
+BloomSelectFilterDown4_p    -- 4x downsample
       |
       v
-Bloom_StreaksSelectSrc_p     -- Select streak intensity
+Bloom_HorizonBlur_p         -- Horizontal Gaussian at each mip
       |
       v
-Bloom_Final_p               -- Composite bloom back onto HDR buffer
+Bloom_StreaksWorkDir_p       -- Directional streaks (anamorphic!)
       |
       v
-Tonemapped + bloomed scene</code></pre></div>
-<p>Configuration: <code>"BloomIntensUseCurve"</code>, <code>"MinIntensInBloomSrc"</code> (threshold), <code>"Bloom_Down%d"</code> (multi-level targets).</p>
-<p>(Source: doc 11, Section 9 "Bloom HDR"; doc 32, Section 6)</p>
+Bloom_Final_p               -- Composite back onto HDR buffer</code></pre></div>
+<p>(Source: doc 11, Section 9; doc 32, Section 6)</p>
 <h3 id="tone-mapping"><a class="anchor" href="#tone-mapping">#</a>Tone Mapping</h3>
-<p>TM2020's tone mapper uses a <strong>filmic curve with power segments</strong> (similar to Hable/Uncharted 2 but parameterized differently):</p>
+<p>Filmic curve with power segments (similar to Hable/Uncharted 2):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>TM_GetLumi_p            -- Extract luminance from HDR
 TM_GetLog2LumiDown1_p   -- Progressive log2 luminance downsample
 TM_GetAvgLumiCurr_p     -- Average luminance (auto-exposure target)
-TM_GlobalFilmCurve_p    -- Apply filmic curve (piecewise power: shoulder+linear+toe)</code></pre></div>
-<p>The filmic curve uses <code>NFilmicTone_PowerSegments::SCurveParamsUser</code> -- a piecewise function model.</p>
-<p>(Source: doc 11, Section 9 "Tone Mapping")</p>
+TM_GlobalFilmCurve_p    -- Apply filmic curve (shoulder+linear+toe)</code></pre></div>
+<p>(Source: doc 11, Section 9)</p>
 <h3 id="hbao-ambient-occlusion"><a class="anchor" href="#hbao-ambient-occlusion">#</a>HBAO+ Ambient Occlusion</h3>
-<p>The full HBAO+ pipeline is a 6-step beast:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Step 1: LinearizeDepth_p.hlsl        -- Hardware depth -&gt; linear eye-space Z
-Step 2: DeinterleaveDepth_p.hlsl     -- Split into 4x4 interleaved layers (16 quarter-res)
-Step 3: ReconstructNormal_p.hlsl     -- Reconstruct normals from depth derivatives
-Step 4: CoarseAO_p.hlsl             -- Main AO computation at quarter resolution
-Step 5: ReinterleaveAO_p.hlsl       -- Recombine 4x4 layers back to full resolution
-Step 6: BlurX_p.hlsl + BlurY_p.hlsl -- Separable bilateral blur (edge-preserving)</code></pre></div>
-<p>And here's the kicker: <strong>it runs TWICE</strong>. The decompiled HBAO config at <code class="addr">0x14091f4e0</code> shows two parameter sets:</p>
+<p>Full 6-step pipeline:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Step 1: LinearizeDepth_p.hlsl        -- Hardware depth -&gt; linear Z
+Step 2: DeinterleaveDepth_p.hlsl     -- Split into 4x4 interleaved layers
+Step 3: ReconstructNormal_p.hlsl     -- Normals from depth derivatives
+Step 4: CoarseAO_p.hlsl             -- Main AO at quarter resolution
+Step 5: ReinterleaveAO_p.hlsl       -- Recombine layers
+Step 6: BlurX_p.hlsl + BlurY_p.hlsl -- Bilateral blur</code></pre></div>
+<p><strong>It runs TWICE.</strong> Two parameter sets from the decompiled config at <code class="addr">0x14091f4e0</code>:</p>
 <ul>
-  <li><code>NvHBAO.*</code> -- Small-scale pass (contact shadows, fine detail)</li>
-  <li><code>NvHBAO_BigScale.*</code> -- Big-scale pass (room-scale ambient occlusion)</li>
+  <li><code>NvHBAO.*</code> -- Small-scale (contact shadows, fine detail)</li>
+  <li><code>NvHBAO_BigScale.*</code> -- Big-scale (room-scale ambient occlusion)</li>
 </ul>
-<p>The results are combined (multiplied) for the final AO term. Each pass has its own radius, bias, and power exponent settings.</p>
-<p>There's also a fallback: <code>UseHomeMadeHBAO</code> (at offset 0x04) switches to Nadeo's custom AO when NVIDIA HBAO+ isn't available.</p>
-<p>(Source: doc 11, Section 6; decompiled <code>NSysCfgVision_SSSAmbOcc_HBAO_14091f4e0.c</code>)</p>
-<h3 id="screen-space-reflections"><a class="anchor" href="#screen-space-reflections">#</a>Screen-Space Reflections</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SSReflect_Deferred_p.hlsl            -- Ray march in screen space using depth
-SSReflect_Deferred_LastFrames_p.hlsl  -- Fill gaps with temporal reprojection
-SSReflect_Forward_p.hlsl              -- Forward path variant
-SSReflect_UpSample_p.hlsl            -- Half-res SSR upsampled to full res
-
-Pipeline: SSLReflects -&gt; SSLReflects_GlobalCube -&gt; SSLReflects_Add
-                                        ^
-                                        |
-                              Fallback for ray-march misses</code></pre></div>
-<p>SSR traces rays in screen space and falls back to a global cubemap when the ray leaves the screen.</p>
-<p>(Source: doc 11, Section 4 Phase 6; doc 32, Section 8.5)</p>
-<h3 id="which-post-effects-are-essential-and-which-are-luxury"><a class="anchor" href="#which-post-effects-are-essential-and-which-are-luxury">#</a>"Which Post-Effects Are Essential and Which Are Luxury?"</h3>
-<p>My ranking for a browser racing game:</p>
-<p><strong>ESSENTIAL</strong> (the game looks wrong without them):</p>
-<ul>
-  <li>Tone mapping (HDR -> LDR, auto-exposure)</li>
-  <li>Global fog (hides draw distance, adds atmosphere)</li>
-  <li>Bloom (defines the bright, clean racing game aesthetic)</li>
-  <li>Anti-aliasing (FXAA minimum, TAA ideal)</li>
-  <li>Basic color adjustment</li>
-</ul>
-<p><strong>NICE-TO-HAVE</strong> (noticeable quality upgrade):</p>
-<ul>
-  <li>SSAO (adds depth perception and grounding)</li>
-  <li>SSR (wet road reflections are iconic)</li>
-  <li>Color grading (mood/atmosphere)</li>
-  <li>Lens dirt (subtle but atmospheric)</li>
-</ul>
-<p><strong>LUXURY</strong> (cut first for performance):</p>
-<ul>
-  <li>Volumetric fog (expensive compute, most maps don't need it)</li>
-  <li>Depth of field (only visible in replays)</li>
-  <li>Motion blur (player preference, many disable it)</li>
-  <li>Subsurface scattering (barely visible at racing speed)</li>
-  <li>Lens flares</li>
-  <li>Anamorphic bloom streaks</li>
-</ul>
+<p>Results are multiplied for the final AO term. Fallback: <code>UseHomeMadeHBAO</code> switches to Nadeo's custom AO. (Source: doc 11, Section 6; <code>NSysCfgVision_SSSAmbOcc_HBAO_14091f4e0.c</code>)</p>
 <hr>
-<h2 id="chapter-6-performance"><a class="anchor" href="#chapter-6-performance">#</a>Chapter 6: Performance</h2>
-<h3 id="1667ms-frame-budget-how-is-it-split"><a class="anchor" href="#1667ms-frame-budget-how-is-it-split">#</a>16.67ms Frame Budget -- How Is It Split?</h3>
-<p>At 60 FPS, each frame must complete in 16.67ms. Based on the pipeline structure:</p>
+<h2 id="performance"><a class="anchor" href="#performance">#</a>Performance</h2>
+<p>This chapter covers frame budget, GPU culling, and LOD. You will understand how TM2020 fits a dense scene into 16.67ms.</p>
+<h3 id="1667ms-frame-budget"><a class="anchor" href="#1667ms-frame-budget">#</a>16.67ms Frame Budget</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ESTIMATED FRAME BUDGET (16.67ms at 60 FPS):
 ============================================
 CPU Phase (overlapped):
@@ -980,154 +797,65 @@ GPU Phase:
   Particles                            ~1.0-1.7 ms (budgeted!)
                                        -----------
   GPU total:                           ~10-16 ms</code></pre></div>
-<p>The particle system has a HARD budget: <code>ParticleMaxGpuLoadMs</code> at offset <code>0xB4</code> in <code>CSystemConfigDisplay</code>, default 1.7ms. The system dynamically reduces particle count to stay within budget.</p>
-<p>(Source: doc 11, Section 12 "GPU Load Management"; decompiled <code>CSystemConfigDisplay_140936810.c</code>)</p>
-<h3 id="gpu-frustum-culling-via-compute-shaders"><a class="anchor" href="#gpu-frustum-culling-via-compute-shaders">#</a>GPU Frustum Culling via Compute Shaders</h3>
-<p>The <code>DipCulling</code> pass runs a compute shader for GPU-side frustum culling + LOD selection:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/Instances_Cull_SetLOD_c.hlsl     -- Frustum test + LOD level per instance
+<p>The particle system has a HARD budget: <code>ParticleMaxGpuLoadMs</code> at offset <code>0xB4</code>, default 1.7ms. The system dynamically reduces particle count to stay within budget. (Source: doc 11, Section 12; decompiled <code>CSystemConfigDisplay_140936810.c</code>)</p>
+<h3 id="gpu-frustum-culling"><a class="anchor" href="#gpu-frustum-culling">#</a>GPU Frustum Culling</h3>
+<p><code>DipCulling</code> runs compute shaders for GPU-side frustum culling + LOD selection:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Engines/Instances_Cull_SetLOD_c.hlsl     -- Frustum test + LOD per instance
 Engines/Instances_Merge_c.hlsl           -- Merge surviving instance lists
-Engines/IndexedInst_SetDrawArgs_LOD_SGs_c.hlsl -- Write DrawIndexedInstancedIndirect args</code></pre></div>
-<p>This is a fully indirect rendering pipeline. The compute shader writes draw arguments directly -- NO CPU readback needed. The GPU decides what to draw and at what LOD. This is critical for scenes with thousands of block instances.</p>
-<p>There's also <strong>Forward+ tile culling</strong>: <code>Engines/ForwardTileCull_c.hlsl</code> divides the screen into tiles and assigns lights per tile for the forward transparent pass.</p>
-<p>(Source: doc 11, Section 14; doc 32, Section 2.2 "Culling and Instancing")</p>
-<h3 id="lod-system-with-impostor-fallback"><a class="anchor" href="#lod-system-with-impostor-fallback">#</a>LOD System with Impostor Fallback</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>LOD PIPELINE:
-
-Close      Medium      Far          Very Far
-[Full Mesh] -&gt; [LOD 1] -&gt; [LOD 2] -&gt; [Impostor Billboard]
-                                           |
-                                           v
-                               DeferredOutput_ImpostorConvert_c.hlsl
-                               (compute: render 3D -&gt; 2D billboard texture)</code></pre></div>
-<ul>
-  <li><code>GeomLodScaleZ</code> (offset <code>0xEC</code> in <code>CSystemConfigDisplay</code>) controls LOD transition distances. Default = 1.0. Higher = more aggressive (objects simplify closer). Lower = objects stay detailed longer.</li>
-  <li>Tree impostors use <code>SCBufferDrawV_TreeImpostor</code> for billboard orientation.</li>
-  <li>Impostor conversion is done by a compute shader that captures the 3D object's appearance from the current viewpoint.</li>
-</ul>
-<p>(Source: doc 11, Section 14; doc 19, Section 8; decompiled <code>CSystemConfigDisplay_140936810.c</code>)</p>
-<h3 id="32m-block-grid-for-spatial-organization"><a class="anchor" href="#32m-block-grid-for-spatial-organization">#</a>32m Block Grid for Spatial Organization</h3>
-<p>The world is divided into a grid of <strong>32-meter blocks</strong>. Evidence: <code>Math::Ceil(distance / 32.0f)</code> from the Openplanet <code>Finetuner</code> plugin.</p>
-<p>Culling operates at this granularity:</p>
-<ul>
-  <li><code>m_ZClipNbBlock</code> (offset <code>0xE4</code>) controls how many blocks are visible</li>
-  <li><code>m_ZClip</code> (offset <code>0xDC</code>) and <code>m_ZClipAuto</code> (offset <code>0xE0</code>) control the far clip distance</li>
-  <li>TMF had a 50,000m far clip; TM2020 is likely similar</li>
-</ul>
-<p>(Source: doc 19, Section 8; doc 11, Section 14)</p>
-<h3 id="texture-compression-bcndds"><a class="anchor" href="#texture-compression-bcndds">#</a>Texture Compression (BCn/DDS)</h3>
-<p>TM2020 uses standard BC (Block Compression) texture formats:</p>
-<ul>
-  <li><code>BC1</code> (DXT1) -- RGB, 4:1 compression, for simple textures</li>
-  <li><code>BC3</code> (DXT5) -- RGBA, 4:1 compression, for textures with alpha</li>
-  <li><code>BC7</code> -- RGBA, 4:1 compression, highest quality</li>
-  <li>Encoding shaders: <code>Encode_BC4_p/v</code>, <code>Encode_BC5_p/v</code></li>
-</ul>
-<p>WebGPU supports BCn via <code>texture-compression-bc</code> feature (optional but widely available on desktop).</p>
-<p>(Source: doc 11, Section 15; doc 32, Section 2.2)</p>
-<h3 id="can-this-run-on-a-phone-browser-what-would-i-cut"><a class="anchor" href="#can-this-run-on-a-phone-browser-what-would-i-cut">#</a>"Can This Run on a Phone Browser? What Would I Cut?"</h3>
-<p>Honestly? The full pipeline -- absolutely not. Here's what I'd cut for a mobile browser:</p>
+Engines/IndexedInst_SetDrawArgs_LOD_SGs_c.hlsl -- Write indirect draw args</code></pre></div>
+<p>Fully indirect rendering. The GPU decides what to draw and at what LOD. No CPU readback. Critical for thousands of block instances.</p>
+<p>Forward+ tile culling (<code>Engines/ForwardTileCull_c.hlsl</code>) divides the screen into tiles for the transparent pass. (Source: doc 11, Section 14; doc 32, Section 2.2)</p>
+<h3 id="mobile-browser-what-would-i-cut"><a class="anchor" href="#mobile-browser-what-would-i-cut">#</a>Mobile Browser -- What Would I Cut?</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>MOBILE BROWSER BUDGET (targeting 30 FPS on mid-range phone):
 ============================================================
 KEEP:
   - Forward rendering (NO deferred -- mobile GPUs hate MRT bandwidth)
-  - 1 directional light (sun) + hemisphere ambient
-  - 1 shadow cascade (512x512 resolution)
-  - FXAA (cheap)
-  - Simple fog (analytical height formula, not ray-marched)
-  - Albedo textures only (skip specular/normal maps)
-  - Resolution: 720p or lower with render scaling
+  - 1 directional light + hemisphere ambient
+  - 1 shadow cascade (512x512)
+  - FXAA
+  - Simple fog (analytical, not ray-marched)
+  - Albedo textures only
+  - 720p or lower with render scaling
 
 CUT:
-  - Entire deferred pipeline (switch to forward)
+  - Entire deferred pipeline
   - All 3 extra normal buffers
   - HBAO+ (replace with baked AO in vertex color)
-  - SSR
-  - Bloom (or very simplified 2-level bloom)
-  - TAA (use FXAA only)
-  - Volumetric fog
-  - Particles (minimal billboard particles only)
+  - SSR, bloom, TAA, volumetric fog, shadow cache
   - GPU culling compute shaders (do CPU-side frustum cull)
-  - Shadow cache
   - Lightmaps (bake into vertex color)
 
-TARGET G-BUFFER: NONE (forward renderer)
-  - 1 color RT (rgba8unorm) = 4 bytes/pixel
-  - 1 depth RT (depth24plus) = 4 bytes/pixel
-  = 8 bytes/pixel at 720p = ~7 MB total RT memory
-  vs 148 MB for the full deferred pipeline at 1080p
-
-That&#x27;s a 20x reduction in render target memory alone.</code></pre></div>
-<p>Doc 03 calls this "Tier 0: Absolute Minimum" -- forward rendering with 1 light, no compute, no MRT. Expected to run at 60 FPS on Intel UHD 620 class. Draw call budget: ~500.</p>
-<p>(Source: doc 03, Section 1 "Tier 0"; doc 11, Section 15 "Safe Mode Configuration")</p>
+TARGET: NONE (forward renderer)
+  - 1 color RT + 1 depth RT = 8 bytes/pixel at 720p = ~7 MB
+  vs 148 MB for full deferred at 1080p. 20x reduction.</code></pre></div>
+<p>(Source: doc 03, Section 1 "Tier 0")</p>
 <hr>
-<h2 id="chapter-7-my-rendering-plan"><a class="anchor" href="#chapter-7-my-rendering-plan">#</a>Chapter 7: My Rendering Plan</h2>
-<h3 id="what-id-build-first"><a class="anchor" href="#what-id-build-first">#</a>What I'd Build First</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>BUILD ORDER:
-============
-
-Phase 1: Forward Renderer (Tier 0)
-  - Single-pass forward shading
-  - 1 directional light + ambient
-  - Albedo textures only
-  - Depth buffer
-  - No post-processing
+<h2 id="my-rendering-plan"><a class="anchor" href="#my-rendering-plan">#</a>My Rendering Plan</h2>
+<p>This chapter covers my phased build plan and WebGPU feature requirements. You will understand the path from forward Tier 0 to full deferred Tier 3.</p>
+<h3 id="build-order"><a class="anchor" href="#build-order">#</a>Build Order</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Phase 1: Forward Renderer (Tier 0)
+  - Single-pass forward shading, 1 light + ambient
+  - Albedo textures only, depth buffer, no post-processing
   - Get blocks rendering and driveable
 
 Phase 2: Deferred Upgrade (Tier 1)
   - 4-MRT G-buffer (albedo, specular, normal, mask)
   - Deferred ambient + 1 directional light
-  - 2-cascade PSSM shadows
-  - FXAA
-  - Simple tone mapping
-  - Lightmap sampling (flat, not H-basis)
+  - 2-cascade PSSM, FXAA, simple tone mapping, flat lightmap
 
 Phase 3: Full Quality (Tier 2)
-  - GPU frustum culling (compute)
-  - 4-cascade PSSM
-  - SSAO (simplified: SAO not HBAO+)
-  - TAA with motion vectors
-  - Bloom (4-level chain)
-  - Global fog
-  - Deferred decals
-  - GPU particles
+  - GPU frustum culling (compute), 4-cascade PSSM
+  - SSAO, TAA with motion vectors, bloom, global fog
+  - Deferred decals, GPU particles
 
 Phase 4: Ultra (Tier 3, stretch goal)
-  - Dual-pass AO
-  - Volumetric fog
-  - SSR
-  - Water reflections + refraction
-  - DoF, motion blur, lens effects</code></pre></div>
-<h3 id="webgpu-feature-requirements"><a class="anchor" href="#webgpu-feature-requirements">#</a>WebGPU Feature Requirements</h3>
-<p>From doc 03, Section 10:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">// Tier 1 (basic deferred):
-const requiredFeatures = [
-    &#x27;float32-filterable&#x27;,           // Shadow map comparison sampling
-];
-const requiredLimits = {
-    maxColorAttachments: 4,         // G-buffer MRT
-    maxBindGroups: 4,               // Frame/Pass/Shader/Draw
-};
-
-// Tier 2 (compute-enhanced):
-requiredFeatures.push(
-    &#x27;rg11b10ufloat-renderable&#x27;,    // Compact HDR render targets
-);
-requiredLimits.maxStorageBufferBindingSize = 134217728;  // 128MB for particles
-requiredLimits.maxTextureDimension2D = 8192;             // Shadow maps
-
-// Tier 3 (ultra):
-requiredFeatures.push(
-    &#x27;texture-compression-bc&#x27;,       // BCn/DDS texture support (optional)
-);
-requiredLimits.maxTextureDimension3D = 256;              // Volumetric fog grid</code></pre></div>
-<p><strong>Browser compatibility concern</strong>: <code>float32-filterable</code> is needed even for basic deferred (shadow map comparison sampling). Without it, I'd need to do manual PCF in the shader instead of hardware shadow comparison. That's doable but slower.</p>
-<p>(Source: doc 03, Section 10)</p>
+  - Dual-pass AO, volumetric fog, SSR
+  - Water reflections, DoF, motion blur, lens effects</code></pre></div>
 <h3 id="4-tier-quality-system"><a class="anchor" href="#4-tier-quality-system">#</a>4-Tier Quality System</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Tier</th>
-  <th style="text-align:left">Name</th>
   <th style="text-align:left">Rendering</th>
   <th style="text-align:left">GPU Class</th>
   <th style="text-align:left">Draw Calls</th>
@@ -1137,7 +865,6 @@ requiredLimits.maxTextureDimension3D = 256;              // Volumetric fog grid<
 <tbody>
 <tr>
   <td style="text-align:left">0</td>
-  <td style="text-align:left">Minimum</td>
   <td style="text-align:left">Forward</td>
   <td style="text-align:left">Intel UHD 620</td>
   <td style="text-align:left">~500</td>
@@ -1145,7 +872,6 @@ requiredLimits.maxTextureDimension3D = 256;              // Volumetric fog grid<
 </tr>
 <tr>
   <td style="text-align:left">1</td>
-  <td style="text-align:left">Basic Deferred</td>
   <td style="text-align:left">Deferred 4 MRT</td>
   <td style="text-align:left">GTX 1060 / M1</td>
   <td style="text-align:left">~2000</td>
@@ -1153,7 +879,6 @@ requiredLimits.maxTextureDimension3D = 256;              // Volumetric fog grid<
 </tr>
 <tr>
   <td style="text-align:left">2</td>
-  <td style="text-align:left">Full Quality</td>
   <td style="text-align:left">Deferred + Compute</td>
   <td style="text-align:left">RTX 2060 / M1 Pro</td>
   <td style="text-align:left">~5000 (indirect)</td>
@@ -1161,7 +886,6 @@ requiredLimits.maxTextureDimension3D = 256;              // Volumetric fog grid<
 </tr>
 <tr>
   <td style="text-align:left">3</td>
-  <td style="text-align:left">Ultra</td>
   <td style="text-align:left">Everything</td>
   <td style="text-align:left">RTX 3070 / M2 Pro</td>
   <td style="text-align:left">~5000+</td>
@@ -1170,102 +894,97 @@ requiredLimits.maxTextureDimension3D = 256;              // Volumetric fog grid<
 </tbody>
 </table></div>
 <p>(Source: doc 03, Section 1)</p>
-<h3 id="my-top-10-rendering-lessons-from-studying-tm2020"><a class="anchor" href="#my-top-10-rendering-lessons-from-studying-tm2020">#</a>My Top 10 Rendering Lessons from Studying TM2020</h3>
+<h3 id="top-10-rendering-lessons"><a class="anchor" href="#top-10-rendering-lessons">#</a>Top 10 Rendering Lessons</h3>
 <ol>
-  <li><strong>Deferred rendering is not the whole frame.</strong> The 19-pass deferred pipeline is just one part. Shadow prep, scene prep, forward transparency, particles, and post-processing each take significant time. The G-buffer fill is maybe 20% of GPU time.</li>
+  <li><strong>Deferred rendering is not the whole frame.</strong> The 19-pass pipeline is maybe 20% of GPU time.</li>
+  <li><strong>Three normal buffers serve different consumers.</strong> But reconstructing face normals from depth saves a full RT.</li>
+  <li><strong>Specular/glossiness PBR is not dead.</strong> It makes sense for metallic racing surfaces.</li>
+  <li><strong>Uber-shaders solve variant explosion.</strong> 1,112 compiled shaders collapse to ~38 modules.</li>
+  <li><strong>GPU culling via compute is essential for dense scenes.</strong> Indirect draw avoids CPU readback.</li>
+  <li><strong>HBAO+ runs twice (small + big scale).</strong> Contact shadows and room-scale occlusion are perceptually different.</li>
+  <li><strong>Particle budgets are enforced in GPU milliseconds.</strong> <code>ParticleMaxGpuLoadMs = 1.7ms</code>.</li>
+  <li><strong>Post-processing order matters.</strong> Fog before DoF, AA after tone mapping, color grading last.</li>
+  <li><strong>Lightmaps are H-basis, not flat.</strong> Directional baked data enables per-pixel lighting from static sources.</li>
+  <li><strong>Triple buffering + immediate present.</strong> Minimizes input latency for competitive racing.</li>
 </ol>
+<h3 id="open-questions"><a class="anchor" href="#open-questions">#</a>Open Questions</h3>
 <ol>
-  <li><strong>Three normal buffers serve different consumers.</strong> Pixel normals for lighting, face normals for AO and edge detection, vertex normals for blur and SSS. Each consumer needs different normal quality. But for a smaller project, reconstructing face normals from depth saves a full RT.</li>
+  <li>Exact PSSM cascade split distances?</li>
+  <li>What is PreShade actually storing?</li>
+  <li>TAA jitter pattern -- Halton(2,3)? 8-sample rotated grid?</li>
+  <li>Exact filmic tone curve parameters?</li>
+  <li>Is normal encoding definitely octahedral?</li>
+  <li>What does <code>AlphaBlendSoap</code> render? (Best shader name ever.)</li>
+  <li>How does the <code>ShadowClipMap</code> system work?</li>
+  <li><code>CPlugMaterialFxFur</code> -- is fur rendering used anywhere in TM2020?</li>
 </ol>
-<ol>
-  <li><strong>Specular/glossiness PBR is not dead.</strong> TM2020 uses it and it makes sense for metallic racing game surfaces. Don't assume metallic/roughness is always the right choice.</li>
-</ol>
-<ol>
-  <li><strong>Uber-shaders are the answer to variant explosion.</strong> 1,112 compiled shaders collapse to ~38 uber-shader modules. WebGPU's <code>override</code> constants can replicate this at pipeline compile time without runtime branching.</li>
-</ol>
-<ol>
-  <li><strong>GPU culling via compute is essential for dense scenes.</strong> The <code>DipCulling</code> pass uses indirect draw to avoid CPU readback. This is how you handle thousands of block instances without the CPU becoming a bottleneck.</li>
-</ol>
-<ol>
-  <li><strong>HBAO+ runs twice (small + big scale) and it matters.</strong> Contact shadows (small radius) and room-scale occlusion (big radius) are perceptually different. The dual-pass approach gives both without compromising either.</li>
-</ol>
-<ol>
-  <li><strong>Particle budgets are enforced in GPU milliseconds.</strong> <code>ParticleMaxGpuLoadMs = 1.7ms</code> -- the system dynamically reduces particle count. This is how you prevent particles from tanking your frame rate. I need to implement this.</li>
-</ol>
-<ol>
-  <li><strong>The post-processing order matters.</strong> Fog before DoF (fog is part of the scene). Tone mapping before bloom (or after? -- doc 11 notes this needs investigation). AA after tone mapping. Color grading last. Getting this wrong creates subtle but visible artifacts.</li>
-</ol>
-<ol>
-  <li><strong>Lightmaps are H-basis, not flat.</strong> This means directional information is baked, enabling per-pixel lighting from static light sources. Just storing flat irradiance loses significant visual quality for bumpy surfaces.</li>
-</ol>
-<ol>
-  <li><strong>Triple buffering + immediate present (no VSync).</strong> The swap chain uses 3 back buffers with <code>VK_PRESENT_MODE_IMMEDIATE_KHR</code>. This means tearing is possible but input latency is minimized -- critical for a competitive racing game.</li>
-</ol>
-<h3 id="open-questions-i-still-have"><a class="anchor" href="#open-questions-i-still-have">#</a>Open Questions I Still Have</h3>
-<ol>
-  <li>What are the exact PSSM cascade split distances? Logarithmic? Practical split scheme?</li>
-  <li>What is the <code>PreShade</code> buffer actually storing?</li>
-  <li>What TAA jitter pattern does TM2020 use -- Halton(2,3)? 8-sample rotated grid?</li>
-  <li>What are the exact filmic tone curve parameters (<code>NFilmicTone_PowerSegments</code>)?</li>
-  <li>Is the normal encoding definitely octahedral, or could it be spheremap transform?</li>
-  <li>What exactly does <code>AlphaBlendSoap</code> render? (Best shader name ever.)</li>
-  <li>How does the <code>ShadowClipMap</code> system work for large-scale terrain shadows?</li>
-  <li>The engine has <code>CPlugMaterialFxFur</code> -- is fur rendering actually used anywhere in TM2020?</li>
-</ol>
-<p>(Sources for open questions: doc 11, Section "Unknowns and Future Investigation")</p>
 <hr>
-<p><em>These notes are based on reverse-engineered evidence from the TM2020 binary. All confidence levels (<span class="badge badge-verified">VERIFIED</span>, <span class="badge badge-plausible">PLAUSIBLE</span>, <span class="badge badge-speculative">SPECULATIVE</span>) are inherited from the source documents. Code citations reference decompiled files in <code>decompiled/rendering/</code> and specific addresses in <code>Trackmania.exe</code>.</em></p>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="../re/11-rendering-deep-dive.md">Rendering Deep Dive</a></li>
+  <li><a href="../re/05-rendering-graphics.md">Rendering & Graphics Pipeline</a></li>
+  <li><a href="../re/15-ghidra-research-findings.md">Ghidra Research Findings</a></li>
+  <li><a href="../re/32-shader-catalog.md">Shader Catalog</a> (if exists)</li>
+  <li><a href="../re/03-webgpu-renderer-design.md">WebGPU Renderer Design</a> (if exists)</li>
+  <li><a href="../re/19-openplanet-intelligence.md">Openplanet Intelligence</a></li>
+  <li><a href="../re/26-real-file-analysis.md">Real File Analysis</a></li>
+</ul>
+<details><summary>Document metadata</summary>
+<p><strong>Author</strong>: Maya Chen, PhD Student (Real-Time Rendering) <strong>Date</strong>: 2026-03-27 <strong>Goal</strong>: Understand exactly how TM2020 achieves its visual quality at 60+ FPS, and plan a WebGPU recreation.</p>
+<p><strong>Sources studied</strong>:</p>
+<ul>
+  <li>doc 11: Rendering Deep Dive (1823 lines) -- primary reference</li>
+  <li>doc 32: Shader Catalog (1410 lines, 1112 shaders)</li>
+  <li>doc 15: Ghidra Research Findings (deferred pipeline, TXAA)</li>
+  <li>doc 05: Rendering & Graphics Pipeline overview</li>
+  <li>doc 19: Openplanet Intelligence (display config, rendering internals)</li>
+  <li>doc 03: WebGPU Renderer Design (4-tier architecture)</li>
+  <li>5 decompiled C files in <code>decompiled/rendering/</code></li>
+</ul>
+</details>
 
                         <nav class="prev-next"><a class="prev" href="seminar-alex.html">&larr; Alex: Physics Notes</a><a class="next" href="seminar-jordan.html">Jordan: Systems Notes &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#chapter-1-the-deferred-pipeline">Chapter 1: The Deferred Pipeline</a></li>
+<li class=""><a href="#the-deferred-pipeline">The Deferred Pipeline</a></li>
   <li class="toc-h3"><a href="#what-is-deferred-rendering">What IS Deferred Rendering?</a></li>
-  <li class="toc-h3"><a href="#the-19-deferred-passes-what-does-each-one-do">The 19 Deferred Passes -- What Does Each One DO?</a></li>
-  <li class="toc-h3"><a href="#the-full-frame-beyond-the-19-deferred-passes">The Full Frame -- Beyond the 19 Deferred Passes</a></li>
-  <li class="toc-h3"><a href="#data-flow-what-goes-into-the-g-buffer-what-comes-out">Data Flow: What Goes Into the G-Buffer, What Comes Out</a></li>
-  <li class="toc-h3"><a href="#i-was-surprised-that-there-are-three-normal-buffers-why">&quot;I Was Surprised That There Are THREE Normal Buffers -- Why?&quot;</a></li>
-<li class=""><a href="#chapter-2-g-buffer-anatomy">Chapter 2: G-Buffer Anatomy</a></li>
+  <li class="toc-h3"><a href="#the-19-deferred-passes">The 19 Deferred Passes</a></li>
+  <li class="toc-h3"><a href="#the-full-frame-beyond-the-19-passes">The Full Frame -- Beyond the 19 Passes</a></li>
+  <li class="toc-h3"><a href="#g-buffer-data-flow">G-Buffer Data Flow</a></li>
+  <li class="toc-h3"><a href="#three-normal-buffers-why">Three Normal Buffers -- Why?</a></li>
+<li class=""><a href="#g-buffer-anatomy">G-Buffer Anatomy</a></li>
   <li class="toc-h3"><a href="#9-named-render-targets">9 Named Render Targets</a></li>
   <li class="toc-h3"><a href="#format-choices-from-doc-03">Format Choices (from doc 03)</a></li>
   <li class="toc-h3"><a href="#memory-cost-at-different-resolutions">Memory Cost at Different Resolutions</a></li>
-  <li class="toc-h3"><a href="#preshade-vs-diffuseambient-vs-mdiffuse-whats-the-difference">&quot;PreShade&quot; vs &quot;DiffuseAmbient&quot; vs &quot;MDiffuse&quot; -- What&#x27;s the Difference?</a></li>
-  <li class="toc-h3"><a href="#how-does-this-compare-to-other-engines">How Does This Compare to Other Engines?</a></li>
-<li class=""><a href="#chapter-3-shaders">Chapter 3: Shaders</a></li>
-  <li class="toc-h3"><a href="#1112-shaders-collapse-to-38-uber-shaders-how">1,112 Shaders Collapse to ~38 Uber-Shaders -- How?</a></li>
-  <li class="toc-h3"><a href="#the-tech3-naming-convention-decode-it">The Tech3 Naming Convention -- Decode It!</a></li>
-  <li class="toc-h3"><a href="#material-shader-variants-how-does-one-block-material-become-5-shaders">Material Shader Variants -- How Does One Block Material Become 5+ Shaders?</a></li>
-  <li class="toc-h3"><a href="#what-the-core-deferred-write-shader-does-conceptually">What the CORE Deferred Write Shader Does (Conceptually)</a></li>
-  <li class="toc-h3"><a href="#whats-the-minimum-set-of-shaders-for-a-playable-game">&quot;What&#x27;s the Minimum Set of Shaders for a Playable Game?&quot;</a></li>
-<li class=""><a href="#chapter-4-lighting-shadows">Chapter 4: Lighting &amp; Shadows</a></li>
+  <li class="toc-h3"><a href="#preshade-vs-diffuseambient-vs-mdiffuse">PreShade vs DiffuseAmbient vs MDiffuse</a></li>
+  <li class="toc-h3"><a href="#comparison-to-other-engines">Comparison to Other Engines</a></li>
+<li class=""><a href="#shaders">Shaders</a></li>
+  <li class="toc-h3"><a href="#1112-shaders-collapse-to-38-uber-shaders">1,112 Shaders Collapse to ~38 Uber-Shaders</a></li>
+  <li class="toc-h3"><a href="#the-tech3-naming-convention">The Tech3 Naming Convention</a></li>
+  <li class="toc-h3"><a href="#minimum-shader-set-for-a-playable-game">Minimum Shader Set for a Playable Game</a></li>
+<li class=""><a href="#lighting-and-shadows">Lighting and Shadows</a></li>
   <li class="toc-h3"><a href="#pbr-model-specularglossiness-not-metallicroughness">PBR Model: Specular/Glossiness (NOT Metallic/Roughness!)</a></li>
-  <li class="toc-h3"><a href="#ggx-brdf-what-is-it-how-does-it-create-realistic-reflections">GGX BRDF -- What Is It? How Does It Create Realistic Reflections?</a></li>
+  <li class="toc-h3"><a href="#ggx-brdf">GGX BRDF</a></li>
   <li class="toc-h3"><a href="#pssm-shadow-cascades">PSSM Shadow Cascades</a></li>
   <li class="toc-h3"><a href="#lightmap-integration-baked-dynamic">Lightmap Integration: Baked + Dynamic</a></li>
-  <li class="toc-h3"><a href="#how-would-i-simplify-this-for-a-browser">&quot;How Would I Simplify This for a Browser?&quot;</a></li>
-<li class=""><a href="#chapter-5-post-processing">Chapter 5: Post-Processing</a></li>
-  <li class="toc-h3"><a href="#the-14-step-post-processing-chain-in-order">The 14-Step Post-Processing Chain (In Order)</a></li>
-  <li class="toc-h3"><a href="#txaa-how-does-temporal-aa-work">TXAA -- How Does Temporal AA Work?</a></li>
+<li class=""><a href="#post-processing">Post-Processing</a></li>
+  <li class="toc-h3"><a href="#the-14-step-chain">The 14-Step Chain</a></li>
+  <li class="toc-h3"><a href="#txaa-temporal-anti-aliasing">TXAA -- Temporal Anti-Aliasing</a></li>
   <li class="toc-h3"><a href="#bloom">Bloom</a></li>
   <li class="toc-h3"><a href="#tone-mapping">Tone Mapping</a></li>
   <li class="toc-h3"><a href="#hbao-ambient-occlusion">HBAO+ Ambient Occlusion</a></li>
-  <li class="toc-h3"><a href="#screen-space-reflections">Screen-Space Reflections</a></li>
-  <li class="toc-h3"><a href="#which-post-effects-are-essential-and-which-are-luxury">&quot;Which Post-Effects Are Essential and Which Are Luxury?&quot;</a></li>
-<li class=""><a href="#chapter-6-performance">Chapter 6: Performance</a></li>
-  <li class="toc-h3"><a href="#1667ms-frame-budget-how-is-it-split">16.67ms Frame Budget -- How Is It Split?</a></li>
-  <li class="toc-h3"><a href="#gpu-frustum-culling-via-compute-shaders">GPU Frustum Culling via Compute Shaders</a></li>
-  <li class="toc-h3"><a href="#lod-system-with-impostor-fallback">LOD System with Impostor Fallback</a></li>
-  <li class="toc-h3"><a href="#32m-block-grid-for-spatial-organization">32m Block Grid for Spatial Organization</a></li>
-  <li class="toc-h3"><a href="#texture-compression-bcndds">Texture Compression (BCn/DDS)</a></li>
-  <li class="toc-h3"><a href="#can-this-run-on-a-phone-browser-what-would-i-cut">&quot;Can This Run on a Phone Browser? What Would I Cut?&quot;</a></li>
-<li class=""><a href="#chapter-7-my-rendering-plan">Chapter 7: My Rendering Plan</a></li>
-  <li class="toc-h3"><a href="#what-id-build-first">What I&#x27;d Build First</a></li>
-  <li class="toc-h3"><a href="#webgpu-feature-requirements">WebGPU Feature Requirements</a></li>
+<li class=""><a href="#performance">Performance</a></li>
+  <li class="toc-h3"><a href="#1667ms-frame-budget">16.67ms Frame Budget</a></li>
+  <li class="toc-h3"><a href="#gpu-frustum-culling">GPU Frustum Culling</a></li>
+  <li class="toc-h3"><a href="#mobile-browser-what-would-i-cut">Mobile Browser -- What Would I Cut?</a></li>
+<li class=""><a href="#my-rendering-plan">My Rendering Plan</a></li>
+  <li class="toc-h3"><a href="#build-order">Build Order</a></li>
   <li class="toc-h3"><a href="#4-tier-quality-system">4-Tier Quality System</a></li>
-  <li class="toc-h3"><a href="#my-top-10-rendering-lessons-from-studying-tm2020">My Top 10 Rendering Lessons from Studying TM2020</a></li>
-  <li class="toc-h3"><a href="#open-questions-i-still-have">Open Questions I Still Have</a></li>
+  <li class="toc-h3"><a href="#top-10-rendering-lessons">Top 10 Rendering Lessons</a></li>
+  <li class="toc-h3"><a href="#open-questions">Open Questions</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

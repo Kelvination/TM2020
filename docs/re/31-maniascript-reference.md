@@ -1,89 +1,56 @@
-# ManiaScript Language Reference
+# ManiaScript language reference
 
-**Date**: 2026-03-27
-**Sources**: Ghidra RE (docs 12, 13, 15), decompiled `CScriptEngine__Run.c`, `class_hierarchy.json`, community documentation (ManiaScript Book, boss-bravo.fr, maniaplanet/documentation, maniaplanet.github.io/maniascript-reference)
-**Confidence**: VERIFIED (binary tokens) + COMMUNITY-CONFIRMED (syntax/semantics)
+## ManiaScript in 30 seconds
 
----
+ManiaScript is Trackmania's built-in scripting language. It controls game modes, UI pages, editor plugins, and server logic. The language is statically typed, uses cooperative multitasking (`yield`/`sleep`/`wait`), and gives you access to engine objects but not the ability to define your own classes. Scripts run on the main thread, synchronized to each frame.
 
-## Table of Contents
+```maniascript
+#RequireContext CMlScript
 
-1. [Language Overview](#1-language-overview)
-2. [Data Types (12 Primitive Types)](#2-data-types-12-primitive-types)
-3. [Variable Declarations](#3-variable-declarations)
-4. [Operators](#4-operators)
-5. [Control Flow](#5-control-flow)
-6. [Functions](#6-functions)
-7. [Collections (Arrays and Maps)](#7-collections-arrays-and-maps)
-8. [Collection Operations (17 Dot Methods)](#8-collection-operations-17-dot-methods)
-9. [Coroutines and Cooperative Multitasking](#9-coroutines-and-cooperative-multitasking)
-10. [Preprocessor Directives (7)](#10-preprocessor-directives-7)
-11. [Script Contexts](#11-script-contexts)
-12. [Classes and Object Model](#12-classes-and-object-model)
-13. [Events](#13-events)
-14. [Network Variables](#14-network-variables)
-15. [Persistent and Cloud Storage](#15-persistent-and-cloud-storage)
-16. [Serialization (JSON)](#16-serialization-json)
-17. [Debug and Tuning](#17-debug-and-tuning)
-18. [Built-in API: Script Managers](#18-built-in-api-script-managers)
-19. [Game Mode Scripting](#19-game-mode-scripting)
-20. [ManiaLink Scripting](#20-manialink-scripting)
-21. [Map Editor Plugin Scripting](#21-map-editor-plugin-scripting)
-22. [Standard Libraries](#22-standard-libraries)
-23. [Lexer and Token Types](#23-lexer-and-token-types)
-24. [Script Engine Internals (from RE)](#24-script-engine-internals-from-re)
-25. [Browser Recreation: Interpreter/Transpiler Approach](#25-browser-recreation-interpretertranspiler-approach)
+main() {
+    declare Integer Counter = 0;
+    while (True) {
+        foreach (Event in PendingEvents) {
+            if (Event.Type == CMlScriptEvent::Type::MouseClick) {
+                Counter += 1;
+                log("Clicks: " ^ Counter);
+            }
+        }
+        yield;  // return control to the engine, resume next frame
+    }
+}
+```
 
 ---
 
-## 1. Language Overview
+# Language basics
 
-ManiaScript is the embedded scripting language in the ManiaPlanet/Trackmania engine, created by Nadeo. It is interpreted by `CScriptEngine`, a singleton engine class confirmed at binary address `0x140874270` (the `CScriptEngine::Run` entry point).
+## Data types
 
-**Key characteristics**:
-- **Statically typed** with type inference on declarations
-- **Cooperative multitasking** via `yield`, `sleep`, `wait`, `meanwhile`
-- **No user-defined classes** -- scripts work exclusively with engine-provided class instances
-- **Pointer/alias semantics** for object references (`=` for stable ID binding, `<=>` for dynamic alias)
-- **Main-thread execution only** -- all script runs on the main thread, even when triggered from `CGameManialinkBrowser::UpdateAsync` on a worker thread
-- **Interpreted** -- bytecode interpreter at `FUN_1408d1ea0`, invoked by `CScriptEngine::Run`
-- **Frame-synchronized** -- scripts yield control each frame via `yield;` and are resumed by the engine
+ManiaScript has 12 primitive types. All are confirmed via `MANIASCRIPT_TYPE_*` binary tokens in Trackmania.exe.
 
-**Language targets**:
-- Game mode rules (server-side)
-- ManiaLink UI pages (client-side)
-- Map editor plugins
-- MediaTracker scripted camera effects
-- Server plugins
+| Token (Binary) | ManiaScript Type | C++ Equivalent | Size | Literal Syntax |
+|----------------|-----------------|----------------|------|----------------|
+| `MANIASCRIPT_TYPE_VOID` | `Void` | void | 0 | -- (return type only) |
+| `MANIASCRIPT_TYPE_BOOLEAN` | `Boolean` | bool | 4 bytes (GBX convention) | `True`, `False` |
+| `MANIASCRIPT_TYPE_INTEGER` | `Integer` | int32_t | 4 bytes | `42`, `-7`, `0xFF` |
+| `MANIASCRIPT_TYPE_REAL` | `Real` | float | 4 bytes | `3.14`, `2.` (trailing dot required) |
+| `MANIASCRIPT_TYPE_TEXT` | `Text` | string | SSO string | `"hello"`, `"""multiline"""` |
+| `MANIASCRIPT_TYPE_VEC2` | `Vec2` | float[2] | 8 bytes | `<1.0, 2.0>` |
+| `MANIASCRIPT_TYPE_VEC3` | `Vec3` | float[3] | 12 bytes | `<1.0, 2.0, 3.0>` |
+| `MANIASCRIPT_TYPE_INT2` | `Int2` | int32_t[2] | 8 bytes | `<1, 2>` |
+| `MANIASCRIPT_TYPE_INT3` | `Int3` | int32_t[3] | 12 bytes | `<1, 2, 3>` |
+| `MANIASCRIPT_TYPE_ISO4` | `Iso4` | float[12] | 48 bytes | 3x3 rotation matrix + vec3 translation |
+| `MANIASCRIPT_TYPE_IDENT` | `Ident` | uint32_t (MwId) | 4 bytes | Interned resource identifier |
+| `MANIASCRIPT_TYPE_CLASS` | `Class` | pointer | 8 bytes | Reference to engine class instance |
 
----
-
-## 2. Data Types (12 Primitive Types)
-
-All 12 types confirmed via binary strings at `MANIASCRIPT_TYPE_*` tokens in the Trackmania.exe binary.
-
-| # | Token (Binary) | ManiaScript Type | C++ Equivalent | Size | Literal Syntax |
-|---|----------------|-----------------|----------------|------|----------------|
-| 1 | `MANIASCRIPT_TYPE_VOID` | `Void` | void | 0 | -- (return type only) |
-| 2 | `MANIASCRIPT_TYPE_BOOLEAN` | `Boolean` | bool | 4 bytes (GBX convention) | `True`, `False` |
-| 3 | `MANIASCRIPT_TYPE_INTEGER` | `Integer` | int32_t | 4 bytes | `42`, `-7`, `0xFF` |
-| 4 | `MANIASCRIPT_TYPE_REAL` | `Real` | float | 4 bytes | `3.14`, `2.` (trailing dot required) |
-| 5 | `MANIASCRIPT_TYPE_TEXT` | `Text` | string | SSO string | `"hello"`, `"""multiline"""` |
-| 6 | `MANIASCRIPT_TYPE_VEC2` | `Vec2` | float[2] | 8 bytes | `<1.0, 2.0>` |
-| 7 | `MANIASCRIPT_TYPE_VEC3` | `Vec3` | float[3] | 12 bytes | `<1.0, 2.0, 3.0>` |
-| 8 | `MANIASCRIPT_TYPE_INT2` | `Int2` | int32_t[2] | 8 bytes | `<1, 2>` |
-| 9 | `MANIASCRIPT_TYPE_INT3` | `Int3` | int32_t[3] | 12 bytes | `<1, 2, 3>` |
-| 10 | `MANIASCRIPT_TYPE_ISO4` | `Iso4` | float[12] | 48 bytes | 3x3 rotation matrix + vec3 translation |
-| 11 | `MANIASCRIPT_TYPE_IDENT` | `Ident` | uint32_t (MwId) | 4 bytes | Interned resource identifier |
-| 12 | `MANIASCRIPT_TYPE_CLASS` | `Class` | pointer | 8 bytes | Reference to engine class instance |
-
-### 2.1 Type Details
+### Type details
 
 **Boolean**: Always `True` or `False` (capitalized). Default value: `False`.
 
 **Integer**: Signed 32-bit. Default: `0`.
 
-**Real**: IEEE 754 single-precision float. Literals require a trailing dot if no decimal digits: `2.` not `2`. Default: `0.0`.
+**Real**: IEEE 754 single-precision float. Literals require a trailing dot when no decimal digits follow: `2.` not `2`. Default: `0.0`.
 
 **Text**: UTF-8 string. Default: `""`. Supports:
 - Escape sequences: `\n`, `\\`, `\"`
@@ -91,21 +58,21 @@ All 12 types confirmed via binary strings at `MANIASCRIPT_TYPE_*` tokens in the 
 - String interpolation in triple-quoted: `"""{{{expression}}}"""`
 - Concatenation operator: `^` (also auto-converts Integer, Real, Boolean to Text)
 
-**Vec2 / Vec3**: Floating-point vectors. Components accessed via `.X`, `.Y`, `.Z`.
+**Vec2 / Vec3**: Floating-point vectors. Access components via `.X`, `.Y`, `.Z`.
 
 **Int2 / Int3**: Integer vectors. Same component access as Vec2/Vec3.
 
-**Iso4**: 4x4 isometric transform (3x3 rotation + translation). Used for positions and orientations in 3D space.
+**Iso4**: 4x4 isometric transform (3x3 rotation + translation). Used for 3D positions and orientations.
 
-**Ident**: Interned identifier (MwId). Used for referencing resources like models, sounds, and images. `NullId` is the empty ident.
+**Ident**: Interned identifier (MwId). References resources like models, sounds, and images. `NullId` is the empty ident.
 
-**Class**: A reference (pointer) to an engine-provided object. Cannot be user-instantiated. Accessed through engine API properties.
+**Class**: A reference (pointer) to an engine-provided object. You cannot instantiate classes directly. Access them through engine API properties.
 
 ---
 
-## 3. Variable Declarations
+## Variable declarations
 
-### 3.1 Basic Declaration
+Variables are declared with `declare`, supporting explicit types and type inference.
 
 ```maniascript
 declare Integer MyVar;              // Explicit type, default value (0)
@@ -115,16 +82,16 @@ declare Text[] Names;               // Array of Text (requires explicit type)
 declare Text[Integer] Lookup;       // Associative array (map)
 ```
 
-### 3.2 Scope Rules
+### Scope rules
 
 - **Local variables**: Declared inside functions with `declare`. Block-scoped (curly brackets).
 - **Global variables**: Declared outside functions. Cannot use initial values; explicit type required.
 - Variables are immutable in type once declared.
 - Default values: `0` for Integer, `0.0` for Real, `False` for Boolean, `""` for Text, `NullId` for Ident.
 
-### 3.3 Extension Variables (Attached to Objects)
+### Extension variables
 
-Variables can be attached to engine objects using the `for` keyword:
+You can attach variables to engine objects using the `for` keyword:
 
 ```maniascript
 declare Integer CustomScore for Players[0];
@@ -133,18 +100,18 @@ declare Text Tag for LocalUser = "default";
 
 When reading an extension variable from an object that has not had it set, the default value is returned. The `= value` in the declaration sets the read-default, not an assignment.
 
-### 3.4 Aliases (`as`)
+### Aliases
 
-Extension variables can be given local aliases to avoid ambiguity:
+Extension variables can have local aliases to avoid ambiguity:
 
 ```maniascript
 declare Integer CustomScore for Players[0] as Score1;
 declare Integer CustomScore for Players[1] as Score2;
 ```
 
-### 3.5 Pointer vs. Alias Binding
+### Pointer vs. alias binding
 
-Two binding modes for object references:
+Two binding modes exist for object references:
 
 ```maniascript
 // Alias binding (dynamic) -- tracks array position
@@ -156,7 +123,7 @@ declare CPlayer StableRef = Players[0];
 // Tracks this specific player even if their array index changes
 ```
 
-### 3.6 Declaration Modifiers
+### Declaration modifiers
 
 | Modifier | Syntax | Purpose |
 |----------|--------|---------|
@@ -167,9 +134,9 @@ declare CPlayer StableRef = Players[0];
 
 ---
 
-## 4. Operators
+## Operators
 
-### 4.1 Arithmetic
+### Arithmetic
 
 | Operator | Types | Result | Notes |
 |----------|-------|--------|-------|
@@ -179,13 +146,13 @@ declare CPlayer StableRef = Players[0];
 | `/` | Integer, Real | Same type / Real if mixed | Division (integer division truncates) |
 | `%` | Integer | Integer | Modulo |
 
-### 4.2 String
+### String
 
 | Operator | Purpose | Example |
 |----------|---------|---------|
 | `^` | Concatenation (auto-converts types to Text) | `"Score: " ^ Score` |
 
-### 4.3 Comparison
+### Comparison
 
 | Operator | Valid Types | Notes |
 |----------|------------|-------|
@@ -196,7 +163,7 @@ declare CPlayer StableRef = Players[0];
 | `<=` | Integer, Real, Text | Less than or equal |
 | `>=` | Integer, Real, Text | Greater than or equal |
 
-### 4.4 Logical
+### Logical
 
 | Operator | Purpose |
 |----------|---------|
@@ -204,7 +171,7 @@ declare CPlayer StableRef = Players[0];
 | `&&` | Logical AND (short-circuit) |
 | `\|\|` | Logical OR (short-circuit) |
 
-### 4.5 Assignment
+### Assignment
 
 | Operator | Purpose |
 |----------|---------|
@@ -213,7 +180,7 @@ declare CPlayer StableRef = Players[0];
 | `+=`, `-=`, `*=`, `/=` | Compound assignment |
 | `^=` | String append |
 
-### 4.6 Vector Construction
+### Vector construction
 
 ```maniascript
 declare Vec3 Pos = <1.0, 2.0, 3.0>;
@@ -222,9 +189,9 @@ declare Int3 Coord = <5, 10, 15>;
 
 ---
 
-## 5. Control Flow
+## Control flow
 
-### 5.1 Conditional
+### Conditional
 
 ```maniascript
 if (Condition) {
@@ -236,7 +203,7 @@ if (Condition) {
 }
 ```
 
-### 5.2 While Loop
+### While loop
 
 ```maniascript
 while (Condition) {
@@ -244,7 +211,7 @@ while (Condition) {
 }
 ```
 
-### 5.3 For Loop (Range-based)
+### For loop (range-based)
 
 ```maniascript
 for (I, 0, 10) {
@@ -253,7 +220,7 @@ for (I, 0, 10) {
 }
 ```
 
-### 5.4 Foreach
+### Foreach
 
 ```maniascript
 // Iterate values
@@ -267,7 +234,7 @@ foreach (Key => Value in MyMap) {
 }
 ```
 
-### 5.5 Switch / Case
+### Switch / case
 
 ```maniascript
 switch (Event.Type) {
@@ -283,7 +250,7 @@ switch (Event.Type) {
 }
 ```
 
-### 5.6 SwitchType (Type-based dispatch)
+### SwitchType (type-based dispatch)
 
 ```maniascript
 switchtype (Event) {
@@ -299,7 +266,7 @@ switchtype (Event) {
 }
 ```
 
-### 5.7 Flow Control Keywords
+### Flow control keywords
 
 | Keyword | Purpose |
 |---------|---------|
@@ -309,9 +276,9 @@ switchtype (Event) {
 
 ---
 
-## 6. Functions
+## Functions
 
-### 6.1 Declaration
+You declare functions with a return type, name, and typed parameters.
 
 ```maniascript
 Integer Add(Integer A, Integer B) {
@@ -327,7 +294,7 @@ Text GetGreeting() {
 }
 ```
 
-### 6.2 Entry Point
+### Entry point
 
 The `main()` function is the script entry point:
 
@@ -342,15 +309,91 @@ main() {
 
 For simple scripts (ManiaLink), a bare script body without `main()` is allowed.
 
-### 6.3 No Overloading or Variadic Functions
+### No overloading or variadic functions
 
 ManiaScript does not support function overloading or variadic parameters. Engine API methods may have overloaded variants, but user-defined functions cannot.
 
 ---
 
-## 7. Collections (Arrays and Maps)
+## Preprocessor directives
 
-### 7.1 Array (Ordered List)
+Seven directives are confirmed as lexer tokens in the binary.
+
+### `#RequireContext`
+
+```maniascript
+#RequireContext CSmMode
+```
+
+Specifies the required script execution context class. The script only loads if attached to the correct context. See [Script contexts](#script-contexts) for available contexts.
+
+### `#Setting`
+
+```maniascript
+#Setting S_TimeLimit 300 as "Time limit"
+#Setting S_PointsLimit 100 as _("Points limit")
+#Setting S_UseTieBreak True as "Use tie-break"
+```
+
+Declares a configurable setting variable. Server administrators and players can modify settings without editing script code. The `as` clause provides a display name; `_()` marks it for translation. Supported types: Integer, Real, Boolean, Text.
+
+### `#Struct`
+
+```maniascript
+#Struct K_PlayerData {
+    Integer Score;
+    Text Name;
+    Boolean IsAlive;
+}
+```
+
+Defines a struct type. Struct names conventionally start with `K_`. You can use structs as variable types, in arrays, and serialize them to/from JSON.
+
+### `#Include`
+
+```maniascript
+#Include "MathLib" as MathLib
+#Include "TextLib" as TextLib
+#Include "Libs/Nadeo/Message.Script.txt" as Message
+```
+
+Imports a library script. The `as` clause provides a namespace alias. Call library functions as `Namespace::FunctionName()`.
+
+### `#Extends`
+
+```maniascript
+#Extends "Modes/TrackMania/Base/TrackmaniaBase.Script.txt"
+```
+
+Extends a base script. Game modes use this to inherit from Nadeo's base mode framework. The base script provides the `main()` function with structured labels for code injection (see [Game mode scripting](#game-mode-scripting)).
+
+### `#Command`
+
+```maniascript
+#Command MyCommand(Integer Param) as "Execute my command"
+```
+
+Registers a callable command. You can invoke commands from the server admin interface or other scripts.
+
+### `#Const`
+
+```maniascript
+#Const C_MaxPlayers 64
+#Const C_Version "1.0.0"
+#Const CompatibleMapTypes "TrackMania\\TM_Race,TrackMania\\TM_Royal"
+```
+
+Defines a compile-time constant. Constants conventionally start with `C_`. Standard game mode constants include `CompatibleMapTypes`, `Version`, and `ScriptName`.
+
+---
+
+# Collections and coroutines
+
+## Collections (arrays and maps)
+
+ManiaScript provides two collection types: ordered arrays and associative maps (key-value dictionaries).
+
+### Array (ordered list)
 
 ```maniascript
 declare Text[] Names = ["Alice", "Bob", "Charlie"];
@@ -365,7 +408,7 @@ foreach (Name in Names) {
 }
 ```
 
-### 7.2 Associative Array (Map)
+### Associative array (map)
 
 ```maniascript
 declare Text[Integer] IdToName = [1 => "Alice", 2 => "Bob"];
@@ -380,18 +423,18 @@ foreach (Id => Name in IdToName) {
 }
 ```
 
-### 7.3 Valid Key/Value Type Combinations
+### Valid key/value type combinations
 
 Keys can be: `Integer`, `Text`, `Ident`, `Boolean`, enum types, or Class references.
 Values can be: any ManiaScript type including arrays (nested).
 
 ---
 
-## 8. Collection Operations (17 Dot Methods)
+## Collection operations
 
-All confirmed via binary string search in Trackmania.exe. These are dot-prefixed method calls on array/map instances.
+All 17 dot methods are confirmed via binary string search in Trackmania.exe. These are dot-prefixed method calls on array/map instances.
 
-### 8.1 Mutation Operations
+### Mutation operations
 
 | Operation | Signature | Description |
 |-----------|-----------|-------------|
@@ -401,7 +444,7 @@ All confirmed via binary string search in Trackmania.exe. These are dot-prefixed
 | `.removekey` | `Map.removekey(Key)` | Remove entry by key |
 | `.clear` | `Collection.clear()` | Remove all elements |
 
-### 8.2 Access Operations
+### Access operations
 
 | Operation | Signature | Description |
 |-----------|-----------|-------------|
@@ -410,7 +453,7 @@ All confirmed via binary string search in Trackmania.exe. These are dot-prefixed
 | `.slice` | `Array.slice(Start, Count)` | Extract sub-array |
 | `.keyof` | `Array.keyof(Elem)` | Get key/index of first occurrence |
 
-### 8.3 Sorting Operations
+### Sorting operations
 
 | Operation | Signature | Description |
 |-----------|-----------|-------------|
@@ -419,7 +462,7 @@ All confirmed via binary string search in Trackmania.exe. These are dot-prefixed
 | `.sortkey` | `Array.sortkey()` | Sort by key ascending |
 | `.sortkeyrev` | `Array.sortkeyrev()` | Sort by key descending |
 
-### 8.4 Query Operations
+### Query operations
 
 | Operation | Signature | Description |
 |-----------|-----------|-------------|
@@ -430,21 +473,19 @@ All confirmed via binary string search in Trackmania.exe. These are dot-prefixed
 
 ---
 
-## 9. Coroutines and Cooperative Multitasking
+## Coroutines and cooperative multitasking
 
-ManiaScript has built-in cooperative multitasking through four coroutine primitives. All confirmed as lexer tokens in the binary (addresses `0x141c023a8`, `0x141c024c8`, `0x141c024b0`).
+ManiaScript uses cooperative multitasking through four coroutine primitives (a coroutine is a function that can pause and resume across frames). All are confirmed as lexer tokens in the binary (addresses `0x141c023a8`, `0x141c024c8`, `0x141c024b0`).
 
-### 9.1 Yield
+### Yield
 
 ```maniascript
 yield;
 ```
 
-Pauses execution and returns control to the engine. The script resumes at the next frame. This is the fundamental scheduling primitive.
+Pauses execution and returns control to the engine. The script resumes at the next frame. Every ManiaScript main loop must include `yield;` to prevent infinite loops.
 
 **Implementation**: The script sets its return state and returns from the bytecode interpreter `FUN_1408d1ea0`. The engine re-enters the same context on the next frame.
-
-**Usage**: Every ManiaScript main loop must include `yield;` to prevent infinite loops:
 
 ```maniascript
 main() {
@@ -457,7 +498,7 @@ main() {
 }
 ```
 
-### 9.2 Sleep
+### Sleep
 
 ```maniascript
 sleep(1000);  // Pause for 1000 milliseconds
@@ -465,7 +506,7 @@ sleep(1000);  // Pause for 1000 milliseconds
 
 Pauses execution for the specified duration in milliseconds. The engine checks the timer each frame by comparing the timestamp at `*(context+0xC4)` against the global tick counter `DAT_141ffad50`.
 
-### 9.3 Wait
+### Wait
 
 ```maniascript
 wait(Player.IsSpawned);
@@ -478,7 +519,7 @@ Evaluates the condition expression each frame. If `False`, the script yields. Wh
 while (!Condition) yield;
 ```
 
-### 9.4 Meanwhile
+### Meanwhile
 
 ```maniascript
 // The meanwhile block runs concurrently with the parent flow
@@ -488,95 +529,93 @@ meanwhile {
 }
 ```
 
-Creates a parallel execution branch within the script using the same fiber mechanism but with additional context for tracking multiple execution points. This enables concurrent tasks within a single script (e.g., updating a HUD while the main game logic runs).
+Creates a parallel execution branch within the script. This enables concurrent tasks within a single script (e.g., updating a HUD while the main game logic runs).
 
-### 9.5 Execution Model
+### Execution model
 
 ManiaScript runs at specific points within each frame, always on the main thread:
 
-1. **During gameplay states** (state machine values 0xFE4, 0x1013, 0x1032): Script is invoked as part of the gameplay dispatch.
+1. **During gameplay states** (state machine values 0xFE4, 0x1013, 0x1032): Script runs as part of the gameplay dispatch.
 2. **During menu/UI**: `CGameManialinkBrowser::UpdateAsync` runs on a worker thread, but actual script execution via `CScriptEngine::Run` is always main-thread.
 3. **Relative to physics**: Script runs AFTER the physics step. The arena client processes physics first, then dispatches script events.
 
 ---
 
-## 10. Preprocessor Directives (7)
+## Serialization (JSON)
 
-All 7 confirmed as lexer tokens in the binary.
-
-### 10.1 `#RequireContext`
+ManiaScript supports JSON serialization for structs and collections through `.tojson()` and `.fromjson()` methods.
 
 ```maniascript
-#RequireContext CSmMode
+// Serialize to JSON
+declare Text JsonString = MyStruct.tojson();
+
+// Deserialize from JSON
+declare K_PlayerData Data;
+Data.fromjson(JsonString);
 ```
 
-Specifies the required script execution context class. This provides type safety: the script will only load if attached to the correct context. Available contexts are listed in [Section 11](#11-script-contexts).
-
-### 10.2 `#Setting`
+### Usage with structs
 
 ```maniascript
-#Setting S_TimeLimit 300 as "Time limit"
-#Setting S_PointsLimit 100 as _("Points limit")
-#Setting S_UseTieBreak True as "Use tie-break"
-```
-
-Declares a configurable setting variable. Settings can be modified by server administrators and players without editing script code. The `as` clause provides a display name; `_()` marks it for translation. Supported types: Integer, Real, Boolean, Text.
-
-### 10.3 `#Struct`
-
-```maniascript
-#Struct K_PlayerData {
-    Integer Score;
-    Text Name;
-    Boolean IsAlive;
+#Struct K_Config {
+    Integer MaxPlayers;
+    Text ServerName;
+    Boolean IsPublic;
 }
+
+// Serialize
+declare K_Config Config;
+Config.MaxPlayers = 64;
+Config.ServerName = "My Server";
+Config.IsPublic = True;
+declare Text Json = Config.tojson();
+// Json == '{"MaxPlayers":64,"ServerName":"My Server","IsPublic":true}'
+
+// Deserialize
+declare K_Config Loaded;
+Loaded.fromjson(Json);
 ```
 
-Defines a struct type. Struct names conventionally start with `K_`. Structs can be used as variable types, in arrays, and serialized to/from JSON.
+### XML parsing
 
-### 10.4 `#Include`
+Via the `CParsingManager` (`Xml` global):
 
 ```maniascript
-#Include "MathLib" as MathLib
-#Include "TextLib" as TextLib
-#Include "Libs/Nadeo/Message.Script.txt" as Message
+declare CXmlDocument Doc = Xml.Create(XmlText);
+declare CXmlNode Root = Doc.Root;
+// Traverse nodes...
+Xml.Destroy(Doc);
 ```
-
-Imports a library script. The `as` clause provides a namespace alias. Library functions are called as `Namespace::FunctionName()`.
-
-### 10.5 `#Extends`
-
-```maniascript
-#Extends "Modes/TrackMania/Base/TrackmaniaBase.Script.txt"
-```
-
-Extends a base script. Used primarily for game modes to inherit from Nadeo's base mode framework. The base script provides the `main()` function with structured labels for code injection (see [Section 19](#19-game-mode-scripting)).
-
-### 10.6 `#Command`
-
-```maniascript
-#Command MyCommand(Integer Param) as "Execute my command"
-```
-
-Registers a callable command. Commands can be invoked from the server admin interface or other scripts.
-
-### 10.7 `#Const`
-
-```maniascript
-#Const C_MaxPlayers 64
-#Const C_Version "1.0.0"
-#Const CompatibleMapTypes "TrackMania\\TM_Race,TrackMania\\TM_Royal"
-```
-
-Defines a compile-time constant. Constants conventionally start with `C_`. Standard game mode constants include `CompatibleMapTypes`, `Version`, and `ScriptName`.
 
 ---
 
-## 11. Script Contexts
+## Persistent and cloud storage
 
-Each ManiaScript script runs within a specific context class that determines which API is available. The context is set via `#RequireContext` and validated at load time.
+Persistent variables survive server changes, game restarts, and reinstalls (if the profile is preserved).
 
-### 11.1 Context Class Hierarchy
+```maniascript
+declare persistent Integer Persistent_BestScore for LocalUser;
+declare persistent Text Persistent_Settings for LocalUser;
+```
+
+### Cloud storage operations
+
+Two collection operations for cloud persistence are confirmed in the binary:
+
+| Operation | Description |
+|-----------|-------------|
+| `.cloudrequestsave` | Request save of collection data to Nadeo cloud storage |
+| `.cloudisready` | Check if a pending cloud operation has completed |
+
+These enable asynchronous cloud save/load for script data beyond simple persistent variables.
+
+---
+
+# Script contexts and APIs
+
+## Script contexts
+
+Each ManiaScript script runs within a specific context class that determines which API is available. Set the context via `#RequireContext` -- the engine validates it at load time.
 
 | Context Class | Purpose | Where It Runs |
 |---------------|---------|---------------|
@@ -595,7 +634,7 @@ Each ManiaScript script runs within a specific context class that determines whi
 | `CEditorMainPlugin` | Main editor plugin | Editor |
 | `CServerPlugin` | Dedicated server plugin | Server |
 
-### 11.2 Context-Specific API Access
+### Context-specific API access
 
 Each context provides different global variables and managers:
 
@@ -620,7 +659,7 @@ Each context provides different global variables and managers:
 - `PlaceMode`, `EditMode`
 - Block/item placement methods
 
-### 11.3 Context Classes in Binary
+### Context classes in binary
 
 From the class hierarchy (2,027 classes), the script engine infrastructure consists of 9 core classes:
 
@@ -638,13 +677,11 @@ CScriptTraitsPersistent          -- Persistent script traits
 
 ---
 
-## 12. Classes and Object Model
+## Classes and object model
 
-### 12.1 No User-Defined Classes
+ManiaScript does not allow you to define new classes. You interact exclusively with engine-provided class instances. You cannot instantiate objects directly; work with objects provided by the context (e.g., `Players[0]`, `Page.GetFirstChild("id")`).
 
-ManiaScript does **not** allow defining new classes. Scripts interact exclusively with engine-provided class instances. You cannot instantiate objects directly; you work with objects provided by the context (e.g., `Players[0]`, `Page.GetFirstChild("id")`).
-
-### 12.2 Class References
+### Class references
 
 ```maniascript
 // Get a reference to an existing object
@@ -660,7 +697,7 @@ if (Target != Null) {
 }
 ```
 
-### 12.3 Casting
+### Casting
 
 ```maniascript
 declare MyLabel <=> (Page.GetFirstChild("label_id") as CMlLabel);
@@ -669,7 +706,7 @@ declare MyQuad <=> (Page.GetFirstChild("quad_id") as CMlQuad);
 
 The `as` operator casts a class reference to a more specific type. Returns `Null` if the cast is invalid.
 
-### 12.4 Enum Access
+### Enum access
 
 Enums are accessed via their class scope:
 
@@ -678,9 +715,7 @@ if (Event.Type == CMlScriptEvent::Type::MouseClick) { ... }
 if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned) { ... }
 ```
 
-### 12.5 Key API Classes (TM2020)
-
-From the Doxygen-generated reference (boss-bravo.fr, BigBang1112/maniascript-reference) and our binary class hierarchy:
+### Key API classes (TM2020)
 
 | Class | Description | Script API Role |
 |-------|-------------|-----------------|
@@ -710,11 +745,9 @@ From the Doxygen-generated reference (boss-bravo.fr, BigBang1112/maniascript-ref
 
 ---
 
-## 13. Events
+## Events
 
-### 13.1 Event-Driven Architecture
-
-ManiaScript uses a pull-based event model. Events accumulate in `PendingEvents` arrays and are processed in the script's main loop:
+ManiaScript uses a pull-based event model. Events accumulate in `PendingEvents` arrays and you process them in the script's main loop.
 
 ```maniascript
 foreach (Event in PendingEvents) {
@@ -729,9 +762,7 @@ foreach (Event in PendingEvents) {
 }
 ```
 
-### 13.2 Game Mode Events (CSmModeEvent)
-
-Key event types for TrackMania game modes:
+### Game mode events (CSmModeEvent)
 
 | Event Type | Trigger |
 |------------|---------|
@@ -742,7 +773,7 @@ Key event types for TrackMania game modes:
 | `OnPlayerRemoved` | Player leaves server |
 | `OnCommand` | Admin/script command received |
 
-### 13.3 ManiaLink Events (CMlScriptEvent)
+### ManiaLink events (CMlScriptEvent)
 
 | Event Type | Trigger |
 |------------|---------|
@@ -761,7 +792,7 @@ Key event types for TrackMania game modes:
 - `Event.CustomEventType` -- Type string for custom events
 - `Event.CustomEventData` -- Data array for custom events
 
-### 13.4 Map Editor Events (CMapEditorPluginEvent)
+### Map editor events (CMapEditorPluginEvent)
 
 | Event Type | Trigger |
 |------------|---------|
@@ -770,7 +801,7 @@ Key event types for TrackMania game modes:
 | `StartValidation` | Validation started |
 | `EditAnchor` | Anchor edited |
 
-### 13.5 Custom Events (Cross-Layer Communication)
+### Custom events (cross-layer communication)
 
 ```maniascript
 // Sending from ManiaLink layer:
@@ -788,11 +819,9 @@ foreach (Event in PendingEvents) {
 
 ---
 
-## 14. Network Variables
+## Network variables
 
-ManiaScript provides `netread` and `netwrite` modifiers for cross-layer communication between game mode scripts and ManiaLink UI scripts.
-
-### 14.1 Declaration
+`netread` and `netwrite` modifiers enable cross-layer communication between game mode scripts (server) and ManiaLink UI scripts (client).
 
 ```maniascript
 // In game mode script (server-side):
@@ -804,9 +833,7 @@ declare netread Integer Net_Score for UI;
 declare netread Text Net_Message for UI;
 ```
 
-### 14.2 Scopes
-
-Network variables can be scoped to three object types:
+### Scopes
 
 | Scope | Declaration | Visibility |
 |-------|-------------|------------|
@@ -814,125 +841,24 @@ Network variables can be scoped to three object types:
 | `for Teams[N]` | Per-team | Visible to all players on team N |
 | `for Players[N]` | Per-player | Visible to all ManiaLink layers for that player |
 
-### 14.3 Naming Convention
+### Naming convention
 
-Network variables should be prefixed with `Net_` by convention.
+Prefix network variables with `Net_` by convention.
 
-### 14.4 Limitations
+### Limitations
 
-- Cannot name a `netread`/`netwrite` variable with the same name as a standard variable
-- Cannot modify a `netread` variable (will crash the script)
-- Do not work with bots (will crash)
-- Alternative approach: use triple-bracket interpolation `{{{S_PointLimit}}}` for simple value passing from game mode to ManiaLink, but this does not allow dynamic updates
-
----
-
-## 15. Persistent and Cloud Storage
-
-### 15.1 Persistent Variables
-
-```maniascript
-declare persistent Integer Persistent_BestScore for LocalUser;
-declare persistent Text Persistent_Settings for LocalUser;
-```
-
-Persistent variables are saved in the player's profile. They survive server changes, game restarts, and reinstalls (if profile is preserved). The `persistent` modifier was historically called "script cloud" by Nadeo.
-
-### 15.2 Cloud Storage Operations
-
-Two collection operations for cloud persistence are confirmed in the binary:
-
-| Operation | Description |
-|-----------|-------------|
-| `.cloudrequestsave` | Request save of collection data to Nadeo cloud storage |
-| `.cloudisready` | Check if a pending cloud operation has completed |
-
-These enable asynchronous cloud save/load for script data beyond simple persistent variables.
+- You cannot name a `netread`/`netwrite` variable with the same name as a standard variable.
+- Modifying a `netread` variable crashes the script.
+- Network variables do not work with bots (causes a crash).
+- Alternative approach: use triple-bracket interpolation `{{{S_PointLimit}}}` for simple value passing from game mode to ManiaLink. This does not allow dynamic updates.
 
 ---
 
-## 16. Serialization (JSON)
+## Built-in API: script managers
 
-### 16.1 Collection Serialization
+The engine exposes subsystem functionality to ManiaScript through `*Script*` and `*ScriptHandler*` classes.
 
-Two collection operations confirmed in binary:
-
-```maniascript
-// Serialize to JSON
-declare Text JsonString = MyStruct.tojson();
-
-// Deserialize from JSON
-declare K_PlayerData Data;
-Data.fromjson(JsonString);
-```
-
-### 16.2 Usage with Structs
-
-```maniascript
-#Struct K_Config {
-    Integer MaxPlayers;
-    Text ServerName;
-    Boolean IsPublic;
-}
-
-// Serialize
-declare K_Config Config;
-Config.MaxPlayers = 64;
-Config.ServerName = "My Server";
-Config.IsPublic = True;
-declare Text Json = Config.tojson();
-// Json == '{"MaxPlayers":64,"ServerName":"My Server","IsPublic":true}'
-
-// Deserialize
-declare K_Config Loaded;
-Loaded.fromjson(Json);
-```
-
-### 16.3 XML Parsing
-
-Via the `CParsingManager` (`Xml` global):
-
-```maniascript
-declare CXmlDocument Doc = Xml.Create(XmlText);
-declare CXmlNode Root = Doc.Root;
-// Traverse nodes...
-Xml.Destroy(Doc);
-```
-
----
-
-## 17. Debug and Tuning
-
-### 17.1 Debug Statements (4)
-
-All confirmed as binary tokens:
-
-| Keyword | Purpose | Example |
-|---------|---------|---------|
-| `log` | Output message to script console | `log("Player count: " ^ Players.count);` |
-| `assert` | Debug assertion (halts in debug builds) | `assert(Player != Null);` |
-| `dump` | Print variable value to debug output | `dump(MyVariable);` |
-| `dumptype` | Print variable type information | `dumptype(MyVariable);` |
-
-### 17.2 Tuning System (3)
-
-Performance profiling keywords confirmed in binary:
-
-| Keyword | Purpose |
-|---------|---------|
-| `TUNING_START` | Begin a tuning/profiling block |
-| `TUNING_END` | End a tuning block |
-| `TUNING_MARK` | Mark a profiling checkpoint |
-
-These insert profiling instrumentation into the script for performance measurement by the engine's profiling system (the same system that uses `"CScriptEngine::Run(%s)"` profiling tags).
-
----
-
-## 18. Built-in API: Script Managers
-
-The engine exposes subsystem functionality to ManiaScript through `*Script*` and `*ScriptHandler*` classes. From the binary class hierarchy:
-
-### 18.1 Script Manager Classes
+### Script manager classes
 
 | Manager | Purpose | Key Methods/Properties |
 |---------|---------|----------------------|
@@ -955,7 +881,7 @@ The engine exposes subsystem functionality to ManiaScript through `*Script*` and
 | `CGameDataFileManagerScript` | File management | Read/write game data |
 | `CXmlScriptParsingManager` | XML/JSON parsing | Document creation/destruction |
 
-### 18.2 Script Handler Architecture
+### Script handler architecture
 
 Script handlers bridge ManiaLink layers to the game logic:
 
@@ -971,7 +897,7 @@ CGameScriptHandlerPlaygroundInterface -- Playground UI handler
 CGameScriptHandlerPlaygroundInterface_ReadOnly -- Read-only playground handler
 ```
 
-### 18.3 HTTP API
+### HTTP API
 
 ```maniascript
 // Create request
@@ -994,16 +920,17 @@ Available methods: `CreateGet()`, `CreatePost()`, `CreatePut()`, `CreateDelete()
 
 ---
 
-## 19. Game Mode Scripting
+## Game mode scripting
 
-### 19.1 Script Location
+Game mode scripts control match flow, player spawning, scoring, and UI layers on the server.
 
-Game mode scripts are located at:
+### Script location
+
 ```
 Scripts/Modes/TrackMania/<ModeName>.Script.txt
 ```
 
-### 19.2 Base Mode Framework
+### Base mode framework
 
 TM2020 game modes extend Nadeo's base framework using `#Extends`:
 
@@ -1011,9 +938,9 @@ TM2020 game modes extend Nadeo's base framework using `#Extends`:
 #Extends "Modes/TrackMania/Base/TrackmaniaBase.Script.txt"
 ```
 
-The base script provides a `main()` function with a structured lifecycle of **labels** that child scripts inject code into.
+The base script provides a `main()` function with a structured lifecycle of labels that child scripts inject code into.
 
-### 19.3 Lifecycle Labels
+### Lifecycle labels
 
 The game mode lifecycle follows this hierarchy:
 
@@ -1047,9 +974,7 @@ Each level has Init/Start/End labels:
 
 Labels are prefixed by context: `Match_StartMap` vs `Lobby_StartMap` depending on matchmaking status.
 
-### 19.4 Built-in Nadeo Game Modes
-
-Available base modes for `#Extends`:
+### Built-in Nadeo game modes
 
 | Mode | Description |
 |------|-------------|
@@ -1061,7 +986,7 @@ Available base modes for `#Extends`:
 | `TM_Laps_Online` | Lap-based racing |
 | `TM_Teams_Online` | Team-based racing |
 
-### 19.5 Player Management
+### Player management
 
 ```maniascript
 // Spawn a player
@@ -1077,7 +1002,7 @@ log(Player.SpawnStatus);  // CSmPlayer::ESpawnStatus::Spawned
 UnspawnPlayer(Player);
 ```
 
-### 19.6 Score Management
+### Score management
 
 ```maniascript
 // Set points
@@ -1090,7 +1015,7 @@ Player.Score.BestRace.Time = RaceTime;
 Scores_SetSortCriteria("BestRace");
 ```
 
-### 19.7 UI Layer Management
+### UI layer management
 
 ```maniascript
 // Create a ManiaLink UI layer
@@ -1116,17 +1041,15 @@ declare CUIConfig PlayerUI = UIManager.GetUI(Player);
 PlayerUI.UILayers.add(Layer);
 ```
 
-### 19.8 Multiplayer Determinism
+### Multiplayer determinism
 
-In multiplayer, game mode scripts at state 0x1032 execute via `virtual (*param_1 + 0x370)` for network-synchronized script execution. Scripts must execute deterministically across all clients to maintain synchronization.
+In multiplayer, game mode scripts at state 0x1032 execute via `virtual (*param_1 + 0x370)` for network-synchronized script execution. Scripts must execute deterministically across all clients.
 
 ---
 
-## 20. ManiaLink Scripting
+## ManiaLink scripting
 
-### 20.1 ManiaLink XML Structure
-
-ManiaLink is an XML-based UI description language. Scripts are embedded within `<script>` tags:
+ManiaLink is an XML-based UI description language. Scripts are embedded within `<script>` tags.
 
 ```xml
 <manialink version="3">
@@ -1152,7 +1075,7 @@ ManiaLink is an XML-based UI description language. Scripts are embedded within `
 </manialink>
 ```
 
-### 20.2 Element Access
+### Element access
 
 ```maniascript
 // Get element by ID (returns CMlControl, must cast)
@@ -1174,9 +1097,7 @@ Entry.Value;  // Read text input
 Gauge.Ratio = 0.75;  // 75% filled
 ```
 
-### 20.3 UI Control Types
-
-From the official ManiaScript reference:
+### UI control types
 
 | Class | Element | Key Properties |
 |-------|---------|---------------|
@@ -1190,7 +1111,7 @@ From the official ManiaScript reference:
 | `CMlMediaPlayer` | `<video>` | `Url`, `Play()`, `Stop()`, `Volume`, `IsLooping` |
 | `CMlFrame` | `<frame>` | Container for other elements |
 
-### 20.4 Visibility and Interaction
+### Visibility and interaction
 
 ```maniascript
 // Show/hide elements
@@ -1207,7 +1128,7 @@ Label.Size = <50.0, 10.0>;
 // focusareacolor1/2 -- Hover colors
 ```
 
-### 20.5 Page Actions
+### Page actions
 
 ```maniascript
 // Trigger a page action (navigates to URL or triggers callback)
@@ -1217,7 +1138,7 @@ TriggerPageAction("MyAction");
 OpenLink("https://trackmania.com", CMlScript::LinkType::ExternalBrowser);
 ```
 
-### 20.6 Menu Navigation (Gamepad)
+### Menu navigation (gamepad)
 
 ```maniascript
 EnableMenuNavigation(True, True, BackButton, 0);
@@ -1226,15 +1147,15 @@ EnableMenuNavigation(True, True, BackButton, 0);
 
 ---
 
-## 21. Map Editor Plugin Scripting
+## Map editor plugin scripting
 
-### 21.1 Context
+Map editor plugins let you automate block placement, validation, and testing from ManiaScript.
 
 ```maniascript
 #RequireContext CMapEditorPlugin
 ```
 
-### 21.2 Available Properties
+### Available properties
 
 | Property | Type | Description |
 |----------|------|-------------|
@@ -1245,7 +1166,7 @@ EnableMenuNavigation(True, True, BackButton, 0);
 | `EditMode` | `EEditMode` | Current edit mode |
 | `IsEditorReadyForRequest` | `Boolean` | Can accept placement commands |
 
-### 21.3 Place Modes
+### Place modes
 
 ```
 Unknown, Terraform, Block, Macroblock, Skin, CopyPaste,
@@ -1253,7 +1174,7 @@ Test, Plugin, CustomSelection, OffZone, BlockProperty,
 Path, GhostBlock, Item, Light
 ```
 
-### 21.4 Block Operations
+### Block operations
 
 ```maniascript
 // Test if a block can be placed
@@ -1270,7 +1191,7 @@ Undo();
 Redo();
 ```
 
-### 21.5 Shadow Computation
+### Shadow computation
 
 ```maniascript
 ComputeShadows(CMapEditorPlugin::ShadowsQuality::High);
@@ -1278,7 +1199,7 @@ ComputeShadows(CMapEditorPlugin::ShadowsQuality::High);
 
 Quality levels: `NotComputed`, `VeryFast`, `Fast`, `Default`, `High`, `Ultra`.
 
-### 21.6 Testing
+### Testing
 
 ```maniascript
 TestMapFromStart();
@@ -1288,11 +1209,11 @@ TestMapWithMode("TrackMania/TM_TimeAttack_Online");
 
 ---
 
-## 22. Standard Libraries
+## Standard libraries
 
-ManiaScript includes standard libraries imported via `#Include`:
+ManiaScript includes standard libraries imported via `#Include`.
 
-### 22.1 MathLib
+### MathLib
 
 ```maniascript
 #Include "MathLib" as MathLib
@@ -1319,7 +1240,7 @@ ManiaScript includes standard libraries imported via `#Include`:
 | `MathLib::CrossProduct(Vec3, Vec3)` | Cross product |
 | `MathLib::PI` | Pi constant |
 
-### 22.2 TextLib
+### TextLib
 
 ```maniascript
 #Include "TextLib" as TextLib
@@ -1346,7 +1267,7 @@ ManiaScript includes standard libraries imported via `#Include`:
 | `TextLib::RegexReplace(Pattern, Text, Replace, Flags)` | Regex replace |
 | `TextLib::URLEncode(Text)` | URL-encode |
 
-### 22.3 AnimLib
+### AnimLib
 
 ```maniascript
 #Include "AnimLib" as AnimLib
@@ -1354,7 +1275,7 @@ ManiaScript includes standard libraries imported via `#Include`:
 
 Animation easing functions for UI animations.
 
-### 22.4 Nadeo Libraries
+### Nadeo libraries
 
 Nadeo provides additional libraries for game mode development:
 
@@ -1367,11 +1288,40 @@ Nadeo provides additional libraries for game mode development:
 
 ---
 
-## 23. Lexer and Token Types
+## Debug and tuning
+
+### Debug statements
+
+Four debug keywords are confirmed as binary tokens:
+
+| Keyword | Purpose | Example |
+|---------|---------|---------|
+| `log` | Output message to script console | `log("Player count: " ^ Players.count);` |
+| `assert` | Debug assertion (halts in debug builds) | `assert(Player != Null);` |
+| `dump` | Print variable value to debug output | `dump(MyVariable);` |
+| `dumptype` | Print variable type information | `dumptype(MyVariable);` |
+
+### Tuning system
+
+Three performance profiling keywords are confirmed in the binary:
+
+| Keyword | Purpose |
+|---------|---------|
+| `TUNING_START` | Begin a tuning/profiling block |
+| `TUNING_END` | End a tuning block |
+| `TUNING_MARK` | Mark a profiling checkpoint |
+
+These insert profiling instrumentation into the script for the engine's profiling system (the same system that uses `"CScriptEngine::Run(%s)"` profiling tags).
+
+---
+
+# Engine internals
+
+## Lexer and token types
 
 From binary string search at the ManiaScript token table in Trackmania.exe.
 
-### 23.1 Lexer Token Categories
+### Lexer token categories
 
 | Token Category | Description | Binary Evidence |
 |----------------|-------------|-----------------|
@@ -1386,7 +1336,7 @@ From binary string search at the ManiaScript token table in Trackmania.exe.
 | `CONCAT_AND_STRING` | Concatenation followed by string | `^ "text"` |
 | `LOCAL_STRUCT` | Local struct declaration | `#Struct` instances |
 
-### 23.2 Keyword Tokens
+### Keyword tokens
 
 All confirmed in binary:
 
@@ -1406,11 +1356,11 @@ All confirmed in binary:
 
 ---
 
-## 24. Script Engine Internals (from RE)
+## Script engine internals (from RE)
 
-### 24.1 CScriptEngine::Run (0x140874270)
+### CScriptEngine::Run (0x140874270)
 
-Decompiled from `Trackmania.exe`. Size: 316 bytes.
+The main entry point for executing ManiaScript. Decompiled from `Trackmania.exe`. Size: 316 bytes.
 
 ```c
 void CScriptEngine__Run(longlong engine, longlong context, undefined4 mode) {
@@ -1470,7 +1420,7 @@ void CScriptEngine__Run(longlong engine, longlong context, undefined4 mode) {
 }
 ```
 
-### 24.2 Key Memory Layout
+### Key memory layout
 
 **CScriptEngine offsets**:
 | Offset | Type | Description |
@@ -1503,15 +1453,15 @@ void CScriptEngine__Run(longlong engine, longlong context, undefined4 mode) {
 | `+0xF4` | int | Filename length |
 | `+0xF8` | ptr | Cached profiling tag string |
 
-### 24.3 Bytecode Interpreter
+### Bytecode interpreter
 
-The actual bytecode interpreter is at `FUN_1408d1ea0`. Its internal structure is **UNKNOWN** -- the opcode format, instruction encoding, and stack layout have not been reverse-engineered. This is identified as one of the highest-priority unknowns in the RE documentation.
+The actual bytecode interpreter is at `FUN_1408d1ea0`. Its internal structure is unknown -- the opcode format, instruction encoding, and stack layout have not been reverse-engineered. This is one of the highest-priority unknowns in the RE documentation.
 
-### 24.4 Script-to-Engine Binding
+### Script-to-engine binding
 
 ManiaScript calls engine functions through a binding layer protected by MSVC Control Flow Guard (`_guard_check_icall`). This validates function pointer targets before indirect calls, including script-to-engine bindings.
 
-### 24.5 Engine Singleton
+### Engine singleton
 
 `CScriptEngine` is one of 12 engine singletons:
 
@@ -1525,17 +1475,13 @@ The engine has two confirmed methods in the binary: `Compilation` and `Run`.
 
 ---
 
-## 25. Browser Recreation: Interpreter/Transpiler Approach
+## Browser recreation: interpreter/transpiler approach
 
-### 25.1 Overview
+For a browser-based recreation, ManiaScript requires either a JavaScript interpreter (parse source, build AST, interpret in JS) or a JavaScript transpiler (parse source, compile to equivalent JS).
 
-For a browser-based recreation of Trackmania, ManiaScript requires either:
-1. **JavaScript interpreter**: Parse ManiaScript source, build AST, interpret in JS
-2. **JavaScript transpiler**: Parse ManiaScript source, compile to equivalent JS
+### Lexer specification
 
-### 25.2 Lexer Specification
-
-The complete lexer token set is documented in [Section 23](#23-lexer-and-token-types). A ManiaScript lexer needs to handle:
+A ManiaScript lexer must handle:
 - C-style comments (`//`, `/* */`)
 - String literals with escape sequences and triple-quoting
 - Numeric literals (integer and float with mandatory trailing dot)
@@ -1544,7 +1490,7 @@ The complete lexer token set is documented in [Section 23](#23-lexer-and-token-t
 - Directive tokens (`#RequireContext`, `#Setting`, etc.)
 - The 40+ keyword tokens
 
-### 25.3 Type System Mapping
+### Type system mapping
 
 | ManiaScript | JavaScript Equivalent |
 |-------------|----------------------|
@@ -1562,7 +1508,7 @@ The complete lexer token set is documented in [Section 23](#23-lexer-and-token-t
 | `Array` | `Array` with type enforcement |
 | `Map` | `Map` with type enforcement |
 
-### 25.4 Coroutine Implementation
+### Coroutine implementation
 
 The `yield`/`sleep`/`wait`/`meanwhile` coroutine model maps to several JavaScript approaches:
 
@@ -1594,7 +1540,7 @@ async function scriptMain(ctx) {
 `wait(condition)` maps to yielding until a condition closure returns true.
 `meanwhile` requires spawning a secondary generator/coroutine.
 
-### 25.5 Collection Operations
+### Collection operations
 
 All 17 dot operations need custom Array/Map wrapper classes:
 
@@ -1619,7 +1565,7 @@ class MsArray {
 }
 ```
 
-### 25.6 Engine API Binding
+### Engine API binding
 
 Each script context class needs a JavaScript counterpart that exposes the same properties and methods. The 700+ ManiaScript API classes require stubs or implementations:
 
@@ -1634,14 +1580,14 @@ class CSmMode {
 }
 ```
 
-### 25.7 Network Variable Simulation
+### Network variable simulation
 
 For browser recreation, `netread`/`netwrite` can be simulated using:
 - SharedArrayBuffer for multi-worker scenarios
 - Simple object properties for single-thread
 - WebSocket messages for true client-server separation
 
-### 25.8 Complexity Estimate
+### Complexity estimate
 
 | Component | Estimated Effort | Priority |
 |-----------|-----------------|----------|
@@ -1655,11 +1601,11 @@ For browser recreation, `netread`/`netwrite` can be simulated using:
 
 ---
 
-## Appendix A: Complete Script Class Inventory
+## Appendix A: complete script class inventory
 
 From `class_hierarchy.json` (2,027 total classes), script-relevant classes:
 
-### Core Script Engine
+### Core script engine
 - `CScriptEngine` (methods: `Compilation`, `Run`)
 - `CScriptBaseEvent`, `CScriptBaseConstEvent`
 - `CScriptEvent`
@@ -1668,7 +1614,7 @@ From `class_hierarchy.json` (2,027 total classes), script-relevant classes:
 - `CScriptSetting`
 - `CScriptTraitsMetadata`, `CScriptTraitsPersistent`
 
-### Game Mode
+### Game mode
 - `CSmMode` (methods: `EActionInput`, `SpawnBotPlayer`, `SpawnPlayer`)
 - `CSmPlayer` (methods: `ESpawnStatus`)
 - `CSmPlayerDriver` (methods: `ESmDriverPathState`)
@@ -1676,7 +1622,7 @@ From `class_hierarchy.json` (2,027 total classes), script-relevant classes:
 - `CSmArenaRules` (methods: `CreateAndDestroyEntities`, `UpdateEvents`, `UpdateTimed`)
 - `CMapType`
 
-### Script Handlers
+### Script handlers
 - `CGameManialinkScriptHandler`
 - `CGameManialinkScriptHandler_ReadOnly`
 - `CGameManialinkNavigationScriptHandler`
@@ -1687,7 +1633,7 @@ From `class_hierarchy.json` (2,027 total classes), script-relevant classes:
 - `CGameScriptHandlerPlaygroundInterface`
 - `CGameScriptHandlerPlaygroundInterface_ReadOnly`
 
-### Script Managers
+### Script managers
 - `CInputScriptManager`, `CInputScriptPad`, `CInputScriptEvent`
 - `CAudioScriptManager`, `CAudioScriptMusic`, `CAudioScriptSound`
 - `CGamePlaygroundScript`, `CGamePlaygroundClientScriptAPI`
@@ -1698,7 +1644,7 @@ From `class_hierarchy.json` (2,027 total classes), script-relevant classes:
 
 ---
 
-## Appendix B: Community Reference Links
+## Appendix B: community reference links
 
 | Resource | URL | Scope |
 |----------|-----|-------|
@@ -1713,15 +1659,35 @@ From `class_hierarchy.json` (2,027 total classes), script-relevant classes:
 
 ---
 
-## Appendix C: Cross-Reference to RE Documentation
+## Appendix C: cross-reference to RE documentation
 
 | Topic | RE Source | Section in This Document |
 |-------|-----------|--------------------------|
-| Token types (40+) | doc 15 Section 10 | Sections 2, 8, 23 |
-| Script engine runtime | doc 12 Sections 5, 15 | Section 24 |
-| CScriptEngine::Run decompilation | `decompiled/architecture/CScriptEngine__Run.c` | Section 24.1 |
+| Token types (40+) | doc 15 Section 10 | Data types, Collection operations, Lexer and token types |
+| Script engine runtime | doc 12 Sections 5, 15 | Script engine internals |
+| CScriptEngine::Run decompilation | `decompiled/architecture/CScriptEngine__Run.c` | Script engine internals |
 | Script class hierarchy | `class_hierarchy.json` | Appendix A |
-| Subsystem class map | doc 13 Sections 13.4, 14.3, 18 | Sections 11, 18 |
-| Community knowledge | doc 29 Section 5 | Sections 11-22 |
-| Frame loop integration | doc 12 Section 6 | Section 9.5 |
-| Network state machine | doc 12 Section 16 | Section 19.8 |
+| Subsystem class map | doc 13 Sections 13.4, 14.3, 18 | Script contexts, Built-in API |
+| Community knowledge | doc 29 Section 5 | Script contexts through Standard libraries |
+| Frame loop integration | doc 12 Section 6 | Coroutines and cooperative multitasking |
+| Network state machine | doc 12 Section 16 | Game mode scripting |
+
+---
+
+## Related pages
+
+- [34-ui-manialink-reference.md](34-ui-manialink-reference.md) -- ManiaLink XML format, layout system, control hierarchy, and UI styling
+- [13-subsystem-class-map.md](13-subsystem-class-map.md) -- Engine subsystem architecture including the script engine
+- [29-community-knowledge.md](29-community-knowledge.md) -- Community-sourced ManiaScript documentation and tutorials
+- [15-binary-token-analysis.md](15-binary-token-analysis.md) -- Binary string analysis confirming lexer tokens
+
+---
+
+<details>
+<summary>Analysis metadata</summary>
+
+**Date**: 2026-03-27
+**Sources**: Ghidra RE (docs 12, 13, 15), decompiled `CScriptEngine__Run.c`, `class_hierarchy.json`, community documentation (ManiaScript Book, boss-bravo.fr, maniaplanet/documentation, maniaplanet.github.io/maniascript-reference)
+**Confidence**: VERIFIED (binary tokens) + COMMUNITY-CONFIRMED (syntax/semantics)
+
+</details>

@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item active" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -112,52 +120,37 @@
                 <div class="content-body">
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
-                        <h1 id="competitive-mechanics-determinism-timing-and-tas-relevant-details"><a class="anchor" href="#competitive-mechanics-determinism-timing-and-tas-relevant-details">#</a>Competitive Mechanics: Determinism, Timing, and TAS-Relevant Details</h1>
-<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020 by Nadeo/Ubisoft) <strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: 18 decompiled physics functions, Openplanet plugin intelligence, TMNF cross-reference, Default.json config <strong>Audience</strong>: Speedrunners, TAS researchers, competitive players who care about millisecond differences <strong>Methodology</strong>: Every claim grounded in decompiled code. Unknowns are marked explicitly.</p>
+                        <h1 id="competitive-mechanics-determinism-timing-and-tas-details"><a class="anchor" href="#competitive-mechanics-determinism-timing-and-tas-details">#</a>Competitive Mechanics: Determinism, Timing, and TAS Details</h1>
+<p>Trackmania 2020's physics simulation runs at a fixed 100Hz tick rate -- one physics tick every 10 milliseconds. Display framerate is completely decoupled. Every claim here is grounded in decompiled code. Unknowns are marked explicitly.</p>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-timing--tick-system">Timing & Tick System</a></li>
-  <li><a href="#2-determinism-guarantees">Determinism Guarantees</a></li>
-  <li><a href="#3-input-pipeline-for-speedrunning">Input Pipeline for Speedrunning</a></li>
-  <li><a href="#4-surface-effect-catalog-competitive-focus">Surface Effect Catalog (Competitive Focus)</a></li>
-  <li><a href="#5-checkpoint--respawn-system">Checkpoint & Respawn System</a></li>
-  <li><a href="#6-speed-limits--edge-cases">Speed Limits & Edge Cases</a></li>
-  <li><a href="#7-race-timer-internals">Race Timer Internals</a></li>
-  <li><a href="#8-tmnf-vs-tm2020-for-competitive-play">TMNF vs TM2020 for Competitive Play</a></li>
-  <li><a href="#9-tas-relevant-technical-details">TAS-Relevant Technical Details</a></li>
-  <li><a href="#10-open-questions-for-competitive-community">Open Questions for Competitive Community</a></li>
-</ol>
-<hr>
-<h2 id="1-timing-tick-system"><a class="anchor" href="#1-timing-tick-system">#</a>1. Timing & Tick System</h2>
-<h3 id="11-the-100hz-physics-tick"><a class="anchor" href="#11-the-100hz-physics-tick">#</a>1.1 The 100Hz Physics Tick</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:63</code>, <code>NSceneDyna__PhysicsStep.c:15</code>, community knowledge, Default.json <code>SmMaxPlayerResimStepPerFrame=100</code> <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> (inferred from converging evidence; no single decompiled constant says "100Hz" explicitly)</p>
-<p>The physics simulation runs at a <strong>fixed 100Hz tick rate</strong> -- one physics tick every 10 milliseconds. This is the fundamental heartbeat of the game. Display framerate (30fps, 60fps, 144fps, etc.) is completely decoupled from physics ticks.</p>
+<h2 id="how-the-tick-system-works"><a class="anchor" href="#how-the-tick-system-works">#</a>How the Tick System Works</h2>
+<h3 id="the-100hz-physics-tick"><a class="anchor" href="#the-100hz-physics-tick">#</a>The 100Hz Physics Tick</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> (inferred from converging evidence; no single decompiled constant says "100Hz" explicitly)</p>
+<p>The physics simulation runs at a <strong>fixed 100Hz tick rate</strong>. Display framerate (30fps, 60fps, 144fps) is decoupled from physics ticks.</p>
 <p>Key evidence:</p>
 <ul>
-  <li><code>SmMaxPlayerResimStepPerFrame = 100</code> in Default.json -- this config value caps how many physics ticks can be resimulated in a single display frame. Setting it to 100 means up to 1 full second of physics can be caught up in one frame, consistent with a 100Hz tick rate.</li>
-  <li>The TMNF predecessor runs at 100Hz (community-verified via donadigo's documentation).</li>
-  <li>The microsecond conversion pattern <code>tick * 1000000</code> (see section 1.2) produces 10,000,000 microseconds per tick when using 10ms ticks, consistent with internal microsecond timing.</li>
+  <li><code>SmMaxPlayerResimStepPerFrame = 100</code> in Default.json caps resimulation to 100 ticks per frame (1 second at 100Hz).</li>
+  <li>TMNF runs at 100Hz (community-verified via donadigo's documentation).</li>
+  <li>The microsecond conversion pattern <code>tick * 1000000</code> produces 10,000,000 microseconds per tick at 10ms ticks.</li>
 </ul>
-<p><strong>What this means for competition</strong>: Every run is quantized to 10ms boundaries. You cannot gain or lose time in sub-10ms increments at the physics level. The displayed time precision may be finer (millisecond), but the simulation state only changes every 10ms.</p>
-<h3 id="12-microsecond-internal-timing"><a class="anchor" href="#12-microsecond-internal-timing">#</a>1.2 Microsecond Internal Timing</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:63</code>, <code>NSceneDyna__PhysicsStep.c:15</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>Every run is quantized to 10ms boundaries. You cannot gain or lose time in sub-10ms increments at the physics level.</p>
+<h3 id="microsecond-internal-timing"><a class="anchor" href="#microsecond-internal-timing">#</a>Microsecond Internal Timing</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <p>Both the per-vehicle physics step and the rigid body dynamics step convert ticks to microseconds:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// PhysicsStep_TM (FUN_141501800) line 63
 lVar18 = (ulonglong)*param_4 * 1000000;
 
 // NSceneDyna::PhysicsStep (FUN_1407bd0e0) line 15
 FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
-<p>The <code><em>param_4</code> / <code></em>param_2</code> is the integer tick count. Multiplying by 1,000,000 converts to microseconds using <strong>integer arithmetic</strong> -- no floating point involved in the time tracking itself. This is a deliberate determinism choice: integer tick counters avoid accumulated floating-point drift.</p>
-<h3 id="13-how-game-ticks-are-counted"><a class="anchor" href="#13-how-game-ticks-are-counted">#</a>1.3 How Game Ticks Are Counted</h3>
-<p><strong>Evidence</strong>: <code>NSceneDyna__PhysicsStep_V2.c:89</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The multiplication uses <strong>integer arithmetic</strong> -- no floating point in time tracking. This is a deliberate determinism choice: integer tick counters avoid accumulated floating-point drift.</p>
+<h3 id="game-tick-counter"><a class="anchor" href="#game-tick-counter">#</a>Game Tick Counter</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <p>The rigid body dynamics step maintains an explicit step counter:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// NSceneDyna::PhysicsStep_V2 (FUN_140803920) line 89
 *(int *)(param_1 + 0xf4b) = (int)param_1[0xf4b] + 1;  // byte offset 0x7A58</code></pre></div>
-<p>This is a monotonically increasing integer counter at struct offset 0x7A58 in the dynamics world. It increments by exactly 1 per physics step. No fractional ticks, no variable timestep. Combined with the integer tick-to-microsecond conversion, this gives deterministic time progression.</p>
-<h3 id="14-display-fps-vs-physics-ticks"><a class="anchor" href="#14-display-fps-vs-physics-ticks">#</a>1.4 Display FPS vs Physics Ticks</h3>
-<p><strong>Evidence</strong>: <code>Default.json</code>, architectural analysis from <code>12-architecture-deep-dive.md</code> <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>The relationship between display FPS and physics ticks:</p>
+<p>This counter increments by exactly 1 per physics step. No fractional ticks, no variable timestep.</p>
+<h3 id="display-fps-vs-physics-ticks"><a class="anchor" href="#display-fps-vs-physics-ticks">#</a>Display FPS vs Physics Ticks</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -180,7 +173,7 @@ FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
 <tr>
   <td style="text-align:left">100</td>
   <td style="text-align:left">1.0</td>
-  <td style="text-align:left">Exact match -- one tick per frame</td>
+  <td style="text-align:left">Exact match</td>
 </tr>
 <tr>
   <td style="text-align:left">144</td>
@@ -192,75 +185,62 @@ FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
   <td style="text-align:left">~0.42</td>
   <td style="text-align:left">Display much faster than physics</td>
 </tr>
-<tr>
-  <td style="text-align:left">Unlimited</td>
-  <td style="text-align:left">Variable</td>
-  <td style="text-align:left">Physics is always 100Hz regardless</td>
-</tr>
 </tbody>
 </table></div>
-<p>The <code>SmMaxPlayerResimStepPerFrame=100</code> config parameter bounds worst-case catch-up: if the display is running at, say, 10fps, the game simulates up to 100 ticks (1 second) per frame to keep physics in sync. If a frame takes longer than 1 second, physics falls behind -- but this represents a catastrophic performance failure.</p>
-<p><strong>Implication for competitive play</strong>: Physics results are identical regardless of display FPS. Running at 30fps vs 300fps produces the same physics outcome for the same inputs. Display FPS only affects input polling frequency and visual smoothness, NOT the physics simulation.</p>
-<h3 id="15-smmaxplayerresimstepperframe-and-resimulation"><a class="anchor" href="#15-smmaxplayerresimstepperframe-and-resimulation">#</a>1.5 SmMaxPlayerResimStepPerFrame and Resimulation</h3>
-<p><strong>Evidence</strong>: <code>Default.json</code> line <code>"SmMaxPlayerResimStepPerFrame" : 100</code> <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>The "Resim" in the parameter name suggests this is related to <strong>resimulation</strong> -- the process of re-running physics steps when correcting state (e.g., after a network correction in multiplayer, or when catching up after a lag spike). The value 100 means:</p>
-<ul>
-  <li>Up to 100 physics ticks can be resimulated in a single display frame</li>
-  <li>At 100Hz, this is 1 second of physics simulation</li>
-  <li>This is a safety bound to prevent infinite loops if physics falls behind</li>
-</ul>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether this also limits the number of fresh physics ticks per frame, or only resimulation ticks.</p>
+<p>Physics results are identical regardless of display FPS. Running at 30fps vs 300fps produces the same physics outcome for the same inputs.</p>
+<h3 id="resimulation-bounds"><a class="anchor" href="#resimulation-bounds">#</a>Resimulation Bounds</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
+<p><code>SmMaxPlayerResimStepPerFrame = 100</code> means up to 100 physics ticks can be resimulated per display frame. At 100Hz, this is 1 second of physics simulation. This bounds worst-case catch-up and prevents infinite loops if physics falls behind.</p>
 <hr>
-<h2 id="2-determinism-guarantees"><a class="anchor" href="#2-determinism-guarantees">#</a>2. Determinism Guarantees</h2>
-<h3 id="21-what-makes-the-replay-system-deterministic"><a class="anchor" href="#21-what-makes-the-replay-system-deterministic">#</a>2.1 What Makes the Replay System Deterministic</h3>
-<p><strong>Evidence</strong>: All 18 decompiled physics functions, architectural patterns <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> for "fully deterministic within same build"; UNCERTAIN for "bit-identical across builds"</p>
-<p>Trackmania's replay system records <strong>inputs</strong>, not positions. When you watch a ghost or validate a replay, the game re-runs the physics with the recorded inputs. This only works if the simulation is deterministic. The decompiled code reveals several mechanisms that enable this:</p>
-<h4 id="211-fixed-timestep-integer-based"><a class="anchor" href="#211-fixed-timestep-integer-based">#</a>2.1.1 Fixed Timestep (Integer-Based)</h4>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:63</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="what-makes-the-simulation-deterministic"><a class="anchor" href="#what-makes-the-simulation-deterministic">#</a>What Makes the Simulation Deterministic</h2>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> for "fully deterministic within same build"; UNCERTAIN for "bit-identical across builds"</p>
+<p>Trackmania records <strong>inputs</strong>, not positions. Replays re-run physics with recorded inputs. The decompiled code reveals several mechanisms enabling determinism.</p>
+<h3 id="fixed-timestep-integer-based"><a class="anchor" href="#fixed-timestep-integer-based">#</a>Fixed Timestep (Integer-Based)</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">lVar18 = (ulonglong)*param_4 * 1000000;  // integer * integer = integer</code></pre></div>
-<p>Time is tracked as integer tick counts. No <code>+= deltaTime</code> floating-point accumulation. Every tick is exactly the same duration. This eliminates the most common source of simulation divergence.</p>
-<h4 id="212-deterministic-sub-stepping"><a class="anchor" href="#212-deterministic-sub-stepping">#</a>2.1.2 Deterministic Sub-Stepping</h4>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:71-167</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>Within each tick, the adaptive sub-stepping algorithm computes the number of sub-steps from the current velocity state:</p>
+<p>Time is tracked as integer tick counts. No <code>+= deltaTime</code> floating-point accumulation. This eliminates the most common source of simulation divergence.</p>
+<h3 id="deterministic-sub-stepping"><a class="anchor" href="#deterministic-sub-stepping">#</a>Deterministic Sub-Stepping</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>Within each tick, adaptive sub-stepping computes step count from the current velocity state:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">total_speed = |linear_vel| + |angular_vel_body| + |angular_vel1| + |angular_vel2|
 num_substeps = floor((total_speed * velocity_scale * dt) / step_size_param) + 1
 num_substeps = clamp(num_substeps, 1, 1000)
 sub_dt = dt / num_substeps</code></pre></div>
-<p>Given the same velocity state, this produces the same number of sub-steps. The sub-step count is deterministic because:</p>
+<p>Given the same velocity state, this produces the same number of sub-steps because:</p>
 <ol>
-  <li>All four velocity magnitudes are computed with the same <code>x<em>x + y</em>y + z*z -> SQRT()</code> pattern</li>
-  <li>The clamping to 1000 is exact integer comparison (<code>if (uVar16 < 0x3e9)</code>)</li>
+  <li>All four velocity magnitudes use the same <code>x<em>x + y</em>y + z*z -> SQRT()</code> pattern</li>
+  <li>Clamping to 1000 uses exact integer comparison (<code>if (uVar16 < 0x3e9)</code>)</li>
   <li>The <code>sub_dt</code> division uses the same float precision path every time</li>
 </ol>
-<h4 id="213-remainder-step-precision"><a class="anchor" href="#213-remainder-step-precision">#</a>2.1.3 Remainder-Step Precision</h4>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:141-167</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="remainder-step-precision"><a class="anchor" href="#remainder-step-precision">#</a>Remainder-Step Precision</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <p>The sub-step loop runs <code>N-1</code> equal steps, then one final step with the remainder:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>total_simulated = (N-1) * sub_dt + remainder = dt (exactly)</code></pre></div>
-<p>This avoids floating-point drift from repeated <code>time += sub_dt</code> addition (which would accumulate rounding error over many iterations).</p>
-<h4 id="214-guarded-square-root"><a class="anchor" href="#214-guarded-square-root">#</a>2.1.4 Guarded Square Root</h4>
-<p><strong>Evidence</strong>: All physics files <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>This avoids floating-point drift from repeated <code>time += sub_dt</code> addition.</p>
+<h3 id="guarded-square-root"><a class="anchor" href="#guarded-square-root">#</a>Guarded Square Root</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <p>Every square root in the physics code is guarded:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (fVar24 &lt; 0.0) {
     fVar24 = (float)FUN_14195dd00(fVar24);  // safe sqrt for negative inputs
 } else {
     fVar24 = SQRT(fVar24);  // SSE sqrtss
 }</code></pre></div>
-<p>This prevents NaN propagation from floating-point precision artifacts that could produce tiny negative values under <code>x<em>x + y</em>y + z*z</code> when x, y, z are very small. NaN would break determinism because <code>NaN != NaN</code> causes divergent control flow.</p>
-<h4 id="215-sequential-processing-order"><a class="anchor" href="#215-sequential-processing-order">#</a>2.1.5 Sequential Processing Order</h4>
-<p><strong>Evidence</strong>: <code>NSceneDyna__PhysicsStep_V2.c:103-116</code>, <code>PhysicsStep_TM.c:66-67</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>Bodies and vehicles are processed in <strong>array order</strong> (sequential iteration):</p>
+<p>This prevents NaN propagation from floating-point precision artifacts. NaN breaks determinism because <code>NaN != NaN</code> causes divergent control flow.</p>
+<h3 id="sequential-processing-order"><a class="anchor" href="#sequential-processing-order">#</a>Sequential Processing Order</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>Bodies and vehicles are processed in <strong>array order</strong>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// PhysicsStep_V2: iterate ordered index array
 do {
     uVar2 = *(uint *)(param_1[0x16] + (ulonglong)*puVar12 * 4);
     // ... process body uVar2
     puVar12 = puVar12 + 1;
 } while (uVar11 &lt; uVar1);</code></pre></div>
-<p>No parallel dispatch, no random ordering. The sorted/ordered iteration ensures collision pair processing is deterministic regardless of memory allocation order.</p>
-<h4 id="216-sse-floating-point-on-x64"><a class="anchor" href="#216-sse-floating-point-on-x64">#</a>2.1.6 SSE Floating Point on x64</h4>
-<p><strong>Evidence</strong>: Decompiled code patterns, x64 ABI <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (for same-platform determinism)</p>
-<p>TM2020 is compiled as x64, which uses SSE for all floating-point operations. SSE <code>sqrtss</code>, <code>addss</code>, <code>mulss</code> etc. are IEEE 754 compliant and produce identical results for identical inputs on the same CPU architecture. The <code>SQRT()</code> macro in the decompiled output maps to SSE <code>sqrtss</code>.</p>
-<p><strong>WARNING</strong>: This guarantees determinism <strong>within the same platform</strong> (PC x64). Cross-platform determinism (PC vs console vs potential ARM builds) is NOT guaranteed by the code patterns alone -- that would require explicit rounding control or fixed-point arithmetic, which is not observed in the decompiled code.</p>
-<h3 id="22-what-could-break-determinism"><a class="anchor" href="#22-what-could-break-determinism">#</a>2.2 What Could Break Determinism</h3>
+<p>No parallel dispatch, no random ordering. Sequential iteration ensures deterministic collision pair processing regardless of memory allocation order.</p>
+<h3 id="sse-floating-point-on-x64"><a class="anchor" href="#sse-floating-point-on-x64">#</a>SSE Floating Point on x64</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (for same-platform determinism)</p>
+<p>TM2020 uses SSE for all floating-point operations. SSE instructions are IEEE 754 compliant and produce identical results for identical inputs on the same CPU architecture.</p>
+<p><strong>WARNING</strong>: This guarantees determinism <strong>within the same platform</strong> (PC x64). Cross-platform determinism is NOT guaranteed.</p>
+<h3 id="what-could-break-determinism"><a class="anchor" href="#what-could-break-determinism">#</a>What Could Break Determinism</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -273,7 +253,7 @@ do {
 <tr>
   <td style="text-align:left">Different executable version</td>
   <td style="text-align:left">HIGH</td>
-  <td style="text-align:left">Any recompilation can change float operation ordering due to compiler optimizations</td>
+  <td style="text-align:left">Recompilation changes float operation ordering</td>
 </tr>
 <tr>
   <td style="text-align:left">Different CPU architecture (x64 vs ARM)</td>
@@ -283,22 +263,17 @@ do {
 <tr>
   <td style="text-align:left">Different FPU rounding mode</td>
   <td style="text-align:left">MEDIUM</td>
-  <td style="text-align:left">Not observed to be explicitly set in decompiled code <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
+  <td style="text-align:left">Not observed to be set explicitly <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
   <td style="text-align:left">Multithreaded physics</td>
   <td style="text-align:left">LOW</td>
-  <td style="text-align:left">No parallel physics dispatch observed -- sequential iteration confirmed</td>
-</tr>
-<tr>
-  <td style="text-align:left">OS differences (Windows version)</td>
-  <td style="text-align:left">LOW</td>
-  <td style="text-align:left">SSE operations are CPU-level, not OS-level</td>
+  <td style="text-align:left">No parallel physics dispatch -- sequential confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Display FPS</td>
   <td style="text-align:left">NONE</td>
-  <td style="text-align:left">Physics completely decoupled from display</td>
+  <td style="text-align:left">Physics completely decoupled</td>
 </tr>
 <tr>
   <td style="text-align:left">GPU driver version</td>
@@ -313,37 +288,34 @@ do {
 </tbody>
 </table></div>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="23-ghost-validation-and-server-verification"><a class="anchor" href="#23-ghost-validation-and-server-verification">#</a>2.3 Ghost Validation and Server Verification</h3></summary>
+<summary><h3 id="ghost-validation-and-server-verification"><a class="anchor" href="#ghost-validation-and-server-verification">#</a>Ghost Validation and Server Verification</h3></summary>
 <div class="collapsible-content">
-<p><strong>Evidence</strong>: <code>12-architecture-deep-dive.md</code> states 0xC74 and 0x1072, <code>07-networking.md:861</code>, <code>14-tmnf-crossref.md:605</code> <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> (architectural evidence, not fully decompiled)</p>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
 <p>The ghost/replay validation system works in layers:</p>
 <ol>
-  <li><strong>Local ghost recording</strong>: The game records input events per-tick (steer, gas, brake). The class hierarchy includes <code>CInputReplay</code> for recording/replaying input sequences and <code>CPlugEntRecordData</code> for raw ghost frame data.</li>
+  <li><strong>Local recording</strong>: Input events per-tick (steer, gas, brake). <code>CInputReplay</code> records input sequences. <code>CPlugEntRecordData</code> stores raw ghost frame data.</li>
 </ol>
 <ol>
-  <li><strong>Local validation</strong>: State 0xC74 in <code>CGameCtnApp::UpdateGame</code> calls virtual <code>(*param_1 + 0x278)</code> for "Replay Validation". State 0x1072 calls <code>FUN_140eb3d60</code> for validation. These likely re-simulate the run from recorded inputs and verify the result matches.</li>
+  <li><strong>Local validation</strong>: State 0xC74 in <code>CGameCtnApp::UpdateGame</code> calls virtual <code>(*param_1 + 0x278)</code> for replay validation. State 0x1072 calls <code>FUN_140eb3d60</code>.</li>
 </ol>
 <ol>
-  <li><strong>Server-side verification</strong>: TM2020 uploads replay data to Nadeo's servers for anti-cheat verification:</li>
+  <li><strong>Server-side verification</strong>: TM2020 uploads replay data for anti-cheat verification:</li>
   <li><code>AntiCheatReplayChunkSize</code> -- chunked upload of replay data</li>
   <li><code>AntiCheatReplayMaxSize</code> / <code>AntiCheatReplayMaxSizeOnCheatReport</code> -- size limits</li>
-  <li><code>UploadAntiCheatReplayOnlyWhenUnblocked</code> -- gating</li>
   <li><code>UploadAntiCheatReplayForcedOnCheatReport</code> -- forced upload on suspicion</li>
 </ol>
 <ol>
-  <li><strong>Server resimulation</strong>: The server presumably re-runs the physics with the uploaded inputs to verify the claimed time. This is the fundamental anti-cheat mechanism: if the physics is deterministic, the server can verify any run independently.</li>
+  <li><strong>Server resimulation</strong>: The server re-runs physics with uploaded inputs to verify the claimed time.</li>
 </ol>
-<p><strong>Replay state copy size</strong>: When replaying (SimulationMode == 1 at vehicle+0x1C90), the code copies 2,168 bytes (<code>0x878</code>) of vehicle state from replay data:</p>
+<p><strong>Replay state copy size</strong>: During replay (SimulationMode == 1 at vehicle+0x1C90), the code copies 2,168 bytes (<code>0x878</code>) of vehicle state:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// NSceneVehiclePhy__PhysicsStep_BeforeMgrDynaUpdate.c:106
 FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code></pre></div>
-<p>This 2,168-byte block includes the complete force model configuration, velocity state, and all wheel data needed to reconstruct the exact vehicle state at any point.</p>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> The exact binary format of the ghost data (input keyframes, sample rate, compression). The <code>CPlugEntRecordData</code> class handles this but its serialization format is not decompiled.</p>
 <hr>
 </div>
 </details>
-<h2 id="3-input-pipeline-for-speedrunning"><a class="anchor" href="#3-input-pipeline-for-speedrunning">#</a>3. Input Pipeline for Speedrunning</h2>
-<h3 id="31-input-values-at-the-physics-level"><a class="anchor" href="#31-input-values-at-the-physics-level">#</a>3.1 Input Values at the Physics Level</h3>
-<p><strong>Evidence</strong>: <code>19-openplanet-intelligence.md</code> (CSceneVehicleVisState fields), <code>04-physics-vehicle.md:572</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (Openplanet reads these from live game memory)</p>
+<h2 id="how-the-input-pipeline-works-for-speedrunning"><a class="anchor" href="#how-the-input-pipeline-works-for-speedrunning">#</a>How the Input Pipeline Works for Speedrunning</h2>
+<h3 id="input-values-at-the-physics-level"><a class="anchor" href="#input-values-at-the-physics-level">#</a>Input Values at the Physics Level</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (Openplanet reads these from live game memory)</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -386,9 +358,9 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 </tr>
 </tbody>
 </table></div>
-<p><strong>Steering is a continuous float, NOT discretized to integer levels.</strong> The value ranges from -1.0 (full left) to +1.0 (full right). Whether the input hardware provides 256, 65536, or truly continuous values, the physics engine receives a 32-bit IEEE 754 float.</p>
-<h3 id="32-input-resolution-by-device-type"><a class="anchor" href="#32-input-resolution-by-device-type">#</a>3.2 Input Resolution by Device Type</h3>
-<p><strong>Evidence</strong>: Architectural inference, community knowledge <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
+<p><strong>Steering is a continuous float, NOT discretized to integer levels.</strong></p>
+<h3 id="input-resolution-by-device-type"><a class="anchor" href="#input-resolution-by-device-type">#</a>Input Resolution by Device Type</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -401,17 +373,12 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 <tr>
   <td style="text-align:left">Keyboard (digital)</td>
   <td style="text-align:left">3 values: -1.0, 0.0, +1.0</td>
-  <td style="text-align:left">Binary left/right, with progressive steering via input smoothing</td>
+  <td style="text-align:left">Binary left/right with progressive steering</td>
 </tr>
 <tr>
   <td style="text-align:left">Gamepad analog stick</td>
   <td style="text-align:left">~256 levels per axis</td>
-  <td style="text-align:left">Typical analog stick resolution</td>
-</tr>
-<tr>
-  <td style="text-align:left">Gamepad with full-range</td>
-  <td style="text-align:left">~65536 levels (16-bit ADC)</td>
-  <td style="text-align:left">High-end controllers</td>
+  <td style="text-align:left">Typical resolution</td>
 </tr>
 <tr>
   <td style="text-align:left">Steering wheel</td>
@@ -420,33 +387,20 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 </tr>
 </tbody>
 </table></div>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether TM2020 applies any input smoothing or dead-zone at the engine level before the value reaches <code>InputSteer</code>. The Openplanet VehicleState plugin reads the post-processing value. Keyboard steering in Trackmania is known to have a ramp-up curve (progressive steering), but it is unclear whether this is implemented in the input system or the force model.</p>
-<h3 id="33-when-is-input-sampled"><a class="anchor" href="#33-when-is-input-sampled">#</a>3.3 When Is Input Sampled?</h3>
-<p><strong>Evidence</strong>: Architectural analysis, <code>PhysicsStep_TM.c</code> pipeline <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>The physics pipeline per tick is:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. CSmArenaPhysics::Players_BeginFrame
-2. ArenaPhysics_CarPhyUpdate
-3. PhysicsStep_TM (per vehicle)
-   a. Read input (implicit -- input is in vehicle state before forces computed)
-   b. Adaptive sub-step loop:
-      - Collision detection
-      - ComputeForces (reads InputSteer, InputGasPedal, etc.)
-      - Force application
-      - Integration
-4. NSceneDyna::PhysicsStep_V2 (rigid body solver)</code></pre></div>
+<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether TM2020 applies input smoothing or dead-zone at the engine level before <code>InputSteer</code>.</p>
+<h3 id="when-input-is-sampled"><a class="anchor" href="#when-input-is-sampled">#</a>When Input Is Sampled</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
 <p>Input is sampled ONCE per 100Hz tick, BEFORE the sub-step loop begins. All sub-steps within a tick use the same input values. You cannot change steering mid-tick.</p>
-<p><strong>Implication for TAS</strong>: The finest input granularity is 10ms. You can change inputs every tick (100 times per second), but not faster. Sub-steps within a tick always use the same input.</p>
-<h3 id="34-input-to-force-pathway"><a class="anchor" href="#34-input-to-force-pathway">#</a>3.4 Input to Force Pathway</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__ComputeForces.c:142-162</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>Input values flow through this chain:</p>
+<p><strong>TAS implication</strong>: The finest input granularity is 10ms. You can change inputs 100 times per second, but not faster.</p>
+<h3 id="input-to-force-pathway"><a class="anchor" href="#input-to-force-pathway">#</a>Input to Force Pathway</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Input device -&gt; CInputEngine -&gt; Vehicle state InputSteer/InputGasPedal/etc.
     -&gt; PhysicsStep_TM reads vehicle state
     -&gt; NSceneVehiclePhy::ComputeForces dispatches to force model
-    -&gt; Force model (e.g., FUN_140851f00 for model 5/Stadium) reads inputs
-    -&gt; Computes tire forces, engine force, steering torque
-    -&gt; Applies forces to rigid body
+    -&gt; Force model reads inputs, computes tire/engine/steering forces
+    -&gt; Forces applied to rigid body
     -&gt; NSceneDyna integrates forces into velocity/position</code></pre></div>
-<p>The force model dispatch at <code>vehicle_model+0x1790</code> selects which function processes the input:</p>
+<p>Force model dispatch at <code>vehicle_model+0x1790</code>:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -489,10 +443,9 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 </tbody>
 </table></div>
 <hr>
-<h2 id="4-surface-effect-catalog-competitive-focus"><a class="anchor" href="#4-surface-effect-catalog-competitive-focus">#</a>4. Surface Effect Catalog (Competitive Focus)</h2>
-<h3 id="41-complete-surface-gameplay-effects"><a class="anchor" href="#41-complete-surface-gameplay-effects">#</a>4.1 Complete Surface Gameplay Effects</h3>
-<p><strong>Evidence</strong>: <code>NHmsCollision__StartPhyFrame.c:100-128</code>, <code>10-physics-deep-dive.md</code> section 6.1 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (string table addresses confirmed)</p>
-<p>Every surface gameplay effect in TM2020, with competitive implications:</p>
+<h2 id="surface-effects-that-matter-for-competition"><a class="anchor" href="#surface-effects-that-matter-for-competition">#</a>Surface Effects That Matter for Competition</h2>
+<h3 id="complete-surface-gameplay-effects"><a class="anchor" href="#complete-surface-gameplay-effects">#</a>Complete Surface Gameplay Effects</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (string table addresses confirmed)</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -505,7 +458,7 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 <tr>
   <td style="text-align:left"><code>Turbo</code></td>
   <td style="text-align:left"><code class="addr">0x141be126c</code></td>
-  <td style="text-align:left">Speed boost level 1. Force ramps UP linearly (see 4.2).</td>
+  <td style="text-align:left">Speed boost level 1. Force ramps UP linearly (see below).</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Turbo2</code></td>
@@ -540,7 +493,7 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 <tr>
   <td style="text-align:left"><code>Fragile</code></td>
   <td style="text-align:left"><code class="addr">0x141be12a8</code></td>
-  <td style="text-align:left">Car breaks on hard impact (see 4.3).</td>
+  <td style="text-align:left">Car breaks on hard impact.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>SlowMotion</code></td>
@@ -614,22 +567,20 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 </tr>
 </tbody>
 </table></div>
-<p><strong>Critical note</strong>: Gameplay effects are NOT driven by materials. All 208 materials in the game have <code>DGameplayId(None)</code>. Effects come from block/item trigger zones, not surface textures.</p>
-<h3 id="42-turbo-mechanics-critical-finding"><a class="anchor" href="#42-turbo-mechanics-critical-finding">#</a>4.2 Turbo Mechanics -- CRITICAL FINDING</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__ComputeForces.c:89-111</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (decompiled code)</p>
-<p>The turbo/boost force in TM2020 is computed as:</p>
+<p>Gameplay effects are NOT driven by materials. All 208 materials have <code>DGameplayId(None)</code>. Effects come from block/item trigger zones, not surface textures.</p>
+<h3 id="turbo-mechanics-force-ramps-up-not-down"><a class="anchor" href="#turbo-mechanics-force-ramps-up-not-down">#</a>Turbo Mechanics -- Force Ramps UP, Not Down</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The turbo/boost force ramps UP linearly from 0 to maximum:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// ComputeForces lines 105-106
 float t = (float)(current_tick - start_tick) / (float)duration;
 float force = t * strength * model_scale;</code></pre></div>
-<p><strong>The boost force RAMPS UP linearly from 0 to maximum.</strong></p>
 <p>At <code>t=0</code> (moment you hit the turbo pad): force = 0. At <code>t=1</code> (boost about to expire): force = strength * model_scale.</p>
 <p>This is the <strong>OPPOSITE</strong> of TMNF, where turbo force decayed from maximum to 0.</p>
 <p><strong>Competitive implications</strong>:</p>
 <ul>
-  <li>In TM2020, you accelerate MORE as the boost is about to expire</li>
+  <li>You accelerate MORE as the boost expires</li>
   <li>The moment you touch a turbo pad, you get almost nothing</li>
   <li>Maximum acceleration happens at the very end of the boost duration</li>
-  <li>For TAS: this means the timing of WHEN you hit a turbo pad relative to corners matters differently than in TMNF</li>
 </ul>
 <p><strong>Boost parameters</strong> (per vehicle):</p>
 <div class="table-wrapper"><table>
@@ -658,74 +609,22 @@ float force = t * strength * model_scale;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Boost initialization</strong>: The start time is set to the current tick when the boost first activates:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (*(int *)(lVar6 + 0x16e8) == -1) {
-    *(uint *)(lVar6 + 0x16e8) = param_5;  // record current tick
-}</code></pre></div>
-<p><strong>Boost event dispatch</strong>: When a boost activates, an event is dispatched to the arena (via <code>FUN_1407d6200</code>), but only if:</p>
-<ul>
-  <li>Event callback exists (<code><em>(longlong </em>)(param_1 + 8) != 0</code>)</li>
-  <li>Events not disabled (<code>(<em>(byte </em>)(lVar6 + 0x1c7c) & 4) == 0</code>)</li>
-  <li>Player is assigned (<code><em>(char </em>)(lVar6 + 0x1c78) != -1</code>)</li>
-</ul>
-<h3 id="43-fragile-surface-exact-break-condition"><a class="anchor" href="#43-fragile-surface-exact-break-condition">#</a>4.3 Fragile Surface -- Exact Break Condition</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:191-195</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The car breaks on a fragile surface when ALL THREE conditions are met simultaneously:</p>
+<h3 id="fragile-surface-exact-break-condition"><a class="anchor" href="#fragile-surface-exact-break-condition">#</a>Fragile Surface -- Exact Break Condition</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The car breaks on a fragile surface when ALL THREE conditions are met:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if ((((*(uint *)(lVar9 + 0x1c7c) &amp; 0x1800) == 0x1800) &amp;&amp;       // Condition 1
     (DAT_141d1ef7c &lt; *(float *)(lVar9 + 0x1c8c))) &amp;&amp;            // Condition 2
    (1 &lt; (*(uint *)(lVar9 + 0x128c) &amp; 0xf) - 2)) {              // Condition 3
     FUN_1407d2870(param_1, lVar9, *param_4);                      // BREAK!
 }</code></pre></div>
-<p><strong>Condition 1</strong>: Bits 11 AND 12 of <code>ContactPhyFlags</code> (vehicle+0x1C7C) must BOTH be set (mask 0x1800). These are collision detection flags set during the sub-step loop.</p>
-<p><strong>Condition 2</strong>: <code>ContactThreshold</code> (vehicle+0x1C8C, a float) must exceed the global threshold <code>DAT_141d1ef7c</code>. This is a collision severity metric -- gentle landings pass, hard impacts fail.</p>
-<p><strong>Condition 3</strong>: The status nibble (vehicle+0x128C & 0xF) must NOT be 2 or 3. Due to unsigned arithmetic: <code>(nibble - 2)</code> wraps for values 0 and 1, making <code>1 < 0xFFFFFFFE</code> true. So nibble values 0, 1, and 4+ all pass. Only values 2 and 3 are excluded.</p>
-<p><strong>Competitive implication</strong>: The fragile break is determined by collision severity at <code>vehicle+0x1C8C</code> exceeding a threshold. This is NOT simply "any contact = break" -- there is a force/impact threshold. Gentle landings on fragile surfaces should survive. The exact threshold value <code>DAT_141d1ef7c</code> is a float at address <code class="addr">0x141d1ef7c</code> in the binary -- <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> what that value is.</p>
-<h3 id="44-surface-friction-system"><a class="anchor" href="#44-surface-friction-system">#</a>4.4 Surface Friction System</h3>
-<p><strong>Evidence</strong>: <code>Tunings_CoefFriction_CoefAcceleration.c:31-45</code>, <code>10-physics-deep-dive.md</code> section 5.4 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The friction system has two layers:</p>
-<p><strong>Layer 1: Per-surface material friction</strong> (from <code>EPlugSurfaceMaterialId</code>):</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Surface ID</th>
-  <th style="text-align:left">Physics Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>Asphalt</code></td>
-  <td style="text-align:left">High grip (road surfaces, platforms)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Concrete</code></td>
-  <td style="text-align:left">Structural, moderate grip</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Dirt</code></td>
-  <td style="text-align:left">Lower grip, off-road</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Grass</code></td>
-  <td style="text-align:left">Low grip</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Ice</code> / <code>RoadIce</code></td>
-  <td style="text-align:left">Very low grip</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Rubber</code></td>
-  <td style="text-align:left">Bouncy (track borders)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Plastic</code></td>
-  <td style="text-align:left">Inflatables/obstacles</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>Metal</code></td>
-  <td style="text-align:left">Metallic, moderate</td>
-</tr>
-</tbody>
-</table></div>
+<p><strong>Condition 1</strong>: Bits 11 AND 12 of <code>ContactPhyFlags</code> (vehicle+0x1C7C) must BOTH be set (mask 0x1800).</p>
+<p><strong>Condition 2</strong>: <code>ContactThreshold</code> (vehicle+0x1C8C, a float) must exceed global threshold <code>DAT_141d1ef7c</code>. Gentle landings pass; hard impacts fail.</p>
+<p><strong>Condition 3</strong>: Status nibble (vehicle+0x128C & 0xF) must NOT be 2 or 3.</p>
+<p>The fragile break depends on collision severity, not simply "any contact." Gentle landings on fragile surfaces should survive. The exact threshold value <code>DAT_141d1ef7c</code> is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>.</p>
+<h3 id="surface-friction-system"><a class="anchor" href="#surface-friction-system">#</a>Surface Friction System</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The friction system has three layers:</p>
+<p><strong>Layer 1: Per-surface material friction</strong> (<code>EPlugSurfaceMaterialId</code>): Asphalt (high grip), Dirt (lower), Grass (low), Ice (very low), etc.</p>
 <p><strong>Layer 2: Global tuning coefficients</strong> (per-player modifiers):</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -753,7 +652,7 @@ float force = t * strength * model_scale;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p>These can be modified via ManiaScript: <code>SetPlayer_Delayed_AdherenceCoef</code> likely modifies <code>CoefFriction</code>, <code>SetPlayer_Delayed_AccelCoef</code> modifies <code>CoefAcceleration</code>. The "Delayed" prefix indicates a 250ms application delay.</p>
+<p>Modifiable via ManiaScript: <code>SetPlayer_Delayed_AdherenceCoef</code> and <code>SetPlayer_Delayed_AccelCoef</code>. The "Delayed" prefix indicates a 250ms application delay.</p>
 <p><strong>Layer 3: Constraint solver</strong> (iterative):</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -786,100 +685,65 @@ float force = t * strength * model_scale;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p>This is a <strong>sequential impulse / Gauss-Seidel constraint solver</strong> with separate iteration counts for static friction, dynamic friction, velocity, and position. More iterations = more accurate but slower.</p>
-<h3 id="45-reactor-boost-mechanics"><a class="anchor" href="#45-reactor-boost-mechanics">#</a>4.5 Reactor Boost Mechanics</h3>
-<p><strong>Evidence</strong>: Surface gameplay strings, <code>10-physics-deep-dive.md</code> section 6.1 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (strings), <span class="badge badge-plausible">PLAUSIBLE</span> (behavioral interpretation)</p>
-<p>TM2020 has four reactor boost variants:</p>
+<p>This is a <strong>sequential impulse / Gauss-Seidel constraint solver</strong> with separate iteration counts for static friction, dynamic friction, velocity, and position.</p>
+<h3 id="reactor-boost-mechanics"><a class="anchor" href="#reactor-boost-mechanics">#</a>Reactor Boost Mechanics</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (strings), <span class="badge badge-plausible">PLAUSIBLE</span> (behavior)</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Variant</th>
-  <th style="text-align:left">String</th>
   <th style="text-align:left">Behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
   <td style="text-align:left"><code>ReactorBoost_Legacy</code></td>
-  <td style="text-align:left">Non-directional</td>
-  <td style="text-align:left">Boost in car's current direction (barrel-roll era)</td>
+  <td style="text-align:left">Boost in car's current direction</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ReactorBoost2_Legacy</code></td>
-  <td style="text-align:left">Non-directional, stronger</td>
   <td style="text-align:left">Same mechanics, higher force</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ReactorBoost_Oriented</code></td>
-  <td style="text-align:left"><strong>Directional</strong></td>
   <td style="text-align:left">Boost in the pad's orientation direction</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ReactorBoost2_Oriented</code></td>
-  <td style="text-align:left"><strong>Directional, stronger</strong></td>
   <td style="text-align:left">Same, higher force</td>
 </tr>
 </tbody>
 </table></div>
-<p>The "Oriented" variants are NEW in TM2020 (not present in TMNF/MP). They apply force in the direction the pad is facing, not the direction the car is traveling. This matters for TAS because the approach angle to an oriented reactor pad affects the resulting trajectory.</p>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> The exact force magnitude and duration for each reactor boost level. These values are stored in GBX resource files (tuning data), not hardcoded in the executable.</p>
+<p>The "Oriented" variants are NEW in TM2020. They apply force in the direction the pad faces, not the direction you travel. Approach angle to an oriented reactor pad affects trajectory.</p>
+<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Exact force magnitude and duration for each level. Values are in GBX resource files.</p>
 <hr>
-<h2 id="5-checkpoint-respawn-system"><a class="anchor" href="#5-checkpoint-respawn-system">#</a>5. Checkpoint & Respawn System</h2>
-<h3 id="51-what-state-is-saved-at-a-checkpoint"><a class="anchor" href="#51-what-state-is-saved-at-a-checkpoint">#</a>5.1 What State Is Saved at a Checkpoint</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__ComputeForces.c:200-218</code> (transform copy pattern), <code>10-physics-deep-dive.md</code> section 6.5 <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> (inferred from replay state copy size and transform patterns)</p>
-<p>When the car crosses a checkpoint, the game saves enough state to restore the vehicle. The replay system copies <strong>2,168 bytes</strong> (0x878) of vehicle state:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Vehicle state copy during replay
-FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code></pre></div>
-<p>This 2,168-byte block starting at vehicle+0x1280 includes:</p>
-<ul>
-  <li>Vehicle unique ID (+0x1280)</li>
-  <li>Status flags (+0x128C)</li>
-  <li>Velocity vectors (+0x1348 to +0x135C)</li>
-  <li>Force model type (+0x1790, via model pointer)</li>
-  <li>All four wheel state blocks (stride 0xB8 starting at +0x1790)</li>
-  <li>Boost state (+0x16E0/E4/E8)</li>
-  <li>Contact history and physics flags</li>
-</ul>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether checkpoint state saves the exact same 2,168-byte block as the replay system, or a different subset. The replay copy is confirmed; the checkpoint save mechanism is not independently decompiled.</p>
-<h3 id="52-transform-state-position-rotation"><a class="anchor" href="#52-transform-state-position-rotation">#</a>5.2 Transform State (Position + Rotation)</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:199-215</code>, <code>NSceneVehiclePhy__ComputeForces.c:200-218</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The vehicle's world transform is stored as 112 bytes at vehicle+0x90 to vehicle+0x100:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// 28 x 4-byte values = 112 bytes, copied from current (+0x90) to previous (+0x104)
-*(lVar + 0x104) = *(lVar + 0x90);   // Transform[0]
-*(lVar + 0x10C) = *(lVar + 0x98);   // Transform[1]
-// ... 12 more 8-byte copies ...
-*(lVar + 0x174) = *(lVar + 0x100);  // Transform[16]</code></pre></div>
-<p>This is a 4x4-ish matrix (possibly 3x4 rotation+translation + extras). The copy from "current" to "previous" happens at the START of each physics step for interpolation and collision backtracking.</p>
-<h3 id="53-respawn-position"><a class="anchor" href="#53-respawn-position">#</a>5.3 Respawn Position</h3>
-<p><strong>Evidence</strong>: Architectural inference from vehicle state structure <strong>Confidence</strong>: <span class="badge badge-speculative">SPECULATIVE</span></p>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether respawn restores the exact saved transform or applies adjustments (e.g., placing the car slightly above the checkpoint surface to avoid ground intersection). The replay state copy is a bitwise memcpy of 2,168 bytes, which suggests an EXACT state restoration, not an approximate one.</p>
-<h3 id="54-does-respawning-reset-physics-state"><a class="anchor" href="#54-does-respawning-reset-physics-state">#</a>5.4 Does Respawning Reset Physics State?</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__ComputeForces.c:173-199</code> (post-switch state reset) <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
+<h2 id="checkpoint-and-respawn-system"><a class="anchor" href="#checkpoint-and-respawn-system">#</a>Checkpoint and Respawn System</h2>
+<h3 id="what-state-is-saved-at-a-checkpoint"><a class="anchor" href="#what-state-is-saved-at-a-checkpoint">#</a>What State Is Saved at a Checkpoint</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
+<p>The replay system copies <strong>2,168 bytes</strong> (0x878) of vehicle state starting at vehicle+0x1280:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code></pre></div>
+<p>This block includes: vehicle unique ID, status flags, velocity vectors, force model type, all four wheel state blocks, boost state, and contact history.</p>
+<h3 id="transform-state-position-rotation"><a class="anchor" href="#transform-state-position-rotation">#</a>Transform State (Position + Rotation)</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The vehicle's world transform is stored as 112 bytes at vehicle+0x90. The copy from "current" to "previous" happens at the START of each physics step for interpolation and collision backtracking.</p>
+<h3 id="respawn-resets-physics-state"><a class="anchor" href="#respawn-resets-physics-state">#</a>Respawn Resets Physics State</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
 <p>The post-force-model reset code zeros extensive physics state:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Reset 4 wheel state blocks, stride 0xB8 (184 bytes each):
-// For each wheel:
-//   previous = current; current = 0; timer = 0; model_type = 0
 *(lVar6 + 0x17b0) = *(lVar6 + 0x17b4);  // prev = current
 *(lVar6 + 0x17b4) = 0;                    // current = 0
 *(lVar6 + 0x17c8) = 0;                    // timer1 = 0
 *(lVar6 + 0x17c4) = 0;                    // timer2 = 0
 *(lVar6 + 0x1794) = 0;                    // state = 0
 *(lVar6 + 0x1790) = 0;                    // force model type = 0</code></pre></div>
-<p>This reset triggers when <code>vehicle_model+0x238 - 5U > 1</code> (a game-mode/class check) AND a condition function returns true. This is likely the respawn/checkpoint reset path.</p>
-<p>Additionally, <code>ComputeForces</code> and <code>PairComputeForces</code> both zero the following on every step for vehicles in reset state (status nibble == 1):</p>
-<ul>
-  <li>Force accumulators at +0x1584, +0x158C</li>
-  <li>Three force vectors set to zero via <code>FUN_1407be380</code>, <code>FUN_1407be4d0</code>, <code>FUN_1407bdc60</code>, <code>FUN_1407bde90</code></li>
-</ul>
-<p><strong>Competitive implication</strong>: A respawn appears to fully reset wheel state, force accumulators, and timers. The car should start from the checkpoint with clean physics state -- no residual forces, no accumulated slip, no ongoing turbo.</p>
-<h3 id="55-discontinuitycount"><a class="anchor" href="#55-discontinuitycount">#</a>5.5 DiscontinuityCount</h3>
-<p><strong>Evidence</strong>: <code>19-openplanet-intelligence.md</code> (CSceneVehicleVisState) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The <code>DiscontinuityCount</code> field in the visual state increments on teleport/reset. This is how the rendering system knows the car has been discontinuously moved (e.g., respawn) and should not interpolate between the old and new positions.</p>
+<p>A respawn fully resets wheel state, force accumulators, and timers. The car starts from the checkpoint with clean physics state -- no residual forces, no accumulated slip, no ongoing turbo.</p>
+<h3 id="discontinuitycount"><a class="anchor" href="#discontinuitycount">#</a>DiscontinuityCount</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The <code>DiscontinuityCount</code> field in the visual state increments on teleport/reset. This tells the renderer not to interpolate between old and new positions.</p>
 <hr>
-<h2 id="6-speed-limits-edge-cases"><a class="anchor" href="#6-speed-limits-edge-cases">#</a>6. Speed Limits & Edge Cases</h2>
-<h3 id="61-maximum-velocity-speed-cap"><a class="anchor" href="#61-maximum-velocity-speed-cap">#</a>6.1 Maximum Velocity (Speed Cap)</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__ComputeForces.c:112-126</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The speed cap is enforced in <code>NSceneVehiclePhy::ComputeForces</code>:</p>
+<h2 id="speed-limits-and-edge-cases"><a class="anchor" href="#speed-limits-and-edge-cases">#</a>Speed Limits and Edge Cases</h2>
+<h3 id="maximum-velocity-speed-cap"><a class="anchor" href="#maximum-velocity-speed-cap">#</a>Maximum Velocity (Speed Cap)</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">fVar9 = *(float *)(local_118 + 0x2f0);   // MaxSpeed from model
 fVar8 = vx*vx + vy*vy + vz*vz;           // speed squared (3D magnitude)
 
@@ -891,25 +755,13 @@ if ((fVar9 * fVar9 &lt; fVar8) &amp;&amp; (DAT_141d1ed34 &lt; fVar9)) {
     vz *= fVar9;                          // clamp z
     FUN_140845270(uVar3, lVar6, &amp;velocity);  // write back
 }</code></pre></div>
-<p>Key observations:</p>
-<ol>
-  <li>The speed cap is stored at <strong>vehicle_model+0x2F0</strong> as a float</li>
-  <li>It is a <strong>3D magnitude cap</strong> -- not per-axis. The car's total speed <code>sqrt(vx^2 + vy^2 + vz^2)</code> is capped, not individual components</li>
-  <li>The velocity is scaled uniformly to match MaxSpeed exactly, preserving direction</li>
-  <li>There is a minimum threshold <code>DAT_141d1ed34</code> -- speed capping is only applied if MaxSpeed exceeds this threshold (prevents division by near-zero)</li>
-</ol>
-<p><strong>TMNF reference</strong>: TMNF's StadiumCar had MaxSpeed = 277.778 m/s (1000 km/h). TM2020's value is stored in GBX tuning data and is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> from the binary alone, but the community consensus is around 1000 km/h for Stadium.</p>
-<h3 id="62-angular-velocity-limits"><a class="anchor" href="#62-angular-velocity-limits">#</a>6.2 Angular Velocity Limits</h3>
-<p><strong>Evidence</strong>: Decompiled code patterns <strong>Confidence</strong>: <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></p>
-<p>No explicit angular velocity clamping was found in the decompiled physics functions. The sub-stepping algorithm uses angular velocity magnitude for step count computation (ensuring more sub-steps for fast-spinning vehicles), but does not clamp it.</p>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether angular velocity is capped elsewhere (in the constraint solver, or in the force model functions that were not decompiled).</p>
-<h3 id="63-sub-step-count-vs-speed"><a class="anchor" href="#63-sub-step-count-vs-speed">#</a>6.3 Sub-Step Count vs Speed</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:71-132</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The sub-step formula:</p>
+<p>The speed cap is stored at <strong>vehicle_model+0x2F0</strong>. It is a <strong>3D magnitude cap</strong> -- velocity is scaled uniformly to preserve direction. A minimum threshold <code>DAT_141d1ed34</code> prevents division by near-zero.</p>
+<p>TMNF's StadiumCar had MaxSpeed = 277.778 m/s (1000 km/h). TM2020's value is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> from the binary, but community consensus is ~1000 km/h for Stadium.</p>
+<h3 id="sub-step-count-vs-speed"><a class="anchor" href="#sub-step-count-vs-speed">#</a>Sub-Step Count vs Speed</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>total_speed = |linear_vel| + |angular_vel_body| + |angular_vel1| + |angular_vel2|
 num_substeps = floor((total_speed * velocity_scale * dt) / step_size_param) + 1
 num_substeps = clamp(num_substeps, 1, 1000)</code></pre></div>
-<p>At higher speeds, MORE sub-steps are computed per tick:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -942,51 +794,30 @@ num_substeps = clamp(num_substeps, 1, 1000)</code></pre></div>
 <tr>
   <td style="text-align:left">Above cap + spinning</td>
   <td style="text-align:left">Up to 1000</td>
-  <td style="text-align:left">Maximum (hard cap)</td>
+  <td style="text-align:left">Hard cap</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Does going faster reduce physics accuracy?</strong> NOT directly -- faster speed increases sub-step count, maintaining stability. However, at the 1000 sub-step cap, further speed increases are NOT compensated with more sub-steps. Above this threshold, each sub-step covers a larger distance, potentially missing thin collision geometry.</p>
-<h3 id="64-the-1000-sub-step-cap"><a class="anchor" href="#64-the-1000-sub-step-cap">#</a>6.4 The 1000 Sub-Step Cap</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:126-131</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="the-1000-sub-step-cap"><a class="anchor" href="#the-1000-sub-step-cap">#</a>The 1000 Sub-Step Cap</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (uVar16 &lt; 0x3e9) {  // &lt; 1001
-    // Normal path: compute sub_dt normally
+    // Normal path
 } else {
-    uVar17 = 999;       // Cap at 999 iterations + 1 remainder = 1000 total
+    uVar17 = 999;       // Cap at 999 + 1 remainder = 1000 total
     fVar26 = (float)param_4[2] / DAT_141d1fa9c;  // dt / 1000.0
 }</code></pre></div>
-<p>When the computed sub-step count exceeds 1000, it is hard-capped at 1000. The sub-step time becomes <code>dt / 1000.0</code> regardless of speed. TMNF allowed up to 10,000 sub-steps -- TM2020 reduced this 10x.</p>
-<p><strong>Competitive implication for extreme TAS scenarios</strong>: At absurdly high speeds (achievable through bugs or chained boosts), the 1000 sub-step cap means the physics simulation becomes less accurate. Collision detection with thin walls could fail at extreme velocities. This is a known issue in speedrunning communities as "noclipping through walls."</p>
+<p>TMNF allowed up to 10,000 sub-steps. TM2020 reduced this 10x. At absurdly high speeds, collision detection with thin walls can fail. This is the "noclipping through walls" issue.</p>
 <hr>
-<h2 id="7-race-timer-internals"><a class="anchor" href="#7-race-timer-internals">#</a>7. Race Timer Internals</h2>
-<h3 id="71-race-start-time"><a class="anchor" href="#71-race-start-time">#</a>7.1 Race Start Time</h3>
-<p><strong>Evidence</strong>: <code>19-openplanet-intelligence.md</code> (CSceneVehicleVisState) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The <code>RaceStartTime</code> field (type: int) in the vehicle visual state records when the race begins. This is an integer tick timestamp.</p>
-<h3 id="72-timer-precision"><a class="anchor" href="#72-timer-precision">#</a>7.2 Timer Precision</h3>
-<p><strong>Evidence</strong>: Internal timing system analysis <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>The race timer displays millisecond precision (e.g., 0:42.123), but the physics tick rate is 100Hz (10ms per tick). This means:</p>
-<ul>
-  <li><strong>Physics quantization</strong>: The car's state changes every 10ms</li>
-  <li><strong>Timer precision</strong>: The timer COUNTS in millisecond precision</li>
-  <li><strong>Effective precision</strong>: Finish times should be quantized to 10ms boundaries (multiples of 0.010s)</li>
-</ul>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether the game uses a sub-tick interpolation system for the finish line trigger that provides true millisecond precision, or whether all times are effectively rounded to the nearest 10ms. Community observation suggests times ARE quantized to 10ms (you never see a time like 0:42.123 -- only 0:42.120 or 0:42.130), but this needs empirical verification.</p>
-<p><strong>TMNF reference</strong>: TMNF times are confirmed to be quantized to 10ms (hundredths of a second displayed as thousandths ending in 0). TM2020 likely follows the same pattern.</p>
-<h3 id="73-when-does-the-timer-start"><a class="anchor" href="#73-when-does-the-timer-start">#</a>7.3 When Does the Timer Start?</h3>
-<p><strong>Evidence</strong>: Architectural inference <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>The timer starts when the car crosses the start line trigger zone (or when the countdown finishes in race mode). The <code>RaceStartTime</code> integer field records this as a tick count.</p>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> The exact mechanism: is it the first tick where the car's collision geometry overlaps the start trigger, or the first tick after the overlap is detected? A one-tick difference is 10ms.</p>
-<h3 id="74-when-does-the-timer-stop"><a class="anchor" href="#74-when-does-the-timer-stop">#</a>7.4 When Does the Timer Stop?</h3>
-<p><strong>Evidence</strong>: Architectural inference <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>The timer stops when the car crosses the finish line trigger zone. The same question applies: is it the tick of overlap detection, or the tick after?</p>
-<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether the finish time is the tick of detection minus the start tick (giving a multiple of 10ms), or whether there is interpolation.</p>
-<h3 id="75-checkpoint-time-recording"><a class="anchor" href="#75-checkpoint-time-recording">#</a>7.5 Checkpoint Time Recording</h3>
-<p><strong>Evidence</strong>: <code>19-openplanet-intelligence.md</code>, architectural inference <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>Checkpoint times are recorded as the tick difference between crossing the checkpoint and the race start. Like finish times, these should be quantized to 10ms.</p>
+<h2 id="race-timer-internals"><a class="anchor" href="#race-timer-internals">#</a>Race Timer Internals</h2>
+<h3 id="timer-precision"><a class="anchor" href="#timer-precision">#</a>Timer Precision</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
+<p>The race timer displays millisecond precision (0:42.123), but the physics tick rate is 100Hz (10ms per tick). Finish times should be quantized to 10ms boundaries.</p>
+<p><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Whether the game uses sub-tick interpolation for finish line triggers. Community observation suggests times ARE quantized to 10ms (you never see 0:42.123 -- only 0:42.120 or 0:42.130).</p>
+<h3 id="racestarttime"><a class="anchor" href="#racestarttime">#</a>RaceStartTime</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>The <code>RaceStartTime</code> field (int) in the vehicle visual state records when the race begins as an integer tick timestamp.</p>
 <hr>
-<h2 id="8-tmnf-vs-tm2020-for-competitive-play"><a class="anchor" href="#8-tmnf-vs-tm2020-for-competitive-play">#</a>8. TMNF vs TM2020 for Competitive Play</h2>
-<h3 id="81-physics-changes-summary"><a class="anchor" href="#81-physics-changes-summary">#</a>8.1 Physics Changes Summary</h3>
-<p><strong>Evidence</strong>: <code>14-tmnf-crossref.md</code>, <code>10-physics-deep-dive.md</code> section 11 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (structural comparisons)</p>
+<h2 id="tmnf-vs-tm2020-for-competitive-play"><a class="anchor" href="#tmnf-vs-tm2020-for-competitive-play">#</a>TMNF vs TM2020 for Competitive Play</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1019,7 +850,7 @@ num_substeps = clamp(num_substeps, 1, 1000)</code></pre></div>
   <td style="text-align:left"><strong>Integration</strong></td>
   <td style="text-align:left">Forward Euler</td>
   <td style="text-align:left">Forward Euler</td>
-  <td style="text-align:left">Same method, same stability characteristics</td>
+  <td style="text-align:left">Same method</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Tick rate</strong></td>
@@ -1037,19 +868,7 @@ num_substeps = clamp(num_substeps, 1, 1000)</code></pre></div>
   <td style="text-align:left"><strong>Velocity inputs for sub-stepping</strong></td>
   <td style="text-align:left">2 (linear + angular)</td>
   <td style="text-align:left">4 (linear + 3 angular)</td>
-  <td style="text-align:left">TM2020 accounts for more motion components</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Architecture</strong></td>
-  <td style="text-align:left">x86 (32-bit, x87 FPU)</td>
-  <td style="text-align:left">x64 (SSE)</td>
-  <td style="text-align:left">Different floating-point behavior</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Vehicle types</strong></td>
-  <td style="text-align:left">Stadium only</td>
-  <td style="text-align:left">Stadium, Rally, Snow, Desert</td>
-  <td style="text-align:left">Dramatically expanded</td>
+  <td style="text-align:left">TM2020 accounts for more motion</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Friction solver</strong></td>
@@ -1059,68 +878,41 @@ num_substeps = clamp(num_substeps, 1, 1000)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="82-the-turbo-reversal-most-important-difference"><a class="anchor" href="#82-the-turbo-reversal-most-important-difference">#</a>8.2 The Turbo Reversal -- Most Important Difference</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__ComputeForces.c:105-106</code>, <code>14-tmnf-crossref.md:504</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>This cannot be overstated: <strong>TM2020 turbo ramps UP, TMNF turbo decayed DOWN.</strong></p>
-<p>TMNF: <code>force(t) = strength <em> (1 - t/duration)</code> -- strongest at the start, fading to zero TM2020: <code>force(t) = (t/duration) </em> strength * modelScale</code> -- zero at start, maximum at end</p>
-<p>If you are a TMNF speedrunner transitioning to TM2020, your intuition about turbo pads is inverted. In TMNF, you wanted to hit the turbo pad early to get maximum immediate boost. In TM2020, the boost builds over time, so the total impulse is the same regardless of when you hit it -- but the acceleration profile is back-loaded.</p>
-<h3 id="83-sub-step-cap-reduction-10000-1000"><a class="anchor" href="#83-sub-step-cap-reduction-10000-1000">#</a>8.3 Sub-Step Cap Reduction (10,000 -> 1,000)</h3>
-<p><strong>Evidence</strong>: <code>PhysicsStep_TM.c:126</code>, <code>14-tmnf-crossref.md:191</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>TMNF allowed up to 10,000 sub-steps per tick. TM2020 allows only 1,000. At extreme speeds, TM2020 is 10x less granular in its collision detection. This may explain why TM2020 has more wall-clipping issues at extreme velocities compared to TMNF.</p>
-<h3 id="84-new-surface-effects"><a class="anchor" href="#84-new-surface-effects">#</a>8.4 New Surface Effects</h3>
-<p><strong>Evidence</strong>: <code>10-physics-deep-dive.md</code> section 6.1 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>Effects not present in TMNF:</p>
-<ul>
-  <li><code>ReactorBoost_Oriented</code> / <code>ReactorBoost2_Oriented</code> (directional boost)</li>
-  <li><code>Bumper</code> / <code>Bumper2</code> (bump surfaces)</li>
-  <li><code>SlowMotion</code> (time manipulation)</li>
-  <li><code>Cruise</code> (fixed speed)</li>
-  <li><code>VehicleTransform_*</code> (car type switching)</li>
-  <li><code>TurboRoulette</code> (randomized boost: <code>TurboRoulette_1/2/3</code>)</li>
-</ul>
-<h3 id="85-suspension-model-evolution"><a class="anchor" href="#85-suspension-model-evolution">#</a>8.5 Suspension Model Evolution</h3>
-<p><strong>Evidence</strong>: <code>14-tmnf-crossref.md:400-410</code> <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>TMNF used game-specific parameter names: <code>AbsorbingValKi</code> (spring stiffness), <code>AbsorbingValKa</code> (damping). TM2020 uses standard engineering notation: <code>Spring.FreqHz</code> (natural frequency in Hz), <code>Spring.DampingRatio</code> (critical damping ratio). The underlying spring-damper model is equivalent:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>TMNF:   F = Ki * (rest - compression) - Ka * velocity
-TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
-         DampingRatio = Ka / (2 * sqrt(Ki * mass))</code></pre></div>
+<h3 id="the-turbo-reversal"><a class="anchor" href="#the-turbo-reversal">#</a>The Turbo Reversal</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>TM2020 turbo ramps UP, TMNF turbo decayed DOWN.</strong></p>
+<p>TMNF: <code>force(t) = strength <em> (1 - t/duration)</code> -- strongest at the start TM2020: <code>force(t) = (t/duration) </em> strength * modelScale</code> -- zero at start, maximum at end</p>
+<p>If you are a TMNF speedrunner, your intuition about turbo pads is inverted.</p>
 <hr>
-<h2 id="9-tas-relevant-technical-details"><a class="anchor" href="#9-tas-relevant-technical-details">#</a>9. TAS-Relevant Technical Details</h2>
-<h3 id="91-minimum-input-granularity"><a class="anchor" href="#91-minimum-input-granularity">#</a>9.1 Minimum Input Granularity</h3>
+<h2 id="tas-relevant-technical-details"><a class="anchor" href="#tas-relevant-technical-details">#</a>TAS-Relevant Technical Details</h2>
+<h3 id="minimum-input-granularity"><a class="anchor" href="#minimum-input-granularity">#</a>Minimum Input Granularity</h3>
 <ul>
-  <li><strong>Time</strong>: 10ms per tick (100Hz). You can change input every tick.</li>
-  <li><strong>Steering</strong>: float -1.0 to +1.0. Continuous within float precision (~7 significant digits).</li>
-  <li><strong>Throttle</strong>: float 0.0 to 1.0. Same float precision.</li>
-  <li><strong>Brake</strong>: float 0.0 to 1.0. Same float precision.</li>
+  <li><strong>Time</strong>: 10ms per tick (100Hz)</li>
+  <li><strong>Steering</strong>: float -1.0 to +1.0 (~7 significant digits)</li>
+  <li><strong>Throttle</strong>: float 0.0 to 1.0</li>
+  <li><strong>Brake</strong>: float 0.0 to 1.0</li>
 </ul>
-<p>For a TAS tool, the input space is: 100 decision points per second, each with 3 continuous float values (steer, gas, brake) plus a boolean (is_braking).</p>
-<h3 id="92-sub-step-determinism-for-tas-replay"><a class="anchor" href="#92-sub-step-determinism-for-tas-replay">#</a>9.2 Sub-Step Determinism for TAS Replay</h3>
-<p>If you record a TAS as a sequence of <code>(tick, steer, gas, brake)</code> tuples and replay them, the result is deterministic IF:</p>
+<p>The input space per second: 100 decision points, each with 3 continuous floats plus a boolean.</p>
+<h3 id="sub-step-determinism-for-tas-replay"><a class="anchor" href="#sub-step-determinism-for-tas-replay">#</a>Sub-Step Determinism for TAS Replay</h3>
+<p>Record a TAS as <code>(tick, steer, gas, brake)</code> tuples. Results are deterministic IF:</p>
 <ol>
-  <li>Same executable version (same binary)</li>
+  <li>Same executable version</li>
   <li>Same map (same collision geometry)</li>
-  <li>Same initial state (same starting position/orientation)</li>
+  <li>Same initial state</li>
   <li>Same platform (x64 SSE)</li>
 </ol>
-<p>The determinism guarantees from Section 2 ensure bit-identical results under these conditions.</p>
-<h3 id="93-contact-history-buffer-oscillation-detection"><a class="anchor" href="#93-contact-history-buffer-oscillation-detection">#</a>9.3 Contact History Buffer (Oscillation Detection)</h3>
-<p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PhysicsStep_BeforeMgrDynaUpdate.c:159-192</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h3 id="contact-history-buffer-oscillation-detection"><a class="anchor" href="#contact-history-buffer-oscillation-detection">#</a>Contact History Buffer (Oscillation Detection)</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <p>Each vehicle maintains a 20-entry circular buffer for wheel contact state:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Buffer at vehicle+0x1594:
-//   [0]: write index (circular, mod 20)
-//   [1]: buffer size (0x14 = 20)
-//   [+8]: 20 bytes of contact state history
-
-// The code counts state transitions in the buffer
 for (i = 1; i &lt; buffer_size; i++) {
     if (buffer[(writeIdx - i + 20) % 20] != buffer[(writeIdx - i + 21) % 20])
         transitions++;
 }
 *(int *)(vehicle + 0x15b0) = transitions;  // ContactStateChangeCount</code></pre></div>
-<p>This detects rapid contact/airborne oscillation (a vehicle bouncing). The <code>ContactStateChangeCount</code> at vehicle+0x15B0 affects game logic decisions, including potentially the fragile surface check. For TAS, this means rapid bouncing can trigger different code paths than smooth contact.</p>
-<h3 id="94-sleep-detection-system"><a class="anchor" href="#94-sleep-detection-system">#</a>9.4 Sleep Detection System</h3>
-<p><strong>Evidence</strong>: <code>NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c:27-57</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The physics engine has a sleep detection system that damps very slow velocities:</p>
+<p>Rapid bouncing can trigger different code paths than smooth contact.</p>
+<h3 id="sleep-detection-system"><a class="anchor" href="#sleep-detection-system">#</a>Sleep Detection System</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">if (DAT_141ebccfc != 0) {  // sleep enabled
     if (speed_sq &lt; DAT_141ebcd04 * DAT_141ebcd04) {  // below threshold
         vx *= DAT_141ebcd00;  // damp
@@ -1128,168 +920,113 @@ for (i = 1; i &lt; buffer_size; i++) {
         vz *= DAT_141ebcd00;
     }
 }</code></pre></div>
-<ul>
-  <li><code>DAT_141ebccfc</code>: Sleep detection enable flag (int)</li>
-  <li><code>DAT_141ebcd00</code>: Damping factor (float, < 1.0)</li>
-  <li><code>DAT_141ebcd04</code>: Velocity threshold (float, linear m/s, squared before comparison)</li>
-</ul>
-<p><strong>TAS implication</strong>: If a vehicle is nearly stationary (below the sleep threshold), its velocity is actively damped each tick. This is NOT instant zeroing -- it is gradual damping. A TAS that relies on very small velocities (e.g., precise creeping toward a finish line) should be aware that the sleep system will attenuate those velocities.</p>
-<h3 id="95-gravity-it-is-not-981"><a class="anchor" href="#95-gravity-it-is-not-981">#</a>9.5 Gravity -- It Is Not 9.81</h3>
-<p><strong>Evidence</strong>: <code>14-tmnf-crossref.md:670</code>, TMNF tuning data <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> (TMNF values verified, TM2020 inferred)</p>
-<p>In TMNF, effective gravity is <strong>NOT</strong> 9.81 m/s^2. It is:</p>
-<ul>
-  <li>Ground: 9.81 * 3.0 = <strong>29.43 m/s^2</strong> (GravityCoef = 3.0)</li>
-  <li>Air: 9.81 * 2.5 = <strong>24.525 m/s^2</strong> (reduced in air)</li>
-</ul>
-<p>TM2020 exposes <code>GravityCoef</code> via ManiaScript (<code>SetPlayer_Delayed_GravityCoef</code>) and the string <code>"GravityCoef"</code> exists at <code class="addr">0x141bb3e18</code>. The base gravity constant (9.81 or similar) is stored in GBX resource files, NOT in the executable -- both TMNF and TM2020 .rdata sections contain no 9.81f constant.</p>
-<p><strong>TAS implication</strong>: The effective gravity is approximately 3x Earth gravity. This explains Trackmania's "heavy" feel and short air times. If you are modeling physics externally for TAS planning, use ~29.4 m/s^2, not 9.81.</p>
-<h3 id="96-forward-euler-integration-implications"><a class="anchor" href="#96-forward-euler-integration-implications">#</a>9.6 Forward Euler Integration Implications</h3>
-<p><strong>Evidence</strong>: <code>14-tmnf-crossref.md:197-202</code>, <code>10-physics-deep-dive.md</code> section 1.3 <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>Both TMNF and TM2020 use <strong>Forward Euler</strong> integration:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>position += velocity * dt
-velocity += (force / mass) * dt</code></pre></div>
-<p>Forward Euler is:</p>
-<ul>
-  <li>First-order accurate (error proportional to dt^2 per step)</li>
-  <li>NOT energy-conserving (can gain or lose energy over time)</li>
-  <li>Stable for small dt (which is why sub-stepping exists)</li>
-  <li>Deterministic (same inputs always produce same outputs)</li>
-</ul>
-<p>For TAS: Forward Euler means the simulation has slight energy drift over long runs. The sub-stepping compensates by keeping dt small, but over thousands of ticks, very subtle energy changes accumulate. This is deterministic but NOT physically "correct" -- it is consistently wrong in the same way every time.</p>
+<p>Near-stationary vehicles have velocity actively damped each tick. This is gradual damping, not instant zeroing. A TAS relying on very small velocities should account for this.</p>
+<h3 id="gravity-is-not-981"><a class="anchor" href="#gravity-is-not-981">#</a>Gravity Is Not 9.81</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span> (TMNF verified, TM2020 inferred)</p>
+<p>Effective gravity in TMNF: 9.81 <em> 3.0 = <strong>29.43 m/s^2</strong> (GravityCoef = 3.0). Air gravity: 9.81 </em> 2.5 = <strong>24.525 m/s^2</strong>. TM2020 exposes <code>GravityCoef</code> via ManiaScript. The base gravity constant is in GBX resources, NOT the executable.</p>
+<p>For TAS planning: use ~29.4 m/s^2, not 9.81.</p>
+<h3 id="forward-euler-integration-implications"><a class="anchor" href="#forward-euler-integration-implications">#</a>Forward Euler Integration Implications</h3>
+<p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p>Both games use Forward Euler: <code>position += velocity <em> dt; velocity += (force / mass) </em> dt</code>.</p>
+<p>Forward Euler is first-order accurate, NOT energy-conserving, but deterministic. Over thousands of ticks, subtle energy drift accumulates. This is consistently wrong in the same way every time.</p>
 <hr>
-<h2 id="10-open-questions-for-competitive-community"><a class="anchor" href="#10-open-questions-for-competitive-community">#</a>10. Open Questions for Competitive Community</h2>
-<p>These are questions that emerge from the decompiled code but cannot be answered without empirical testing or further reverse engineering. Speedrunners: your expertise is needed here.</p>
-<h3 id="101-timer-precision"><a class="anchor" href="#101-timer-precision">#</a>10.1 Timer Precision</h3>
+<h2 id="open-questions-for-the-competitive-community"><a class="anchor" href="#open-questions-for-the-competitive-community">#</a>Open Questions for the Competitive Community</h2>
+<h3 id="timer-precision-1"><a class="anchor" href="#timer-precision-1">#</a>Timer Precision</h3>
+<p>Are finish times quantized to 10ms? Has anyone observed a time ending in anything other than 0?</p>
+<h3 id="turbo-ramp-up-verification"><a class="anchor" href="#turbo-ramp-up-verification">#</a>Turbo Ramp-Up Verification</h3>
+<p>Can the ramp-up be observed in-game? Use Openplanet to plot <code>FrontSpeed</code> during a turbo -- acceleration should increase linearly.</p>
+<h3 id="fragile-surface-threshold"><a class="anchor" href="#fragile-surface-threshold">#</a>Fragile Surface Threshold</h3>
+<p>What is the exact threshold? Read vehicle+0x1C8C via Openplanet while landing on fragile from increasing heights.</p>
+<h3 id="sub-step-cap-speed"><a class="anchor" href="#sub-step-cap-speed">#</a>Sub-Step Cap Speed</h3>
+<p>At what speed does the 1000 sub-step cap affect collision accuracy? Test wall clipping at increasing velocities.</p>
+<h3 id="sleep-threshold-value"><a class="anchor" href="#sleep-threshold-value">#</a>Sleep Threshold Value</h3>
+<p>What is <code>DAT_141ebcd04</code>? Read address <code class="addr">0x141ebcd04</code> via a memory tool, or measure when a car stops on a flat surface.</p>
+<h3 id="reactor-boost-oriented-force-direction"><a class="anchor" href="#reactor-boost-oriented-force-direction">#</a>Reactor Boost Oriented Force Direction</h3>
+<p>Does <code>ReactorBoost_Oriented</code> apply force in the pad's facing direction or the car's? Hit an oriented reactor from different angles and observe trajectory.</p>
+<h3 id="checkpoint-state-completeness"><a class="anchor" href="#checkpoint-state-completeness">#</a>Checkpoint State Completeness</h3>
+<p>Does a respawn perfectly restore all physics state? Record vehicle state via Openplanet before and after a respawn. Compare all fields.</p>
+<h3 id="cross-version-determinism"><a class="anchor" href="#cross-version-determinism">#</a>Cross-Version Determinism</h3>
+<p>Do ghosts from one version produce identical results on another? Save a ghost, update the game, replay it.</p>
+<h3 id="exact-turbo-parameters"><a class="anchor" href="#exact-turbo-parameters">#</a>Exact Turbo Parameters</h3>
+<p>Read vehicle+0x16E0 (duration) and vehicle+0x16E4 (strength) via Openplanet when hitting turbo pads. TMNF had Turbo=5.0/250ms, Turbo2=20.0/100ms.</p>
+<h3 id="input-smoothing-for-keyboard"><a class="anchor" href="#input-smoothing-for-keyboard">#</a>Input Smoothing for Keyboard</h3>
+<p>Read <code>InputSteer</code> via Openplanet while pressing left/right on keyboard. Plot over time. Is it instantaneous -1/0/+1 or smoothed?</p>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
 <ul>
-  <li><strong>Q</strong>: Are finish times truly quantized to 10ms? Has anyone observed a time ending in anything other than 0 (e.g., 0:42.123 vs 0:42.120)?</li>
-  <li><strong>Test</strong>: Record many runs on the same map and check if all times are multiples of 0.010s.</li>
-  <li><strong>Code basis</strong>: 100Hz tick rate, integer tick counting. Expects 10ms quantization.</li>
+  <li><a href="physics.html">10-physics-deep-dive.md</a> -- Full physics system analysis</li>
+  <li><a href="tmnf-crossref.html">14-tmnf-crossref.md</a> -- TMNF vs TM2020 comparison</li>
+  <li><a href="physics.html">04-physics-vehicle.md</a> -- Vehicle physics overview</li>
+  <li><a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> -- Openplanet vehicle state fields</li>
+  <li><a href="30-ghost-replay-format.md">30-ghost-replay-format.md</a> -- Ghost/replay binary format</li>
 </ul>
-<h3 id="102-turbo-ramp-up-verification"><a class="anchor" href="#102-turbo-ramp-up-verification">#</a>10.2 Turbo Ramp-Up Verification</h3>
-<ul>
-  <li><strong>Q</strong>: Can the turbo force ramp-up be observed in-game? Does the car noticeably accelerate MORE at the end of a turbo than at the beginning?</li>
-  <li><strong>Test</strong>: Use Openplanet to plot <code>FrontSpeed</code> over time during a turbo. The acceleration curve should increase linearly.</li>
-  <li><strong>Code basis</strong>: <code>force = (elapsed/duration) <em> strength </em> modelScale</code> at <code>NSceneVehiclePhy__ComputeForces.c:105-106</code>.</li>
-</ul>
-<h3 id="103-fragile-surface-threshold"><a class="anchor" href="#103-fragile-surface-threshold">#</a>10.3 Fragile Surface Threshold</h3>
-<ul>
-  <li><strong>Q</strong>: What is the exact collision severity threshold for fragile surface breakage? Can it be read via Openplanet at vehicle+0x1C8C?</li>
-  <li><strong>Test</strong>: Land on fragile from increasing heights until breakage occurs. Plot vehicle+0x1C8C value at impact vs breakage outcome.</li>
-  <li><strong>Code basis</strong>: <code>DAT_141d1ef7c</code> is the threshold float. Vehicle+0x1C8C is the severity value.</li>
-</ul>
-<h3 id="104-sub-step-cap-at-extreme-speed"><a class="anchor" href="#104-sub-step-cap-at-extreme-speed">#</a>10.4 Sub-Step Cap at Extreme Speed</h3>
-<ul>
-  <li><strong>Q</strong>: At what speed does the 1000 sub-step cap start affecting collision accuracy? Can wall clips be reliably reproduced at specific speeds?</li>
-  <li><strong>Test</strong>: Use Openplanet to read sub-step count (if accessible) at various speeds, or test wall clipping at increasing velocities.</li>
-  <li><strong>Code basis</strong>: Sub-step cap at 1000 in <code>PhysicsStep_TM.c:126</code>.</li>
-</ul>
-<h3 id="105-sleep-threshold-value"><a class="anchor" href="#105-sleep-threshold-value">#</a>10.5 Sleep Threshold Value</h3>
-<ul>
-  <li><strong>Q</strong>: What is the sleep velocity threshold <code>DAT_141ebcd04</code>? At what speed does the engine start damping velocity?</li>
-  <li><strong>Test</strong>: Place a car on a flat surface and measure when it stops. Or read the global at address <code class="addr">0x141ebcd04</code> via a memory tool.</li>
-  <li><strong>Code basis</strong>: <code>NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c:27</code>.</li>
-</ul>
-<h3 id="106-reactor-boost-oriented-force-direction"><a class="anchor" href="#106-reactor-boost-oriented-force-direction">#</a>10.6 Reactor Boost Oriented Force Direction</h3>
-<ul>
-  <li><strong>Q</strong>: Does <code>ReactorBoost_Oriented</code> apply force in the pad's facing direction or the car's facing direction? Does approach angle matter?</li>
-  <li><strong>Test</strong>: Hit an oriented reactor from different angles and observe trajectory.</li>
-  <li><strong>Code basis</strong>: The distinction between <code>_Legacy</code> (non-directional) and <code>_Oriented</code> (directional) at string level. Force application mechanism not decompiled.</li>
-</ul>
-<h3 id="107-checkpoint-state-completeness"><a class="anchor" href="#107-checkpoint-state-completeness">#</a>10.7 Checkpoint State Completeness</h3>
-<ul>
-  <li><strong>Q</strong>: Does a respawn perfectly restore all physics state, or are there subtle differences (e.g., wheel rotation, tire wear, contact history)?</li>
-  <li><strong>Test</strong>: Record vehicle state (via Openplanet) before and after a checkpoint respawn. Compare all fields.</li>
-  <li><strong>Code basis</strong>: Reset zeros wheel state blocks (stride 0xB8) at <code>ComputeForces.c:173-199</code>. The 2168-byte replay state copy at <code>BeforeMgrDynaUpdate.c:106</code>.</li>
-</ul>
-<h3 id="108-cross-version-determinism"><a class="anchor" href="#108-cross-version-determinism">#</a>10.8 Cross-Version Determinism</h3>
-<ul>
-  <li><strong>Q</strong>: Do replays/ghosts from one game version produce identical results on another version? Or do patches break ghost validity?</li>
-  <li><strong>Test</strong>: Save a ghost, update the game, replay the ghost. Compare finish time.</li>
-  <li><strong>Code basis</strong>: Any recompilation can change float operation ordering. Nadeo likely maintains determinism across minor patches but this is not guaranteed by the architecture.</li>
-</ul>
-<h3 id="109-exact-turboturbo2-parameters"><a class="anchor" href="#109-exact-turboturbo2-parameters">#</a>10.9 Exact Turbo/Turbo2 Parameters</h3>
-<ul>
-  <li><strong>Q</strong>: What are the exact duration and strength values for Turbo and Turbo2? TMNF had Turbo=5.0/250ms, Turbo2=20.0/100ms.</li>
-  <li><strong>Test</strong>: Read vehicle+0x16E0 (duration) and vehicle+0x16E4 (strength) via Openplanet when hitting turbo pads.</li>
-  <li><strong>Code basis</strong>: Offsets confirmed at <code>NSceneVehiclePhy__ComputeForces.c:89-111</code>.</li>
-</ul>
-<h3 id="1010-input-smoothing-for-keyboard"><a class="anchor" href="#1010-input-smoothing-for-keyboard">#</a>10.10 Input Smoothing for Keyboard</h3>
-<ul>
-  <li><strong>Q</strong>: Does the engine apply input smoothing/ramp for keyboard steering, or is it instantaneous -1/0/+1?</li>
-  <li><strong>Test</strong>: Read <code>InputSteer</code> via Openplanet while pressing left/right on keyboard. Plot over time.</li>
-  <li><strong>Code basis</strong>: <code>InputSteer</code> is a float -1.0 to 1.0 at the physics level. Keyboard mapping is upstream in CInputEngine.</li>
-</ul>
-<hr>
-<p><em>This document is grounded entirely in decompiled code from Trackmania.exe, Openplanet plugin intelligence, and cross-reference with TMNF reverse engineering. Every address and offset cited is from confirmed decompilation output. Items marked <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> are honest gaps that require either further decompilation or empirical testing by the competitive community. If you test any of the open questions, please document your methodology and results -- they will directly improve this analysis.</em></p>
+<details><summary>Analysis metadata</summary>
+<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020 by Nadeo/Ubisoft) <strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: 18 decompiled physics functions, Openplanet plugin intelligence, TMNF cross-reference, Default.json config <strong>Audience</strong>: Speedrunners, TAS researchers, competitive players who care about millisecond differences <strong>Methodology</strong>: Every claim grounded in decompiled code. Unknowns are marked explicitly.</p>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="recreation.html">&larr; Browser Recreation Guide</a><a class="next" href="audio.html">Audio System &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="physics.html">&larr; Physics &amp; Vehicle</a><a class="next" href="rendering.html">Rendering &amp; Graphics &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-timing-tick-system">1. Timing &amp; Tick System</a></li>
-  <li class="toc-h3"><a href="#11-the-100hz-physics-tick">1.1 The 100Hz Physics Tick</a></li>
-  <li class="toc-h3"><a href="#12-microsecond-internal-timing">1.2 Microsecond Internal Timing</a></li>
-  <li class="toc-h3"><a href="#13-how-game-ticks-are-counted">1.3 How Game Ticks Are Counted</a></li>
-  <li class="toc-h3"><a href="#14-display-fps-vs-physics-ticks">1.4 Display FPS vs Physics Ticks</a></li>
-  <li class="toc-h3"><a href="#15-smmaxplayerresimstepperframe-and-resimulation">1.5 SmMaxPlayerResimStepPerFrame and Resimulation</a></li>
-<li class=""><a href="#2-determinism-guarantees">2. Determinism Guarantees</a></li>
-  <li class="toc-h3"><a href="#21-what-makes-the-replay-system-deterministic">2.1 What Makes the Replay System Deterministic</a></li>
-  <li class="toc-h3"><a href="#22-what-could-break-determinism">2.2 What Could Break Determinism</a></li>
-  <li class="toc-h3"><a href="#23-ghost-validation-and-server-verification">2.3 Ghost Validation and Server Verification</a></li>
-<li class=""><a href="#3-input-pipeline-for-speedrunning">3. Input Pipeline for Speedrunning</a></li>
-  <li class="toc-h3"><a href="#31-input-values-at-the-physics-level">3.1 Input Values at the Physics Level</a></li>
-  <li class="toc-h3"><a href="#32-input-resolution-by-device-type">3.2 Input Resolution by Device Type</a></li>
-  <li class="toc-h3"><a href="#33-when-is-input-sampled">3.3 When Is Input Sampled?</a></li>
-  <li class="toc-h3"><a href="#34-input-to-force-pathway">3.4 Input to Force Pathway</a></li>
-<li class=""><a href="#4-surface-effect-catalog-competitive-focus">4. Surface Effect Catalog (Competitive Focus)</a></li>
-  <li class="toc-h3"><a href="#41-complete-surface-gameplay-effects">4.1 Complete Surface Gameplay Effects</a></li>
-  <li class="toc-h3"><a href="#42-turbo-mechanics-critical-finding">4.2 Turbo Mechanics -- CRITICAL FINDING</a></li>
-  <li class="toc-h3"><a href="#43-fragile-surface-exact-break-condition">4.3 Fragile Surface -- Exact Break Condition</a></li>
-  <li class="toc-h3"><a href="#44-surface-friction-system">4.4 Surface Friction System</a></li>
-  <li class="toc-h3"><a href="#45-reactor-boost-mechanics">4.5 Reactor Boost Mechanics</a></li>
-<li class=""><a href="#5-checkpoint-respawn-system">5. Checkpoint &amp; Respawn System</a></li>
-  <li class="toc-h3"><a href="#51-what-state-is-saved-at-a-checkpoint">5.1 What State Is Saved at a Checkpoint</a></li>
-  <li class="toc-h3"><a href="#52-transform-state-position-rotation">5.2 Transform State (Position + Rotation)</a></li>
-  <li class="toc-h3"><a href="#53-respawn-position">5.3 Respawn Position</a></li>
-  <li class="toc-h3"><a href="#54-does-respawning-reset-physics-state">5.4 Does Respawning Reset Physics State?</a></li>
-  <li class="toc-h3"><a href="#55-discontinuitycount">5.5 DiscontinuityCount</a></li>
-<li class=""><a href="#6-speed-limits-edge-cases">6. Speed Limits &amp; Edge Cases</a></li>
-  <li class="toc-h3"><a href="#61-maximum-velocity-speed-cap">6.1 Maximum Velocity (Speed Cap)</a></li>
-  <li class="toc-h3"><a href="#62-angular-velocity-limits">6.2 Angular Velocity Limits</a></li>
-  <li class="toc-h3"><a href="#63-sub-step-count-vs-speed">6.3 Sub-Step Count vs Speed</a></li>
-  <li class="toc-h3"><a href="#64-the-1000-sub-step-cap">6.4 The 1000 Sub-Step Cap</a></li>
-<li class=""><a href="#7-race-timer-internals">7. Race Timer Internals</a></li>
-  <li class="toc-h3"><a href="#71-race-start-time">7.1 Race Start Time</a></li>
-  <li class="toc-h3"><a href="#72-timer-precision">7.2 Timer Precision</a></li>
-  <li class="toc-h3"><a href="#73-when-does-the-timer-start">7.3 When Does the Timer Start?</a></li>
-  <li class="toc-h3"><a href="#74-when-does-the-timer-stop">7.4 When Does the Timer Stop?</a></li>
-  <li class="toc-h3"><a href="#75-checkpoint-time-recording">7.5 Checkpoint Time Recording</a></li>
-<li class=""><a href="#8-tmnf-vs-tm2020-for-competitive-play">8. TMNF vs TM2020 for Competitive Play</a></li>
-  <li class="toc-h3"><a href="#81-physics-changes-summary">8.1 Physics Changes Summary</a></li>
-  <li class="toc-h3"><a href="#82-the-turbo-reversal-most-important-difference">8.2 The Turbo Reversal -- Most Important Difference</a></li>
-  <li class="toc-h3"><a href="#83-sub-step-cap-reduction-10000-1000">8.3 Sub-Step Cap Reduction (10,000 -&gt; 1,000)</a></li>
-  <li class="toc-h3"><a href="#84-new-surface-effects">8.4 New Surface Effects</a></li>
-  <li class="toc-h3"><a href="#85-suspension-model-evolution">8.5 Suspension Model Evolution</a></li>
-<li class=""><a href="#9-tas-relevant-technical-details">9. TAS-Relevant Technical Details</a></li>
-  <li class="toc-h3"><a href="#91-minimum-input-granularity">9.1 Minimum Input Granularity</a></li>
-  <li class="toc-h3"><a href="#92-sub-step-determinism-for-tas-replay">9.2 Sub-Step Determinism for TAS Replay</a></li>
-  <li class="toc-h3"><a href="#93-contact-history-buffer-oscillation-detection">9.3 Contact History Buffer (Oscillation Detection)</a></li>
-  <li class="toc-h3"><a href="#94-sleep-detection-system">9.4 Sleep Detection System</a></li>
-  <li class="toc-h3"><a href="#95-gravity-it-is-not-981">9.5 Gravity -- It Is Not 9.81</a></li>
-  <li class="toc-h3"><a href="#96-forward-euler-integration-implications">9.6 Forward Euler Integration Implications</a></li>
-<li class=""><a href="#10-open-questions-for-competitive-community">10. Open Questions for Competitive Community</a></li>
-  <li class="toc-h3"><a href="#101-timer-precision">10.1 Timer Precision</a></li>
-  <li class="toc-h3"><a href="#102-turbo-ramp-up-verification">10.2 Turbo Ramp-Up Verification</a></li>
-  <li class="toc-h3"><a href="#103-fragile-surface-threshold">10.3 Fragile Surface Threshold</a></li>
-  <li class="toc-h3"><a href="#104-sub-step-cap-at-extreme-speed">10.4 Sub-Step Cap at Extreme Speed</a></li>
-  <li class="toc-h3"><a href="#105-sleep-threshold-value">10.5 Sleep Threshold Value</a></li>
-  <li class="toc-h3"><a href="#106-reactor-boost-oriented-force-direction">10.6 Reactor Boost Oriented Force Direction</a></li>
-  <li class="toc-h3"><a href="#107-checkpoint-state-completeness">10.7 Checkpoint State Completeness</a></li>
-  <li class="toc-h3"><a href="#108-cross-version-determinism">10.8 Cross-Version Determinism</a></li>
-  <li class="toc-h3"><a href="#109-exact-turboturbo2-parameters">10.9 Exact Turbo/Turbo2 Parameters</a></li>
-  <li class="toc-h3"><a href="#1010-input-smoothing-for-keyboard">10.10 Input Smoothing for Keyboard</a></li>
+<li class=""><a href="#how-the-tick-system-works">How the Tick System Works</a></li>
+  <li class="toc-h3"><a href="#the-100hz-physics-tick">The 100Hz Physics Tick</a></li>
+  <li class="toc-h3"><a href="#microsecond-internal-timing">Microsecond Internal Timing</a></li>
+  <li class="toc-h3"><a href="#game-tick-counter">Game Tick Counter</a></li>
+  <li class="toc-h3"><a href="#display-fps-vs-physics-ticks">Display FPS vs Physics Ticks</a></li>
+  <li class="toc-h3"><a href="#resimulation-bounds">Resimulation Bounds</a></li>
+<li class=""><a href="#what-makes-the-simulation-deterministic">What Makes the Simulation Deterministic</a></li>
+  <li class="toc-h3"><a href="#fixed-timestep-integer-based">Fixed Timestep (Integer-Based)</a></li>
+  <li class="toc-h3"><a href="#deterministic-sub-stepping">Deterministic Sub-Stepping</a></li>
+  <li class="toc-h3"><a href="#remainder-step-precision">Remainder-Step Precision</a></li>
+  <li class="toc-h3"><a href="#guarded-square-root">Guarded Square Root</a></li>
+  <li class="toc-h3"><a href="#sequential-processing-order">Sequential Processing Order</a></li>
+  <li class="toc-h3"><a href="#sse-floating-point-on-x64">SSE Floating Point on x64</a></li>
+  <li class="toc-h3"><a href="#what-could-break-determinism">What Could Break Determinism</a></li>
+  <li class="toc-h3"><a href="#ghost-validation-and-server-verification">Ghost Validation and Server Verification</a></li>
+<li class=""><a href="#how-the-input-pipeline-works-for-speedrunning">How the Input Pipeline Works for Speedrunning</a></li>
+  <li class="toc-h3"><a href="#input-values-at-the-physics-level">Input Values at the Physics Level</a></li>
+  <li class="toc-h3"><a href="#input-resolution-by-device-type">Input Resolution by Device Type</a></li>
+  <li class="toc-h3"><a href="#when-input-is-sampled">When Input Is Sampled</a></li>
+  <li class="toc-h3"><a href="#input-to-force-pathway">Input to Force Pathway</a></li>
+<li class=""><a href="#surface-effects-that-matter-for-competition">Surface Effects That Matter for Competition</a></li>
+  <li class="toc-h3"><a href="#complete-surface-gameplay-effects">Complete Surface Gameplay Effects</a></li>
+  <li class="toc-h3"><a href="#turbo-mechanics-force-ramps-up-not-down">Turbo Mechanics -- Force Ramps UP, Not Down</a></li>
+  <li class="toc-h3"><a href="#fragile-surface-exact-break-condition">Fragile Surface -- Exact Break Condition</a></li>
+  <li class="toc-h3"><a href="#surface-friction-system">Surface Friction System</a></li>
+  <li class="toc-h3"><a href="#reactor-boost-mechanics">Reactor Boost Mechanics</a></li>
+<li class=""><a href="#checkpoint-and-respawn-system">Checkpoint and Respawn System</a></li>
+  <li class="toc-h3"><a href="#what-state-is-saved-at-a-checkpoint">What State Is Saved at a Checkpoint</a></li>
+  <li class="toc-h3"><a href="#transform-state-position-rotation">Transform State (Position + Rotation)</a></li>
+  <li class="toc-h3"><a href="#respawn-resets-physics-state">Respawn Resets Physics State</a></li>
+  <li class="toc-h3"><a href="#discontinuitycount">DiscontinuityCount</a></li>
+<li class=""><a href="#speed-limits-and-edge-cases">Speed Limits and Edge Cases</a></li>
+  <li class="toc-h3"><a href="#maximum-velocity-speed-cap">Maximum Velocity (Speed Cap)</a></li>
+  <li class="toc-h3"><a href="#sub-step-count-vs-speed">Sub-Step Count vs Speed</a></li>
+  <li class="toc-h3"><a href="#the-1000-sub-step-cap">The 1000 Sub-Step Cap</a></li>
+<li class=""><a href="#race-timer-internals">Race Timer Internals</a></li>
+  <li class="toc-h3"><a href="#timer-precision">Timer Precision</a></li>
+  <li class="toc-h3"><a href="#racestarttime">RaceStartTime</a></li>
+<li class=""><a href="#tmnf-vs-tm2020-for-competitive-play">TMNF vs TM2020 for Competitive Play</a></li>
+  <li class="toc-h3"><a href="#the-turbo-reversal">The Turbo Reversal</a></li>
+<li class=""><a href="#tas-relevant-technical-details">TAS-Relevant Technical Details</a></li>
+  <li class="toc-h3"><a href="#minimum-input-granularity">Minimum Input Granularity</a></li>
+  <li class="toc-h3"><a href="#sub-step-determinism-for-tas-replay">Sub-Step Determinism for TAS Replay</a></li>
+  <li class="toc-h3"><a href="#contact-history-buffer-oscillation-detection">Contact History Buffer (Oscillation Detection)</a></li>
+  <li class="toc-h3"><a href="#sleep-detection-system">Sleep Detection System</a></li>
+  <li class="toc-h3"><a href="#gravity-is-not-981">Gravity Is Not 9.81</a></li>
+  <li class="toc-h3"><a href="#forward-euler-integration-implications">Forward Euler Integration Implications</a></li>
+<li class=""><a href="#open-questions-for-the-competitive-community">Open Questions for the Competitive Community</a></li>
+  <li class="toc-h3"><a href="#timer-precision-1">Timer Precision</a></li>
+  <li class="toc-h3"><a href="#turbo-ramp-up-verification">Turbo Ramp-Up Verification</a></li>
+  <li class="toc-h3"><a href="#fragile-surface-threshold">Fragile Surface Threshold</a></li>
+  <li class="toc-h3"><a href="#sub-step-cap-speed">Sub-Step Cap Speed</a></li>
+  <li class="toc-h3"><a href="#sleep-threshold-value">Sleep Threshold Value</a></li>
+  <li class="toc-h3"><a href="#reactor-boost-oriented-force-direction">Reactor Boost Oriented Force Direction</a></li>
+  <li class="toc-h3"><a href="#checkpoint-state-completeness">Checkpoint State Completeness</a></li>
+  <li class="toc-h3"><a href="#cross-version-determinism">Cross-Version Determinism</a></li>
+  <li class="toc-h3"><a href="#exact-turbo-parameters">Exact Turbo Parameters</a></li>
+  <li class="toc-h3"><a href="#input-smoothing-for-keyboard">Input Smoothing for Keyboard</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

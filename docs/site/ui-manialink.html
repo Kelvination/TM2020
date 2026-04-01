@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item active" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -112,29 +120,12 @@
                 <div class="content-body">
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
-                        <h1 id="uimanialink-system-reference"><a class="anchor" href="#uimanialink-system-reference">#</a>UI/ManiaLink System Reference</h1>
-<p><strong>Source</strong>: <code>class_hierarchy.json</code> (2,027 classes), <code>13-subsystem-class-map.md</code> (Section 4), <code>19-openplanet-intelligence.md</code>, <code>29-community-knowledge.md</code>, Openplanet <code>DefaultStyle.toml</code>, ManiaLink community documentation <strong>Confidence</strong>: MIXED -- Native control hierarchy is <span class="badge badge-verified">VERIFIED</span> from binary RTTI; ManiaLink XML format is community-documented (HIGH confidence); scripting API is <span class="badge badge-verified">VERIFIED</span> via Openplanet; HUD module system is <span class="badge badge-verified">VERIFIED</span> from class hierarchy <strong>Date</strong>: 2026-03-27</p>
+                        <h1 id="uimanialink-system-reference"><a class="anchor" href="#uimanialink-system-reference">#</a>UI/ManiaLink system reference</h1>
+<h2 id="what-manialink-is-and-why-it-matters"><a class="anchor" href="#what-manialink-is-and-why-it-matters">#</a>What ManiaLink is and why it matters</h2>
+<p>ManiaLink is the XML-based UI system built into Trackmania's engine. It handles all in-game interfaces: HUD elements, scoreboards, menus, and custom game mode overlays. You define layout in XML, style with attributes and built-in style presets, and script interactivity with ManiaScript.</p>
+<p>ManiaLink operates through three layers: native C++ controls (<code>CControl<em></code>) handle rendering, script-exposed wrappers (<code>CGameManialink</em></code>) provide the ManiaScript API, and XML markup lets you declaratively build pages. Understanding this stack is essential for building custom UI or reverse-engineering the engine's rendering pipeline.</p>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-architecture-overview">Architecture Overview</a></li>
-  <li><a href="#2-ccontrol-class-hierarchy-native-controls">CControl Class Hierarchy (Native Controls)</a></li>
-  <li><a href="#3-cgamemanialink-class-hierarchy-script-exposed-controls">CGameManialink Class Hierarchy (Script-Exposed Controls)</a></li>
-  <li><a href="#4-manialink-xml-format">ManiaLink XML Format</a></li>
-  <li><a href="#5-layout-system-positioning-sizing-anchoring">Layout System (Positioning, Sizing, Anchoring)</a></li>
-  <li><a href="#6-style-system">Style System</a></li>
-  <li><a href="#7-built-in-controls-reference">Built-in Controls Reference</a></li>
-  <li><a href="#8-manialink-scripting">ManiaLink Scripting</a></li>
-  <li><a href="#9-maniaapp-system-application-layer">ManiaApp System (Application Layer)</a></li>
-  <li><a href="#10-hud-elements-and-playground-modules">HUD Elements and Playground Modules</a></li>
-  <li><a href="#11-game-control-cards">Game Control Cards</a></li>
-  <li><a href="#12-ui-effect-and-animation-system">UI Effect and Animation System</a></li>
-  <li><a href="#13-openplanet-defaultstyle-modern-ui-theme">Openplanet DefaultStyle (Modern UI Theme)</a></li>
-  <li><a href="#14-browser-htmlcss-equivalents">Browser HTML/CSS Equivalents</a></li>
-  <li><a href="#15-unknowns-and-gaps">Unknowns and Gaps</a></li>
-</ol>
-<hr>
-<h2 id="1-architecture-overview"><a class="anchor" href="#1-architecture-overview">#</a>1. Architecture Overview</h2>
+<h2 id="architecture-overview"><a class="anchor" href="#architecture-overview">#</a>Architecture overview</h2>
 <p>The Trackmania 2020 UI system operates on three layers:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Layer 3: ManiaLink XML + ManiaScript     (Content creators / Game modes)
          |
@@ -146,7 +137,7 @@ Layer 1: CControl* classes                (Native C++ UI controls, Engine 0x07)
          |
          v  [rendered by CControlEngine]
 Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
-<h3 id="key-singletons"><a class="anchor" href="#key-singletons">#</a>Key Singletons</h3>
+<h3 id="key-singletons"><a class="anchor" href="#key-singletons">#</a>Key singletons</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -181,7 +172,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="engine-assignment"><a class="anchor" href="#engine-assignment">#</a>Engine Assignment</h3>
+<h3 id="engine-assignment"><a class="anchor" href="#engine-assignment">#</a>Engine assignment</h3>
 <p>The UI/Control system spans two engine IDs:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -209,10 +200,9 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </table></div>
 <p><strong>Total UI classes</strong>: 70 (39 native + 31 ManiaLink)</p>
 <hr>
-<h2 id="2-ccontrol-class-hierarchy-native-controls"><a class="anchor" href="#2-ccontrol-class-hierarchy-native-controls">#</a>2. CControl Class Hierarchy (Native Controls)</h2>
-<p><strong>Source</strong>: Binary RTTI extraction (class_hierarchy.json) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>These are the C++ engine controls that render on screen. They are not directly accessible from ManiaScript; instead, <code>CGameManialink*</code> wrappers expose them to scripts.</p>
-<h3 id="21-complete-hierarchy-39-classes"><a class="anchor" href="#21-complete-hierarchy-39-classes">#</a>2.1 Complete Hierarchy (39 classes)</h3>
+<h2 id="ccontrol-class-hierarchy-native-controls"><a class="anchor" href="#ccontrol-class-hierarchy-native-controls">#</a>CControl class hierarchy (native controls)</h2>
+<p>These are the C++ engine controls that render on screen. They are not directly accessible from ManiaScript; <code>CGameManialink*</code> wrappers expose them to scripts. Source: Binary RTTI extraction. Confidence: <span class="badge badge-verified">VERIFIED</span>.</p>
+<h3 id="complete-hierarchy-39-classes"><a class="anchor" href="#complete-hierarchy-39-classes">#</a>Complete hierarchy (39 classes)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CMwNod
   +-- CControlBase                        -- Base UI control (all visual controls inherit)
   |     +-- CControlButton                -- Clickable button
@@ -253,7 +243,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
   +-- CControlStyleSheet                  -- Style collection (maps IDs to styles)
   +-- CControlSimi2                       -- 2D similarity transform (scale/rotate/translate)
   +-- CControlEngine                      -- UI engine singleton (update pipeline)</code></pre></div>
-<h3 id="22-ccontrolengine-update-pipeline"><a class="anchor" href="#22-ccontrolengine-update-pipeline">#</a>2.2 CControlEngine Update Pipeline</h3>
+<h3 id="ccontrolengine-update-pipeline"><a class="anchor" href="#ccontrolengine-update-pipeline">#</a>CControlEngine update pipeline</h3>
 <p>The <code>CControlEngine</code> singleton drives the per-frame UI update through 7 methods:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -301,7 +291,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="23-ccontroltextedition-methods"><a class="anchor" href="#23-ccontroltextedition-methods">#</a>2.3 CControlTextEdition Methods</h3>
+<h3 id="ccontroltextedition-methods"><a class="anchor" href="#ccontroltextedition-methods">#</a>CControlTextEdition methods</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -328,13 +318,12 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="24-ccontroleffectsimi"><a class="anchor" href="#24-ccontroleffectsimi">#</a>2.4 CControlEffectSimi</h3>
+<h3 id="ccontroleffectsimi"><a class="anchor" href="#ccontroleffectsimi">#</a>CControlEffectSimi</h3>
 <p>Has a nested <code>SKeyVal</code> struct for keyframe animation data. This drives the ManiaLink animation system at the native level.</p>
 <hr>
-<h2 id="3-cgamemanialink-class-hierarchy-script-exposed-controls"><a class="anchor" href="#3-cgamemanialink-class-hierarchy-script-exposed-controls">#</a>3. CGameManialink Class Hierarchy (Script-Exposed Controls)</h2>
-<p><strong>Source</strong>: Binary RTTI extraction (class_hierarchy.json) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>These classes wrap native <code>CControl*</code> instances and expose them to ManiaScript. Each has an <code>UpdateControl</code> method called per-frame.</p>
-<h3 id="31-complete-hierarchy-31-classes"><a class="anchor" href="#31-complete-hierarchy-31-classes">#</a>3.1 Complete Hierarchy (31 classes)</h3>
+<h2 id="cgamemanialink-class-hierarchy-script-exposed-controls"><a class="anchor" href="#cgamemanialink-class-hierarchy-script-exposed-controls">#</a>CGameManialink class hierarchy (script-exposed controls)</h2>
+<p>These classes wrap native <code>CControl*</code> instances and expose them to ManiaScript. Each has an <code>UpdateControl</code> method called per-frame. Source: Binary RTTI extraction. Confidence: <span class="badge badge-verified">VERIFIED</span>.</p>
+<h3 id="complete-hierarchy-31-classes"><a class="anchor" href="#complete-hierarchy-31-classes">#</a>Complete hierarchy (31 classes)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CMwNod
   +-- CGameManialinkControl               -- Base ManiaLink control (script API)
   |     +-- CGameManialinkArrow           -- Arrow/direction indicator
@@ -367,7 +356,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
   +-- CGameManialink3dMood                -- 3D scene mood settings in UI
   +-- CGameManialink3dStyle               -- 3D scene style in UI
   +-- CGameManialink3dWorld               -- 3D scene world embedded in UI</code></pre></div>
-<h3 id="32-native-to-script-control-mapping"><a class="anchor" href="#32-native-to-script-control-mapping">#</a>3.2 Native-to-Script Control Mapping</h3>
+<h3 id="native-to-script-control-mapping"><a class="anchor" href="#native-to-script-control-mapping">#</a>Native-to-script control mapping</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -416,7 +405,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tr>
 <tr>
   <td style="text-align:left"><code>CControlSlider</code></td>
-  <td style="text-align:left"><code>CGameManialinkSlider</code></td>
+  <td style="text-align:left"><code>CGameManialinkGauge</code></td>
   <td style="text-align:left"><code><gauge></code></td>
   <td style="text-align:left"><code>CMlGauge</code></td>
 </tr>
@@ -476,12 +465,12 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="33-per-frame-update"><a class="anchor" href="#33-per-frame-update">#</a>3.3 Per-Frame Update</h3>
+<h3 id="per-frame-update"><a class="anchor" href="#per-frame-update">#</a>Per-frame update</h3>
 <p>Every <code>CGameManialink*</code> control has an <code>UpdateControl</code> method called each frame. The <code>CGameManialinkPage</code> has both <code>SetContents</code> (XML parsing) and <code>Update</code> (per-frame). The <code>CGameManialinkBrowser</code> has <code>UpdateAsync</code> and <code>UpdateFiber</code> for asynchronous page loading.</p>
 <hr>
-<h2 id="4-manialink-xml-format"><a class="anchor" href="#4-manialink-xml-format">#</a>4. ManiaLink XML Format</h2>
-<p><strong>Source</strong>: Community documentation (doc.maniaplanet.com, wiki.trackmania.io, maniaplanet-community.gitbook.io) <strong>Confidence</strong>: HIGH (widely used by content creators, consistent across sources)</p>
-<h3 id="41-basic-structure"><a class="anchor" href="#41-basic-structure">#</a>4.1 Basic Structure</h3>
+<h2 id="manialink-xml-format"><a class="anchor" href="#manialink-xml-format">#</a>ManiaLink XML format</h2>
+<p>ManiaLink XML is the markup language you write to build UI pages. TM2020 uses version 3 exclusively.</p>
+<h3 id="basic-structure"><a class="anchor" href="#basic-structure">#</a>Basic structure</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;yes&quot; ?&gt;
 &lt;manialink version=&quot;3&quot; name=&quot;MyManialink&quot;&gt;
   &lt;!-- UI elements go here --&gt;
@@ -498,7 +487,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
     }
   --&gt;&lt;/script&gt;
 &lt;/manialink&gt;</code></pre></div>
-<h3 id="42-version-history"><a class="anchor" href="#42-version-history">#</a>4.2 Version History</h3>
+<h3 id="version-history"><a class="anchor" href="#version-history">#</a>Version history</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -535,8 +524,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>TM2020 uses version 3 exclusively.</strong></p>
-<h3 id="43-root-element-attributes"><a class="anchor" href="#43-root-element-attributes">#</a>4.3 Root Element Attributes</h3>
+<h3 id="root-element-attributes"><a class="anchor" href="#root-element-attributes">#</a>Root element attributes</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;manialink version=&quot;3&quot; name=&quot;UniqueIdentifier&quot; background=&quot;...&quot;&gt;</code></pre></div>
 <div class="table-wrapper"><table>
 <thead>
@@ -564,8 +552,8 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="44-complete-element-reference"><a class="anchor" href="#44-complete-element-reference">#</a>4.4 Complete Element Reference</h3>
-<h4 id="common-attributes-all-elements"><a class="anchor" href="#common-attributes-all-elements">#</a>Common Attributes (all elements)</h4>
+<h3 id="complete-element-reference"><a class="anchor" href="#complete-element-reference">#</a>Complete element reference</h3>
+<h4 id="common-attributes-all-elements"><a class="anchor" href="#common-attributes-all-elements">#</a>Common attributes (all elements)</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -668,7 +656,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h4 id="imagerectangle-display"><a class="anchor" href="#imagerectangle-display">#</a><code><quad></code> -- Image/Rectangle Display</h4>
+<h4 id="imagerectangle-display"><a class="anchor" href="#imagerectangle-display">#</a><code><quad></code> -- image/rectangle display</h4>
 <p>Displays an image, colored rectangle, or built-in style element.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -732,7 +720,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tbody>
 </table></div>
 <p><strong>HTML equivalent</strong>: <code><div></code> with <code>background-image</code> or <code><img></code></p>
-<h4 id="text-display"><a class="anchor" href="#text-display">#</a><code><label></code> -- Text Display</h4>
+<h4 id="text-display"><a class="anchor" href="#text-display">#</a><code><label></code> -- text display</h4>
 <p>Displays text with formatting options.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -811,7 +799,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tbody>
 </table></div>
 <p><strong>HTML equivalent</strong>: <code><span></code> or <code><p></code> with CSS <code>font-*</code> properties</p>
-<h4 id="single-line-text-input"><a class="anchor" href="#single-line-text-input">#</a><code><entry></code> -- Single-Line Text Input</h4>
+<h4 id="single-line-text-input"><a class="anchor" href="#single-line-text-input">#</a><code><entry></code> -- single-line text input</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -874,7 +862,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tbody>
 </table></div>
 <p><strong>HTML equivalent</strong>: <code><input type="text"></code></p>
-<h4 id="multi-line-text-editor"><a class="anchor" href="#multi-line-text-editor">#</a><code><textedit></code> -- Multi-Line Text Editor</h4>
+<h4 id="multi-line-text-editor"><a class="anchor" href="#multi-line-text-editor">#</a><code><textedit></code> -- multi-line text editor</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -952,7 +940,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tbody>
 </table></div>
 <p><strong>HTML equivalent</strong>: <code><textarea></code></p>
-<h4 id="file-chooser"><a class="anchor" href="#file-chooser">#</a><code><fileentry></code> -- File Chooser</h4>
+<h4 id="file-chooser"><a class="anchor" href="#file-chooser">#</a><code><fileentry></code> -- file chooser</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1020,7 +1008,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tbody>
 </table></div>
 <p><strong>HTML equivalent</strong>: <code><input type="file"></code></p>
-<h4 id="progress-bar"><a class="anchor" href="#progress-bar">#</a><code><gauge></code> -- Progress Bar</h4>
+<h4 id="progress-bar"><a class="anchor" href="#progress-bar">#</a><code><gauge></code> -- progress bar</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1068,8 +1056,8 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)</code></pre></div>
 </tbody>
 </table></div>
 <p><strong>HTML equivalent</strong>: <code><progress></code> or <code><div></code> with percentage width</p>
-<h4 id="line-chart"><a class="anchor" href="#line-chart">#</a><code><graph></code> -- Line Chart</h4>
-<p>Populated via ManiaScript. The XML element just establishes the container.</p>
+<h4 id="line-chart"><a class="anchor" href="#line-chart">#</a><code><graph></code> -- line chart</h4>
+<p>Populated via ManiaScript. The XML element establishes the container.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1093,7 +1081,7 @@ Curve.Points.add(&lt;X, Y&gt;);
 Curve.Color = &lt;R, G, B&gt;;
 Curve.Width = 2.0;</code></pre></div>
 <p><strong>HTML equivalent</strong>: <code><canvas></code> or <code><svg></code> with chart.js / d3.js</p>
-<h4 id="containergroup"><a class="anchor" href="#containergroup">#</a><code><frame></code> -- Container/Group</h4>
+<h4 id="containergroup"><a class="anchor" href="#containergroup">#</a><code><frame></code> -- container/group</h4>
 <p>Groups child elements with shared position offset.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1116,8 +1104,8 @@ Curve.Width = 2.0;</code></pre></div>
   &lt;label pos=&quot;2 -2&quot; text=&quot;Hello&quot; /&gt;
 &lt;/frame&gt;</code></pre></div>
 <p><strong>HTML equivalent</strong>: <code><div></code> with <code>position: relative</code></p>
-<h4 id="reusable-frame-template"><a class="anchor" href="#reusable-frame-template">#</a><code><framemodel></code> -- Reusable Frame Template</h4>
-<p>Defines a template that can be instantiated multiple times.</p>
+<h4 id="reusable-frame-template"><a class="anchor" href="#reusable-frame-template">#</a><code><framemodel></code> -- reusable frame template</h4>
+<p>Defines a template you can instantiate multiple times.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1139,7 +1127,7 @@ Curve.Width = 2.0;</code></pre></div>
   &lt;label id=&quot;ItemLabel&quot; pos=&quot;2 -2&quot; textsize=&quot;2&quot; /&gt;
 &lt;/framemodel&gt;</code></pre></div>
 <p><strong>HTML equivalent</strong>: <code><template></code> element</p>
-<h4 id="template-instance"><a class="anchor" href="#template-instance">#</a><code><frameinstance></code> -- Template Instance</h4>
+<h4 id="template-instance"><a class="anchor" href="#template-instance">#</a><code><frameinstance></code> -- template instance</h4>
 <p>Creates an instance of a <code><framemodel></code>.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1160,7 +1148,7 @@ Curve.Width = 2.0;</code></pre></div>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;frameinstance modelid=&quot;ItemTemplate&quot; pos=&quot;0 0&quot; /&gt;
 &lt;frameinstance modelid=&quot;ItemTemplate&quot; pos=&quot;0 -10&quot; /&gt;</code></pre></div>
 <p><strong>HTML equivalent</strong>: JavaScript <code>template.content.cloneNode(true)</code></p>
-<h4 id="audio-playback"><a class="anchor" href="#audio-playback">#</a><code><audio></code> -- Audio Playback</h4>
+<h4 id="audio-playback"><a class="anchor" href="#audio-playback">#</a><code><audio></code> -- audio playback</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1198,7 +1186,7 @@ Curve.Width = 2.0;</code></pre></div>
 </tbody>
 </table></div>
 <p><strong>HTML equivalent</strong>: <code><audio></code></p>
-<h4 id="video-playback"><a class="anchor" href="#video-playback">#</a><code><video></code> -- Video Playback</h4>
+<h4 id="video-playback"><a class="anchor" href="#video-playback">#</a><code><video></code> -- video playback</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1236,7 +1224,7 @@ Curve.Width = 2.0;</code></pre></div>
 </tbody>
 </table></div>
 <p><strong>HTML equivalent</strong>: <code><video></code></p>
-<h4 id="include-external-file"><a class="anchor" href="#include-external-file">#</a><code><include></code> -- Include External File</h4>
+<h4 id="include-external-file"><a class="anchor" href="#include-external-file">#</a><code><include></code> -- include external file</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1255,7 +1243,7 @@ Curve.Width = 2.0;</code></pre></div>
 </table></div>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;include url=&quot;file://Media/Manialinks/Common/Header.xml&quot; /&gt;</code></pre></div>
 <p><strong>HTML equivalent</strong>: Server-side includes / JavaScript <code>fetch()</code></p>
-<h4 id="translation-dictionary"><a class="anchor" href="#translation-dictionary">#</a><code><dico></code> -- Translation Dictionary</h4>
+<h4 id="translation-dictionary"><a class="anchor" href="#translation-dictionary">#</a><code><dico></code> -- translation dictionary</h4>
 <p>Defines translations for multilingual ManiaLink pages.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;dico&gt;
   &lt;language id=&quot;en&quot;&gt;
@@ -1268,9 +1256,9 @@ Curve.Width = 2.0;</code></pre></div>
 &lt;label text=&quot;&quot; textid=&quot;greeting&quot; translate=&quot;1&quot; /&gt;</code></pre></div>
 <p><strong>HTML equivalent</strong>: i18n libraries (i18next, etc.)</p>
 <hr>
-<h2 id="5-layout-system-positioning-sizing-anchoring"><a class="anchor" href="#5-layout-system-positioning-sizing-anchoring">#</a>5. Layout System (Positioning, Sizing, Anchoring)</h2>
-<h3 id="51-coordinate-system"><a class="anchor" href="#51-coordinate-system">#</a>5.1 Coordinate System</h3>
-<p>ManiaLink version 3 uses a screen-relative coordinate system:</p>
+<h2 id="layout-system"><a class="anchor" href="#layout-system">#</a>Layout system</h2>
+<p>ManiaLink version 3 uses a screen-relative coordinate system with the origin at center and Y increasing upward (opposite of HTML/CSS).</p>
+<h3 id="coordinate-system"><a class="anchor" href="#coordinate-system">#</a>Coordinate system</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>        (-160, 90)              (0, 90)               (160, 90)
             +-------------------------+-------------------------+
             |                         |                         |
@@ -1328,9 +1316,9 @@ Curve.Width = 2.0;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>CRITICAL</strong>: Unlike HTML/CSS where Y increases downward, ManiaLink Y increases <strong>upward</strong>. This means <code>pos="0 -10"</code> moves an element <strong>down</strong> from its parent.</p>
-<h3 id="52-positioning"><a class="anchor" href="#52-positioning">#</a>5.2 Positioning</h3>
-<p>Elements are positioned relative to their parent frame:</p>
+<p><strong>CRITICAL</strong>: Unlike HTML/CSS where Y increases downward, ManiaLink Y increases <strong>upward</strong>. <code>pos="0 -10"</code> moves an element <strong>down</strong> from its parent.</p>
+<h3 id="positioning"><a class="anchor" href="#positioning">#</a>Positioning</h3>
+<p>Position elements relative to their parent frame:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;!-- Absolute position (relative to screen center) --&gt;
 &lt;quad pos=&quot;-100 50&quot; size=&quot;40 20&quot; bgcolor=&quot;F00A&quot; /&gt;
 
@@ -1339,7 +1327,7 @@ Curve.Width = 2.0;</code></pre></div>
   &lt;quad pos=&quot;0 0&quot; size=&quot;40 20&quot; bgcolor=&quot;F00A&quot; /&gt;
   &lt;quad pos=&quot;0 -25&quot; size=&quot;40 20&quot; bgcolor=&quot;0F0A&quot; /&gt;  &lt;!-- 25 units below first --&gt;
 &lt;/frame&gt;</code></pre></div>
-<h3 id="53-alignment-anchor-point"><a class="anchor" href="#53-alignment-anchor-point">#</a>5.3 Alignment (Anchor Point)</h3>
+<h3 id="alignment-anchor-point"><a class="anchor" href="#alignment-anchor-point">#</a>Alignment (anchor point)</h3>
 <p><code>halign</code> and <code>valign</code> control the anchor point of the element:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>halign=&quot;left&quot; (default)     halign=&quot;center&quot;          halign=&quot;right&quot;
   +--------+                   +--------+                +--------+
@@ -1408,24 +1396,24 @@ valign=&quot;top&quot; (default)      valign=&quot;center&quot;          valign=
 </tr>
 </tbody>
 </table></div>
-<h3 id="54-scale-and-rotation"><a class="anchor" href="#54-scale-and-rotation">#</a>5.4 Scale and Rotation</h3>
+<h3 id="scale-and-rotation"><a class="anchor" href="#scale-and-rotation">#</a>Scale and rotation</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;quad pos=&quot;0 0&quot; size=&quot;20 10&quot; scale=&quot;1.5&quot; rot=&quot;45&quot; bgcolor=&quot;F00A&quot; /&gt;</code></pre></div>
 <ul>
   <li><code>scale="1.5"</code> -- scales the element to 150% around its anchor point</li>
   <li><code>rot="45"</code> -- rotates 45 degrees clockwise around its anchor point</li>
 </ul>
-<h3 id="55-z-index-layering"><a class="anchor" href="#55-z-index-layering">#</a>5.5 Z-Index Layering</h3>
+<h3 id="z-index-layering"><a class="anchor" href="#z-index-layering">#</a>Z-index layering</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;quad pos=&quot;0 0&quot; z-index=&quot;-1&quot; size=&quot;320 180&quot; bgcolor=&quot;000F&quot; /&gt;  &lt;!-- Background --&gt;
 &lt;quad pos=&quot;0 0&quot; z-index=&quot;0&quot; size=&quot;100 50&quot; bgcolor=&quot;F00A&quot; /&gt;    &lt;!-- Content --&gt;
 &lt;label pos=&quot;0 0&quot; z-index=&quot;1&quot; text=&quot;On Top&quot; /&gt;                   &lt;!-- Foreground --&gt;</code></pre></div>
 <p>Range: approximately -999 to 999. Higher values render on top.</p>
 <hr>
-<h2 id="6-style-system"><a class="anchor" href="#6-style-system">#</a>6. Style System</h2>
-<h3 id="61-built-in-quad-styles"><a class="anchor" href="#61-built-in-quad-styles">#</a>6.1 Built-in Quad Styles</h3>
-<p>ManiaLink provides a rich library of pre-built visual styles. Apply with <code>style="StyleName" substyle="SubStyleName"</code>:</p>
+<h2 id="style-system"><a class="anchor" href="#style-system">#</a>Style system</h2>
+<p>ManiaLink provides built-in visual style presets applied through <code>style</code> and <code>substyle</code> attributes.</p>
+<h3 id="built-in-quad-styles"><a class="anchor" href="#built-in-quad-styles">#</a>Built-in quad styles</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;quad pos=&quot;0 0&quot; size=&quot;40 20&quot; style=&quot;Bgs1&quot; substyle=&quot;BgWindow1&quot; /&gt;
 &lt;quad pos=&quot;0 0&quot; size=&quot;64 64&quot; style=&quot;Icons64x64_1&quot; substyle=&quot;ArrowGreen&quot; /&gt;</code></pre></div>
-<h4 id="major-style-categories"><a class="anchor" href="#major-style-categories">#</a>Major Style Categories</h4>
+<h4 id="major-style-categories"><a class="anchor" href="#major-style-categories">#</a>Major style categories</h4>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1558,7 +1546,7 @@ valign=&quot;top&quot; (default)      valign=&quot;center&quot;          valign=
 </tr>
 </tbody>
 </table></div>
-<h4 id="bgs1-complete-substyle-list"><a class="anchor" href="#bgs1-complete-substyle-list">#</a>Bgs1 Complete Substyle List</h4>
+<h4 id="bgs1-complete-substyle-list"><a class="anchor" href="#bgs1-complete-substyle-list">#</a>Bgs1 complete substyle list</h4>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ArrowDown, ArrowLeft, ArrowRight, ArrowUp,
 BgButton, BgButtonBig, BgButtonGlow, BgButtonGrayed, BgButtonOff, BgButtonShadow, BgButtonSmall,
 BgCard, BgCard1, BgCard2, BgCard3, BgCardBuddy, BgCardChallenge, BgCardFolder,
@@ -1573,8 +1561,7 @@ BgWindow1, BgWindow2, BgWindow3, BgWindow4,
 EnergyBar, EnergyTeam2, Glow, HealthBar,
 NavButton, NavButtonBlink, NavButtonQuit,
 ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
-<h3 id="62-label-styles"><a class="anchor" href="#62-label-styles">#</a>6.2 Label Styles</h3>
-<p>Label styles control text appearance:</p>
+<h3 id="label-styles"><a class="anchor" href="#label-styles">#</a>Label styles</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1605,7 +1592,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="63-frame3d-styles"><a class="anchor" href="#63-frame3d-styles">#</a>6.3 Frame3d Styles</h3>
+<h3 id="frame3d-styles"><a class="anchor" href="#frame3d-styles">#</a>Frame3d styles</h3>
 <p>For 3D frame elements:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1657,7 +1644,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="64-color-format"><a class="anchor" href="#64-color-format">#</a>6.4 Color Format</h3>
+<h3 id="color-format"><a class="anchor" href="#color-format">#</a>Color format</h3>
 <p>Colors use hexadecimal notation with multiple formats:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1692,8 +1679,8 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </table></div>
 <p><strong>Note</strong>: In the 4-digit RGBA format, the alpha channel follows a convention where <code>0</code> = opaque and <code>F</code> = transparent. This is <strong>inverted</strong> from the <code>opacity</code> attribute and standard CSS convention. In the 8-digit RRGGBBAA format, <code>00</code> = transparent and <code>FF</code> = opaque (standard convention).</p>
 <hr>
-<h2 id="7-built-in-controls-reference"><a class="anchor" href="#7-built-in-controls-reference">#</a>7. Built-in Controls Reference</h2>
-<h3 id="71-quad-ccontrolquad-cgamemanialinkquad"><a class="anchor" href="#71-quad-ccontrolquad-cgamemanialinkquad">#</a>7.1 Quad (CControlQuad / CGameManialinkQuad)</h3>
+<h2 id="built-in-controls-reference"><a class="anchor" href="#built-in-controls-reference">#</a>Built-in controls reference</h2>
+<h3 id="quad-ccontrolquad-cgamemanialinkquad"><a class="anchor" href="#quad-ccontrolquad-cgamemanialinkquad">#</a>Quad (CControlQuad / CGameManialinkQuad)</h3>
 <p>The most versatile element. Displays images, colors, or built-in styles.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;!-- Solid color background --&gt;
 &lt;quad size=&quot;60 40&quot; bgcolor=&quot;000C&quot; /&gt;
@@ -1757,7 +1744,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="72-label-ccontrollabel-cgamemanialinklabel"><a class="anchor" href="#72-label-ccontrollabel-cgamemanialinklabel">#</a>7.2 Label (CControlLabel / CGameManialinkLabel)</h3>
+<h3 id="label-ccontrollabel-cgamemanialinklabel"><a class="anchor" href="#label-ccontrollabel-cgamemanialinklabel">#</a>Label (CControlLabel / CGameManialinkLabel)</h3>
 <p>Text display with rich formatting.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;!-- Simple text --&gt;
 &lt;label pos=&quot;0 0&quot; text=&quot;Hello World&quot; textsize=&quot;4&quot; textcolor=&quot;FFF&quot; /&gt;
@@ -1813,7 +1800,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="73-entry-ccontrolentry-cgamemanialinkentry"><a class="anchor" href="#73-entry-ccontrolentry-cgamemanialinkentry">#</a>7.3 Entry (CControlEntry / CGameManialinkEntry)</h3>
+<h3 id="entry-ccontrolentry-cgamemanialinkentry"><a class="anchor" href="#entry-ccontrolentry-cgamemanialinkentry">#</a>Entry (CControlEntry / CGameManialinkEntry)</h3>
 <p>Single-line text input field.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;entry id=&quot;NameInput&quot; pos=&quot;0 0&quot; size=&quot;40 6&quot;
        default=&quot;Enter name...&quot; textsize=&quot;2&quot;
@@ -1850,7 +1837,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="74-textedit-ccontroltextedition-cgamemanialinktextedit"><a class="anchor" href="#74-textedit-ccontroltextedition-cgamemanialinktextedit">#</a>7.4 TextEdit (CControlTextEdition / CGameManialinkTextEdit)</h3>
+<h3 id="textedit-ccontroltextedition-cgamemanialinktextedit"><a class="anchor" href="#textedit-ccontroltextedition-cgamemanialinktextedit">#</a>TextEdit (CControlTextEdition / CGameManialinkTextEdit)</h3>
 <p>Multi-line text editor with optional line numbers.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;textedit id=&quot;CodeEditor&quot; pos=&quot;-60 30&quot; size=&quot;120 60&quot;
           showlinenumbers=&quot;1&quot; textformat=&quot;Script&quot;
@@ -1882,7 +1869,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="75-gauge-ccontrolslider-cgamemanialinkgauge"><a class="anchor" href="#75-gauge-ccontrolslider-cgamemanialinkgauge">#</a>7.5 Gauge (CControlSlider / CGameManialinkGauge)</h3>
+<h3 id="gauge-ccontrolslider-cgamemanialinkgauge"><a class="anchor" href="#gauge-ccontrolslider-cgamemanialinkgauge">#</a>Gauge (CControlSlider / CGameManialinkGauge)</h3>
 <p>Progress bar / gauge display.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;gauge id=&quot;HealthBar&quot; pos=&quot;0 -80&quot; size=&quot;60 8&quot;
        style=&quot;EnergyBar&quot; drawbg=&quot;1&quot;
@@ -1923,7 +1910,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="76-graph-ccontrolgraph-cgamemanialinkgraph"><a class="anchor" href="#76-graph-ccontrolgraph-cgamemanialinkgraph">#</a>7.6 Graph (CControlGraph / CGameManialinkGraph)</h3>
+<h3 id="graph-ccontrolgraph-cgamemanialinkgraph"><a class="anchor" href="#graph-ccontrolgraph-cgamemanialinkgraph">#</a>Graph (CControlGraph / CGameManialinkGraph)</h3>
 <p>Line chart display populated via script.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;graph id=&quot;SpeedGraph&quot; pos=&quot;-60 -20&quot; size=&quot;120 40&quot; scriptevents=&quot;1&quot; /&gt;</code></pre></div>
 <div class="table-wrapper"><table>
@@ -1984,7 +1971,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="77-frame-ccontrolframe-cgamemanialinkframe"><a class="anchor" href="#77-frame-ccontrolframe-cgamemanialinkframe">#</a>7.7 Frame (CControlFrame / CGameManialinkFrame)</h3>
+<h3 id="frame-ccontrolframe-cgamemanialinkframe"><a class="anchor" href="#frame-ccontrolframe-cgamemanialinkframe">#</a>Frame (CControlFrame / CGameManialinkFrame)</h3>
 <p>Invisible container that groups elements.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;frame id=&quot;Panel&quot; pos=&quot;-60 40&quot;&gt;
   &lt;quad size=&quot;120 80&quot; bgcolor=&quot;111C&quot; /&gt;
@@ -2027,7 +2014,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="78-minimap-ccontrolminimap-cgamemanialinkminimap"><a class="anchor" href="#78-minimap-ccontrolminimap-cgamemanialinkminimap">#</a>7.8 MiniMap (CControlMiniMap / CGameManialinkMiniMap)</h3>
+<h3 id="minimap-ccontrolminimap-cgamemanialinkminimap"><a class="anchor" href="#minimap-ccontrolminimap-cgamemanialinkminimap">#</a>MiniMap (CControlMiniMap / CGameManialinkMiniMap)</h3>
 <p>Displays a top-down map view.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;minimap id=&quot;MapView&quot; pos=&quot;50 -50&quot; size=&quot;40 40&quot; /&gt;</code></pre></div>
 <div class="table-wrapper"><table>
@@ -2061,7 +2048,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="79-audio-cgamemanialinkmediaplayer"><a class="anchor" href="#79-audio-cgamemanialinkmediaplayer">#</a>7.9 Audio (CGameManialinkMediaPlayer)</h3>
+<h3 id="audio-cgamemanialinkmediaplayer"><a class="anchor" href="#audio-cgamemanialinkmediaplayer">#</a>Audio (CGameManialinkMediaPlayer)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;audio data=&quot;file://Media/Sounds/click.ogg&quot; play=&quot;0&quot; loop=&quot;0&quot; id=&quot;ClickSound&quot; /&gt;</code></pre></div>
 <div class="table-wrapper"><table>
 <thead>
@@ -2089,14 +2076,13 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="710-video-cgamemanialinkmediaplayer"><a class="anchor" href="#710-video-cgamemanialinkmediaplayer">#</a>7.10 Video (CGameManialinkMediaPlayer)</h3>
+<h3 id="video-cgamemanialinkmediaplayer"><a class="anchor" href="#video-cgamemanialinkmediaplayer">#</a>Video (CGameManialinkMediaPlayer)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;video id=&quot;IntroVideo&quot; pos=&quot;-80 45&quot; size=&quot;160 90&quot;
        data=&quot;file://Media/Videos/intro.webm&quot; play=&quot;1&quot; loop=&quot;0&quot; /&gt;</code></pre></div>
 <p>Shares the same ManiaScript API as Audio.</p>
 <hr>
-<h2 id="8-manialink-scripting"><a class="anchor" href="#8-manialink-scripting">#</a>8. ManiaLink Scripting</h2>
-<h3 id="81-script-context"><a class="anchor" href="#81-script-context">#</a>8.1 Script Context</h3>
-<p>ManiaLink scripts run within specific context classes depending on where the ManiaLink is loaded:</p>
+<h2 id="manialink-scripting"><a class="anchor" href="#manialink-scripting">#</a>ManiaLink scripting</h2>
+<p>ManiaLink scripts run within specific context classes depending on where you load them.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2128,7 +2114,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="82-script-structure"><a class="anchor" href="#82-script-structure">#</a>8.2 Script Structure</h3>
+<h3 id="script-structure"><a class="anchor" href="#script-structure">#</a>Script structure</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;script&gt;&lt;!--
   #RequireContext CMlScriptIngame  // Optional: specify required context
 
@@ -2162,7 +2148,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
     }
   }
 --&gt;&lt;/script&gt;</code></pre></div>
-<h3 id="83-event-types-cmlscripteventtype"><a class="anchor" href="#83-event-types-cmlscripteventtype">#</a>8.3 Event Types (CMlScriptEvent::Type)</h3>
+<h3 id="event-types-cmlscripteventtype"><a class="anchor" href="#event-types-cmlscripteventtype">#</a>Event types (CMlScriptEvent::Type)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2209,7 +2195,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="84-event-properties"><a class="anchor" href="#84-event-properties">#</a>8.4 Event Properties</h3>
+<h3 id="event-properties"><a class="anchor" href="#event-properties">#</a>Event properties</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2261,7 +2247,7 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="85-page-api-cmlpage"><a class="anchor" href="#85-page-api-cmlpage">#</a>8.5 Page API (CMlPage)</h3>
+<h3 id="page-api-cmlpage"><a class="anchor" href="#page-api-cmlpage">#</a>Page API (CMlPage)</h3>
 <p>The <code>Page</code> global object provides access to all controls:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -2289,14 +2275,14 @@ ProgressBar, ProgressBarSmall, Shadow</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Type Casting</strong>: Controls must be cast to their specific type:</p>
+<p><strong>Type Casting</strong>: You must cast controls to their specific type:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>declare MyQuad = (Page.GetFirstChild(&quot;qid&quot;) as CMlQuad);
 declare MyLabel = (Page.GetFirstChild(&quot;lid&quot;) as CMlLabel);
 declare MyEntry = (Page.GetFirstChild(&quot;eid&quot;) as CMlEntry);
 declare MyGauge = (Page.GetFirstChild(&quot;gid&quot;) as CMlGauge);
 declare MyFrame = (Page.GetFirstChild(&quot;fid&quot;) as CMlFrame);
 declare MyGraph = (Page.GetFirstChild(&quot;grid&quot;) as CMlGraph);</code></pre></div>
-<h3 id="86-common-control-properties-cmlcontrol-base"><a class="anchor" href="#86-common-control-properties-cmlcontrol-base">#</a>8.6 Common Control Properties (CMlControl base)</h3>
+<h3 id="common-control-properties-cmlcontrol-base"><a class="anchor" href="#common-control-properties-cmlcontrol-base">#</a>Common control properties (CMlControl base)</h3>
 <p>All ManiaLink controls expose:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -2379,7 +2365,7 @@ declare MyGraph = (Page.GetFirstChild(&quot;grid&quot;) as CMlGraph);</code></pr
 </tr>
 </tbody>
 </table></div>
-<h3 id="87-animation-api-animmgr"><a class="anchor" href="#87-animation-api-animmgr">#</a>8.7 Animation API (AnimMgr)</h3>
+<h3 id="animation-api-animmgr"><a class="anchor" href="#animation-api-animmgr">#</a>Animation API (AnimMgr)</h3>
 <p>The <code>AnimMgr</code> global provides programmatic UI animation:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>// Animate position over 300ms with EaseOutQuad
 AnimMgr.Add(MyControl, &quot;&lt;control pos=\&quot;10 -20\&quot; /&gt;&quot;, 300, CAnimManager::EAnimManagerEasing::EaseOutQuad);
@@ -2389,7 +2375,7 @@ AnimMgr.Add(MyQuad, &quot;&lt;quad size=\&quot;40 20\&quot; opacity=\&quot;0.5\&
 
 // Flush all animations on a control
 AnimMgr.Flush(MyControl);</code></pre></div>
-<p><strong>Easing Functions</strong> (<code>CAnimManager::EAnimManagerEasing</code> / <code>CGameManialinkAnimManager::EAnimManagerEasing</code>):</p>
+<p><strong>Easing functions</strong> (<code>CAnimManager::EAnimManagerEasing</code> / <code>CGameManialinkAnimManager::EAnimManagerEasing</code>):</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2524,7 +2510,7 @@ AnimMgr.Flush(MyControl);</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="88-declare-modes-for-ui-layers"><a class="anchor" href="#88-declare-modes-for-ui-layers">#</a>8.8 Declare Modes (for UI Layers)</h3>
+<h3 id="declare-modes-for-ui-layers"><a class="anchor" href="#declare-modes-for-ui-layers">#</a>Declare modes (for UI layers)</h3>
 <p>When ManiaLink runs as a game mode UI layer, variables can have special persistence:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>// Local to this page instance (default)
 declare Integer MyVar;
@@ -2536,9 +2522,9 @@ declare persistent Integer MyPersistentVar;
 declare netwrite Integer Net_ServerValue for UI;
 declare netread Integer Net_ServerValue for UI;</code></pre></div>
 <hr>
-<h2 id="9-maniaapp-system-application-layer"><a class="anchor" href="#9-maniaapp-system-application-layer">#</a>9. ManiaApp System (Application Layer)</h2>
-<h3 id="91-maniaapp-hierarchy"><a class="anchor" href="#91-maniaapp-hierarchy">#</a>9.1 ManiaApp Hierarchy</h3>
-<p>The <code>CGameManiaApp*</code> classes form the application layer that hosts ManiaLink pages:</p>
+<h2 id="maniaapp-system-application-layer"><a class="anchor" href="#maniaapp-system-application-layer">#</a>ManiaApp system (application layer)</h2>
+<p>The <code>CGameManiaApp*</code> classes form the application layer that hosts ManiaLink pages.</p>
+<h3 id="maniaapp-hierarchy"><a class="anchor" href="#maniaapp-hierarchy">#</a>ManiaApp hierarchy</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameManiaApp                             -- Base ManiaApp (has Update method)
   +-- CGameManiaAppBrowser                -- ManiaLink browser app (UpdateAsync)
   +-- CGameManiaAppGraphWindow            -- Graph window app
@@ -2549,7 +2535,7 @@ declare netread Integer Net_ServerValue for UI;</code></pre></div>
   +-- CGameManiaAppTextSet                -- Text set app
   +-- CGameManiaAppTitle                  -- Title pack app (Update)
   +-- CGameManiaAppTitleLayerScriptHandler -- Title layer scripting</code></pre></div>
-<h3 id="92-cgamemaniaappplayground"><a class="anchor" href="#92-cgamemaniaappplayground">#</a>9.2 CGameManiaAppPlayground</h3>
+<h3 id="cgamemaniaappplayground"><a class="anchor" href="#cgamemaniaappplayground">#</a>CGameManiaAppPlayground</h3>
 <p>The primary entry point for in-game UI. Available as the script context for game mode ManiaLink layers.</p>
 <p><strong>Key capabilities</strong>:</p>
 <ul>
@@ -2558,8 +2544,8 @@ declare netread Integer Net_ServerValue for UI;</code></pre></div>
   <li>Access to game state, scores, and other players</li>
   <li>Can send/receive <code>CustomEvents</code> between layers</li>
 </ul>
-<h3 id="93-ui-layer-system-cgameuilayer"><a class="anchor" href="#93-ui-layer-system-cgameuilayer">#</a>9.3 UI Layer System (CGameUILayer)</h3>
-<p>Game modes create UI by adding <strong>layers</strong> -- each layer is a ManiaLink page:</p>
+<h3 id="ui-layer-system-cgameuilayer"><a class="anchor" href="#ui-layer-system-cgameuilayer">#</a>UI layer system (CGameUILayer)</h3>
+<p>Game modes create UI by adding layers -- each layer is a ManiaLink page:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGamePlaygroundUIConfig               -- Manages UI layers
   +-- UILayers[] : CGameUILayer[]    -- Array of active layers</code></pre></div>
 <p>Each <code>CGameUILayer</code> has:</p>
@@ -2594,7 +2580,7 @@ declare netread Integer Net_ServerValue for UI;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="94-maniaplanet-application-root"><a class="anchor" href="#94-maniaplanet-application-root">#</a>9.4 ManiaPlanet Application Root</h3>
+<h3 id="maniaplanet-application-root"><a class="anchor" href="#maniaplanet-application-root">#</a>ManiaPlanet application root</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameManiaPlanet                          -- Top-level application
   +-- CGameManiaPlanetMenuStations        -- Menu station manager
   +-- CGameManiaPlanetNetwork             -- Network subsystem
@@ -2604,9 +2590,9 @@ declare netread Integer Net_ServerValue for UI;</code></pre></div>
   +-- CGameManiaTitleControlScriptAPI     -- Title control API
   +-- CGameManiaTitleEditionScriptAPI     -- Title edition API</code></pre></div>
 <hr>
-<h2 id="10-hud-elements-and-playground-modules"><a class="anchor" href="#10-hud-elements-and-playground-modules">#</a>10. HUD Elements and Playground Modules</h2>
-<h3 id="101-module-architecture"><a class="anchor" href="#101-module-architecture">#</a>10.1 Module Architecture</h3>
-<p>The HUD in Trackmania uses a module system with client/server components:</p>
+<h2 id="hud-elements-and-playground-modules"><a class="anchor" href="#hud-elements-and-playground-modules">#</a>HUD elements and playground modules</h2>
+<p>The HUD uses a module system with client/server components.</p>
+<h3 id="module-architecture"><a class="anchor" href="#module-architecture">#</a>Module architecture</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGamePlaygroundModuleManagerClient / Server
   +-- CGamePlaygroundModuleClient* / Server*
        +-- Altimeter      -- Altitude display
@@ -2619,7 +2605,7 @@ declare netread Integer Net_ServerValue for UI;</code></pre></div>
        +-- Store          -- In-game store (ShootMania)
        +-- TeamState      -- Team state display
        +-- Throttle       -- Throttle/input display</code></pre></div>
-<h3 id="102-hud-model-classes"><a class="anchor" href="#102-hud-model-classes">#</a>10.2 HUD Model Classes</h3>
+<h3 id="hud-model-classes"><a class="anchor" href="#hud-model-classes">#</a>HUD model classes</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2690,8 +2676,7 @@ declare netread Integer Net_ServerValue for UI;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="103-standard-tm2020-hud-elements"><a class="anchor" href="#103-standard-tm2020-hud-elements">#</a>10.3 Standard TM2020 HUD Elements</h3>
-<p>These are the built-in HUD elements visible during gameplay:</p>
+<h3 id="standard-tm2020-hud-elements"><a class="anchor" href="#standard-tm2020-hud-elements">#</a>Standard TM2020 HUD elements</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2758,8 +2743,8 @@ declare netread Integer Net_ServerValue for UI;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="104-custom-hud-via-manialink"><a class="anchor" href="#104-custom-hud-via-manialink">#</a>10.4 Custom HUD via ManiaLink</h3>
-<p>Game mode scripts can create custom HUD layers:</p>
+<h3 id="custom-hud-via-manialink"><a class="anchor" href="#custom-hud-via-manialink">#</a>Custom HUD via ManiaLink</h3>
+<p>Game mode scripts create custom HUD layers:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>// In game mode script (CSmMode / CTmMode)
 declare CUILayer MyLayer = UIManager.UILayerCreate();
 MyLayer.ManialinkPage = &quot;&quot;&quot;
@@ -2774,9 +2759,9 @@ MyLayer.ManialinkPage = &quot;&quot;&quot;
 &quot;&quot;&quot;;
 MyLayer.Type = CUILayer::EUILayerType::Normal;</code></pre></div>
 <hr>
-<h2 id="11-game-control-cards"><a class="anchor" href="#11-game-control-cards">#</a>11. Game Control Cards</h2>
-<h3 id="111-card-widget-system-17-classes"><a class="anchor" href="#111-card-widget-system-17-classes">#</a>11.1 Card Widget System (17 classes)</h3>
-<p>Cards are reusable UI widgets for displaying structured data:</p>
+<h2 id="game-control-cards"><a class="anchor" href="#game-control-cards">#</a>Game control cards</h2>
+<p>Cards are reusable UI widgets for displaying structured data.</p>
+<h3 id="card-widget-system-17-classes"><a class="anchor" href="#card-widget-system-17-classes">#</a>Card widget system (17 classes)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameControlCard                          -- Base card widget
   +-- CGameControlCardBuddy              -- Friend/buddy info card
   +-- CGameControlCardCtnArticle         -- Article/content card
@@ -2795,8 +2780,7 @@ CGameControlCardManager                   -- Card widget lifecycle manager
 CGameControlDataType                      -- Card data type schema definition
 CGameControlGrid                          -- Game-specific grid layout
 CGameControlGridCard                      -- Grid of card widgets</code></pre></div>
-<h3 id="112-trackmania-specific-cards"><a class="anchor" href="#112-trackmania-specific-cards">#</a>11.2 TrackMania-Specific Cards</h3>
-<p>From the class_hierarchy.json, TrackMania adds its own card specializations:</p>
+<h3 id="trackmania-specific-cards"><a class="anchor" href="#trackmania-specific-cards">#</a>TrackMania-specific cards</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2829,19 +2813,19 @@ CGameControlGridCard                      -- Grid of card widgets</code></pre></
 </tbody>
 </table></div>
 <hr>
-<h2 id="12-ui-effect-and-animation-system"><a class="anchor" href="#12-ui-effect-and-animation-system">#</a>12. UI Effect and Animation System</h2>
-<h3 id="121-native-effect-classes"><a class="anchor" href="#121-native-effect-classes">#</a>12.1 Native Effect Classes</h3>
+<h2 id="ui-effect-and-animation-system"><a class="anchor" href="#ui-effect-and-animation-system">#</a>UI effect and animation system</h2>
+<h3 id="native-effect-classes"><a class="anchor" href="#native-effect-classes">#</a>Native effect classes</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CControlEffect                            -- Base effect
   +-- CControlEffectCombined              -- Chains multiple effects
   +-- CControlEffectMaster                -- Master controller (orchestrates)
   +-- CControlEffectMotion                -- Translation/rotation motion
   +-- CControlEffectMoveFrame             -- Frame position animation
   +-- CControlEffectSimi                  -- Similarity transform (scale+rotate+translate)</code></pre></div>
-<h3 id="122-ccontroleffectsimi-keyframes"><a class="anchor" href="#122-ccontroleffectsimi-keyframes">#</a>12.2 CControlEffectSimi Keyframes</h3>
+<h3 id="ccontroleffectsimi-keyframes"><a class="anchor" href="#ccontroleffectsimi-keyframes">#</a>CControlEffectSimi keyframes</h3>
 <p>The <code>SKeyVal</code> struct defines keyframe values for similarity transform animations. This is the underlying mechanism for ManiaLink's <code>AnimMgr</code>.</p>
-<h3 id="123-ccontrolsimi2"><a class="anchor" href="#123-ccontrolsimi2">#</a>12.3 CControlSimi2</h3>
+<h3 id="ccontrolsimi2"><a class="anchor" href="#ccontrolsimi2">#</a>CControlSimi2</h3>
 <p>A 2D similarity transform (3 DOF: translate X/Y, uniform scale, rotation). Used for efficient 2D UI transformations.</p>
-<h3 id="124-animation-system-flow"><a class="anchor" href="#124-animation-system-flow">#</a>12.4 Animation System Flow</h3>
+<h3 id="animation-system-flow"><a class="anchor" href="#animation-system-flow">#</a>Animation system flow</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ManiaScript: AnimMgr.Add(control, xmlTarget, duration, easing)
     |
     v
@@ -2856,10 +2840,9 @@ CControlEngine::ControlsEffects() (per-frame interpolation)
     v
 Native rendering (GPU)</code></pre></div>
 <hr>
-<h2 id="13-openplanet-defaultstyle-modern-ui-theme"><a class="anchor" href="#13-openplanet-defaultstyle-modern-ui-theme">#</a>13. Openplanet DefaultStyle (Modern UI Theme)</h2>
-<p><strong>Source</strong>: <code>Trackmania/Openplanet/DefaultStyle.toml</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (actual file from game installation)</p>
-<p>Openplanet uses ImGui-style theming. While not ManiaLink, it shows the modern TM2020 UI aesthetic:</p>
-<h3 id="131-layout-parameters"><a class="anchor" href="#131-layout-parameters">#</a>13.1 Layout Parameters</h3>
+<h2 id="openplanet-defaultstyle-modern-ui-theme"><a class="anchor" href="#openplanet-defaultstyle-modern-ui-theme">#</a>Openplanet DefaultStyle (modern UI theme)</h2>
+<p>Openplanet uses ImGui-style theming. While not ManiaLink, it shows the modern TM2020 UI aesthetic. Source: <code>Trackmania/Openplanet/DefaultStyle.toml</code>. Confidence: <span class="badge badge-verified">VERIFIED</span>.</p>
+<h3 id="layout-parameters"><a class="anchor" href="#layout-parameters">#</a>Layout parameters</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2941,7 +2924,7 @@ Native rendering (GPU)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="132-color-palette"><a class="anchor" href="#132-color-palette">#</a>13.2 Color Palette</h3>
+<h3 id="color-palette"><a class="anchor" href="#color-palette">#</a>Color palette</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -3092,10 +3075,10 @@ Native rendering (GPU)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Design language</strong>: Dark theme with <code>#566AFF</code> blue accent. Very consistent with TM2020's overall dark/neon aesthetic.</p>
+<p><strong>Design language</strong>: Dark theme with <code>#566AFF</code> blue accent. Consistent with TM2020's dark/neon aesthetic.</p>
 <hr>
-<h2 id="14-browser-htmlcss-equivalents"><a class="anchor" href="#14-browser-htmlcss-equivalents">#</a>14. Browser HTML/CSS Equivalents</h2>
-<h3 id="141-element-mapping"><a class="anchor" href="#141-element-mapping">#</a>14.1 Element Mapping</h3>
+<h2 id="browser-htmlcss-equivalents"><a class="anchor" href="#browser-htmlcss-equivalents">#</a>Browser HTML/CSS equivalents</h2>
+<h3 id="element-mapping"><a class="anchor" href="#element-mapping">#</a>Element mapping</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -3187,7 +3170,7 @@ Native rendering (GPU)</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="142-coordinate-system-conversion"><a class="anchor" href="#142-coordinate-system-conversion">#</a>14.2 Coordinate System Conversion</h3>
+<h3 id="coordinate-system-conversion"><a class="anchor" href="#coordinate-system-conversion">#</a>Coordinate system conversion</h3>
 <p>ManiaLink coordinates must be converted for browser rendering:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">// ManiaLink: origin at center, Y-up, 320x180 viewport
 // Browser: origin at top-left, Y-down, variable viewport
@@ -3212,7 +3195,7 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
     transform: `translate(${transformX}%, ${transformY}%)`
   };
 }</code></pre></div>
-<h3 id="143-style-system-mapping"><a class="anchor" href="#143-style-system-mapping">#</a>14.3 Style System Mapping</h3>
+<h3 id="style-system-mapping"><a class="anchor" href="#style-system-mapping">#</a>Style system mapping</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -3263,7 +3246,7 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 </tr>
 </tbody>
 </table></div>
-<h3 id="144-animation-mapping"><a class="anchor" href="#144-animation-mapping">#</a>14.4 Animation Mapping</h3>
+<h3 id="animation-mapping"><a class="anchor" href="#animation-mapping">#</a>Animation mapping</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -3303,8 +3286,8 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 </tbody>
 </table></div>
 <hr>
-<h2 id="15-unknowns-and-gaps"><a class="anchor" href="#15-unknowns-and-gaps">#</a>15. Unknowns and Gaps</h2>
-<h3 id="151-known-unknowns-need-further-re"><a class="anchor" href="#151-known-unknowns-need-further-re">#</a>15.1 Known Unknowns (Need Further RE)</h3>
+<h2 id="unknowns-and-gaps"><a class="anchor" href="#unknowns-and-gaps">#</a>Unknowns and gaps</h2>
+<h3 id="known-unknowns-need-further-re"><a class="anchor" href="#known-unknowns-need-further-re">#</a>Known unknowns (need further RE)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -3366,7 +3349,7 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 </tr>
 </tbody>
 </table></div>
-<h3 id="152-what-we-know-well-60"><a class="anchor" href="#152-what-we-know-well-60">#</a>15.2 What We Know Well (60%+)</h3>
+<h3 id="what-is-well-understood-60"><a class="anchor" href="#what-is-well-understood-60">#</a>What is well understood (60%+)</h3>
 <ul>
   <li>Complete class hierarchy (all 70 UI classes enumerated)</li>
   <li>ManiaLink XML elements and attributes (community-documented)</li>
@@ -3377,7 +3360,7 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
   <li>Card widget system</li>
   <li>Openplanet UI theme parameters</li>
 </ul>
-<h3 id="153-what-remains-poorly-understood-20"><a class="anchor" href="#153-what-remains-poorly-understood-20">#</a>15.3 What Remains Poorly Understood (20%)</h3>
+<h3 id="what-remains-poorly-understood-20"><a class="anchor" href="#what-remains-poorly-understood-20">#</a>What remains poorly understood (20%)</h3>
 <ul>
   <li>Native CControl rendering pipeline internals</li>
   <li>CControlLayout algorithm specifics</li>
@@ -3389,7 +3372,18 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
   <li>Built-in style sprite sheet asset format</li>
 </ul>
 <hr>
-<h2 id="sources"><a class="anchor" href="#sources">#</a>Sources</h2>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related pages</h2>
+<ul>
+  <li><a href="31-maniascript-reference.md">31-maniascript-reference.md</a> -- ManiaScript language reference, syntax, coroutines, and script contexts</li>
+  <li><a href="class-hierarchy.html">13-subsystem-class-map.md</a> -- Engine subsystem architecture including the UI/Control system</li>
+  <li><a href="29-community-knowledge.md">29-community-knowledge.md</a> -- Community-sourced ManiaLink and ManiaScript documentation</li>
+  <li><a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> -- Openplanet plugin system and UI structure</li>
+</ul>
+<hr>
+<details>
+<summary>Analysis metadata</summary>
+<p><strong>Source</strong>: <code>class_hierarchy.json</code> (2,027 classes), <code>13-subsystem-class-map.md</code> (Section 4), <code>19-openplanet-intelligence.md</code>, <code>29-community-knowledge.md</code>, Openplanet <code>DefaultStyle.toml</code>, ManiaLink community documentation <strong>Confidence</strong>: MIXED -- Native control hierarchy is <span class="badge badge-verified">VERIFIED</span> from binary RTTI; ManiaLink XML format is community-documented (HIGH confidence); scripting API is <span class="badge badge-verified">VERIFIED</span> via Openplanet; HUD module system is <span class="badge badge-verified">VERIFIED</span> from class hierarchy <strong>Date</strong>: 2026-03-27</p>
+<p><strong>Sources</strong>:</p>
 <ul>
   <li>Binary RTTI: <code>class_hierarchy.json</code> (5,886 lines, 2,027 Nadeo classes)</li>
   <li>Subsystem analysis: <code>13-subsystem-class-map.md</code> (Section 4: UI/Control System)</li>
@@ -3407,92 +3401,92 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
   <li><a href="https://openplanet.dev/plugin/mlhook">MLHook Openplanet Plugin</a></li>
   <li><a href="https://maniaplanet.github.io/maniascript-reference/struct_c_ml_script_ingame.html">CMlScriptIngame Reference</a></li>
 </ul>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="maniascript.html">&larr; ManiaScript Reference</a><a class="next" href="shaders.html">Shader Catalog &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="maniascript.html">&larr; ManiaScript Reference</a><a class="next" href="openplanet.html">Openplanet Intelligence &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-architecture-overview">1. Architecture Overview</a></li>
-  <li class="toc-h3"><a href="#key-singletons">Key Singletons</a></li>
-  <li class="toc-h3"><a href="#engine-assignment">Engine Assignment</a></li>
-<li class=""><a href="#2-ccontrol-class-hierarchy-native-controls">2. CControl Class Hierarchy (Native Controls)</a></li>
-  <li class="toc-h3"><a href="#21-complete-hierarchy-39-classes">2.1 Complete Hierarchy (39 classes)</a></li>
-  <li class="toc-h3"><a href="#22-ccontrolengine-update-pipeline">2.2 CControlEngine Update Pipeline</a></li>
-  <li class="toc-h3"><a href="#23-ccontroltextedition-methods">2.3 CControlTextEdition Methods</a></li>
-  <li class="toc-h3"><a href="#24-ccontroleffectsimi">2.4 CControlEffectSimi</a></li>
-<li class=""><a href="#3-cgamemanialink-class-hierarchy-script-exposed-controls">3. CGameManialink Class Hierarchy (Script-Exposed Controls)</a></li>
-  <li class="toc-h3"><a href="#31-complete-hierarchy-31-classes">3.1 Complete Hierarchy (31 classes)</a></li>
-  <li class="toc-h3"><a href="#32-native-to-script-control-mapping">3.2 Native-to-Script Control Mapping</a></li>
-  <li class="toc-h3"><a href="#33-per-frame-update">3.3 Per-Frame Update</a></li>
-<li class=""><a href="#4-manialink-xml-format">4. ManiaLink XML Format</a></li>
-  <li class="toc-h3"><a href="#41-basic-structure">4.1 Basic Structure</a></li>
-  <li class="toc-h3"><a href="#42-version-history">4.2 Version History</a></li>
-  <li class="toc-h3"><a href="#43-root-element-attributes">4.3 Root Element Attributes</a></li>
-  <li class="toc-h3"><a href="#44-complete-element-reference">4.4 Complete Element Reference</a></li>
-<li class=""><a href="#5-layout-system-positioning-sizing-anchoring">5. Layout System (Positioning, Sizing, Anchoring)</a></li>
-  <li class="toc-h3"><a href="#51-coordinate-system">5.1 Coordinate System</a></li>
-  <li class="toc-h3"><a href="#52-positioning">5.2 Positioning</a></li>
-  <li class="toc-h3"><a href="#53-alignment-anchor-point">5.3 Alignment (Anchor Point)</a></li>
-  <li class="toc-h3"><a href="#54-scale-and-rotation">5.4 Scale and Rotation</a></li>
-  <li class="toc-h3"><a href="#55-z-index-layering">5.5 Z-Index Layering</a></li>
-<li class=""><a href="#6-style-system">6. Style System</a></li>
-  <li class="toc-h3"><a href="#61-built-in-quad-styles">6.1 Built-in Quad Styles</a></li>
-  <li class="toc-h3"><a href="#62-label-styles">6.2 Label Styles</a></li>
-  <li class="toc-h3"><a href="#63-frame3d-styles">6.3 Frame3d Styles</a></li>
-  <li class="toc-h3"><a href="#64-color-format">6.4 Color Format</a></li>
-<li class=""><a href="#7-built-in-controls-reference">7. Built-in Controls Reference</a></li>
-  <li class="toc-h3"><a href="#71-quad-ccontrolquad-cgamemanialinkquad">7.1 Quad (CControlQuad / CGameManialinkQuad)</a></li>
-  <li class="toc-h3"><a href="#72-label-ccontrollabel-cgamemanialinklabel">7.2 Label (CControlLabel / CGameManialinkLabel)</a></li>
-  <li class="toc-h3"><a href="#73-entry-ccontrolentry-cgamemanialinkentry">7.3 Entry (CControlEntry / CGameManialinkEntry)</a></li>
-  <li class="toc-h3"><a href="#74-textedit-ccontroltextedition-cgamemanialinktextedit">7.4 TextEdit (CControlTextEdition / CGameManialinkTextEdit)</a></li>
-  <li class="toc-h3"><a href="#75-gauge-ccontrolslider-cgamemanialinkgauge">7.5 Gauge (CControlSlider / CGameManialinkGauge)</a></li>
-  <li class="toc-h3"><a href="#76-graph-ccontrolgraph-cgamemanialinkgraph">7.6 Graph (CControlGraph / CGameManialinkGraph)</a></li>
-  <li class="toc-h3"><a href="#77-frame-ccontrolframe-cgamemanialinkframe">7.7 Frame (CControlFrame / CGameManialinkFrame)</a></li>
-  <li class="toc-h3"><a href="#78-minimap-ccontrolminimap-cgamemanialinkminimap">7.8 MiniMap (CControlMiniMap / CGameManialinkMiniMap)</a></li>
-  <li class="toc-h3"><a href="#79-audio-cgamemanialinkmediaplayer">7.9 Audio (CGameManialinkMediaPlayer)</a></li>
-  <li class="toc-h3"><a href="#710-video-cgamemanialinkmediaplayer">7.10 Video (CGameManialinkMediaPlayer)</a></li>
-<li class=""><a href="#8-manialink-scripting">8. ManiaLink Scripting</a></li>
-  <li class="toc-h3"><a href="#81-script-context">8.1 Script Context</a></li>
-  <li class="toc-h3"><a href="#82-script-structure">8.2 Script Structure</a></li>
-  <li class="toc-h3"><a href="#83-event-types-cmlscripteventtype">8.3 Event Types (CMlScriptEvent::Type)</a></li>
-  <li class="toc-h3"><a href="#84-event-properties">8.4 Event Properties</a></li>
-  <li class="toc-h3"><a href="#85-page-api-cmlpage">8.5 Page API (CMlPage)</a></li>
-  <li class="toc-h3"><a href="#86-common-control-properties-cmlcontrol-base">8.6 Common Control Properties (CMlControl base)</a></li>
-  <li class="toc-h3"><a href="#87-animation-api-animmgr">8.7 Animation API (AnimMgr)</a></li>
-  <li class="toc-h3"><a href="#88-declare-modes-for-ui-layers">8.8 Declare Modes (for UI Layers)</a></li>
-<li class=""><a href="#9-maniaapp-system-application-layer">9. ManiaApp System (Application Layer)</a></li>
-  <li class="toc-h3"><a href="#91-maniaapp-hierarchy">9.1 ManiaApp Hierarchy</a></li>
-  <li class="toc-h3"><a href="#92-cgamemaniaappplayground">9.2 CGameManiaAppPlayground</a></li>
-  <li class="toc-h3"><a href="#93-ui-layer-system-cgameuilayer">9.3 UI Layer System (CGameUILayer)</a></li>
-  <li class="toc-h3"><a href="#94-maniaplanet-application-root">9.4 ManiaPlanet Application Root</a></li>
-<li class=""><a href="#10-hud-elements-and-playground-modules">10. HUD Elements and Playground Modules</a></li>
-  <li class="toc-h3"><a href="#101-module-architecture">10.1 Module Architecture</a></li>
-  <li class="toc-h3"><a href="#102-hud-model-classes">10.2 HUD Model Classes</a></li>
-  <li class="toc-h3"><a href="#103-standard-tm2020-hud-elements">10.3 Standard TM2020 HUD Elements</a></li>
-  <li class="toc-h3"><a href="#104-custom-hud-via-manialink">10.4 Custom HUD via ManiaLink</a></li>
-<li class=""><a href="#11-game-control-cards">11. Game Control Cards</a></li>
-  <li class="toc-h3"><a href="#111-card-widget-system-17-classes">11.1 Card Widget System (17 classes)</a></li>
-  <li class="toc-h3"><a href="#112-trackmania-specific-cards">11.2 TrackMania-Specific Cards</a></li>
-<li class=""><a href="#12-ui-effect-and-animation-system">12. UI Effect and Animation System</a></li>
-  <li class="toc-h3"><a href="#121-native-effect-classes">12.1 Native Effect Classes</a></li>
-  <li class="toc-h3"><a href="#122-ccontroleffectsimi-keyframes">12.2 CControlEffectSimi Keyframes</a></li>
-  <li class="toc-h3"><a href="#123-ccontrolsimi2">12.3 CControlSimi2</a></li>
-  <li class="toc-h3"><a href="#124-animation-system-flow">12.4 Animation System Flow</a></li>
-<li class=""><a href="#13-openplanet-defaultstyle-modern-ui-theme">13. Openplanet DefaultStyle (Modern UI Theme)</a></li>
-  <li class="toc-h3"><a href="#131-layout-parameters">13.1 Layout Parameters</a></li>
-  <li class="toc-h3"><a href="#132-color-palette">13.2 Color Palette</a></li>
-<li class=""><a href="#14-browser-htmlcss-equivalents">14. Browser HTML/CSS Equivalents</a></li>
-  <li class="toc-h3"><a href="#141-element-mapping">14.1 Element Mapping</a></li>
-  <li class="toc-h3"><a href="#142-coordinate-system-conversion">14.2 Coordinate System Conversion</a></li>
-  <li class="toc-h3"><a href="#143-style-system-mapping">14.3 Style System Mapping</a></li>
-  <li class="toc-h3"><a href="#144-animation-mapping">14.4 Animation Mapping</a></li>
-<li class=""><a href="#15-unknowns-and-gaps">15. Unknowns and Gaps</a></li>
-  <li class="toc-h3"><a href="#151-known-unknowns-need-further-re">15.1 Known Unknowns (Need Further RE)</a></li>
-  <li class="toc-h3"><a href="#152-what-we-know-well-60">15.2 What We Know Well (60%+)</a></li>
-  <li class="toc-h3"><a href="#153-what-remains-poorly-understood-20">15.3 What Remains Poorly Understood (20%)</a></li>
-<li class=""><a href="#sources">Sources</a></li>
+<li class=""><a href="#what-manialink-is-and-why-it-matters">What ManiaLink is and why it matters</a></li>
+<li class=""><a href="#architecture-overview">Architecture overview</a></li>
+  <li class="toc-h3"><a href="#key-singletons">Key singletons</a></li>
+  <li class="toc-h3"><a href="#engine-assignment">Engine assignment</a></li>
+<li class=""><a href="#ccontrol-class-hierarchy-native-controls">CControl class hierarchy (native controls)</a></li>
+  <li class="toc-h3"><a href="#complete-hierarchy-39-classes">Complete hierarchy (39 classes)</a></li>
+  <li class="toc-h3"><a href="#ccontrolengine-update-pipeline">CControlEngine update pipeline</a></li>
+  <li class="toc-h3"><a href="#ccontroltextedition-methods">CControlTextEdition methods</a></li>
+  <li class="toc-h3"><a href="#ccontroleffectsimi">CControlEffectSimi</a></li>
+<li class=""><a href="#cgamemanialink-class-hierarchy-script-exposed-controls">CGameManialink class hierarchy (script-exposed controls)</a></li>
+  <li class="toc-h3"><a href="#complete-hierarchy-31-classes">Complete hierarchy (31 classes)</a></li>
+  <li class="toc-h3"><a href="#native-to-script-control-mapping">Native-to-script control mapping</a></li>
+  <li class="toc-h3"><a href="#per-frame-update">Per-frame update</a></li>
+<li class=""><a href="#manialink-xml-format">ManiaLink XML format</a></li>
+  <li class="toc-h3"><a href="#basic-structure">Basic structure</a></li>
+  <li class="toc-h3"><a href="#version-history">Version history</a></li>
+  <li class="toc-h3"><a href="#root-element-attributes">Root element attributes</a></li>
+  <li class="toc-h3"><a href="#complete-element-reference">Complete element reference</a></li>
+<li class=""><a href="#layout-system">Layout system</a></li>
+  <li class="toc-h3"><a href="#coordinate-system">Coordinate system</a></li>
+  <li class="toc-h3"><a href="#positioning">Positioning</a></li>
+  <li class="toc-h3"><a href="#alignment-anchor-point">Alignment (anchor point)</a></li>
+  <li class="toc-h3"><a href="#scale-and-rotation">Scale and rotation</a></li>
+  <li class="toc-h3"><a href="#z-index-layering">Z-index layering</a></li>
+<li class=""><a href="#style-system">Style system</a></li>
+  <li class="toc-h3"><a href="#built-in-quad-styles">Built-in quad styles</a></li>
+  <li class="toc-h3"><a href="#label-styles">Label styles</a></li>
+  <li class="toc-h3"><a href="#frame3d-styles">Frame3d styles</a></li>
+  <li class="toc-h3"><a href="#color-format">Color format</a></li>
+<li class=""><a href="#built-in-controls-reference">Built-in controls reference</a></li>
+  <li class="toc-h3"><a href="#quad-ccontrolquad-cgamemanialinkquad">Quad (CControlQuad / CGameManialinkQuad)</a></li>
+  <li class="toc-h3"><a href="#label-ccontrollabel-cgamemanialinklabel">Label (CControlLabel / CGameManialinkLabel)</a></li>
+  <li class="toc-h3"><a href="#entry-ccontrolentry-cgamemanialinkentry">Entry (CControlEntry / CGameManialinkEntry)</a></li>
+  <li class="toc-h3"><a href="#textedit-ccontroltextedition-cgamemanialinktextedit">TextEdit (CControlTextEdition / CGameManialinkTextEdit)</a></li>
+  <li class="toc-h3"><a href="#gauge-ccontrolslider-cgamemanialinkgauge">Gauge (CControlSlider / CGameManialinkGauge)</a></li>
+  <li class="toc-h3"><a href="#graph-ccontrolgraph-cgamemanialinkgraph">Graph (CControlGraph / CGameManialinkGraph)</a></li>
+  <li class="toc-h3"><a href="#frame-ccontrolframe-cgamemanialinkframe">Frame (CControlFrame / CGameManialinkFrame)</a></li>
+  <li class="toc-h3"><a href="#minimap-ccontrolminimap-cgamemanialinkminimap">MiniMap (CControlMiniMap / CGameManialinkMiniMap)</a></li>
+  <li class="toc-h3"><a href="#audio-cgamemanialinkmediaplayer">Audio (CGameManialinkMediaPlayer)</a></li>
+  <li class="toc-h3"><a href="#video-cgamemanialinkmediaplayer">Video (CGameManialinkMediaPlayer)</a></li>
+<li class=""><a href="#manialink-scripting">ManiaLink scripting</a></li>
+  <li class="toc-h3"><a href="#script-structure">Script structure</a></li>
+  <li class="toc-h3"><a href="#event-types-cmlscripteventtype">Event types (CMlScriptEvent::Type)</a></li>
+  <li class="toc-h3"><a href="#event-properties">Event properties</a></li>
+  <li class="toc-h3"><a href="#page-api-cmlpage">Page API (CMlPage)</a></li>
+  <li class="toc-h3"><a href="#common-control-properties-cmlcontrol-base">Common control properties (CMlControl base)</a></li>
+  <li class="toc-h3"><a href="#animation-api-animmgr">Animation API (AnimMgr)</a></li>
+  <li class="toc-h3"><a href="#declare-modes-for-ui-layers">Declare modes (for UI layers)</a></li>
+<li class=""><a href="#maniaapp-system-application-layer">ManiaApp system (application layer)</a></li>
+  <li class="toc-h3"><a href="#maniaapp-hierarchy">ManiaApp hierarchy</a></li>
+  <li class="toc-h3"><a href="#cgamemaniaappplayground">CGameManiaAppPlayground</a></li>
+  <li class="toc-h3"><a href="#ui-layer-system-cgameuilayer">UI layer system (CGameUILayer)</a></li>
+  <li class="toc-h3"><a href="#maniaplanet-application-root">ManiaPlanet application root</a></li>
+<li class=""><a href="#hud-elements-and-playground-modules">HUD elements and playground modules</a></li>
+  <li class="toc-h3"><a href="#module-architecture">Module architecture</a></li>
+  <li class="toc-h3"><a href="#hud-model-classes">HUD model classes</a></li>
+  <li class="toc-h3"><a href="#standard-tm2020-hud-elements">Standard TM2020 HUD elements</a></li>
+  <li class="toc-h3"><a href="#custom-hud-via-manialink">Custom HUD via ManiaLink</a></li>
+<li class=""><a href="#game-control-cards">Game control cards</a></li>
+  <li class="toc-h3"><a href="#card-widget-system-17-classes">Card widget system (17 classes)</a></li>
+  <li class="toc-h3"><a href="#trackmania-specific-cards">TrackMania-specific cards</a></li>
+<li class=""><a href="#ui-effect-and-animation-system">UI effect and animation system</a></li>
+  <li class="toc-h3"><a href="#native-effect-classes">Native effect classes</a></li>
+  <li class="toc-h3"><a href="#ccontroleffectsimi-keyframes">CControlEffectSimi keyframes</a></li>
+  <li class="toc-h3"><a href="#ccontrolsimi2">CControlSimi2</a></li>
+  <li class="toc-h3"><a href="#animation-system-flow">Animation system flow</a></li>
+<li class=""><a href="#openplanet-defaultstyle-modern-ui-theme">Openplanet DefaultStyle (modern UI theme)</a></li>
+  <li class="toc-h3"><a href="#layout-parameters">Layout parameters</a></li>
+  <li class="toc-h3"><a href="#color-palette">Color palette</a></li>
+<li class=""><a href="#browser-htmlcss-equivalents">Browser HTML/CSS equivalents</a></li>
+  <li class="toc-h3"><a href="#element-mapping">Element mapping</a></li>
+  <li class="toc-h3"><a href="#coordinate-system-conversion">Coordinate system conversion</a></li>
+  <li class="toc-h3"><a href="#style-system-mapping">Style system mapping</a></li>
+  <li class="toc-h3"><a href="#animation-mapping">Animation mapping</a></li>
+<li class=""><a href="#unknowns-and-gaps">Unknowns and gaps</a></li>
+  <li class="toc-h3"><a href="#known-unknowns-need-further-re">Known unknowns (need further RE)</a></li>
+  <li class="toc-h3"><a href="#what-is-well-understood-60">What is well understood (60%+)</a></li>
+  <li class="toc-h3"><a href="#what-remains-poorly-understood-20">What remains poorly understood (20%)</a></li>
+<li class=""><a href="#related-pages">Related pages</a></li>
 </ul>
 </nav>
 

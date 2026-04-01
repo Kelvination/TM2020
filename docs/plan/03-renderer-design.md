@@ -1,30 +1,10 @@
 # OpenTM Renderer Design
 
-**Purpose**: Exact WebGPU rendering pipeline specification for reproducing TM2020's visual quality at interactive frame rates in a browser.
-
-**Date**: 2026-03-27
-
-**Sources**: All reverse-engineering documents (11, 15, 19, 28, 32) cross-referenced for every design decision.
+This document specifies the WebGPU rendering pipeline for reproducing TM2020's visual quality at interactive frame rates in a browser. Every format choice and architecture decision cites specific evidence from reverse engineering (docs 11, 15, 19, 28, 32).
 
 ---
 
-## Table of Contents
-
-1. [Pipeline Architecture (4 Tiers)](#1-pipeline-architecture-4-tiers)
-2. [G-Buffer Design](#2-g-buffer-design)
-3. [Shader Architecture](#3-shader-architecture)
-4. [Mesh Pipeline](#4-mesh-pipeline)
-5. [Shadow System](#5-shadow-system)
-6. [Post-Processing Chain](#6-post-processing-chain)
-7. [Asset Loading Pipeline](#7-asset-loading-pipeline)
-8. [The Block Mesh Problem (CRITICAL)](#8-the-block-mesh-problem-critical)
-9. [Performance Optimization Strategy](#9-performance-optimization-strategy)
-10. [WebGPU Feature Requirements](#10-webgpu-feature-requirements)
-11. [Unknown Analysis](#11-unknown-analysis)
-
----
-
-## 1. Pipeline Architecture (4 Tiers)
+## Pipeline Architecture (4 Tiers)
 
 The renderer is designed as four progressive tiers. Each tier adds rendering features and GPU requirements. A browser client probes device capabilities at startup and selects the highest supported tier.
 
@@ -178,7 +158,7 @@ All of Tier 2 plus:
 
 ---
 
-## 2. G-Buffer Design
+## G-Buffer Design
 
 ### Format Justification
 
@@ -258,7 +238,7 @@ Plus shadow maps (4 x 2048x2048 x 4 bytes = 64 MB), bloom chain (~4 MB), TAA his
 
 ---
 
-## 3. Shader Architecture
+## Shader Architecture
 
 ### Strategy: 1,112 TM2020 Shaders to ~35 WebGPU Uber-Shaders
 
@@ -871,7 +851,7 @@ fn fs_main(@builtin(position) frag_coord: vec4<f32>) -> @location(0) vec4<f32> {
 
 ---
 
-## 4. Mesh Pipeline
+## Mesh Pipeline
 
 ### Vertex Formats
 
@@ -952,7 +932,7 @@ This is addressed in detail in Section 8. The critical point for the mesh pipeli
 
 ---
 
-## 5. Shadow System
+## Shadow System
 
 ### Architecture
 
@@ -997,7 +977,7 @@ TM2020 caches static shadow maps (doc 11: `"ShadowCache_Enable"`, `ShadowCacheUp
 
 ---
 
-## 6. Post-Processing Chain
+## Post-Processing Chain
 
 The exact execution order is reconstructed from TM2020's verified pass ordering (doc 11, Section 4 Phase 9-12; doc 32, Section 6):
 
@@ -1051,7 +1031,7 @@ fn filmic_tonemap(x: vec3<f32>) -> vec3<f32> {
 
 ---
 
-## 7. Asset Loading Pipeline
+## Asset Loading Pipeline
 
 ### DDS Texture Loading
 
@@ -1115,7 +1095,7 @@ The browser's WebGPU implementation will enforce adapter limits. We query `adapt
 
 ---
 
-## 8. The Block Mesh Problem (CRITICAL)
+## The Block Mesh Problem (CRITICAL)
 
 This is the single biggest blocker for the entire OpenTM renderer. The visual appearance of a Trackmania map depends on block geometry, and that geometry is locked inside encrypted pack files.
 
@@ -1245,7 +1225,7 @@ This produces a playable-looking map with correct geometry for driving, even if 
 
 ---
 
-## 9. Performance Optimization Strategy
+## Performance Optimization Strategy
 
 ### Frustum Culling (GPU Compute Shader)
 
@@ -1318,7 +1298,7 @@ This eliminates texture bind changes between draw calls, enabling the full insta
 
 ---
 
-## 10. WebGPU Feature Requirements
+## WebGPU Feature Requirements
 
 ### Required Features
 
@@ -1377,7 +1357,7 @@ Mobile browsers present significant limitations for Tier 2+:
 
 ---
 
-## 11. Unknown Analysis
+## Unknown Analysis
 
 ### Critical Unknowns
 

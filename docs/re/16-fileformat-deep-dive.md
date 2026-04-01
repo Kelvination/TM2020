@@ -1,55 +1,10 @@
 # GBX File Format Deep Dive
 
-**Binary**: `Trackmania.exe` (Trackmania 2020)
-**Date of analysis**: 2026-03-27
-**Tools**: Ghidra 11.x via PyGhidra bridge
-**Purpose**: Complete GBX format specification sufficient to implement a parser
+GBX (GameBox) is Nadeo's proprietary binary serialization format. Every `.Gbx` file encodes a single CMwNod-derived object tree using a chunk-based protocol. The format has evolved through 6 major versions; Trackmania 2020 uses version 6. This document provides a complete specification sufficient to implement a parser.
 
 ---
 
-## Table of Contents
-
-**Reference Sections:**
-1. [GBX Binary Format Overview](#1-gbx-binary-format-overview)
-2. [Complete Header Specification](#2-complete-header-specification)
-3. [Format Flags (Version 6+)](#3-format-flags-version-6)
-4. [Header Chunk Table](#4-header-chunk-table)
-5. [Reference Table](#5-reference-table)
-6. [Body Chunk System](#6-body-chunk-system)
-7. [Chunk Dispatch and End Sentinel](#7-chunk-dispatch-and-end-sentinel)
-8. [Compression System](#8-compression-system)
-9. [Class Factory (CreateByMwClassId)](#9-class-factory-createbymwclassid)
-10. [Class ID Two-Level Registry](#10-class-id-two-level-registry)
-11. [Class ID Remapping (Legacy Compatibility)](#11-class-id-remapping-legacy-compatibility)
-12. [Serialization System (CClassicArchive)](#12-serialization-system-cclassicarchive)
-13. [String Serialization](#13-string-serialization)
-14. [Array Serialization](#14-array-serialization)
-15. [Object Reference Serialization](#15-object-reference-serialization)
-16. [Map File Structure (CGameCtnChallenge)](#16-map-file-structure-cgamectnchallenge)
-17. [Ghost / Replay Structure](#17-ghost--replay-structure)
-18. [Item File Structure (CGameItemModel)](#18-item-file-structure-cgameitemmodel)
-19. [Mesh / Solid2 Structure](#19-mesh--solid2-structure)
-20. [Material and Texture Files](#20-material-and-texture-files)
-21. [Pack File System](#21-pack-file-system)
-22. [Fid (Virtual File System)](#22-fid-virtual-file-system)
-23. [Complete Class ID Remap Table](#23-complete-class-id-remap-table)
-24. [Complete Engine ID Table](#24-complete-engine-id-table)
-25. [Parser Pseudocode](#25-parser-pseudocode)
-
-**Parsing Tutorial (validated against real files):**
-26. [Parsing Tutorial: Byte 0 to Parsed Tree](#26-parsing-tutorial-byte-0-to-parsed-tree)
-27. [Hex Dump Walkthrough: Real .Map.Gbx](#27-hex-dump-walkthrough-real-mapgbx)
-28. [Data Type Serialization Reference](#28-data-type-serialization-reference)
-29. [LookbackString Deep Dive (Corrected)](#29-lookbackstring-deep-dive-corrected)
-30. [TypeScript Parser Implementation Guide](#30-typescript-parser-implementation-guide)
-31. [Quick Reference Card](#31-quick-reference-card)
-32. [Cross-File Validation Results](#32-cross-file-validation-results)
-
----
-
-## 1. GBX Binary Format Overview
-
-GBX (GameBox) is Nadeo's proprietary binary serialization format. Every `.Gbx` file encodes a single `CMwNod`-derived object tree using a chunk-based serialization protocol. The format has evolved through 6 major versions; Trackmania 2020 uses version 6.
+## How GBX Files Are Structured
 
 ### Top-Level File Layout
 
@@ -96,7 +51,7 @@ The loading pipeline supports three file variants:
 
 ---
 
-## 2. Complete Header Specification
+## Header Byte-by-Byte Specification
 
 ### Byte-by-Byte Header Format
 
@@ -141,7 +96,7 @@ Version stored at archive offset `+0x60` as `uint16`.
 
 ---
 
-## 3. Format Flags (Version 6+)
+## How Format Flags Control Parsing (Version 6+)
 
 For version >= 6, a 4-byte format descriptor immediately follows the version field. This is the most critical part of header parsing for TM2020 files.
 
@@ -190,7 +145,7 @@ In practice, most TM2020 `.Gbx` files use `'U'` for byte 1 and `'C'` for byte 2,
 
 ---
 
-## 4. Header Chunk Table
+## How Header Chunks Are Organized
 
 After the format flags and class ID, the header contains a chunk table that provides metadata accessible without parsing the body.
 
@@ -247,7 +202,7 @@ Each header chunk internally starts with a version byte that allows forward comp
 
 ---
 
-## 5. Reference Table
+## How External References Are Stored
 
 The reference table is located between the header chunks and the body. It lists all external GBX files that this file depends on.
 
@@ -312,7 +267,7 @@ Ancestor folders establish a hierarchy of directory prefixes. When resolving a r
 
 ---
 
-## 6. Body Chunk System
+## How the Body Chunk System Works
 
 The body section contains the actual serialized data for the root node and all inline sub-nodes. It is organized as a sequential stream of chunks.
 
@@ -406,7 +361,7 @@ if (chunk_version > MAX_KNOWN_VERSION) {
 
 ---
 
-## 7. Chunk Dispatch and End Sentinel
+## How Chunks Are Dispatched and Terminated
 
 ### End-of-Body Sentinel: 0xFACADE01
 
@@ -448,7 +403,7 @@ For skippable chunks, the parser can safely skip `chunk_size` bytes. For non-ski
 
 ---
 
-## 8. Compression System
+## How Compression Works (LZO1X)
 
 ### Algorithm
 
@@ -490,7 +445,7 @@ The decompression buffer is pooled and reused from `DAT_14205c280`. When `uncomp
 
 ---
 
-## 9. Class Factory (CreateByMwClassId)
+## How the Class Factory Instantiates Nodes
 
 ### Overview
 
@@ -543,7 +498,7 @@ Offset  Size  Type            Field
 
 ---
 
-## 10. Class ID Two-Level Registry
+## How the Two-Level Class ID Registry Works
 
 ### Global Registry Structure
 
@@ -624,7 +579,7 @@ if (param_2 == *(int *)(tls + 0x11ac))
 
 ---
 
-## 11. Class ID Remapping (Legacy Compatibility)
+## How Legacy Class IDs Are Remapped
 
 ### Overview
 
@@ -757,7 +712,7 @@ normalized_chunk_id = normalized_class_id | chunk_index
 
 ---
 
-## 12. Serialization System (CClassicArchive)
+## How CClassicArchive Serializes Data
 
 ### Archive Object Layout
 
@@ -854,7 +809,7 @@ This confirms that the same archive system handles both read and write operation
 
 ---
 
-## 13. String Serialization
+## How Strings Are Serialized
 
 ### Standard String Format
 
@@ -911,7 +866,7 @@ Note: The "Stadium"/"Valley"/"Canyon" collection names are NOT stored as Lookbac
 
 ---
 
-## 14. Array Serialization
+## How Arrays Are Serialized
 
 ### Standard Array Format
 
@@ -945,7 +900,7 @@ For each node:
 
 ---
 
-## 15. Object Reference Serialization
+## How Object References Are Serialized
 
 ### Internal Node References
 
@@ -979,7 +934,7 @@ External references point to nodes in other GBX files. These are resolved via th
 
 ---
 
-## 16. Map File Structure (CGameCtnChallenge)
+## How Map Files Are Structured (CGameCtnChallenge)
 
 ### Class ID: `0x03043000`
 
@@ -1113,7 +1068,7 @@ Maps reference vehicle models via paths:
 
 ---
 
-## 17. Ghost / Replay Structure
+## How Ghosts and Replays Are Structured
 
 ### CGameCtnGhost (Class ID: determined from hierarchy)
 
@@ -1148,7 +1103,7 @@ The exact binary layout of ghost samples is class-specific and version-dependent
 
 ---
 
-## 18. Item File Structure (CGameItemModel)
+## How Item Files Are Structured (CGameItemModel)
 
 ### Class: CGameItemModel
 
@@ -1187,7 +1142,7 @@ Items typically embed or reference:
 
 ---
 
-## 19. Mesh / Solid2 Structure
+## How Meshes Are Structured (CPlugSolid2Model)
 
 ### CPlugSolid2Model (Class ID: `0x090BB000`)
 
@@ -1237,7 +1192,7 @@ The exact chunk-by-chunk format is class-specific and version-dependent.
 
 ---
 
-## 20. Material and Texture Files
+## How Materials and Textures Work
 
 ### CPlugMaterial (Class ID: `0x09026000` for ShaderApply)
 
@@ -1315,7 +1270,7 @@ From the file classes in the hierarchy:
 
 ---
 
-## 21. Pack File System
+## How Pack Files Bundle Assets
 
 ### Overview
 
@@ -1374,7 +1329,7 @@ The exact order in which packs are loaded and how conflicts are resolved (when m
 
 ---
 
-## 22. Fid (Virtual File System)
+## How the Fid Virtual File System Works
 
 ### Overview
 
@@ -1420,7 +1375,7 @@ The Fid system is Nadeo's virtual file system layer abstracting file access acro
 
 ---
 
-## 23. Complete Class ID Remap Table
+## Complete Class ID Remap Table
 
 This table contains every legacy-to-modern class ID remapping extracted from `FUN_1402f2610`. It is critical for reading GBX files from older game versions.
 
@@ -1530,7 +1485,7 @@ This table contains every legacy-to-modern class ID remapping extracted from `FU
 
 ---
 
-## 24. Complete Engine ID Table
+## Complete Engine ID Table
 
 ### Known Engine IDs
 
@@ -1567,7 +1522,7 @@ This table contains every legacy-to-modern class ID remapping extracted from `FU
 
 ---
 
-## 25. Parser Pseudocode
+## Parser Pseudocode
 
 ### Complete GBX Parser
 
@@ -1865,7 +1820,7 @@ class GbxStream:
 
 ---
 
-## 26. Parsing Tutorial: Byte 0 to Parsed Tree
+## Parsing Tutorial: Byte 0 to Parsed Tree
 
 This section walks through parsing a GBX file from the very first byte, using real hex dumps from actual TM2020 files to validate every claim.
 
@@ -2013,7 +1968,7 @@ loop:
 
 ---
 
-## 27. Hex Dump Walkthrough: Real .Map.Gbx
+## Hex Dump Walkthrough: Real .Map.Gbx
 
 The following is a complete annotated hex dump of the first 0x6324 bytes of `TechFlow.Map.Gbx`, verified by parsing the actual file.
 
@@ -2110,7 +2065,7 @@ This chunk demonstrates LookbackStrings and CIdent parsing:
 
 ---
 
-## 28. Data Type Serialization Reference
+## Data Type Serialization Reference
 
 All values are little-endian. This table covers every primitive type used in GBX serialization.
 
@@ -2170,7 +2125,7 @@ CIdent:
 
 ---
 
-## 29. LookbackString Deep Dive (Corrected)
+## How LookbackStrings Work (Corrected)
 
 The LookbackString system is the most confusing part of GBX parsing. This section corrects errors in earlier documentation based on validation against real file data.
 
@@ -2282,7 +2237,7 @@ class LookbackStringReader {
 
 ---
 
-## 30. TypeScript Parser Implementation Guide
+## TypeScript Parser Implementation Guide
 
 ### Core Parser Structure
 
@@ -2605,7 +2560,7 @@ In TypeScript, use one of:
 
 ---
 
-## 31. Quick Reference Card
+## Quick Reference Card
 
 ### File Layout (Version 6)
 
@@ -2696,7 +2651,7 @@ value encoding:
 
 ---
 
-## 32. Cross-File Validation Results
+## Cross-File Validation Results
 
 ### Files Examined
 
@@ -2896,3 +2851,21 @@ Every structural claim in this document traces back to one of these decompiled s
 | `FUN_1402f20a0_ClassIdLookup.c` | Two-level lookup | Registry structure, TLS cache |
 | `FUN_1402f2610_ClassIdRemap.c` | Legacy ID remap | Complete remap table |
 | `FUN_1402d0c40_ChunkEndMarker.c` | End sentinel | FACADE01 and 01001000 handling |
+
+## Related Pages
+
+- [06-file-formats.md](06-file-formats.md) -- GBX format overview
+- [09-game-files-analysis.md](09-game-files-analysis.md) -- Game files and pack analysis
+- [14-tmnf-crossref.md](14-tmnf-crossref.md) -- GBX format evolution from TMNF
+- [26-real-file-analysis.md](26-real-file-analysis.md) -- Real file hex analysis
+- [28-map-structure-encyclopedia.md](28-map-structure-encyclopedia.md) -- Map structure details
+- [30-ghost-replay-format.md](30-ghost-replay-format.md) -- Ghost/replay format
+
+<details><summary>Analysis metadata</summary>
+
+**Binary**: `Trackmania.exe` (Trackmania 2020)
+**Date of analysis**: 2026-03-27
+**Tools**: Ghidra 11.x via PyGhidra bridge
+**Purpose**: Complete GBX format specification sufficient to implement a parser
+
+</details>

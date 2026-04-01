@@ -1,15 +1,10 @@
-# TM2020 Physics Constants - Extracted from Binary
+# TM2020 Physics Constants -- Extracted from Binary
 
-Extracted from `Trackmania.exe` via Ghidra decompilation on 2026-03-27.
-
-## Key Finding
-
-**TM2020 uses NO hardcoded gravity constant (9.81, 29.43, etc.) in the binary.**
-The gravity vector is entirely data-driven, loaded from GBX files (DefaultGravitySpawn in CPlugSpawnModel at +0x54). All friction curves, engine curves, and surface parameters are likewise loaded from GBX at runtime. The binary contains only the **code framework** and a handful of **mathematical/utility constants**.
+TM2020 uses NO hardcoded gravity constant (9.81, 29.43, etc.) in the binary. The gravity vector loads entirely from GBX files (DefaultGravitySpawn in CPlugSpawnModel at +0x54). All friction curves, engine curves, and surface parameters likewise load from GBX at runtime. The binary contains only the code framework and a handful of mathematical/utility constants.
 
 ---
 
-## 1. Hardcoded Mathematical Constants (`.rdata`)
+## Hardcoded Mathematical Constants (`.rdata`)
 
 | Constant | Value | Address | Context | Confidence |
 |----------|-------|---------|---------|------------|
@@ -17,10 +12,10 @@ The gravity vector is entirely data-driven, loaded from GBX files (DefaultGravit
 | Float -1.0 | -1.0 | `0x141d1fd80` | Negative direction flip | Confirmed |
 | Float 0.5 | 0.5 | `0x141d1f1ac` | Half multiplier (e.g. half-force in friction) | Confirmed |
 | Float 3.0 | 3.0 | `0x141d1f6e0` | Smoothstep coefficient: `3t^2 - 2t^3` | Confirmed |
-| Float 3.6 | 3.6 | `0x141d1f71c` | **m/s to km/h conversion factor** (used in speed calcs) | Confirmed |
+| Float 3.6 | 3.6 | `0x141d1f71c` | m/s to km/h conversion factor | Confirmed |
 | Float 2.0 | 2.0 | `0x141d1f624` | Speed threshold for brake/reverse detection (m/s) | Confirmed |
 | Float 0.1 | 0.1 | `0x141d1ef7c` | Velocity threshold for sliding detection | Confirmed |
-| Pi | 3.14159274 | `0x141d1f6f8` | Used in angle calculations | Confirmed |
+| Pi | 3.14159274 | `0x141d1f6f8` | Angle calculations | Confirmed |
 | 2*Pi | 6.28318548 | `0x141d1f79c` | Full rotation (wheel spin range) | Confirmed |
 | Pi/6 | 0.52359879 | `0x141d1f1c8` | +30 degrees (max steer angle display range) | Confirmed |
 | -Pi/6 | -0.52359879 | `0x141d1fcfc` | -30 degrees (min steer angle display range) | Confirmed |
@@ -42,22 +37,22 @@ The gravity vector is entirely data-driven, loaded from GBX files (DefaultGravit
 | Constant | Value | Address | Context | Confidence |
 |----------|-------|---------|---------|------------|
 | Unit Vec4 | (1.0, 1.0, 1.0, 1.0) | `0x141d21110` | Default identity multiplier | Confirmed |
-| Down Vec4 | (0.0, 0.0, 0.0, -1.0) | `0x141d21d30` | Used in gravity direction setup | Confirmed |
+| Down Vec4 | (0.0, 0.0, 0.0, -1.0) | `0x141d21d30` | Gravity direction setup | Confirmed |
 
 ---
 
-## 2. Dynamics Sleep/Damping Constants
+## Dynamics Sleep/Damping Constants
 
 | Constant | Value | Address | Context | Confidence |
 |----------|-------|---------|---------|------------|
-| Sleep damping | 0.9 | `0x141ebcd00` | Velocity damping when near-sleep (DAT_141ebcd00) | Confirmed |
+| Sleep damping | 0.9 | `0x141ebcd00` | Velocity damping when near-sleep | Confirmed |
 | Sleep threshold | 0.01 | `0x141ebcd04` | Velocity below this = candidate for sleep | Confirmed |
-| Sleep enable flag | 1 | `0x141ebccfc` | DAT_141ebccfc: sleep system enabled | Confirmed |
+| Sleep enable flag | 1 | `0x141ebccfc` | Sleep system enabled | Confirmed |
 | Max iterations | 1000 | `0x141ebccf8` | Pre-sleep iteration count | Confirmed |
 
 ---
 
-## 3. Tuning Parameters (Runtime Coefficients)
+## Tuning Parameters (Runtime Coefficients)
 
 These are multiplier fields in the vehicle state, not hardcoded constants. Default value is 1.0 for all.
 
@@ -88,11 +83,11 @@ These are multiplier fields in the vehicle state, not hardcoded constants. Defau
 
 ---
 
-## 4. Vehicle Physics Model Offsets (from GBX data at `car_state+0x88`)
+## Vehicle Physics Model Offsets (from GBX data at `car_state+0x88`)
 
-These are offsets within the physics model struct loaded from GBX. Values are data-driven (not hardcoded).
+All values are data-driven (not hardcoded). Offsets are within the physics model struct loaded from GBX.
 
-### Speed & Acceleration Curves
+### Speed and Acceleration Curves
 
 | Field | Model Offset | Context | Confidence |
 |-------|-------------|---------|------------|
@@ -104,7 +99,7 @@ These are offsets within the physics model struct loaded from GBX. Values are da
 | Engine RPM force curve | +0x9A8 | RPM-dependent force multiplier curve | Confirmed |
 | Engine RPM force curve 2 | +0x9F8 | RPM-dependent grip limiting curve | Confirmed |
 
-### Friction & Grip
+### Friction and Grip
 
 | Field | Model Offset | Context | Confidence |
 |-------|-------------|---------|------------|
@@ -129,7 +124,7 @@ These are offsets within the physics model struct loaded from GBX. Values are da
 | Friction reduction curve | +0xD40 | Curve for friction reduction factor | Confirmed |
 | Friction blend threshold | +0xCD4 | Threshold for friction blending | Confirmed |
 
-### Steering & Control
+### Steering and Control
 
 | Field | Model Offset | Context | Confidence |
 |-------|-------------|---------|------------|
@@ -156,7 +151,7 @@ These are offsets within the physics model struct loaded from GBX. Values are da
 | Brake linear coef | +0x1798 | Brake force = coef + speed * slope | Confirmed |
 | Brake speed slope | +0x179C | Brake force speed multiplier | Confirmed |
 
-### Air Control & Reactor
+### Air Control and Reactor
 
 | Field | Model Offset | Context | Confidence |
 |-------|-------------|---------|------------|
@@ -172,7 +167,7 @@ These are offsets within the physics model struct loaded from GBX. Values are da
 
 ---
 
-## 5. Spring/Damper Constraint Model (NPlugDyna::SConstraintModel)
+## Spring/Damper Constraint Model (NPlugDyna::SConstraintModel)
 
 Loaded from GBX, size 0x74 bytes.
 
@@ -184,7 +179,7 @@ Loaded from GBX, size 0x74 bytes.
 
 ---
 
-## 6. Solver Parameters (NSceneDyna::SSolverParams)
+## Solver Parameters (NSceneDyna::SSolverParams)
 
 Size 0x2C bytes. All loaded from GBX.
 
@@ -204,9 +199,9 @@ Size 0x2C bytes. All loaded from GBX.
 
 ---
 
-## 7. CSceneVehicleVisState Layout (size 0x360)
+## CSceneVehicleVisState Layout (size 0x360)
 
-This is the per-frame visual/physics output state.
+The per-frame visual/physics output state.
 
 | Field | Offset | Type | Confidence |
 |-------|--------|------|------------|
@@ -251,7 +246,7 @@ This is the per-frame visual/physics output state.
 
 ---
 
-## 8. Surface Gameplay IDs (EPlugSurfaceGameplayId)
+## Surface Gameplay IDs (EPlugSurfaceGameplayId)
 
 Enum table at `0x141eb2f60`, 25 values. These IDs map to surface physics via `car_state+0x6B8` pointer table.
 
@@ -280,13 +275,13 @@ Enum table at `0x141eb2f60`, 25 values. These IDs map to surface physics via `ca
 
 ---
 
-## 9. Physics Model Type Switch
+## Physics Model Type Switch
 
 In `NSceneVehiclePhy::ComputeForces` (FUN_1408427d0), the physics model type at `model+0x1790` selects the force computation:
 
 | Type | Function | Description |
 |------|----------|-------------|
-| 0, 1, 2 | FUN_140869cd0 | **Standard car physics** (4-wheel) |
+| 0, 1, 2 | FUN_140869cd0 | Standard car physics (4-wheel) |
 | 3 | FUN_14086b060 | 2-wheel vehicle model |
 | 4 | FUN_14086bc50 | Special vehicle type 4 |
 | 5 | FUN_140851f00 | CarSport model |
@@ -295,7 +290,7 @@ In `NSceneVehiclePhy::ComputeForces` (FUN_1408427d0), the physics model type at 
 
 ---
 
-## 10. Tire Force Model (FUN_14086af20 - Lateral Grip)
+## Tire Force Model (FUN_14086af20 -- Lateral Grip)
 
 The tire force model uses a slip-angle based friction curve, not a direct Pacejka formula:
 
@@ -317,23 +312,23 @@ Where:
 
 ---
 
-## 11. Gravity System
+## Gravity System
 
-**No hardcoded gravity constant exists in the binary.** The gravity:
+No hardcoded gravity constant exists in the binary. The gravity:
 
-1. Is loaded as a Vec3 from `CPlugSpawnModel.DefaultGravitySpawn` (+0x54)
-2. Is stored in the scene dynamics manager at offset `*param_1 + 0xA10` (3 floats)
-3. Is passed to `NSceneDyna::ComputeGravityAndSleepStateAndNewVels` as `param_8`
+1. Loads as a Vec3 from `CPlugSpawnModel.DefaultGravitySpawn` (+0x54)
+2. Stores in the scene dynamics manager at offset `*param_1 + 0xA10` (3 floats)
+3. Passes to `NSceneDyna::ComputeGravityAndSleepStateAndNewVels` as `param_8`
 4. Can be modified at runtime via `GravityCoef` multiplier (default 1.0)
 
-The gravity vector is multiplied by `fVar8 = extraout_XMM0_Da * *pfVar4` (mass * inverse_mass_scale) before application.
+The gravity vector is multiplied by mass * inverse_mass_scale before application.
 
 ### Sleep State
-When velocity < `0.01` m/s, the damping factor `0.9` is applied to velocities each tick, gradually bringing the body to rest.
+When velocity < `0.01` m/s, the damping factor `0.9` applies to velocities each tick, gradually bringing the body to rest.
 
 ---
 
-## 12. Key Function Addresses
+## Key Function Addresses
 
 | Function | Address | Role |
 |----------|---------|------|
@@ -353,3 +348,19 @@ When velocity < `0.01` m/s, the damping factor `0.9` is applied to velocities ea
 | SSolverParams reg | `0x1407f3fc0` | Solver iteration counts |
 | SSleepingParams reg | `0x1407f4430` | Sleep velocity thresholds |
 | SConstraintModel reg | `0x1404a6d20` | Spring length/damping/frequency |
+
+---
+
+## Related Pages
+
+- [Physics Engine](02-physics-engine.md) -- Force model implementation using these constants
+- [Tuning Data Extraction](09-tuning-data-extraction.md) -- How to extract the GBX files containing tuning values
+- [Tuning Loading Analysis](10-tuning-loading-analysis.md) -- How values flow from GBX to runtime
+- [Determinism Analysis](06-determinism-analysis.md) -- Float determinism for these constants
+
+<details><summary>Document metadata</summary>
+
+- **Date**: 2026-03-27
+- **Source**: Extracted from `Trackmania.exe` via Ghidra decompilation
+
+</details>

@@ -1,33 +1,12 @@
-# Openplanet Plugin Deep Mining - Game Engine Intelligence
+# Openplanet Deep Mining -- Extended Game Engine Intelligence
 
-**Generated**: 2026-03-27
-**Source**: 81 AngelScript (.as) files across 12 plugin directories
-**Scope**: Every installed Openplanet plugin, exhaustively mined
+This document extends [19-openplanet-intelligence.md](19-openplanet-intelligence.md) with additional data mined from all 81 AngelScript (.as) files across 12 Openplanet plugin directories. It covers memory layouts not in the first pass, API details, binary patch patterns, class member catalogs, and plugin system internals.
 
 ---
 
-## Table of Contents
+## Memory Layout Intelligence
 
-1. [Memory Layout Intelligence](#1-memory-layout-intelligence)
-2. [Enum Definitions](#2-enum-definitions)
-3. [API Intelligence](#3-api-intelligence)
-4. [Binary Patch Patterns](#4-binary-patch-patterns)
-5. [Game Events and Hooks](#5-game-events-and-hooks)
-6. [Class Member Catalog](#6-class-member-catalog)
-7. [Version History](#7-version-history)
-8. [Camera System Internals](#8-camera-system-internals)
-9. [Editor System Internals](#9-editor-system-internals)
-10. [Networking Internals](#10-networking-internals)
-11. [Rendering and Display Settings](#11-rendering-and-display-settings)
-12. [Plugin System Meta-Intelligence](#12-plugin-system-meta-intelligence)
-
----
-
-## 1. Memory Layout Intelligence
-
-### 1.1 CSceneVehicleVis (TM2020/Next) - Entity ID and Vehicle Vis Manager
-
-**Source**: `VehicleState/Internal/Vehicle/VehicleNext.as`
+### CSceneVehicleVis Entity ID and Vehicle Vis Manager (TM2020/Next)
 
 The vehicle visualization system is accessed through a scene manager hierarchy:
 
@@ -59,9 +38,9 @@ Entity ID bit masks for vehicle identification:
 - `0x02000000` mask: Player vehicle (used when vehicleEntityId == 0 to find player)
 - `0x04000000` mask: Replay/editor vehicle (checked to avoid editor car placement)
 
-### 1.2 ISceneVis Manager Array (Alternative Layout)
+### ISceneVis Manager Array (Alternative Layout)
 
-**Source**: `VehicleState/Internal/SceneVis.as`
+Two different manager arrays exist within `ISceneVis`:
 
 ```
 ISceneVis (fast path):
@@ -76,11 +55,9 @@ ISceneVis (full managers enumeration):
   }
 ```
 
-The managers at +0x10 and +0x290 appear to be two different manager arrays. The +0x10 array is used for fast indexed access (like getting the vehicle vis manager), while the +0x290 array stores metadata including class name strings.
+The +0x10 array provides fast indexed access. The +0x290 array stores metadata including class name strings.
 
-### 1.3 CSceneVehicleVisState (TM2020/Next) - Reflection-Based Offsets
-
-**Source**: `VehicleState/Main.as`
+### CSceneVehicleVisState Reflection-Based Offsets (TM2020/Next)
 
 These offsets are computed at runtime using Openplanet's reflection system, relative to known member offsets in `CSceneVehicleVisState`:
 
@@ -101,7 +78,9 @@ These offsets are computed at runtime using Openplanet's reflection system, rela
 | CruiseDisplaySpeed | `FrontSpeed.Offset + 0x0C` | FrontSpeed |
 | VehicleType | `InputSteer.Offset - 0x08` | InputSteer |
 
-This means the in-memory layout near `FrontSpeed` is:
+These imply the following in-memory layouts:
+
+Near `FrontSpeed`:
 ```
 FrontSpeed - 0x00: float FrontSpeed
 FrontSpeed + 0x04: float SideSpeed
@@ -109,7 +88,7 @@ FrontSpeed + 0x08: (unknown 4 bytes)
 FrontSpeed + 0x0C: int   CruiseDisplaySpeed
 ```
 
-And near `CurGear`:
+Near `CurGear`:
 ```
 CurGear - 0x0C: float EngineRPM
 CurGear - 0x08: (unknown)
@@ -117,7 +96,7 @@ CurGear - 0x04: (unknown)
 CurGear + 0x00: uint  CurGear
 ```
 
-And near wheel data (e.g. FL):
+Near wheel data (e.g. FL):
 ```
 FLIcing01 - 0x04: float FLDirt
 FLIcing01 + 0x00: float FLIcing01
@@ -130,9 +109,7 @@ FLBreakNormedCoef + 0x04: int   FLFallingState
 
 **Vehicle type** is read as uint8 at `InputSteer.Offset - 0x08`, used as an index into `playground.Arena.Resources.m_AllGameItemModels[]` to look up the vehicle model's MwId.
 
-### 1.4 CSceneVehicleVisState (ManiaPlanet 4 / MP4) - Hardcoded Offsets
-
-**Source**: `VehicleState/StateWrappers.as`
+### CSceneVehicleVisState Hardcoded Offsets (ManiaPlanet 4)
 
 ```
 CSceneVehicleVisState (MP4 - via CSceneVehicleVis internal pointer):
@@ -169,9 +146,7 @@ CSceneVehicleVisState (MP4 - via CSceneVehicleVis internal pointer):
 
 **MP4 wheel order in memory**: FL=0, FR=1, RR=2, RL=3 (clockwise starting from front-left)
 
-### 1.5 CSceneVehicleVisState (Turbo) - Hardcoded Offsets
-
-**Source**: `VehicleState/StateWrappers.as`
+### CSceneVehicleVisState Hardcoded Offsets (Turbo)
 
 ```
 CSceneVehicleVisState (Turbo - from vehicleMobil offset):
@@ -193,9 +168,7 @@ CSceneVehicleVisState (Turbo - from vehicleMobil offset):
   +0x1B8: uint32 ActiveEffects  (bitmask)
 ```
 
-### 1.6 CSceneVehicleCar (TMNF/Forever) - Hardcoded Offsets
-
-**Source**: `VehicleState/StateWrappers.as`
+### CSceneVehicleCar Hardcoded Offsets (TMNF/Forever)
 
 ```
 CSceneVehicleCar (Forever):
@@ -231,53 +204,33 @@ CSceneVehicleCar (Forever):
   +0x154: float  SteerAngle
 ```
 
-### 1.7 CTrackManiaPlayer (MP4) - Vehicle Vis Pointer
+### Additional Pointer Layouts
 
-**Source**: `VehicleState/Internal/Vehicle/VehicleMP4.as`
-
+**CTrackManiaPlayer (MP4)**:
 ```
-CTrackManiaPlayer (MP4):
   +0x2B8: CMwNod* vehicleVisPtr   (same pointer as found via VehicleVisMgr)
   +0x2C4: uint32  EntityId
 ```
 
-### 1.8 CSceneMgrVehicleVisImpl (MP4) - Vehicle Array
-
-**Source**: `VehicleState/Internal/Vehicle/VehicleMP4.as`
-
+**CSceneMgrVehicleVisImpl (MP4)**:
 ```
-CSceneMgrVehicleVisImpl (MP4):
   +0x38: CMwNod* vehicles_ptr
   +0x40: uint32  vehicles_count
 ```
 
-### 1.9 CGameMobil (Turbo) - Vehicle Vis Access
-
-**Source**: `VehicleState/Internal/Vehicle/VehicleTurbo.as`
-
+**CGameMobil (Turbo)**:
 ```
-CGameMobil (Turbo):
   +0x14: CMwNod* vehicleMobilPtr
     -> +0x84: CMwNod* vehicleVisPtr
 ```
 
-### 1.10 GameCamera (MP4) - Viewing Vehicle ID
-
-**Source**: `VehicleState/Internal/Vehicle/VehicleMP4.as`
-
+**CGameCamera (MP4)**:
 ```
-CGameCamera (MP4):
   +0xD4: uint32 ViewingVisId
 ```
-
 Special viewing ID `0x0FF00000` is used during intro/podium scenes (when camera is null).
 
-### 1.11 CNetClient - NetConfig TCP Limit
-
-**Source**: `InfiniteEmbedSize/NetConfig.as`
-
-The NetConfig struct is accessed relative to `CNetClient.TCPSendingNodTotal` reflection offset:
-
+**CNetClient NetConfig**:
 ```
 CNetClient:
   TCPSendingNodTotal.Offset + 4: IntPtr netConfigPtr  (pointer to NetConfig struct)
@@ -286,10 +239,7 @@ NetConfig (TM2020):
   +0x38: uint32 TcpMaxPacketSize
 ```
 
-### 1.12 CGameCtnEditorCommon - Orbital Camera
-
-**Source**: `Camera/Impl.as`, `EditorDeveloper/Main.as`
-
+**CGameCtnEditorCommon Orbital Camera**:
 ```
 CGameCtnEditorCommon.OrbitalCameraControl (TM2020/MP4):
   .m_CurrentHAngle: float   (Turbo: .CurrentHAngle)
@@ -304,11 +254,9 @@ CGameCtnEditorCommon.OrbitalCameraControl (TM2020/MP4):
 
 ---
 
-## 2. Enum Definitions
+## Enum Definitions
 
-### 2.1 FallingState (TM2020 only)
-
-**Source**: `VehicleState/StateWrappers.as`
+### FallingState (TM2020 only)
 
 ```
 enum FallingState {
@@ -320,11 +268,9 @@ enum FallingState {
 }
 ```
 
-Note: Values are always even (0, 2, 4, 6, 8). The plugin validates against this exact set and rejects unexpected values.
+Values are always even. The plugin validates against this exact set and rejects unexpected values.
 
-### 2.2 TurboLevel (TM2020 only)
-
-**Source**: `VehicleState/StateWrappers.as`
+### TurboLevel (TM2020 only)
 
 ```
 enum TurboLevel {
@@ -339,9 +285,7 @@ enum TurboLevel {
 
 Valid range: 1-5. Value 0 and values > 5 are treated as None.
 
-### 2.3 VehicleType (TM2020 only)
-
-**Source**: `VehicleState/StateWrappers.as`
+### VehicleType (TM2020 only)
 
 ```
 enum VehicleType {
@@ -353,11 +297,9 @@ enum VehicleType {
 }
 ```
 
-Vehicle type is determined by reading a uint8 index from the vis state, looking up the corresponding `CGameItemModel` from `playground.Arena.Resources.m_AllGameItemModels[index]`, and comparing its `MwId` against known vehicle IDs. The MwIds are initialized from string names: "CharacterPilot", "CarSport", "CarSnow", "CarRally", "CarDesert".
+Vehicle type is determined by reading a uint8 index from the vis state, looking up the corresponding `CGameItemModel` from `playground.Arena.Resources.m_AllGameItemModels[index]`, and comparing its `MwId` against known vehicle IDs.
 
-### 2.4 EffectFlags (MP4/Turbo/Forever)
-
-**Source**: `VehicleState/StateWrappers.as`
+### EffectFlags (MP4/Turbo/Forever)
 
 ```
 enum EffectFlags {
@@ -369,19 +311,15 @@ enum EffectFlags {
 }
 ```
 
-### 2.5 ESurfId (Ground Contact Material)
+### ESurfId (Ground Contact Material)
 
-Referenced via `CAudioSourceSurface::ESurfId` (TM2020/MP4/Turbo) or `CAudioSoundSurface::ESurfId` (Forever). These are uint16 values stored in the wheel struct. The actual enum values are not defined in the plugin source -- they come from the game's audio surface type system.
+Referenced via `CAudioSourceSurface::ESurfId` (TM2020/MP4/Turbo) or `CAudioSoundSurface::ESurfId` (Forever). These are uint16 values stored in the wheel struct. Actual enum values come from the game's audio surface type system.
 
-### 2.6 EHmsOverlayAdaptRatio (TM2020)
+### EHmsOverlayAdaptRatio (TM2020)
 
-**Source**: `Finetuner/src/02_OverlayScaling.as`
+Referenced with value `ShrinkToKeepRatio` as default. Applied to viewport overlays via `viewport.Overlays[i].m_AdaptRatio`.
 
-Referenced as `EHmsOverlayAdaptRatio` with value `ShrinkToKeepRatio` as default. Applied to viewport overlays via `viewport.Overlays[i].m_AdaptRatio`.
-
-### 2.7 ShortcutMode
-
-**Source**: `Finetuner/src/99_Shortcuts.as`
+### ShortcutMode
 
 ```
 enum ShortcutMode {
@@ -393,11 +331,9 @@ enum ShortcutMode {
 
 ---
 
-## 3. API Intelligence
+## API Intelligence
 
-### 3.1 Nadeo Services Base URLs
-
-**Source**: `NadeoServices/NadeoServices.as`
+### Nadeo Services Base URLs
 
 | Audience | Base URL |
 |----------|----------|
@@ -405,19 +341,17 @@ enum ShortcutMode {
 | NadeoLiveServices (Live) | `https://live-services.trackmania.nadeo.live` |
 | NadeoLiveServices (Meet) | `https://meet.trackmania.nadeo.club` |
 
-**DEPRECATION**: As of 2024-01-31, `NadeoClubServices` is deprecated. All requests are redirected to `NadeoLiveServices`.
+**DEPRECATION**: As of 2024-01-31, `NadeoClubServices` is deprecated. All requests redirect to `NadeoLiveServices`.
 
-### 3.2 Authentication Pattern
-
-**Source**: `NadeoServices/AccessToken.as`, `NadeoServices/CoreToken.as`
+### Authentication Pattern
 
 Two token types:
 1. **CoreToken** (`NadeoServices`): Retrieved directly via `Internal::NadeoServices::GetCoreToken()` -- always authenticated, no refresh needed.
 2. **AccessToken** (`NadeoLiveServices`): Obtained via `api.Authentication_GetToken(userId, audience)`.
 
 **Token lifecycle**:
-- Tokens are valid for **55 minutes** + random 1-60 seconds (intentionally slightly longer than Nadeo's internal 55-minute window to avoid conflicts with the game's own auth).
-- On authentication failure: exponential backoff retry (1s, 2s, 4s, 8s, 16s, ...) -- "intentionally mimicking Nadeo's code".
+- Tokens are valid for **55 minutes** + random 1-60 seconds.
+- On failure: exponential backoff retry (1s, 2s, 4s, 8s, 16s, ...) -- "intentionally mimicking Nadeo's code".
 - Auth header format: `Authorization: nadeo_v1 t=<token>`
 
 **Authentication flow**:
@@ -428,9 +362,7 @@ CGameManiaPlanet.ManiaPlanetScriptAPI.Authentication_GetToken(MSUsers[0].Id, aud
   -> read .Authentication_Token
 ```
 
-### 3.3 Account ID / Login Conversion
-
-**Source**: `NadeoServices/NadeoServices.as`
+### Account ID / Login Conversion
 
 Login (base64url) to AccountId (UUID) conversion:
 ```
@@ -440,11 +372,9 @@ Login: "c5jutptORLinoaIUmVWscA"
 Result: "7398eeb6-9b4e-44b8-a7a1-a2149955ac70"
 ```
 
-This confirms the UUID format: 4-2-2-2-6 byte groups from the 16-byte decoded base64.
+UUID format: 4-2-2-2-6 byte groups from the 16-byte decoded base64.
 
-### 3.4 Display Name Resolution
-
-**Source**: `NadeoServices/NadeoServices.as`
+### Display Name Resolution
 
 Display names are resolved via `UserManagerScript`:
 ```
@@ -455,9 +385,7 @@ userMgr.TaskResult_Release(req.Id)  // cleanup
 
 The batch limit of **209 account IDs per request** is enforced in the code.
 
-### 3.5 Map Info from Services
-
-**Source**: `Discord/Services.as`
+### Map Info from Services
 
 ```
 maniaApp.DataFileMgr.Map_NadeoServices_GetListFromUid(0, uids)
@@ -465,14 +393,12 @@ maniaApp.DataFileMgr.Map_NadeoServices_GetListFromUid(0, uids)
   -> req.MapList[i].ThumbnailUrl  (with ".jpg" suffix appended if missing)
 ```
 
-### 3.6 Openplanet Plugin API
-
-**Source**: `PluginManager/src/Settings.as`, `PluginManager/src/Utils/API.as`
+### Openplanet Plugin API
 
 Base URL: `https://api.openplanet.dev`
 
 Endpoints:
-- `GET /plugins?tags=Trackmania&page=0` -- list plugins (tags: "Trackmania", "Turbo", "Forever", "Maniaplanet")
+- `GET /plugins?tags=Trackmania&page=0` -- list plugins
 - `GET /plugins?tags=Trackmania&order=f` -- featured
 - `GET /plugins?tags=Trackmania&order=d` -- popular (by downloads)
 - `GET /plugins?tags=Trackmania&order=u` -- last updated
@@ -483,15 +409,13 @@ Endpoints:
 - `GET /plugin/{siteID}/download` -- download plugin .op file
 - `GET /versions?ids=1,2,3` -- batch version check for updates
 
-Web URL: `https://openplanet.dev`
-
 ---
 
-## 4. Binary Patch Patterns
+## Binary Patch Patterns
 
-### 4.1 Editor Offzone Enable Patch
+These patches modify the game binary at runtime. All convert conditional jumps to NOPs or unconditional jumps.
 
-**Source**: `EditorDeveloper/Main.as`
+### Editor Offzone Enable Patch
 
 | Version | Pattern | Replacement |
 |---------|---------|-------------|
@@ -500,21 +424,15 @@ Web URL: `https://openplanet.dev`
 | MP4.1 (64-bit) | `F6 86 ?? ?? ?? ?? ?? 0F 84 ?? ?? ?? ?? 4C 8D 44 24 70 BA` | `90 90 90 90 90 90 90 90 90 90 90 90 90` (NOP 13 bytes) |
 | MP4 (32-bit) | `0F 84 ?? ?? ?? ?? 8D ?? ?? ?? ?? ?? ?? 50 6A 12` | `90 90 90 90 90 90` |
 
-All patches convert conditional jumps (JE/JZ) to NOPs, unconditionally enabling offzone placement in the editor.
-
-### 4.2 Editor Edge Camera Scroll Disable
-
-**Source**: `EditorDeveloper/Main.as`
+### Editor Edge Camera Scroll Disable
 
 | Version | Pattern | Replacement |
 |---------|---------|-------------|
 | Forever (32-bit) | `83 EC 3C D9 EE` | `C2 0C 00` (RET 0x0C -- early return) |
 
-For TM2020/MP4/Turbo, scrolling is disabled by setting `OrbitalCameraControl.m_ParamScrollAreaStart = 1.1` and `.m_ParamScrollAreaMax = 1.1` (both values > 1.0 effectively disable edge scrolling).
+For TM2020/MP4/Turbo, scrolling is disabled by setting `OrbitalCameraControl.m_ParamScrollAreaStart = 1.1` and `.m_ParamScrollAreaMax = 1.1` (both > 1.0 disables edge scrolling).
 
-### 4.3 Embed Size Limit Bypass
-
-**Source**: `InfiniteEmbedSize/EmbedLimit.as`
+### Embed Size Limit Bypass
 
 | Version | Pattern | Replacement |
 |---------|---------|-------------|
@@ -523,11 +441,9 @@ For TM2020/MP4/Turbo, scrolling is disabled by setting `OrbitalCameraControl.m_P
 | Turbo (32-bit) | `83 C4 10 3B ?? ?? ?? ?? ?? 76` | `83 C4 10 3B ?? ?? ?? ?? ?? EB` |
 | Other (32-bit) | `81 FE 00 A0 0F 00 76 08 C7` | `81 FE 00 A0 0F 00 EB` |
 
-The `0x000FA000` value (1,024,000 bytes = ~1000 KB) appears in the MP4/32-bit patterns as the comparison threshold. All patches change conditional branches to unconditional jumps.
+The `0x000FA000` value (1,024,000 bytes) appears as the comparison threshold. All patches change conditional branches to unconditional jumps.
 
-### 4.4 Max Challenge Size Pattern
-
-**Source**: `InfiniteEmbedSize/MaxChallengeSize.as`
+### Max Challenge Size Pattern
 
 | Version | Pattern | Purpose |
 |---------|---------|---------|
@@ -541,13 +457,13 @@ ptrOffset = Dev::ReadInt32(ptr + 2)  // or +3 for Linux
 globalVar = ptr + 2 + 4 + ptrOffset  // RIP-relative resolution
 ```
 
-The value at this address is set to `(maxBytes - 0xC00)` where default maxBytes = 12 * 1024 * 1024. The `0xC00` (3072 byte) subtraction "matches Nadeo's amounts".
+The value at this address is set to `(maxBytes - 0xC00)` where default maxBytes = 12 * 1024 * 1024.
 
 ---
 
-## 5. Game Events and Hooks
+## Game Events and Hooks
 
-### 5.1 Openplanet Callback Functions
+### Openplanet Callback Functions
 
 Every plugin can implement these standard callbacks:
 
@@ -563,19 +479,15 @@ Every plugin can implement these standard callbacks:
 | `void OnSettingsChanged()` | Setting modified | EditorDeveloper, Discord, InfiniteEmbedSize |
 | `UI::InputBlocking OnKeyPress(bool down, VirtualKey key)` | Key events | Finetuner |
 
-### 5.2 Meta::RunContext
-
-**Source**: `Finetuner/src/Main.as`
+### Meta::RunContext
 
 ```
 Meta::StartWithRunContext(Meta::RunContext::NetworkAfterMainLoop, callback)
 ```
 
-This allows code to run in a specific point in the game's main loop -- specifically after the network processing but before the next frame. Used by Finetuner to update render distance without visual artifacts.
+This runs code after network processing but before the next frame. Finetuner uses this to update render distance without visual artifacts.
 
-### 5.3 Game State Detection Patterns
-
-**Source**: Various plugins (Stats, Discord, ClassicMenu)
+### Game State Detection Patterns
 
 ```
 // In a map
@@ -607,9 +519,7 @@ app.ActiveMenus[i].CurrentFrame.IdName == "FrameMenuCustom"
 app.ActiveMenus[0].CurrentFrame.IdName == "FrameManiaPlanetMain"
 ```
 
-### 5.4 Player Access Patterns
-
-**Source**: `VehicleState/Internal/Impl.as`
+### Player Access Patterns
 
 | Game | Player Access |
 |------|---------------|
@@ -622,9 +532,9 @@ Player entity ID (TM2020): `player.GetCurrentEntityID()`
 
 ---
 
-## 6. Class Member Catalog
+## Class Member Catalog
 
-### 6.1 CSceneVehicleVisState Members (TM2020)
+### CSceneVehicleVisState Members (TM2020)
 
 Confirmed accessible via Openplanet reflection (used in VehicleState debugger):
 
@@ -685,14 +595,12 @@ Confirmed accessible via Openplanet reflection (used in VehicleState debugger):
 
 **Note on wheel indices**: The exported API uses FL=0, FR=1, RL=2, RR=3 but internally the memory order is FL=0, FR=1, RR=2, RL=3 (clockwise). The comment states: "These indices are inconsistent with the game's memory but must remain unchanged as to not break dependent plugins."
 
-### 6.2 CSceneVehicleVis Members (TM2020)
+### CSceneVehicleVis Members (TM2020)
 
 - `AsyncState` (CSceneVehicleVisState@)
 - `Turbo` (float, 0.0 to 1.0 -- visual turbo indicator)
 
-### 6.3 CHmsCamera Members
-
-**Source**: `Camera/Main.as`
+### CHmsCamera Members
 
 - `Location` (iso4)
 - `Fov` (float)
@@ -708,9 +616,7 @@ Confirmed accessible via Openplanet reflection (used in VehicleState debugger):
 
 Camera selection: iterate `GetApp().Viewport.Cameras` in reverse, skip overlays. Forever heuristic: skip cameras with `NearZ >= 100.0f` (menu camera).
 
-### 6.4 CGameCtnNetServerInfo Members
-
-**Source**: `UsefulInformation/Main.as`, `Discord/Main.as`
+### CGameCtnNetServerInfo Members
 
 - `ServerName` (string)
 - `ServerLogin` (string -- TM2020/MP4)
@@ -720,9 +626,7 @@ Camera selection: iterate `GetApp().Viewport.Cameras` in reverse, skip overlays.
 - `PlayerCount` (uint -- Forever)
 - `MaxPlayerCount` (uint -- Forever)
 
-### 6.5 CNetServerInfo (Connection) Members
-
-**Source**: `UsefulInformation/Main.as`
+### CNetServerInfo (Connection) Members
 
 - `RemoteIP` (string)
 - `RemoteUDPPort` (uint)
@@ -730,9 +634,7 @@ Camera selection: iterate `GetApp().Viewport.Cameras` in reverse, skip overlays.
 
 Access: `network.Client.Connections[0].Info` (only when `connection.ClientToServer == true`)
 
-### 6.6 CTrackManiaPlayerInfo Members
-
-**Source**: `UsefulInformation/Main.as`
+### CTrackManiaPlayerInfo Members
 
 - `Name` (string)
 - `Login` (string)
@@ -741,38 +643,22 @@ Access: `network.Client.Connections[0].Info` (only when `connection.ClientToServ
 - `Trigram` (string -- TM2020 only)
 - `ClubTag` (string -- TM2020 only)
 
-### 6.7 CGameCtnChallenge / Map Members
-
-**Source**: `UsefulInformation/Main.as`, `Discord/Main.as`
+### CGameCtnChallenge / Map Members
 
 TM2020/MP4 (via `RootMap.MapInfo`):
-- `MapInfo.Name` (string)
-- `MapInfo.MapUid` (string)
-- `MapInfo.FileName` (string)
-- `MapInfo.CopperString` (string)
-- `MapInfo.AuthorNickName` (string)
-- `MapInfo.AuthorLogin` (string)
-- `MapInfo.TMObjective_AuthorTime` (uint)
-- `MapInfo.TMObjective_GoldTime` (uint)
-- `MapInfo.TMObjective_SilverTime` (uint)
-- `MapInfo.TMObjective_BronzeTime` (uint)
-- `MapName` (string -- direct on challenge)
-- `IdName` (string -- UID)
+- `MapInfo.Name`, `MapInfo.MapUid`, `MapInfo.FileName`
+- `MapInfo.CopperString`, `MapInfo.AuthorNickName`, `MapInfo.AuthorLogin`
+- `MapInfo.TMObjective_AuthorTime/GoldTime/SilverTime/BronzeTime` (uint)
+- `MapName` (direct on challenge)
+- `IdName` (UID)
 - `Id.Value` (uint -- 0xFFFFFFFF when invalid)
 
 Forever (via `Challenge`):
-- `ChallengeName` (string)
-- `Name` (string -- UID)
-- `Author` (string)
+- `ChallengeName`, `Name` (UID), `Author`
 - `CopperPrice` (int)
-- `ChallengeParameters.AuthorTime` (uint)
-- `ChallengeParameters.GoldTime` (uint)
-- `ChallengeParameters.SilverTime` (uint)
-- `ChallengeParameters.BronzeTime` (uint)
+- `ChallengeParameters.AuthorTime/GoldTime/SilverTime/BronzeTime` (uint)
 
-### 6.8 CGameCtnCollection Members
-
-**Source**: `BigDecor/GameData.as`
+### CGameCtnCollection Members
 
 - `CollectionId_Text` (string -- TM2020)
 - `DisplayName` (string -- MP4/Turbo)
@@ -780,20 +666,14 @@ Forever (via `Challenge`):
 - `FolderDecoration` (CSystemFidsFolder@)
 - `FolderDecoration.Leaves[i]` (CSystemFid@)
 
-### 6.9 CGameCtnDecoration Members
-
-**Source**: `BigDecor/Params.as`
+### CGameCtnDecoration Members
 
 - `IdName` (string)
 - `IsInternal` (bool)
 - `DecoSize` (CGameCtnDecorationSize@)
-  - `.SizeX` (uint)
-  - `.SizeY` (uint)
-  - `.SizeZ` (uint)
+  - `.SizeX`, `.SizeY`, `.SizeZ` (uint)
 
-### 6.10 CGameManiaPlanet / CTrackMania Members
-
-**Source**: Various plugins
+### CGameManiaPlanet / CTrackMania Members
 
 - `ManiaPlanetScriptAPI` (script API access)
 - `ManiaPlanetScriptAPI.MasterServer_MSUsers[0].Id` (user ID for auth)
@@ -803,93 +683,28 @@ Forever (via `Challenge`):
 - `ManiaPlanetScriptAPI.Authentication_Token` (string)
 - `ManiaTitleFlowScriptAPI.EditNewMap(...)` (Turbo)
 - `ManiaTitleControlScriptAPI.EditNewMap2(...)` (TM2020/MP4)
-- `LoadedManiaTitle` (CGameManiaTitle@)
-- `LoadedManiaTitle.TitleId` (string)
-- `LoadedManiaTitle.BaseTitleId` (string)
-- `LoadedManiaTitle.IdName` (string)
-- `LoadedManiaTitle.Name` (string)
-- `LoadedManiaTitle.CollectionFids` (CSystemFid@[])
-- `MenuManager.MenuCustom_CurrentManiaApp.DataFileMgr` (for NadeoServices map queries)
-- `ActiveMenus[i].CurrentFrame.IdName` (string)
-- `Viewport` (CHmsViewport@)
-- `Viewport.Cameras` (CHmsCamera@[])
-- `Viewport.Overlays` (CHmsOverlay@[])
-- `Viewport.AverageFps` (float)
+- `LoadedManiaTitle` (CGameManiaTitle@) with `.TitleId`, `.BaseTitleId`, `.IdName`, `.Name`
+- `Viewport` (CHmsViewport@) with `.Cameras`, `.Overlays`, `.AverageFps`
 - `GameScene` (ISceneVis@ / CGameScene@)
-- `GameCamera` (camera for MP4 vis ID)
-- `CurrentPlayground` (playground access)
-- `CurrentPlayground.GameTerminals` (terminal/player access)
-- `CurrentPlayground.Players` (player list)
-- `CurrentPlayground.Interface` (UI interface)
-- `CurrentPlayground.Arena.Resources.m_AllGameItemModels` (item models array)
-- `Network` (CTrackManiaNetwork@)
-- `Network.Client` (CNetClient@)
-- `Network.Client.Connections` (connection list)
-- `Network.ServerInfo` (CGameCtnNetServerInfo@)
-- `Network.PlayerInfo` (local player info)
-- `Network.PlayerInfos` (all player infos)
-- `Network.Spectator` (bool)
-- `Network.GetManialinkPages()` (manialink page list)
-- `UserManagerScript` (display name resolution)
-- `Editor` (current editor, various cast targets)
-- `EditorBase` (CGameEditorBase@ -- MP4)
-- `ChatManagerScript.CurrentServerPlayerCount` (int)
-- `ChatManagerScript.CurrentServerPlayerCountMax` (int)
-- `BuddiesManager.CurrentServerPlayerCount` (int -- Turbo)
-- `BuddiesManager.CurrentServerPlayerCountMax` (int -- Turbo)
+- `CurrentPlayground` (playground access) with `.GameTerminals`, `.Players`, `.Interface`, `.Arena.Resources.m_AllGameItemModels`
+- `Network` (CTrackManiaNetwork@) with `.Client`, `.ServerInfo`, `.PlayerInfo`, `.PlayerInfos`, `.Spectator`
 - `RootMap` / `Challenge` (current map)
 
-### 6.11 Viewport / CVisionViewport Members
-
-**Source**: `Finetuner/src/01_RenderDistance.as`
-
-- `AsyncRender` (bool -- enables async rendering to allow render distance with UI)
-
-### 6.12 System Configuration Members
-
-**Source**: `Finetuner/src/*.as`
-
-Accessed via `GetSystemConfig()`:
-- `Display.GeomLodScaleZ` (float -- LOD distance scale, default 1.0)
-- `Display.Decals_3D__TextureDecals_` (bool -- TM2020, 3D decals)
-- `Display.TextureDecals_3D` (bool -- MP4/Turbo)
-- `Display.TextureDecals_2D` (bool -- MP4)
-
-### 6.13 Editor UI Controls
-
-**Source**: `EditorDeveloper/Main.as`
-
-Editor interface hierarchy:
-```
-editor.EditorInterface.InterfaceScene.Mobils[0]  // root CControlContainer
-  -> FindControl("FrameDeveloperTools")           // developer tools panel
-  -> FindControl("FrameEditTools")
-     -> FindControl("ButtonOffZone")              // offzone button (hidden by default)
-  -> FindControl("FrameLightTools")               // light tools bar
-```
-
-### 6.14 Race Interface Members
-
-**Source**: `Discord/Main.as`
+### Race Interface Members
 
 MP4/Turbo/Forever:
-- `CTrackManiaRaceInterface.PlayerGeneralPosition` (int -- server position)
+- `CTrackManiaRaceInterface.PlayerGeneralPosition` (int)
 - `CTrackManiaRaceInterface.CurrentRacePositionText` (string -- Forever)
 - `CTrackManiaRaceInterface.TimeCountDown` (uint -- milliseconds)
 
-TM2020: Countdown is read from ManiaLink pages:
+TM2020 countdown is read from ManiaLink pages:
 ```
 Network.GetManialinkPages()[i].MainFrame.Controls[0]
   -> Check ControlId == "Race_Countdown"
   -> GetFirstChild("label-countdown").Value  // time string
 ```
 
-ShootMania:
-- `CSmArenaInterfaceUI.InterfaceRoot` -> FindControl("LabelTimeLeft") -> `.Label`
-
-### 6.15 Permissions (TM2020)
-
-**Source**: `ClassicMenu/ClassicMenu.as`, `BigDecor/Main.as`
+### Permissions (TM2020)
 
 ```
 Permissions::PlayPublicClubRoom()
@@ -905,11 +720,9 @@ Permissions::OpenSkinEditor()
 
 ---
 
-## 7. Version History
+## Version History
 
-### 7.1 VehiclesManagerIndex Changes (TM2020)
-
-**Source**: `VehicleState/Internal/Vehicle/VehicleNext.as`
+### VehiclesManagerIndex Changes (TM2020)
 
 | Date | VehiclesManagerIndex |
 |------|---------------------|
@@ -921,9 +734,7 @@ Permissions::OpenSkinEditor()
 | 2023-03-03 | 12 |
 | 2025-09-26 | 13 |
 
-### 7.2 VehiclesOffset Changes (TM2020)
-
-**Source**: `VehicleState/Internal/Vehicle/VehicleNext.as`
+### VehiclesOffset Changes (TM2020)
 
 | Date | VehiclesOffset |
 |------|---------------|
@@ -935,13 +746,9 @@ These track internal changes to the `NSceneVehicleVis_SMgr` struct layout across
 
 ---
 
-## 8. Camera System Internals
+## Camera System Internals
 
-**Source**: `Camera/Main.as`, `Camera/Impl.as`, `Camera/Export.as`
-
-### 8.1 Projection Matrix Construction
-
-The Camera plugin constructs a projection matrix from the active CHmsCamera:
+### Projection Matrix Construction
 
 ```
 projection = Perspective(fov, aspect, nearZ, farZ)
@@ -950,7 +757,7 @@ rotation = Inverse(Inverse(translation) * mat4(camLoc))
 g_projection = projection * Inverse(translation * rotation)
 ```
 
-### 8.2 World-to-Screen Projection
+### World-to-Screen Projection
 
 ```
 projectedPoint = g_projection * worldPos
@@ -961,7 +768,7 @@ behindCamera = projectedPoint.w > 0
 
 Display bounds come from the camera's `DrawRectMin`/`DrawRectMax` (normalized coordinates), mapped to actual display size via `Display::GetSize()`.
 
-### 8.3 Camera Selection Algorithm
+### Camera Selection Algorithm
 
 Cameras are iterated in reverse order from `Viewport.Cameras`. The first non-overlay camera is selected:
 - TM2020: Skip if `m_IsOverlay3d == true`
@@ -970,11 +777,9 @@ Cameras are iterated in reverse order from `Viewport.Cameras`. The first non-ove
 
 ---
 
-## 9. Editor System Internals
+## Editor System Internals
 
-**Source**: `EditorDeveloper/Main.as`, `BigDecor/`
-
-### 9.1 Map Creation API
+### Map Creation API
 
 **Turbo**:
 ```
@@ -998,35 +803,31 @@ app.ManiaTitleControlScriptAPI.EditNewMap2(
 )
 ```
 
-### 9.2 Environment/Collection IDs
+### Environment/Collection IDs
 
 **TM2020**: Stadium, GreenCoast, RedIsland, BlueBay, WhiteShore, Stadium256
 **MP4**: Stadium, Valley, Canyon, Lagoon
 
-### 9.3 Player Model Names
+### Player Model Names
 
 **TM2020**: CarSport, CarSnow, CarRally, CarDesert, CharacterPilot
 **MP4**: StadiumCar, CanyonCar, ValleyCar, LagoonCar
 
-### 9.4 Decoration Size Manipulation
+### Decoration Size Manipulation
 
-The BigDecor plugin modifies `CGameCtnDecoration.DecoSize` (SizeX/Y/Z) before calling `EditNewMap2`, then restores the original values when the editor closes. This allows creating maps larger than the standard 48x48 size. The maximum slider value is 255 per axis.
+The BigDecor plugin modifies `CGameCtnDecoration.DecoSize` (SizeX/Y/Z) before calling `EditNewMap2`, then restores original values when the editor closes. Maximum slider value is 255 per axis. This allows maps larger than the standard 48x48 size.
 
 ---
 
-## 10. Networking Internals
+## Networking Internals
 
-### 10.1 Server Connection Details
-
-**Source**: `UsefulInformation/Main.as`
+### Server Connection Details
 
 Accessible via `network.Client.Connections[0]`:
-- `.ClientToServer` (bool -- identifies the server connection vs other connections)
+- `.ClientToServer` (bool -- identifies the server connection)
 - `.Info` -> `CNetServerInfo` with RemoteIP, RemoteUDPPort, RemoteTCPPort
 
-### 10.2 Server Join Links
-
-**Source**: `Discord/Main.as`
+### Server Join Links
 
 Join URL format:
 - **Forever**: `#join=serverHostName` or `#spectate=serverHostName`
@@ -1034,41 +835,37 @@ Join URL format:
 
 Opened via: `app.ManiaPlanetScriptAPI.OpenLink(url, CGameManiaPlanetScriptAPI::ELinkType::ManialinkBrowser)`
 
-### 10.3 NadeoClubServices Deprecation
+### NadeoClubServices Deprecation
 
-**Source**: `NadeoServices/NadeoServices.as`
-
-As of 2024-01-31, `NadeoClubServices` was deprecated by Nadeo. All requests with this audience are silently redirected to `NadeoLiveServices`. The Meet API will "soon" no longer accept the old audience name.
+As of 2024-01-31, `NadeoClubServices` was deprecated by Nadeo. All requests with this audience redirect to `NadeoLiveServices`.
 
 ---
 
-## 11. Rendering and Display Settings
+## Rendering and Display Settings
 
-### 11.1 Render Distance
+### Render Distance
 
-**Source**: `Finetuner/src/01_RenderDistance.as`
+Modified via `camera.FarZ`. Default FarZ for Forever is 50000. Block size is 32 meters (used to display approximate block count).
 
-Modified via `camera.FarZ`. Default FarZ for Forever is 50000. The plugin sets this directly on the active camera each frame. Block size is 32 meters (used to display approximate block count).
+### Async Rendering
 
-### 11.2 Async Rendering
+When render distance limiting is enabled with UI visible, `CVisionViewport.AsyncRender` must be `true` for the limit to take effect (except in editor).
 
-When render distance limiting is enabled with UI visible, `CVisionViewport.AsyncRender` must be set to `true` for the distance limit to take effect (only applicable when not in editor).
+### Level of Detail
 
-### 11.3 Level of Detail
+Modified via `GetSystemConfig().Display.GeomLodScaleZ`. Higher values cause low-poly LODs to appear more aggressively.
 
-Modified via `GetSystemConfig().Display.GeomLodScaleZ`. Higher values cause low-poly LODs to be used more aggressively.
-
-### 11.4 Overlay Scaling
+### Overlay Scaling
 
 Applied to all viewport overlays: `viewport.Overlays[i].m_AdaptRatio = EHmsOverlayAdaptRatio::ShrinkToKeepRatio`
 
 ---
 
-## 12. Plugin System Meta-Intelligence
+## Plugin System Meta-Intelligence
 
-### 12.1 Openplanet Dev API Functions
+### Openplanet Dev API Functions
 
-Confirmed functions available through `Dev::` namespace:
+Confirmed functions in the `Dev::` namespace:
 - `Dev::GetOffsetUint8(nod, offset)` / `GetOffsetUint16` / `GetOffsetUint32` / `GetOffsetUint64`
 - `Dev::GetOffsetInt32(nod, offset)`
 - `Dev::GetOffsetFloat(nod, offset)`
@@ -1082,7 +879,7 @@ Confirmed functions available through `Dev::` namespace:
 - `Dev::FindPattern(pattern)` (returns address of first match)
 - `Dev::ForceCast<T>(nod)` (unsafe cast between nod types)
 
-### 12.2 Reflection System
+### Reflection System
 
 - `Reflection::GetType("ClassName")` -> `MwClassInfo@`
 - `Reflection::TypeOf(nod)` -> `MwClassInfo@`
@@ -1090,7 +887,7 @@ Confirmed functions available through `Dev::` namespace:
 - `MwMemberInfo.Offset` (uint16 -- 0xFFFF when invalid)
 - `MwClassInfo.Name` (string)
 
-### 12.3 PatternPatch System
+### PatternPatch System
 
 Used for binary patching:
 - `PatternPatch(searchPattern, replacePattern)` -> `IPatch@`
@@ -1098,7 +895,7 @@ Used for binary patching:
 - `patch.Revert()` -- restores original bytes
 - `patch.IsApplied()` -- check if currently applied
 
-### 12.4 Fids System (File Access)
+### Fids System (File Access)
 
 - `Fids::Preload(fid)` -- loads a file's nod (CMwNod) from its fid
 - `Fids::GetUserFolder(path)` -- gets user folder
@@ -1107,24 +904,19 @@ Used for binary patching:
 - `Fids::UpdateTree(folder)` -- refreshes folder contents
 - `GetFidFromNod(nod)` -- reverse lookup from nod to fid
 
-### 12.5 Meta Plugin System
+### Meta Plugin System
 
 - `Meta::AllPlugins()` -> `Meta::Plugin@[]`
 - `Meta::UnloadedPlugins()` -> unloaded plugin info list
-- `Meta::GetPluginFromSiteID(id)` -> `Meta::Plugin@`
-- `Meta::GetPluginFromID(id)` -> `Meta::Plugin@`
+- `Meta::GetPluginFromSiteID(id)` / `Meta::GetPluginFromID(id)` -> `Meta::Plugin@`
 - `Meta::LoadPlugin(path, source, type)` -> `Meta::Plugin@`
 - `Meta::UnloadPlugin(plugin)` (queues unload, not immediate)
-- `Meta::PluginIndex()` -- dependency graph builder
-  - `.AddTree(plugin)` -- adds plugin and all dependents
-  - `.TopologicalSort()` -- returns load order
+- `Meta::PluginIndex()` -- dependency graph builder with `.AddTree(plugin)` and `.TopologicalSort()`
 
 Plugin properties: `.ID`, `.Name`, `.Version`, `.Author`, `.Category`, `.SiteID`, `.Type`, `.Enabled`, `.SourcePath`
 Plugin types: `Meta::PluginType::Zip`, `Meta::PluginType::Folder`
 
-### 12.6 Discord Integration IDs
-
-**Source**: `Discord/Main.as`
+### Discord Integration IDs
 
 | Game | Discord Application ID |
 |------|----------------------|
@@ -1133,9 +925,7 @@ Plugin types: `Meta::PluginType::Zip`, `Meta::PluginType::Folder`
 | Forever | `713505734515621939` |
 | ManiaPlanet | `415975536343646208` |
 
-### 12.7 Conditional Compilation Defines
-
-Observed `#if` directives across all plugins:
+### Conditional Compilation Defines
 
 | Define | Meaning |
 |--------|---------|
@@ -1147,91 +937,24 @@ Observed `#if` directives across all plugins:
 | `FOREVER` | TM United/Nations Forever |
 | `UNITED_FOREVER` | TM United Forever specifically |
 | `NATIONS_FOREVER` | TM Nations Forever specifically |
-| `MANIA64` | 64-bit ManiaPlanet build |
-| `LINUX` | Linux build |
-| `LOGS` | Debug/logging build |
-| `DEVELOPER` | Developer mode enabled |
-| `SIG_DEVELOPER` | Signed developer mode |
-| `MPD` | ManiaPlanet Dedicated? |
 
 ---
 
-## Appendix A: Complete File Inventory
+## Related Pages
 
-### VehicleState Plugin (11 files)
-- `Internal/Impl.as` - Player/vis lookup, entity ID masks
-- `Internal/SceneVis.as` - ISceneVis manager enumeration at +0x08, +0x10, +0x290
-- `Internal/Vehicle/VehicleNext.as` - TM2020 vehicle vis manager (index 13, offset 0x210)
-- `Internal/Vehicle/VehicleForever.as` - Forever CSceneVehicleCar wrapper
-- `Internal/Vehicle/VehicleMP4.as` - MP4 offsets (player +0x2B8, +0x2C4; vehicles +0x38)
-- `Internal/Vehicle/VehicleTurbo.as` - Turbo offsets (mobil +0x14, vis +0x84)
-- `StateWrappers.as` - All enum definitions, complete struct layouts for MP4/Turbo/Forever
-- `Export.as` - Public API exports
-- `Main.as` - Reflection-based offset discovery for TM2020
-- `Settings.as` - Debug settings
-- `Debugger/Main.as` - Complete member access catalog for all CSceneVehicleVisState fields
+- [19-openplanet-intelligence.md](19-openplanet-intelligence.md) -- First-pass extraction this document extends
+- [04-physics-vehicle.md](04-physics-vehicle.md) -- Decompiled vehicle physics code
+- [29-community-knowledge.md](29-community-knowledge.md) -- Community projects cross-referencing this data
+- [07-networking.md](07-networking.md) -- Networking architecture overview
+- [08-game-architecture.md](08-game-architecture.md) -- Game architecture using these class members
 
-### NadeoServices Plugin (6 files)
-- `NadeoServices.as` - Base URLs, HTTP methods, auth header, account ID conversion
-- `AccessToken.as` - Token lifecycle (55min + random), exponential backoff
-- `CoreToken.as` - Core token (always valid)
-- `IToken.as` - Token interface
-- `Main.as` - Token refresh loop
-- `Export.as` - Public API with usage example
+---
 
-### Camera Plugin (3 files)
-- `Impl.as` - World-to-screen projection, editor orbital camera control
-- `Main.as` - Camera selection algorithm, projection matrix construction
-- `Export.as` - Public API exports
+<details><summary>Analysis metadata</summary>
 
-### EditorDeveloper Plugin (1 file)
-- `Main.as` - Offzone binary patch, scroll disable, developer tools, light tools, orbital camera params
+- **Generated**: 2026-03-27
+- **Source**: 81 AngelScript (.as) files across 12 plugin directories
+- **Scope**: Every installed Openplanet plugin, exhaustively mined
+- **Confidence**: VERIFIED -- All data from working plugins that read live game memory
 
-### InfiniteEmbedSize Plugin (5 files)
-- `EmbedLimit.as` - Embed limit bypass patterns for all games
-- `NetConfig.as` - TCP packet size limit (CNetClient -> NetConfig +0x38)
-- `MaxChallengeSize.as` - Max challenge size pattern and RIP-relative address resolution
-- `Main.as` - Patch application, size calculation with 0xC00 offset
-- `Settings.as` - Default 12MB limit
-
-### Finetuner Plugin (6 files)
-- `src/Main.as` - NetworkAfterMainLoop run context
-- `src/01_RenderDistance.as` - Camera FarZ manipulation, async rendering
-- `src/02_OverlayScaling.as` - Viewport overlay adapt ratio
-- `src/03_LevelOfDetail.as` - GeomLodScaleZ system config
-- `src/04_Decals.as` - Texture decals system config
-- `src/90_FPS.as` - Viewport.AverageFps display
-- `src/99_Shortcuts.as` - Key binding system
-
-### Stats Plugin (2 files)
-- `Main.as` - Game state detection patterns, editor type detection
-- `Statistics.as` - Time tracking persistence
-
-### Discord Plugin (5 files)
-- `Main.as` - Application IDs, comprehensive game state machine, ManiaLink page parsing
-- `Services.as` - NadeoServices map thumbnail fetch
-- `Notify.as` - Change notification helpers
-- `Settings.as` - Display settings
-- `Titles.as` - Title pack ID to Discord image key mapping (47 entries)
-
-### BigDecor Plugin (6 files)
-- `Main.as` - Decoration size manipulation, Fids::Preload
-- `GameData.as` - Collection/decoration/texture mod enumeration
-- `Params.as` - EditNewMap/EditNewMap2 API calls
-- `PreloadingFid.as` - Lazy fid loading wrapper
-- `Settings.as` - Size limits
-- `Window.as` - Environment names, player model names
-
-### ClassicMenu Plugin (1 file)
-- `ClassicMenu.as` - MenuMultiPlayer_OnInternet, MenuMultiLocal, MenuEditors; Permissions API
-
-### Controls Plugin (5 files)
-- UI component library (Tags, Frames) -- no game engine intelligence
-
-### UsefulInformation Plugin (1 file)
-- `Main.as` - Server connection details, player info, map info access patterns
-
-### PluginManager Plugin (21 files)
-- `src/Utils/API.as` - Openplanet API base URL and endpoints
-- `src/Settings.as` - API/web URLs
-- Other files: Plugin management UI (no game engine intelligence)
+</details>

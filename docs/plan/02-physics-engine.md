@@ -1,30 +1,10 @@
 # OpenTM Physics Engine Design
 
-**Version**: 1.0
-**Date**: 2026-03-27
-**Crate**: `opentm-physics`
-**Target**: WASM (wasm32-unknown-unknown), compiled from Rust
-**Goal**: Bit-for-bit reproduction of TM2020 vehicle physics where decompiled code exists; documented approximations elsewhere
+The physics engine reproduces TM2020 vehicle physics bit-for-bit where decompiled code exists, with documented approximations elsewhere. It compiles from Rust to WASM (wasm32-unknown-unknown) and targets the `opentm-physics` crate.
 
 ---
 
-## Table of Contents
-
-1. [Rust Module Structure](#1-rust-module-structure)
-2. [VehicleState Struct](#2-vehiclestate-struct)
-3. [Physics Step Algorithm](#3-physics-step-algorithm)
-4. [Force Model Implementation Strategy](#4-force-model-implementation-strategy)
-5. [Determinism Strategy](#5-determinism-strategy)
-6. [Collision System Design](#6-collision-system-design)
-7. [Surface Effect System](#7-surface-effect-system)
-8. [Tuning Parameter Loading](#8-tuning-parameter-loading)
-9. [WASM Interface (SharedArrayBuffer)](#9-wasm-interface-sharedarraybuffer)
-10. [Test Strategy](#10-test-strategy)
-11. [Honest Assessment of Unknowns](#11-honest-assessment-of-unknowns)
-
----
-
-## 1. Rust Module Structure
+## Rust Module Structure
 
 ```
 opentm-physics/
@@ -105,11 +85,11 @@ lib.rs
 
 ---
 
-## 2. VehicleState Struct
+## VehicleState Struct
 
 Derived from aggregated decompiled offsets across all 34 physics .c files, cross-referenced with Openplanet's CSceneVehicleVisState.
 
-### 2.1 Complete Rust Definition
+### Complete Rust Definition
 
 ```rust
 /// Complete vehicle entity state. ~7328 bytes in TM2020 (highest known offset: 0x1CA0).
@@ -422,7 +402,7 @@ pub struct WheelPhyBlock {
 }
 ```
 
-### 2.2 Vehicle Model Structure (via vehicle+0x88)
+### Vehicle Model Structure (via vehicle+0x88)
 
 ```rust
 /// Physics model data. Accessed through VehicleState::phy_model_ptr.
@@ -571,7 +551,7 @@ pub struct VehiclePhyModel {
 }
 ```
 
-### 2.3 Openplanet Visual State Mapping
+### Openplanet Visual State Mapping
 
 The visual state (`CSceneVehicleVisState`) is a SEPARATE struct from the physics state, populated by `ExtractVisStates` (FUN_1407d5780). For OpenTM, we copy from our physics state to a vis-state struct at the end of each tick for rendering.
 
@@ -598,9 +578,9 @@ The visual state (`CSceneVehicleVisState`) is a SEPARATE struct from the physics
 
 ---
 
-## 3. Physics Step Algorithm
+## Physics Step Algorithm
 
-### 3.1 Direct Translation: PhysicsStep_TM (FUN_141501800)
+### Direct Translation: PhysicsStep_TM (FUN_141501800)
 
 Source: `decompiled/physics/PhysicsStep_TM.c`
 
@@ -740,7 +720,7 @@ pub fn physics_step_tm(
 }
 ```
 
-### 3.2 Guarded Square Root
+### Guarded Square Root
 
 Every sqrt in TM2020's physics is guarded against negative inputs:
 
@@ -769,7 +749,7 @@ pub fn guarded_magnitude(v: &[f32; 3]) -> f32 {
 }
 ```
 
-### 3.3 Timing System
+### Timing System
 
 ```rust
 /// TM2020 physics timing.
@@ -804,9 +784,9 @@ impl PhysicsTiming {
 
 ---
 
-## 4. Force Model Implementation Strategy
+## Force Model Implementation Strategy
 
-### 4.1 Overview
+### Overview
 
 | Case | Function | Name | Params | Decompiled? | Fidelity Target |
 |---|---|---|---|---|---|
@@ -836,7 +816,7 @@ Sub-functions shared across models 5, 6, and 0xB:
 | FUN_14086af20 | Lateral grip (2-wheel) | YES (fully decompiled) |
 | FUN_14083d8e0 | Steering input processing | YES (decompiled) |
 
-### 4.2 Cases 0/1/2: Base 4-Wheel Model
+### Cases 0/1/2: Base 4-Wheel Model
 
 **What we know**: Fully decompiled (force_model_4wheel_FUN_140869cd0.c).
 - Iterates 4 wheels at stride 0xB8, starting car_state+0x1780
@@ -859,7 +839,7 @@ Sub-functions shared across models 5, 6, and 0xB:
 
 **Expected fidelity**: **Exact match** given correct tuning data.
 
-### 4.3 Case 3: Bicycle (2-Wheel) Model
+### Case 3: Bicycle (2-Wheel) Model
 
 **What we know**: Fully decompiled (force_model_2wheel_FUN_14086b060.c).
 - Single front/rear axis force decomposition
@@ -883,7 +863,7 @@ Sub-functions shared across models 5, 6, and 0xB:
 
 **Expected fidelity**: **Exact match**.
 
-### 4.4 Case 4: TMNF M5 Equivalent
+### Case 4: TMNF M5 Equivalent
 
 **What we know**: Decompiled (force_model_case4_FUN_14086bc50.c).
 - Similar structure to cases 0-2 but different coefficient paths
@@ -896,7 +876,7 @@ Sub-functions shared across models 5, 6, and 0xB:
 
 **Expected fidelity**: **Exact match**.
 
-### 4.5 Case 5: CarSport / Stadium Full Model
+### Case 5: CarSport / Stadium Full Model
 
 **What we know**: The largest decompilation (force_model_case5.c, 500+ lines). This is the primary Stadium car model.
 - Sub-function breakdown matches the CarSport header documentation:
@@ -927,7 +907,7 @@ Sub-functions shared across models 5, 6, and 0xB:
 
 **Expected fidelity**: **Close match**. The orchestrator and several key sub-functions are exact. Missing sub-function internals (steering, suspension, anti-roll, drift) need decompilation for exact match.
 
-### 4.6 Case 6: Extended CarSport (Rally/Snow)
+### Case 6: Extended CarSport (Rally/Snow)
 
 **What we know**: Header comments document the complete sub-function breakdown (identical to case 5 with additions). The decompiled header at force_model_carsport_FUN_14085c9e0.c confirms:
 - Same 12-phase pipeline as case 5
@@ -944,7 +924,7 @@ Sub-functions shared across models 5, 6, and 0xB:
 
 **Expected fidelity**: **Close match** (same confidence as case 5, plus uncertainty about case-6-specific branches).
 
-### 4.7 Case 0xB: Desert/Variant Model
+### Case 0xB: Desert/Variant Model
 
 **What we know**: Fully decompiled (force_model_case0xB.c, 302 lines). Structural analysis:
 - Same sub-function calls as cases 5/6: FUN_1408570e0, FUN_14085ad30, FUN_140858c90, FUN_140857b20, FUN_14085b600
@@ -965,7 +945,7 @@ Sub-functions shared across models 5, 6, and 0xB:
 
 **Expected fidelity**: **Close match**. Orchestrator is exact; unique sub-functions are gaps.
 
-### 4.8 Curve Sampling (Critical Shared Utility)
+### Curve Sampling (Critical Shared Utility)
 
 The curve sampler FUN_14042bcb0 is called hundreds of times per physics tick and is **fully decompiled**:
 
@@ -1029,9 +1009,9 @@ pub fn sample_curve(curve_ptr: &CurveData, t: f32) -> f32 {
 
 ---
 
-## 5. Determinism Strategy
+## Determinism Strategy
 
-### 5.1 The Core Challenge
+### The Core Challenge
 
 TM2020's determinism relies on:
 1. Fixed 100Hz integer tick counter (no float accumulation)
@@ -1041,7 +1021,7 @@ TM2020's determinism relies on:
 
 For WASM, we must achieve **identical floating-point results across all browsers**.
 
-### 5.2 WASM Floating-Point Guarantees
+### WASM Floating-Point Guarantees
 
 **What WASM guarantees (IEEE 754)**:
 - `f32.add`, `f32.sub`, `f32.mul`, `f32.div`: **Deterministic**. WASM mandates IEEE 754 single-precision with round-to-nearest-even. These produce identical results across V8, SpiderMonkey, and JavaScriptCore.
@@ -1053,7 +1033,7 @@ For WASM, we must achieve **identical floating-point results across all browsers
 - `sin`, `cos`, `tan`, `atan2`, `exp`, `log`: These are NOT WASM opcodes. They are implemented via libm in the Rust standard library, which compiles to WASM as software implementations. The Rust `core::f32::sin()` etc. use MUSL libm when targeting WASM, which IS deterministic (pure software, no hardware dependency).
 - **NaN bit patterns**: WASM specifies NaN propagation but allows arithmetic NaN to have non-deterministic payload bits. However, `f32.sqrt` of a negative number produces a canonical NaN in WASM (the spec mandates this), so our guarded_sqrt avoids this entirely.
 
-### 5.3 f32 vs f64 Decision
+### f32 vs f64 Decision
 
 **TM2020's actual behavior**:
 - **Physics computations use f32** (confirmed by decompiled code: `float` type throughout, SSE `sqrtss`/`addss`/`mulss` instructions).
@@ -1065,7 +1045,7 @@ For WASM, we must achieve **identical floating-point results across all browsers
 
 **Implications**: f32 in WASM is IEEE 754 binary32 with round-to-nearest-even, identical to SSE `sqrtss`. Basic arithmetic will match bit-for-bit. The only divergence risk is in transcendental functions (atan2, sin, cos), which we address below.
 
-### 5.4 Transcendental Function Strategy
+### Transcendental Function Strategy
 
 TM2020 uses `atan2` (steering angle computation in the bicycle model, FUN_14018d310) and potentially `sin`/`cos`. These map to x87/SSE library functions on x86-64.
 
@@ -1080,7 +1060,7 @@ TM2020 uses `atan2` (steering angle computation in the bicycle model, FUN_14018d
 - Extracting TM2020's exact libm implementation (from MSVC runtime)
 - Using a lookup table approximation tuned to match TM2020's output
 
-### 5.5 Cross-Runtime Determinism
+### Cross-Runtime Determinism
 
 | Runtime | f32 basic ops | f32.sqrt | Transcendentals (libm) | Overall |
 |---|---|---|---|---|
@@ -1090,7 +1070,7 @@ TM2020 uses `atan2` (steering angle computation in the bicycle model, FUN_14018d
 
 Since we compile transcendentals to WASM bytecode (not native intrinsics), all runtimes execute the same instruction sequence. **Cross-browser determinism is guaranteed**.
 
-### 5.6 Sub-Step Ordering Guarantees
+### Sub-Step Ordering Guarantees
 
 TM2020 processes vehicles in array order (PhysicsStep_TM.c lines 66-220). Bodies are processed in sorted index order (PhysicsStep_V2.c lines 103-116). OpenTM must preserve this sequential ordering. No parallel dispatch, no shuffling.
 
@@ -1103,9 +1083,9 @@ for i in 0..vehicle_count {
 
 ---
 
-## 6. Collision System Design
+## Collision System Design
 
-### 6.1 Architecture Overview
+### Architecture Overview
 
 ```
 Per-Tick Pipeline:
@@ -1128,7 +1108,7 @@ Per-Tick Pipeline:
     -> ProcessContactPoints (FUN_1407d2b90, 7 contact buffers)
 ```
 
-### 6.2 Broadphase
+### Broadphase
 
 **TM2020 approach**: Tree-based spatial acceleration (BVH or k-d tree), inferred from `NHmsCollision::SMgr` namespace and the `DynamicCollisionCreateCache` function which builds per-body AABB entries.
 
@@ -1149,7 +1129,7 @@ impl SpatialGrid {
 
 **APPROXIMATION**: TM2020 likely uses a BVH (more efficient for static geometry). Our grid is simpler but may have different performance characteristics. Physics results are unaffected as long as all overlapping pairs are found.
 
-### 6.3 Narrowphase
+### Narrowphase
 
 TM2020 uses `NHmsCollision::PointCast_FirstClip/AllClips` for per-wheel raycasts and a constraint-based solver for body-body collision.
 
@@ -1169,7 +1149,7 @@ pub fn wheel_raycast(
 }
 ```
 
-### 6.4 Contact Structure (88 bytes)
+### Contact Structure (88 bytes)
 
 From MergeContacts decompilation (stride 0x58):
 
@@ -1191,7 +1171,7 @@ pub struct ContactPoint {
 // Total: 0x58 = 88 bytes
 ```
 
-### 6.5 Contact Merging (FUN_1402a8a70)
+### Contact Merging (FUN_1402a8a70)
 
 Direct port from decompiled code (271 lines):
 
@@ -1220,7 +1200,7 @@ pub fn merge_contacts(
 }
 ```
 
-### 6.6 Friction Solver
+### Friction Solver
 
 From FrictionIterCount_Config.c, the solver uses Gauss-Seidel sequential impulses with configurable iteration counts:
 
@@ -1285,9 +1265,9 @@ pub fn solve_constraints(
 
 ---
 
-## 7. Surface Effect System
+## Surface Effect System
 
-### 7.1 Two-ID System
+### Two-ID System
 
 TM2020 has two independent surface classification systems:
 
@@ -1295,7 +1275,7 @@ TM2020 has two independent surface classification systems:
 
 2. **EPlugSurfaceGameplayId** (gameplay triggers): Controls turbo, reset, no-grip, etc. Applied through block/item trigger zones, NOT through materials. All 208 stock materials have `DGameplayId(None)`.
 
-### 7.2 Complete Gameplay Surface Effects (22 effects)
+### Complete Gameplay Surface Effects (22 effects)
 
 | ID | Name | Implementation | Constants Needed | Unknown |
 |---|---|---|---|---|
@@ -1322,7 +1302,7 @@ TM2020 has two independent surface classification systems:
 | 20 | `VehicleTransform_Reset` | Revert to Stadium car | Stadium tuning GBX data | None beyond case 5 model |
 | 21 | `ReactorBoost2_Oriented` | Stronger oriented boost | Direction, force, duration | **Exact force from GBX** |
 
-### 7.3 Material Surface Physics (19 types)
+### Material Surface Physics (19 types)
 
 From the NadeoImporter material library:
 
@@ -1350,7 +1330,7 @@ From the NadeoImporter material library:
 
 **UNKNOWN**: The exact friction and restitution coefficient values for each material. These are stored in the material property table accessed via `*car_state + 0x6B8 + surface_id * 8`, which points to a struct with 7 floats at offsets +0x18 through +0x30, plus additional flags. The actual numeric values must be extracted from TM2020's runtime memory or GBX resource files.
 
-### 7.4 Surface Material Lookup (from decompiled code)
+### Surface Material Lookup (from decompiled code)
 
 ```rust
 /// Per-wheel surface property accumulation.
@@ -1411,9 +1391,9 @@ pub fn accumulate_wheel_surfaces(
 
 ---
 
-## 8. Tuning Parameter Loading
+## Tuning Parameter Loading
 
-### 8.1 GBX to Physics Pipeline
+### GBX to Physics Pipeline
 
 ```
 .Gbx file (CPlugVehicleCarPhyTuning, class ID 0x090ED)
@@ -1440,7 +1420,7 @@ VehiclePhyModel (populated at vehicle spawn)
   -> Curves deserialized into CurveData structs
 ```
 
-### 8.2 Known Tuning Parameters
+### Known Tuning Parameters
 
 From TMNF cross-reference and TM2020 string analysis:
 
@@ -1463,7 +1443,7 @@ From TMNF cross-reference and TM2020 string analysis:
 | Water gravity | `WaterGravity=1.0` | NSceneDyna::ComputeWaterForces | Water params | Vehicle GBX |
 | Water min speed | `WaterReboundMinHSpeed=200km/h` | Inside water model | Water params | Vehicle GBX |
 
-### 8.3 Suspension Model Translation
+### Suspension Model Translation
 
 TMNF-to-TM2020 parameter equivalence:
 
@@ -1479,7 +1459,7 @@ pub fn tmnf_to_tm2020_suspension(ki: f32, ka: f32, mass: f32) -> (f32, f32) {
 }
 ```
 
-### 8.4 Tuning Coefficient Runtime State
+### Tuning Coefficient Runtime State
 
 ```rust
 /// NGameSlotPhy::SMgr (144 bytes / 0x90).
@@ -1500,9 +1480,9 @@ pub struct SlotPhyState {
 
 ---
 
-## 9. WASM Interface (SharedArrayBuffer)
+## WASM Interface (SharedArrayBuffer)
 
-### 9.1 Memory Layout
+### Memory Layout
 
 The physics engine communicates with the JavaScript render thread via a SharedArrayBuffer. The layout is designed for lock-free read (render) / write (physics) with double-buffering.
 
@@ -1609,7 +1589,7 @@ Offset 0x0014..0x003F: reserved global state
 Per-vehicle data starts at offset 0x0040 + vehicle_index * 512.
 ```
 
-### 9.2 Double-Buffering Protocol
+### Double-Buffering Protocol
 
 ```rust
 /// Physics thread writes to buffer[write_idx].
@@ -1632,9 +1612,9 @@ pub fn physics_tick_complete(sab: &SharedArrayBuffer, vehicle_idx: usize) {
 
 ---
 
-## 10. Test Strategy
+## Test Strategy
 
-### 10.1 Replay Validation (Gold Standard)
+### Replay Validation (Gold Standard)
 
 The highest-fidelity test: play a TM2020 ghost replay's inputs through our physics engine and compare the resulting positions frame-by-frame.
 
@@ -1658,7 +1638,7 @@ Compare:
 
 **Replay state block**: TM2020 copies 2,168 bytes (0x878) of vehicle state for replay. This block can be compared byte-for-byte.
 
-### 10.2 Unit Tests Per Force Model
+### Unit Tests Per Force Model
 
 ```rust
 #[cfg(test)]
@@ -1726,7 +1706,7 @@ mod tests {
 }
 ```
 
-### 10.3 Determinism Regression Tests
+### Determinism Regression Tests
 
 ```rust
 /// Run the same input sequence twice and verify bit-identical output.
@@ -1756,7 +1736,7 @@ fn test_cross_platform_basic_arithmetic() {
 }
 ```
 
-### 10.4 Community Telemetry Comparison
+### Community Telemetry Comparison
 
 Using Openplanet telemetry recordings from real TM2020 sessions:
 
@@ -1773,9 +1753,9 @@ Compare:
 
 ---
 
-## 11. Honest Assessment of Unknowns
+## Honest Assessment of Unknowns
 
-### 11.1 Critical Unknowns (Block Implementation)
+### Critical Unknowns (Block Implementation)
 
 | Unknown | Impact | Mitigation | Research Action |
 |---|---|---|---|
@@ -1783,7 +1763,7 @@ Compare:
 | **Surface material friction table** (the 7-float property struct at material+0x18) | **BLOCKS**: Wheels will have wrong grip on every surface | Dump from runtime memory via Openplanet, or extract from GBX | Write Openplanet plugin to dump `*car_state + 0x6B8 + i*8` for each material ID |
 | **Gravity constant** (not found as 9.81 in binary; loaded from GBX) | **BLOCKS**: Vehicle weight/fall speed will be wrong | Use TMNF's `GravityCoef=3.0` as starting point; measure in-game fall time | Extract from GBX resource or measure empirically (drop car, time fall) |
 
-### 11.2 High-Impact Unknowns (Degrade Quality)
+### High-Impact Unknowns (Degrade Quality)
 
 | Unknown | Impact | Mitigation | Research Action |
 |---|---|---|---|
@@ -1795,7 +1775,7 @@ Compare:
 | **FUN_14195dd00** (safe sqrt for negative inputs) | **DEGRADES**: Edge case behavior for tiny negative values | Assume `sqrt(abs(x))` | Decompile FUN_14195dd00 (likely trivial) |
 | **Sleep detection constants** (DAT_141ebccfc/cd00/cd04) | **DEGRADES**: Bodies may not sleep/wake correctly | Set sleep threshold very low (effectively disabled) | Read values from binary at known addresses |
 
-### 11.3 Medium-Impact Unknowns (Noticeable Differences)
+### Medium-Impact Unknowns (Noticeable Differences)
 
 | Unknown | Impact | Mitigation | Research Action |
 |---|---|---|---|
@@ -1805,7 +1785,7 @@ Compare:
 | **Solver iteration counts** (default values for SSolverParams) | **NOTICEABLE**: Different constraint solver convergence | Start with reasonable defaults (4 static, 4 dynamic, 8 velocity, 4 position) | Extract from runtime memory |
 | **Cruise control implementation** | **NOTICEABLE**: Wrong speed maintenance behavior | PID controller approximation targeting cruise speed | Decompile cruise force model path |
 
-### 11.4 Low-Impact Unknowns (Cosmetic / Minor)
+### Low-Impact Unknowns (Cosmetic / Minor)
 
 | Unknown | Impact | Mitigation | Research Action |
 |---|---|---|---|
@@ -1815,7 +1795,7 @@ Compare:
 | **Vehicle-vehicle collision response** (PairComputeForces) | **MINOR**: Multiplayer car-to-car impacts | Port PairComputeForces (already decompiled, prepares state for solver) | Already decompiled |
 | **DiscontinuityCount increment** | **COSMETIC**: Visual interpolation on teleport | Increment on checkpoint reset | Already understood |
 
-### 11.5 What Makes TM2020 Physics FEEL Unique
+### What Makes TM2020 Physics FEEL Unique
 
 Based on the decompiled code, these are the critical elements that define the "TM feel" and must be preserved:
 
@@ -1897,3 +1877,24 @@ Based on the decompiled code, these are the critical elements that define the "T
 | 0x140842ed0 | PairComputeForces | Vehicle-vehicle | YES |
 | 0x1407d2870 | Fragile break handler | Crash/reset | NO |
 | 0x14083dca0 | Velocity scale factor | Sub-step calc | NO |
+
+---
+
+## Related Pages
+
+- [Physics Constants](07-physics-constants.md) -- All extracted constants and struct layouts
+- [Determinism Analysis](06-determinism-analysis.md) -- WASM float determinism guarantees
+- [Tuning Data Extraction](09-tuning-data-extraction.md) -- How to extract GBX tuning files
+- [Tuning Loading Analysis](10-tuning-loading-analysis.md) -- GBX to runtime data flow
+- [System Architecture](01-system-architecture.md) -- Threading model and SAB layout
+- [MVP Tasks](08-mvp-tasks.md) -- Physics task breakdown (MVP-034 through MVP-044)
+
+<details><summary>Document metadata</summary>
+
+- **Version**: 1.0
+- **Date**: 2026-03-27
+- **Crate**: `opentm-physics`
+- **Target**: WASM (wasm32-unknown-unknown), compiled from Rust
+- **Goal**: Bit-for-bit reproduction of TM2020 vehicle physics where decompiled code exists; documented approximations elsewhere
+
+</details>

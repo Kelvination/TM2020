@@ -1,19 +1,12 @@
 # OpenTM Executive Summary
 
-**READ THIS FIRST** -- This document synthesizes all 8 plan documents into a single starting point.
+OpenTM recreates Trackmania 2020's core gameplay in the browser. Load official TM2020 map files, render them with WebGPU, and drive on them with physics that approximate the original game. The physics engine compiles Rust to WASM for determinism and performance. Ghost recording uses input-based deterministic simulation, matching TM2020's architecture.
 
-**Date**: 2026-03-27
-**Status**: Pre-implementation design review complete
-
----
-
-## 1. Project Vision
-
-OpenTM is a browser-based recreation of Trackmania 2020's core gameplay: load official TM2020 map files, render them in 3D with WebGPU, and drive on them with physics that approximate the original game. The physics engine runs as Rust compiled to WASM for determinism and performance. Ghost recording/replay uses input-based deterministic simulation, matching TM2020's architecture. The project targets a 12-week MVP (load map, render, drive, checkpoints, finish) with a 6-month path to full feature parity including multiplayer, editor, and audio.
+The project targets a 12-week MVP (load map, render, drive, checkpoints, finish). A 6-month path covers full feature parity including multiplayer, editor, and audio.
 
 ---
 
-## 2. Architecture Overview
+## Architecture Overview
 
 ```
                         @opentm/core (TS, math types, constants)
@@ -33,21 +26,19 @@ OpenTM is a browser-based recreation of Trackmania 2020's core gameplay: load of
            (TS)    (TS)
 ```
 
-**Key architectural decisions**:
-
 | Decision | Rationale |
 |----------|-----------|
 | Rust/WASM for physics | Determinism (IEEE 754 guaranteed by WASM spec) + performance (up to 1000 sub-steps/tick) |
-| WebGPU deferred renderer | Matches TM2020's 19-pass deferred pipeline; 4-tier progressive quality (forward -> full deferred) |
-| TypeScript GBX parser | Runs in browser; loads official .Map.Gbx files directly from user's disk |
-| SharedArrayBuffer for physics<->render | Zero-copy 100Hz physics communication; avoids postMessage overhead |
-| Pre-extracted block meshes served from CDN | PAK files are encrypted; runtime extraction is infeasible |
-| Svelte for UI, HTML/CSS overlay | Do NOT replicate ManiaLink; leverage browser's native UI strength |
+| WebGPU deferred renderer | Matches TM2020's 19-pass deferred pipeline; 4-tier progressive quality (forward to full deferred) |
+| TypeScript GBX parser | Runs in browser; loads official .Map.Gbx files directly from disk |
+| SharedArrayBuffer for physics-render | Zero-copy 100Hz physics communication; avoids postMessage overhead |
+| Pre-extracted block meshes from CDN | PAK files are encrypted; runtime extraction is infeasible |
+| Svelte for UI, HTML/CSS overlay | Leverage the browser's native UI strength; do NOT replicate ManiaLink |
 | pnpm monorepo + Turborepo | 14 packages with clear dependency boundaries |
 
 ---
 
-## 3. Implementation Timeline
+## Implementation Timeline
 
 ### 12-Week MVP
 
@@ -55,49 +46,50 @@ OpenTM is a browser-based recreation of Trackmania 2020's core gameplay: load of
 |-------|-------|-----------------|
 | 1 | Project setup + math | Monorepo, WASM toolchain, Vec3/Mat4/Iso4/Quat in Rust + TS |
 | 2-4 | GBX parser + block system | BinaryReader, LZO, LookbackString, map header+body parsing, block mesh extraction pipeline |
-| 4-7 | Renderer | Forward pipeline -> deferred G-buffer (4 MRT), PBR materials, shadows, tone mapping |
+| 4-7 | Renderer | Forward pipeline to deferred G-buffer (4 MRT), PBR materials, shadows, tone mapping |
 | 5-8 | Physics | VehicleState, 100Hz fixed timestep, Euler integration, collision mesh, CarSport force model |
 | 6-8 | Input + Camera | Keyboard/gamepad, chase camera, free camera |
 | 8-10 | Integration | Map load pipeline end-to-end, vehicle driving on map, HUD, checkpoints, finish |
 | 10-12 | Polish | Bloom, FXAA, sky, car model, loading screen, settings, performance optimization |
 
-**Critical path**: 23 working days through physics chain (monorepo -> WASM -> math -> VehicleState -> timestep -> integration -> collision -> force model -> integration with renderer). Block mesh extraction (MVP-021) is the highest-risk item on the critical path.
+The critical path runs 23 working days through the physics chain (monorepo to WASM to math to VehicleState to timestep to integration to collision to force model to renderer integration). Block mesh extraction (MVP-021) is the highest-risk item on the critical path.
 
 ### 6-Month Full
 
-Post-MVP additions: audio engine, Nadeo API integration, ghost import/export, map editor, ManiaScript interpreter, multiplayer (WebSocket + WebRTC), Tier 2-3 rendering (SSAO, SSR, volumetric fog, TAA), official ghost loading.
+Post-MVP adds: audio engine, Nadeo API integration, ghost import/export, map editor, ManiaScript interpreter, multiplayer (WebSocket + WebRTC), Tier 2-3 rendering (SSAO, SSR, volumetric fog, TAA), official ghost loading.
 
 ---
 
-## 4. Key Risks
+## Key Risks
 
-### Risk 1: Block Mesh Extraction (CRITICAL)
-**Problem**: Block geometry lives in encrypted .pak files (Blowfish CBC, server-derived keys).
-**Mitigation**: GBX.NET + PAK extraction pipeline (doc 05 recommends this as primary approach, 1-2 week effort). Fallback chain: Openplanet Fid extraction -> Ninja Ripper capture -> procedural placeholder geometry.
-**Status from doc 05**: GBX.NET.PAK already implements decryption. Nations Converter 2 proves the pipeline works. Keys obtainable from Profile.Gbx.
+### Block Mesh Extraction (CRITICAL)
 
-### Risk 2: CarSport Physics Feel (HIGH probability)
-**Problem**: Force model is decompiled structurally (500+ lines, 9 sub-functions) but tuning curve data comes from .Gbx files we cannot read. Steering, suspension, anti-roll, and drift sub-functions are referenced but not fully decompiled.
-**Mitigation**: Use TMInterface to capture reference trajectories. Build tuning workflow comparing position divergence. Accept "approximately right" for MVP.
+Block geometry lives in encrypted .pak files (Blowfish CBC, server-derived keys). GBX.NET + PAK extraction pipeline is the primary approach (1-2 week effort). GBX.NET.PAK already implements decryption. Nations Converter 2 proves the pipeline works. Keys are obtainable from Profile.Gbx.
 
-### Risk 3: Tuning Data is Entirely Data-Driven (HIGH impact)
-**Problem**: Doc 07 proves NO physics constants (gravity, friction, engine curves) are hardcoded in the binary. Everything is loaded from GBX at runtime. Without extracting CPlugSpawnModel, CPlugVehiclePhyModel, and related GBX files, we have zero ground-truth values.
-**Mitigation**: Extract tuning GBX files via the same PAK pipeline as block meshes. Use TMInterface recordings to reverse-engineer approximate values. This risk compounds Risk 1 -- if PAK extraction fails, both meshes AND physics tuning are blocked.
+Fallback chain: Openplanet Fid extraction, Ninja Ripper capture, procedural placeholder geometry.
 
-### Risk 4: GBX Parser Completeness (MEDIUM)
-**Problem**: Complex community maps may use chunk versions or features not handled. Non-skippable unknown chunks halt parsing entirely.
-**Mitigation**: Use gbx-net source as authoritative reference. Target 80%+ map compatibility for MVP.
+### CarSport Physics Feel (HIGH probability)
 
-### Risk 5: WASM Transcendental Function Divergence (LOW for cross-browser, MEDIUM for TM2020 match)
-**Problem**: Compiled libm sin/cos/atan2 will be deterministic across browsers but will NOT match TM2020's MSVC implementation. Over many ticks, trajectories will diverge from official replays.
-**Mitigation**: Accept divergence for v1. Future: extract TM2020's exact libm or use lookup tables tuned to match.
+The force model is decompiled structurally (500+ lines, 9 sub-functions), but tuning curve data comes from .Gbx files we cannot read. Steering, suspension, anti-roll, and drift sub-functions are referenced but not fully decompiled. TMInterface captures reference trajectories for comparison. Accept "approximately right" for MVP.
+
+### Tuning Data is Entirely Data-Driven (HIGH impact)
+
+Doc 07 proves NO physics constants (gravity, friction, engine curves) are hardcoded in the binary. Everything loads from GBX at runtime. Without extracting CPlugSpawnModel, CPlugVehiclePhyModel, and related GBX files, we have zero ground-truth values. This risk compounds the block mesh risk -- if PAK extraction fails, both meshes AND physics tuning are blocked.
+
+### GBX Parser Completeness (MEDIUM)
+
+Complex community maps may use chunk versions or features not handled. Non-skippable unknown chunks halt parsing entirely. Use gbx-net source as authoritative reference. Target 80%+ map compatibility for MVP.
+
+### WASM Transcendental Function Divergence (LOW cross-browser, MEDIUM TM2020 match)
+
+Compiled libm sin/cos/atan2 produces deterministic results across browsers but does NOT match TM2020's MSVC implementation. Over many ticks, trajectories diverge from official replays. Accept divergence for v1.
 
 ---
 
-## 5. Technology Stack
+## Technology Stack
 
-| Layer | Technology | Version/Notes |
-|-------|-----------|---------------|
+| Layer | Technology | Notes |
+|-------|-----------|-------|
 | Language (physics) | Rust | Compiled to wasm32-unknown-unknown via wasm-pack |
 | Language (everything else) | TypeScript | Strict mode |
 | UI framework | Svelte | Minimal bundle, reactive |
@@ -115,7 +107,7 @@ Post-MVP additions: audio engine, Nadeo API integration, ghost import/export, ma
 
 ---
 
-## 6. Getting Started -- First 5 Tasks on Day 1
+## Getting Started -- First 5 Tasks on Day 1
 
 1. **MVP-001**: Initialize pnpm monorepo with `@opentm/app`, `@opentm/gbx`, `@opentm/renderer`, `@opentm/physics` packages. Configure TypeScript strict, ESLint, Prettier.
 
@@ -131,7 +123,7 @@ Tasks 1-4 are zero-risk setup. Task 5 is the highest-risk item in the entire pro
 
 ---
 
-## 7. Open Questions
+## Open Questions
 
 ### Must Answer Before Implementation
 
@@ -165,69 +157,55 @@ Tasks 1-4 are zero-risk setup. Task 5 is the highest-risk item in the entire pro
 
 ---
 
-## 8. Cross-Document Issues
+## Cross-Document Issues
 
 ### Contradictions Found
 
-**C1: Module naming inconsistency between doc 01 and doc 08.**
-Doc 01 defines `@opentm/gbx-parser` as the GBX parsing module. Doc 08 (MVP tasks) refers to it as module `gbx` in task descriptions (e.g., MVP-010 through MVP-019 list "Module: gbx"). The Cargo crate is named `opentm-physics` in doc 01 but the npm package is `@opentm/physics`. This is cosmetic but should be standardized before implementation. The monorepo directory in doc 01 Section 5.1 uses `gbx-parser/` which is correct.
+**C1: Module naming inconsistency between doc 01 and doc 08.** Doc 01 defines `@opentm/gbx-parser` as the GBX parsing module. Doc 08 refers to it as module `gbx` in task descriptions. The Cargo crate is named `opentm-physics` in doc 01 but the npm package is `@opentm/physics`. Standardize before implementation.
 
-**C2: rapier3d vs custom collision.**
-Doc 01 (Section 1.1, `@opentm/physics`) declares `collision: CollisionWorld, // wraps rapier3d` and lists rapier3d in Cargo.toml dependencies. Doc 02 (Section 6) designs a fully custom collision system (broadphase grid, GJK/EPA narrowphase, custom contact merging, custom friction solver) with no mention of rapier3d. Doc 08 (MVP-040 through MVP-042) describes building custom BVH, SAT/GJK narrowphase, and impulse-based solver. These are contradictory approaches. **Resolution needed**: Either use rapier3d (simpler, faster to ship) or build custom (more control, matches TM2020's internal solver). The custom approach in docs 02 and 08 is more aligned with the project's goal of matching TM2020 behavior.
+**C2: rapier3d vs custom collision.** Doc 01 declares `collision: CollisionWorld, // wraps rapier3d` and lists rapier3d in Cargo.toml dependencies. Doc 02 designs a fully custom collision system (broadphase grid, GJK/EPA narrowphase, custom contact merging, custom friction solver). Doc 08 describes building custom BVH, SAT/GJK narrowphase, and impulse-based solver. **Resolution needed**: Either use rapier3d (simpler, faster to ship) or build custom (more control, matches TM2020's internal solver). The custom approach in docs 02 and 08 aligns better with the project's goal.
 
-**C3: G-buffer normal format inconsistency.**
-Doc 03 Section 2 specifies RT2 Normal as `rg16float` with octahedral encoding (2 channels). Doc 01 Section 2.3 (render frame trace) says `RT2: normal (rgba16float) -- camera-space normal from TBN * normal map`. Doc 08 MVP-032 says `world-space normal (rgba16float)`. Three different specifications: `rg16float` vs `rgba16float`, and camera-space vs world-space. **Doc 03 is authoritative** (it provides the detailed justification): `rg16float`, camera-space, octahedral encoded. Docs 01 and 08 should be corrected.
+**C3: G-buffer normal format inconsistency.** Doc 03 specifies RT2 Normal as `rg16float` with octahedral encoding (2 channels). Doc 01 says `rgba16float` camera-space normal. Doc 08 says `world-space normal (rgba16float)`. Three different specifications. **Doc 03 is authoritative**: `rg16float`, camera-space, octahedral encoded.
 
-**C4: Gravity constant handling.**
-Doc 08 MVP-036 says "Apply gravity as a constant downward acceleration (9.81 m/s^2 in -Y direction)." Doc 07 explicitly states "TM2020 uses NO hardcoded gravity constant" -- it is data-driven from CPlugSpawnModel.DefaultGravitySpawn. Doc 08 acknowledges this ("TM2020 uses parameterized gravity with GravityCoef, but start with hardcoded 9.81 for now"), so this is an intentional simplification for MVP, not a true contradiction. However, the actual TM2020 gravity magnitude is UNKNOWN (not necessarily 9.81). This should be flagged as a tuning risk.
+**C4: Gravity constant handling.** Doc 08 MVP-036 says "Apply gravity as a constant downward acceleration (9.81 m/s^2)." Doc 07 states "TM2020 uses NO hardcoded gravity constant" -- it is data-driven from CPlugSpawnModel.DefaultGravitySpawn. Doc 08 acknowledges this as an intentional MVP simplification. The actual TM2020 gravity magnitude is UNKNOWN (not necessarily 9.81).
 
-**C5: SharedArrayBuffer layout discrepancy.**
-Doc 01 Section 3.2 defines a detailed SAB layout with INPUT REGION starting at offset 0x0040 and OUTPUT REGION at 0x0100. Doc 02 Section 9 is titled "WASM Interface (SharedArrayBuffer)" but was not fully readable. The physics Rust struct in doc 02 uses `#[wasm_bindgen]` with `pub fn step(&mut self, input_buffer: &[u8]) -> Box<[u8]>` which is a byte-buffer interface, NOT a SharedArrayBuffer interface. These are two different communication patterns. **Resolution needed**: The SAB approach (doc 01) is superior for performance. The byte-buffer approach (doc 02) is simpler but involves copying. Pick one.
+**C5: SharedArrayBuffer layout discrepancy.** Doc 01 defines a detailed SAB layout with INPUT REGION at offset 0x0040 and OUTPUT REGION at 0x0100. Doc 02's physics Rust struct uses `#[wasm_bindgen]` with `pub fn step(&mut self, input_buffer: &[u8]) -> Box<[u8]>` -- a byte-buffer interface, NOT a SharedArrayBuffer interface. **Resolution needed**: The SAB approach (doc 01) is superior for performance.
 
-**C6: Tick microsecond constant.**
-Doc 01 defines `TICK_DT_MICROS = 10_000_000` (10 million, which would be 10 seconds, not 10ms). The correct value for 10ms is 10,000 microseconds. Doc 02 correctly uses `TICK_US: i64 = 10_000` (10,000 microseconds). Doc 01's value appears to be a bug -- it should be `10_000` not `10_000_000`.
+**C6: Tick microsecond constant.** Doc 01 defines `TICK_DT_MICROS = 10_000_000` (10 million, which equals 10 seconds, not 10ms). The correct value for 10ms is 10,000 microseconds. Doc 02 correctly uses `TICK_US: i64 = 10_000`. Doc 01's value is a bug.
 
 ### Gaps Found
 
-**G1: No specification for extracting physics tuning data.**
-Doc 05 covers block mesh extraction in detail (7 approaches evaluated). Doc 07 proves all physics constants are data-driven from GBX. But NO document specifies how to extract the GBX files containing CPlugSpawnModel, CPlugVehiclePhyModel, NPlugDyna::SConstraintModel, or SSolverParams. The mesh extraction pipeline (doc 05) should also extract these files, but this is not called out. A developer would not know which specific GBX files to target or how to parse the tuning curve format (CFuncKeysReal).
+**G1: No specification for extracting physics tuning data.** Doc 05 covers block mesh extraction. Doc 07 proves all physics constants are data-driven from GBX. But NO document specifies how to extract the GBX files containing CPlugSpawnModel, CPlugVehiclePhyModel, NPlugDyna::SConstraintModel, or SSolverParams.
 
-**G2: No asset manifest specification.**
-Doc 01 mentions an "asset manifest JSON" and doc 04 references "asset manifest management," but no document defines the manifest schema (what fields, what URLs, how blocks map to meshes and materials). A developer starting MVP-022 (block mesh registry) would need to invent this format.
+**G2: No asset manifest specification.** Doc 01 mentions an "asset manifest JSON" and doc 04 references "asset manifest management," but no document defines the manifest schema.
 
-**G3: No specification for block variant selection.**
-Maps contain blocks with ground/air variants, color variants (flags bits 12-14), and free-placement variants. Doc 04 Section 4 titles "The Block Mesh Problem" but focuses on extraction, not on runtime variant resolution. Which mesh file corresponds to "StadiumRoadMainStraight" ground variant vs air variant? How are the ~200 block types mapped to mesh files? This is a gap between doc 04 (asset pipeline) and doc 08 (MVP-020, block data model).
+**G3: No specification for block variant selection.** Maps contain blocks with ground/air variants, color variants, and free-placement variants. No document specifies how to map block names to mesh files at runtime.
 
-**G4: No multiplayer protocol specification.**
-Doc 01 mentions "WebSocket + WebRTC" for future multiplayer and explicitly defers it, which is fine for MVP. But there is no placeholder design or even a list of what would need to change in the architecture to support multiplayer (e.g., authoritative server, client prediction, state sync frequency).
+**G4: No multiplayer protocol specification.** Doc 01 mentions "WebSocket + WebRTC" for future multiplayer and explicitly defers it.
 
-**G5: Collision mesh vs visual mesh separation.**
-Doc 08 MVP-040 acknowledges that "TM2020 separates visual and collision meshes internally" and flags "block meshes may have decorative geometry mixed with collision geometry." No document specifies how to separate collision geometry from visual geometry during extraction. The CPlugSolid2Model contains both visual LODs and a collision shape (CPlugSurface/Shape.Gbx), but the extraction pipeline in doc 05 focuses only on visual meshes. The collision shapes need separate extraction.
+**G5: Collision mesh vs visual mesh separation.** Doc 08 acknowledges TM2020 separates visual and collision meshes internally. No document specifies how to separate collision geometry from visual geometry during extraction.
 
-**G6: No error recovery or graceful degradation strategy.**
-What happens when a block mesh is missing? Doc 08 MVP-022 says "substitute a colored wireframe cube," but there is no systematic strategy for: missing textures, unsupported GBX chunk versions, physics solver divergence, WebGPU feature gaps on specific hardware. A resilience/fallback matrix would help.
+**G6: No error recovery or graceful degradation strategy.** No systematic strategy for missing textures, unsupported GBX chunk versions, physics solver divergence, or WebGPU feature gaps.
 
-**G7: Map coordinate system offset ambiguity.**
-Doc 01 Section 2.1 says `world_y = (gridY - 8) * 8m` with a note about "Y has a -8 offset for maps with grid origin at y=8". Doc 08 MVP-020 says `world_y = grid_y * 8.0` with NO offset. These produce different results. The actual offset depends on the map's `MapCoordOrigin` field (chunk 0x03043003). This needs to be resolved with a definitive rule.
+**G7: Map coordinate system offset ambiguity.** Doc 01 says `world_y = (gridY - 8) * 8m`. Doc 08 says `world_y = grid_y * 8.0` with NO offset. The actual offset depends on the map's `MapCoordOrigin` field.
 
-**G8: Wheel order discrepancy.**
-Doc 02 Section 2.1 states wheel order as "FL(0), FR(1), RR(2), RL(3) -- clockwise from front-left." Doc 07 Section 7 shows wheel stride offsets but does not confirm this order. The "clockwise from front-left" labeling gives FL, FR, RR, RL which skips the rear-left before rear-right, suggesting it might actually be FL, FR, RL, RR (as in standard automotive convention). This should be verified.
+**G8: Wheel order discrepancy.** Doc 02 states wheel order as "FL(0), FR(1), RR(2), RL(3) -- clockwise from front-left." The "clockwise" labeling suggests it might actually be FL, FR, RL, RR (standard automotive convention). Verify.
 
 ### Things That Would Surprise a Developer
 
-1. **GBX body uses LZO, not zlib.** Multiple docs emphasize this correction from the initial assumption. The binary contains zlib strings but those are for lightmaps and ghosts, not the main body.
+1. **GBX body uses LZO, not zlib.** The binary contains zlib strings but those are for lightmaps and ghosts, not the main body.
 
-2. **The turbo force ramps UP, not down.** Decompilation shows `(elapsed / duration) * strength`, meaning the boost gets stronger over time, not weaker. This is counterintuitive and contradicts TMNF behavior.
+2. **The turbo force ramps UP, not down.** Decompilation shows `(elapsed / duration) * strength`. The boost gets stronger over time. This contradicts TMNF behavior.
 
-3. **All physics tuning is data-driven.** There is no hardcoded 9.81. No hardcoded friction. No hardcoded engine curves. Everything comes from GBX files. If you cannot extract those files, you have zero ground-truth physics values.
+3. **All physics tuning is data-driven.** No hardcoded 9.81. No hardcoded friction. No hardcoded engine curves. Everything comes from GBX files. Without extracting those files, you have zero ground-truth physics values.
 
 4. **The TICK_DT_MICROS constant in doc 01 is wrong.** It says 10,000,000 (10 seconds) instead of 10,000 (10ms). Do not copy this value.
 
-5. **The `@opentm/physics` Rust crate has two conflicting interfaces** described across docs: SharedArrayBuffer (doc 01) vs byte-buffer via wasm_bindgen (doc 02). These need to be reconciled.
+5. **The `@opentm/physics` Rust crate has two conflicting interfaces** described across docs: SharedArrayBuffer (doc 01) vs byte-buffer via wasm_bindgen (doc 02). Reconcile before implementation.
 
 6. **208 stock materials all have `DGameplayId(None)`.** Gameplay effects (turbo, ice, etc.) come from block trigger zones, NOT from material surfaces. The two-ID system (material physics ID vs gameplay ID) is non-obvious.
 
-7. **Block mesh extraction is prerequisite for BOTH rendering AND physics.** Without it, you have neither visual meshes nor collision geometry nor physics tuning curves. This single dependency gates three major subsystems.
+7. **Block mesh extraction gates THREE major subsystems.** Without it, you have neither visual meshes nor collision geometry nor physics tuning curves.
 
 ---
 
@@ -237,9 +215,25 @@ Doc 02 Section 2.1 states wheel order as "FL(0), FR(1), RR(2), RL(3) -- clockwis
 |-----|-------|-------------|
 | 01 | System Architecture | Module graph, data flow traces, threading model, SAB layout, state machine, build system, performance budget |
 | 02 | Physics Engine | Rust module structure, VehicleState (7328 bytes), PhysicsStep algorithm, force model dispatch (7 cases), collision system, surface effects |
-| 03 | Renderer Design | 4-tier pipeline (forward -> ultra), G-buffer format, 38 uber-shaders replacing 1112 TM2020 shaders, WGSL code |
+| 03 | Renderer Design | 4-tier pipeline (forward to ultra), G-buffer format, 38 uber-shaders replacing 1112 TM2020 shaders, WGSL code |
 | 04 | Asset Pipeline | GBX parser architecture (TypeScript), map loading pipeline, material system, texture pipeline, caching |
 | 05 | Block Mesh Research | 7 extraction approaches evaluated; GBX.NET + PAK recommended; PAK encryption details; mesh data format |
 | 06 | Determinism Analysis | WASM float guarantees, NaN prevention, compiled libm strategy, fixed-point rejected, cross-browser test plan |
 | 07 | Physics Constants | All values data-driven from GBX; hardcoded math constants listed; VehiclePhyModel offsets; CSceneVehicleVisState layout (0x360 bytes); 22 surface gameplay IDs |
 | 08 | MVP Tasks | 68 tasks across 10 groups; critical path (23 days); 10 risks ranked; block extraction is highest-risk critical-path item |
+
+---
+
+## Related Pages
+
+- [System Architecture](01-system-architecture.md) -- Full module dependency graph and data flow traces
+- [Physics Engine](02-physics-engine.md) -- VehicleState struct and force model implementation
+- [Block Mesh Research](05-block-mesh-research.md) -- Detailed extraction approach comparison
+- [MVP Tasks](08-mvp-tasks.md) -- Complete task breakdown and critical path
+
+<details><summary>Document metadata</summary>
+
+- **Date**: 2026-03-27
+- **Status**: Pre-implementation design review complete
+
+</details>

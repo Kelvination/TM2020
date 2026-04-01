@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,26 +121,9 @@
                     <div class="content-main">
                         
                         <h1 id="opentm-renderer-design"><a class="anchor" href="#opentm-renderer-design">#</a>OpenTM Renderer Design</h1>
-<p><strong>Purpose</strong>: Exact WebGPU rendering pipeline specification for reproducing TM2020's visual quality at interactive frame rates in a browser.</p>
-<p><strong>Date</strong>: 2026-03-27</p>
-<p><strong>Sources</strong>: All reverse-engineering documents (11, 15, 19, 28, 32) cross-referenced for every design decision.</p>
+<p>This document specifies the WebGPU rendering pipeline for reproducing TM2020's visual quality at interactive frame rates in a browser. Every format choice and architecture decision cites specific evidence from reverse engineering (docs 11, 15, 19, 28, 32).</p>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-pipeline-architecture-4-tiers">Pipeline Architecture (4 Tiers)</a></li>
-  <li><a href="#2-g-buffer-design">G-Buffer Design</a></li>
-  <li><a href="#3-shader-architecture">Shader Architecture</a></li>
-  <li><a href="#4-mesh-pipeline">Mesh Pipeline</a></li>
-  <li><a href="#5-shadow-system">Shadow System</a></li>
-  <li><a href="#6-post-processing-chain">Post-Processing Chain</a></li>
-  <li><a href="#7-asset-loading-pipeline">Asset Loading Pipeline</a></li>
-  <li><a href="#8-the-block-mesh-problem-critical">The Block Mesh Problem (CRITICAL)</a></li>
-  <li><a href="#9-performance-optimization-strategy">Performance Optimization Strategy</a></li>
-  <li><a href="#10-webgpu-feature-requirements">WebGPU Feature Requirements</a></li>
-  <li><a href="#11-unknown-analysis">Unknown Analysis</a></li>
-</ol>
-<hr>
-<h2 id="1-pipeline-architecture-4-tiers"><a class="anchor" href="#1-pipeline-architecture-4-tiers">#</a>1. Pipeline Architecture (4 Tiers)</h2>
+<h2 id="pipeline-architecture-4-tiers"><a class="anchor" href="#pipeline-architecture-4-tiers">#</a>Pipeline Architecture (4 Tiers)</h2>
 <p>The renderer is designed as four progressive tiers. Each tier adds rendering features and GPU requirements. A browser client probes device capabilities at startup and selects the highest supported tier.</p>
 <h3 id="tier-0-absolute-minimum-forward-rendering"><a class="anchor" href="#tier-0-absolute-minimum-forward-rendering">#</a>Tier 0: Absolute Minimum (Forward Rendering)</h3>
 <p><strong>Goal</strong>: Render a visible track with basic lighting. Fallback for low-end devices or WebGL2 polyfill.</p>
@@ -566,7 +557,7 @@
 <p><strong>GPU feature requirements</strong>: All Tier 2 features plus <code>texture-compression-bc</code> (optional, for DDS texture support), 3D texture support (<code>maxTextureDimension3D >= 128</code>), occlusion queries.</p>
 <p><strong>Expected performance</strong>: 60 fps on NVIDIA RTX 3070 / Apple M2 Pro class at 1440p. 30 fps target for 4K.</p>
 <hr>
-<h2 id="2-g-buffer-design"><a class="anchor" href="#2-g-buffer-design">#</a>2. G-Buffer Design</h2>
+<h2 id="g-buffer-design"><a class="anchor" href="#g-buffer-design">#</a>G-Buffer Design</h2>
 <h3 id="format-justification"><a class="anchor" href="#format-justification">#</a>Format Justification</h3>
 <p>Every format choice is justified against the TM2020 reverse-engineering evidence.</p>
 <h4 id="rt0-albedo-material-flags"><a class="anchor" href="#rt0-albedo-material-flags">#</a>RT0: Albedo + Material Flags</h4>
@@ -664,7 +655,7 @@
 <hr>
 </div>
 </details>
-<h2 id="3-shader-architecture"><a class="anchor" href="#3-shader-architecture">#</a>3. Shader Architecture</h2>
+<h2 id="shader-architecture"><a class="anchor" href="#shader-architecture">#</a>Shader Architecture</h2>
 <h3 id="strategy-1112-tm2020-shaders-to-35-webgpu-uber-shaders"><a class="anchor" href="#strategy-1112-tm2020-shaders-to-35-webgpu-uber-shaders">#</a>Strategy: 1,112 TM2020 Shaders to ~35 WebGPU Uber-Shaders</h3>
 <p>The TM2020 shader catalog (doc 32) contains 1,112 compiled DXBC stages. However, analysis reveals massive combinatorial explosion from a small number of core programs. The block shader family alone accounts for 180 entries derived from 6 core programs with 8 pipeline variants and multiple modifiers (doc 32, Section 5: "180 block shaders derive from approximately 6 core shader programs").</p>
 <p>Our approach: <strong>preprocessor-style pipeline overrides</strong> in WGSL. Each uber-shader uses <code>override</code> constants to select code paths at pipeline compilation time, producing specialized GPU code without runtime branching.</p>
@@ -1453,7 +1444,7 @@ fn fs_main(@builtin(position) frag_coord: vec4&lt;f32&gt;) -&gt; @location(0) ve
     return vec4&lt;f32&gt;(result, 0.0); // Additive blend
 }</code></pre></div>
 <hr>
-<h2 id="4-mesh-pipeline"><a class="anchor" href="#4-mesh-pipeline">#</a>4. Mesh Pipeline</h2>
+<h2 id="mesh-pipeline"><a class="anchor" href="#mesh-pipeline">#</a>Mesh Pipeline</h2>
 <h3 id="vertex-formats"><a class="anchor" href="#vertex-formats">#</a>Vertex Formats</h3>
 <p>From the D3D11 runtime log captured from TM2020 (doc 11, Section 2):</p>
 <h4 id="block-geometry-stride-56-7-attributes"><a class="anchor" href="#block-geometry-stride-56-7-attributes">#</a>Block Geometry (Stride 56, 7 attributes)</h4>
@@ -1511,7 +1502,7 @@ attributes: [
 <h3 id="meshes-inside-pak-files"><a class="anchor" href="#meshes-inside-pak-files">#</a>Meshes Inside .pak Files</h3>
 <p>This is addressed in detail in Section 8. The critical point for the mesh pipeline is that block geometry definitions -- the actual vertex/index data -- are stored inside encrypted <code>.pak</code> files (NadeoPak format), not inside <code>.Map.Gbx</code> files. The map file contains only block placement data (name + position + rotation). The mesh data must come from somewhere else.</p>
 <hr>
-<h2 id="5-shadow-system"><a class="anchor" href="#5-shadow-system">#</a>5. Shadow System</h2>
+<h2 id="shadow-system"><a class="anchor" href="#shadow-system">#</a>Shadow System</h2>
 <h3 id="architecture"><a class="anchor" href="#architecture">#</a>Architecture</h3>
 <p>Parallel Split Shadow Maps (PSSM), matching TM2020's verified 4-cascade system (doc 11, Section 5: strings <code>"MapShadowSplit0"</code> through <code>"MapShadowSplit3"</code>).</p>
 <h3 id="cascade-configuration"><a class="anchor" href="#cascade-configuration">#</a>Cascade Configuration</h3>
@@ -1618,7 +1609,7 @@ attributes: [
   <li>The cache is invalidated when the sun angle changes (time-of-day shift)</li>
 </ul>
 <hr>
-<h2 id="6-post-processing-chain"><a class="anchor" href="#6-post-processing-chain">#</a>6. Post-Processing Chain</h2>
+<h2 id="post-processing-chain"><a class="anchor" href="#post-processing-chain">#</a>Post-Processing Chain</h2>
 <p>The exact execution order is reconstructed from TM2020's verified pass ordering (doc 11, Section 4 Phase 9-12; doc 32, Section 6):</p>
 <h3 id="pass-order"><a class="anchor" href="#pass-order">#</a>Pass Order</h3>
 <div class="table-wrapper"><table>
@@ -1800,7 +1791,7 @@ fn filmic_tonemap(x: vec3&lt;f32&gt;) -&gt; vec3&lt;f32&gt; {
     return saturate((x * (a * x + b)) / (x * (c * x + d) + e));
 }</code></pre></div>
 <hr>
-<h2 id="7-asset-loading-pipeline"><a class="anchor" href="#7-asset-loading-pipeline">#</a>7. Asset Loading Pipeline</h2>
+<h2 id="asset-loading-pipeline"><a class="anchor" href="#asset-loading-pipeline">#</a>Asset Loading Pipeline</h2>
 <h3 id="dds-texture-loading"><a class="anchor" href="#dds-texture-loading">#</a>DDS Texture Loading</h3>
 <p>TM2020 textures are stored in DDS format (DirectDraw Surface) inside .pak files. The DDS files use BCn block compression:</p>
 <div class="table-wrapper"><table>
@@ -1923,7 +1914,7 @@ fn filmic_tonemap(x: vec3&lt;f32&gt;) -&gt; vec3&lt;f32&gt; {
 <p>The browser's WebGPU implementation will enforce adapter limits. We query <code>adapter.limits.maxBufferSize</code> and <code>adapter.requestAdapterInfo()</code> to estimate available VRAM and adjust texture quality accordingly.</p>
 <p><strong>Texture eviction policy</strong>: When approaching the texture budget, evict the lowest-priority texture (farthest from camera, lowest visual impact) by replacing it with a lower mip level. Track last-used frame per texture for LRU eviction.</p>
 <hr>
-<h2 id="8-the-block-mesh-problem-critical"><a class="anchor" href="#8-the-block-mesh-problem-critical">#</a>8. The Block Mesh Problem (CRITICAL)</h2>
+<h2 id="the-block-mesh-problem-critical"><a class="anchor" href="#the-block-mesh-problem-critical">#</a>The Block Mesh Problem (CRITICAL)</h2>
 <p>This is the single biggest blocker for the entire OpenTM renderer. The visual appearance of a Trackmania map depends on block geometry, and that geometry is locked inside encrypted pack files.</p>
 <h3 id="what-we-know"><a class="anchor" href="#what-we-know">#</a>What We Know</h3>
 <h4 id="nadeopak-format"><a class="anchor" href="#nadeopak-format">#</a>NadeoPak Format</h4>
@@ -2067,7 +2058,7 @@ fn filmic_tonemap(x: vec3&lt;f32&gt;) -&gt; vec3&lt;f32&gt; {
 </ol>
 <p>This produces a playable-looking map with correct geometry for driving, even if it lacks TM2020's visual richness. Textures and detail are added incrementally.</p>
 <hr>
-<h2 id="9-performance-optimization-strategy"><a class="anchor" href="#9-performance-optimization-strategy">#</a>9. Performance Optimization Strategy</h2>
+<h2 id="performance-optimization-strategy"><a class="anchor" href="#performance-optimization-strategy">#</a>Performance Optimization Strategy</h2>
 <h3 id="frustum-culling-gpu-compute-shader"><a class="anchor" href="#frustum-culling-gpu-compute-shader">#</a>Frustum Culling (GPU Compute Shader)</h3>
 <p>Matches TM2020's <code>DipCulling</code> pass using <code>Instances_Cull_SetLOD_c.hlsl</code> (doc 32, Section 7).</p>
 <p><strong>Implementation</strong> (Tier 2+):</p>
@@ -2146,7 +2137,7 @@ Output:
 </ol>
 <p>This eliminates texture bind changes between draw calls, enabling the full instancing pipeline.</p>
 <hr>
-<h2 id="10-webgpu-feature-requirements"><a class="anchor" href="#10-webgpu-feature-requirements">#</a>10. WebGPU Feature Requirements</h2>
+<h2 id="webgpu-feature-requirements"><a class="anchor" href="#webgpu-feature-requirements">#</a>WebGPU Feature Requirements</h2>
 <h3 id="required-features"><a class="anchor" href="#required-features">#</a>Required Features</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -2305,7 +2296,7 @@ Output:
   <li><strong><code>maxTextureDimension2D</code></strong>: Some mobile GPUs cap at 4096. Shadow maps must be 2048 or lower.</li>
 </ul>
 <hr>
-<h2 id="11-unknown-analysis"><a class="anchor" href="#11-unknown-analysis">#</a>11. Unknown Analysis</h2>
+<h2 id="unknown-analysis"><a class="anchor" href="#unknown-analysis">#</a>Unknown Analysis</h2>
 <h3 id="critical-unknowns"><a class="anchor" href="#critical-unknowns">#</a>Critical Unknowns</h3>
 <h4 id="unknown-1-exact-g-buffer-dxgi-formats"><a class="anchor" href="#unknown-1-exact-g-buffer-dxgi-formats">#</a>Unknown 1: Exact G-Buffer DXGI Formats</h4>
 <p><strong>What we don't know</strong>: The exact <code>DXGI_FORMAT</code> of each MRT target (doc 11: "Exact G-buffer DXGI formats: HIGH priority").</p>
@@ -2368,56 +2359,55 @@ Output:
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-pipeline-architecture-4-tiers">1. Pipeline Architecture (4 Tiers)</a></li>
+<li class=""><a href="#pipeline-architecture-4-tiers">Pipeline Architecture (4 Tiers)</a></li>
   <li class="toc-h3"><a href="#tier-0-absolute-minimum-forward-rendering">Tier 0: Absolute Minimum (Forward Rendering)</a></li>
   <li class="toc-h3"><a href="#tier-1-basic-deferred-core-pipeline">Tier 1: Basic Deferred (Core Pipeline)</a></li>
   <li class="toc-h3"><a href="#tier-2-full-quality-compute-enhanced">Tier 2: Full Quality (Compute-Enhanced)</a></li>
   <li class="toc-h3"><a href="#tier-3-maximum-quality-ultra">Tier 3: Maximum Quality (Ultra)</a></li>
-<li class=""><a href="#2-g-buffer-design">2. G-Buffer Design</a></li>
+<li class=""><a href="#g-buffer-design">G-Buffer Design</a></li>
   <li class="toc-h3"><a href="#format-justification">Format Justification</a></li>
   <li class="toc-h3"><a href="#g-buffer-memory-budget-tier-2-1920x1080">G-Buffer Memory Budget (Tier 2, 1920x1080)</a></li>
-<li class=""><a href="#3-shader-architecture">3. Shader Architecture</a></li>
+<li class=""><a href="#shader-architecture">Shader Architecture</a></li>
   <li class="toc-h3"><a href="#strategy-1112-tm2020-shaders-to-35-webgpu-uber-shaders">Strategy: 1,112 TM2020 Shaders to ~35 WebGPU Uber-Shaders</a></li>
   <li class="toc-h3"><a href="#core-uber-shader-list">Core Uber-Shader List</a></li>
   <li class="toc-h3"><a href="#core-wgsl-shader-code">Core WGSL Shader Code</a></li>
-<li class=""><a href="#4-mesh-pipeline">4. Mesh Pipeline</a></li>
+<li class=""><a href="#mesh-pipeline">Mesh Pipeline</a></li>
   <li class="toc-h3"><a href="#vertex-formats">Vertex Formats</a></li>
   <li class="toc-h3"><a href="#index-buffer-format">Index Buffer Format</a></li>
   <li class="toc-h3"><a href="#instancing-strategy-for-repeated-blocks">Instancing Strategy for Repeated Blocks</a></li>
   <li class="toc-h3"><a href="#meshes-inside-pak-files">Meshes Inside .pak Files</a></li>
-<li class=""><a href="#5-shadow-system">5. Shadow System</a></li>
+<li class=""><a href="#shadow-system">Shadow System</a></li>
   <li class="toc-h3"><a href="#architecture">Architecture</a></li>
   <li class="toc-h3"><a href="#cascade-configuration">Cascade Configuration</a></li>
   <li class="toc-h3"><a href="#split-distances">Split Distances</a></li>
   <li class="toc-h3"><a href="#shadow-atlas-vs-individual-maps">Shadow Atlas vs Individual Maps</a></li>
   <li class="toc-h3"><a href="#shadow-cache">Shadow Cache</a></li>
-<li class=""><a href="#6-post-processing-chain">6. Post-Processing Chain</a></li>
+<li class=""><a href="#post-processing-chain">Post-Processing Chain</a></li>
   <li class="toc-h3"><a href="#pass-order">Pass Order</a></li>
   <li class="toc-h3"><a href="#key-ordering-notes">Key Ordering Notes</a></li>
   <li class="toc-h3"><a href="#tone-mapping-implementation">Tone Mapping Implementation</a></li>
-<li class=""><a href="#7-asset-loading-pipeline">7. Asset Loading Pipeline</a></li>
+<li class=""><a href="#asset-loading-pipeline">Asset Loading Pipeline</a></li>
   <li class="toc-h3"><a href="#dds-texture-loading">DDS Texture Loading</a></li>
   <li class="toc-h3"><a href="#texture-format-conversion-pipeline">Texture Format Conversion Pipeline</a></li>
   <li class="toc-h3"><a href="#streaming-vs-all-at-once">Streaming vs All-at-Once</a></li>
   <li class="toc-h3"><a href="#gpu-memory-budget-management">GPU Memory Budget Management</a></li>
-<li class=""><a href="#8-the-block-mesh-problem-critical">8. The Block Mesh Problem (CRITICAL)</a></li>
+<li class=""><a href="#the-block-mesh-problem-critical">The Block Mesh Problem (CRITICAL)</a></li>
   <li class="toc-h3"><a href="#what-we-know">What We Know</a></li>
   <li class="toc-h3"><a href="#approaches-to-solving-the-block-mesh-problem">Approaches to Solving the Block Mesh Problem</a></li>
   <li class="toc-h3"><a href="#the-minimum-viable-approach">The Minimum Viable Approach</a></li>
-<li class=""><a href="#9-performance-optimization-strategy">9. Performance Optimization Strategy</a></li>
+<li class=""><a href="#performance-optimization-strategy">Performance Optimization Strategy</a></li>
   <li class="toc-h3"><a href="#frustum-culling-gpu-compute-shader">Frustum Culling (GPU Compute Shader)</a></li>
   <li class="toc-h3"><a href="#occlusion-culling-hierarchical-z-buffer">Occlusion Culling (Hierarchical Z-Buffer)</a></li>
   <li class="toc-h3"><a href="#lod-system">LOD System</a></li>
   <li class="toc-h3"><a href="#draw-call-batching-indirect-rendering">Draw Call Batching (Indirect Rendering)</a></li>
   <li class="toc-h3"><a href="#texture-atlasing">Texture Atlasing</a></li>
-<li class=""><a href="#10-webgpu-feature-requirements">10. WebGPU Feature Requirements</a></li>
+<li class=""><a href="#webgpu-feature-requirements">WebGPU Feature Requirements</a></li>
   <li class="toc-h3"><a href="#required-features">Required Features</a></li>
   <li class="toc-h3"><a href="#optional-features">Optional Features</a></li>
   <li class="toc-h3"><a href="#required-limits">Required Limits</a></li>
   <li class="toc-h3"><a href="#browser-compatibility-matrix">Browser Compatibility Matrix</a></li>
   <li class="toc-h3"><a href="#mobile-browser-compatibility-notes">Mobile Browser Compatibility Notes</a></li>
-<li class=""><a href="#11-unknown-analysis">11. Unknown Analysis</a></li>
+<li class=""><a href="#unknown-analysis">Unknown Analysis</a></li>
   <li class="toc-h3"><a href="#critical-unknowns">Critical Unknowns</a></li>
 </ul>
 </nav>

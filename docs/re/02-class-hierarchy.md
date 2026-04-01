@@ -1,35 +1,26 @@
-# Trackmania.exe Class Hierarchy and Namespace Structure
+# Class Hierarchy and Namespace Structure
 
-**Binary**: `Trackmania.exe` (Trackmania 2020 / Trackmania Nations remake by Nadeo/Ubisoft)
-**Date of analysis**: 2026-03-27
-**Tools**: Ghidra 11.x via PyGhidra bridge
-**Data sources**: RTTI string extraction, vtable scan, namespace enumeration, pre-extracted `class_hierarchy.json`
+Trackmania 2020 runs on Nadeo's ManiaPlanet/GameBox (GBX) engine. The engine registers 2,027 Nadeo classes and 55 MSVC RTTI classes. Every Nadeo class inherits from a single root: CMwNod.
 
----
-
-## 1. Overview
-
-Trackmania 2020 is built on Nadeo's proprietary **ManiaPlanet/GameBox engine**, which uses a custom RTTI and class registration system centered on `CMwNod` as the universal base class. The binary contains **2,027 identified Nadeo engine classes** and **55 MSVC RTTI classes** (C++ standard library and GPU shader buffer types).
-
-All Nadeo classes follow the **C-prefix naming convention**: every class name begins with `C` followed by a subsystem identifier (e.g., `CGame`, `CPlug`, `CMw`, `CHms`, `CNet`).
+This page maps the class hierarchy, naming conventions, subsystem prefixes, and inheritance patterns extracted from the binary.
 
 ---
 
-## 2. Nadeo Class Naming Convention
+## How Nadeo names its classes
 
-### 2.1 General Pattern
+Every Nadeo class follows the C-prefix naming convention. The general pattern is:
 
 ```
 C<Subsystem><SubFamily><SpecificName>[_Suffix]
 ```
 
-- **C**: Mandatory class prefix (every Nadeo class begins with `C`)
-- **Subsystem**: Top-level engine module (e.g., `Game`, `Plug`, `Mw`, `Hms`, `Net`)
-- **SubFamily**: Functional grouping within the subsystem (e.g., `Ctn`, `Editor`, `Script`)
-- **SpecificName**: The concrete class name
-- **_Suffix**: Optional variant/specialization (e.g., `_Deprecated`, `_ReadOnly`, `_Script`)
+- **C**: Mandatory prefix on every Nadeo class.
+- **Subsystem**: Top-level engine module (e.g., `Game`, `Plug`, `Mw`, `Hms`, `Net`).
+- **SubFamily**: Functional group within the subsystem (e.g., `Ctn`, `Editor`, `Script`).
+- **SpecificName**: The concrete class name.
+- **_Suffix**: Optional variant/specialization (e.g., `_Deprecated`, `_ReadOnly`, `_Script`).
 
-### 2.2 Subsystem Prefix Inventory
+### Subsystem prefix inventory
 
 | Prefix          | Count | Role                                                          |
 |-----------------|------:|---------------------------------------------------------------|
@@ -60,27 +51,27 @@ C<Subsystem><SubFamily><SpecificName>[_Suffix]
 | `CUser*`        |     4 | User profiles and prestige                                    |
 | `CDx*`          |     3 | DirectX 11 rendering (context, texture, viewport)             |
 | `CTitle*`       |     3 | Title/game pack management                                    |
-| `CGbx*`         |     2 | GameBox application bootstrap                                 |
+| `CGbx*`         |     2 | GBX application bootstrap                                     |
 | Other C*        |    25 | Miscellaneous (Crystal, Dialogs, Ghost, Hud, Replay, etc.)   |
 
-### 2.3 Non-C-Prefix Classes
+### Non-C-prefix classes
 
-A small set of classes in the `nadeo_classes` list do not follow the C-prefix convention:
+Four classes break the C-prefix convention:
 
 - `Clouds` -- [UNKNOWN] purpose, possibly internal scene element
 - `Cluster` -- [UNKNOWN] purpose, possibly spatial partitioning
 - `ConnectionClient` -- Likely a network connection abstraction
 - `ConsoleClient` -- Likely a debug console client
 
-These appear to be internal/helper types that were still registered in the engine class system.
+These appear to be internal/helper types still registered in the engine class system.
 
 ---
 
-## 3. CMwNod: The Universal Base Class
+## CMwNod: the universal base class
 
-### 3.1 Evidence
+CMwNod sits at the root of the entire class hierarchy. The engine's custom RTTI system and object factory revolve around it.
 
-The string `"CMwNod"` appears at address `0x141b71fc8` in the binary. Additional evidence for CMwNod as the root of the class hierarchy:
+### Evidence from the binary
 
 | Address          | String                                              | Significance                           |
 |------------------|-----------------------------------------------------|----------------------------------------|
@@ -91,24 +82,24 @@ The string `"CMwNod"` appears at address `0x141b71fc8` in the binary. Additional
 | `0x141b58728`    | `"Parameter is not a CMwNod."`                      | Type-check assertion                   |
 | `0x141c0cab0`    | `" CMwNod"`                                         | Possibly used in class info display    |
 
-### 3.2 Class Registration / RTTI System
+### Class registration / RTTI system
 
-The Nadeo engine implements its own RTTI system separate from MSVC RTTI. Key characteristics:
+The Nadeo engine implements its own RTTI system separate from MSVC RTTI.
 
-1. **MwClassId**: Each class has a numeric "MwClassId" used for serialization and factory creation. The string `"CreateByMwClassId"` in error messages confirms a factory pattern where objects are instantiated by integer class ID.
+**Class ID (MwClassId)**: Each class has a numeric class ID used for serialization and factory creation. Error messages referencing `"CreateByMwClassId"` confirm a factory pattern where objects are instantiated by integer class ID. These IDs are 32-bit integers (e.g., `0x03043000` for `CGameCtnChallenge`).
 
-2. **StaticInit pattern**: Classes register themselves via static initialization functions. Three `StaticInit` strings were found:
-   - `CMwNod::MwNod_StaticInit` -- Base class registration
-   - `CMwId::StaticInit` -- String/identifier interning system initialization
-   - `CSystemEngine::StaticInit` -- System engine bootstrapping
+**StaticInit pattern**: Classes register themselves via static initialization functions. Three `StaticInit` strings appear in the binary:
+- `CMwNod::MwNod_StaticInit` -- Base class registration
+- `CMwId::StaticInit` -- String/identifier interning system initialization
+- `CSystemEngine::StaticInit` -- System engine bootstrapping
 
-3. **No `::ClassId` or `::GetClassId` strings found**: The class ID mechanism does not use string-based RTTI labels like `"ClassName::ClassId"`. Instead, class IDs are likely compile-time constants embedded in the class registration tables. This is consistent with the known ManiaPlanet GBX format where class IDs are 32-bit integers (e.g., `0x03043000` for `CGameCtnChallenge`).
+**No `::ClassId` strings found**: Class IDs are compile-time constants embedded in registration tables rather than string-based RTTI labels.
 
-4. **CMwNod vtable**: CMwNod was **not** found in the MSVC vtable symbol table (only 83 vtable symbols were resolved, all for std:: or MSVC internal classes). The Nadeo classes use their own vtable layout not decorated with MSVC RTTI metadata, which is consistent with a custom RTTI system.
+**CMwNod vtable**: CMwNod was not found in the MSVC vtable symbol table. Only 83 vtable symbols were resolved, all for std:: or MSVC internal classes. Nadeo classes use their own vtable layout without MSVC RTTI metadata.
 
-### 3.3 Likely CMwNod Interface
+### Likely CMwNod interface
 
-Based on the factory strings and known ManiaPlanet engine behavior, CMwNod likely provides:
+Based on factory strings and known ManiaPlanet engine behavior, CMwNod likely provides:
 
 - Virtual destructor
 - `GetMwClassId()` -- returns the numeric class ID
@@ -121,11 +112,13 @@ Based on the factory strings and known ManiaPlanet engine behavior, CMwNod likel
 
 ---
 
-## 4. Engine Architecture
+## How the engine boots
 
-### 4.1 Engine Singleton Classes
+The engine follows a modular design with singleton "Engine" classes and a layered application bootstrap chain.
 
-The engine follows a modular design with singleton "Engine" classes. 12 engine singletons were identified:
+### Engine singletons
+
+Twelve engine singletons form the backbone of the engine:
 
 | Class                  | Subsystem  | Role                                          |
 |------------------------|------------|-----------------------------------------------|
@@ -142,12 +135,11 @@ The engine follows a modular design with singleton "Engine" classes. 12 engine s
 | `CControlEngine`       | Control    | UI control hierarchy management               |
 | `CAudioSourceEngine`   | Audio      | Audio source management (name suggests it may be a source type rather than a true engine singleton) |
 
-Additional quasi-engine singletons:
-- `CPlugSoundEngine` / `CPlugSoundEngine2` -- Sound resource management
+Additional quasi-engine singletons: `CPlugSoundEngine` / `CPlugSoundEngine2` handle sound resource management.
 
-### 4.2 Application Bootstrap Chain
+### Application bootstrap chain
 
-Based on class naming patterns, the likely bootstrap order is:
+The likely bootstrap order based on class naming patterns:
 
 ```
 CGbxApp (base application)
@@ -158,15 +150,15 @@ CGbxApp (base application)
           -> CTrackMania (TrackMania-specific top-level)
 ```
 
-Evidence: `CGbxApp` and `CGbxGame` exist as minimal bootstrap classes. `CGameCtnApp` contains methods like `AskConnectionType`, `BuddyAdd`, `QuitGame`. `CTrackMania`, `CTrackManiaMenus`, `CTrackManiaNetwork`, and `CTrackManiaIntro` are the game-specific specializations.
+`CGbxApp` and `CGbxGame` exist as minimal bootstrap classes. `CGameCtnApp` contains methods like `AskConnectionType`, `BuddyAdd`, `QuitGame`. `CTrackMania`, `CTrackManiaMenus`, `CTrackManiaNetwork`, and `CTrackManiaIntro` are the game-specific specializations.
 
 ---
 
-## 5. Major Class Families
+## Major class families
 
-### 5.1 CGame* (728 classes) -- Game Logic
+### CGame* (728 classes) -- Game Logic
 
-The largest family. Key sub-families:
+The largest family covers game logic, editors, maps, players, and scoring.
 
 | Sub-Family                | Count | Purpose                                           |
 |---------------------------|------:|---------------------------------------------------|
@@ -189,7 +181,7 @@ The largest family. Key sub-families:
 | `CGameBlock*`             |     4 | Block info and placement helpers                    |
 | `CGameVehicle*`           |     3 | Vehicle model and physics wrappers                  |
 
-#### Notable CGameCtn* Classes
+#### Key CGameCtn* classes
 
 The `CGameCtn*` family is the heart of the map/track system:
 
@@ -202,9 +194,9 @@ The `CGameCtn*` family is the heart of the map/track system:
 - **Zones**: `CGameCtnZone`, `CGameCtnZoneFlat`, `CGameCtnZoneFrontier`, `CGameCtnZoneTransition`
 - **Network**: `CGameCtnNetwork`, `CGameCtnNetServerInfo`
 
-### 5.2 CPlug* (391 classes) -- Resources and Assets
+### CPlug* (391 classes) -- Resources and Assets
 
-The plugin/resource system handles all loadable assets. Key sub-families:
+The plugin/resource system handles all loadable assets.
 
 | Sub-Family            | Count | Purpose                                              |
 |-----------------------|------:|------------------------------------------------------|
@@ -226,20 +218,11 @@ The plugin/resource system handles all loadable assets. Key sub-families:
 | `CPlugMood*`          |     4 | Mood/atmosphere settings                             |
 | `CPlugVFXNode_*`      |     7 | VFX node graph system                                |
 
-#### Notable CPlug* Classes
+Key classes: `CPlugSolid2Model` (primary 3D model format), `CPlugStaticObjectModel` (static items/scenery), `CPlugDynaObjectModel` (dynamic/kinematic objects), `CPlugSkel` (skeleton), `CPlugEntRecordData` (ghost replay data), `CPlugTree` (scene graph node), `CPlugPrefab` (reusable compositions), `CPlugSurface` (collision surfaces).
 
-- **CPlugSolid2Model**: The primary 3D model format (meshes, materials, UV layers)
-- **CPlugStaticObjectModel**: Static objects (items, scenery)
-- **CPlugDynaObjectModel**: Dynamic/kinematic objects with physics
-- **CPlugSkel**: Skeleton for skeletal animation
-- **CPlugEntRecordData**: Entity record data (ghost replay data)
-- **CPlugTree**: Scene graph tree node (base for all scene objects)
-- **CPlugPrefab**: Prefab system for reusable object compositions
-- **CPlugSurface**: Collision/physics surface definitions
+### CWebServices* (297 classes) -- Online Services
 
-### 5.3 CWebServices* (297 classes) -- Online Services
-
-Handles all communication with Nadeo/Ubisoft web APIs:
+All communication with Nadeo/Ubisoft web APIs uses the async Task/Result pattern.
 
 | Sub-Family                    | Count | Purpose                                    |
 |-------------------------------|------:|--------------------------------------------|
@@ -250,9 +233,9 @@ Handles all communication with Nadeo/Ubisoft web APIs:
 | `CWebServicesTaskScheduler`   |     1 | Task scheduling infrastructure              |
 | Other                         |     4 | Base classes and sequences                  |
 
-The `CWebServicesTaskResult_NS*` prefix indicates Nadeo Services-specific result types. The `CWebServicesTaskResult_WS*` prefix indicates general web services results.
+The `_NS*` prefix indicates Nadeo Services-specific result types. The `_WS*` prefix indicates general web services results.
 
-### 5.4 CNet* (262 classes) -- Networking
+### CNet* (262 classes) -- Networking
 
 | Sub-Family                    | Count | Purpose                                       |
 |-------------------------------|------:|-----------------------------------------------|
@@ -265,7 +248,7 @@ The `CWebServicesTaskResult_NS*` prefix indicates Nadeo Services-specific result
 | `CNetScriptHttp*`             |     3 | HTTP scripting API                            |
 | Core networking               |    17 | CNetClient, CNetServer, CNetConnection, etc.  |
 
-### 5.5 CHms* (41 classes) -- Hierarchical Managed Scene
+### CHms* (41 classes) -- Hierarchical Managed Scene
 
 The HMS system manages the 3D scene graph with portal-based visibility:
 
@@ -278,7 +261,7 @@ The HMS system manages the 3D scene graph with portal-based visibility:
 - **Managers**: `CHmsMgrVisDyna`, `CHmsMgrVisDynaDecal2d`, `CHmsMgrVisEnvMap`, `CHmsMgrVisParticle`, `CHmsMgrVisVolume`
 - **Car-specific**: `CHmsSolidVisCst_TmCar` -- TrackMania car-specific rendering constants
 
-### 5.6 CScene* (52 classes) -- Scene Objects
+### CScene* (52 classes) -- Scene Objects
 
 Higher-level scene object management:
 
@@ -289,48 +272,26 @@ Higher-level scene object management:
 - **Visual managers**: `CSceneMgrGUI`, `CScenePickerManager`
 - **Spatial**: `CSceneSector`, `CSceneLayout`, `CSceneLocation`, `CSceneLocationCamera`
 
-### 5.7 CControl* (39 classes) -- UI Controls
+### CControl* (39 classes) -- UI Controls
 
-Standard UI widget system:
+Standard UI widget system: `CControlBase` (base), buttons, labels, text fields, sliders, grids, graphs, frames, style sheets, and effects. Specialized controls include `CControlMediaPlayer`, `CControlMiniMap`, `CControlScriptEditor`, and `CControlScriptConsole`.
 
-- Base: `CControlBase`, `CControlEngine`
-- Containers: `CControlContainer`, `CControlFrame`, `CControlFrameAnimated`, `CControlFrameStyled`
-- Widgets: `CControlButton`, `CControlLabel`, `CControlText`, `CControlTextEdition`, `CControlEntry`, `CControlEnum`, `CControlSlider`, `CControlQuad`, `CControlGrid`
-- Styling: `CControlStyle`, `CControlStyleSheet`, `CControlLayout`, `CControlSimi2`
-- Effects: `CControlEffect`, `CControlEffectCombined`, `CControlEffectMaster`, `CControlEffectMotion`, `CControlEffectMoveFrame`, `CControlEffectSimi`
-- Specialized: `CControlMediaPlayer`, `CControlMiniMap`, `CControlGraph`, `CControlColorChooser`, `CControlScriptEditor`, `CControlScriptConsole`
+### CSystem* (24 classes) -- System Layer
 
-### 5.8 CSystem* (24 classes) -- System Layer
+File system (`CSystemFidFile`, `CSystemFidsFolder`), configuration (`CSystemConfig`), platform abstraction (`CSystemPlatform`, `CSystemWindow`), package management (`CSystemPackManager`), platform integration (`CSystemSteam`, `CSystemUplayPC`), and serialization (`CSystemArchiveNod`).
 
-- **File system**: `CSystemFidFile`, `CSystemFidContainer`, `CSystemFidsFolder`, `CSystemFidsDrive`, `CSystemManagerFile`, `CSystemFile`
-- **Configuration**: `CSystemConfig`, `CSystemConfigDisplay`
-- **Platform**: `CSystemPlatform`, `CSystemPlatformScript`, `CSystemWindow`, `CSystemKeyboard`, `CSystemMouse`
-- **Package management**: `CSystemPackDesc`, `CSystemPackManager`
-- **Engine/services**: `CSystemEngine`, `CSystemData`, `CSystemMemoryMonitor`, `CSystemDependenciesList`
-- **Platform integration**: `CSystemSteam`, `CSystemUplayPC`, `CSystemUserMgr`
-- **Serialization**: `CSystemArchiveNod`, `CSystemNodWrapper`
+### CMw* (17 classes) -- ManiaPlanet Core
 
-### 5.9 CMw* (17 classes) -- ManiaPlanet Core
-
-The foundational layer of the engine:
-
-- **Base**: `CMwNod` -- Universal base class for all engine objects
-- **Engines**: `CMwEngine`, `CMwEngineMain`
-- **Commands/scripting**: `CMwCmd`, `CMwCmdBuffer`, `CMwCmdBufferCore`, `CMwCmdContainer`, `CMwCmdFastCall`, `CMwCmdFastCallStatic`, `CMwCmdFastCallStaticParam`, `CMwCmdFastCallUser`, `CMwCmdFiber`
-- **Identity**: `CMwId` -- Interned string/identifier system
-- **Introspection**: `CMwClassInfoViewer` -- Runtime class info viewer
-- **Network**: `CMwNetworkEntitiesManager` -- Networked entity replication
-- **Utility**: `CMwRefBuffer`, `CMwStatsValue`
+The foundational layer: `CMwNod` (universal base), engines (`CMwEngine`, `CMwEngineMain`), command system (`CMwCmd*` family with fast calls and fibers), identity (`CMwId` interned strings), introspection (`CMwClassInfoViewer`), and networked entity replication (`CMwNetworkEntitiesManager`).
 
 ---
 
-## 6. Observed Inheritance Patterns
+## Observed inheritance patterns
 
-### 6.1 Evidenced Relationships
+The following inheritance trees are inferred from naming conventions, method presence, and structural evidence. Naming alone does not confirm inheritance, but the consistency provides strong circumstantial evidence.
 
-The following inheritance patterns are supported by naming conventions, method presence, and structural evidence. Naming alone is not sufficient to confirm inheritance, but the consistency of the patterns provides strong circumstantial evidence.
+### Engine hierarchy (high confidence)
 
-#### Engine Hierarchy (high confidence based on naming + string evidence)
 ```
 CMwNod
   +-- CMwEngine
@@ -356,7 +317,8 @@ CMwNod
   +-- CMwId
 ```
 
-#### Application Hierarchy (high confidence)
+### Application hierarchy (high confidence)
+
 ```
 CMwNod
   +-- CGbxApp
@@ -367,7 +329,8 @@ CMwNod
                                 +-- CTrackMania
 ```
 
-#### Block Info Hierarchy (high confidence based on naming)
+### Block info hierarchy (high confidence)
+
 ```
 CMwNod
   +-- CGameCtnBlockInfo
@@ -384,7 +347,8 @@ CMwNod
         +-- CGameCtnBlockInfoTransition
 ```
 
-#### Visual Hierarchy (high confidence)
+### Visual hierarchy (high confidence)
+
 ```
 CMwNod
   +-- CPlugVisual
@@ -407,7 +371,8 @@ CMwNod
               +-- CPlugVisualCelEdge
 ```
 
-#### MediaTracker Block Hierarchy (high confidence)
+### MediaTracker block hierarchy (high confidence)
+
 ```
 CMwNod
   +-- CGameCtnMediaBlock
@@ -440,96 +405,26 @@ CMwNod
         +-- ... (65+ block types total)
 ```
 
-#### Zone Hierarchy (high confidence)
-```
-CMwNod
-  +-- CGameCtnZone
-        +-- CGameCtnZoneFlat
-        +-- CGameCtnZoneFrontier
-        +-- CGameCtnZoneTransition
-```
+### Additional hierarchies
 
-#### Editor Hierarchy (moderate confidence -- naming pattern consistent)
-```
-CMwNod
-  +-- CGameEditorBase [UNCERTAIN parent]
-        +-- CGameEditorAction
-        +-- CGameEditorAnimChar
-        +-- CGameEditorAnimClip
-        +-- CGameEditorBullet
-        +-- CGameEditorCustomBullet
-        +-- CGameEditorItem
-        +-- CGameEditorManialink
-        +-- CGameEditorMaterial
-        +-- CGameEditorMediaTracker
-        +-- CGameEditorMesh
-        +-- CGameEditorModule
-        +-- CGameEditorSkin
-        +-- CGameEditorVehicle
-```
+**Zone hierarchy** (high confidence): `CGameCtnZone` -> `CGameCtnZoneFlat`, `CGameCtnZoneFrontier`, `CGameCtnZoneTransition`
 
-#### Bitmap Render Hierarchy (high confidence)
-```
-CMwNod
-  +-- CPlugBitmapRender
-        +-- CPlugBitmapRenderCamera
-        +-- CPlugBitmapRenderCubeMap
-        +-- CPlugBitmapRenderHemisphere
-        +-- CPlugBitmapRenderLightFromMap
-        +-- CPlugBitmapRenderLightOcc
-        +-- CPlugBitmapRenderOverlay
-        +-- CPlugBitmapRenderPlaneR
-        +-- CPlugBitmapRenderPortal
-        +-- CPlugBitmapRenderShadow
-        +-- CPlugBitmapRenderSolid
-        +-- CPlugBitmapRenderSub
-        +-- CPlugBitmapRenderVDepPlaneY
-        +-- CPlugBitmapRenderWater
-```
+**Editor hierarchy** (moderate confidence): `CGameEditorBase` [UNCERTAIN parent] -> `CGameEditorAction`, `CGameEditorItem`, `CGameEditorMesh`, `CGameEditorMediaTracker`, `CGameEditorSkin`, `CGameEditorVehicle`, and 9 others.
 
-#### Animation Graph Node Hierarchy (high confidence -- 41 node types)
-```
-CMwNod
-  +-- CPlugAnimGraphNode [UNKNOWN -- base may not exist as named]
-        +-- CPlugAnimGraphNode_Blend
-        +-- CPlugAnimGraphNode_Blend2d
-        +-- CPlugAnimGraphNode_ClipPlay
-        +-- CPlugAnimGraphNode_Graph
-        +-- CPlugAnimGraphNode_Group
-        +-- CPlugAnimGraphNode_StateMachine
-        +-- CPlugAnimGraphNode_JointIK2
-        +-- CPlugAnimGraphNode_JointRotate
-        +-- ... (41 node types total)
-```
+**Bitmap render hierarchy** (high confidence): `CPlugBitmapRender` -> 13 specializations (Camera, CubeMap, Shadow, Water, etc.)
 
-#### Scene FX Hierarchy (high confidence)
-```
-CMwNod
-  +-- CSceneFx [UNCERTAIN if this is the actual base]
-        +-- CSceneFxBloom
-        +-- CSceneFxBlur
-        +-- CSceneFxCameraBlend
-        +-- CSceneFxCellEdge
-        +-- CSceneFxColors
-        +-- CSceneFxCompo
-        +-- CSceneFxDepthOfField
-        +-- CSceneFxDistor2d
-        +-- CSceneFxEdgeBlender
-        +-- CSceneFxFlares
-        +-- CSceneFxHeadTrack
-        +-- CSceneFxOverlay
-        +-- CSceneFxStereoscopy
-        +-- CSceneFxSuperSample
-```
+**Animation graph node hierarchy** (high confidence): `CPlugAnimGraphNode` [UNKNOWN if base exists as named] -> 41 node types (Blend, ClipPlay, StateMachine, JointIK2, etc.)
 
-### 6.2 Task/Result Pattern
+**Scene FX hierarchy** (high confidence): `CSceneFx` [UNCERTAIN base] -> 14 specializations (Bloom, Blur, DOF, Flares, etc.)
 
-A recurring architectural pattern throughout the codebase is the **Task/Result pair**:
+---
 
-- **Task class**: Represents an asynchronous operation (e.g., `CNetNadeoServicesTask_GetMap`)
-- **Result class**: Typed container for the operation's result (e.g., `CWebServicesTaskResult_NSMap`)
+## Cross-cutting architectural patterns
 
-This pattern appears in:
+### Task/Result pattern
+
+A recurring pattern pairs an async task class with a typed result class:
+
 - `CNetNadeoServicesTask_*` (157 task classes)
 - `CWebServicesTask_*` (108 task classes)
 - `CWebServicesTaskResult_*` (168 result classes)
@@ -539,9 +434,9 @@ This pattern appears in:
 - `CNetMasterServerTask_*` (24 task classes)
 - `CNetUbiServicesTask_*` (38 task classes)
 
-### 6.3 Phy/Vis/Model Pattern
+### Model/Physics/Visual decomposition
 
-Many game entities follow a **Model/Physics/Visual** decomposition:
+Many game entities split into Model, Physics (Phy), and Visual (Vis) components:
 
 | Domain        | Model                     | Physics              | Visual              |
 |---------------|---------------------------|----------------------|---------------------|
@@ -549,7 +444,6 @@ Many game entities follow a **Model/Physics/Visual** decomposition:
 | Vehicle       | `CGameVehicleModel`       | `CGameVehiclePhy`    | --                  |
 | Gate          | `CGameGateModel`          | `CGameGatePhy`       | `CGameGateVis`      |
 | Turret        | --                        | `CGameTurretPhy`     | `CGameTurretVis`    |
-| Shield        | --                        | --                   | `CGameShield`       |
 | Bullet        | `CPlugBulletModel`        | `CSceneBulletPhy`    | `CSceneBulletVis`   |
 | Character     | `CPlugCharPhyModel`       | --                   | `CPlugCharVisModel` |
 | Slot          | --                        | `CGameSlotPhy`       | `CGameSlotVis`      |
@@ -557,11 +451,11 @@ Many game entities follow a **Model/Physics/Visual** decomposition:
 
 ---
 
-## 7. VTable Scan Results
+## VTable scan results
 
-The vtable scan found **83 vtable symbols**, all belonging to MSVC standard library or internal types. No Nadeo class vtables were resolved by symbol name because the binary is stripped of Nadeo-specific RTTI type info metadata (the engine uses its own RTTI system instead).
+The vtable scan found 83 vtable symbols, all belonging to MSVC standard library or internal types. No Nadeo class vtables were resolved because the binary is stripped of Nadeo-specific RTTI metadata.
 
-Notable vtable entries:
+Notable entries:
 
 | Address          | Class                                      |
 |------------------|--------------------------------------------|
@@ -571,15 +465,15 @@ Notable vtable entries:
 | `0x141980280`    | `type_info::vftable`                       |
 | `0x141a3a0a0`    | `CSingletonCriticalSection::vftable`       |
 
-The absence of Nadeo vtable symbols means that vtable-based inheritance reconstruction requires manual analysis of vtable pointer patterns and cross-references, which is a future analysis step.
+Vtable-based inheritance reconstruction requires manual analysis of vtable pointer patterns. This is a future analysis step.
 
 ---
 
-## 8. GPU/Shader Namespace Structure
+## GPU and shader namespace structure
 
-In addition to the Nadeo class hierarchy, the binary contains extensive GPU shader constant buffer types organized in a namespace-based hierarchy:
+The binary contains extensive GPU shader constant buffer types organized by namespace.
 
-### 8.1 Top-Level GPU Namespaces
+### Top-level GPU namespaces
 
 - `NGpu::` -- GPU shader programs and constant buffers (50+ sub-namespaces)
 - `NGpuP::` -- Pixel shader variants
@@ -587,7 +481,7 @@ In addition to the Nadeo class hierarchy, the binary contains extensive GPU shad
 - `NVis::` -- Vision engine GPU operations
 - `NVisionResourceFile::` -- Vision resource file GPU helpers
 
-### 8.2 GPU Buffer Naming Convention
+### Buffer naming convention
 
 ```
 N<ShaderFamily>::SCBuffer[V|P][_Variant]
@@ -602,10 +496,9 @@ N<ShaderFamily>::SCBuffer[V|P][_Variant]
 Examples:
 - `NGpu::NBilateralBlur_p::SCBuffer` -- Bilateral blur pixel shader constants
 - `NGpuP::NTmCar::SCBuffer_Draw` -- TrackMania car pixel shader draw constants
-- `NGpuV::NTmCar::SCBuffer_Draw` -- TrackMania car vertex shader draw constants
 - `NGpu::NTM_GlobalFilmCurve_p::SCBuffer_ACES_LUT` -- ACES tone mapping LUT constants
 
-### 8.3 Notable Rendering Families
+### Notable rendering families
 
 - `NBlock_*` -- Block rendering (tree sprites, etc.)
 - `NCharAnimSkel*` -- Character animation skeletal rendering
@@ -620,23 +513,13 @@ Examples:
 
 ---
 
-## 9. RTTI and Non-Nadeo Classes
+## RTTI and non-Nadeo classes
 
-### 9.1 MSVC RTTI Classes (55 types)
+### MSVC RTTI classes (55 types)
 
-These are C++ standard library types with MSVC RTTI metadata:
+Standard C++ types with MSVC RTTI metadata: exceptions (`std::exception`, `std::bad_alloc`, etc.), I/O (`std::basic_streambuf`, `std::basic_filebuf`), locale facets, concurrency primitives, COM (`_com_error`), MSVC internals (`type_info`, `DNameNode`), and 55 `SCBuffer*` GPU constant buffer structs.
 
-- Standard exceptions: `std::exception`, `std::bad_alloc`, `std::bad_function_call`, `std::logic_error`, `std::length_error`, `std::out_of_range`, `std::runtime_error`, `std::system_error`, `std::bad_exception`
-- I/O: `std::basic_streambuf`, `std::basic_filebuf`, `std::basic_ios`, `std::basic_ostream`, `std::ios_base`, `std::ios_base::failure`
-- Locale: `std::ctype<char>`, `std::codecvt`, `std::numpunct<char>`, `std::num_put`, `std::_Facet_base`, `std::locale::_Locimp`
-- Concurrency: `Concurrency::details::stl_critical_section_vista/win7`, `Concurrency::details::stl_condition_variable_vista/win7`
-- COM: `_com_error`
-- MSVC internals: `type_info`, `DNameNode`, `DNameStatusNode`, `charNode`, `pcharNode`, `pDNameNode`, `pairNode`
-- Shader types: 55 `SCBuffer*` GPU constant buffer structs (these have RTTI because they use virtual destructors or virtual methods)
-
-### 9.2 Third-Party Libraries
-
-Evidence from namespaces and DLL imports:
+### Third-party libraries
 
 - **NVIDIA GFSDK**: `GFSDK::SSAO::PerPassConstantStruct` -- HBAO+ ambient occlusion
 - **Gm math library**: `Gm::GmVec2`, `Gm::GmVec4`, `GmMat4` -- custom math types (likely Nadeo's own)
@@ -647,7 +530,7 @@ Evidence from namespaces and DLL imports:
 
 ---
 
-## 10. Summary Statistics
+## Summary statistics
 
 | Metric                                | Value    |
 |---------------------------------------|----------|
@@ -676,18 +559,37 @@ Evidence from namespaces and DLL imports:
 
 ---
 
-## 11. Open Questions and Future Work
+## Open questions and future work
 
-1. **[UNKNOWN]** CMwNod vtable layout -- the exact virtual function table structure needs manual reconstruction from vtable pointer patterns, since no Nadeo vtable symbols exist.
+1. **[UNKNOWN]** CMwNod vtable layout -- the exact virtual function table structure needs manual reconstruction from vtable pointer patterns.
 
-2. **[UNKNOWN]** MwClassId values -- the numeric class IDs for each class need to be extracted from the class registration tables. These are critical for GBX file format parsing.
+2. **[UNKNOWN]** MwClassId values -- the numeric class IDs for each class need extraction from registration tables. These are critical for GBX file format parsing.
 
-3. **[UNKNOWN]** Exact inheritance chains -- while naming patterns strongly suggest parent-child relationships, the actual vtable inheritance has not been verified through pointer chain analysis. Some classes may use composition rather than inheritance despite similar naming.
+3. **[UNKNOWN]** Exact inheritance chains -- naming patterns strongly suggest parent-child relationships, but vtable inheritance has not been verified through pointer chain analysis.
 
-4. **[UNKNOWN]** CMwNod field layout -- the base class fields (reference count, class info pointer, flags) need to be determined through constructor analysis.
+4. **[UNKNOWN]** CMwNod field layout -- base class fields (reference count, class info pointer, flags) need determination through constructor analysis.
 
-5. **[UNKNOWN]** Engine initialization order -- while `StaticInit` strings were found for `CMwNod`, `CMwId`, and `CSystemEngine`, the full engine bootstrap sequence and class registration order is not established.
+5. **[UNKNOWN]** Engine initialization order -- the full bootstrap sequence and class registration order is not established beyond three `StaticInit` strings.
 
-6. **[UNKNOWN]** The relationship between the `Gm::` math types and the engine -- whether `GmVec2/GmVec4/GmMat4` are standalone structs or inherit from CMwNod.
+6. **[UNKNOWN]** The relationship between `Gm::` math types and the engine -- whether `GmVec2/GmVec4/GmMat4` are standalone structs or inherit from CMwNod.
 
-7. **Non-C-prefix classes** (Clouds, Cluster, ConnectionClient, ConsoleClient) -- their role in the hierarchy and whether they inherit from CMwNod is not confirmed.
+7. **Non-C-prefix classes** (Clouds, Cluster, ConnectionClient, ConsoleClient) -- their role in the hierarchy and whether they inherit from CMwNod is unconfirmed.
+
+---
+
+## Related Pages
+
+- [13-subsystem-class-map.md](13-subsystem-class-map.md) -- Every class mapped to a subsystem with detailed analysis
+- [12-architecture-deep-dive.md](12-architecture-deep-dive.md) -- State machine, fiber system, and frame loop
+- [08-game-architecture.md](08-game-architecture.md) -- High-level game architecture overview
+- [15-ghidra-research-findings.md](15-ghidra-research-findings.md) -- Ghidra string and function analysis
+- [00-master-overview.md](00-master-overview.md) -- Master index of all reverse engineering docs
+
+<details><summary>Analysis metadata</summary>
+
+**Binary**: `Trackmania.exe` (Trackmania 2020 / Trackmania Nations remake by Nadeo/Ubisoft)
+**Date of analysis**: 2026-03-27
+**Tools**: Ghidra 11.x via PyGhidra bridge
+**Data sources**: RTTI string extraction, vtable scan, namespace enumeration, pre-extracted `class_hierarchy.json`
+
+</details>

@@ -1,39 +1,19 @@
-# File Format Handling and GBX Parsing
+# GBX File Format and Parsing
 
-**Binary**: `Trackmania.exe` (Trackmania 2020)
-**Date of analysis**: 2026-03-27
-**Tools**: Ghidra 11.x via PyGhidra bridge
-**Note**: All function symbols are stripped. Functions are named by Ghidra convention (FUN_<address>).
+GBX (GameBox) is Nadeo's binary serialization format for all Trackmania game assets. Every `.Gbx` file encodes a single CMwNod-derived object tree using a chunk-based protocol. Understanding GBX is the gateway to reading maps, replays, items, and every other game file.
 
----
-
-## Table of Contents
-
-1. [GBX File Format Overview](#1-gbx-file-format-overview)
-2. [GBX Header Parsing](#2-gbx-header-parsing)
-3. [GBX Body and Chunk System](#3-gbx-body-and-chunk-system)
-4. [The Serialization / Archive System](#4-the-serialization--archive-system)
-5. [Class ID System](#5-class-id-system)
-6. [File Types Supported](#6-file-types-supported)
-7. [The Fid (File ID) System](#7-the-fid-file-id-system)
-8. [Pack File System](#8-pack-file-system)
-9. [Map Loading Pipeline (CGameCtnChallenge)](#9-map-loading-pipeline-cgamectnchallenge)
-10. [Key Function Reference Table](#10-key-function-reference-table)
-
----
-
-## 1. GBX File Format Overview
-
-GBX (GameBox) is Nadeo's proprietary binary serialization format used for all game assets. Every `.Gbx` file encodes a single CMwNod-derived object tree using a chunk-based serialization protocol.
+The GBX format supports three file variants:
+- **Binary GBX** (`.gbx`) -- primary format, chunk-based binary serialization
+- **XML GBX** (`.gbx.xml`) -- XML representation, loaded via `FUN_140925fa0`
+- **JSON** (`.json`) -- JSON import, loaded via `FUN_140934b80`
 
 **Loading entry point**: `FUN_140904730` (CSystemArchiveNod::LoadGbx)
 
-The loading pipeline supports three file variants:
-- **Binary GBX** (`.gbx`) - primary format, chunk-based binary serialization
-- **XML GBX** (`.gbx.xml`) - XML representation, loaded via `FUN_140925fa0`
-- **JSON** (`.json`) - JSON import, loaded via `FUN_140934b80`
+---
 
-### GBX File Structure (Binary)
+## How GBX files are structured
+
+Every GBX file follows a header-references-body layout. The header identifies the file type and provides quick-access metadata. The reference table lists external dependencies. The body carries the serialized data.
 
 ```
 +---------------------------+
@@ -62,12 +42,15 @@ The loading pipeline supports three file variants:
 
 ---
 
-## 2. GBX Header Parsing
+## How the header is parsed
 
-### Magic and Version (`FUN_140900e60` at `0x140900e60`)
+The header parser (`FUN_140900e60` at `0x140900e60`) reads the magic bytes and version, then hands off to version-specific logic.
 
-The header loader reads:
-1. **3 bytes**: Must be exactly `'G'`, `'B'`, `'X'`
+### Magic and version
+
+The first 5 bytes identify the file:
+
+1. **3 bytes**: Must match `'G'`, `'B'`, `'X'`
 2. **2 bytes (uint16)**: Version number
 
 | Version | Status | Notes |
@@ -81,9 +64,9 @@ The header loader reads:
 
 For versions 3-6, parsing continues in `FUN_140901850`.
 
-### Format Flags - Version 6+ (`FUN_140901850` at `0x140901850`)
+### Format flags (version 6+)
 
-For version 6, a 4-character format descriptor follows the version:
+`FUN_140901850` at `0x140901850` reads a 4-character format descriptor after the version field.
 
 | Byte | Position | Values | Meaning |
 |------|----------|--------|---------|
@@ -111,11 +94,13 @@ See `decompiled/fileformats/FUN_140900e60_LoadHeader.c` and `FUN_140901850_Parse
 
 ---
 
-## 3. GBX Body and Chunk System
+## How the body and chunk system work
 
-### Reference Table Loading (`FUN_140902530` at `0x140902530`)
+The body contains all serialized data for the root node. It is organized as a sequential stream of chunks.
 
-After the header, the reference table is loaded. This resolves external dependencies (other GBX files referenced by this one).
+### Reference table loading
+
+`FUN_140902530` at `0x140902530` loads the reference table after the header. This resolves external dependencies (other GBX files referenced by this one).
 
 **Profiling marker**: `"NSys::ArLoadRef_Gbx"` (version 7) or `"NSys::ArLoadRef"` (others)
 
@@ -132,9 +117,9 @@ The function:
    - Loads referenced file if needed (recursive loading)
 7. The special value `0xDEADBEEF` is written as a placeholder during reference resolution (visible at address `0x140902994`)
 
-### Body Chunk Loading (`FUN_1409031d0` at `0x1409031d0`)
+### Body chunk loading
 
-The body contains the actual serialized data, organized as a sequence of chunks.
+`FUN_1409031d0` at `0x1409031d0` loads the main serialized data from the body.
 
 **Profiling marker**: Uses the output of `FUN_140903140` (e.g., `"ArchiveNod::LoadGbx_Body(Challenge)"`)
 
@@ -146,19 +131,20 @@ Flow:
    - Decompresses body via `FUN_140127aa0` into a memory buffer
    - The decompression buffer is pooled (reused from `DAT_14205c280`)
    - Max decompressed size of 0xFFFFF (~1MB) before pool reuse
-5. Resolves **internal references** - iterates the reference table connecting nodes
+5. Resolves **internal references** -- iterates the reference table connecting nodes
 6. Calls `FUN_140900560` to associate the main node with the archive
 
-### End-of-Chunks Marker (`FUN_1402d0c40` at `0x1402d0c40`)
+### How chunks end
 
-The body chunk stream ends with a special sentinel:
+`FUN_1402d0c40` at `0x1402d0c40` detects the end-of-chunks marker.
+
 - **Chunk ID `0xFACADE01`**: Signals end of chunks (returned by this function for all non-terminal chunk IDs)
 - **Chunk ID `0x01001000`**: The actual end-of-chunks marker (CMwNod_End), returns 1
 
 When an unknown chunk ID is encountered, `FUN_1402d0c80` logs:
 `"Unknown ChunkId: %08X"` at `0x141b72000`
 
-### Body Type Labels (Class ID -> Profile Label)
+### Body type labels (class ID to profile label)
 
 From `FUN_140903140` at `0x140903140`:
 
@@ -176,11 +162,13 @@ From `FUN_140903140` at `0x140903140`:
 
 ---
 
-## 4. The Serialization / Archive System
+## How the serialization/archive system works
+
+CClassicArchive is the core archive reader that handles all binary read/write operations.
 
 ### CClassicArchive
 
-The core archive reader. String evidence:
+String evidence:
 - `"CClassicArchive::ReadData() failed on \""` at `0x141b58200`
 - `"[Archive] SAVING ERROR: Saving skipped datas => data may be lost !!"` at `0x141b582c0`
 
@@ -192,6 +180,7 @@ The core archive reader. String evidence:
 - Calls `DAT_141f9d088` callback on error (if set) -- used for crash reporting
 
 The archive object layout (partial, from decompilation):
+
 | Offset | Type | Purpose |
 |--------|------|---------|
 | `+0x00` | vtable* | Virtual function table |
@@ -220,7 +209,7 @@ The archive object layout (partial, from decompilation):
 
 ### CSystemArchiveNod
 
-The system-level archive that manages loading GBX files from the file system.
+The system-level archive manages loading GBX files from the file system.
 
 String evidence:
 - `"ArchiveNod::LoadGbx"` at `0x141c06b98`
@@ -236,7 +225,7 @@ Thread safety warnings:
 - `"[Sys] Danger: CSystemArchiveNod::DoLoadFromFid(Gbx) called outside MainThread"` at `0x141c06be0`
 - `"[Sys] Danger: CSystemArchiveNod::DoLoadFromFid(Media) called outside MainThread"` at `0x141c06a60`
 
-### Archive Version System
+### Archive version system
 
 String: `"%.*sUnknown archive version %d (> %d)"` at `0x141b72028`
 
@@ -244,11 +233,11 @@ Individual chunks within a GBX body have their own version numbers (independent 
 
 ---
 
-## 5. Class ID System
+## How class IDs identify node types
 
-### Class ID Structure
+Class IDs are 32-bit values encoding the engine namespace, class index, and sub-class information. The engine uses these to look up factory functions that create the correct CMwNod subclass during deserialization.
 
-Class IDs are 32-bit values with a hierarchical structure:
+### Class ID structure
 
 ```
   Bits 31-24: Engine ID (top-level namespace)
@@ -256,7 +245,7 @@ Class IDs are 32-bit values with a hierarchical structure:
   Bits 11-0:  [UNKNOWN - possibly chunk/sub-class index, always 0x000 for class IDs]
 ```
 
-### Engine IDs (from string evidence and class ID remapping table)
+### Engine IDs
 
 | Engine ID | Name | Example Classes |
 |-----------|------|----------------|
@@ -269,15 +258,16 @@ Class IDs are 32-bit values with a hierarchical structure:
 | `0x11` | [UNKNOWN] | `0x11001000` |
 | `0x2E` | [UNKNOWN] | Various classes remapped from old IDs |
 
-### Class Registration and Lookup
+### Registration and lookup
 
 **Global class table**: `DAT_141ff9d58`
 
-The table is organized as a two-level hierarchy:
+The table uses a two-level hierarchy:
 1. **Level 1**: Array of engine pointers, indexed by engine ID (`class_id >> 24`)
 2. **Level 2**: Each engine has an array of class info pointers, indexed by class index (`(class_id >> 12) & 0xFFF`)
 
 Each class info entry (from `FUN_1402f20a0`):
+
 | Offset | Content |
 |--------|---------|
 | `+0x08` | Class name (const char*) |
@@ -292,7 +282,7 @@ Each class info entry (from `FUN_1402f20a0`):
 - If factory is NULL: logs `"[MwNod] Trying to CreateByMwClassId('<classname>') which is pure..."`
 - If class unknown: logs `"[MwNod] Trying to CreateByMwClassId(<id>) which is unknown..."`
 
-### Class ID Remapping (Backward Compatibility)
+### Class ID remapping (backward compatibility)
 
 `FUN_1402f2610` at `0x1402f2610` is a massive lookup table that converts legacy class IDs to their modern equivalents. This enables reading GBX files from older ManiaPlanet/Trackmania versions.
 
@@ -321,175 +311,72 @@ See:
 
 ---
 
-## 6. File Types Supported
+## What GBX file types exist
 
-### GBX File Extensions (from binary strings)
+Over 431 unique `.Gbx` extension strings appear in the binary. Here are the key categories.
 
-The following `.Gbx` file types were found referenced in the binary. Organized by category:
+### Map / Challenge
 
-#### Map / Challenge
 | Extension | Address | Notes |
 |-----------|---------|-------|
 | `.Map.Gbx` | `0x141c2b290` | Map files (modern name) |
 | `.Challenge.Gbx` | `0x141c2dc10` | Map files (legacy name, same format) |
-| `Map.Gbx` | `0x141c347d8` | Without leading dot |
-| `%1%2\%3.Map.Gbx` | `0x141c34f70` | Map path template |
 
-#### Replay / Ghost
+### Replay / Ghost
+
 | Extension | Address | Notes |
 |-----------|---------|-------|
 | `.Replay.Gbx` | `0x141c2b280` | Replay files |
 | `.Ghost.Gbx` | `0x141c40868` | Ghost data (individual runs) |
-| `.Ghost.gbx` | `0x141c320f8` | Ghost (lowercase variant) |
-| `Replay.Gbx` | `0x141c49c68` | Without leading dot |
 | `.InputsReplay.Gbx` | `0x141cccef0` | Raw input replay |
 
-#### Items / Blocks
+### Items / Blocks
+
 | Extension | Address | Notes |
 |-----------|---------|-------|
 | `.Item.Gbx` | `0x141c2d630` | Custom items |
 | `.Block.Gbx` | `0x141c2d740` | Block definitions |
 | `.Macroblock.Gbx` | `0x141c2d708` | Macroblock (multi-block groups) |
-| `BlockItem.Gbx` | `0x141c284e0` | Block-item hybrid |
-| `Item.Gbx` | `0x141c201a0` | Item base |
-| `StaticObject.Gbx` | `0x141bc68e8` | Static 3D object |
 
-#### Visual / Mesh
+### Visual / Mesh
+
 | Extension | Address | Notes |
 |-----------|---------|-------|
 | `.Mesh.Gbx` | `0x141bd5490` | 3D mesh |
-| `.Mesh.gbx` | `0x141bd1cc0` | Mesh (lowercase) |
 | `.Solid2.gbx` | `0x141bd1cd0` | Solid2 model |
-| `Crystal.Gbx` | `0x141bc2168` | Crystal geometry |
-| `Visual.Gbx` | `0x141ba4990` | Visual representation |
-| `Model.Gbx` | `0x141bc5d90` | General model |
-| `GenSolid.Gbx` | `0x141bc69c8` | Generated solid |
-
-#### Texture / Material
-| Extension | Address | Notes |
-|-----------|---------|-------|
-| `Texture.Gbx` | `0x141ba3768` | Texture file |
-| `.Texture.Gbx` | `0x141bb8e18` | Texture with dot prefix |
 | `Material.Gbx` | `0x141ba5d78` | Material definition |
-| `.Material.Gbx` | `0x141c99238` | Material with dot prefix |
-| `.Material.gbx` | `0x141bb8d80` | Material (lowercase) |
-| `Mat.Gbx` | `0x141bbd5a0` | Short material name |
-| `TexturePack.Gbx` | `0x141bbdd18` | Texture atlas pack |
-| `ImageArray.Gbx` | `0x141bb9e50` | Image array |
+| `Texture.Gbx` | `0x141ba3768` | Texture file |
 
-#### Audio
+### Audio
+
 | Extension | Address | Notes |
 |-----------|---------|-------|
 | `Sound.Gbx` | `0x141ba55f8` | Sound file |
 | `Music.Gbx` | `0x141bc2f80` | Music |
-| `SoundMood.Gbx` | `0x141bc2810` | Sound mood/ambience |
 | `SoundEngine.Gbx` | `0x141bc2990` | Engine sound model |
-| `SoundSurface.Gbx` | `0x141bc2b08` | Surface-specific sounds |
-| `AudioEnvironment.Gbx` | `0x141bc31c0` | Audio environment settings |
-| `AudioBalance.Gbx` | `0x141bc33a0` | Audio balance |
 
-#### Animation / Skeleton
-| Extension | Address | Notes |
-|-----------|---------|-------|
-| `.Anim.gbx` | `0x141bd1d08` | Animation |
-| `.AnimClip.gbx` | `0x141bd1d18` | Animation clip |
-| `AnimClip.Gbx` | `0x141bd0700` | Animation clip |
-| `Anim.Gbx` | `0x141bd09b0` | Animation |
-| `.Skel.gbx` | `0x141bd1cb0` | Skeleton |
-| `Skel.Gbx` | `0x141bba2a8` | Skeleton |
-| `Rig.gbx` | `0x141bd7980` | Rig file |
-| `RigToSkel.gbx` | `0x141bd7b30` | Rig-to-skeleton mapping |
+### Vehicle
 
-#### Vehicle
 | Extension | Address | Notes |
 |-----------|---------|-------|
 | `VehicleVisModel.Gbx` | `0x141bd2510` | Vehicle visual model |
 | `VehiclePhyModelCustom.Gbx` | `0x141bd5b28` | Vehicle physics model |
-| `VehicleStyles.gbx` | `0x141bd3188` | Vehicle style variants |
-| `VehicleCameraRace3Model.gbx` | `0x141bd3c80` | Race camera model |
-| `CarMarksModel.Gbx` | `0x141becc38` | Tire mark model |
 
-#### Lighting / Effects
-| Extension | Address | Notes |
-|-----------|---------|-------|
-| `Light.Gbx` | `0x141babda0` | Light definition |
-| `LightMapCache.Gbx` | `0x141b66db8` | Lightmap cache |
-| `LightmapCustom.Gbx` | `0x141bd6670` | Custom lightmap |
-| `LightMapMood.Gbx` | `0x141b6b0d8` | Lightmap mood settings |
-| `ProbeGrid.Gbx` | `0x141b668b8` | Light probe grid |
-| `SceneFx.Gbx` | `0x141be5ff0` | Scene effects |
-| `FxSys.Gbx` | `0x141bd68a0` | FX system |
-| `VFX.Gbx` | `0x141bb5280` | Visual effects |
-| `ParticleModel.Gbx` | `0x141bb6d48` | Particle system |
+### Pack Files
 
-#### UI / Control
-| Extension | Address | Notes |
-|-----------|---------|-------|
-| `Frame.Gbx` | `0x141b5c318` | UI frame |
-| `StyleSheet.Gbx` | `0x141b5c6c0` | UI stylesheet |
-| `ControlStyle.Gbx` | `0x141b5afb0` | Control styling |
-| `ControlLayout.Gbx` | `0x141b5ca50` | Control layout |
-| `ControlEffect.Gbx` | `0x141b5d830` | Control effect |
-| `Font.Gbx` | `0x141ba5490` | Font |
-
-#### Campaign / Title
-| Extension | Address | Notes |
-|-----------|---------|-------|
-| `.Campaign.Gbx` | `0x141c35e10` | Campaign definition |
-| `Title.Gbx` | `0x141c35928` | Title pack reference |
-| `TitleCore.Gbx` | `0x141cea968` | Title core data |
-| `Collection.Gbx` | `0x141c5f398` | Block collection |
-| `Decoration.Gbx` | `0x141c3be78` | Decoration definition |
-| `DecorationMood.Gbx` | `0x141c3b8b8` | Decoration mood settings |
-
-#### Pack Files
 | Extension | Address | Notes |
 |-----------|---------|-------|
 | `.pack.gbx` | `0x141bbba40` | Generic pack |
-| `.skin.pack.gbx` | `0x141bbba50` | Skin pack |
-| `.Skin.Pack.Gbx` | `0x141c077e8` | Skin pack (capitalized) |
 | `.Title.Pack.Gbx` | `0x141c2f438` | Title pack |
-| `.Media.Pack.Gbx` | `0x141c2f5e0` | Media pack |
-| `-Model.Pack.Gbx` | `0x141c8bf00` | Model pack |
-| `Model.Pack.Gbx` | `0x141c8dbe0` | Model pack |
 | `Trackmania.Title.Pack.Gbx` | `0x141bcc828` | Main game title pack |
-| `Trackmania_Update.Title.Pack.Gbx` | `0x141c584b0` | Update title pack |
-| `.Title.Pack.Gbx.ref` | `0x141c58c50` | Title pack reference file |
-| `-wip.pack.gbx` | `0x141c2f818` | Work-in-progress pack |
-
-#### Miscellaneous
-| Extension | Address | Notes |
-|-----------|---------|-------|
-| `Prefab.Gbx` | `0x141bcca30` | Prefab (pre-assembled objects) |
-| `World.Gbx` | `0x141cf6c88` | World definition |
-| `.ScriptCache.Gbx` | `0x141c31e50` | Script cache |
-| `.Profile.Gbx` | `0x141c31e68` | Player profile |
-| `User.FidCache.Gbx` | `0x141c30fe0` | User file cache |
-| `User.Profile.Gbx` | `0x141c82f68` | User profile |
-| `GameCtnApp.Gbx` | `0x141c30710` | Application state |
-| `.environment.gbx` | `0x141c29ac0` | Environment definition |
-| `ManiaPlanet.ManiaPlanet.gbx` | `0x141a58bd8` | Root app GBX |
-| `GpuCache.Gbx` | `0x141bbcf70` | GPU shader cache |
-| `.GpuCache.Gbx` | `0x141bad7f0` | GPU cache with dot prefix |
-
-#### JSON Config Files
-| Extension | Address | Notes |
-|-----------|---------|-------|
-| `.gbx.json` | `0x141bd1c50` | GBX in JSON format |
-| `SkelLodSetup.Gbx.json` | `0x141bba230` | Skeleton LOD setup |
-| `ShootIconSetting.gbx.json` | `0x141c7b7a0` | [UNKNOWN] |
-| `PreloadDesc.gbx.json` | `0x141c2fca0` | Preload descriptor |
-| `Default.gbx.json` | `0x141c05468` | Default config |
-
-**Total unique .Gbx extensions found**: 431 string matches containing ".Gbx" or ".gbx".
 
 ---
 
-## 7. The Fid (File ID) System
+## How the Fid (File ID) system works
 
-The Fid system is Nadeo's virtual file system layer that abstracts file access across different storage backends (disk, packs, network).
+The Fid system is Nadeo's virtual file system layer. It abstracts file access across disk, packs, and network backends.
 
-### Class Hierarchy (from strings)
+### Class hierarchy
 
 | Class | Address | Role |
 |-------|---------|------|
@@ -498,7 +385,7 @@ The Fid system is Nadeo's virtual file system layer that abstracts file access a
 | `CSystemFidContainer` | `0x141c08ec8` | Contains fids (e.g., a pack file) |
 | `CSystemFidsDrive` | `0x141c08ff8` | Top-level drive/mount point |
 
-### Key Operations
+### Key operations
 
 - **`CSystemFidsFolder::BrowsePath`** (string at `0x141c08d88`): Directory traversal
 - **`CSystemFidContainer::InstallFids`** (`FUN_14092bec0` at `0x14092bec0`): Registers files from a container (pack) into the virtual file system
@@ -509,34 +396,28 @@ The Fid system is Nadeo's virtual file system layer that abstracts file access a
   - Sets up file watching if `container+0x80` is non-null
   - Updates folder indices at `container+0x38`
 
-### FidFile Layout (partial, from decompilation)
+### FidFile layout (partial)
 
 | Offset | Type | Purpose |
 |--------|------|---------|
 | `+0x08` | ptr | [UNKNOWN] |
 | `+0x18` | ptr | Parent folder/container |
 | `+0x20` | uint | Flags (bit 0 = [UNKNOWN], bit 2 = [UNKNOWN]) |
-| `+0x24` | uint | Additional flags |
-| `+0x48` | uint | File state flags |
-| `+0x78` | uint32 | [UNKNOWN - possibly file size or class ID] |
 | `+0x80` | ptr | Loaded nod pointer (the actual object) |
-| `+0xA8` | ptr | [UNKNOWN] |
 | `+0xB0` | ptr* | Stream factory (vtable for creating read streams) |
 | `+0xD0` | string | File path/name |
-| `+0xD8` | uint32 | Path length |
-| `+0xDC` | uint32 | [UNKNOWN path-related field] |
 
-### CPlugFileFidCache
+### FidCache
 
-`CPlugFileFidCache` (string at `0x141bc4ec8`) and `User.FidCache.Gbx` (at `0x141c30fe0`) indicate a caching layer for file lookups. The `LoadAndRefreshFidCache` operation (string at `0x141c30e70`) suggests the cache is persisted to disk and refreshed on startup.
+`CPlugFileFidCache` (string at `0x141bc4ec8`) and `User.FidCache.Gbx` (at `0x141c30fe0`) indicate a caching layer for file lookups. The `LoadAndRefreshFidCache` operation (string at `0x141c30e70`) suggests the cache persists to disk and refreshes on startup.
 
 ---
 
-## 8. Pack File System
+## How the pack file system works
 
-### Pack Types
+Pack files bundle multiple GBX files into archives for distribution.
 
-From binary strings, these pack file types exist:
+### Pack types
 
 | Pack Type | Extension | Example |
 |-----------|-----------|---------|
@@ -545,37 +426,30 @@ From binary strings, these pack file types exist:
 | Title pack | `.Title.Pack.Gbx` | Full game title content |
 | Media pack | `.Media.Pack.Gbx` | Media assets |
 | Model pack | `Model.Pack.Gbx` / `-Model.Pack.Gbx` | 3D model collections |
-| WIP pack | `-wip.pack.gbx` | Work-in-progress content |
 
-### Pack Management
+### Pack management
 
 **CSystemPackManager** (strings at `0x141c076d8`):
 - `CSystemPackManager::UpdatePackDescsAfterLoad` (`0x141c07820`)
 - `CSystemPackManager::LoadCache` (`0x141c078b0`)
 - `CSystemPackManager::TrimCacheIfNeeded` (`0x141c079b0`)
 
-**CSystemPackDesc** (string at `0x141c07270`): Describes a pack's metadata.
+### Title packs
 
-### Title Packs
-
-The main game content is loaded from:
+The main game content loads from:
 - `"Trackmania.Title.Pack.Gbx"` at `0x141bcc828` / `0x141c58368`
 - `"Trackmania_Update.Title.Pack.Gbx"` at `0x141c584b0`
 - `".Title.Pack.Gbx.ref"` at `0x141c58c50` (reference files that point to actual packs)
 
-Legacy ManiaPlanet title packs are also referenced:
-- `"ShootMania\ShootMania.TitleCore.Gbx"` at `0x141c35c10`
-- `"TrackMania.TitleCore.Gbx"` at `0x141c35cb8`
-
 ---
 
-## 9. Map Loading Pipeline (CGameCtnChallenge)
+## How the map loading pipeline works
 
 CGameCtnChallenge (class ID `0x03043000`) is the main map class. "Challenge" is the legacy internal name; externally these are `.Map.Gbx` files.
 
-### Loading Stages (from string evidence)
+### Loading stages
 
-The map loading process follows a defined sequence of stages, each identified by profiling markers:
+The map loading process follows a 22-stage sequence, each identified by profiling markers:
 
 | Stage | Function String | Address |
 |-------|-----------------|---------|
@@ -602,67 +476,25 @@ The map loading process follows a defined sequence of stages, each identified by
 | 21 | `CGameCtnChallenge::ConnectAdditionalDataClipsToBakedClips` | `0x141c35040` |
 | 22 | `CGameCtnChallenge::RemoveNonBlocksFromBlockStock` | `0x141c35080` |
 
-### Filtered Block Lists
+### Filtered block lists
 
 Maps maintain filtered views of their block data:
-- `CGameCtnChallenge::SFilteredBlockLists::UpdateFilteredBlocks` (`0x141c35110`)
 - `CGameCtnChallenge::SFilteredBlockLists::GetClassicBlocks` (`0x141c35150`)
 - `CGameCtnChallenge::SFilteredBlockLists::GetTerrainBlocks` (`0x141c35190`)
 - `CGameCtnChallenge::SFilteredBlockLists::GetGhostBlocks` (`0x141c351d0`)
 
-### Related Classes
+### Vehicle references in maps
 
-| Class | String Address | Role |
-|-------|----------------|------|
-| `CGameCtnChallengeInfo` | `0x141bf9898` | Map metadata/info |
-| `CGameCtnChallengeGroup` | `0x141bf98d0` | Group of maps |
-| `CGameCtnChallengeParameters` | `0x141c64f20` | Map parameters (time limits, etc.) |
-| `CGameCtnReplayRecord` | `0x141c49c50` | Replay data |
-| `CGameCtnReplayRecordInfo` | `0x141bf98b0` | Replay metadata |
-
-### Block System Classes
-
-| Class | String Address |
-|-------|----------------|
-| `CGameCtnBlockInfo` | `0x141bf88d0` |
-| `CGameCtnBlockInfoVariant` | `0x141bf88e8` |
-| `CGameCtnBlockInfoVariantAir` | `0x141bf8890` |
-| `CGameCtnBlockInfoVariantGround` | `0x141bf88b0` |
-| `CGameCtnBlockInfoClip` | `0x141bf8860` |
-| `CGameCtnBlockInfoFlat` | `0x141c62a28` |
-| `CGameCtnBlockInfoFrontier` | `0x141c62c38` |
-| `CGameCtnBlockInfoTransition` | `0x141c62e90` |
-| `CGameCtnBlockInfoClassic` | `0x141c63070` |
-| `CGameCtnBlockInfoRoad` | `0x141c63390` |
-| `CGameCtnBlockInfoSlope` | `0x141c63f08` |
-| `CGameCtnBlockInfoPylon` | `0x141c640b0` |
-| `CGameCtnBlockInfoRectAsym` | `0x141c64358` |
-| `CGameCtnBlockInfoClipHorizontal` | `0x141c63a08` |
-| `CGameCtnBlockInfoClipVertical` | `0x141c63c30` |
-| `CGameCtnBlockInfoMobil` | `0x141c79260` |
-| `CGameCtnBlockInfoMobilLink` | `0x141c64db8` |
-
-### Vehicle References in Maps
-
-Vehicle items referenced by maps:
-- `\Trackmania\Items\Vehicles\StadiumCar.ObjectInfo.Gbx` (`0x141c20b98`)
-- `\Trackmania\Items\Vehicles\RallyCar.ObjectInfo.Gbx` (`0x141c20a48`)
-- `\Trackmania\Items\Vehicles\SnowCar.ObjectInfo.Gbx` (`0x141c20a10`)
-- `\Trackmania\Items\Vehicles\DesertCar.ObjectInfo.Gbx` (`0x141c20ab8`)
-- `\Trackmania\Items\Vehicles\CanyonCar.ObjectInfo.Gbx` (`0x141c20940`)
-- `\Trackmania\Items\Vehicles\LagoonCar.ObjectInfo.Gbx` (`0x141c20908`)
-- `\Trackmania\Items\Vehicles\CoastCar.ObjectInfo.Gbx` (`0x141c20af0`)
-- `\Trackmania\Items\Vehicles\BayCar.ObjectInfo.Gbx` (`0x141c20b28`)
-- `\Trackmania\Items\Vehicles\ValleyCar.ObjectInfo.Gbx` (`0x141c20b60`)
-- `\Trackmania\Items\Vehicles\IslandCar.ObjectInfo.Gbx` (`0x141c20a80`)
-- `\Vehicles\Items\CarSport.Item.gbx` (`0x141c5a398`)
-- `\Vehicles\Items\CarSnow.Item.gbx` (`0x141c5a3c0`)
-- `\Vehicles\Items\CarRally.Item.gbx` (`0x141c5a3f0`)
-- `\Vehicles\Items\CarDesert.Item.gbx` (`0x141c5a428`)
+| Path | Vehicle |
+|------|---------|
+| `\Vehicles\Items\CarSport.Item.gbx` | CarSport (Stadium) |
+| `\Vehicles\Items\CarSnow.Item.gbx` | CarSnow |
+| `\Vehicles\Items\CarRally.Item.gbx` | CarRally |
+| `\Vehicles\Items\CarDesert.Item.gbx` | CarDesert |
 
 ---
 
-## 10. Key Function Reference Table
+## Key function reference
 
 | Address | Role | Notes |
 |---------|------|-------|
@@ -684,7 +516,7 @@ Vehicle items referenced by maps:
 
 ---
 
-## Unknowns and Open Questions
+## Unknowns and open questions
 
 1. **[UNKNOWN]** The exact role of byte 2 in the version 6 format flags (both bytes 1 and 2 seem compression-related, but which is body vs header is not fully confirmed from decompilation alone)
 2. **[UNKNOWN]** The complete class info structure layout beyond offsets `+0x08` (name) and `+0x30` (factory)
@@ -696,3 +528,23 @@ Vehicle items referenced by maps:
 8. **[UNKNOWN]** Whether text format (`'T'` in byte 0) is actually functional in TM2020
 9. **[UNKNOWN]** Class IDs for engine `0x06`, `0x11`, and `0x2E` -- what actual classes these correspond to
 10. **[UNKNOWN]** The internal format of pack files (`.pack.gbx`) -- how they differ from regular GBX in terms of containing multiple files
+
+---
+
+## Related Pages
+
+- [GBX File Format Deep Dive](16-fileformat-deep-dive.md) -- byte-level specification and parser pseudocode
+- [Real GBX File Analysis](26-real-file-analysis.md) -- hex-level validation against live game data
+- [Game Files Analysis](09-game-files-analysis.md) -- DLL, material, and pack file inventory
+- [Map Structure Encyclopedia](28-map-structure-encyclopedia.md) -- block, item, and waypoint systems
+- [Ghost & Replay Format](30-ghost-replay-format.md) -- ghost sample encoding and replay structure
+- [Class Hierarchy](02-class-hierarchy.md) -- complete CMwNod class tree
+
+<details><summary>Analysis metadata</summary>
+
+**Binary**: `Trackmania.exe` (Trackmania 2020)
+**Date of analysis**: 2026-03-27
+**Tools**: Ghidra 11.x via PyGhidra bridge
+**Note**: All function symbols are stripped. Functions are named by Ghidra convention (FUN_<address>).
+
+</details>

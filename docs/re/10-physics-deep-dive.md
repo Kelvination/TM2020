@@ -1,38 +1,17 @@
 # Physics Deep Dive: Trackmania 2020 Decompiled Physics Engine
 
-**Binary**: `Trackmania.exe` (Trackmania 2020 by Nadeo/Ubisoft)
-**Date of analysis**: 2026-03-27
-**Tools**: Ghidra 12.0.4 via PyGhidra bridge
-**Sources**: 18 decompiled physics functions, cross-referenced with TMNF RE diary and existing `04-physics-vehicle.md`
+This document covers the decompiled physics engine of Trackmania 2020. It maps the simulation pipeline, force models, vehicle state structures, collision systems, and tuning parameters extracted from 18 decompiled functions.
 
 ---
 
-## Table of Contents
+## How the simulation pipeline works
 
-1. [Simulation Pipeline Overview](#1-simulation-pipeline-overview)
-2. [The 7 Force Models](#2-the-7-force-models)
-3. [Complete Vehicle State Structure](#3-complete-vehicle-state-structure)
-4. [Tire/Wheel Contact Model](#4-tirewheelcontact-model)
-5. [Collision System](#5-collision-system)
-6. [Surface Effects](#6-surface-effects)
-7. [Gravity and Sub-stepping](#7-gravity-and-sub-stepping)
-8. [Water Physics](#8-water-physics)
-9. [Tuning Parameters and Numeric Constants](#9-tuning-parameters-and-numeric-constants)
-10. [Determinism](#10-determinism)
-11. [Differences from TMNF](#11-differences-from-tmnf)
-12. [Curious Questions Answered](#12-curious-questions-answered)
-13. [Comprehensive Constants Table](#13-comprehensive-constants-table)
+The physics pipeline runs once per physics tick. Each tick flows through a top-level call chain that processes every vehicle, computes forces, resolves collisions, and integrates motion.
 
----
-
-## 1. Simulation Pipeline Overview
-
-### 1.1 Top-Level Call Chain
+**Quick version:** `CSmArenaPhysics::Players_BeginFrame` drives per-vehicle updates through `PhysicsStep_TM`, which runs an adaptive sub-stepping loop calling collision, force computation, and integration in sequence.
 
 **Evidence**: `PhysicsStep_TM.c`, `NSceneDyna__PhysicsStep.c`, `NSceneDyna__PhysicsStep_V2.c`
 **Confidence**: VERIFIED
-
-The physics pipeline runs each game tick as follows:
 
 ```
 CSmArenaPhysics::Players_BeginFrame (FUN_1412c2cc0)
@@ -56,13 +35,13 @@ CSmArenaPhysics::Players_BeginFrame (FUN_1412c2cc0)
                     +-> Body force clearing (stride 0x38)
 ```
 
-### 1.2 Per-Vehicle Physics Step (PhysicsStep_TM)
+### Per-vehicle physics step (PhysicsStep_TM)
 
 **Evidence**: `PhysicsStep_TM.c:7-224`
 **Confidence**: VERIFIED
 **Address**: FUN_141501800
 
-The profiling scope string `"PhysicsStep_TM"` confirms this is the main per-vehicle physics step. Key operations:
+The profiling scope string `"PhysicsStep_TM"` confirms this is the main per-vehicle physics step.
 
 ```c
 // FUN_141501800 - PhysicsStep_TM
@@ -91,7 +70,7 @@ void FUN_141501800(param_1, param_2, param_3, param_4) {
 }
 ```
 
-### 1.3 Timing System
+### How the timing system converts ticks to microseconds
 
 **Evidence**: `PhysicsStep_TM.c:63`, `NSceneDyna__PhysicsStep.c:15`
 **Confidence**: VERIFIED
@@ -105,37 +84,39 @@ lVar18 = (ulonglong)*param_4 * 1000000;
 FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);
 ```
 
-The internal time unit is **microseconds**. The input tick is multiplied by 1,000,000. Given TM2020 runs at 100Hz (10ms per tick), this produces 10,000,000 microseconds per tick, consistent with the standard physics timestep.
+The internal time unit is **microseconds**. The input tick is multiplied by 1,000,000. TM2020 runs at 100Hz (10ms per tick). This produces 10,000,000 microseconds per tick.
 
-### 1.4 PhysicsStep_V2 Orchestration
+### How PhysicsStep_V2 orchestrates rigid body dynamics
 
 **Evidence**: `NSceneDyna__PhysicsStep_V2.c:1-237`
 **Confidence**: VERIFIED
 **Address**: FUN_140803920
 
-PhysicsStep_V2 is the rigid body dynamics orchestrator. Key observations:
+NSceneDyna::PhysicsStep_V2 is the rigid body dynamics orchestrator (a system that manages the core rigid body simulation, separate from vehicle-specific physics).
 
 1. **Step counter increment**: `*(param_1 + 0xf4b) += 1` (line 89)
-2. **Time scale**: `fVar16 = (float)param_2[2] * DAT_141d1fa9c` (line 133) -- `DAT_141d1fa9c` is likely 1000.0f (the max substep cap value reused as a divisor)
+2. **Time scale**: `fVar16 = (float)param_2[2] * DAT_141d1fa9c` (line 133) -- `DAT_141d1fa9c` is likely 1000.0f (the max sub-step cap value reused as a divisor)
 3. **Collision cache creation**: Calls `FUN_1407f9da0` (DynamicCollisionCreateCache) (line 150)
 4. **InternalPhysicsStep dispatch**: Calls `FUN_1408025a0` if bodies need updating (line 201)
 5. **Body force clearing**: Loop zeros `+0x8` in body array with stride `0x38` (56 bytes) (lines 214-232)
 
 **Struct Offset**: `param_1[0xf4b]` = physics step counter (8-byte aligned: byte offset 0x7A58)
 
-The body force clearing uses both strides `0x38` (56 bytes, unrolled 4x as `0xE0` = 224 bytes) and single-iteration `0x38`, confirming the per-body data structure is 56 bytes with forces at offset `+0x8`.
+The body force clearing uses both strides `0x38` (56 bytes, unrolled 4x as `0xE0` = 224 bytes) and single-iteration `0x38`. This confirms the per-body data structure is 56 bytes with forces at offset `+0x8`.
 
 ---
 
-## 2. The 7 Force Models
+## How the 7 force models dispatch
 
-### 2.1 Force Model Dispatch Switch
+The engine supports 7 force models, each implementing a different vehicle dynamics simulation. A switch at offset `+0x1790` on the vehicle model object selects which force computation function runs.
+
+**Quick version:** Models 0-4 are 2-parameter legacy models. Models 5, 6, and 0xB are 3-parameter models used by CarSport, RallyCar, SnowCar, and DesertCar.
+
+### Force model dispatch switch
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:142-162`
 **Confidence**: VERIFIED
 **Struct Offset**: `vehicle_model+0x1790` (force model type selector)
-
-The switch at offset `+0x1790` on the vehicle model object dispatches to different force computation functions:
 
 ```c
 switch(*(undefined4 *)(local_118 + 0x1790)) {
@@ -162,7 +143,7 @@ switch(*(undefined4 *)(local_118 + 0x1790)) {
 }
 ```
 
-### 2.2 Model Identification and Mapping
+### How models map to vehicle types
 
 **Evidence**: Cross-reference with TMNF `ESteerModel` enum and gbx-net field names
 **Confidence**: PLAUSIBLE (mapping inferred from TMNF analysis + TM2020 switch values)
@@ -176,7 +157,7 @@ switch(*(undefined4 *)(local_118 + 0x1790)) {
 | 6 | `FUN_14085c9e0` | [NEW in TM2020] | **SnowCar** or **RallyCar** | 3 params, new model |
 | 0xB (11) | `FUN_14086d3b0` | [NEW in TM2020] | **DesertCar** or variant | 3 params, newest model |
 
-### 2.3 Key Differences Between Models
+### How model parameters differ
 
 **Evidence**: Parameter signatures from `NSceneVehiclePhy__ComputeForces.c:142-162`
 **Confidence**: VERIFIED (signatures), PLAUSIBLE (interpretations)
@@ -185,24 +166,20 @@ switch(*(undefined4 *)(local_118 + 0x1790)) {
 ```c
 FUN_140869cd0(param_3, &local_158);  // param_3 = dyna_state, local_158 = vehicle_context
 ```
-These take only the dynamics state and vehicle context. They represent simpler force models that don't need the additional `param_4` parameter.
+These take only the dynamics state and vehicle context. They represent simpler force models.
 
 **Models 5, 6, 0xB** (3-parameter):
 ```c
 FUN_140851f00(param_3, param_4, &local_158);  // adds param_4 (tick/time parameter)
 ```
-These receive an additional parameter (passed through from ComputeForces' `param_4`, which is a tick/time value). This enables time-dependent features like:
-- Turbo decay curves
-- Time-limited boost effects
-- Cruise control timing
-- Vehicle transform transition physics
+These receive an additional parameter (a tick/time value from ComputeForces' `param_4`). This enables time-dependent features like turbo decay curves, time-limited boost effects, cruise control timing, and vehicle transform transition physics.
 
-### 2.4 The Pre-Model-6 Force Path
+### How models select different force accumulators
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:128-137`
 **Confidence**: VERIFIED
 
-Before the switch, the code selects different force source offsets based on the model:
+Before the switch, the code selects different force source offsets:
 
 ```c
 if (*(int *)(local_118 + 0x1790) < 6) {
@@ -218,17 +195,17 @@ if (*(int *)(local_118 + 0x1790) < 6) {
 }
 ```
 
-This shows that models 6+ use a different force accumulator location within the vehicle state, suggesting a fundamentally reorganized force layout. The offsets `+0x144C` and `+0x1534` are separated by `0xE8` (232 bytes), large enough for an entire wheel-set of per-wheel data.
+Models 6+ use a different force accumulator location within the vehicle state. The offsets `+0x144C` and `+0x1534` are separated by `0xE8` (232 bytes), large enough for an entire wheel-set of per-wheel data.
 
-### 2.5 Post-Switch State Reset (Checkpoint Reset Logic)
+### How checkpoint reset clears force state
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:173-199`
 **Confidence**: VERIFIED
 
-After the force model switch, the code checks if the vehicle should reset its physics state:
+After the force model switch, the code checks whether to reset the vehicle's physics state:
 
 ```c
-// Condition: model value > 5 (i.e., the subtraction 5 wraps unsigned, so > 5 means models 0-4 excluded)
+// Condition: model value > 5 (unsigned subtraction wraps, so > 5 means models 0-4 excluded)
 if ((1 < *(int *)(local_118 + 0x238) - 5U) &&
     (iVar5 = FUN_14083db20(local_150 + 0x1280), iVar5 != 0)) {
     // Reset 4 parallel wheel state blocks, each with same pattern:
@@ -252,7 +229,7 @@ if ((1 < *(int *)(local_118 + 0x238) - 5U) &&
 }
 ```
 
-**Struct Offset**: `vehicle_model+0x238` is checked against value 5 (unsigned). This is likely a game-mode or vehicle-class identifier that determines whether checkpoint resets should clear the force model.
+**Struct Offset**: `vehicle_model+0x238` is checked against value 5 (unsigned). This is likely a game-mode or vehicle-class identifier.
 
 The 4 blocks at stride `0xB8` (184 bytes) likely correspond to the 4 wheels, each containing:
 - `+0x00`: Force model type (the 0x1790 selector)
@@ -262,26 +239,26 @@ The 4 blocks at stride `0xB8` (184 bytes) likely correspond to the 4 wheels, eac
 - `+0x34`: Timer/counter
 - `+0x38`: Timer/counter
 
-### 2.6 Vehicle Type to Force Model Mapping
+### How vehicle types map to force models
 
 **Evidence**: Surface gameplay strings in `NHmsCollision__StartPhyFrame.c:100-128`, `04-physics-vehicle.md`
 **Confidence**: SPECULATIVE
-
-Based on the known vehicle types and force model count:
 
 | Vehicle | Likely Model | Reasoning |
 |:---|:---:|:---|
 | **CarSport (Stadium)** | 5 | The M6/Steer06 model from TMNF, confirmed as the full simulation model. CarSport is the primary racing car. |
 | **RallyCar** | 6 | Rally requires different tire physics (loose surface, sliding), new model with time param. |
 | **SnowCar** | 6 or 0xB | Snow physics need unique slip/ice model; may share model 6 with different tuning or use 0xB. |
-| **DesertCar** | 0xB | Desert is the most different driving style; likely the newest model (value 11). |
+| **DesertCar** | 0xB | Desert has the most different driving style; likely the newest model (value 11). |
 | **Legacy/inactive** | 0, 1, 2 | Base models for backward compatibility or simplified simulation. |
 
 ---
 
-## 3. Complete Vehicle State Structure
+## What the vehicle state structure contains
 
-### 3.1 Vehicle Entity State (accessed via `lVar6` / `lVar9`)
+The vehicle entity state structure spans at least **0x1CA0 bytes (~7,328 bytes)**. Every physics function accesses offsets within this structure. The table below aggregates all observed offsets from the 18 decompiled files.
+
+**Quick version:** The structure holds transforms, velocities, force accumulators, boost state, wheel contact history, collision flags, and simulation mode. Four per-wheel blocks at stride `0xB8` start at offset `+0x1790`.
 
 **Evidence**: All 18 decompiled files, aggregated
 **Confidence**: VERIFIED for offsets observed in code; [UNKNOWN] for gaps
@@ -324,8 +301,8 @@ Based on the known vehicle types and force model count:
 | `+0x12F0` | varies | struct | `MatchData` | ArenaPhysics_CarPhyUpdate: `FUN_141403460(uVar4, lVar3 + 0x12F0)` |
 | `+0x1314` | varies | struct | `IntermediateTransform` | BeforeMgrDynaUpdate |
 | `+0x1338` | 4 | uint | `Param` | BeforeMgrDynaUpdate: `FUN_1407be770(uVar4, *(lVar19 + 0x10), *(lVar19 + 0x1338))` |
-| `+0x1348` | 12 | vec3 | `VelocityVec1` | PhysicsStep_TM: used in substep magnitude |
-| `+0x1354` | 12 | vec3 | `VelocityVec2` | PhysicsStep_TM: used in substep magnitude |
+| `+0x1348` | 12 | vec3 | `VelocityVec1` | PhysicsStep_TM: used in sub-step magnitude |
+| `+0x1354` | 12 | vec3 | `VelocityVec2` | PhysicsStep_TM: used in sub-step magnitude |
 | `+0x1408` | 4 | int | `ForceAccumFlag` | ComputeForces, PairComputeForces: zeroed |
 | `+0x144C` | 12 | vec3 | `ForceAccum_Model0to5` | ComputeForces: read for models < 6 |
 | `+0x1534` | 12 | vec3 | `ForceAccum_Model6plus` | ComputeForces: read for models >= 6 |
@@ -371,14 +348,12 @@ Based on the known vehicle types and force model count:
 | `+0x1BDC` | 8 | f64/2xf32 | `ClearForce2` | ComputeForces, PairComputeForces: zeroed |
 | `+0x1BF0` | 4 | uint | `ArenaZoneId` | ArenaPhysics_CarPhyUpdate: written from zone lookup |
 | `+0x1C78` | 1 | char | `PlayerIndex` | BeforeMgrDynaUpdate: -1 = no player |
-| `+0x1C7C` | 4 | uint | `ContactPhyFlags` | Multiple: complex bitfield (see section 3.2) |
+| `+0x1C7C` | 4 | uint | `ContactPhyFlags` | Multiple: complex bitfield (see below) |
 | `+0x1C8C` | 4 | f32 | `ContactThreshold` | PhysicsStep_TM: compared to `DAT_141d1ef7c` |
 | `+0x1C90` | 4 | int | `SimulationMode` | BeforeMgrDynaUpdate, PhysicsStep_TM: 0=normal, 1=replay, 2=spectator, 3=normal-alt |
 | `+0x1C98` | 8 | ptr | `ReplayDataPtr` | BeforeMgrDynaUpdate: memcpy source when mode==1 |
 
-**Total estimated struct size**: at least **0x1CA0** (~7,328 bytes).
-
-### 3.2 ContactPhyFlags Bitfield (+0x1C7C)
+### ContactPhyFlags bitfield (+0x1C7C)
 
 **Evidence**: Multiple files
 **Confidence**: VERIFIED for bit positions, PLAUSIBLE for meanings
@@ -396,7 +371,7 @@ Bit 12  (0x1000): [UNKNOWN] -- checked with 0x1800 in PhysicsStep_TM
 Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return
 ```
 
-### 3.3 StatusFlags Low Nibble (+0x128C & 0xF)
+### StatusFlags low nibble (+0x128C & 0xF)
 
 **Evidence**: `PhysicsStep_TM.c:68`, `ComputeForces.c:65`, `BeforeMgrDynaUpdate.c:97`, `ExtractVisStates.c:37`
 **Confidence**: VERIFIED
@@ -408,12 +383,10 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return
 | 2 | Excluded | Skipped entirely in PhysicsStep_TM (line 68) |
 | 3 | [UNKNOWN] | Checked as `(nibble - 2) < 2` in BeforeMgrDynaUpdate (values 2,3) |
 
-### 3.4 Vehicle Model Structure (accessed via vehicle+0x88)
+### Vehicle model structure (accessed via vehicle+0x88)
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:51-56, 112-128`
 **Confidence**: VERIFIED
-
-Key offsets on the model object (accessed through `local_118 = *(longlong *)(lVar6 + 0x88)`):
 
 | Offset | Type | Field | Evidence |
 |:---|:---:|:---|:---|
@@ -423,12 +396,10 @@ Key offsets on the model object (accessed through `local_118 = *(longlong *)(lVa
 | `+0x30D8` | varies | [UNKNOWN] | ComputeForces: `FUN_140841ca0(uVar3, lVar6, local_118 + 0x30D8, param_5)` |
 | `+0x31A8` | varies | [UNKNOWN] | ComputeForces: `local_168 = local_118 + 0x31A8` |
 
-### 3.5 Vehicle Model Class (accessed via vehicle+0x1BB0)
+### Vehicle model class (accessed via vehicle+0x1BB0)
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:54,66,106`
 **Confidence**: VERIFIED
-
-Key offsets on the vehicle model class pointer:
 
 | Offset | Type | Field | Evidence |
 |:---|:---:|:---|:---|
@@ -436,12 +407,12 @@ Key offsets on the vehicle model class pointer:
 | `+0x2B0` | ptr | TransformVtablePtr | PhysicsStep_TM: `(**(code **)(*plVar10 + 0x28))(plVar10, local_f0)` |
 | `+0xE0` | f32 | ModelScale | ComputeForces: multiplied into boost force |
 
-### 3.6 Transform Copy Pattern
+### How the transform copy preserves previous state
 
 **Evidence**: `PhysicsStep_TM.c:199-215`, `ComputeForces.c:200-218`, `PairComputeForces.c:43-90`
 **Confidence**: VERIFIED
 
-All three functions contain identical transform copy code, copying 112 bytes from `+0x90` to `+0x104`:
+All three functions copy 112 bytes from `+0x90` to `+0x104`:
 
 ```c
 // Copy current transform to previous transform (28 4-byte values = 112 bytes)
@@ -451,13 +422,15 @@ All three functions contain identical transform copy code, copying 112 bytes fro
 *(lVar + 0x174) = *(lVar + 0x100);
 ```
 
-This is a 4x4 matrix (with possible 3x4 + extras) representing the vehicle's world transform. The copy to "previous" happens at the START of each physics step, preserving the last frame's position for interpolation and collision backtracking.
+This is a 4x4 matrix (with possible 3x4 + extras) representing the vehicle's world transform. The copy to "previous" happens at the START of each physics tick, preserving the last frame's position for interpolation and collision backtracking.
 
 ---
 
-## 4. Tire/Wheel Contact Model
+## How the tire/wheel contact model works
 
-### 4.1 Contact Point Processing
+Contact points, wheel contact history, boost forces, and speed clamping all interact to produce the vehicle's tire physics behavior.
+
+### Contact point processing
 
 **Evidence**: `NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c:1-51`
 **Confidence**: VERIFIED
@@ -494,9 +467,9 @@ FUN_14010be60(param_1 + 0x1a8);   // [UNKNOWN] buffer
 | `+0x38` | ptr | Referenced object pointer (for vehicle-vehicle) |
 | ... | | [UNKNOWN remaining fields] |
 
-**Key observation**: There are at least 7 separate contact buffers (at param_1 offsets 0x188, 0x198, 0x1A8, 0x1B8, 0x1C8, 0x1D8, 0x1E8), each cleared after processing. This suggests categorized contact types: wheel-ground, body-body, body-wall, etc.
+At least 7 separate contact buffers exist (at param_1 offsets 0x188, 0x198, 0x1A8, 0x1B8, 0x1C8, 0x1D8, 0x1E8). Each is cleared after processing. This suggests categorized contact types: wheel-ground, body-body, body-wall, etc.
 
-### 4.2 Wheel Contact History (Circular Buffer)
+### How the wheel contact history ring buffer works
 
 **Evidence**: `NSceneVehiclePhy__PhysicsStep_BeforeMgrDynaUpdate.c:159-192`
 **Confidence**: VERIFIED
@@ -534,9 +507,9 @@ for (uVar11 = 1; uVar11 < uVar17; uVar11++) {
 **Struct Offset**: `vehicle+0x1594` = circular buffer header (8 bytes header + 20 bytes data)
 **Struct Offset**: `vehicle+0x15B0` = contact state change counter (oscillation detection)
 
-This is used for detecting rapid contact/airborne oscillation (a vehicle bouncing), which affects game logic decisions like fragile surface checks.
+The engine uses this buffer to detect rapid contact/airborne oscillation (a vehicle bouncing). The oscillation count affects game logic decisions like fragile surface checks.
 
-### 4.3 Boost/Turbo Force Application
+### How boost/turbo force ramps up
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:89-111`
 **Confidence**: VERIFIED
@@ -576,7 +549,7 @@ The boost force is:
 - **Direction**: applied via `FUN_1407bdf40` (a force-at-direction function on the dyna manager)
 - **Model-scaled**: multiplied by the model object's `+0xE0` field (a global scale factor)
 
-### 4.4 Speed Clamping
+### How speed clamping limits velocity
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:112-126`
 **Confidence**: VERIFIED
@@ -596,18 +569,14 @@ if ((fVar9 * fVar9 < fVar8) && (DAT_141d1ed34 < fVar9)) {
 }
 ```
 
-The speed clamping:
-1. Reads max speed from model at `+0x2F0`
-2. Computes velocity magnitude squared
-3. If exceeds max speed AND max speed > threshold (`DAT_141d1ed34`), scales velocity to exactly match max speed
-4. Writes back the clamped velocity
+The speed clamping reads max speed from model at `+0x2F0`, computes velocity magnitude squared, and scales the velocity vector to exactly match max speed if it exceeds the limit.
 
-### 4.5 Suspension and Wheel Initialization (Pre-Model Update)
+### How suspension and wheel state initialize before force computation
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:127,140-141`
 **Confidence**: VERIFIED
 
-Before the force model switch, two setup functions are called:
+Before the force model switch, two setup functions run:
 
 ```c
 FUN_140841ca0(uVar3, lVar6, local_118 + 0x30d8, param_5);  // line 127
@@ -617,15 +586,15 @@ FUN_1408426e0(lVar6, param_5);                               // line 141
 
 - `FUN_140841ca0`: Takes the dyna manager, vehicle, model offset `+0x30D8`, and tick. This likely initializes per-wheel contact state and surface detection.
 - `FUN_140841f40`: Takes the arena, dyna manager, vehicle, and the force vector (from either `+0x144C` or `+0x1534`). This likely applies pre-computed suspension forces.
-- `FUN_1408426e0`: Takes just the vehicle and tick. This likely updates wheel rotation/position state.
+- `FUN_1408426e0`: Takes the vehicle and tick. This likely updates wheel rotation/position state.
 
-### 4.6 PairComputeForces (Vehicle-to-Vehicle Interaction)
+### How PairComputeForces handles vehicle-to-vehicle interaction
 
 **Evidence**: `NSceneVehiclePhy__PairComputeForces.c:1-93`
 **Confidence**: VERIFIED
 **Address**: FUN_140842ed0
 
-When two vehicles collide, `PairComputeForces` handles the interaction. It:
+When two vehicles collide, `PairComputeForces` handles the interaction:
 
 1. Resolves both vehicle entities via `FUN_1407bea40` (lines 25-29)
 2. Fetches velocity, position, and force data for BOTH vehicles (lines 30-36)
@@ -641,19 +610,19 @@ When two vehicles collide, `PairComputeForces` handles the interaction. It:
    - `+0x1578` = zero
    - `+0x1408` = 0 (clear accumulator flag)
 
-This function does NOT compute forces itself -- it prepares two-body state for the dynamics solver to handle the collision response.
+This function does NOT compute forces itself. It prepares two-body state for the dynamics solver to handle the collision response.
 
 ---
 
-## 5. Collision System
+## How the collision system works
 
-### 5.1 StartPhyFrame (Frame Initialization)
+The collision system initializes each frame, creates a collision cache, merges redundant contacts, and feeds the friction solver.
+
+### StartPhyFrame initializes each physics frame
 
 **Evidence**: `NHmsCollision__StartPhyFrame.c:1-57`
 **Confidence**: VERIFIED
 **Address**: FUN_1402a9c60
-
-Each physics frame begins with collision initialization:
 
 ```c
 // 1. Update static collision world if needed
@@ -682,50 +651,30 @@ for each item in set at param_1 + 0xA58:
     FUN_140194860();
 ```
 
-**Key structure**: Each collidable item has:
+Each collidable item has:
 - `+0x74`: Current position (3 x float32 = vec3)
 - `+0x94`: Previous position (3 x float32 = vec3, copied from current at frame start)
 - `+0xA4`: Hit body index (uint, 0xFFFFFFFF = no hit)
 
-Two separate collision item sets exist at manager offsets `+0x9C8` and `+0xA58`, suggesting separation of static-collidable and dynamic-collidable objects.
+Two separate collision item sets exist at manager offsets `+0x9C8` and `+0xA58`. This suggests separation of static-collidable and dynamic-collidable objects.
 
-### 5.2 DynamicCollisionCreateCache
+### How DynamicCollisionCreateCache builds the solver cache
 
 **Evidence**: `NSceneDyna__DynamicCollisionCreateCache.c:1-88`
 **Confidence**: VERIFIED
 **Address**: FUN_1407f9da0
 
-This function creates a collision cache for the dynamics solver. For each dynamic body:
+For each dynamic body, a 56-byte cache entry is created:
 
 ```c
-// Cache entry is 0x38 bytes (56 bytes = 14 uint32s), stride matches body struct
-
 // Read collision shape type and filter masks
 puVar7[8] = *(uint *)(&DAT_141fabc20 + *(byte *)(lVar2 + 0x11) * 4)
           & ~*(uint *)(lVar2 + 0x18);     // collision_layer_mask & ~exclusion_mask
-
-// Copy AABB or position data
-puVar7[0..3] = local_48/uStack_40;        // AABB min or position
 
 // Compute collision layer bit
 if (*(char *)(lVar2 + 0x11) != 0) {
     iVar9 = 1 << (*(char *)(lVar2 + 0x11) - 1);  // layer bit from layer index
 }
-puVar7[9] = iVar9;                         // collision_layer_bit
-
-// Copy additional collision properties
-puVar7[10] = *(lVar2 + 0x14);             // [UNKNOWN] collision property
-puVar7[11] = *(lVar2 + 0xa4);             // hit body index reference
-
-// Copy collision type byte
-*(byte *)(puVar7 + 0xc) = *(byte *)(lVar2 + 0x11);  // collision type
-
-// Check if body is sleeping or static
-bVar5 = (body_is_sleeping || body_has_no_solver_pair) ? 1 : 0;
-bVar6 = (body_has_kinematic_flag) ? 2 : 0;
-
-// Clear impulse accumulators
-*(puVar7 + 4..7) = 0;                     // 16 bytes of impulse data cleared
 
 // Check for compound collision shape (type 0xD)
 if (*(int *)(shape + 0xC) == 0xD && *(int *)(shape + 0x58) != 0) {
@@ -747,22 +696,20 @@ if (*(int *)(shape + 0xC) == 0xD && *(int *)(shape + 0x58) != 0) {
 | 0x30 | 1 | Collision type byte |
 | 0x31 | 1 | Flags (sleep | kinematic) |
 
-**Layer system**: The global table at `DAT_141fabc20` maps collision type bytes (0x00-0xFF) to layer masks. The actual mask is computed as `layer_table[type] & ~body_exclusion_mask`, allowing per-body collision filtering.
+The global table at `DAT_141fabc20` maps collision type bytes (0x00-0xFF) to layer masks. The actual mask is computed as `layer_table[type] & ~body_exclusion_mask`, allowing per-body collision filtering.
 
-### 5.3 Contact Merging Algorithm
+### How the contact merging algorithm reduces redundant contacts
 
 **Evidence**: `NHmsCollision__MergeContacts.c:1-271`
 **Confidence**: VERIFIED
 **Address**: FUN_1402a8a70
 
-The contact merging algorithm reduces redundant contact points to improve solver stability:
+The contact merging algorithm reduces redundant contact points to improve solver stability.
 
 **Parameters**:
 - `param_1`: Contact manager (array + count)
-- `param_2`: Normal dot threshold (float, minimum dot product for normals to be "similar")
-- `param_3`: Distance threshold (float, maximum distance between contact points)
-
-**Algorithm**:
+- `param_2`: Normal dot threshold (minimum dot product for normals to be "similar")
+- `param_3`: Distance threshold (maximum distance between contact points)
 
 ```
 Phase 1: Find merge candidates
@@ -807,12 +754,7 @@ Phase 3: Remove consumed contacts
     Remove from contact array in reverse order (FUN_1402aa090)
 ```
 
-**Key constants**:
-- `DAT_141d1ecc4`: Minimum normal length squared (prevents zero-division)
-- `DAT_141d1fc24`: Maximum normal length squared (sanity check)
-- `DAT_141d1f3c8`: Normal scale factor (likely 1.0f for unit normalization)
-
-**Contact structure fields used in merging** (from the contact array with stride 0x58 = 88 bytes):
+**Contact structure fields used in merging** (stride 0x58 = 88 bytes):
 
 | Offset | Purpose | Accessed by |
 |:---:|:---|:---|
@@ -835,16 +777,15 @@ Phase 3: Remove consumed contacts
 | `+0x52` | Contact type (short) | Checked for 0x0D (compound) |
 | `+0x54` | Contact flags | Bit 1 = has alternate; bit 0 = [UNKNOWN] |
 
-### 5.4 Friction Solver Configuration
+### How the friction solver is configured
 
 **Evidence**: `FrictionIterCount_Config.c:1-105`
 **Confidence**: VERIFIED
 **Address**: FUN_1407f3fc0
 
-The friction solver is configured via the `NSceneDyna::SSolverParams` struct (0x2C = 44 bytes):
+The friction solver uses the `NSceneDyna::SSolverParams` struct (0x2C = 44 bytes):
 
 ```c
-// Struct: NSceneDyna::SSolverParams (44 bytes)
 FUN_1402ea9e0(*puVar1, "NSceneDyna::SSolverParams", 0x2c, 0, 0, 0, 0);
 ```
 
@@ -862,20 +803,20 @@ FUN_1402ea9e0(*puVar1, "NSceneDyna::SSolverParams", 0x2c, 0, 0, 0, 0);
 | `0x24` | bool | `UseConstraints2` | Whether to use second-generation constraints |
 | `0x28` | float | `MinVelocityForRestitution` | Minimum velocity to apply restitution |
 
-**Key insight**: The solver has **separate iteration counts** for static friction, dynamic friction, velocity solving, and position correction. This is a **sequential impulse / Gauss-Seidel style** constraint solver with configurable convergence per category.
+The solver has **separate iteration counts** for static friction, dynamic friction, velocity solving, and position correction. This is a **sequential impulse / Gauss-Seidel style** constraint solver with configurable convergence per category.
 
-The note `"auto AllowedPen if negative"` (line 81) means a negative AllowedPen value triggers automatic computation of the penetration tolerance.
+A negative `AllowedPen` value triggers automatic computation of the penetration tolerance.
 
 ---
 
-## 6. Surface Effects
+## What surface effects exist
 
-### 6.1 Complete Surface Gameplay Effect Enum
+Surface effects control gameplay behavior when a vehicle touches a surface. The `EPlugSurfaceGameplayId` enum (a set of string identifiers that the engine maps to gameplay behaviors) defines all available effects.
+
+### Complete surface gameplay effect enum
 
 **Evidence**: `NHmsCollision__StartPhyFrame.c:100-128` (string table)
 **Confidence**: VERIFIED (strings confirmed at addresses)
-
-The `EPlugSurfaceGameplayId` enum values, in address order:
 
 | String Address | Effect Name | Description |
 |:---|:---|:---|
@@ -902,20 +843,7 @@ The `EPlugSurfaceGameplayId` enum values, in address order:
 | `0x141be1398` | `VehicleTransform_Reset` | Transforms vehicle back to Stadium car |
 | `0x141be13b0` | `ReactorBoost2_Oriented` | Directional reactor boost level 2 |
 
-### 6.2 Turbo Implementation Details
-
-**Evidence**: `NSceneVehiclePhy__ComputeForces.c:89-111`
-**Confidence**: VERIFIED
-
-The turbo system in TM2020 uses the same boost mechanism described in section 4.3:
-
-- **Turbo (level 1)**: Sets `vehicle+0x16E0` (duration), `+0x16E4` (strength), `+0x16E8` (start time)
-- **Turbo2 (level 2)**: Same offsets, different duration/strength values
-- **Turbo3Roulette**: Randomized turbo that selects from `TurboRoulette_1`, `_2`, `_3` with different strengths
-
-The force is applied linearly over the duration: `force(t) = (t / duration) * strength * modelScale`.
-
-### 6.3 Fragile Surface Check
+### How the fragile surface check triggers breakage
 
 **Evidence**: `PhysicsStep_TM.c:191-195`
 **Confidence**: VERIFIED
@@ -931,15 +859,15 @@ if ((((*(uint *)(lVar9 + 0x1c7c) & 0x1800) == 0x1800) &&
 The fragile check requires ALL THREE conditions:
 1. **Flags 0x1800 both set**: Both collision flags at bits 11 and 12 must be active
 2. **Threshold exceeded**: Float at `vehicle+0x1C8C` must exceed global `DAT_141d1ef7c` (a collision severity threshold)
-3. **Status nibble check**: The expression `(nibble - 2)` uses unsigned arithmetic, so `1 < (nibble - 2)` passes for nibble values **0, 1, and 4+**. Only nibble values 2 and 3 are excluded. (Nibble values 0 and 1 cause unsigned underflow: e.g., 0-2 = 0xFFFFFFFE, and `1 < 0xFFFFFFFE` is true in unsigned comparison.)
+3. **Status nibble check**: `(nibble - 2)` uses unsigned arithmetic, so `1 < (nibble - 2)` passes for nibble values **0, 1, and 4+**. Values 2 and 3 are excluded.
 
 `FUN_1407d2870` is the crash/reset handler that triggers the fragile vehicle breakage.
 
 ---
 
-## 7. Gravity and Sub-stepping
+## How gravity and sub-stepping work
 
-### 7.1 Gravity Computation
+### Gravity computation
 
 **Evidence**: `NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c:1-103`
 **Confidence**: VERIFIED
@@ -985,7 +913,7 @@ for each body i in 0..param_1:
         force_accumulator = (0, 0, 0, 0, 0, 0)
 ```
 
-### 7.2 Sleep Detection Constants
+### Sleep detection constants
 
 **Evidence**: `NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c:27,40-57`
 **Confidence**: VERIFIED
@@ -996,14 +924,9 @@ for each body i in 0..param_1:
 | `DAT_141ebcd00` | Sleep velocity damping factor | float |
 | `DAT_141ebcd04` | Sleep velocity threshold (linear m/s; squared by code before comparison) | float |
 
-The sleep system:
-1. Check if sleep detection is enabled (`DAT_141ebccfc != 0`)
-2. Compute velocity magnitude squared
-3. If below threshold, multiply each component by damping factor (< 1.0)
-4. Applied separately to linear and angular velocity
-5. Does NOT immediately zero velocity -- gradual damping over multiple frames
+The sleep system applies gradual damping over multiple frames when velocity is below the threshold. It does NOT immediately zero velocity.
 
-### 7.3 Adaptive Sub-stepping Algorithm
+### How the adaptive sub-stepping algorithm works
 
 **Evidence**: `PhysicsStep_TM.c:71-167`
 **Confidence**: VERIFIED
@@ -1038,15 +961,6 @@ Step 6: Sub-step loop (N-1 iterations):
 Step 7: Final step with accumulated remainder
 ```
 
-### 7.4 Sub-stepping Key Parameters
-
-| Parameter | Value | Evidence |
-|:---|:---|:---|
-| Maximum substeps | **1000** (0x3E9 - 1 = 0x3E8) | `if (uVar16 >= 0x3E9)` then cap at 999 |
-| Divisor at +0x54 | float from body state | `*(float *)(lVar15 + 0x54)` |
-| Time constant | `DAT_141d1fa9c` | Used as divisor when capping (likely 1000.0f) |
-| Microsecond conversion | `_DAT_141d1fe58` (double) | Multiplied by sub_dt for time advance |
-
 **Sub-step formula**:
 ```
 total_speed = |linear_vel| + |angular_vel_body| + |angular_vel1| + |angular_vel2|
@@ -1057,9 +971,9 @@ sub_dt = dt / num_substeps
 
 ---
 
-## 8. Water Physics
+## How water physics works
 
-### 8.1 Water Force Computation
+### Water force computation
 
 **Evidence**: `NSceneDyna__ComputeWaterForces.c:1-53`
 **Confidence**: VERIFIED
@@ -1081,9 +995,9 @@ if (param_8 != 0) {
 }
 ```
 
-### 8.2 Water Model Architecture
+### Water model architecture
 
-Two-tier water lookup:
+The engine uses a two-tier water lookup:
 ```
 Body collision item -> offset +0x128 -> custom water reference
     If null:
@@ -1092,17 +1006,17 @@ Body collision item -> offset +0x128 -> custom water reference
         Custom water -> *(item+0x128) + 0x38 -> specific water shape
 ```
 
-The `+0x128` offset on the collision item is a pointer to a water-zone association, allowing bodies in different water volumes to experience different water properties.
+The `+0x128` offset on the collision item is a pointer to a water-zone association. This allows bodies in different water volumes to experience different water properties.
 
 ---
 
-## 9. Tuning Parameters and Numeric Constants
+## What tuning parameters and numeric constants control
 
-### 9.1 Global Constants from Decompiled Code
+### Global constants from decompiled code
 
 | Address | Context | Likely Purpose | Type | Evidence |
 |:---|:---|:---|:---:|:---|
-| `DAT_141d1fa9c` | PhysicsStep_TM: `/ DAT_141d1fa9c` when cap at 1000 | 1000.0f (max substep count) | float | `if (uVar16 >= 0x3E9)` then divide by this |
+| `DAT_141d1fa9c` | PhysicsStep_TM: `/ DAT_141d1fa9c` when cap at 1000 | 1000.0f (max sub-step count) | float | `if (uVar16 >= 0x3E9)` then divide by this |
 | `DAT_141d1fe58` | PhysicsStep_TM: `dVar11 = (double)fVar26 * _DAT_141d1fe58` | 1,000,000.0 (microsecond conversion) | double | Converts sub_dt seconds to microseconds |
 | `DAT_141d1ed34` | ComputeForces: speed clamping threshold | Min speed threshold for clamping | float | `DAT_141d1ed34 < fVar9` |
 | `DAT_141d1ee10` | PhysicsStep_TM: used in force loop | [UNKNOWN] constant | float | Used as parameter to step functions |
@@ -1119,7 +1033,7 @@ The `+0x128` offset on the collision item is a pointer to a water-zone associati
 | `DAT_141e64060` | Multiple: stack cookie | Security check cookie | uint64 | `local_d8 = DAT_141e64060 ^ (ulonglong)stack` |
 | `DAT_141fabc20` | DynCollision: layer table | Collision layer mask lookup table | uint[] | `*(DAT_141fabc20 + type * 4)` |
 
-### 9.2 Tuning Coefficient System
+### Tuning coefficient system
 
 **Evidence**: `Tunings_CoefFriction_CoefAcceleration.c:1-48`
 **Confidence**: VERIFIED
@@ -1132,62 +1046,64 @@ The `NGameSlotPhy::SMgr` struct (0x90 = 144 bytes):
 | `0x5C` | float | `Tunings.CoefAcceleration` | Global acceleration multiplier |
 | `0x60` | float | `Tunings.Sensibility` | [UNKNOWN] Sensibility tuning |
 
-### 9.3 Solver Parameter Structure
+### Hardcoded integer constants
 
-Complete SSolverParams layout (44 bytes):
-
-| Offset | Type | Name | Typical Range |
+| Value | Hex | Context | Meaning |
 |:---:|:---:|:---|:---|
-| `0x00` | int | `FrictionStaticIterCount` | 1-20 |
-| `0x04` | int | `FrictionDynaIterCount` | 1-20 |
-| `0x08` | int | `VelocityIterCount` | 1-20 |
-| `0x0C` | int | `PositionIterCount` | 1-10 |
-| `0x10` | float | `DepenImpulseFactor` | 0.0 - 1.0 |
-| `0x14` | float | `MaxDepenVel` | > 0.0 |
-| `0x18` | bool | `EnablePositionConstraint` | 0 or 1 |
-| `0x1C` | float | `AllowedPen` | negative = auto |
-| `0x20` | int | `VelBiasMode` | 0, 1, 2... |
-| `0x24` | bool | `UseConstraints2` | 0 or 1 |
-| `0x28` | float | `MinVelocityForRestitution` | > 0.0 |
+| 1000000 | 0xF4240 | PhysicsStep_TM:63, ProcessContactPoints:31 | Tick to microsecond multiplier |
+| 1001 | 0x3E9 | PhysicsStep_TM:126 | Max sub-step count + 1 (comparison threshold) |
+| 999 | 0x3E7 | PhysicsStep_TM:131 | Actual max sub-step count |
+| 88 | 0x58 | ProcessContactPoints:22,30 | Contact point struct stride |
+| 56 | 0x38 | PhysicsStep_V2:227,231, ComputeExternalForces:26 | Body data struct stride |
+| 224 | 0xE0 | PhysicsStep_V2:220 | 4x body stride (loop unrolling) |
+| 184 | 0xB8 | ComputeForces reset blocks | Per-wheel state block stride |
+| 44 | 0x2C | FrictionIterCount_Config:21 | SSolverParams struct size |
+| 144 | 0x90 | Tunings registration:21 | NGameSlotPhy::SMgr struct size |
+| 2168 | 0x878 | BeforeMgrDynaUpdate:107 | Replay state copy size |
+| 20 | 0x14 | BeforeMgrDynaUpdate (circular buffer) | Wheel contact history buffer size |
+| 13 | 0x0D | DynCollisionCache:77 | Compound collision shape type ID |
+| 0xFFFFFFFF | -1 | Multiple (boost start, hit body, body id) | Sentinel: "no value" / "uninitialized" |
 
-### 9.4 Known Numeric Constants from Code
+### Bitfield constants
 
-| Constant | Value | Context |
-|:---|:---:|:---|
-| `0x3E9` | 1001 | Max substep count + 1 (PhysicsStep_TM) |
-| `999` | 999 | Actual max substep count (PhysicsStep_TM) |
-| `1000000` | 1,000,000 | Tick to microsecond conversion |
-| `0x58` | 88 | Contact point stride (bytes) |
-| `0x38` | 56 | Body data stride (bytes) |
-| `0xE0` | 224 | 4 * body stride (unrolled loop) |
-| `0xB8` | 184 | Per-wheel state block stride (ComputeForces reset) |
-| `0x2C` | 44 | SSolverParams struct size |
-| `0x90` | 144 | NGameSlotPhy::SMgr struct size |
-| `0x878` | 2168 | Replay state copy size |
-| `0x14` | 20 | Wheel contact history buffer size |
-| `0x0D` | 13 | Compound collision shape type |
-| `0x0F` | 15 | Mask value for status nibble extraction |
-| `0x1800` | Bits 11+12 | Fragile contact flags mask |
-| `0xE0` | Bits 5-7 | Contact type flags mask |
-| `0xFFFFF5FF` | ~(bits 9-10) | Physics flags clear mask |
-| `0xFFFFE1F` | ~(bits 5-7, bit 8) | Contact type clear mask |
+| Value | Bits | Context | Meaning |
+|:---:|:---|:---|:---|
+| 0x0F | bits 0-3 | StatusFlags nibble extraction | Low nibble mask for vehicle state |
+| 0x01 | bit 0 | PhyFlags (+0x1BC0) | [UNKNOWN] physics flag |
+| 0x02 | bit 1 | Body flags, contact flags | Kinematic/static body flag |
+| 0x04 | bit 2 | ContactPhyFlags (+0x1C7C) | DisableEvents flag |
+| 0x08 | bit 3 | ContactPhyFlags (+0x1C7C) | HasContactThisTick |
+| 0x10 | bit 4 | ContactPhyFlags (+0x1C7C) | SubStepCollisionDetected |
+| 0x20 | bit 5 | Body flags (DynCollisionCache) | Kinematic flag for cache |
+| 0xE0 | bits 5-7 | ContactPhyFlags (+0x1C7C) | ContactType field |
+| 0x0600 | bits 9-10 | ContactPhyFlags (+0x1C7C) | Cleared each tick in PhysicsStep_TM |
+| 0x0800 | bit 11 | ContactPhyFlags (+0x1C7C) | Part of fragile check (with bit 12) |
+| 0x1000 | bit 12 | ContactPhyFlags (+0x1C7C) | Part of fragile check (with bit 11) |
+| 0x1800 | bits 11-12 | PhysicsStep_TM:191 | Both bits must be set for fragile break |
+| 0x10000 | bit 16 | ContactPhyFlags (+0x1C7C) | SubStepCollisionResult |
+| 0x400 | bit 10 | Players_BeginFrame:24 | Arena state flag check |
+| 0xFFFFF5FF | ~(0x0600) | PhysicsStep_TM:69 | Clears bits 9-10 |
+| 0xFFFFE1F | ~(0x1E0) | BeforeMgrDynaUpdate:151 | Clears bits 5-8 |
+| 0xFFFFFFFD | ~(0x02) | MergeContacts:236 | Clears "needs merge" flag |
 
 ---
 
-## 10. Determinism
+## How determinism is guaranteed
 
-### 10.1 Fixed Timestep Architecture
+The physics engine ensures identical results across runs through fixed timesteps, integer timing, and ordered iteration.
+
+### Fixed timestep architecture
 
 **Evidence**: `PhysicsStep_TM.c:63`, `NSceneDyna__PhysicsStep.c:15`, TMNF diary
 **Confidence**: PLAUSIBLE
 
-The physics engine uses a **fixed 100Hz tick rate** (10ms per tick). Key determinism features:
+The physics engine uses a **fixed 100Hz tick rate** (10ms per tick):
 
 1. **Integer tick counter**: All timing is driven by integer tick counts, not floating-point accumulated time
-2. **Tick-to-microseconds**: `tick * 1000000` uses integer multiplication, avoiding float precision issues in time tracking
+2. **Tick-to-microseconds**: `tick * 1000000` uses integer multiplication, avoiding float precision issues
 3. **Adaptive sub-stepping**: Within each fixed tick, sub-stepping is deterministic given the same velocity state
 
-### 10.2 Consistent Floating Point Patterns
+### Consistent floating point patterns
 
 1. **Magnitude computation**: Always uses `x*x + y*y + z*z` then `SQRT()`, never `length()` utilities that might vary
 2. **Negative sqrt guard**: Every sqrt call is preceded by a `< 0.0` check:
@@ -1200,7 +1116,7 @@ The physics engine uses a **fixed 100Hz tick rate** (10ms per tick). Key determi
    ```
 3. **FUN_14195dd00**: A "safe sqrt" function called when the value is negative. Likely returns `sqrt(abs(x))` or `0.0f`.
 
-### 10.3 Sub-step Remainder Handling
+### Sub-step remainder handling
 
 The sub-step loop processes `N-1` equal steps, then one final step with the accumulated remainder:
 
@@ -1210,11 +1126,11 @@ total = (N-1) * sub_dt + remainder
       = dt  (exactly)
 ```
 
-### 10.4 Platform Considerations
+### Platform considerations
 
 The code uses standard `float` (32-bit IEEE 754) throughout, with occasional `double` (64-bit) for time conversion. The x64 target uses SSE for floating-point, which provides deterministic results within the same platform. The `SQRT()` macro maps to the SSE `sqrtss` instruction, which is IEEE 754 compliant.
 
-### 10.5 Ordering Guarantees
+### Ordering guarantees
 
 Bodies and vehicles are processed in array order (sequential iteration, no parallel dispatch):
 
@@ -1235,15 +1151,13 @@ do {
 
 ---
 
-## 11. Differences from TMNF
-
-### 11.1 Summary Table
+## How TM2020 differs from TMNF
 
 | Feature | TMNF | TM2020 |
 |:---|:---|:---|
 | Force model count | 4 (cases 3,4,5,default) | 7 (cases 0-2,3,4,5,6,0xB) |
-| Max substeps | 10,000 | 1,000 |
-| Velocity inputs for substep calc | 2 (linear + angular) | 4 (linear + 3 angular) |
+| Max sub-steps | 10,000 | 1,000 |
+| Velocity inputs for sub-step calc | 2 (linear + angular) | 4 (linear + 3 angular) |
 | Vehicle state struct size | ~2,112 bytes | ~7,328 bytes |
 | Architecture | x86 (32-bit, x87 FPU) | x64 (64-bit, SSE) |
 | Time conversion | `tick * 0.001` (ms) | `tick * 1000000` (us) |
@@ -1253,7 +1167,7 @@ do {
 | Boost force curve | Decays: starts high, decreases to 0 | Ramps UP: starts at 0, increases to max |
 | Vehicle types | Stadium only | Stadium + Rally + Snow + Desert |
 
-### 11.2 Critical Boost Force Direction Change
+### The critical boost force direction change
 
 **Evidence**: `NSceneVehiclePhy__ComputeForces.c:105-106` vs TMNF diary
 **Confidence**: VERIFIED
@@ -1261,15 +1175,15 @@ do {
 **TMNF**: `boost_force = (1.0 - t/duration) * strength` -- force DECAYS from max to zero
 **TM2020**: `boost_force = (t/duration) * strength * modelScale` -- force RAMPS UP from zero to max
 
-This means in TM2020, the car accelerates MORE as the boost is about to expire. This is a fundamental behavioral change from TMNF.
+In TM2020, the car accelerates MORE as the boost is about to expire. This is a fundamental behavioral change from TMNF.
 
 ---
 
-## 12. Curious Questions Answered
+## Answers to common physics questions
 
-### Q1: "I just hit a turbo pad. What EXACTLY happens?"
+### What happens when you hit a turbo pad?
 
-#### The Complete Turbo Code Path
+The complete turbo code path:
 
 ```
 Surface Contact Detection
@@ -1293,7 +1207,7 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
 
 1. **First tick with boost pending** (line 89): The code checks `if (*(int *)(lVar6 + 0x16e8) == -1)`. If the boost start time is uninitialized (`0xFFFFFFFF`), it records the current tick: `*(uint *)(lVar6 + 0x16e8) = param_5`.
 
-2. **Event dispatch** (lines 91-99): If the boost has a non-zero duration AND the arena has an event callback AND events are not disabled (bit 2 of `+0x1C7C` is clear) AND the vehicle has a valid player index, it dispatches a boost event via `FUN_1407d6200()`. The event data includes the vehicle ID (`+0x1280`), a magic float `1.12104e-44` (likely a type indicator, possibly IEEE representation of an integer), and the tick stamp.
+2. **Event dispatch** (lines 91-99): If the boost has a non-zero duration AND the arena has an event callback AND events are not disabled (bit 2 of `+0x1C7C` is clear) AND the vehicle has a valid player index, it dispatches a boost event via `FUN_1407d6200()`.
 
 3. **Force computation** (lines 101-108): Each tick while `start_time <= current_tick <= start_time + duration`:
    ```c
@@ -1302,9 +1216,7 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
    FUN_1407bdf40(dyna_mgr, body_id, &force_vec);
    ```
 
-4. **Force direction**: The force vector `local_b8` is initialized as a scalar and applied via `FUN_1407bdf40`, which applies force along the body's forward direction (inferred from it being a directional force function on the dynamics manager).
-
-#### The Ramp-Up Controversy -- RESOLVED
+4. **Force direction**: The force vector `local_b8` is initialized as a scalar and applied via `FUN_1407bdf40`, which applies force along the body's forward direction.
 
 The decompiled code at `ComputeForces.c:105` is unambiguous:
 
@@ -1313,13 +1225,11 @@ local_b8 = ((float)(param_5 - uVar2) / (float)*(uint *)(lVar6 + 0x16e0)) *
            *(float *)(lVar6 + 0x16e4) * *(float *)(*(longlong *)(lVar6 + 0x1bb0) + 0xe0);
 ```
 
-This computes `(elapsed / duration) * strength * modelScale`. When `elapsed = 0`, force = 0. When `elapsed = duration`, force = `strength * modelScale`. **The boost force linearly ramps UP over its duration.** This is the opposite of TMNF's decay model.
+This computes `(elapsed / duration) * strength * modelScale`. When `elapsed = 0`, force = 0. When `elapsed = duration`, force = `strength * modelScale`. **The boost force linearly ramps UP over its duration.**
 
-**Implication for gameplay**: The initial "kick" from a turbo pad is zero. The force builds gradually, reaching maximum at the instant the boost expires. This creates a smooth acceleration curve rather than an instant jolt.
+The initial "kick" from a turbo pad is zero. The force builds gradually, reaching maximum at the instant the boost expires. This creates a smooth acceleration curve rather than an instant jolt.
 
-#### Turbo Levels
-
-From the `EPlugSurfaceGameplayId` enum:
+**Turbo levels** from the `EPlugSurfaceGameplayId` enum:
 
 | Level | String | Duration/Strength |
 |:---:|:---|:---|
@@ -1327,39 +1237,29 @@ From the `EPlugSurfaceGameplayId` enum:
 | Turbo2 | `"Turbo2"` at `0x141be1288` | [NEEDS INVESTIGATION - stored in GBX tuning, not in .exe] |
 | TurboRoulette | `TurboRoulette_1/2/3` | [NEEDS INVESTIGATION - randomized selection] |
 
-The actual duration and strength values for each turbo level are NOT hardcoded in the executable. They are loaded from GBX resource files (vehicle tuning data). From TMNF cross-reference: TMNF used TurboBoost=5.0/Duration=250ms and Turbo2Boost=20.0/Duration=100ms. TM2020 values may differ.
+The actual duration and strength values for each turbo level are NOT hardcoded in the executable. They are loaded from GBX resource files (vehicle tuning data).
 
 ---
 
-### Q2: "How does the car stay on a vertical wall or a loop?"
+### How does the car stay on a vertical wall or a loop?
 
-#### What the Code Shows
+There is **no special "sticky" force** in the decompiled dispatcher-level code. Wall/loop adhesion comes from the interaction of multiple systems:
 
-There is **no special "sticky" force** in the decompiled dispatcher-level code. The wall/loop adhesion comes from the interaction of multiple systems:
+1. **Gravity with GravityCoef**: Gravity is applied as `force += gravity_scale * gravity_direction * body_mass * dt`. The `gravity_scale` comes from `FUN_1407f5130`. TMNF's `GravityCoef = 3.0` multiplies the base gravity by 3x, producing roughly `3 * 9.81 = 29.43 m/s^2`.
 
-1. **Gravity with GravityCoef**: From `NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c:68-77`, gravity is applied as:
-   ```
-   force += gravity_scale * gravity_direction * body_mass * dt
-   ```
-   The `gravity_scale` comes from `FUN_1407f5130`, which reads a per-body mass property. TMNF's `GravityCoef = 3.0` (from the tuning GBX) multiplies the base gravity by 3x. This means the game's gravity is roughly `3 * 9.81 = 29.43 m/s^2` -- much stronger than real life.
-
-2. **Contact normals direct forces**: When the car's wheels contact a wall or loop surface, the contact normal points AWAY from the surface (inward, toward the car). The friction solver (configured in `FrictionIterCount_Config.c`) resolves constraints along these normals, keeping the car pressed to the surface.
+2. **Contact normals direct forces**: When wheels contact a wall or loop surface, the contact normal points AWAY from the surface. The friction solver resolves constraints along these normals, pressing the car to the surface.
 
 3. **Centripetal force from speed**: At sufficient speed, the car's velocity around a loop generates centripetal force that pushes it into the surface. Combined with the exaggerated gravity coefficient, this keeps the car attached.
 
-4. **Speed threshold for falling off**: There is no explicit "minimum speed for wall riding" constant in the decompiled code. Instead, the car falls off when the combination of gravity pulling it away from the surface exceeds the centripetal force plus tire friction. This is an emergent property of:
-   - The car's speed (lower speed = less centripetal force)
-   - The surface curvature (tighter loop = more centripetal force needed)
-   - The GravityCoef (higher = harder to stay on)
-   - The friction coefficients
+4. **Speed threshold for falling off**: No explicit "minimum speed for wall riding" constant exists. The car falls off when gravity pulling it away exceeds centripetal force plus tire friction. This is an emergent property of speed, surface curvature, GravityCoef, and friction coefficients.
 
-**What we cannot answer from the decompiled code**: The actual force model functions (FUN_140851f00 for CarSport, etc.) are NOT decompiled. The per-wheel force computation that generates lateral/longitudinal tire forces -- the code that actually makes wall-riding work -- is inside those large, un-decompiled functions. [NEEDS INVESTIGATION: decompile FUN_140851f00]
+[NEEDS INVESTIGATION: decompile FUN_140851f00 for the per-wheel force computation that makes wall-riding work]
 
 ---
 
-### Q3: "What happens when I crash into a wall?"
+### What happens when you crash into a wall?
 
-#### The Collision Pipeline
+**The collision pipeline:**
 
 ```
 NHmsCollision::StartPhyFrame (FUN_1402a9c60)
@@ -1390,38 +1290,17 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
     |  - Collision severity threshold
 ```
 
-#### The Bounce/Response (Coefficient of Restitution)
+The `MinVelocityForRestitution` parameter at SSolverParams offset `0x28` defines the minimum impact velocity required for a bounce. Below this threshold, the collision is purely inelastic (no bounce). The actual coefficient of restitution value is [NEEDS INVESTIGATION -- likely stored per-material].
 
-From `FrictionIterCount_Config.c:102`:
-```c
-FUN_1402eb040("MinVelocityForRestitution", 0x28, &local_48);
-```
+The `Bouncy` gameplay surface (`0x141be12bc`) creates high-restitution behavior, confirming restitution is a per-surface property.
 
-The `MinVelocityForRestitution` parameter at SSolverParams offset `0x28` defines the minimum impact velocity required for a bounce. Below this threshold, the collision is purely inelastic (no bounce). The actual coefficient of restitution value is [NEEDS INVESTIGATION -- likely stored per-material in the `EPlugSurfaceMaterialId` data, not in the solver params].
-
-The `Bouncy` gameplay surface (`0x141be12bc`) explicitly creates high-restitution behavior, confirming that restitution is a per-surface property.
-
-#### Contact Merging Details
-
-From `NHmsCollision__MergeContacts.c`:
-
-When the car hits a wall, multiple contact points may be generated (one per mesh triangle in the collision zone). The merge algorithm:
-
-1. Groups contacts where `distance < threshold` AND `dot(normal_i, normal_j) > dot_threshold`
-2. Averages position, normal, and impulse across the group
-3. Normalizes the averaged normal
-4. Keeps one "survivor" contact per group
-5. Removes all consumed contacts in reverse index order
-
-This reduces solver jitter from having too many redundant constraints at the same point.
+When the car hits a wall, multiple contact points may be generated (one per mesh triangle). The merge algorithm groups contacts where `distance < threshold` AND `dot(normal_i, normal_j) > dot_threshold`, averages them, and keeps one survivor per group. This reduces solver jitter.
 
 ---
 
-### Q4: "How does ice/dirt/grass affect driving?"
+### How does ice/dirt/grass affect driving?
 
-#### The Two-ID Surface System
-
-From `04-physics-vehicle.md` and string evidence:
+TM2020 uses a **two-ID surface system**:
 
 ```
 EPlugSurfaceMaterialId (physical)     EPlugSurfaceGameplayId (gameplay)
@@ -1436,45 +1315,16 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 (updated per physics tick)             (applied on contact)
 ```
 
-**Key insight**: Surface PHYSICS (friction) come from `EPlugSurfaceMaterialId`, while surface GAMEPLAY EFFECTS come from `EPlugSurfaceGameplayId`. These are independent systems.
+Surface PHYSICS (friction) come from `EPlugSurfaceMaterialId`. Surface GAMEPLAY EFFECTS come from `EPlugSurfaceGameplayId`. These are independent systems.
 
-#### Known Material Types and Their Physics Role
+Each wheel independently detects its surface. You can have front wheels on asphalt and rear wheels on ice. The friction coefficient changes instantly when the wheel crosses a surface boundary. The actual friction multiplier is applied inside the force model functions.
 
-From `19-openplanet-intelligence.md` (Material Library, 208 materials):
-
-| Surface ID | Physics Role | Friction Level |
-|:---|:---|:---|
-| `Asphalt` | Road surface | HIGH grip |
-| `Concrete` | Structural | HIGH grip |
-| `Dirt` | Off-road | MEDIUM grip |
-| `Grass` | Natural ground | LOW grip |
-| `Ice` | Frozen surface | VERY LOW grip |
-| `RoadIce` | Icy road | VERY LOW grip |
-| `Plastic` | Inflatable | MEDIUM grip, bouncy |
-| `Rubber` | Track borders | HIGH grip, bouncy |
-
-#### How Surface Transitions Work
-
-The per-wheel `GroundContactMaterial` field (an `ESurfId` / `uint16`) is updated every physics tick based on which surface the wheel's raycast hits. This means:
-
-1. **Each wheel independently detects its surface** -- you can have front wheels on asphalt and rear wheels on ice
-2. **The friction coefficient changes instantly** when the wheel crosses a surface boundary (no blending/transition period visible in the decompiled code)
-3. **The actual friction multiplier** is applied inside the force model functions (FUN_140851f00 etc.), which read the per-wheel material and look up the corresponding friction value from the tuning data
-
-#### NoGrip and SlowMotion
-
-- `NoGrip` (`0x141be1244`): A gameplay effect that sets friction to zero. This is NOT a material -- it is a gameplay trigger zone that overrides the normal friction computation.
-- `SlowMotion` (`0x141be12d0`): Reduces the `SimulationTimeCoef` (visible in Openplanet's `CSceneVehicleVisState`), slowing down the entire physics simulation for that vehicle.
-
-**What we cannot fully answer**: The exact friction coefficient values per material are stored in GBX tuning resources, not in the executable. The `Tunings.CoefFriction` at NGameSlotPhy offset `0x58` provides a global multiplier, but per-material base values are [NEEDS INVESTIGATION -- extract from StadiumCar tuning GBX].
+- `NoGrip` (`0x141be1244`): A gameplay effect that sets friction to zero. This is NOT a material -- it is a gameplay trigger zone.
+- `SlowMotion` (`0x141be12d0`): Reduces the `SimulationTimeCoef`, slowing the entire physics simulation for that vehicle.
 
 ---
 
-### Q5: "How does the sub-stepping algorithm work?"
-
-#### Complete Walkthrough (from `PhysicsStep_TM.c`)
-
-Here is the algorithm, line by line:
+### How does the sub-stepping algorithm work step by step?
 
 **1. Time setup** (line 63):
 ```c
@@ -1487,7 +1337,6 @@ If the tick value is 1 (one 100Hz tick = 10ms), this produces 1,000,000 microsec
 fVar21 = FUN_14083dca0(vehicle + 0x1280, model_ptr);
 fVar25 = fVar21 * (float)param_4[2];  // scale * dt
 ```
-`FUN_14083dca0` computes a velocity-dependent scale factor from the vehicle state. `param_4[2]` is the delta time in seconds (e.g., 0.01 for 100Hz).
 
 **3. Four velocity magnitudes** (lines 78-116):
 ```
@@ -1498,14 +1347,13 @@ fVar25 = fVar21 * (float)param_4[2];  // scale * dt
 ```
 Each sqrt has a guard: `if (val < 0.0) call safe_sqrt else SQRT()`.
 
-**4. Substep count** (lines 121-132):
+**4. Sub-step count** (lines 121-132):
 ```c
 total_speed = |v1| + |v2| + |v3| + |v4|;
 raw_count = (uint)(total_speed * scaled_dt / body_step_size);
 num_substeps = raw_count + 1;  // always at least 1
 
 if (num_substeps >= 1001) {
-    // Cap at 1000
     num_substeps = 1000;
     sub_dt = dt / 1000.0f;  // DAT_141d1fa9c
 } else if (num_substeps > 1) {
@@ -1515,10 +1363,9 @@ if (num_substeps >= 1001) {
 
 **5. The sub-step loop** (lines 137-167):
 ```c
-// Run (num_substeps - 1) equal-size steps
 for (i = 0; i < num_substeps - 1; i++) {
     collision_result = FUN_141501090(&bounds, transform);
-    flags |= (collision_result & 1) << 16;       // store in bit 16 of ContactPhyFlags
+    flags |= (collision_result & 1) << 16;
 
     FUN_140801e20(dyna_mgr, time_us);            // set dyna time
     FUN_1414ffee0(dyna, dyna_mgr, ..., sub_dt);  // compute forces
@@ -1528,35 +1375,16 @@ for (i = 0; i < num_substeps - 1; i++) {
 
     time_us -= (longlong)(sub_dt * 1000000.0);   // advance time
 }
-
 // Final step with remainder
-remainder = scaled_dt - (scaled_dt_per_step * (num_substeps - 1));
-// ... same 6 function calls with remainder instead of sub_dt
 ```
 
-#### Why 1000 Instead of TMNF's 10,000?
-
-TMNF allowed 10,000 substeps. TM2020 caps at 1,000. Possible reasons:
-- TM2020 has 4 vehicle types (4x the tuning work, testing)
-- TM2020's solver is more robust (iterative constraint solver vs analytical friction)
-- 1000 substeps at 100Hz = 100,000 substeps/second, which is already very high
-- Exceeding 1000 causes `sub_dt = dt / 1000.0f`, which may produce simulation artifacts but prevents CPU starvation
-
-#### What Happens If You Exceed the Cap?
-
-When `num_substeps >= 1001` (line 126-132), the game:
-1. Clamps to 1000 substeps
-2. Each substep uses `dt / 1000.0f` seconds
-3. The total simulated time is `1000 * (dt/1000) = dt` -- still exact
-4. But the step size may be too large for the actual velocity, potentially causing tunneling through thin geometry or unstable oscillation
+When `num_substeps >= 1001`, the game clamps to 1000 sub-steps. Each sub-step uses `dt / 1000.0f` seconds. The total simulated time is still exact: `1000 * (dt/1000) = dt`. But the step size may be too large for the actual velocity, potentially causing tunneling or unstable oscillation.
 
 ---
 
-### Q6: "What makes each car type feel different?"
+### What makes each car type feel different?
 
-#### Force Model Dispatch
-
-From `NSceneVehiclePhy__ComputeForces.c:142-162`, each car type uses a different force model function:
+Each car type uses a different force model function dispatched from `NSceneVehiclePhy__ComputeForces.c:142-162`:
 
 | Car Type | Force Model | Function | Extra Time Param? |
 |:---:|:---:|:---:|:---:|
@@ -1566,77 +1394,35 @@ From `NSceneVehiclePhy__ComputeForces.c:142-162`, each car type uses a different
 | **CarDesert** | 0xB (likely) | `FUN_14086d3b0` | YES |
 | Legacy/inactive | 0, 1, 2 | `FUN_140869cd0` | NO |
 
-#### What Changes Between Cars
+The force model selector at `vehicle_model+0x1790` determines WHICH function computes tire forces. Models 0-5 read from `vehicle+0x144C`, models 6+ read from `vehicle+0x1534`. Max speed is read from `model+0x2F0` per vehicle type. Tuning data at `model+0x30D8` and `model+0x31A8` contains all car-specific parameters.
 
-The force model selector at `vehicle_model+0x1790` determines WHICH function computes tire forces. Additionally:
+The actual force model functions (`FUN_140851f00`, `FUN_14085c9e0`, `FUN_14086d3b0`) are **not decompiled**. Each is likely 4,000-10,000+ bytes containing per-wheel tire force computation, burnout/slip state machines, engine/gear simulation, suspension force integration, and steering response curves.
 
-1. **Force accumulator location**: Models 0-5 read from `vehicle+0x144C`, models 6+ read from `vehicle+0x1534` (`ComputeForces.c:128-137`). This means the new cars have a reorganized internal force layout.
-
-2. **Max speed**: Read from `model+0x2F0` per vehicle type. Different cars have different speed caps.
-
-3. **Tuning data**: At `model+0x30D8` and `model+0x31A8`, large blocks of tuning data are passed to the force model. These contain all the car-specific parameters (spring rates, friction curves, gear ratios, etc.) loaded from the vehicle's GBX tuning file.
-
-4. **Wheel state blocks**: The 4 wheel blocks at stride `0xB8` starting at `+0x1790` have their own per-car state that gets reset on checkpoint (lines 173-199 of ComputeForces).
-
-#### What We Cannot Answer
-
-The actual force model functions (`FUN_140851f00`, `FUN_14085c9e0`, `FUN_14086d3b0`) are **not decompiled** in our 18-file set. Each is likely 4,000-10,000+ bytes of code containing:
-- Per-wheel lateral and longitudinal tire force computation
-- Burnout/slip state machine
-- Engine/gear simulation
-- Suspension force integration
-- Steering response curves
-
-[NEEDS INVESTIGATION: Decompile FUN_140851f00 (CarSport), FUN_14085c9e0 (model 6), FUN_14086d3b0 (model 0xB) to see the actual differences]
+[NEEDS INVESTIGATION: Decompile FUN_140851f00 (CarSport), FUN_14085c9e0 (model 6), FUN_14086d3b0 (model 0xB)]
 
 ---
 
-### Q7: "How does the gearbox/engine simulation work?"
+### How does the gearbox/engine simulation work?
 
-#### What the Openplanet Data Tells Us
+The decompiled ComputeForces dispatcher does NOT contain engine/gearbox logic. This is entirely inside the force model functions.
 
-From `19-openplanet-intelligence.md`:
+From Openplanet data: `CurGear` ranges 0-7 (8 gears), `RPM` ranges 0-11000, and `EngineOn` is a boolean.
 
-| Field | Range | Description |
-|:---:|:---:|:---|
-| `CurGear` | 0-7 | Current gear (8 gears total) |
-| `RPM` | 0-11000 | Engine RPM |
-| `EngineOn` | bool | Whether engine is running |
-
-#### What the Decompiled Code Shows
-
-The decompiled ComputeForces dispatcher does NOT contain engine/gearbox logic. This is entirely inside the force model functions (FUN_140851f00 etc.).
-
-From TMNF cross-reference (the M6/Steer06 model was fully decompiled for TMNF):
-
-**TMNF's engine model** (which TM2020 likely preserves in concept):
+From TMNF cross-reference (the M6/Steer06 model was fully decompiled):
 - 6 gear ratios stored in the tuning GBX
 - RPM computed from wheel rotation speed and current gear ratio
 - Gear shifts triggered by RPM thresholds
-- Engine torque curve (via `CFuncKeysReal` piecewise linear curves)
-- Accelerator pedal maps to engine torque, which maps to wheel drive force
+- Engine torque curve via `CFuncKeysReal` piecewise linear curves
 
-**TM2020 expansion**:
-- 8 gears (vs TMNF's 6) based on `CurGear` range 0-7
-- RPM range up to 11,000 (vs TMNF's typical ~10,000)
-- `EngineOn` flag suggests the engine can be explicitly disabled (FreeWheeling surface effect)
+TM2020 expands this to 8 gears (vs TMNF's 6) and RPM range up to 11,000. The `EngineOn` flag suggests the engine can be explicitly disabled (FreeWheeling surface effect).
 
-#### Is RPM Simulated or Cosmetic?
-
-Based on the TMNF analysis: RPM IS simulated (not cosmetic). In TMNF's M6 model, RPM determines:
-- When to shift gears
-- Engine torque output (via the torque curve)
-- The burnout state machine entry condition
-
-TM2020 almost certainly preserves this -- the RPM field is exposed at a custom memory offset in the VisState, suggesting it is computed by the physics engine and copied to the visual state via `ExtractVisStates` (FUN_1407d29a0).
+RPM IS simulated (not cosmetic). In TMNF's M6 model, RPM determines when to shift gears, engine torque output, and burnout state machine entry conditions.
 
 [NEEDS INVESTIGATION: Decompile force model functions to confirm gear ratio storage and shift logic]
 
 ---
 
-### Q8: "What happens when the car goes into water?"
-
-#### The Water Physics Code Path
+### What happens when the car goes into water?
 
 From `NSceneDyna__ComputeWaterForces.c`:
 
@@ -1657,78 +1443,50 @@ NSceneDyna::ComputeWaterForces (FUN_1407f8290)
 FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)
 ```
 
-#### What We Know About the Water Model
+Bodies can be in a global water volume or a custom per-zone water volume. The function takes `lVar1 + 0x18` (body collision shape) and `lVar3` (water shape), suggesting **submerged volume computation** for buoyancy.
 
-1. **Two-tier lookup**: Bodies can be in a global water volume or a custom per-zone water volume. The custom water is referenced at `collision_item + 0x128 -> +0x38`.
+From `FallingState` enum: `FallingWater` (2) and `RestingWater` (6) exist. `WaterImmersionCoef` (0-1) tracks submersion depth. The TMNF cross-reference mentions `WaterReboundMinHSpeed = 55.556 m/s` (200 km/h), suggesting cars can skip across water at sufficient speed.
 
-2. **Body shape intersection**: The function takes `lVar1 + 0x18` (the body's collision shape) and `lVar3` (the water shape). This strongly suggests **submerged volume computation** for buoyancy.
-
-3. **The ninth parameter is 0**: `FUN_1407fb580(..., param_8, 0)` -- the trailing `0` may be a mode flag (e.g., 0 = normal water, other values for special water behavior).
-
-4. **WaterImmersionCoef**: From Openplanet data, `WaterImmersionCoef` (0-1) tracks how submerged the car is. This is likely computed by `FUN_1407fb580` and stored in the vis state.
-
-#### Can You Drive Underwater?
-
-From the `FallingState` enum in `19-openplanet-intelligence.md`:
-- `FallingWater` (2): Falling through water
-- `RestingWater` (6): Resting on water surface
-
-The existence of `RestingWater` and `WaterImmersionCoef` (0-1, not just 0/1) suggests the car can be partially submerged and drive on/through water. The TMNF cross-reference mentions `WaterReboundMinHSpeed = 55.556 m/s` (200 km/h) -- suggesting cars can skip across water at sufficient speed.
-
-[NEEDS INVESTIGATION: Decompile FUN_1407fb580 for the actual buoyancy/drag formulas]
+[NEEDS INVESTIGATION: Decompile FUN_1407fb580 for buoyancy/drag formulas]
 
 ---
 
-### Q9: "How does the game guarantee deterministic physics?"
+### How does the game guarantee deterministic physics?
 
-#### Determinism Mechanisms Found in the Code
-
-**1. Fixed-tick integer timing** (`PhysicsStep_TM.c:63`, `NSceneDyna__PhysicsStep.c:15`):
+**1. Fixed-tick integer timing** (`PhysicsStep_TM.c:63`):
 ```c
 lVar18 = (ulonglong)*param_4 * 1000000;  // integer * integer = no float error
 ```
-Time is NEVER accumulated as floating-point. The tick counter is an integer, and the conversion to microseconds uses integer multiplication.
+Time is NEVER accumulated as floating-point.
 
-**2. Deterministic sub-stepping** (`PhysicsStep_TM.c:121-167`):
-The substep count is computed from velocity magnitudes via a deterministic formula. Given the same velocity state, the same number of substeps will be computed. The remainder handling ensures total time = dt exactly.
+**2. Deterministic sub-stepping**: The sub-step count is computed from velocity magnitudes via a deterministic formula. The remainder handling ensures total time = dt exactly.
 
-**3. Ordered iteration** (`PhysicsStep_TM.c:66-67`, `NSceneDyna__PhysicsStep_V2.c:103-116`):
-All bodies and vehicles are iterated in array order. No parallel dispatch is visible. This means collision pairs are always processed in the same order.
+**3. Ordered iteration**: All bodies and vehicles are iterated in array order. No parallel dispatch is visible.
 
-**4. Safe sqrt** (`PhysicsStep_TM.c:90-116`):
-Every square root computation has a `< 0.0` guard that calls `FUN_14195dd00` for negative inputs. This prevents NaN propagation from floating-point rounding.
+**4. Safe sqrt**: Every square root computation has a `< 0.0` guard calling `FUN_14195dd00`, preventing NaN propagation.
 
-**5. SSE floating-point** (platform-level):
-The x64 build uses SSE instructions (`sqrtss`, etc.) which are IEEE 754 compliant and produce identical results on all x64 CPUs. No x87 FPU (which had 80-bit intermediate precision issues) is used.
+**5. SSE floating-point**: The x64 build uses SSE instructions (`sqrtss`, etc.) which are IEEE 754 compliant and produce identical results on all x64 CPUs. No x87 FPU is used.
 
-**6. Network replay validation**:
-From `BeforeMgrDynaUpdate.c:106-108`: when `SimulationMode == 1` (replay), the game copies 2,168 bytes of vehicle state from a replay data pointer:
+**6. Network replay validation**: When `SimulationMode == 1` (replay), the game copies 2,168 bytes of vehicle state from a replay data pointer:
 ```c
 FUN_1418d7510(lVar19 + 0x1280, *(lVar19 + 0x1c98), 0x878);
 ```
-This is a `memcpy` of the authoritative state, used for validation. If the local simulation diverges from the server's state, the replay data corrects it.
+If the local simulation diverges, the replay data corrects it.
 
-#### What Could Break Determinism
-
-- **Cross-platform**: Different CPUs might have different rounding for denormalized numbers. The code has no visible `_controlfp` or FPU control word manipulation.
-- **Compiler differences**: Different optimization levels might reorder floating-point operations. Nadeo likely uses a specific compiler with specific flags.
-- **Uninitialized memory**: Some fields are not explicitly initialized to zero in the decompiled code. If they contain stale values, behavior could vary.
-
----
-
-### Q10: "What are ALL the numeric constants and what do they control?"
-
-See [Section 13: Comprehensive Constants Table](#13-comprehensive-constants-table) below for the complete table extracted from all 18 decompiled files.
+**What could break determinism:**
+- Different CPUs might have different rounding for denormalized numbers
+- Different compiler optimization levels might reorder floating-point operations
+- Some fields are not explicitly initialized to zero in the decompiled code
 
 ---
 
-## 13. Comprehensive Constants Table
+## Comprehensive constants table
 
-### 13.1 Global Data Constants (from .rdata / .data sections)
+### Global data constants
 
 | Address | Name | Type | Likely Value | Used In | Purpose |
 |:---|:---|:---:|:---:|:---|:---|
-| `DAT_141d1fa9c` | MAX_SUBSTEP_FLOAT | float | 1000.0f | PhysicsStep_TM:132 | Divisor when substep count capped at 1000 |
+| `DAT_141d1fa9c` | MAX_SUBSTEP_FLOAT | float | 1000.0f | PhysicsStep_TM:132 | Divisor when sub-step count capped at 1000 |
 | `DAT_141d1fe58` | MICROSECOND_SCALE | double | 1000000.0 | PhysicsStep_TM:136 | Converts sub_dt (seconds) to microseconds |
 | `DAT_141d1ed34` | MIN_SPEED_THRESHOLD | float | [UNKNOWN] | ComputeForces:114 | Minimum maxSpeed value for clamping to apply |
 | `DAT_141d1ee10` | STEP_PARAM | float | [UNKNOWN] | PhysicsStep_TM:118,187 | Parameter passed to step functions |
@@ -1745,47 +1503,7 @@ See [Section 13: Comprehensive Constants Table](#13-comprehensive-constants-tabl
 | `DAT_141e64060` | STACK_COOKIE | uint64 | [random] | Multiple | Security check cookie for stack protection |
 | `DAT_141fabc20` | COLLISION_LAYER_TABLE | uint[256] | [256 entries] | DynCollisionCache:42 | Maps collision type byte to layer mask |
 
-### 13.2 Hardcoded Integer Constants
-
-| Value | Hex | Context | Meaning |
-|:---:|:---:|:---|:---|
-| 1000000 | 0xF4240 | PhysicsStep_TM:63, ProcessContactPoints:31 | Tick to microsecond multiplier |
-| 1001 | 0x3E9 | PhysicsStep_TM:126 | Max substep count + 1 (comparison threshold) |
-| 999 | 0x3E7 | PhysicsStep_TM:131 | Actual max substep count |
-| 88 | 0x58 | ProcessContactPoints:22,30 | Contact point struct stride |
-| 56 | 0x38 | PhysicsStep_V2:227,231, ComputeExternalForces:26 | Body data struct stride |
-| 224 | 0xE0 | PhysicsStep_V2:220 | 4x body stride (loop unrolling) |
-| 184 | 0xB8 | ComputeForces reset blocks | Per-wheel state block stride |
-| 44 | 0x2C | FrictionIterCount_Config:21 | SSolverParams struct size |
-| 144 | 0x90 | Tunings registration:21 | NGameSlotPhy::SMgr struct size |
-| 2168 | 0x878 | BeforeMgrDynaUpdate:107 | Replay state copy size |
-| 20 | 0x14 | BeforeMgrDynaUpdate (circular buffer) | Wheel contact history buffer size |
-| 13 | 0x0D | DynCollisionCache:77 | Compound collision shape type ID |
-| 0xFFFFFFFF | -1 | Multiple (boost start, hit body, body id) | Sentinel: "no value" / "uninitialized" |
-
-### 13.3 Bitfield Constants
-
-| Value | Bits | Context | Meaning |
-|:---:|:---|:---|:---|
-| 0x0F | bits 0-3 | StatusFlags nibble extraction | Low nibble mask for vehicle state |
-| 0x01 | bit 0 | PhyFlags (+0x1BC0) | [UNKNOWN] physics flag |
-| 0x02 | bit 1 | Body flags, contact flags | Kinematic/static body flag |
-| 0x04 | bit 2 | ContactPhyFlags (+0x1C7C) | DisableEvents flag |
-| 0x08 | bit 3 | ContactPhyFlags (+0x1C7C) | HasContactThisTick |
-| 0x10 | bit 4 | ContactPhyFlags (+0x1C7C) | SubStepCollisionDetected |
-| 0x20 | bit 5 | Body flags (DynCollisionCache) | Kinematic flag for cache |
-| 0xE0 | bits 5-7 | ContactPhyFlags (+0x1C7C) | ContactType field |
-| 0x0600 | bits 9-10 | ContactPhyFlags (+0x1C7C) | Cleared each tick in PhysicsStep_TM |
-| 0x0800 | bit 11 | ContactPhyFlags (+0x1C7C) | Part of fragile check (with bit 12) |
-| 0x1000 | bit 12 | ContactPhyFlags (+0x1C7C) | Part of fragile check (with bit 11) |
-| 0x1800 | bits 11-12 | PhysicsStep_TM:191 | Both bits must be set for fragile break |
-| 0x10000 | bit 16 | ContactPhyFlags (+0x1C7C) | SubStepCollisionResult |
-| 0x400 | bit 10 | Players_BeginFrame:24 | Arena state flag check |
-| 0xFFFFF5FF | ~(0x0600) | PhysicsStep_TM:69 | Clears bits 9-10 |
-| 0xFFFFE1F | ~(0x1E0) | BeforeMgrDynaUpdate:151 | Clears bits 5-8 |
-| 0xFFFFFFFD | ~(0x02) | MergeContacts:236 | Clears "needs merge" flag |
-
-### 13.4 Struct Offset Constants
+### Struct offset constants
 
 | Offset | Struct | Field | Type |
 |:---:|:---|:---|:---:|
@@ -1819,9 +1537,9 @@ See [Section 13: Comprehensive Constants Table](#13-comprehensive-constants-tabl
 | +0x30D8 | PhyModel | TuningDataBlock1 | varies |
 | +0x31A8 | PhyModel | TuningDataBlock2 | varies |
 
-### 13.5 Named Parameter Registration (from Decompiled Config Functions)
+### Named parameter registration (from decompiled config functions)
 
-#### SSolverParams (NSceneDyna::SSolverParams, 0x2C bytes)
+**SSolverParams** (NSceneDyna::SSolverParams, 0x2C bytes):
 
 | Offset | Name | Type | Notes |
 |:---:|:---|:---:|:---|
@@ -1837,7 +1555,7 @@ See [Section 13: Comprehensive Constants Table](#13-comprehensive-constants-tabl
 | 0x24 | UseConstraints2 | bool | Registered via `FUN_1401dc110` |
 | 0x28 | MinVelocityForRestitution | float | Registered via `FUN_14016e290` |
 
-#### NGameSlotPhy::SMgr (0x90 bytes)
+**NGameSlotPhy::SMgr** (0x90 bytes):
 
 | Offset | Name | Type | Notes |
 |:---:|:---|:---:|:---|
@@ -1847,7 +1565,7 @@ See [Section 13: Comprehensive Constants Table](#13-comprehensive-constants-tabl
 
 ---
 
-## Appendix A: Function Reference
+## Appendix A: Function reference
 
 | Function Label | Address | File | Key Purpose |
 |:---|:---:|:---|:---|
@@ -1870,7 +1588,7 @@ See [Section 13: Comprehensive Constants Table](#13-comprehensive-constants-tabl
 | `NHmsCollision::MergeContacts` | `0x1402a8a70` | `NHmsCollision__MergeContacts.c` | Contact point merging |
 | `NHmsCollision::StartPhyFrame` | `0x1402a9c60` | `NHmsCollision__StartPhyFrame.c` | Collision frame initialization |
 
-## Appendix B: Force Model Function Addresses
+## Appendix B: Force model function addresses
 
 | Model | Switch Value | Address | Param Count | Estimated Size |
 |:---:|:---:|:---:|:---:|:---|
@@ -1881,7 +1599,7 @@ See [Section 13: Comprehensive Constants Table](#13-comprehensive-constants-tabl
 | New Model A | 6 | `FUN_14085c9e0` | 3 | [UNKNOWN] |
 | New Model B | 0xB | `FUN_14086d3b0` | 3 | [UNKNOWN] |
 
-## Appendix C: Key Struct Sizes
+## Appendix C: Key struct sizes
 
 | Struct | Size | Evidence |
 |:---|:---:|:---|
@@ -1896,9 +1614,7 @@ See [Section 13: Comprehensive Constants Table](#13-comprehensive-constants-tabl
 | Vehicle model (partial) | >0x31A8 | Highest offset accessed via vehicle+0x88 |
 | Transform copy | 112 bytes | 28 x 4-byte values from +0x90 to +0x174 |
 
-## Appendix D: Needs Investigation Summary
-
-These questions could not be fully answered from the 18 decompiled dispatcher-level files:
+## Appendix D: Needs investigation summary
 
 | Question | What's Missing | How to Resolve |
 |:---|:---|:---|
@@ -1912,3 +1628,22 @@ These questions could not be fully answered from the 18 decompiled dispatcher-le
 | How Rally/Snow/Desert differ | Force model 6 and 0xB not decompiled | Decompile FUN_14085c9e0 and FUN_14086d3b0 |
 | Reactor boost force direction | Not in dispatcher code | Decompile oriented reactor boost handler |
 | Cruise control implementation | Not in dispatcher code | Trace from "Cruise" gameplay effect to force model |
+
+## Related Pages
+
+- [04-physics-vehicle.md](04-physics-vehicle.md) -- Vehicle physics overview and TMNF cross-reference
+- [14-tmnf-crossref.md](14-tmnf-crossref.md) -- TMNF physics analysis used for cross-referencing
+- [21-competitive-mechanics.md](21-competitive-mechanics.md) -- Competitive mechanics affected by physics
+- [12-architecture-deep-dive.md](12-architecture-deep-dive.md) -- Game architecture and frame loop
+- [19-openplanet-intelligence.md](19-openplanet-intelligence.md) -- Runtime data from Openplanet
+- [13-subsystem-class-map.md](13-subsystem-class-map.md) -- Vehicle/car system class hierarchy
+
+<details>
+<summary>Analysis metadata</summary>
+
+**Binary**: `Trackmania.exe` (Trackmania 2020 by Nadeo/Ubisoft)
+**Date of analysis**: 2026-03-27
+**Tools**: Ghidra 12.0.4 via PyGhidra bridge
+**Sources**: 18 decompiled physics functions, cross-referenced with TMNF RE diary and existing `04-physics-vehicle.md`
+
+</details>

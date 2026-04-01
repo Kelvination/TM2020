@@ -227,6 +227,21 @@ body {
     margin-top: 0;
 }
 
+.nav-subsection {
+    padding: 6px 16px 2px 24px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.nav-subsection + .nav-item {
+    /* No extra margin needed */
+}
+
 .nav-item {
     display: flex;
     align-items: center;

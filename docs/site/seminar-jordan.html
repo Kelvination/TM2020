@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,15 +121,16 @@
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
                         <h1 id="jordans-systems-architecture-notes-tm2020-deep-dive"><a class="anchor" href="#jordans-systems-architecture-notes-tm2020-deep-dive">#</a>Jordan's Systems Architecture Notes: TM2020 Deep Dive</h1>
-<p><strong>Author</strong>: Jordan (PhD student, game engine architecture) <strong>Date</strong>: 2026-03-27 <strong>Focus</strong>: How everything CONNECTS -- data flow, state machines, lifecycle, and browser translation <strong>Method</strong>: Read every decompiled function, every RE document, every plan document. Every claim is sourced.</p>
+<p>This document traces TM2020's architecture end-to-end: boot sequence, state machines, file loading, networking, scripting, and UI. Every claim is sourced from decompiled code or validated RE docs. Where I recommend browser translation strategies, I explain why.</p>
 <hr>
-<h2 id="chapter-1-game-lifecycle"><a class="anchor" href="#chapter-1-game-lifecycle">#</a>Chapter 1: Game Lifecycle</h2>
-<h3 id="from-double-click-to-driving-the-complete-boot-sequence"><a class="anchor" href="#from-double-click-to-driving-the-complete-boot-sequence">#</a>From Double-Click to Driving: The Complete Boot Sequence</h3>
-<p>This is the question that defines a game engine: what happens between <code>entry()</code> and the first rendered frame? TM2020 has a <strong>10-phase boot sequence</strong> before the player sees the main menu, and then another <strong>5-phase sequence</strong> before they're driving on a map. Let me trace the entire thing.</p>
-<h4 id="phase-0-anti-tamper-crt-bootstrap-1ms"><a class="anchor" href="#phase-0-anti-tamper-crt-bootstrap-1ms">#</a>Phase 0: Anti-Tamper + CRT Bootstrap (< 1ms)</h4>
-<p>The entry point at <code class="addr">0x14291e317</code> lives in a section called <code>.D."</code> -- an obfuscated, anti-tamper protected region. It calls <code>FUN_1428eb7e6()</code> (an unpacker/decoder loop), then transfers to <code>FUN_14291da78()</code> which jumps to the real code. After that, standard MSVC CRT initialization runs: <code>__scrt_common_main_seh</code> calls <code>_initterm</code> for C++ static constructors, then dispatches to <code>WinMain</code> at <code>FUN_140aa7470</code>.</p>
+<h2 id="game-lifecycle"><a class="anchor" href="#game-lifecycle">#</a>Game Lifecycle</h2>
+<h3 id="from-double-click-to-driving"><a class="anchor" href="#from-double-click-to-driving">#</a>From Double-Click to Driving</h3>
+<p>This section covers TM2020's complete boot pipeline. You'll learn the 10-phase startup sequence, the 60+ state coroutine machine, and three strategies for translating it to JavaScript.</p>
+<p>The defining question of any game engine: what happens between <code>entry()</code> and the first rendered frame? TM2020 runs 10 phases before showing the main menu, then 5 more before you drive.</p>
+<h4 id="anti-tamper-crt-bootstrap-1ms"><a class="anchor" href="#anti-tamper-crt-bootstrap-1ms">#</a>Anti-Tamper + CRT Bootstrap (< 1ms)</h4>
+<p>The entry point at <code class="addr">0x14291e317</code> lives in <code>.D."</code> -- an obfuscated, anti-tamper protected region. It calls <code>FUN_1428eb7e6()</code> (unpacker/decoder loop), then transfers to <code>FUN_14291da78()</code> which jumps to real code. Standard MSVC CRT initialization runs: <code>__scrt_common_main_seh</code> calls <code>_initterm</code> for C++ static constructors, then dispatches to <code>WinMain</code> at <code>FUN_140aa7470</code>.</p>
 <p><em>Source: doc 12 Section 3.1, decompiled boot chain</em></p>
-<h4 id="phase-1-winmain-early-init-10ms"><a class="anchor" href="#phase-1-winmain-early-init-10ms">#</a>Phase 1: WinMain Early Init (< 10ms)</h4>
+<h4 id="winmain-early-init-10ms"><a class="anchor" href="#winmain-early-init-10ms">#</a>WinMain Early Init (< 10ms)</h4>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FUN_140aa7470 (WinMain, 202 bytes):
   1. Default window: 640x480 (local_878=0x280, uStack_874=0x1e0)
   2. Init profiling: 75 slots, 128KB buffer, frame budget 20ms outer / 10ms inner
@@ -129,10 +138,10 @@
   4. Frame timing init: increment DAT_141f9cfd0 (global frame counter)
   5. Begin &quot;InitApp&quot; profiling tag
   6. Transfer to CGbxApp::Init1</code></pre></div>
-<p><strong>Why 75 profiling slots?</strong> The engine has ~75 distinct profiling regions. Each slot is 0x70 bytes (112 bytes). That's <code>75 * 112 = 8,400 bytes</code> for profiling metadata, plus the 128KB buffer. Nadeo clearly takes performance instrumentation seriously.</p>
+<p><strong>Why 75 profiling slots?</strong> The engine has ~75 distinct profiling regions. Each slot is 0x70 bytes (112 bytes). That's <code>75 * 112 = 8,400 bytes</code> for profiling metadata, plus the 128KB buffer. Nadeo takes performance instrumentation seriously.</p>
 <p><em>Source: doc 12 Section 3.1, startup_frame_begin.c</em></p>
-<h4 id="phase-2-engine-subsystem-init-100-500ms"><a class="anchor" href="#phase-2-engine-subsystem-init-100-500ms">#</a>Phase 2: Engine Subsystem Init (100-500ms)</h4>
-<p><code>CGbxApp::Init1</code> at <code>FUN_140aa3220</code> is <strong>7,401 bytes</strong> of initialization code. That's enormous for a single function. It registers <strong>16 engine subsystems</strong> into a slot-based manager at <code>DAT_141f9f018</code>:</p>
+<h4 id="engine-subsystem-init-100-500ms"><a class="anchor" href="#engine-subsystem-init-100-500ms">#</a>Engine Subsystem Init (100-500ms)</h4>
+<p><code>CGbxApp::Init1</code> at <code>FUN_140aa3220</code> is <strong>7,401 bytes</strong> of initialization code. It registers <strong>16 engine subsystems</strong> into a slot-based manager at <code>DAT_141f9f018</code>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SUBSYSTEM SLOT MAP (DAT_141f9f018)
 +------+------------------+-------+
 | Slot | Subsystem        | Size  |
@@ -153,20 +162,20 @@
 | 0x14 | [UNKNOWN]        | 0x20  |
 | 0x2E | [UNKNOWN]        | 0x20  |
 +------+------------------+-------+</code></pre></div>
-<p><strong>Architectural observation</strong>: This is a <strong>service locator pattern</strong> with fixed numeric slots. Not dependency injection, not a registry with string keys -- integer slots. This is a C++ game engine pattern optimized for cache-line-friendly lookups. The slot IDs are not contiguous (0x01, 0x03, 0x05... 0x2E), suggesting they correspond to engine ID constants defined elsewhere.</p>
-<p>Also notable: the Luna Mode accessibility check looks for UUID <code>41958b32-a08c-4313-a6c0-f49d4fb5a91e</code>. If matched, <code>DAT_141f9cff4 = 1</code> and it logs <code>"[Sys] Luna Mode enabled."</code> This is an accessibility feature I haven't seen documented elsewhere.</p>
+<p><strong>Architectural observation</strong>: This is a <strong>service locator pattern</strong> (a design pattern where subsystems are registered into a global lookup table) with fixed numeric slots. Not dependency injection, not string-keyed -- integer slots optimized for cache-line-friendly lookups. The non-contiguous slot IDs (0x01, 0x03, 0x05... 0x2E) suggest engine ID constants defined elsewhere.</p>
+<p>The Luna Mode accessibility check looks for UUID <code>41958b32-a08c-4313-a6c0-f49d4fb5a91e</code>. If matched, <code>DAT_141f9cff4 = 1</code> and it logs <code>"[Sys] Luna Mode enabled."</code> This accessibility feature isn't documented elsewhere.</p>
 <p><em>Source: doc 12 Section 3.1, Subsystem Slot Map</em></p>
-<h4 id="phase-3-4-graphics-game-app-init-300-2500ms"><a class="anchor" href="#phase-3-4-graphics-game-app-init-300-2500ms">#</a>Phase 3-4: Graphics + Game App Init (300-2500ms)</h4>
-<p><code>CGbxApp::Init2</code> creates the DirectX viewport. If DirectX initialization fails, the player sees: <code>"Could not start the game!\r\n  System error, initialization of DirectX failed."</code> -- that's the only fatal error in the entire boot sequence. Everything else has fallback paths.</p>
+<h4 id="graphics-game-app-init-300-2500ms"><a class="anchor" href="#graphics-game-app-init-300-2500ms">#</a>Graphics + Game App Init (300-2500ms)</h4>
+<p><code>CGbxApp::Init2</code> creates the DirectX viewport. DirectX failure produces the only fatal boot error: <code>"Could not start the game!\r\n  System error, initialization of DirectX failed."</code> Everything else has fallback paths.</p>
 <p>Then <code>CGbxGame::InitApp</code> creates the <code>CSystemEngine</code> and installs three critical callbacks:</p>
 <ul>
   <li><code>+0x70</code>: Frame callback (<code>FUN_140101a40</code>) -- drives per-frame input</li>
   <li><code>+0x80</code>: Security callback (<code>_guard_check_icall</code>) -- MSVC Control Flow Guard</li>
   <li><code>+0x90</code>: Render callback (<code>FUN_140aa93b0</code>) -- drives the rendering pipeline</li>
 </ul>
-<p>These callbacks are <strong>only installed when <code>DAT_141fbbee8 == 0</code></strong> (non-headless mode). The same binary runs both client and dedicated server by toggling this flag. That's elegant.</p>
+<p>These callbacks install <strong>only when <code>DAT_141fbbee8 == 0</code></strong> (non-headless mode). The same binary runs both client and dedicated server by toggling this flag. That's elegant.</p>
 <p><em>Source: doc 12 Section 3.1, CGbxApp__Init2.c, CGbxGame__InitApp.c</em></p>
-<h4 id="phase-5-6-system-engine-platform-start-150-500ms"><a class="anchor" href="#phase-5-6-system-engine-platform-start-150-500ms">#</a>Phase 5-6: System Engine + Platform Start (150-500ms)</h4>
+<h4 id="system-engine-platform-start-150-500ms"><a class="anchor" href="#system-engine-platform-start-150-500ms">#</a>System Engine + Platform Start (150-500ms)</h4>
 <p><code>CSystemEngine::InitForGbxGame</code> reads config strings: <code>"Distro"</code>, <code>"WindowTitle"</code>, <code>"DataDir"</code> (default: <code>"GameData\\"</code>). Then <code>CGameManiaPlanet::Start</code> registers playground types and sets the game name to <code>"Trackmania"</code>.</p>
 <p><code>CGameCtnApp::Start</code> (at <code>FUN_140b4eba0</code>, <strong>3,356 bytes</strong>) creates 7 subsystem objects:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameCtnApp::Start() subsystem allocations:
@@ -178,10 +187,10 @@
   param_1[0x79]  = 0x188 bytes -- game client
   param_1[0x74]  = 0xA0  bytes -- refcounted object
   param_1[0x116] = 0x250 bytes -- scene manager</code></pre></div>
-<p>I verified this in the decompiled <code>CGameCtnApp__Start.c</code>. Line 92: <code>FUN_140117690(local_1c8,"CGameCtnApp::Start()");</code> -- the profiling tag. The reference counting pattern is visible throughout: <code><em>(puVar8 + 2) = </em>(puVar8 + 2) + 1</code> for AddRef, with the refcount at offset <code>+0x10</code> from every object's base, matching the <code>CMwNod</code> base class layout: <code>[vtable(8)][unknown(8)][refcount(4)]</code>.</p>
+<p>I verified this in the decompiled <code>CGameCtnApp__Start.c</code>. Line 92: <code>FUN_140117690(local_1c8,"CGameCtnApp::Start()");</code> -- the profiling tag. The reference counting pattern appears throughout: <code><em>(puVar8 + 2) = </em>(puVar8 + 2) + 1</code> for AddRef, with the refcount at offset <code>+0x10</code> from every object's base, matching the <code>CMwNod</code> base class layout: <code>[vtable(8)][unknown(8)][refcount(4)]</code>.</p>
 <p><em>Source: doc 12 Section 3.1, CGameCtnApp__Start.c lines 92-200</em></p>
-<h4 id="phase-7-the-60-state-machine-begins"><a class="anchor" href="#phase-7-the-60-state-machine-begins">#</a>Phase 7: The 60+ State Machine Begins</h4>
-<p>Now we enter <code>CGameCtnApp::UpdateGame</code> at <code>FUN_140b78f10</code>. This function is <strong>34,959 bytes</strong> of decompiled C. It is called <strong>every single frame</strong> with <code>(CGameCtnApp<em> this, ulonglong</em> fiberContext)</code>.</p>
+<h4 id="the-60-state-machine"><a class="anchor" href="#the-60-state-machine">#</a>The 60+ State Machine</h4>
+<p><code>CGameCtnApp::UpdateGame</code> at <code>FUN_140b78f10</code> is <strong>34,959 bytes</strong> of decompiled C. It runs <strong>every single frame</strong> with <code>(CGameCtnApp<em> this, ulonglong</em> fiberContext)</code>.</p>
 <p>The state machine has <strong>60+ states</strong> organized into 11 phases:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>COMPLETE STATE MACHINE DATA FLOW
 =================================
@@ -198,7 +207,7 @@ Phase 8: Map Load/Editor   (0xCD1 - 0xDE5)    12 states
 Phase 9: Replay/Podium     (0xE14 - 0xF3D)    3 states
 Phase 10: Multiplayer      (0xF85 - 0x109A)   10 states
 Phase 11: Special          (0xFFFFFFFF)        shutdown</code></pre></div>
-<p><strong>The coroutine pattern</strong>: Every state uses the same yield mechanism. The fiber context at <code>*param_2</code> stores the current state at <code>+0x08</code>, and a sub-fiber pointer at <code>+0x10</code>. When a state needs to wait for an async operation, it sets the sub-fiber, writes its own state ID back to <code>+0x08</code>, and returns. Next frame, the switch statement jumps back to the same case, checks if the sub-fiber is done (<code>+0x10 == -1</code>), and either waits again or proceeds.</p>
+<p><strong>The coroutine pattern</strong>: Every state uses the same yield mechanism. A <strong>stackless coroutine</strong> (a cooperative multitasking pattern where persistent state lives on the heap, not on separate OS stacks) stores the current state at <code>+0x08</code> in the fiber context, and a sub-fiber pointer at <code>+0x10</code>. When a state waits for an async operation, it sets the sub-fiber, writes its state ID back to <code>+0x08</code>, and returns. Next frame, the switch jumps back, checks if the sub-fiber is done (<code>+0x10 == -1</code>), and either waits again or proceeds.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>THE YIELD PATTERN (appears hundreds of times):
   if (*(longlong *)(uVar16 + 0x10) - 1U &lt; 0xfffffffffffffffe) {
       iVar12 = *(int *)(*(longlong *)(uVar16 + 0x10) + 8);
@@ -210,7 +219,7 @@ Phase 11: Special          (0xFFFFFFFF)        shutdown</code></pre></div>
       goto LAB_140b81895;                               // yield
   }
   // Sub-coroutine done, proceed to next state</code></pre></div>
-<p>This is a <strong>stackless coroutine</strong> -- no separate OS fiber stacks. All persistent state is stored in the heap-allocated context (0x380 bytes for the main UpdateGame context). This is important for the browser translation: JavaScript <code>async/await</code> maps perfectly to this pattern.</p>
+<p>All persistent state occupies a 0x380-byte heap-allocated context. This matters for browser translation: JavaScript <code>async/await</code> maps perfectly to this pattern.</p>
 <p><em>Source: doc 12 Sections 1.2-1.3, 4.1-4.3</em></p>
 <h4 id="the-path-to-main-menu-15-states-minimum"><a class="anchor" href="#the-path-to-main-menu-15-states-minimum">#</a>The Path to Main Menu: 15 States Minimum</h4>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x000  [Game Init] -- allocate 0x380 context, log &quot;[Game] starting game.&quot;
@@ -241,7 +250,7 @@ LAB_140b7cdcc  [MAIN MENU] -- FUN_140b54b90(param_1, 2), &quot;[Game] main menu.
 <p><strong>Estimated total time</strong>: 2-8 seconds depending on network conditions. The 1000ms login timeout at state 0x488 is the main variable.</p>
 <p><em>Source: doc 12 Section 11.1-11.3</em></p>
 <h4 id="from-main-menu-to-driving-6-more-states"><a class="anchor" href="#from-main-menu-to-driving-6-more-states">#</a>From Main Menu to Driving: 6 More States</h4>
-<p>When a player clicks Play, the menu returns a result code at <code>*param_2 + 0x174</code>. The game logs <code>"[Game] exec MenuResult: {result}"</code>. For playing a specific map (result 0x09):</p>
+<p>When you click Play, the menu returns a result code at <code>*param_2 + 0x174</code>. The game logs <code>"[Game] exec MenuResult: {result}"</code>. For playing a specific map (result 0x09):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>0x9A5  [Menu Result Dispatch] -- read *(ctx+0x174)
   |     result 0x09: Play Map -&gt; set phase 0x0E
 0xBF6  [Load Map] -- FUN_140b57d10 resolves map path
@@ -257,10 +266,10 @@ LAB_140b7cdcc  [MAIN MENU] -- FUN_140b54b90(param_1, 2), &quot;[Game] main menu.
 0xD45  [Gameplay Active] -- polls FUN_140b76aa0 each frame
   |     returns 0: continue playing (stay in 0xD45)
   |     returns non-0: race complete, return to menu</code></pre></div>
-<p><strong>Key insight</strong>: State 0xD45 is where the player LIVES during gameplay. Every frame, the state machine enters 0xD45, calls <code>FUN_140b76aa0</code> to check if gameplay is over, and if not, yields. Meanwhile, the actual gameplay (physics, input, script, rendering) runs through the engine callbacks installed at Phase 4. The state machine is not driving gameplay frame-by-frame -- it's just monitoring for completion.</p>
+<p><strong>Key insight</strong>: State 0xD45 is where you LIVE during gameplay. Every frame, the state machine enters 0xD45, calls <code>FUN_140b76aa0</code> to check if gameplay is over, and if not, yields. The actual gameplay (physics, input, script, rendering) runs through the engine callbacks installed at Phase 4. The state machine monitors for completion -- it does not drive gameplay frame-by-frame.</p>
 <p><em>Source: doc 12 Sections 12.1-12.5</em></p>
-<h3 id="how-would-i-implement-this-as-a-browser-app"><a class="anchor" href="#how-would-i-implement-this-as-a-browser-app">#</a>"How Would I Implement This as a Browser App?"</h3>
-<p>The coroutine-based state machine maps to JavaScript in three natural ways:</p>
+<h3 id="browser-translation-strategies"><a class="anchor" href="#browser-translation-strategies">#</a>Browser Translation Strategies</h3>
+<p>The coroutine-based state machine maps to JavaScript in three ways:</p>
 <p><strong>Option 1: async/await</strong> (recommended)</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">async function updateGame(app) {
   await gameInit(app);           // State 0x000
@@ -297,15 +306,14 @@ LAB_140b7cdcc  [MAIN MENU] -- FUN_140b54b90(param_1, 2), &quot;[Game] main menu.
     }
   }
 }</code></pre></div>
-<p>I'd go with Option 1. The <code>async/await</code> approach loses the explicit state IDs but gains readability. Since we're not trying to be bug-compatible with the original state machine (just behaviorally equivalent), the async approach is cleaner.</p>
+<p>I'd go with Option 1. The <code>async/await</code> approach loses explicit state IDs but gains readability. We're not trying to be bug-compatible -- just behaviorally equivalent.</p>
 <p>The headless/dedicated server pattern (<code>DAT_141fbbee8</code> / <code>DAT_141fbbf0c</code>) maps to a Node.js server running the same state machine with rendering disabled. The original binary does exactly this.</p>
 <p><em>Source: doc 12 Sections 10.1-10.6</em></p>
 <hr>
-<h2 id="chapter-2-loading-a-map"><a class="anchor" href="#chapter-2-loading-a-map">#</a>Chapter 2: Loading a Map</h2>
-<details class="collapsible collapsed-by-default">
-<summary><h3 id="gbx-file-format-byte-by-byte"><a class="anchor" href="#gbx-file-format-byte-by-byte">#</a>GBX File Format: Byte by Byte</h3></summary>
-<div class="collapsible-content">
-<p>Every piece of content in TM2020 is stored as a GBX (GameBox) file. Maps, items, ghosts, replays, materials, meshes -- all GBX. The entry point for loading is <code>FUN_140904730</code> (<code>CSystemArchiveNod::LoadGbx</code>), which I read in the decompiled code. It checks for three formats: <code>.gbx</code> (binary), <code>.gbx.xml</code> (XML), <code>.json</code> (JSON import), then orchestrates: header parse, class instantiation via factory, body decompress, chunk dispatch, reference resolution.</p>
+<h2 id="loading-a-map"><a class="anchor" href="#loading-a-map">#</a>Loading a Map</h2>
+<h3 id="gbx-file-format"><a class="anchor" href="#gbx-file-format">#</a>GBX File Format</h3>
+<p>This section covers the GBX binary format byte-by-byte, LZO1X compression, the LookbackString interning system, and the 22-stage map initialization pipeline.</p>
+<p>Every piece of content in TM2020 is a GBX (GameBox) file. Maps, items, ghosts, replays, materials, meshes -- all GBX. The entry point for loading is <code>FUN_140904730</code> (<code>CSystemArchiveNod::LoadGbx</code>). It checks for three formats: <code>.gbx</code> (binary), <code>.gbx.xml</code> (XML), <code>.json</code> (JSON import), then orchestrates: header parse, class instantiation via factory, body decompress, chunk dispatch, reference resolution.</p>
 <p><em>Source: FUN_140904730_LoadGbx.c, doc 16 Section 1</em></p>
 <h4 id="the-header-bytes-0x00-variable"><a class="anchor" href="#the-header-bytes-0x00-variable">#</a>The Header (Bytes 0x00 - variable)</h4>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>BYTE-LEVEL GBX HEADER (Version 6, TM2020)
@@ -321,36 +329,36 @@ Offset  Bytes              Field               Value
 0x15    [chunk index]      8 bytes per chunk   (chunk_id, size | heavy_flag)
 var     [chunk data]       concatenated        all header chunk payloads
 var     XX XX XX XX        num_nodes           node count for reference sizing</code></pre></div>
-<p><strong>Format flags "BUCR"</strong> -- every real TM2020 file I've seen uses this:</p>
+<p><strong>Format flags "BUCR"</strong> -- every real TM2020 file uses this:</p>
 <ul>
   <li>B = Binary (not Text)</li>
   <li>U = Body wrapper uncompressed</li>
   <li>C = Body stream compressed (LZO1X)</li>
   <li>R = With external references</li>
 </ul>
-<p>These flags are parsed at <code>FUN_140901850</code>:</p>
+<p>These flags parse at <code>FUN_140901850</code>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Byte 0: &#x27;T&#x27; (text=1) or &#x27;B&#x27; (binary=0)
 // Byte 1: &#x27;C&#x27; (compressed=1) or &#x27;U&#x27; (uncompressed=0) -&gt; stored at +0xD8
 // Byte 2: &#x27;C&#x27; (compressed=1) or &#x27;U&#x27; (uncompressed=0) -&gt; stored at +0xDC
 // Byte 3: &#x27;R&#x27; (with refs) or &#x27;E&#x27; (no external refs)</code></pre></div>
 <p><em>Source: doc 16 Sections 2-3, verified against 5+ real files in doc 26</em></p>
 <h4 id="lzo1x-decompression-not-zlib"><a class="anchor" href="#lzo1x-decompression-not-zlib">#</a>LZO1X Decompression (NOT zlib!)</h4>
-<p>This was a critical correction. The body compression is <strong>LZO1X</strong>, not zlib. Evidence:</p>
+<p>Body compression uses <strong>LZO1X</strong>, not zlib. Evidence:</p>
 <ul>
   <li>Real file validation: compressed body data starts with bytes consistent with LZO1X encoding (0x1A in TechFlow.Map.Gbx means "initial literal run of 9 bytes")</li>
   <li>Both zlib and raw deflate FAIL on the compressed data</li>
   <li>Community tools (GBX.NET, gbx-py) all use LZO</li>
-  <li>The decompression function <code>FUN_140127aa0</code> is called when <code>param_1+0xDC</code> is non-zero</li>
+  <li>The decompression function <code>FUN_140127aa0</code> fires when <code>param_1+0xDC</code> is non-zero</li>
 </ul>
-<p>However, <strong>zlib IS used</strong> for ghost sample data within replays. So there are two compression layers:</p>
+<p><strong>zlib IS used</strong> for ghost sample data within replays. Two compression layers exist:</p>
 <ol>
   <li>Outer: GBX body = LZO1X</li>
   <li>Inner: Ghost samples within body = zlib deflate</li>
 </ol>
-<p>The decompression buffer is pooled at <code>DAT_14205c280</code> with max size <code>0xFFFFF</code> (~1MB). Anything larger gets a fresh allocation.</p>
+<p>The decompression buffer pools at <code>DAT_14205c280</code> with max size <code>0xFFFFF</code> (~1MB). Anything larger gets a fresh allocation.</p>
 <p><em>Source: doc 16 Section 8, validated in doc 26 Section 2</em></p>
 <h4 id="the-lookbackstring-system"><a class="anchor" href="#the-lookbackstring-system">#</a>The LookbackString System</h4>
-<p>This is the cleverest optimization in the format. Block names like <code>"StadiumRoadMainStraight"</code> appear hundreds of times in a map file. Instead of repeating the full string, GBX uses a per-archive string interning table.</p>
+<p>This is the cleverest optimization in the format. <strong>LookbackString</strong> is a per-archive string interning table that replaces repeated strings (like <code>"StadiumRoadMainStraight"</code>) with compact back-references.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>LOOKBACKSTRING READ ALGORITHM:
   1. First read in a context: uint32 must equal 3 (version marker)
   2. Subsequent reads: uint32 value
@@ -374,12 +382,10 @@ var     XX XX XX XX        num_nodes           node count for reference sizing</
 
   If non-skippable:
     +0x04  bytes   chunk_data    Must be fully understood to continue!</code></pre></div>
-<p>The <code class="addr">0xFACADE01</code> sentinel is confirmed in <code>FUN_1402d0c40</code>. The "SKIP" marker is ASCII <code>S-K-I-P</code> = <code class="addr">0x534B4950</code>. Skippable chunks are safe to skip when you don't understand them. Non-skippable chunks are the parser's nightmare -- if you can't parse one, you can't find the next chunk boundary.</p>
+<p>The <code class="addr">0xFACADE01</code> sentinel is confirmed in <code>FUN_1402d0c40</code>. The "SKIP" marker is ASCII <code>S-K-I-P</code> = <code class="addr">0x534B4950</code>. Skippable chunks are safe to skip. Non-skippable chunks are the parser's nightmare -- if you can't parse one, you can't find the next chunk boundary.</p>
 <p><em>Source: doc 16 Sections 6-7</em></p>
-</div>
-</details>
 <h3 id="the-22-stage-map-loading-pipeline"><a class="anchor" href="#the-22-stage-map-loading-pipeline">#</a>The 22-Stage Map Loading Pipeline</h3>
-<p>After GBX deserialization, the map undergoes a 22-stage initialization pipeline. Each stage has a dedicated profiling marker in the binary:</p>
+<p>After GBX deserialization, the map undergoes a 22-stage initialization pipeline. Each stage has a dedicated profiling marker:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>STAGE  METHOD                                          COST
 -----  ------                                          ----
   1    LoadDecorationAndCollection                     SLOW (loads .pak assets)
@@ -404,13 +410,14 @@ var     XX XX XX XX        num_nodes           node count for reference sizing</
  20    InitAllAnchoredObjects                          Moderate
  21    ConnectAdditionalDataClipsToBakedClips          Fast
  22    RemoveNonBlocksFromBlockStock                   Fast</code></pre></div>
-<p><strong>What takes the longest?</strong> Stages 1 (decoration/pack loading -- megabytes of 3D assets), 5 (block instantiation -- proportional to block count), and 18 (embedded items -- each is a full GBX sub-file). Lightmap generation, if not pre-baked, is the slowest of all.</p>
-<p><strong>What can be parallelized?</strong> Stages 3-4 (lightmap IDs), 9 (genealogy), 10 (pylons), and 15 (pylon list) are independent data transforms. Stages 11-14 (clip connectivity) form a dependency chain but could run on a worker. The real bottleneck is stage 1 -- decoration loading -- which blocks everything else.</p>
+<p><strong>Bottlenecks</strong>: Stages 1 (decoration/pack loading), 5 (block instantiation), and 18 (embedded items). Lightmap generation, if not pre-baked, is the slowest of all.</p>
+<p><strong>Parallelization opportunities</strong>: Stages 3-4 (lightmap IDs), 9 (genealogy), 10 (pylons), and 15 (pylon list) are independent transforms. Stages 11-14 (clip connectivity) form a dependency chain but could run on a worker. Stage 1 (decoration loading) blocks everything else.</p>
 <p><em>Source: doc 28 Section 6.2-6.5</em></p>
 <hr>
-<h2 id="chapter-3-the-blockitem-system"><a class="anchor" href="#chapter-3-the-blockitem-system">#</a>Chapter 3: The Block/Item System</h2>
+<h2 id="the-blockitem-system"><a class="anchor" href="#the-blockitem-system">#</a>The Block/Item System</h2>
 <h3 id="the-32-meter-grid"><a class="anchor" href="#the-32-meter-grid">#</a>The 32-Meter Grid</h3>
-<p>TM2020 maps exist on a discrete 3D grid. The numbers:</p>
+<p>This section covers TM2020's block coordinate system, naming conventions, waypoint connectivity, and how items differ from blocks.</p>
+<p>TM2020 maps exist on a discrete 3D grid:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>COORDINATE SYSTEM:
   X axis: Right (left-handed, D3D convention)
   Y axis: Up (elevation)
@@ -430,7 +437,7 @@ CONVERSION:
   world_y = block_y * 8.0
   world_z = block_z * 32.0</code></pre></div>
 <p><em>Source: doc 28 Section 1.2, confirmed by Openplanet Finetuner using Math::Ceil(distance/32.0f)</em></p>
-<h3 id="block-naming-convention-decoding-the-pattern"><a class="anchor" href="#block-naming-convention-decoding-the-pattern">#</a>Block Naming Convention: Decoding the Pattern</h3>
+<h3 id="block-naming-convention"><a class="anchor" href="#block-naming-convention">#</a>Block Naming Convention</h3>
 <p>Block names follow a strict hierarchy: <code>{Environment}{Category}{Shape}{Variant}{Modifier}</code></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>DECODED NAMING EXAMPLES:
   StadiumRoadMainStraight           = Stadium + Road (Main) + Straight
@@ -453,7 +460,7 @@ SHAPES:
 MODIFIERS:
   x2/x3/x4 (width), Mirror, Narrow, In/Out (curve direction)</code></pre></div>
 <p><em>Source: doc 28 Section 9, real map exports</em></p>
-<h3 id="waypoints-how-connectivity-works"><a class="anchor" href="#waypoints-how-connectivity-works">#</a>Waypoints: How Connectivity Works</h3>
+<h3 id="waypoints-and-connectivity"><a class="anchor" href="#waypoints-and-connectivity">#</a>Waypoints and Connectivity</h3>
 <p>Waypoints define the race route. Four types exist, stored as <code>CGameWaypointSpecialProperty</code> on blocks:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -486,10 +493,10 @@ MODIFIERS:
 </tr>
 </tbody>
 </table></div>
-<p>Detection uses trigger volumes (<code>CSceneTriggerAction</code>, <code>CGameTriggerGate</code>). When the car's bounding volume intersects the gate's trigger zone, the checkpoint/finish is registered.</p>
-<p>Route validation is performed by <code>CGameEditorPluginMapConnectResults</code> -- the editor simulates whether a car can physically drive from Start through all Checkpoints to Finish via connected road surfaces.</p>
+<p>Detection uses trigger volumes (<code>CSceneTriggerAction</code>, <code>CGameTriggerGate</code>). When the car's bounding volume intersects the gate's trigger zone, the checkpoint/finish registers.</p>
+<p>Route validation runs via <code>CGameEditorPluginMapConnectResults</code> -- the editor simulates whether a car can drive from Start through all Checkpoints to Finish via connected road surfaces.</p>
 <p><em>Source: doc 28 Sections 3.1-3.4, binary strings <code>|BlockInfo|Start</code>, <code>|BlockInfo|Finish</code>, etc.</em></p>
-<h3 id="items-vs-blocks-whats-different"><a class="anchor" href="#items-vs-blocks-whats-different">#</a>Items vs Blocks: What's Different?</h3>
+<h3 id="items-vs-blocks"><a class="anchor" href="#items-vs-blocks">#</a>Items vs Blocks</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -531,12 +538,13 @@ MODIFIERS:
 </tr>
 </tbody>
 </table></div>
-<p><strong>"This is basically Minecraft with racing -- am I wrong?"</strong></p>
-<p>Not entirely wrong. Like Minecraft: discrete grid, block types with specific behaviors, automated support generation (pylons = pillar blocks auto-placed under air variants). Unlike Minecraft: the grid is 32 meters not 1 meter, blocks are complex pre-built 3D models not cubes, and the clip system enforces connectivity rules that Minecraft doesn't have. Items are the escape hatch from the grid -- they're what make TM2020 maps look organic rather than blocky.</p>
+<p><strong>"This is Minecraft with racing -- am I wrong?"</strong></p>
+<p>Not entirely. Like Minecraft: discrete grid, block types with specific behaviors, automated support generation (pylons = pillar blocks auto-placed under air variants). Unlike Minecraft: the grid is 32 meters not 1 meter, blocks are complex pre-built 3D models not cubes, and the clip system enforces connectivity rules. Items are the escape hatch from the grid -- they make TM2020 maps look organic rather than blocky.</p>
 <p><em>Source: doc 28 Sections 2.1, 4.1</em></p>
 <hr>
-<h2 id="chapter-4-ghost-replay-system"><a class="anchor" href="#chapter-4-ghost-replay-system">#</a>Chapter 4: Ghost & Replay System</h2>
+<h2 id="ghost-and-replay-system"><a class="anchor" href="#ghost-and-replay-system">#</a>Ghost and Replay System</h2>
 <h3 id="the-recording-pipeline"><a class="anchor" href="#the-recording-pipeline">#</a>The Recording Pipeline</h3>
+<p>This section covers ghost sample encoding, input recording, and server-side replay validation for anti-cheat.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>DURING GAMEPLAY (per frame):
   1. CInputReplay captures raw input each simulation tick (100 Hz)
   2. CPlugEntRecordData stores entity state samples (position, rotation, speed)
@@ -546,7 +554,7 @@ MODIFIERS:
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="50ms-samples-22-bytes-each"><a class="anchor" href="#50ms-samples-22-bytes-each">#</a>50ms Samples, 22 Bytes Each</h3></summary>
 <div class="collapsible-content">
-<p>Ghost samples are visual snapshots -- NOT physics state. They're recorded at <strong>20 samples per second</strong> (50ms period), much coarser than the 100Hz physics tick. This is because ghosts exist for visual playback, not deterministic re-simulation.</p>
+<p>Ghost samples are visual snapshots -- NOT physics state. They record at <strong>20 samples per second</strong> (50ms period), much coarser than the 100Hz physics tick. Ghosts exist for visual playback, not deterministic re-simulation.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>PER-SAMPLE ENCODING (22 bytes):
   Offset  Type     Size  Field              Encoding
   ------  ----     ----  -----              --------
@@ -571,7 +579,7 @@ MODIFIERS:
 </div>
 </details>
 <h3 id="input-recording-at-100hz"><a class="anchor" href="#input-recording-at-100hz">#</a>Input Recording at 100Hz</h3>
-<p>Separate from visual ghost data, <code>CInputReplay</code> captures raw inputs at the full physics tick rate:</p>
+<p><code>CInputReplay</code> captures raw inputs at the full physics tick rate, separate from visual ghost data:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>INPUT FIELDS (per tick):
   InputSteer:      float -1.0 to 1.0  (from raw int: -65536 to 65536)
   InputGasPedal:   float  0.0 to 1.0  (from raw int: 0 to 65535)
@@ -579,7 +587,7 @@ MODIFIERS:
   InputIsBraking:  bool   0 or 1
 
   Conversion: float_value = int_value / 65536.0</code></pre></div>
-<p>Input recording is likely <strong>event-based</strong> (only state changes stored), not every-tick. For a 38-second run, this produces ~200-500 events rather than 3,800 ticks of data.</p>
+<p>Input recording is likely <strong>event-based</strong> (only state changes stored). For a 38-second run, this produces ~200-500 events rather than 3,800 ticks of data.</p>
 <p><em>Source: doc 30 Section 8, community (TMInterface/donadigo)</em></p>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="ghost-validation-for-anti-cheat"><a class="anchor" href="#ghost-validation-for-anti-cheat">#</a>Ghost Validation for Anti-Cheat</h3></summary>
@@ -601,7 +609,7 @@ MODIFIERS:
 <p><em>Source: doc 30 Section 14, doc 17 Section 13</em></p>
 </div>
 </details>
-<h3 id="how-would-i-implement-this-for-my-own-game"><a class="anchor" href="#how-would-i-implement-this-for-my-own-game">#</a>"How Would I Implement This for My Own Game?"</h3>
+<h3 id="building-your-own-replay-system"><a class="anchor" href="#building-your-own-replay-system">#</a>Building Your Own Replay System</h3>
 <p><strong>For custom replays</strong> (recommended approach):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">interface InputFrame {
   tick: number;     // Physics tick (100 Hz)
@@ -618,11 +626,12 @@ interface SimpleReplay {
   checkpoints: number[];    // cumulative ms timestamps
   inputs: InputFrame[];     // only store state CHANGES
 }</code></pre></div>
-<p>Record only when input changes. Playback by feeding into deterministic physics at 100Hz. If physics is bit-identical, the replay is exact. For visual-only ghosts (opponent display), sample position at 20Hz and interpolate -- exactly what TM2020 does.</p>
+<p>Record only when input changes. Play back by feeding into deterministic physics at 100Hz. If physics is bit-identical, the replay is exact. For visual-only ghosts (opponent display), sample position at 20Hz and interpolate -- exactly what TM2020 does.</p>
 <p><em>Source: doc 30 Section 16</em></p>
 <hr>
-<h2 id="chapter-5-networking"><a class="anchor" href="#chapter-5-networking">#</a>Chapter 5: Networking</h2>
+<h2 id="networking"><a class="anchor" href="#networking">#</a>Networking</h2>
 <h3 id="the-authentication-chain"><a class="anchor" href="#the-authentication-chain">#</a>The Authentication Chain</h3>
+<p>This section covers TM2020's 4-step token exchange, the 11-layer network stack, and minimum viable browser networking.</p>
 <p>TM2020 uses a 4-step token exchange:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>AUTH DATA FLOW:
   UPC SDK (DLL) --ticket--&gt; Ubisoft Services --session--&gt; Nadeo Core --JWT--&gt; API Access
@@ -659,8 +668,7 @@ interface SimpleReplay {
 </tr>
 </tbody>
 </table></div>
-<p>JWT token lifetime: 55 minutes + random 1-60 seconds jitter before refresh (confirmed from Openplanet source).</p>
-<p>The <code>Ubi-AppId</code> for TM2020 is <code>86263886-327a-4328-ac69-527f0d20a237</code>.</p>
+<p>JWT token lifetime: 55 minutes + random 1-60 seconds jitter before refresh (confirmed from Openplanet source). The <code>Ubi-AppId</code> for TM2020 is <code>86263886-327a-4328-ac69-527f0d20a237</code>.</p>
 <p><em>Source: doc 17 Sections 2-3, verified from Openplanet NadeoServices plugin and decompiled function at 0x140356160</em></p>
 <h3 id="the-11-layer-network-stack"><a class="anchor" href="#the-11-layer-network-stack">#</a>The 11-Layer Network Stack</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>NETWORK ARCHITECTURE (from binary):
@@ -676,7 +684,7 @@ interface SimpleReplay {
   Layer  2: Network Engine (CNetEngine, CNetServer, CNetClient, 262 classes)
   Layer  1: Transport (WS2_32 Winsock, libcurl static, OpenSSL 1.1.1t+quic)
   Layer  0: External (UPC SDK DLL, Vivox VoiceChat.dll, XMPP)</code></pre></div>
-<p><strong>562 total networking classes</strong>. The HTTP client uses libcurl's multi interface for non-blocking I/O. Each request is a 0x1A8-byte structure. There's one shared <code>curl_multi_handle</code> at <code>DAT_1420ba2f8</code>. The web services layer uses a dedicated background thread (<code>CWebServices::Update_WebServicesThread</code>) with results dispatched to the main thread.</p>
+<p><strong>562 total networking classes</strong>. The HTTP client uses libcurl's multi interface for non-blocking I/O. Each request is a 0x1A8-byte structure. One shared <code>curl_multi_handle</code> lives at <code>DAT_1420ba2f8</code>. The web services layer uses a dedicated background thread (<code>CWebServices::Update_WebServicesThread</code>) with results dispatched to the main thread.</p>
 <p><em>Source: doc 17 Sections 1, 4, 6</em></p>
 <h3 id="real-time-multiplayer-tcp-udp-dual-stack"><a class="anchor" href="#real-time-multiplayer-tcp-udp-dual-stack">#</a>Real-Time Multiplayer: TCP + UDP Dual Stack</h3>
 <p>The game uses <strong>both TCP and UDP simultaneously</strong> per connection:</p>
@@ -686,8 +694,7 @@ interface SimpleReplay {
   - Admin commands                - Time-critical sync
   - File transfers                - Ping measurements
   - Serialized objects (Nods)     - Voice chat frames</code></pre></div>
-<p>UDP probing happens after TCP handshake. If UDP hole-punching fails, it falls back to TCP-only. The connection uses <code>CNetConnection</code> with metrics tracking for both channels: sending/receiving data rates, packet counts, nod (serialized object) counts.</p>
-<p>The per-frame network update follows a strict deterministic order:</p>
+<p>UDP probing happens after TCP handshake. If UDP hole-punching fails, it falls back to TCP-only. Per-frame network updates follow a strict deterministic order:</p>
 <ol>
   <li><code>NetUpdate_BeforePhy</code> -- receive remote inputs</li>
   <li>Physics step (deterministic -- all clients simulate identically)</li>
@@ -695,10 +702,10 @@ interface SimpleReplay {
   <li><code>NetLoop_Synchronize</code> -- ensure shared game timer</li>
 </ol>
 <p><em>Source: doc 17 Sections 7-8, debug strings at <code class="addr">0x141c2b348</code>-0x141c49c28</em></p>
-<h3 id="whats-the-minimum-for-online-features-in-a-browser"><a class="anchor" href="#whats-the-minimum-for-online-features-in-a-browser">#</a>"What's the Minimum for Online Features in a Browser?"</h3>
+<h3 id="minimum-browser-online-stack"><a class="anchor" href="#minimum-browser-online-stack">#</a>Minimum Browser Online Stack</h3>
 <p>For a browser client, the minimum viable online stack is:</p>
 <ol>
-  <li><strong>Auth proxy server</strong> (Node.js): handles UPC/Ubisoft auth (can't do from browser due to CORS)</li>
+  <li><strong>Auth proxy server</strong> (Node.js): handles UPC/Ubisoft auth (can't run from browser due to CORS)</li>
   <li><strong>Token management</strong> (client): store JWT, refresh every 55 minutes, use <code>nadeo_v1 t=<token></code> header</li>
   <li><strong>Map download</strong>: <code>GET /maps/{mapId}</code> from Core API</li>
   <li><strong>Leaderboard read</strong>: <code>GET /map-records</code> from Live API</li>
@@ -707,9 +714,10 @@ interface SimpleReplay {
 <p>Total: ~4 API endpoints. No WebSocket needed for single-player. For multiplayer, use WebSocket (reliable) + WebRTC DataChannel (unreliable) instead of TCP+UDP -- the browser can't do raw sockets.</p>
 <p><em>Source: doc 17 Section 16, plan doc 01</em></p>
 <hr>
-<h2 id="chapter-6-maniascript"><a class="anchor" href="#chapter-6-maniascript">#</a>Chapter 6: ManiaScript</h2>
+<h2 id="maniascript"><a class="anchor" href="#maniascript">#</a>ManiaScript</h2>
 <h3 id="the-engines-built-in-scripting-language"><a class="anchor" href="#the-engines-built-in-scripting-language">#</a>The Engine's Built-in Scripting Language</h3>
-<p>ManiaScript is interpreted by <code>CScriptEngine</code>, a singleton at binary address <code class="addr">0x140874270</code> (<code>CScriptEngine::Run</code>). I read the decompiled code:</p>
+<p>This section covers <code>CScriptEngine</code>, ManiaScript's type system, coroutine primitives, and whether to replicate it in a browser project.</p>
+<p>ManiaScript is interpreted by <code>CScriptEngine</code>, a singleton at <code class="addr">0x140874270</code> (<code>CScriptEngine::Run</code>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// CScriptEngine::Run (316 bytes):
 void FUN_140874270(longlong engine, longlong context, undefined4 mode) {
     *(longlong *)(engine + 0x60) = context;        // Set current script
@@ -760,16 +768,17 @@ LABELS (each has Init/Start/End):
   ***EndServer***</code></pre></div>
 <p>Built-in modes: <code>TM_TimeAttack_Online</code>, <code>TM_Rounds_Online</code>, <code>TM_Cup_Online</code>, <code>TM_Champion_Online</code>, <code>TM_Knockout_Online</code>, <code>TM_Laps_Online</code>, <code>TM_Teams_Online</code>.</p>
 <p><em>Source: doc 31 Sections 19.1-19.4</em></p>
-<h3 id="would-i-build-a-scripting-language-or-use-luajs"><a class="anchor" href="#would-i-build-a-scripting-language-or-use-luajs">#</a>"Would I Build a Scripting Language or Use Lua/JS?"</h3>
+<h3 id="should-you-build-a-scripting-language"><a class="anchor" href="#should-you-build-a-scripting-language">#</a>Should You Build a Scripting Language?</h3>
 <p><strong>For the MVP</strong>: Skip scripting entirely. Hardcode TimeAttack rules (start timer on first input, record checkpoints, stop on finish). This covers 90% of single-player use.</p>
-<p><strong>If scripting is needed</strong>: Use JavaScript directly. ManiaScript's coroutine model (<code>yield</code>/<code>sleep</code>/<code>wait</code>) maps to async generators. The 12 types map to JS primitives. The main reason Nadeo built their own language was sandboxing user-created content -- but in a browser, you already have the sandboxing (Web Workers with controlled APIs).</p>
-<p>Building a ManiaScript interpreter (~10,000 LOC) is only necessary if you need to run existing TM2020 game mode scripts verbatim. For a fresh project, that's a bad ROI.</p>
+<p><strong>If scripting is needed</strong>: Use JavaScript directly. ManiaScript's coroutine model (<code>yield</code>/<code>sleep</code>/<code>wait</code>) maps to async generators. The 12 types map to JS primitives. Nadeo built their own language for sandboxing user-created content -- but in a browser, you already have sandboxing (Web Workers with controlled APIs).</p>
+<p>Building a ManiaScript interpreter (~10,000 LOC) is only necessary to run existing TM2020 game mode scripts verbatim. For a fresh project, that's a bad ROI.</p>
 <p><em>Source: plan doc 01 (@opentm/scripting section)</em></p>
 <hr>
-<h2 id="chapter-7-the-ui-system"><a class="anchor" href="#chapter-7-the-ui-system">#</a>Chapter 7: The UI System</h2>
+<h2 id="the-ui-system"><a class="anchor" href="#the-ui-system">#</a>The UI System</h2>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="manialink-xml-ui-in-a-320x180-coordinate-space"><a class="anchor" href="#manialink-xml-ui-in-a-320x180-coordinate-space">#</a>ManiaLink: XML UI in a 320x180 Coordinate Space</h3></summary>
 <div class="collapsible-content">
+<p>This section covers TM2020's three-layer UI architecture, native controls, and why HTML/CSS replaces all of it.</p>
 <p>TM2020's UI system has three layers:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Layer 3: ManiaLink XML + ManiaScript    (content creators)
 Layer 2: CGameManialink* classes (31)   (script-accessible wrappers)
@@ -802,14 +811,14 @@ CControlContainer, CControlFrame (+Animated, +Styled)
 CControlEffect (+Combined, +Master, +Motion, +MoveFrame, +Simi)
 CControlLayout, CControlStyle, CControlStyleSheet
 CControlSimi2, CControlEngine</code></pre></div>
-<p>The <code>CControlEngine</code> singleton drives 7 per-frame update phases: <code>ContainersDoLayout</code>, <code>ContainersEffects</code>, <code>ContainersFocus</code>, <code>ContainersValues</code>, <code>ControlsEffects</code>, <code>ControlsFocus</code>, <code>ControlsValues</code>.</p>
+<p><code>CControlEngine</code> singleton drives 7 per-frame update phases: <code>ContainersDoLayout</code>, <code>ContainersEffects</code>, <code>ContainersFocus</code>, <code>ContainersValues</code>, <code>ControlsEffects</code>, <code>ControlsFocus</code>, <code>ControlsValues</code>.</p>
 <p><em>Source: doc 34 Section 2.1-2.2</em></p>
-<h3 id="hud-elements-in-tm2020"><a class="anchor" href="#hud-elements-in-tm2020">#</a>HUD Elements in TM2020</h3>
+<h3 id="hud-elements"><a class="anchor" href="#hud-elements">#</a>HUD Elements</h3>
 <p>The in-game HUD uses <code>CUILayer</code> objects attached via <code>UIManager.UIAll.UILayers</code> in ManiaScript. Each layer is a ManiaLink page. The speedometer, timer, checkpoint display -- all ManiaLink XML with ManiaScript event handlers updating <code>CMlLabel.Value</code> every frame.</p>
-<p>Standard HUD modules are loaded from <code>CGamePlaygroundModulePlaygroundScriptHandler</code> subclasses, with 12 module types in the binary class hierarchy.</p>
+<p>Standard HUD modules load from <code>CGamePlaygroundModulePlaygroundScriptHandler</code> subclasses, with 12 module types in the binary class hierarchy.</p>
 <p><em>Source: doc 34 Section 10, doc 31 Section 19.7</em></p>
-<h3 id="htmlcss-can-replace-all-of-this"><a class="anchor" href="#htmlcss-can-replace-all-of-this">#</a>"HTML/CSS Can Replace All of This"</h3>
-<p>Yes. Every ManiaLink element has a direct HTML equivalent:</p>
+<h3 id="htmlcss-replaces-all-of-this"><a class="anchor" href="#htmlcss-replaces-all-of-this">#</a>HTML/CSS Replaces All of This</h3>
+<p>Every ManiaLink element has a direct HTML equivalent:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ManiaLink              HTML/CSS
 ---------              --------
 &lt;quad&gt;                 &lt;div&gt; with background-image or &lt;img&gt;
@@ -838,12 +847,13 @@ CControlSimi2, CControlEngine</code></pre></div>
   /* x: (ml_x + 160) / 320 * 100vw */
   /* y: (90 - ml_y) / 180 * 100vh  -- flip Y axis! */
 }</code></pre></div>
-<p>The 65+ built-in quad styles (Bgs1, Icons64x64_1, etc.) would need to be re-created as CSS classes or sprite sheets. The plan document recommends Svelte for minimal bundle size and fast reactivity.</p>
-<p><strong>My recommendation</strong>: Do NOT replicate ManiaLink for the UI. Build native web UI. Only implement ManiaLink parsing if you need to load community-created game mode UIs.</p>
+<p>The 65+ built-in quad styles (Bgs1, Icons64x64_1, etc.) would need re-creation as CSS classes or sprite sheets.</p>
+<p><strong>My recommendation</strong>: Do NOT replicate ManiaLink for UI. Build native web UI. Only implement ManiaLink parsing if you need to load community-created game mode UIs.</p>
 <p><em>Source: doc 34 Section 14, plan doc 01 (@opentm/ui section)</em></p>
 <hr>
-<h2 id="chapter-8-my-architecture-plan"><a class="anchor" href="#chapter-8-my-architecture-plan">#</a>Chapter 8: My Architecture Plan</h2>
-<h3 id="what-id-build-the-same-way-as-tm2020"><a class="anchor" href="#what-id-build-the-same-way-as-tm2020">#</a>What I'd Build the SAME Way as TM2020</h3>
+<h2 id="my-architecture-plan"><a class="anchor" href="#my-architecture-plan">#</a>My Architecture Plan</h2>
+<h3 id="what-id-build-the-same-way"><a class="anchor" href="#what-id-build-the-same-way">#</a>What I'd Build the Same Way</h3>
+<p>This section covers my architectural recommendations: what to keep from TM2020, what to change, and the feasibility of the 68-task MVP.</p>
 <ol>
   <li><strong>Coroutine-based state machine</strong>: The fiber/yield pattern is perfect. <code>async/await</code> maps directly. The 60+ states become ~20 async functions.</li>
 </ol>
@@ -857,17 +867,17 @@ CControlSimi2, CControlEngine</code></pre></div>
   <li><strong>Deterministic physics for replay validation</strong>: Input-based replay is the right approach. Record inputs at tick rate, re-simulate for validation. The 100Hz physics tick with adaptive sub-stepping is well-designed.</li>
 </ol>
 <ol>
-  <li><strong>Chunk-based file format</strong>: GBX's chunk system with skippable chunks is forward-compatible and parseable. I'd use a similar design (though I'd pick a standard container like FlatBuffers or MessagePack rather than inventing a new binary format).</li>
+  <li><strong>Chunk-based file format</strong>: GBX's chunk system with skippable chunks is forward-compatible and parseable. I'd use a similar design (though I'd pick a standard container like FlatBuffers or MessagePack).</li>
 </ol>
 <ol>
   <li><strong>Ghost system with dual representation</strong>: Visual ghosts at 20Hz for rendering, input ghosts at 100Hz for validation. Different use cases, different fidelity requirements.</li>
 </ol>
-<h3 id="what-id-do-differently-and-why"><a class="anchor" href="#what-id-do-differently-and-why">#</a>What I'd Do DIFFERENTLY and Why</h3>
+<h3 id="what-id-do-differently"><a class="anchor" href="#what-id-do-differently">#</a>What I'd Do Differently</h3>
 <ol>
-  <li><strong>NOT LZO for compression</strong>: Use zstd or brotli. LZO is fast but produces larger output. Brotli is standard in browsers (built into <code>Accept-Encoding</code>). The 1MB decompression pool limit suggests LZO was chosen for memory-constrained environments (consoles), not relevant for browsers.</li>
+  <li><strong>NOT LZO for compression</strong>: Use zstd or brotli. LZO is fast but produces larger output. Brotli is standard in browsers (built into <code>Accept-Encoding</code>). The 1MB decompression pool limit suggests LZO was chosen for memory-constrained environments (consoles).</li>
 </ol>
 <ol>
-  <li><strong>NOT a custom scripting language</strong>: Use JavaScript/TypeScript directly. ManiaScript's 12 types and coroutine model can be replicated with TypeScript's type system and async generators. The ~10,000 LOC interpreter is complexity that doesn't add value unless you need TM2020 script compatibility.</li>
+  <li><strong>NOT a custom scripting language</strong>: Use JavaScript/TypeScript directly. ManiaScript's 12 types and coroutine model replicate with TypeScript's type system and async generators. The ~10,000 LOC interpreter adds no value unless you need TM2020 script compatibility.</li>
 </ol>
 <ol>
   <li><strong>NOT ManiaLink XML for UI</strong>: Use HTML/CSS/Svelte. The 320x180 coordinate space with manual positioning is 2008-era UI technology. CSS Grid + Flexbox + media queries give better results with less effort.</li>
@@ -876,13 +886,13 @@ CControlSimi2, CControlEngine</code></pre></div>
   <li><strong>NOT custom binary file format</strong>: Use standard formats (glTF for meshes, JSON for metadata, standard image formats) with optional binary packing for performance. GBX is powerful but the 200+ class ID remapping table and LookbackString complexity are self-inflicted wounds.</li>
 </ol>
 <ol>
-  <li><strong>NOT TCP+UDP dual stack</strong>: Use WebSocket + WebRTC DataChannel. Same reliable/unreliable split, but browser-native. No need for UDP hole-punching or Winsock.</li>
+  <li><strong>NOT TCP+UDP dual stack</strong>: Use WebSocket + WebRTC DataChannel. Same reliable/unreliable split, but browser-native. No UDP hole-punching or Winsock needed.</li>
 </ol>
 <ol>
-  <li><strong>NOT 22-stage map loading</strong>: Lazy-load blocks on demand. The 22-stage pipeline is sequential because of 2004-era engine constraints. With WebGPU, block meshes can be streamed and instantiated progressively.</li>
+  <li><strong>NOT 22-stage map loading</strong>: Lazy-load blocks on demand. The 22-stage pipeline is sequential because of 2004-era engine constraints. With WebGPU, block meshes stream and instantiate progressively.</li>
 </ol>
 <h3 id="the-68-task-mvp-is-it-realistic"><a class="anchor" href="#the-68-task-mvp-is-it-realistic">#</a>The 68-Task MVP: Is It Realistic?</h3>
-<p>The plan document breaks the MVP into 68 tasks across 12 weeks, one developer. Let me assess:</p>
+<p>The plan document breaks the MVP into 68 tasks across 12 weeks, one developer:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>GROUP                TASKS   WEEKS   RISK LEVEL
 Project Setup          5     1       Low
 Math Foundation        4     1-2     Low
@@ -896,46 +906,46 @@ Integration            8     8-10    MEDIUM (cross-module bugs)
 Polish                 8    10-12    Low</code></pre></div>
 <p><strong>Critical blockers</strong>:</p>
 <ol>
-  <li><strong>Block mesh extraction</strong> (MVP-021): Block geometry lives in encrypted <code>.pak</code> files. NadeoImporter may not export built-in blocks. This is the single highest-risk task.</li>
+  <li><strong>Block mesh extraction</strong> (MVP-021): Block geometry lives in encrypted <code>.pak</code> files. NadeoImporter may not export built-in blocks. Highest-risk task.</li>
   <li><strong>Physics force model</strong> (MVP-040+): Only the CarSport model (case 5) is decompiled. CarRally and CarSnow are NOT decompiled. You can't drive those cars without the force model.</li>
-  <li><strong>GBX non-skippable chunks</strong>: If you hit an unknown non-skippable chunk, parsing halts. Need to test against many real maps.</li>
+  <li><strong>GBX non-skippable chunks</strong>: Unknown non-skippable chunks halt parsing. Must test against many real maps.</li>
 </ol>
-<p><strong>My verdict</strong>: 12 weeks is <strong>optimistic but achievable</strong> for a stripped-down MVP (one car type, placeholder block meshes, no multiplayer). A realistic estimate with mesh extraction risk factored in: 16-20 weeks.</p>
+<p><strong>My verdict</strong>: 12 weeks is <strong>optimistic but achievable</strong> for a stripped-down MVP (one car type, placeholder block meshes, no multiplayer). Realistic estimate with mesh extraction risk: 16-20 weeks.</p>
 <p><em>Source: plan doc 08, risk register</em></p>
-<h3 id="my-top-10-architecture-lessons-from-tm2020"><a class="anchor" href="#my-top-10-architecture-lessons-from-tm2020">#</a>My Top 10 Architecture Lessons from TM2020</h3>
+<h3 id="top-10-architecture-lessons-from-tm2020"><a class="anchor" href="#top-10-architecture-lessons-from-tm2020">#</a>Top 10 Architecture Lessons from TM2020</h3>
 <ol>
-  <li><strong>State machines scale to 60+ states if you use coroutines</strong>. The fiber/yield pattern keeps each state's logic self-contained. Without coroutines, this would be unmaintainable spaghetti.</li>
+  <li><strong>State machines scale to 60+ states with coroutines.</strong> The fiber/yield pattern keeps each state's logic self-contained. Without coroutines, this would be unmaintainable spaghetti.</li>
 </ol>
 <ol>
-  <li><strong>Two compression layers is normal</strong>. LZO for the container, zlib for inner data. Different algorithms optimize for different data patterns.</li>
+  <li><strong>Two compression layers is normal.</strong> LZO for the container, zlib for inner data. Different algorithms optimize for different data patterns.</li>
 </ol>
 <ol>
-  <li><strong>String interning (LookbackString) saves enormous space</strong> in binary formats. A map with 1000 blocks uses maybe 100 unique block names. Interning turns 23-byte strings into 4-byte indices after first occurrence.</li>
+  <li><strong>String interning saves enormous space.</strong> A map with 1000 blocks uses maybe 100 unique block names. Interning turns 23-byte strings into 4-byte indices after first occurrence.</li>
 </ol>
 <ol>
-  <li><strong>The same binary should run client and server</strong>. TM2020's headless mode flag (<code>DAT_141fbbee8</code>) eliminates an entire class of "works on client, breaks on server" bugs.</li>
+  <li><strong>The same binary should run client and server.</strong> TM2020's headless mode flag (<code>DAT_141fbbee8</code>) eliminates an entire class of "works on client, breaks on server" bugs.</li>
 </ol>
 <ol>
-  <li><strong>Ghost != Physics Replay</strong>. Visual ghosts (50ms, 22 bytes) and input replays (10ms, event-based) serve different purposes. Conflating them leads to either wasted bandwidth or inaccurate playback.</li>
+  <li><strong>Ghost != Physics Replay.</strong> Visual ghosts (50ms, 22 bytes) and input replays (10ms, event-based) serve different purposes. Conflating them leads to wasted bandwidth or inaccurate playback.</li>
 </ol>
 <ol>
-  <li><strong>Authentication requires a proxy for browsers</strong>. The UPC SDK is a Windows DLL. Any browser client needs a backend for the initial auth step. Plan for this from day one.</li>
+  <li><strong>Authentication requires a proxy for browsers.</strong> The UPC SDK is a Windows DLL. Any browser client needs a backend for the initial auth step. Plan for this from day one.</li>
 </ol>
 <ol>
-  <li><strong>The file format should be forward-compatible</strong>. GBX's skippable chunk marker ("SKIP") means old parsers can skip new chunks. Every binary format should have this escape hatch.</li>
+  <li><strong>File formats should be forward-compatible.</strong> GBX's skippable chunk marker ("SKIP") lets old parsers skip new chunks. Every binary format needs this escape hatch.</li>
 </ol>
 <ol>
-  <li><strong>Profiling is infrastructure, not afterthought</strong>. TM2020 allocates 75 profiling slots and a 128KB buffer at the very start of <code>WinMain</code>, before any game code runs. Performance measurement is baked into the engine's DNA.</li>
+  <li><strong>Profiling is infrastructure, not afterthought.</strong> TM2020 allocates 75 profiling slots and a 128KB buffer at the very start of <code>WinMain</code>, before any game code runs. Performance measurement is baked into the engine's DNA.</li>
 </ol>
 <ol>
-  <li><strong>UI should not be coupled to the game engine</strong>. ManiaLink is XML parsed and rendered by the engine. In a browser, HTML/CSS already IS the UI engine -- don't rebuild it.</li>
+  <li><strong>UI should not be coupled to the game engine.</strong> ManiaLink is XML parsed and rendered by the engine. In a browser, HTML/CSS already IS the UI engine.</li>
 </ol>
 <ol>
-  <li><strong>562 networking classes is not overengineered -- it's layered</strong>. Each layer (transport, services, facade, game logic) is independently testable. The web services task/result pattern gives type-safe async operations. This is good architecture, just a LOT of it.</li>
+  <li><strong>562 networking classes is not overengineered -- it's layered.</strong> Each layer (transport, services, facade, game logic) is independently testable. The web services task/result pattern gives type-safe async operations. Good architecture, just a LOT of it.</li>
 </ol>
 <hr>
 <h2 id="appendix-key-data-flow-diagrams"><a class="anchor" href="#appendix-key-data-flow-diagrams">#</a>Appendix: Key Data Flow Diagrams</h2>
-<h3 id="a-map-load-data-flow"><a class="anchor" href="#a-map-load-data-flow">#</a>A: Map Load Data Flow</h3>
+<h3 id="map-load-data-flow"><a class="anchor" href="#map-load-data-flow">#</a>Map Load Data Flow</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>.Map.Gbx file (on disk)
     |
     v
@@ -965,7 +975,7 @@ Polish                 8    10-12    Low</code></pre></div>
     |
     v
 [Playable Map in Memory]</code></pre></div>
-<h3 id="b-frame-execution-flow-gameplay"><a class="anchor" href="#b-frame-execution-flow-gameplay">#</a>B: Frame Execution Flow (Gameplay)</h3>
+<h3 id="frame-execution-flow-gameplay"><a class="anchor" href="#frame-execution-flow-gameplay">#</a>Frame Execution Flow (Gameplay)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FRAME BEGIN (FUN_140117840)
   |-- increment global frame counter (DAT_141f9cfd0)
   |-- calculate delta time
@@ -1011,7 +1021,7 @@ ASYNC UPDATES (worker threads, concurrent)
 FRAME END (FUN_1401176a0)
   |-- record frame duration
   |-- budget check: 20ms outer, 10ms inner</code></pre></div>
-<h3 id="c-authentication-data-flow"><a class="anchor" href="#c-authentication-data-flow">#</a>C: Authentication Data Flow</h3>
+<h3 id="authentication-data-flow"><a class="anchor" href="#authentication-data-flow">#</a>Authentication Data Flow</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Browser Client          Auth Proxy (Node.js)      Ubisoft APIs              Nadeo APIs
      |                        |                       |                        |
      | 1. Login(email,pw)     |                       |                        |
@@ -1034,54 +1044,72 @@ FRAME END (FUN_1401176a0)
      |   Authorization: nadeo_v1 t=&lt;accessToken&gt;                               |
      |------------------------------------------------------------------------&gt;|</code></pre></div>
 <hr>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="../re/12-architecture-deep-dive.md">Architecture Deep Dive</a> -- full engine subsystem analysis</li>
+  <li><a href="../re/16-fileformat-deep-dive.md">File Format Deep Dive</a> -- GBX format specification</li>
+  <li><a href="../re/17-networking-deep-dive.md">Networking Deep Dive</a> -- complete network stack analysis</li>
+  <li><a href="../re/28-map-structure-encyclopedia.md">Map Structure Encyclopedia</a> -- block/item system details</li>
+  <li><a href="../re/30-ghost-replay-format.md">Ghost/Replay Format</a> -- replay encoding details</li>
+  <li><a href="../re/31-maniascript-reference.md">ManiaScript Reference</a> -- scripting engine internals</li>
+  <li><a href="../re/34-ui-manialink-reference.md">UI/ManiaLink Reference</a> -- UI system details</li>
+  <li><a href="../re/26-real-file-analysis.md">Real File Analysis</a> -- hex-verified file structure</li>
+  <li><a href="../re/20-browser-recreation-guide.md">Browser Recreation Guide</a> -- translation strategies</li>
+</ul>
+<hr>
 <p><strong>Final thought</strong>: TM2020 is a 20-year-old engine (ManiaPlanet lineage traces to TrackMania Nations circa 2006) that has been continuously evolved. The architecture shows its age in places (integer state IDs, custom binary format, bespoke scripting language) but the core patterns (coroutine state machines, deterministic physics, dual-layer ghost system) are genuinely well-engineered. The challenge for a browser recreation is not "can we match the architecture?" but "where can we skip complexity by leveraging the browser platform?"</p>
+<details>
+<summary>Document metadata</summary>
+<p><strong>Author</strong>: Jordan (PhD student, game engine architecture) <strong>Date</strong>: 2026-03-27 <strong>Focus</strong>: How everything CONNECTS -- data flow, state machines, lifecycle, and browser translation <strong>Method</strong>: Read every decompiled function, every RE document, every plan document. Every claim is sourced.</p>
+</details>
 
                         <nav class="prev-next"><a class="prev" href="seminar-maya.html">&larr; Maya: Rendering Notes</a><a class="next" href="seminar-chen.html">Prof. Chen: Physics Lectures &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#chapter-1-game-lifecycle">Chapter 1: Game Lifecycle</a></li>
-  <li class="toc-h3"><a href="#from-double-click-to-driving-the-complete-boot-sequence">From Double-Click to Driving: The Complete Boot Sequence</a></li>
-  <li class="toc-h3"><a href="#how-would-i-implement-this-as-a-browser-app">&quot;How Would I Implement This as a Browser App?&quot;</a></li>
-<li class=""><a href="#chapter-2-loading-a-map">Chapter 2: Loading a Map</a></li>
-  <li class="toc-h3"><a href="#gbx-file-format-byte-by-byte">GBX File Format: Byte by Byte</a></li>
+<li class=""><a href="#game-lifecycle">Game Lifecycle</a></li>
+  <li class="toc-h3"><a href="#from-double-click-to-driving">From Double-Click to Driving</a></li>
+  <li class="toc-h3"><a href="#browser-translation-strategies">Browser Translation Strategies</a></li>
+<li class=""><a href="#loading-a-map">Loading a Map</a></li>
+  <li class="toc-h3"><a href="#gbx-file-format">GBX File Format</a></li>
   <li class="toc-h3"><a href="#the-22-stage-map-loading-pipeline">The 22-Stage Map Loading Pipeline</a></li>
-<li class=""><a href="#chapter-3-the-blockitem-system">Chapter 3: The Block/Item System</a></li>
+<li class=""><a href="#the-blockitem-system">The Block/Item System</a></li>
   <li class="toc-h3"><a href="#the-32-meter-grid">The 32-Meter Grid</a></li>
-  <li class="toc-h3"><a href="#block-naming-convention-decoding-the-pattern">Block Naming Convention: Decoding the Pattern</a></li>
-  <li class="toc-h3"><a href="#waypoints-how-connectivity-works">Waypoints: How Connectivity Works</a></li>
-  <li class="toc-h3"><a href="#items-vs-blocks-whats-different">Items vs Blocks: What&#x27;s Different?</a></li>
-<li class=""><a href="#chapter-4-ghost-replay-system">Chapter 4: Ghost &amp; Replay System</a></li>
+  <li class="toc-h3"><a href="#block-naming-convention">Block Naming Convention</a></li>
+  <li class="toc-h3"><a href="#waypoints-and-connectivity">Waypoints and Connectivity</a></li>
+  <li class="toc-h3"><a href="#items-vs-blocks">Items vs Blocks</a></li>
+<li class=""><a href="#ghost-and-replay-system">Ghost and Replay System</a></li>
   <li class="toc-h3"><a href="#the-recording-pipeline">The Recording Pipeline</a></li>
   <li class="toc-h3"><a href="#50ms-samples-22-bytes-each">50ms Samples, 22 Bytes Each</a></li>
   <li class="toc-h3"><a href="#input-recording-at-100hz">Input Recording at 100Hz</a></li>
   <li class="toc-h3"><a href="#ghost-validation-for-anti-cheat">Ghost Validation for Anti-Cheat</a></li>
-  <li class="toc-h3"><a href="#how-would-i-implement-this-for-my-own-game">&quot;How Would I Implement This for My Own Game?&quot;</a></li>
-<li class=""><a href="#chapter-5-networking">Chapter 5: Networking</a></li>
+  <li class="toc-h3"><a href="#building-your-own-replay-system">Building Your Own Replay System</a></li>
+<li class=""><a href="#networking">Networking</a></li>
   <li class="toc-h3"><a href="#the-authentication-chain">The Authentication Chain</a></li>
   <li class="toc-h3"><a href="#the-11-layer-network-stack">The 11-Layer Network Stack</a></li>
   <li class="toc-h3"><a href="#real-time-multiplayer-tcp-udp-dual-stack">Real-Time Multiplayer: TCP + UDP Dual Stack</a></li>
-  <li class="toc-h3"><a href="#whats-the-minimum-for-online-features-in-a-browser">&quot;What&#x27;s the Minimum for Online Features in a Browser?&quot;</a></li>
-<li class=""><a href="#chapter-6-maniascript">Chapter 6: ManiaScript</a></li>
+  <li class="toc-h3"><a href="#minimum-browser-online-stack">Minimum Browser Online Stack</a></li>
+<li class=""><a href="#maniascript">ManiaScript</a></li>
   <li class="toc-h3"><a href="#the-engines-built-in-scripting-language">The Engine&#x27;s Built-in Scripting Language</a></li>
   <li class="toc-h3"><a href="#12-types-4-coroutine-primitives">12 Types, 4 Coroutine Primitives</a></li>
   <li class="toc-h3"><a href="#game-mode-lifecycle">Game Mode Lifecycle</a></li>
-  <li class="toc-h3"><a href="#would-i-build-a-scripting-language-or-use-luajs">&quot;Would I Build a Scripting Language or Use Lua/JS?&quot;</a></li>
-<li class=""><a href="#chapter-7-the-ui-system">Chapter 7: The UI System</a></li>
+  <li class="toc-h3"><a href="#should-you-build-a-scripting-language">Should You Build a Scripting Language?</a></li>
+<li class=""><a href="#the-ui-system">The UI System</a></li>
   <li class="toc-h3"><a href="#manialink-xml-ui-in-a-320x180-coordinate-space">ManiaLink: XML UI in a 320x180 Coordinate Space</a></li>
   <li class="toc-h3"><a href="#the-ccontrol-hierarchy-39-native-controls">The CControl Hierarchy (39 Native Controls)</a></li>
-  <li class="toc-h3"><a href="#hud-elements-in-tm2020">HUD Elements in TM2020</a></li>
-  <li class="toc-h3"><a href="#htmlcss-can-replace-all-of-this">&quot;HTML/CSS Can Replace All of This&quot;</a></li>
-<li class=""><a href="#chapter-8-my-architecture-plan">Chapter 8: My Architecture Plan</a></li>
-  <li class="toc-h3"><a href="#what-id-build-the-same-way-as-tm2020">What I&#x27;d Build the SAME Way as TM2020</a></li>
-  <li class="toc-h3"><a href="#what-id-do-differently-and-why">What I&#x27;d Do DIFFERENTLY and Why</a></li>
+  <li class="toc-h3"><a href="#hud-elements">HUD Elements</a></li>
+  <li class="toc-h3"><a href="#htmlcss-replaces-all-of-this">HTML/CSS Replaces All of This</a></li>
+<li class=""><a href="#my-architecture-plan">My Architecture Plan</a></li>
+  <li class="toc-h3"><a href="#what-id-build-the-same-way">What I&#x27;d Build the Same Way</a></li>
+  <li class="toc-h3"><a href="#what-id-do-differently">What I&#x27;d Do Differently</a></li>
   <li class="toc-h3"><a href="#the-68-task-mvp-is-it-realistic">The 68-Task MVP: Is It Realistic?</a></li>
-  <li class="toc-h3"><a href="#my-top-10-architecture-lessons-from-tm2020">My Top 10 Architecture Lessons from TM2020</a></li>
+  <li class="toc-h3"><a href="#top-10-architecture-lessons-from-tm2020">Top 10 Architecture Lessons from TM2020</a></li>
 <li class=""><a href="#appendix-key-data-flow-diagrams">Appendix: Key Data Flow Diagrams</a></li>
-  <li class="toc-h3"><a href="#a-map-load-data-flow">A: Map Load Data Flow</a></li>
-  <li class="toc-h3"><a href="#b-frame-execution-flow-gameplay">B: Frame Execution Flow (Gameplay)</a></li>
-  <li class="toc-h3"><a href="#c-authentication-data-flow">C: Authentication Data Flow</a></li>
+  <li class="toc-h3"><a href="#map-load-data-flow">Map Load Data Flow</a></li>
+  <li class="toc-h3"><a href="#frame-execution-flow-gameplay">Frame Execution Flow (Gameplay)</a></li>
+  <li class="toc-h3"><a href="#authentication-data-flow">Authentication Data Flow</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

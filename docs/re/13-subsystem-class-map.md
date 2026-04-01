@@ -1,48 +1,15 @@
 # Trackmania 2020 Subsystem Class Map
 
-**Source**: `class_hierarchy.json` (5,886 lines), `02-class-hierarchy.md`
-**Total Nadeo classes**: 2,027
-**Total MSVC RTTI classes**: 55 (not covered here)
-**Date**: 2026-03-27
-
-This document maps every one of the 2,027 Nadeo engine classes to exactly one subsystem, with detailed analysis of 12 major subsystems and their inter-relationships.
+This document maps every one of the 2,027 Nadeo engine classes to exactly one subsystem. It covers 12 major subsystems, their class hierarchies, methods, and inter-relationships, plus content creator guides for materials, editors, and audio.
 
 ---
 
-## Table of Contents
-
-1. [Audio Subsystem](#1-audio-subsystem) (30 classes)
-2. [Input Subsystem](#2-input-subsystem) (17 classes)
-3. [Camera System](#3-camera-system) (22 classes)
-4. [UI/Control System](#4-uicontrol-system) (70 classes)
-5. [Editor System](#5-editor-system) (71 classes)
-6. [Replay/Ghost System](#6-replayghost-system) (14 classes)
-7. [Map/Block System](#7-mapblock-system) (60 classes)
-8. [Vehicle/Car System](#8-vehiclecar-system) (27 classes)
-9. [Web Services](#9-web-services) (713 classes)
-10. [Scene Graph](#10-scene-graph) (93 classes)
-11. [MediaTracker Blocks](#11-mediatracker-blocks) (74 classes)
-12. [Plugin/Mod System](#12-plugmod-system) (392 classes)
-13. [Remaining Subsystems](#13-remaining-subsystems) (444 classes)
-14. [Cross-Cutting Concerns](#14-cross-cutting-concerns)
-15. [Completeness Verification](#15-completeness-verification)
-16. [Content Creator Guide](#16-content-creator-guide) -- Item pipeline, material assignment, UV requirements
-17. [Complete Material Reference (All 208)](#17-complete-material-reference-all-208-materials) -- Every material with SurfaceId, UV layers, and use
-18. [ManiaScript Language Reference](#18-maniascript-language-reference) -- Types, directives, coroutines, collections
-19. [Editor Capabilities Matrix](#19-editor-capabilities-matrix) -- All 18 editors and what they do
-20. [MediaTracker Block Type Catalog](#20-complete-mediatracker-block-type-catalog) -- All 65+ block types
-21. [Block Naming Convention Decoder](#21-block-naming-convention-decoder) -- Coordinates, rotation, clips, waypoints
-22. [Audio System for Custom Content](#22-audio-system-for-custom-content) -- Sound types, formats, how they attach
-23. [Skins and Customization System](#23-skins-and-customization-system) -- Skins, badges, vehicle customization
-
----
-
-## 1. Audio Subsystem
+## Audio subsystem
 
 **Class count**: 30
 **Prefixes**: `CAudio*`, `CPlug*Sound*`, `CPlug*Audio*`, `CPlug*Music*`, `COal*`
 
-### 1.1 Class Hierarchy
+### Class Hierarchy
 
 ```
 CMwNod
@@ -90,14 +57,14 @@ CMwNod
   +-- CGameAudioSettingsWrapper           -- Script-accessible audio settings
 ```
 
-### 1.2 Methods
+### Methods
 
 | Class | Methods | Purpose |
 |-------|---------|---------|
 | `CAudioPort` | `ApplySystemConfig`, `CaptureUpdate`, `PreloadResources` | Port lifecycle |
 | `COalAudioPort` | `PushData` | OpenAL data submission |
 
-### 1.3 Architecture
+### Architecture
 
 **Audio Engine Flow**:
 1. `CAudioManager` orchestrates all audio
@@ -116,7 +83,7 @@ CMwNod
 
 **Audio Formats**: WAV (`CPlugFileWav`), OGG Vorbis (`CPlugFileOggVorbis`), generic SND (`CPlugFileSnd`/`CPlugFileSndGen`), motor profiles (`CPlugFileAudioMotors`)
 
-### 1.4 Browser Recreation Implications
+### Browser Recreation Implications
 
 For a browser recreation, the audio subsystem needs:
 - Web Audio API for spatial audio (replacing OpenAL)
@@ -127,12 +94,12 @@ For a browser recreation, the audio subsystem needs:
 
 ---
 
-## 2. Input Subsystem
+## Input subsystem
 
 **Class count**: 17
 **Prefixes**: `CInput*`
 
-### 2.1 Class Hierarchy
+### Class Hierarchy
 
 ```
 CMwNod
@@ -156,14 +123,14 @@ CMwNod
   +-- CGameHapticDevice                   -- Force feedback / haptic device [CROSS-CUTTING]
 ```
 
-### 2.2 Methods
+### Methods
 
 | Class | Methods | Purpose |
 |-------|---------|---------|
 | `CInputEngine` | `GetOrCreateInputPort` | Port creation |
 | `CInputPort` | `Tick`, `Update_StartFrame`, `Update_EndFrame` | Per-frame input polling |
 
-### 2.3 Architecture
+### Architecture
 
 **Input Event Flow**:
 1. `CInputEngine` creates `CInputPort` instances (DirectInput 8 on Windows)
@@ -179,7 +146,7 @@ CMwNod
 - Gamepad: `CInputDeviceDx8Pad` / `CInputPad`
 - Haptic: `CGameHapticDevice` (force feedback for steering wheels)
 
-### 2.4 Browser Recreation Implications
+### Browser Recreation Implications
 
 - Replace DirectInput with Gamepad API + keyboard/mouse events
 - Input binding system maps well to a configurable binding table
@@ -188,12 +155,12 @@ CMwNod
 
 ---
 
-## 3. Camera System
+## Camera system
 
 **Class count**: 22
 **Prefixes**: `CGameControlCamera*`, `CPlugVehicleCamera*`, `CSceneLocationCamera`, `CMapEditorCamera`, `CGameCtnEdControlCam*`
 
-### 3.1 Class Hierarchy
+### Class Hierarchy
 
 ```
 CMwNod
@@ -229,14 +196,14 @@ CMwNod
   +-- CHmsCamera                          -- HMS (render) camera
 ```
 
-### 3.2 Methods
+### Methods
 
 | Class | Methods | Purpose |
 |-------|---------|---------|
 | `CHmsCamera` | `EViewportRatio` | Viewport aspect ratio enum |
 | `CGameCtnPlayground` | `UpdateCamsAll` | Per-frame camera update |
 
-### 3.3 Camera Types
+### Camera Types
 
 | Camera | Use Case | Key Behavior |
 |--------|----------|--------------|
@@ -248,7 +215,7 @@ CMwNod
 | `EditorOrbital` | Map editor | Orbit around cursor position |
 | `HmdExternal` | VR mode | External VR tracking |
 
-### 3.4 Browser Recreation Implications
+### Browser Recreation Implications
 
 - Three generations of race camera (`Race`, `Race2`, `Race3`) -- need the v3 parameters
 - Camera models (`CPlugVehicleCameraRace3Model`) define spring stiffness, lag, terrain avoidance
@@ -257,12 +224,12 @@ CMwNod
 
 ---
 
-## 4. UI/Control System
+## UI/control system
 
 **Class count**: 70
 **Prefixes**: `CControl*`, `CGameManialink*`, `CGameControl*` (UI subset)
 
-### 4.1 Native Controls (39 classes)
+### Native Controls (39 classes)
 
 ```
 CMwNod
@@ -307,7 +274,7 @@ CMwNod
   +-- CControlEngine                      -- UI engine singleton
 ```
 
-### 4.2 Manialink Controls (28 classes)
+### Manialink Controls (28 classes)
 
 ```
 CMwNod
@@ -344,7 +311,7 @@ CMwNod
   +-- CGameManialink3dWorld               -- 3D scene world in UI
 ```
 
-### 4.3 Game Control Cards (17 classes)
+### Game Control Cards (17 classes)
 
 ```
 CGameControlCard                          -- Base card widget
@@ -367,7 +334,7 @@ CGameControlGrid                          -- Game-specific grid
 CGameControlGridCard                      -- Grid of cards
 ```
 
-### 4.4 Methods
+### Methods
 
 | Class | Methods | Purpose |
 |-------|---------|---------|
@@ -377,7 +344,7 @@ CGameControlGridCard                      -- Grid of cards
 | `CGameManialinkAnimManager` | `EAnimManagerEasing` | Animation easing enum |
 | All `CGameManialink*` | `UpdateControl` | Per-frame control update |
 
-### 4.5 Browser Recreation Implications
+### Browser Recreation Implications
 
 - Manialink is essentially an XML-based UI markup language -- maps well to HTML/CSS
 - `CControlEffect*` system provides UI animations (motion, frame moves, similarity transforms)
@@ -387,12 +354,12 @@ CGameControlGridCard                      -- Grid of cards
 
 ---
 
-## 5. Editor System
+## Editor system
 
 **Class count**: 71
 **Prefixes**: `CGameEditor*`, `CGameCtnEditor*`, `CInteraction*`, `CGameModuleEditor*`
 
-### 5.1 Editor Types (15+ editors)
+### Editor Types (15+ editors)
 
 ```
 CMwNod
@@ -421,7 +388,7 @@ CMwNod
   +-- CGameEditorParent                   -- Parent editor container
 ```
 
-### 5.2 Editor Supporting Classes
+### Editor Supporting Classes
 
 ```
 CGameEditorAnimChar_Interface             -- Animation char editor UI
@@ -477,7 +444,7 @@ CGameModuleEditorGraphEditionModel        -- Module graph editor model
 CGameModuleEditorModel                    -- Module editor model
 ```
 
-### 5.3 Interaction System (5 classes)
+### Interaction System (5 classes)
 
 ```
 CInteraction                              -- Editor interaction mode base
@@ -487,7 +454,7 @@ CInteraction                              -- Editor interaction mode base
   +-- CInteraction_Skin                   -- Skin editing interaction
 ```
 
-### 5.4 Key Methods
+### Key Methods
 
 | Class | Methods | Purpose |
 |-------|---------|---------|
@@ -496,7 +463,7 @@ CInteraction                              -- Editor interaction mode base
 | `CGameEditorPluginMap` | `CanPlaceBlock/GhostBlock/Macroblock`, `PlaceBlock/Macroblock`, `RemoveBlock/Macroblock`, `GetConnectResults` | Programmatic map editing |
 | `CGameCtnEditorCommon` | `AutoSave`, `BuildTerrain`, `CanPlaceMacroBlock`, `PlaceMacroBlock`, `PlaceSolution`, `RunEditor` | Core editor operations |
 
-### 5.5 Browser Recreation Implications
+### Browser Recreation Implications
 
 - Map editor is the most complex editor -- block/item placement with clip-based connectivity
 - Mesh editor uses voxel pick-drag paradigm
@@ -506,12 +473,12 @@ CInteraction                              -- Editor interaction mode base
 
 ---
 
-## 6. Replay/Ghost System
+## Replay/ghost system
 
 **Class count**: 14
 **Prefixes**: `CGameCtnGhost*`, `CGameCtnReplay*`, `CGameGhost*`, `CGhostManager`, `CReplayInfo`, `CGameReplayObjectVisData`
 
-### 6.1 Class Hierarchy
+### Class Hierarchy
 
 ```
 CMwNod
@@ -531,7 +498,7 @@ CMwNod
   +-- CGameSaveLaunchedCheckpoints        -- Checkpoint state saves during run
 ```
 
-### 6.2 Architecture
+### Architecture
 
 **Ghost Recording Pipeline**:
 1. `CInputReplay` captures raw input each simulation tick
@@ -545,12 +512,12 @@ CMwNod
 - **Input replay**: Deterministic replay -- raw inputs that reproduce the exact run
 - Both are present in the system, suggesting Nadeo uses both approaches
 
-### 6.3 Related Task Classes (counted under Web Services)
+### Related Task Classes (counted under Web Services)
 
 - `CGameDataFileTask_GhostDriver`, `_GhostDriver_Download`, `_GhostDriver_Upload`, `_GhostDriver_UploadLimits`
 - `CGameDataFileTask_GhostLoadMedal`, `_GhostLoadUserRecord_Maniaplanet`, `_GhostStoreUserRecord_Maniaplanet`
 
-### 6.4 Browser Recreation Implications
+### Browser Recreation Implications
 
 - Ghost format needs reverse engineering -- `CPlugEntRecordData` is the raw format
 - Replays bundle ghost + map UID + metadata
@@ -560,12 +527,12 @@ CMwNod
 
 ---
 
-## 7. Map/Block System
+## Map/block system
 
 **Class count**: 60
 **Prefixes**: `CGameCtnBlock*`, `CGameCtnChallenge*`, `CGameCtnZone*`, `CBlock*`, `CMapEditorInventory*`
 
-### 7.1 Map Structure
+### Map Structure
 
 ```
 CMwNod
@@ -583,7 +550,7 @@ CMwNod
   +-- CGameCtnDecorationSize              -- Decoration dimensions
 ```
 
-### 7.2 Block System
+### Block System
 
 ```
 CMwNod
@@ -622,7 +589,7 @@ CMwNod
   +-- CGameCtnMacroDecals                 -- Macroblock decals
 ```
 
-### 7.3 Item/Anchor System
+### Item/Anchor System
 
 ```
 CMwNod
@@ -639,7 +606,7 @@ CMwNod
   +-- CAnchorData                         -- Anchor/waypoint data
 ```
 
-### 7.4 Zone System
+### Zone System
 
 ```
 CMwNod
@@ -654,7 +621,7 @@ CMwNod
   +-- CGameWaypointSpecialProperty        -- Waypoint properties (start/finish/CP)
 ```
 
-### 7.5 Map Editor Inventory (Script API)
+### Map Editor Inventory (Script API)
 
 ```
 CMapEditorInventory                       -- Script inventory
@@ -668,7 +635,7 @@ CMapEditorCursor                          -- Script editor cursor
 CMapEditorConnectResults                  -- Script connectivity check results
 ```
 
-### 7.6 Key Methods
+### Key Methods
 
 | Class | Methods | Purpose |
 |-------|---------|---------|
@@ -676,7 +643,7 @@ CMapEditorConnectResults                  -- Script connectivity check results
 | `CBlockModel` | `EWayPointType` | Block waypoint type enum |
 | `CAnchorData` | `EWaypointType` | Waypoint type enum (Start/Finish/Checkpoint/etc.) |
 
-### 7.7 Browser Recreation Implications
+### Browser Recreation Implications
 
 - Map is a 3D grid of blocks (`CGameCtnBlock`) + free-placed items (`CGameCtnAnchoredObject`)
 - Block connectivity uses the clip system (`CGameCtnBlockInfoClip*`)
@@ -687,12 +654,12 @@ CMapEditorConnectResults                  -- Script connectivity check results
 
 ---
 
-## 8. Vehicle/Car System
+## Vehicle/car system
 
 **Class count**: 27
 **Prefixes**: `CPlugVehicle*`, `CSceneVehicle*`, `CGameVehicle*`, `CVehicleSettings`
 
-### 8.1 Class Hierarchy
+### Class Hierarchy
 
 ```
 CMwNod
@@ -727,7 +694,7 @@ CMwNod
   +-- CPlugTrainWagonModelCustom          -- Custom wagon model
 ```
 
-### 8.2 Architecture
+### Architecture
 
 **Vehicle Model/Phy/Vis Decomposition**:
 - **Model**: `CGameVehicleModel` + `CPlugVehiclePhyModelCustom` -- defines the car
@@ -747,14 +714,14 @@ CMwNod
 - `CPlugVehicleVisStyles` -- paint/style variants
 - `CSceneVehicleCarMarksModel` -- tire marks on road surface
 
-### 8.3 Related Methods
+### Related Methods
 
 | Class | Methods | Purpose |
 |-------|---------|---------|
 | `CHmsSolidVisCst_TmCar` | `SPrestige` | Prestige visual constants |
 | `CSystemConfig` | `ETmCarQuality`, `ETmCarParticlesQuality` | Car quality settings |
 
-### 8.4 Browser Recreation Implications
+### Browser Recreation Implications
 
 - Vehicle physics is the most critical subsystem for gameplay feel
 - `CPlugVehicleWheelPhyModel` contains suspension/grip parameters
@@ -765,16 +732,16 @@ CMwNod
 
 ---
 
-## 9. Web Services
+## Web services
 
 **Class count**: 713 (largest subsystem by far)
 **Prefixes**: `CWebServices*`, `CNetNadeoServicesTask_*`, `CNetUbiServicesTask_*`, `CNetMasterServer*`, `CNetUplayPC*`, `CGameDataFileTask_*`, `CGameScoreTask_*`, `CGameMasterServer*`, `CGameUserTask_*`
 
-### 9.1 Architecture Overview
+### Architecture Overview
 
 The web services system uses a **Task/Result** pattern throughout. Every online operation is an async task that produces a typed result.
 
-### 9.2 Service Facades (20 classes)
+### Service Facades (20 classes)
 
 ```
 CWebServices                              -- Top-level web services manager
@@ -803,7 +770,7 @@ CWebServicesTaskScheduler                 -- Task scheduling/queuing
 
 All have a `Terminate` method.
 
-### 9.3 Nadeo Services Tasks (157 classes)
+### Nadeo Services Tasks (157 classes)
 
 `CNetNadeoServicesTask_*` -- grouped by API domain:
 
@@ -824,7 +791,7 @@ All have a `Terminate` method.
 | Subscriptions | ~3 | `AddSubscription`, `GetAccountSubscriptionList` |
 | Other | ~35 | Profile chunks, clubs, servers, stations, bots, telemetry, etc. |
 
-### 9.4 Ubisoft Services Tasks (38 classes)
+### Ubisoft Services Tasks (38 classes)
 
 `CNetUbiServicesTask_*`:
 
@@ -837,11 +804,11 @@ All have a `Terminate` method.
 | Session | ~3 | `CreateSession`, `DeleteSession`, `RefreshSession` |
 | Other | ~5 | `AcceptNDA`, `GetNews`, `GetStatList`, `GetUnsentEvents` |
 
-### 9.5 UplayPC Tasks (11 classes)
+### UplayPC Tasks (11 classes)
 
 `CNetUplayPCTask_*`: `Achievement_GetCompletionList`, `Achievement_Unlock`, `GetFriendList`, `GetUserConsumableItemList`, `JoinSession`, `LeaveSession`, `Overlay_ShowMicroApp`, `ShowBrowserUrl`, `ShowInviteUI`
 
-### 9.6 WebServices Tasks (108 classes)
+### WebServices Tasks (108 classes)
 
 `CWebServicesTask_*` -- high-level orchestration tasks:
 
@@ -858,7 +825,7 @@ All have a `Terminate` method.
 | User | ~10 | `GetUserClubTag*`, `GetUserZone*`, `SetUserZone` |
 | Other | ~38 | News, stations, zones, achievements, stats, etc. |
 
-### 9.7 WebServices Task Results (168 classes)
+### WebServices Task Results (168 classes)
 
 `CWebServicesTaskResult_*` -- typed result containers:
 
@@ -871,7 +838,7 @@ All have a `Terminate` method.
 | `_UPC*` | ~3 | Uplay PC results (achievements, friends) |
 | Generic | ~53 | `Bool`, `Integer`, `String`, `Natural`, `Ghost*`, `Season*`, etc. |
 
-### 9.8 Game-Level Task Classes (counted under Web Services total)
+### Game-Level Task Classes (counted under Web Services total)
 
 - `CGameDataFileTask_*` (44 classes): Map, skin, ghost, item collection operations
 - `CGameScoreTask_*` (21 classes): Season, trophy, map record operations
@@ -886,7 +853,7 @@ All have a `Terminate` method.
 Infrastructure:
 - `CWebServicesTaskSequence`, `CWebServicesTaskVoid`, `CWebServicesTaskWait`, `CWebServicesTaskWaitMultiple`
 
-### 9.9 Authentication Flow
+### Authentication Flow
 
 Based on class names, the authentication chain is:
 1. `CNetNadeoServicesTask_AuthenticateWithUbiServices` -- Ubi token -> Nadeo token
@@ -894,7 +861,7 @@ Based on class names, the authentication chain is:
 3. `CNetNadeoServicesTask_RefreshNadeoServicesAuthenticationToken` -- Token refresh
 4. `CNetNadeoServicesTask_GetAuthenticationToken` -- Get current token
 
-### 9.10 Browser Recreation Implications
+### Browser Recreation Implications
 
 - The web services layer is the thickest abstraction -- 713 classes
 - For browser recreation, these map to REST API calls to Nadeo services
@@ -905,12 +872,12 @@ Based on class names, the authentication chain is:
 
 ---
 
-## 10. Scene Graph
+## Scene graph
 
 **Class count**: 93
 **Prefixes**: `CScene*`, `CHms*`
 
-### 10.1 HMS (Hierarchical Managed Scene) -- 41 classes
+### HMS (Hierarchical Managed Scene) -- 41 classes
 
 ```
 CMwNod
@@ -957,7 +924,7 @@ CMwNod
   +-- CHmsMgrVisVolume                    -- Volume visual manager
 ```
 
-### 10.2 Scene Objects -- 52 classes
+### Scene Objects -- 52 classes
 
 ```
 CMwNod
@@ -1017,7 +984,7 @@ CMwNod
 
 *Note: Vehicle-related scene classes are counted under the Vehicle subsystem to avoid double-counting.*
 
-### 10.3 Key Methods
+### Key Methods
 
 | Class | Methods | Purpose |
 |-------|---------|---------|
@@ -1027,7 +994,7 @@ CMwNod
 | `CScenePickerManager` | `BeginFocus`, `DoFocus`, `EndFocus`, `PickerUpdate` | Object picking |
 | `CSceneFxSuperSample` | `OnActiveChange`, `SetInit` | AA activation |
 
-### 10.4 Browser Recreation Implications
+### Browser Recreation Implications
 
 - Portal-based visibility (HMS portals) can be replaced with frustum culling in WebGL
 - Lightmap system (`CHmsLightMap*`) is baked -- need to load pre-computed lightmaps
@@ -1037,12 +1004,12 @@ CMwNod
 
 ---
 
-## 11. MediaTracker Blocks
+## MediaTracker blocks
 
 **Class count**: 74
 **Prefixes**: `CGameCtnMediaBlock*`, `CGameCtnMediaClip*`, `CGameCtnMediaTrack`, `CMediaTracker*`
 
-### 11.1 MediaTracker Infrastructure
+### MediaTracker Infrastructure
 
 ```
 CMwNod
@@ -1060,7 +1027,7 @@ CMwNod
   +-- CMediaTrackerTrack                  -- Script-API track wrapper
 ```
 
-### 11.2 All 65+ MediaTracker Block Types
+### All 65+ MediaTracker Block Types
 
 ```
 CGameCtnMediaBlock                        -- Base media block
@@ -1138,7 +1105,7 @@ CGameCtnMediaBlock                        -- Base media block
         CGameCtnMediaBlockEvent_deprecated
 ```
 
-### 11.3 Key Methods
+### Key Methods
 
 Most media blocks expose a `SKeyVal` or `SuperSKeyVal` struct for keyframe interpolation:
 
@@ -1149,7 +1116,7 @@ Most media blocks expose a `SKeyVal` or `SuperSKeyVal` struct for keyframe inter
 | `CGameCtnMediaBlockEditorTriangles` | `EEditMode` | Triangle editing mode |
 | `CGameCtnMediaVideoShooter` | `DoShoot`, `ShootClip` | Video rendering |
 
-### 11.4 Browser Recreation Implications
+### Browser Recreation Implications
 
 - MediaTracker is a cutscene/replay editor with timeline-based block composition
 - Each block type controls one aspect (camera, audio, FX, overlay) at a given time range
@@ -1161,12 +1128,12 @@ Most media blocks expose a `SKeyVal` or `SuperSKeyVal` struct for keyframe inter
 
 ---
 
-## 12. Plugin/Mod System (CPlug*)
+## Plugin/mod system (CPlug*)
 
 **Class count**: 392 (entire CPlug* family minus audio/vehicle/camera classes already counted)
 **Note**: Audio classes (CPlugSound*, CPlugMusic*, CPlugAudio*, CPlugFile audio), vehicle classes (CPlugVehicle*), and camera models (CPlugCam*) are counted in their respective subsystems. This section covers the remaining ~310 CPlug* classes.
 
-### 12.1 Animation System (77 classes)
+### Animation System (77 classes)
 
 ```
 CPlugAnimGraph                            -- Animation state graph
@@ -1202,7 +1169,7 @@ CPlugAnimTransition                       -- Animation transition
 CPlugAnimVariantGroup                     -- Animation variants
 ```
 
-### 12.2 ADN Animation System (11 classes)
+### ADN Animation System (11 classes)
 
 ```
 CPlugAdnModel                             -- ADN model
@@ -1214,7 +1181,7 @@ CPlugAdnShader_Part / Skin               -- ADN shaders
 CPlugAdnTagFidCache                       -- Tag file cache
 ```
 
-### 12.3 Bitmap/Texture System (28 classes)
+### Bitmap/Texture System (28 classes)
 
 ```
 CPlugBitmapBase                           -- Base bitmap
@@ -1233,7 +1200,7 @@ CPlugBitmapSampler                        -- Texture sampler
 CPlugBitmapShader                         -- Bitmap shader binding
 ```
 
-### 12.4 Material System (14 classes)
+### Material System (14 classes)
 
 ```
 CPlugMaterial                             -- Base material
@@ -1252,7 +1219,7 @@ CPlugMaterialWaterArray                   -- Water material array
 CPlugMaterial_VertexIndex                 -- Vertex index material data
 ```
 
-### 12.5 Model/Mesh System (12 classes)
+### Model/Mesh System (12 classes)
 
 ```
 CPlugModel                                -- Base model
@@ -1269,7 +1236,7 @@ CPlugSolidTools                           -- Solid manipulation tools
 CPlugStaticObjectModel                    -- Static object model (items)
 ```
 
-### 12.6 Visual Primitives (18 classes)
+### Visual Primitives (18 classes)
 
 ```
 CPlugVisual                               -- Base visual
@@ -1292,7 +1259,7 @@ CPlugVisual                               -- Base visual
         +-- CPlugVisualCelEdge           -- Cel-shading edge
 ```
 
-### 12.7 File Format Handlers (36 classes)
+### File Format Handlers (36 classes)
 
 ```
 CPlugFile                                 -- Base file handler
@@ -1310,7 +1277,7 @@ CPlugFile                                 -- Base file handler
          CPlugFileFidContainer_SystemUserSaveProxy
 ```
 
-### 12.8 Particle System (9 classes)
+### Particle System (9 classes)
 
 ```
 CPlugParticleEmitterModel                 -- CPU particle emitter
@@ -1324,7 +1291,7 @@ CPlugParticleMaterialImpactModel          -- Material-dependent impact
 CPlugParticleSplashModel                  -- Splash particle
 ```
 
-### 12.9 FX System (15 classes)
+### FX System (15 classes)
 
 ```
 CPlugFxSystem                             -- FX system base
@@ -1344,7 +1311,7 @@ CPlugFxWindOnDecal                        -- Wind-on-decal effect
 CPlugFxWindOnTreeSprite                   -- Wind-on-tree effect
 ```
 
-### 12.10 VFX Node System (7 classes)
+### VFX Node System (7 classes)
 
 ```
 CPlugVFXFile                              -- VFX file container
@@ -1357,7 +1324,7 @@ CPlugVFXNode                              -- VFX node base
   +-- CPlugVFXNode_VortexEmitterModel     -- Vortex emitter
 ```
 
-### 12.11 Scene Tree (6 classes)
+### Scene Tree (6 classes)
 
 ```
 CPlugTree                                 -- Base scene tree node
@@ -1368,7 +1335,7 @@ CPlugTreeLight                            -- Light tree node
 CPlugTreeVisualMip                        -- Visual MIP-mapped tree
 ```
 
-### 12.12 Shader System (5 classes)
+### Shader System (5 classes)
 
 ```
 CPlugShader                               -- Shader base
@@ -1378,7 +1345,7 @@ CPlugShaderGeneric                        -- Generic shader
 CPlugShaderPass                           -- Shader pass
 ```
 
-### 12.13 Physics/Dynamics (5 classes)
+### Physics/Dynamics (5 classes)
 
 ```
 CPlugDynaModel                            -- Dynamic physics model
@@ -1388,7 +1355,7 @@ CPlugDynaPointModel                       -- Point mass physics
 CPlugDynaWaterModel                       -- Water dynamics
 ```
 
-### 12.14 Character System (8 classes)
+### Character System (8 classes)
 
 ```
 CPlugCharPhyModel                         -- Character physics base
@@ -1400,7 +1367,7 @@ CPlugCharVisModel                         -- Character visual model
 CPlugCharVisModelCustom                   -- Custom character visual
 ```
 
-### 12.15 Environment/Weather (10 classes)
+### Environment/Weather (10 classes)
 
 ```
 CPlugWeather                              -- Weather system
@@ -1415,7 +1382,7 @@ CPlugDayTime                              -- Day/night time
 CPlugClouds / CloudsParam / CloudsSolids  -- Cloud system
 ```
 
-### 12.16 Remaining CPlug* Classes (~50)
+### Remaining CPlug* Classes (~50)
 
 ```
 CPlugEngine                               -- Plugin engine singleton
@@ -1481,7 +1448,7 @@ CPlugVisEntFxModel                        -- Entity visual FX
 CPlugVoxelResource                        -- Voxel data
 ```
 
-### 12.17 Browser Recreation Implications
+### Browser Recreation Implications
 
 - `CPlugSolid2Model` is the primary mesh format -- must parse this for 3D rendering
 - Material system (`CPlugMaterial*`) maps to WebGL shader uniforms and textures
@@ -1493,9 +1460,9 @@ CPlugVoxelResource                        -- Voxel data
 
 ---
 
-## 13. Remaining Subsystems
+## Remaining subsystems
 
-### 13.1 Core/MwNod System (17 classes)
+### Core/MwNod System (17 classes)
 
 ```
 CMwNod                                    -- Universal base class
@@ -1510,7 +1477,7 @@ CMwRefBuffer                              -- Reference-counted buffer
 CMwStatsValue                             -- Statistics value
 ```
 
-### 13.2 System Layer (24 classes)
+### System Layer (24 classes)
 
 ```
 CSystemEngine                             -- System engine singleton
@@ -1529,7 +1496,7 @@ CSystemUplayPC                            -- Uplay PC integration
 CSystemUserMgr                            -- OS user management
 ```
 
-### 13.3 Networking Core (17 classes)
+### Networking Core (17 classes)
 
 ```
 CNetEngine                                -- Network engine singleton
@@ -1552,7 +1519,7 @@ CNetUbiServices / Task                    -- Ubisoft services infrastructure
 CNetUplayPC / UserInfo                    -- Uplay infrastructure
 ```
 
-### 13.4 Script Engine (9 classes)
+### Script Engine (9 classes)
 
 ```
 CScriptEngine                             -- Script VM singleton
@@ -1564,7 +1531,7 @@ CScriptSetting                            -- Script setting
 CScriptTraitsMetadata / Persistent        -- Script traits
 ```
 
-### 13.5 Vision/Rendering Backend (10 classes)
+### Vision/Rendering Backend (10 classes)
 
 ```
 CVisionEngine                             -- Vision engine singleton
@@ -1577,7 +1544,7 @@ CVisionVisual                             -- Vision visual
 CVisPostFx_BloomHdr                       -- Bloom HDR post-FX
 ```
 
-### 13.6 DirectX 11 Layer (3 classes)
+### DirectX 11 Layer (3 classes)
 
 ```
 CDx11RenderContext                        -- DX11 render context
@@ -1585,7 +1552,7 @@ CDx11Texture                              -- DX11 texture
 CDx11Viewport                             -- DX11 viewport/swap chain
 ```
 
-### 13.7 XML/JSON (10 classes)
+### XML/JSON (10 classes)
 
 ```
 CXmlDocument / Manager / Node             -- XML DOM
@@ -1595,7 +1562,7 @@ CXmlScriptParsingDocumentJson / Xml       -- JSON/XML document
 CXmlScriptParsingNodeJson / Xml           -- JSON/XML node
 ```
 
-### 13.8 HTTP (4 classes)
+### HTTP (4 classes)
 
 ```
 CHttpClient_Internal                      -- HTTP client implementation
@@ -1604,7 +1571,7 @@ CHttpManager                              -- HTTP manager
 CHttpRequest                              -- HTTP request
 ```
 
-### 13.9 ShootMania (12 classes)
+### ShootMania (12 classes)
 
 ```
 CShootMania                               -- ShootMania game mode
@@ -1614,7 +1581,7 @@ CSmMode                                   -- Game mode
 CSmPlayer / PlayerDriver                  -- Player
 ```
 
-### 13.10 Dedicated Server (4 classes)
+### Dedicated Server (4 classes)
 
 ```
 CServerAdmin                              -- Server administration
@@ -1622,7 +1589,7 @@ CServerInfo                               -- Server information
 CServerPlugin / PluginEvent               -- Server plugin system
 ```
 
-### 13.11 TrackMania-Specific (4 classes)
+### TrackMania-Specific (4 classes)
 
 ```
 CTrackMania                               -- TrackMania top-level
@@ -1631,14 +1598,14 @@ CTrackManiaMenus                          -- TrackMania menus
 CTrackManiaNetwork                        -- TrackMania networking
 ```
 
-### 13.12 GameBox Application (2 classes)
+### GameBox Application (2 classes)
 
 ```
 CGbxApp                                   -- Base application
 CGbxGame                                  -- Game application
 ```
 
-### 13.13 Title/Pack Management (3 classes)
+### Title/Pack Management (3 classes)
 
 ```
 CTitleControl                             -- Title flow control
@@ -1646,14 +1613,14 @@ CTitleEdition                             -- Title edition/creation
 CTitleFlow                                -- Title selection flow
 ```
 
-### 13.14 User System (4 classes)
+### User System (4 classes)
 
 ```
 CUserPrestige                             -- User prestige data
 CUserV2 / V2Manager / V2Profile           -- User V2 system
 ```
 
-### 13.15 Game Logic Classes (~200+ classes)
+### Game Logic Classes (~200+ classes)
 
 These CGame* classes that don't fit neatly into the subsystems above:
 
@@ -1821,7 +1788,7 @@ CNGameActionFxVis
 CIPCRemoteControl
 ```
 
-### 13.16 Miscellaneous Non-Prefix Classes (4 classes)
+### Miscellaneous Non-Prefix Classes (4 classes)
 
 ```
 Clouds                                    -- Cloud instance manager
@@ -1830,14 +1797,14 @@ ConnectionClient                          -- Network connection client
 ConsoleClient                             -- Debug console client
 ```
 
-### 13.17 Classic Archive (2 classes)
+### Classic Archive (2 classes)
 
 ```
 CClassicArchive                           -- GBX file reader/writer
 CClassicBuffer                            -- Compressed data buffer
 ```
 
-### 13.18 Other Standalone Classes
+### Other Standalone Classes
 
 ```
 CCrystal                                  -- Crystal mesh geometry
@@ -1851,9 +1818,9 @@ CVehicleSettings                          -- Vehicle settings
 
 ---
 
-## 14. Cross-Cutting Concerns
+## Cross-cutting concerns
 
-### 14.1 Task/Result Pattern
+### Task/Result Pattern
 
 Appears in 6+ subsystems with ~574 total task+result classes:
 - `CNetNadeoServicesTask_*` (157)
@@ -1866,7 +1833,7 @@ Appears in 6+ subsystems with ~574 total task+result classes:
 - `CGameUserTask_*` (10)
 - `CNetUplayPCTask_*` (9)
 
-### 14.2 Model/Physics/Visual (Phy/Vis/Model) Decomposition
+### Model/Physics/Visual (Phy/Vis/Model) Decomposition
 
 Used consistently across subsystems:
 
@@ -1882,7 +1849,7 @@ Used consistently across subsystems:
 | Wagon | -- | `CSceneWagonPhy` | `CSceneWagonVis` |
 | Slot | -- | `CGameSlotPhy` | `CGameSlotVis` |
 
-### 14.3 Script API Layer
+### Script API Layer
 
 Many subsystems expose ManiaScript APIs via `*Script*` or `*ScriptHandler*` classes:
 - `CInputScriptManager` / `CInputScriptPad` / `CInputScriptEvent`
@@ -1895,7 +1862,7 @@ Many subsystems expose ManiaScript APIs via `*Script*` or `*ScriptHandler*` clas
 - `CGameDataFileManagerScript`
 - `CXmlScriptParsingManager`
 
-### 14.4 Engine Singleton Pattern
+### Engine Singleton Pattern
 
 12 engine singletons form the engine backbone:
 ```
@@ -1906,9 +1873,9 @@ CMwEngine -> CMwEngineMain, CGameEngine, CPlugEngine, CSceneEngine,
 
 ---
 
-## 15. Completeness Verification
+## Completeness verification
 
-### 15.1 Class Counts by Subsystem
+### Class Counts by Subsystem
 
 | # | Subsystem | Count | Notes |
 |---|-----------|------:|-------|
@@ -1927,7 +1894,7 @@ CMwEngine -> CMwEngineMain, CGameEngine, CPlugEngine, CSceneEngine,
 | 13 | Remaining | 444 | Core, system, net core, script, vision, DX11, XML, HTTP, SM, server, TM, game logic, misc |
 | -- | **Total** | **2,027** | **All Nadeo classes accounted for** |
 
-### 15.2 Verification Notes
+### Verification Notes
 
 - Some classes appear in discussions of multiple subsystems but are counted in exactly one
 - The "Remaining" category includes ~200+ CGame* logic classes that span multiple concerns
@@ -1936,7 +1903,7 @@ CMwEngine -> CMwEngineMain, CGameEngine, CPlugEngine, CSceneEngine,
 - Camera-related CPlug* classes are counted under Camera, not Plugin
 - The 4 non-C-prefix classes (Clouds, Cluster, ConnectionClient, ConsoleClient) are included in Remaining
 
-### 15.3 Classes with [UNCERTAIN] Categorization
+### Classes with [UNCERTAIN] Categorization
 
 - `CAudioSourceEngine` -- Name suggests audio source type, but registered as an engine singleton
 - `CControlEngine` -- May or may not inherit from `CMwEngine`
@@ -1986,11 +1953,11 @@ CMwEngine -> CMwEngineMain, CGameEngine, CPlugEngine, CSceneEngine,
 
 ---
 
-## 16. Content Creator Guide
+## Content creator guide
 
 This section documents the engine from the perspective of someone making custom items, maps, materials, and scripts for Trackmania 2020.
 
-### 16.1 Item/Asset Pipeline: Blender to In-Game
+### Item/Asset Pipeline: Blender to In-Game
 
 **Evidence**: NadeoImporterMaterialLib.txt (208 materials), `09-game-files-analysis.md` (mesh pipeline strings), class_hierarchy.json (`CGameCtnImporter`, `CPlugSolid2Model`, `CPlugStaticObjectModel`)
 
@@ -2028,7 +1995,7 @@ The complete pipeline for getting a custom item from Blender into the game:
 
 **Critical requirement**: Every drivable surface mesh MUST have a Lightmap UV layer (layer 1). Without it, NadeoImporter will abort. The only materials that skip the lightmap layer are decals, some FX materials, and a few special cases (Grass uses Lightmap at layer 0 instead of BaseMaterial).
 
-### 16.2 Material Assignment Process
+### Material Assignment Process
 
 When you name a material in Blender, NadeoImporter looks up that exact name in `NadeoImporterMaterialLib.txt`. The library file defines:
 
@@ -2054,7 +2021,7 @@ This is the single most important finding for content creators: **Gameplay effec
 
 Materials ONLY control: visual appearance, collision physics (via SurfaceId), and tire sounds.
 
-### 16.3 UV Layer Requirements by Material Type
+### UV Layer Requirements by Material Type
 
 | Material Category | UV Layer 0 | UV Layer 1 | DColor0 | Notes |
 |---|---|---|---|---|
@@ -2072,12 +2039,12 @@ Materials ONLY control: visual appearance, collision physics (via SurfaceId), an
 
 ---
 
-## 17. Complete Material Reference (All 208 Materials)
+## Complete material reference (all 208 materials)
 
 **Source**: `NadeoImporterMaterialLib.txt`, verified line by line
 **Library**: `DLibrary(Stadium)`
 
-### 17.1 Road Materials (4)
+### Road Materials (4)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
@@ -2086,7 +2053,7 @@ Materials ONLY control: visual appearance, collision physics (via SurfaceId), an
 | RoadDirt | Dirt | BaseMaterial | Lightmap | Dirt/off-road surface |
 | RoadIce | RoadIce | BaseMaterial | Lightmap | Ice road surface |
 
-### 17.2 Platform Materials (3)
+### Platform Materials (3)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
@@ -2094,14 +2061,14 @@ Materials ONLY control: visual appearance, collision physics (via SurfaceId), an
 | OpenTechBorders | Asphalt | BaseMaterial | Lightmap | Open platform edge borders |
 | ItemInflatableFloor | Plastic | BaseMaterial | Lightmap | Inflatable floor surface |
 
-### 17.3 Inflatable Materials (2)
+### Inflatable Materials (2)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
 | ItemInflatableMat | Plastic | BaseMaterial | Lightmap | Inflatable mat surface |
 | ItemInflatableTube | Metal | BaseMaterial | Lightmap | Inflatable tube (metal physics) |
 
-### 17.4 Track/Technics Materials (14)
+### Track/Technics Materials (14)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
@@ -2120,14 +2087,14 @@ Materials ONLY control: visual appearance, collision physics (via SurfaceId), an
 | ScreenBack | RoadSynthetic | BaseMaterial | Lightmap | Screen backing surface |
 | Structure | ResonantMetal | BaseMaterial | Lightmap | Structural framework |
 
-### 17.5 Light Materials (2)
+### Light Materials (2)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
 | LightSpot | MetalTrans | BaseMaterial | Lightmap | Light spot (semi-transparent) |
 | LightSpot2 | MetalTrans | BaseMaterial | Lightmap | Light spot variant 2 |
 
-### 17.6 Ad Screen Materials (6)
+### Ad Screen Materials (6)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
@@ -2138,7 +2105,7 @@ Materials ONLY control: visual appearance, collision physics (via SurfaceId), an
 | 16x9ScreenOff | MetalTrans | BaseMaterial | Lightmap | 16:9 screen (off state) |
 | Ad2x3Screen | MetalTrans | BaseMaterial | Lightmap | 2:3 portrait ad screen |
 
-### 17.7 Racing Materials (7)
+### Racing Materials (7)
 
 | Material | SurfaceId | UV0 | UV1 | DColor0 | Use |
 |----------|-----------|-----|-----|---------|-----|
@@ -2150,7 +2117,7 @@ Materials ONLY control: visual appearance, collision physics (via SurfaceId), an
 | SpeedometerLight_Dyna | Metal | BaseMaterial | -- | No | Dynamic speedometer light (NO lightmap) |
 | Speedometer | Metal | BaseMaterial | Lightmap | No | Speedometer display |
 
-### 17.8 Chrono Digit Materials (20)
+### Chrono Digit Materials (20)
 
 All chrono materials: `SurfaceId(NotCollidable)`, `DColor0()` (vertex color support), `BaseMaterial` + `Lightmap`.
 
@@ -2165,7 +2132,7 @@ All chrono materials: `SurfaceId(NotCollidable)`, `DColor0()` (vertex color supp
 | ChronoFinish | 7 | ChronoFinish-10-00-00 through ChronoFinish-00-00-001 |
 | Chrono (general) | 6 | Chrono-10-00-00 through Chrono-00-00-01 |
 
-### 17.9 Decoration Materials (4)
+### Decoration Materials (4)
 
 | Material | SurfaceId | UV0 | UV1 | DColor0 | Use |
 |----------|-----------|-----|-----|---------|-----|
@@ -2174,7 +2141,7 @@ All chrono materials: `SurfaceId(NotCollidable)`, `DColor0()` (vertex color supp
 | DecoHill2 | Grass | BaseMaterial | Lightmap | No | Hill decoration variant |
 | GlassWaterWall | NotCollidable | BaseMaterial | -- | Yes | Glass water wall (pass-through) |
 
-### 17.10 Item Obstacle Materials (12)
+### Item Obstacle Materials (12)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
@@ -2191,7 +2158,7 @@ All chrono materials: `SurfaceId(NotCollidable)`, `DColor0()` (vertex color supp
 | ScreenPusher | Metal | BaseMaterial | Lightmap | Pusher screen display |
 | ItemSupportConnector | Metal | BaseMaterial | Lightmap | Support connector piece |
 
-### 17.11 Item Support / Deco Materials (3)
+### Item Support / Deco Materials (3)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
@@ -2199,7 +2166,7 @@ All chrono materials: `SurfaceId(NotCollidable)`, `DColor0()` (vertex color supp
 | ItemBase | Metal | BaseMaterial | Lightmap | Item base/pedestal |
 | ItemCactus | Metal | BaseMaterial | Lightmap | Cactus decoration |
 
-### 17.12 Item Lamp Materials (4)
+### Item Lamp Materials (4)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
@@ -2208,7 +2175,7 @@ All chrono materials: `SurfaceId(NotCollidable)`, `DColor0()` (vertex color supp
 | ItemLampLightB | Metal | BaseMaterial | Lightmap | Lamp light variant B |
 | ItemLampLightC | Metal | BaseMaterial | Lightmap | Lamp light variant C |
 
-### 17.13 Item Sign Materials (4)
+### Item Sign Materials (4)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
@@ -2217,13 +2184,13 @@ All chrono materials: `SurfaceId(NotCollidable)`, `DColor0()` (vertex color supp
 | ItemCurveSignB | Concrete | BaseMaterial | Lightmap | Curve sign variant B |
 | ItemCurveSignC | Concrete | BaseMaterial | Lightmap | Curve sign variant C |
 
-### 17.14 Item Wrong Way Sign (1)
+### Item Wrong Way Sign (1)
 
 | Material | SurfaceId | UV0 | UV1 | Use |
 |----------|-----------|-----|-----|-----|
 | ItemWrongWaySign | Concrete | BaseMaterial | Lightmap | Wrong-way indicator sign |
 
-### 17.15 Decal Materials -- Road Markings (5)
+### Decal Materials -- Road Markings (5)
 
 All: `SurfaceId(NotCollidable)`, `BaseMaterial` layer 0, `DColor0()`, NO lightmap.
 
@@ -2235,13 +2202,13 @@ All: `SurfaceId(NotCollidable)`, `BaseMaterial` layer 0, `DColor0()`, NO lightma
 | DecalMarksRamp | Ramp markings |
 | DecalMarksStart | Start line markings |
 
-### 17.16 Decal Materials -- Platform (1)
+### Decal Materials -- Platform (1)
 
 | Material | Use |
 |----------|-----|
 | DecalPlatform | Platform surface decal |
 
-### 17.17 Decal Materials -- Animated Obstacles (4)
+### Decal Materials -- Animated Obstacles (4)
 
 All: `SurfaceId(NotCollidable)`, `BaseMaterial` layer 0, `DColor0()`.
 
@@ -2252,7 +2219,7 @@ All: `SurfaceId(NotCollidable)`, `BaseMaterial` layer 0, `DColor0()`.
 | DecalObstacleTurnstileLeft | Left turnstile decal |
 | DecalObstacleTurnstileRight | Right turnstile decal |
 
-### 17.18 Decal Materials -- Sponsors and Branding (13)
+### Decal Materials -- Sponsors and Branding (13)
 
 All: `SurfaceId(NotCollidable)`, `BaseMaterial` layer 0, `DColor0()`.
 
@@ -2272,13 +2239,13 @@ All: `SurfaceId(NotCollidable)`, `BaseMaterial` layer 0, `DColor0()`.
 | DecalPaintSponsor4x1D | 4:1 sponsor D (NOTE: uses `Color0()` not `DColor0()`, likely a typo in the file) |
 | DecalPaint2Sponsor4x1D | 4:1 sponsor D variant 2 |
 
-### 17.19 Decal Materials -- Sponsor Big (1)
+### Decal Materials -- Sponsor Big (1)
 
 | Material | Use |
 |----------|-----|
 | DecalSponsor1x1BigA | 1:1 large sponsor decal |
 
-### 17.20 Special Turbo Materials (5)
+### Special Turbo Materials (5)
 
 | Material | SurfaceId | UV0 | UV1 | DColor0 | Use |
 |----------|-----------|-----|-----|---------|-----|
@@ -2288,7 +2255,7 @@ All: `SurfaceId(NotCollidable)`, `BaseMaterial` layer 0, `DColor0()`.
 | SpecialSignOff | MetalTrans | BaseMaterial | Lightmap | No | Turbo sign off state |
 | TriggerFXTurbo | NotCollidable | BaseMaterial | -- | No | Turbo trigger zone FX |
 
-### 17.21 Customizable Materials (14)
+### Customizable Materials (14)
 
 These use engine-provided textures. `Lightmap` at layer 0, NO `BaseMaterial`.
 
@@ -2309,7 +2276,7 @@ These use engine-provided textures. `Lightmap` at layer 0, NO `BaseMaterial`.
 | CustomSand | Sand | Sandy surface |
 | CustomSnow | Snow | Snow surface |
 
-### 17.22 Moddable Materials (14)
+### Moddable Materials (14)
 
 User-moddable materials with `BaseMaterial` + `Lightmap`. All have `SurfaceId(Concrete)` unless noted.
 
@@ -2330,7 +2297,7 @@ User-moddable materials with `BaseMaterial` + `Lightmap`. All have `SurfaceId(Co
 | CustomModDecal | NotCollidable | Yes | Decal projection (no collision) |
 | CustomModDecal2 | NotCollidable | Yes | Decal projection v2 |
 
-### 17.23 Modifier Materials (88 total, in 11 modifier groups)
+### Modifier Materials (88 total, in 11 modifier groups)
 
 Each modifier group has 4-5 visual sub-materials used by the block's appearance. All use `DLinkFull` to reference external media. The pattern is:
 
@@ -2368,7 +2335,7 @@ Each modifier group has 4-5 visual sub-materials used by the block's appearance.
 | PlatformIce | DecalPlatform, DecoHill, DecoHill2, OpenTechBorders, PlatformTech | RoadIce/Snow surfaces |
 | PlatformPlastic | DecalPlatform, PlatformTech | RoadIce surface |
 
-### 17.24 Complete Surface ID Physics Reference
+### Complete Surface ID Physics Reference
 
 | SurfaceId | Count | Grip Level | Tire Sound | Description |
 |-----------|------:|------------|-----------|-------------|
@@ -2396,14 +2363,14 @@ Each modifier group has 4-5 visual sub-materials used by the block's appearance.
 
 ---
 
-## 18. ManiaScript Language Reference
+## ManiaScript language reference
 
 **Source**: Ghidra binary strings (`15-ghidra-research-findings.md`), `CScriptEngine__Run.c` decompilation
 **Confidence**: VERIFIED (40+ token strings found in binary)
 
 ManiaScript is the scripting language embedded in the ManiaPlanet/Trackmania engine. It is interpreted by `CScriptEngine` (confirmed by decompiled `CScriptEngine::Run` function at `0x140874270`).
 
-### 18.1 Data Types (12 primitive types)
+### Data Types (12 primitive types)
 
 | Token | ManiaScript Type | Equivalent | Notes |
 |-------|-----------------|------------|-------|
@@ -2420,7 +2387,7 @@ ManiaScript is the scripting language embedded in the ManiaPlanet/Trackmania eng
 | `MANIASCRIPT_TYPE_IDENT` | Ident | uint32 | Interned resource identifier (MwId) |
 | `MANIASCRIPT_TYPE_CLASS` | Class | pointer | Reference to engine class |
 
-### 18.2 Preprocessor Directives (7)
+### Preprocessor Directives (7)
 
 | Directive | Syntax | Purpose |
 |-----------|--------|---------|
@@ -2432,7 +2399,7 @@ ManiaScript is the scripting language embedded in the ManiaPlanet/Trackmania eng
 | `#Command` | `#Command MyCommand(Integer Param)` | Register a callable command |
 | `#Const` | `#Const C_MaxPlayers 64` | Define a compile-time constant |
 
-### 18.3 Coroutine Primitives (4)
+### Coroutine Primitives (4)
 
 ManiaScript has built-in cooperative multitasking:
 
@@ -2445,7 +2412,7 @@ ManiaScript has built-in cooperative multitasking:
 
 **Evidence**: Openplanet `EditorDeveloper/Main.as` uses `yield()` in its main loop (line 202), confirming the cooperative scheduling model.
 
-### 18.4 Collection Operations (17)
+### Collection Operations (17)
 
 All collection operations are dot-prefixed method calls on arrays/maps:
 
@@ -2469,7 +2436,7 @@ All collection operations are dot-prefixed method calls on arrays/maps:
 | `.containsoneof` | `a.containsoneof(b)` | Set: a intersects b |
 | `.keyof` | `array.keyof(elem)` | Get key/index of element |
 
-### 18.5 Serialization / Cloud Operations (3)
+### Serialization / Cloud Operations (3)
 
 | Operation | Description |
 |-----------|-------------|
@@ -2478,7 +2445,7 @@ All collection operations are dot-prefixed method calls on arrays/maps:
 | `.cloudrequestsave` | Request save to Nadeo cloud storage |
 | `.cloudisready` | Check if cloud operation completed |
 
-### 18.6 Debug Statements (4)
+### Debug Statements (4)
 
 | Keyword | Purpose |
 |---------|---------|
@@ -2487,7 +2454,7 @@ All collection operations are dot-prefixed method calls on arrays/maps:
 | `dumptype` | Print variable type info to debug output |
 | `log` | Log message to script console |
 
-### 18.7 Tuning System (3)
+### Tuning System (3)
 
 | Keyword | Purpose |
 |---------|---------|
@@ -2495,7 +2462,7 @@ All collection operations are dot-prefixed method calls on arrays/maps:
 | `TUNING_END` | End a tuning block |
 | `TUNING_MARK` | Mark a tuning checkpoint |
 
-### 18.8 Lexer Token Types
+### Lexer Token Types
 
 The ManiaScript lexer recognizes these token categories:
 - `WHITESPACE` -- Spaces, tabs, newlines
@@ -2509,7 +2476,7 @@ The ManiaScript lexer recognizes these token categories:
 - `CONCAT_AND_STRING` -- Concatenation + string
 - `LOCAL_STRUCT` -- Local struct declaration
 
-### 18.9 Script Engine Runtime
+### Script Engine Runtime
 
 From `CScriptEngine__Run` decompilation (`0x140874270`):
 
@@ -2521,12 +2488,12 @@ From `CScriptEngine__Run` decompilation (`0x140874270`):
 
 ---
 
-## 19. Editor Capabilities Matrix
+## Editor capabilities matrix
 
 **Source**: class_hierarchy.json (2,027 classes), `EditorDeveloper/Main.as` (Openplanet plugin)
 **Confidence**: VERIFIED
 
-### 19.1 All Editor Types (18 editors)
+### All Editor Types (18 editors)
 
 | Editor Class | In-Game Access | What It Edits | Key Methods |
 |---|---|---|---|
@@ -2549,7 +2516,7 @@ From `CScriptEngine__Run` decompilation (`0x140874270`):
 | `CGameEditorModule` | Module Editor | HUD modules | `CGameModuleEditorBase` |
 | `CGameEditorPacks` | Pack/Title Editor | Title packs | Package management |
 
-### 19.2 Map Editor Architecture (CGameCtnEditorFree)
+### Map Editor Architecture (CGameCtnEditorFree)
 
 **Evidence**: Openplanet `EditorDeveloper/Main.as` directly accesses the editor's internal structure.
 
@@ -2578,7 +2545,7 @@ CGameCtnEditorFree
 - `ButtonOffZone`: Off-zone placement button (hidden, requires binary patch to enable: NOP `0F 84 ?? ?? ?? ?? 4C 8D 45 ?? BA 13`)
 - `FrameLightTools`: Light manipulation controls
 
-### 19.3 Item Editor Capabilities (CGameEditorItem)
+### Item Editor Capabilities (CGameEditorItem)
 
 | Capability | Method | Description |
 |---|---|---|
@@ -2590,7 +2557,7 @@ CGameCtnEditorFree
 | Mesh editing | `PrepareEditMesh` | Edit visual mesh |
 | Shape editing | `PrepareEditShape` | Edit placement shape |
 
-### 19.4 Mesh Editor Capabilities (CGameEditorMesh)
+### Mesh Editor Capabilities (CGameEditorMesh)
 
 | Capability | Method | Description |
 |---|---|---|
@@ -2605,14 +2572,14 @@ CGameCtnEditorFree
 
 ---
 
-## 20. Complete MediaTracker Block Type Catalog
+## MediaTracker block type catalog
 
 **Source**: class_hierarchy.json (all `CGameCtnMediaBlock*` classes)
 **Confidence**: VERIFIED
 
 MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **ClipGroup -> Clip -> Track -> Block**. Each block controls one visual/audio/timing aspect at a given time range.
 
-### 20.1 Camera Blocks (10)
+### Camera Blocks (10)
 
 | Block Class | In-Editor Name | Use | Replay Useful? |
 |---|---|---|---|
@@ -2627,7 +2594,7 @@ MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **Cli
 | `CGameCtnMediaBlockCameraEffectShake` | Camera Shake | Impact/terrain camera shake | YES |
 | `CGameCtnMediaBlockCamera` | Camera (base) | Abstract base, not directly used | -- |
 
-### 20.2 Visual FX Blocks (11)
+### Visual FX Blocks (11)
 
 | Block Class | Effect | Use |
 |---|---|---|
@@ -2643,7 +2610,7 @@ MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **Cli
 | `CGameCtnMediaBlockDirtyLens` | Dirty Lens | Simulated dirty lens overlay |
 | `CGameCtnMediaBlockFx` | FX (base) | Abstract FX base |
 
-### 20.3 Overlay / 2D Blocks (8)
+### Overlay / 2D Blocks (8)
 
 | Block Class | Effect | Use |
 |---|---|---|
@@ -2656,7 +2623,7 @@ MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **Cli
 | `CGameCtnMediaBlockManialink` | Manialink | Manialink UI layer overlay |
 | `CGameCtnMediaBlockInterface` | Interface | Game interface overlay |
 
-### 20.4 Scene / Entity Blocks (6)
+### Scene / Entity Blocks (6)
 
 | Block Class | Effect | Use |
 |---|---|---|
@@ -2667,14 +2634,14 @@ MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **Cli
 | `CGameCtnMediaBlockSkel` | Skeleton | Skeletal animation playback |
 | `CGameCtnMediaBlockVehicleLight` | Vehicle Light | Control vehicle headlights/taillights |
 
-### 20.5 Audio Blocks (2)
+### Audio Blocks (2)
 
 | Block Class | Effect | Use |
 |---|---|---|
 | `CGameCtnMediaBlockSound` | Sound | Play a sound at a time/position |
 | `CGameCtnMediaBlockMusicEffect` | Music Effect | Music volume/filter effect |
 
-### 20.6 Environment Blocks (4)
+### Environment Blocks (4)
 
 | Block Class | Effect | Use |
 |---|---|---|
@@ -2683,28 +2650,28 @@ MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **Cli
 | `CGameCtnMediaBlockColorGrading` | Color Grading | LUT-based color grading |
 | `CGameCtnMediaBlockLightmap` | Lightmap | Lightmap intensity/settings |
 
-### 20.7 Timing Blocks (2)
+### Timing Blocks (2)
 
 | Block Class | Effect | Use |
 |---|---|---|
 | `CGameCtnMediaBlockTime` | Time | Set game time at a point on timeline |
 | `CGameCtnMediaBlockTimeSpeed` | Time Speed | Control playback speed (slow-mo/fast-forward) |
 
-### 20.8 Transition Blocks (2)
+### Transition Blocks (2)
 
 | Block Class | Effect | Use |
 |---|---|---|
 | `CGameCtnMediaBlockTransition` | Transition (base) | Abstract transition |
 | `CGameCtnMediaBlockTransitionFade` | Fade | Fade to/from black/white |
 
-### 20.9 Coloring Blocks (2)
+### Coloring Blocks (2)
 
 | Block Class | Effect | Use |
 |---|---|---|
 | `CGameCtnMediaBlockColoringBase` | Base Coloring | Base object color override |
 | `CGameCtnMediaBlockColoringCapturable` | Capturable Coloring | Capturable zone color |
 
-### 20.10 Gameplay Blocks (3)
+### Gameplay Blocks (3)
 
 | Block Class | Effect | Use |
 |---|---|---|
@@ -2712,7 +2679,7 @@ MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **Cli
 | `CGameCtnMediaBlockOpponentVisibility` | Opponent Visibility | Show/hide opponents |
 | `CGameCtnMediaBlockTrails` | Trails | Vehicle trail/streak effects |
 
-### 20.11 Special Blocks (6)
+### Special Blocks (6)
 
 | Block Class | Effect | Use |
 |---|---|---|
@@ -2723,13 +2690,13 @@ MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **Cli
 | `CGameCtnMediaBlockEditor` | Editor View | Editor perspective block |
 | `CGameCtnMediaBlockEditorDecal2d` | Editor Decal 2D | Editor-only 2D decal |
 
-### 20.12 Editor-Only Blocks (1)
+### Editor-Only Blocks (1)
 
 | Block Class | Effect | Use |
 |---|---|---|
 | `CGameCtnMediaBlockEditorTriangles` | Editor Triangles | Editor-only triangle overlay |
 
-### 20.13 Deprecated Blocks (3)
+### Deprecated Blocks (3)
 
 | Block Class | Status |
 |---|---|
@@ -2737,7 +2704,7 @@ MediaTracker is a timeline-based cutscene/replay editor. The hierarchy is: **Cli
 | `CGameCtnMediaBlockCharVis_Deprecated` | Removed (character visual) |
 | `CGameCtnMediaBlockEvent_deprecated` | Removed (event trigger) |
 
-### 20.14 Replay Editing Essentials
+### Replay Editing Essentials
 
 For creating replay edits, these blocks are most useful:
 
@@ -2754,11 +2721,11 @@ For creating replay edits, these blocks are most useful:
 
 ---
 
-## 21. Block Naming Convention Decoder
+## Block naming convention decoder
 
 **Source**: Block names from game files, `09-game-files-analysis.md` block analysis, class_hierarchy.json
 
-### 21.1 Block Name Structure
+### Block Name Structure
 
 TM2020 Stadium block names follow this hierarchical pattern:
 
@@ -2792,7 +2759,7 @@ TM2020 Stadium block names follow this hierarchical pattern:
 - `Mirror` -- Mirrored version
 - `In` / `Out` -- Border direction (inward/outward)
 
-### 21.2 Coordinate System
+### Coordinate System
 
 **Evidence**: Openplanet rendering code (`distance / 32.0f`), camera system Y-up convention
 
@@ -2805,7 +2772,7 @@ TM2020 Stadium block names follow this hierarchical pattern:
 | Block position | Integer grid coordinates (x, y, z) |
 | Block height unit | 8 meters (4 sub-grid positions per block height) |
 
-### 21.3 Block Rotation System
+### Block Rotation System
 
 Blocks can be placed in 4 cardinal orientations:
 
@@ -2816,7 +2783,7 @@ Blocks can be placed in 4 cardinal orientations:
 | South | 2 | -Z |
 | West | 3 | -X |
 
-### 21.4 Block Placement Modes
+### Block Placement Modes
 
 | Mode | Snapping | Description |
 |------|----------|-------------|
@@ -2825,7 +2792,7 @@ Blocks can be placed in 4 cardinal orientations:
 | Ghost blocks | 32m grid | Overlapping blocks (no collision validation) |
 | Macroblock | 32m grid | Multi-block templates (CGameCtnMacroBlockInfo) |
 
-### 21.5 Block Connectivity (Clip System)
+### Block Connectivity (Clip System)
 
 **Evidence**: `CGameCtnBlockInfoClip`, `CGameCtnBlockInfoClipHorizontal`, `CGameCtnBlockInfoClipVertical`, `CBlockClip`, `CBlockClipList`
 
@@ -2842,7 +2809,7 @@ CGameCtnBlockInfoClip          -- Base clip connection type
 - Blocks with matching clip types on adjacent faces connect seamlessly
 - Invalid connections produce visible seams or "red" invalid placement indicators
 
-### 21.6 Waypoint Types
+### Waypoint Types
 
 **Evidence**: Binary strings `|BlockInfo|Checkpoint`, `|BlockInfo|Finish`, `|BlockInfo|Start`, `|BlockInfo|Start/Finish`; class `CGameWaypointSpecialProperty`, `CAnchorData.EWaypointType`
 
@@ -2853,7 +2820,7 @@ CGameCtnBlockInfoClip          -- Base clip connection type
 | Checkpoint | Intermediate checkpoint | No (but standard for validation) |
 | StartFinish | Combined start/finish for multilap | Yes (1 for multilap maps) |
 
-### 21.7 Block Type Hierarchy
+### Block Type Hierarchy
 
 ```
 CGameCtnBlockInfo                    -- Base block definition
@@ -2877,11 +2844,11 @@ Each block type has **variants** for ground-level and elevated placement:
 
 ---
 
-## 22. Audio System for Custom Content
+## Audio system for custom content
 
 **Source**: class_hierarchy.json (30 audio classes), `15-ghidra-research-findings.md` (OpenAL init), `19-openplanet-intelligence.md` (audio config)
 
-### 22.1 Sound Types Available
+### Sound Types Available
 
 | Sound Category | Source Class | Resource Class | Description |
 |---|---|---|---|
@@ -2894,7 +2861,7 @@ Each block type has **variants** for ground-level and elevated placement:
 | Located sound | -- | `CPlugLocatedSound` | 3D-positioned sound in world |
 | Video sound | -- | `CPlugSoundVideo` | Sound attached to video playback |
 
-### 22.2 Audio File Formats
+### Audio File Formats
 
 | Format | Handler Class | Use |
 |--------|--------------|-----|
@@ -2904,7 +2871,7 @@ Each block type has **variants** for ground-level and elevated placement:
 | Generated SND | `CPlugFileSndGen` | Procedurally generated sound |
 | Motor profiles | `CPlugFileAudioMotors` | Engine sound RPM profile data |
 
-### 22.3 How Sounds Attach to Items
+### How Sounds Attach to Items
 
 Items do not directly reference audio. Sound is driven by:
 
@@ -2916,7 +2883,7 @@ Items do not directly reference audio. Sound is driven by:
 
 4. **Decoration audio**: `CGameCtnDecorationAudio` defines map-wide audio settings (ambient mood, music).
 
-### 22.4 Audio Configuration Parameters
+### Audio Configuration Parameters
 
 **Evidence**: Default.json configuration
 
@@ -2936,11 +2903,11 @@ Items do not directly reference audio. Sound is driven by:
 
 ---
 
-## 23. Skins and Customization System
+## Skins and customization system
 
 **Source**: class_hierarchy.json, web services task classes
 
-### 23.1 Skin-Related Classes
+### Skin-Related Classes
 
 | Class | Purpose |
 |---|---|
@@ -2956,7 +2923,7 @@ Items do not directly reference audio. Sound is driven by:
 | `CGameSkinnedNod` | Generic skinned node |
 | `CGameSlotPhy` / `CGameSlotVis` | Slot physics/visuals (attachment points) |
 
-### 23.2 Player Identity Classes
+### Player Identity Classes
 
 | Class | Purpose |
 |---|---|
@@ -2970,7 +2937,7 @@ Items do not directly reference audio. Sound is driven by:
 | `CGameBadgeScript` | Badge (club tag) script API |
 | `CGameBadgeStickerSlots` | Badge sticker placement slots |
 
-### 23.3 Skin Web Services
+### Skin Web Services
 
 | Task Class | Operation |
 |---|---|
@@ -2982,7 +2949,7 @@ Items do not directly reference audio. Sound is driven by:
 | `CGameDataFileTask_AccountSkin_NadeoServices_GetFavoriteList` | List favorite skins |
 | `CGameDataFileTask_AccountSkin_NadeoServices_RemoveFavorite` | Unfavorite a skin |
 
-### 23.4 Vehicle Customization
+### Vehicle Customization
 
 The vehicle visual system separates concerns:
 
@@ -2999,10 +2966,31 @@ CGameVehicleModel
 
 **Prestige system**: `CUserPrestige`, `CWebServicesPrestigeService`, `CHmsSolidVisCst_TmCar.SPrestige` -- prestige skins are special visual styles earned through gameplay progression.
 
-### 23.5 Club Tags (Badges)
+### Club Tags (Badges)
 
 Club tag customization uses:
 - `CGameBadgeScript` -- Script API for badge manipulation
 - `CGameBadgeStickerSlots` -- Sticker placement on the badge
 - `CGameManagerBadgeScript` -- Badge management API
 - `CWebServicesTask_GetUserClubTag*` -- Club tag web service queries
+
+## Related Pages
+
+- [02-class-hierarchy.md](02-class-hierarchy.md) -- Class hierarchy source data
+- [12-architecture-deep-dive.md](12-architecture-deep-dive.md) -- Game architecture and state machine
+- [10-physics-deep-dive.md](10-physics-deep-dive.md) -- Physics engine deep dive
+- [06-file-formats.md](06-file-formats.md) -- GBX file format documentation
+- [16-fileformat-deep-dive.md](16-fileformat-deep-dive.md) -- File format deep dive
+- [19-openplanet-intelligence.md](19-openplanet-intelligence.md) -- Runtime data from Openplanet
+- [28-map-structure-encyclopedia.md](28-map-structure-encyclopedia.md) -- Map structure encyclopedia
+- [31-maniascript-reference.md](31-maniascript-reference.md) -- ManiaScript language reference
+
+<details>
+<summary>Analysis metadata</summary>
+
+**Source**: `class_hierarchy.json` (5,886 lines), `02-class-hierarchy.md`
+**Total Nadeo classes**: 2,027
+**Total MSVC RTTI classes**: 55 (not covered here)
+**Date**: 2026-03-27
+
+</details>

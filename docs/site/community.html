@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item active" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item active" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,22 +121,11 @@
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
                         <h1 id="community-knowledge-cross-reference"><a class="anchor" href="#community-knowledge-cross-reference">#</a>Community Knowledge Cross-Reference</h1>
-<p><strong>Date</strong>: 2026-03-27 <strong>Purpose</strong>: Catalog publicly available community reverse engineering projects, documentation, and tools for Trackmania, and cross-reference their findings with our RE work.</p>
+<p>Community reverse engineering projects provide complementary data to our Ghidra-based analysis. This document catalogs those projects, compares findings, and identifies gaps each side fills.</p>
+<p>Use this as a lookup when you need a community tool, want to validate an RE finding, or need to fill a knowledge gap.</p>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-community-projects-catalog">Community Projects Catalog</a></li>
-  <li><a href="#2-gbx-format---community-vs-re-comparison">GBX Format - Community vs RE Comparison</a></li>
-  <li><a href="#3-physics---community-vs-re-comparison">Physics - Community vs RE Comparison</a></li>
-  <li><a href="#4-api-endpoints---community-vs-re-comparison">API Endpoints - Community vs RE Comparison</a></li>
-  <li><a href="#5-maniascript---community-documentation">ManiaScript - Community Documentation</a></li>
-  <li><a href="#6-new-information-from-community-sources">New Information from Community Sources</a></li>
-  <li><a href="#7-contradictions-to-investigate">Contradictions to Investigate</a></li>
-  <li><a href="#8-gap-filling-opportunities">Gap-Filling Opportunities</a></li>
-</ol>
-<hr>
-<h2 id="1-community-projects-catalog"><a class="anchor" href="#1-community-projects-catalog">#</a>1. Community Projects Catalog</h2>
-<h3 id="11-gbx-parsing-libraries"><a class="anchor" href="#11-gbx-parsing-libraries">#</a>1.1 GBX Parsing Libraries</h3>
+<h2 id="community-projects-catalog"><a class="anchor" href="#community-projects-catalog">#</a>Community Projects Catalog</h2>
+<h3 id="gbx-parsing-libraries"><a class="anchor" href="#gbx-parsing-libraries">#</a>GBX Parsing Libraries</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -177,7 +174,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="12-gbx-analysis-tools"><a class="anchor" href="#12-gbx-analysis-tools">#</a>1.2 GBX Analysis Tools</h3>
+<h3 id="gbx-analysis-tools"><a class="anchor" href="#gbx-analysis-tools">#</a>GBX Analysis Tools</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -209,7 +206,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="13-physics-tas-tools"><a class="anchor" href="#13-physics-tas-tools">#</a>1.3 Physics / TAS Tools</h3>
+<h3 id="physics-tas-tools"><a class="anchor" href="#physics-tas-tools">#</a>Physics / TAS Tools</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -236,7 +233,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="14-openplanet-ecosystem"><a class="anchor" href="#14-openplanet-ecosystem">#</a>1.4 Openplanet Ecosystem</h3>
+<h3 id="openplanet-ecosystem"><a class="anchor" href="#openplanet-ecosystem">#</a>Openplanet Ecosystem</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -273,7 +270,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="15-api-documentation"><a class="anchor" href="#15-api-documentation">#</a>1.5 API Documentation</h3>
+<h3 id="api-documentation"><a class="anchor" href="#api-documentation">#</a>API Documentation</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -305,7 +302,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="16-wikis-and-references"><a class="anchor" href="#16-wikis-and-references">#</a>1.6 Wikis and References</h3>
+<h3 id="wikis-and-references"><a class="anchor" href="#wikis-and-references">#</a>Wikis and References</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -347,7 +344,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="17-maniascript-references"><a class="anchor" href="#17-maniascript-references">#</a>1.7 ManiaScript References</h3>
+<h3 id="maniascript-references"><a class="anchor" href="#maniascript-references">#</a>ManiaScript References</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -380,8 +377,8 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="2-gbx-format-community-vs-re-comparison"><a class="anchor" href="#2-gbx-format-community-vs-re-comparison">#</a>2. GBX Format - Community vs RE Comparison</h2>
-<h3 id="21-header-structure"><a class="anchor" href="#21-header-structure">#</a>2.1 Header Structure</h3>
+<h2 id="gbx-format-community-vs-re-comparison"><a class="anchor" href="#gbx-format-community-vs-re-comparison">#</a>GBX Format -- Community vs RE Comparison</h2>
+<h3 id="header-structure"><a class="anchor" href="#header-structure">#</a>Header Structure</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -442,8 +439,8 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>CONTRADICTION</strong>: The Mania Tech Wiki says byte 6 (reference table compression) is "unused". Our RE shows it is stored at <code>+0xDC</code> and controls body stream decompression (LZO/zlib). The community labels byte 7 as body compression while we label byte 5 (second format flag) as body compression at <code>+0xD8</code>. The byte ordering may differ due to different counting conventions. This needs further investigation.</p>
-<h3 id="22-chunk-system"><a class="anchor" href="#22-chunk-system">#</a>2.2 Chunk System</h3>
+<p><strong>CONTRADICTION</strong>: The Mania Tech Wiki says byte 6 (reference table compression) is "unused." Our RE shows it controls body stream decompression. The byte ordering may differ due to different counting conventions. This needs further investigation.</p>
+<h3 id="chunk-system"><a class="anchor" href="#chunk-system">#</a>Chunk System</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -486,8 +483,8 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="23-engine-ids"><a class="anchor" href="#23-engine-ids">#</a>2.3 Engine IDs</h3>
-<p>The Mania Tech Wiki / ManiaPlanet Internals page documents <strong>37 engine IDs</strong>:</p>
+<h3 id="engine-ids"><a class="anchor" href="#engine-ids">#</a>Engine IDs</h3>
+<p>The Mania Tech Wiki documents <strong>37 engine IDs</strong>. Many legacy/game-specific engines (VirtualSkipper, Lanfeust, Sorcieres) are absent from TM2020 as expected. Our binary contains 2,027 Nadeo classes across the active engines. The engine ID scheme is CONFIRMED.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -503,24 +500,9 @@
   <td style="text-align:left">Yes (CMw* classes)</td>
 </tr>
 <tr>
-  <td style="text-align:left">0x02</td>
-  <td style="text-align:left">ENGINE_DATA</td>
-  <td style="text-align:left">Not explicitly cataloged</td>
-</tr>
-<tr>
   <td style="text-align:left">0x03</td>
   <td style="text-align:left">ENGINE_GAME</td>
   <td style="text-align:left">Yes (CGame* classes, 728 found)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x04</td>
-  <td style="text-align:left">ENGINE_GRAPHIC</td>
-  <td style="text-align:left">Not explicitly cataloged</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x05</td>
-  <td style="text-align:left">ENGINE_FUNCTION</td>
-  <td style="text-align:left">Not explicitly cataloged</td>
 </tr>
 <tr>
   <td style="text-align:left">0x06</td>
@@ -531,11 +513,6 @@
   <td style="text-align:left">0x07</td>
   <td style="text-align:left">ENGINE_CONTROL</td>
   <td style="text-align:left">Yes (CControl* classes, 39 found)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x08</td>
-  <td style="text-align:left">ENGINE_MOTION</td>
-  <td style="text-align:left">Not explicitly cataloged</td>
 </tr>
 <tr>
   <td style="text-align:left">0x09</td>
@@ -556,21 +533,6 @@
   <td style="text-align:left">0x0C</td>
   <td style="text-align:left">ENGINE_VISION</td>
   <td style="text-align:left">Yes (CVision* classes, 9 found)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x0D</td>
-  <td style="text-align:left">ENGINE_PSY</td>
-  <td style="text-align:left">Not found in our binary</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x0E</td>
-  <td style="text-align:left">ENGINE_EDIT</td>
-  <td style="text-align:left">Not explicitly cataloged</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x0F</td>
-  <td style="text-align:left">ENGINE_NODEDIT</td>
-  <td style="text-align:left">Not explicitly cataloged</td>
 </tr>
 <tr>
   <td style="text-align:left">0x10</td>
@@ -598,79 +560,9 @@
   <td style="text-align:left">Yes (CXml* classes, 10 found)</td>
 </tr>
 <tr>
-  <td style="text-align:left">0x15</td>
-  <td style="text-align:left">ENGINE_MOVIE</td>
-  <td style="text-align:left">Not found</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x16</td>
-  <td style="text-align:left">ENGINE_PTP</td>
-  <td style="text-align:left">Not found</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x20</td>
-  <td style="text-align:left">ENGINE_CYBERDRIVE</td>
-  <td style="text-align:left">Not found (legacy game)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x21</td>
-  <td style="text-align:left">ENGINE_VIRTUALSKIPPER</td>
-  <td style="text-align:left">Not found (different game)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x22</td>
-  <td style="text-align:left">ENGINE_ADVENTURE</td>
-  <td style="text-align:left">Not found (legacy)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x23</td>
-  <td style="text-align:left">ENGINE_LANFEUST</td>
-  <td style="text-align:left">Not found (legacy)</td>
-</tr>
-<tr>
   <td style="text-align:left">0x24</td>
   <td style="text-align:left">ENGINE_TRACKMANIA</td>
   <td style="text-align:left">Yes (CTrackMania* classes, 4 found)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x25</td>
-  <td style="text-align:left">ENGINE_SORCIERES</td>
-  <td style="text-align:left">Not found (legacy)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x26</td>
-  <td style="text-align:left">ENGINE_MG</td>
-  <td style="text-align:left">Not found (legacy)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x27</td>
-  <td style="text-align:left">ENGINE_GBXVIEWER</td>
-  <td style="text-align:left">Not found (legacy tool)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x28</td>
-  <td style="text-align:left">ENGINE_GBE</td>
-  <td style="text-align:left">Not found (legacy tool)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x29</td>
-  <td style="text-align:left">ENGINE_MEDIATRACKERAPP</td>
-  <td style="text-align:left">Not found (legacy tool)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x2A</td>
-  <td style="text-align:left">ENGINE_RENDERBOX</td>
-  <td style="text-align:left">Not found (legacy tool)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x2B</td>
-  <td style="text-align:left">ENGINE_FBX</td>
-  <td style="text-align:left">Not found (legacy tool)</td>
-</tr>
-<tr>
-  <td style="text-align:left">0x2C</td>
-  <td style="text-align:left">ENGINE_QUESTMANIA</td>
-  <td style="text-align:left">Not found</td>
 </tr>
 <tr>
   <td style="text-align:left">0x2D</td>
@@ -684,64 +576,7 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>FINDING</strong>: The community documents 37 engines. Many legacy/game-specific engines (VirtualSkipper, Lanfeust, Sorcieres, etc.) are absent from TM2020 as expected. Our binary contains 2,027 Nadeo classes across the active engines. The engine ID scheme is CONFIRMED.</p>
-<h3 id="24-data-types"><a class="anchor" href="#24-data-types">#</a>2.4 Data Types</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Type</th>
-  <th style="text-align:left">Community</th>
-  <th style="text-align:left">Our RE</th>
-  <th style="text-align:left">Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">bool</td>
-  <td style="text-align:left">32-bit LE (0 or 1)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">string</td>
-  <td style="text-align:left">uint32 length + UTF-8 bytes</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">lookbackstring</td>
-  <td style="text-align:left">Version + index + optional new string, bits 30-31 = type</td>
-  <td style="text-align:left">Confirmed with deep dive in doc 16 section 29</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">noderef</td>
-  <td style="text-align:left">uint32 index (-1 = null)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">fileref</td>
-  <td style="text-align:left">Version + checksum + path + locator URL</td>
-  <td style="text-align:left">Not deeply analyzed</td>
-  <td style="text-align:left"><strong>GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">vec2/vec3</td>
-  <td style="text-align:left">float pairs/triples</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">color</td>
-  <td style="text-align:left">float r, g, b</td>
-  <td style="text-align:left">Not specifically validated</td>
-  <td style="text-align:left">MINOR GAP</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="25-cgamectnchallenge-map-chunks"><a class="anchor" href="#25-cgamectnchallenge-map-chunks">#</a>2.5 CGameCtnChallenge (Map) Chunks</h3>
-<p>From GBX.NET source (CGameCtnChallenge.cs), compared with our RE:</p>
+<h3 id="cgamectnchallenge-map-chunks"><a class="anchor" href="#cgamectnchallenge-map-chunks">#</a>CGameCtnChallenge (Map) Chunks</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -830,15 +665,9 @@
   <td style="text-align:left">Not analyzed</td>
   <td style="text-align:left"><strong>GAP</strong></td>
 </tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x0304305B</code></td>
-  <td style="text-align:left">Lightmap cache (alternate)</td>
-  <td style="text-align:left">Referenced</td>
-  <td style="text-align:left">PARTIAL</td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="26-compression"><a class="anchor" href="#26-compression">#</a>2.6 Compression</h3>
+<h3 id="compression"><a class="anchor" href="#compression">#</a>Compression</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -861,48 +690,11 @@
   <td style="text-align:left">Zlib confirmed for internal compressed data</td>
   <td style="text-align:left">MATCH</td>
 </tr>
-<tr>
-  <td style="text-align:left">Compression detection</td>
-  <td style="text-align:left">Byte 7 ('C'/'U')</td>
-  <td style="text-align:left">Format flags byte 1 at <code>+0xD8</code></td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="27-class-id-remapping"><a class="anchor" href="#27-class-id-remapping">#</a>2.7 Class ID Remapping</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Feature</th>
-  <th style="text-align:left">Community</th>
-  <th style="text-align:left">Our RE</th>
-  <th style="text-align:left">Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Legacy remap table exists</td>
-  <td style="text-align:left">100+ remappings documented</td>
-  <td style="text-align:left">Documented in doc 16 section 11/23</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">Example: <code>24003000 -> 03043000</code></td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">Purpose: backward compatibility</td>
-  <td style="text-align:left">Engine maps old class IDs to new</td>
-  <td style="text-align:left">Same understanding</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
 </tbody>
 </table></div>
 <hr>
-<h2 id="3-physics-community-vs-re-comparison"><a class="anchor" href="#3-physics-community-vs-re-comparison">#</a>3. Physics - Community vs RE Comparison</h2>
-<h3 id="31-simulation-architecture"><a class="anchor" href="#31-simulation-architecture">#</a>3.1 Simulation Architecture</h3>
+<h2 id="physics-community-vs-re-comparison"><a class="anchor" href="#physics-community-vs-re-comparison">#</a>Physics -- Community vs RE Comparison</h2>
+<h3 id="simulation-architecture"><a class="anchor" href="#simulation-architecture">#</a>Simulation Architecture</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -943,16 +735,10 @@
   <td style="text-align:left">Confirmed: velocity-dependent sub-stepping in <code>PhysicsStep_TM</code></td>
   <td style="text-align:left">MATCH</td>
 </tr>
-<tr>
-  <td style="text-align:left">Per-vehicle loop</td>
-  <td style="text-align:left">Confirmed by TMInterface per-vehicle callbacks</td>
-  <td style="text-align:left">Confirmed: loop over vehicles in <code>PhysicsStep_TM</code></td>
-  <td style="text-align:left">MATCH</td>
-</tr>
 </tbody>
 </table></div>
-<p><strong>NOTE</strong>: Community references <code>CHmsZoneDynamic::PhysicsStep2</code> as the buffer-invoked function (from TMNF RE). Our TM2020 RE traces the pipeline from <code>CSmArenaPhysics::Players_UpdateTimed</code> -> <code>PhysicsStep_TM</code> -> <code>NSceneDyna::PhysicsStep</code> -> <code>NSceneDyna::PhysicsStep_V2</code>. The community's <code>CHmsZoneDynamic::PhysicsStep2</code> likely corresponds to <code>NSceneDyna::PhysicsStep_V2</code> in our analysis (or wraps it). Both paths are consistent.</p>
-<h3 id="32-input-system"><a class="anchor" href="#32-input-system">#</a>3.2 Input System</h3>
+<p>Community references <code>CHmsZoneDynamic::PhysicsStep2</code> from TMNF RE. Our TM2020 RE traces through <code>CSmArenaPhysics::Players_UpdateTimed</code> -> <code>PhysicsStep_TM</code> -> <code>NSceneDyna::PhysicsStep_V2</code>. The community name likely corresponds to <code>NSceneDyna::PhysicsStep_V2</code> in our analysis. Both paths are consistent.</p>
+<h3 id="input-system"><a class="anchor" href="#input-system">#</a>Input System</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -969,266 +755,51 @@
   <td style="text-align:left">InputSteer is -1.0 to 1.0 (float) in CSceneVehicleVisState</td>
   <td style="text-align:left"><strong>DIFFERENT LAYERS</strong></td>
 </tr>
-<tr>
-  <td style="text-align:left">Input pipeline</td>
-  <td style="text-align:left"><code>CTrackManiaRace::InputRace</code> -> <code>CInputPort::GatherLatestInputs</code> -> DirectInput -> <code>CInputEventsStore</code></td>
-  <td style="text-align:left">CInput* classes (17 found), DirectInput confirmed in imports</td>
-  <td style="text-align:left">MATCH (high-level)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Buffered vs immediate</td>
-  <td style="text-align:left">32-event buffer or immediate device state</td>
-  <td style="text-align:left">Not deeply analyzed at this level</td>
-  <td style="text-align:left"><strong>GAP</strong></td>
-</tr>
 </tbody>
 </table></div>
-<p><strong>CLARIFICATION</strong>: The community steering range (-65536 to 65536) is the raw integer input from the device/replay file. The float -1.0 to 1.0 seen in <code>CSceneVehicleVisState.InputSteer</code> is the normalized version used by the physics/vis system. Both are correct at their respective layers.</p>
-<h3 id="33-vehicle-state-cscenevehiclevisstate"><a class="anchor" href="#33-vehicle-state-cscenevehiclevisstate">#</a>3.3 Vehicle State (CSceneVehicleVisState)</h3>
+<p>The integer range is the raw replay/input file encoding. The float range is the normalized physics/vis value. Conversion: <code>float_steer = int_steer / 65536.0</code>. Both are correct at their respective layers.</p>
+<h3 id="vehicle-state-cscenevehiclevisstate"><a class="anchor" href="#vehicle-state-cscenevehiclevisstate">#</a>Vehicle State (CSceneVehicleVisState)</h3>
+<p>All major vehicle state properties match between Openplanet and our RE: Position, WorldVel, Dir/Left/Up, FrontSpeed, SideSpeed, CurGear, RPM, EngineOn, InputSteer, InputGasPedal, InputBrakePedal, IsGroundContact, IsTurbo, TurboTime, ReactorBoostLvl, ReactorBoostType, SimulationTimeCoef.</p>
+<p>The Openplanet API confirms the class ID as <code class="addr">0x0A00C000</code> (Engine 0x0A = Scene, Class 00C).</p>
+<h3 id="per-wheel-data-from-openplanet"><a class="anchor" href="#per-wheel-data-from-openplanet">#</a>Per-Wheel Data (from Openplanet)</h3>
+<p>These properties fill gaps in our RE:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Property</th>
-  <th style="text-align:left">Community (Openplanet)</th>
-  <th style="text-align:left">Our RE (doc 19/25)</th>
+  <th style="text-align:left">Source</th>
   <th style="text-align:left">Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left">Position (vec3)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
+  <td style="text-align:left">Wheel indexing FL=0, FR=1, RR=2, RL=3</td>
+  <td style="text-align:left">Openplanet</td>
+  <td style="text-align:left"><strong>FILLS GAP</strong></td>
 </tr>
 <tr>
-  <td style="text-align:left">WorldVel (vec3)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
+  <td style="text-align:left">SteerAngle, WheelRot, WheelRotSpeed (float, per wheel)</td>
+  <td style="text-align:left">Openplanet</td>
+  <td style="text-align:left"><strong>FILLS GAP</strong></td>
 </tr>
 <tr>
-  <td style="text-align:left">Dir/Left/Up (vec3)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
+  <td style="text-align:left">DamperLen, SlipCoef, Icing01, TireWear01 (float, per wheel)</td>
+  <td style="text-align:left">Openplanet</td>
+  <td style="text-align:left"><strong>FILLS GAP</strong></td>
 </tr>
 <tr>
-  <td style="text-align:left">FrontSpeed (float)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed (m/s, *3.6 for km/h)</td>
-  <td style="text-align:left">MATCH</td>
+  <td style="text-align:left">GroundContactMaterial (EPlugSurfaceMaterialId, per wheel)</td>
+  <td style="text-align:left">Openplanet</td>
+  <td style="text-align:left"><strong>FILLS GAP</strong></td>
 </tr>
 <tr>
-  <td style="text-align:left">SideSpeed (float)</td>
-  <td style="text-align:left">Via VehicleState custom offset</td>
-  <td style="text-align:left">Confirmed via custom offset</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">CurGear (uint, 0-7)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">RPM (float, 0-11000)</td>
-  <td style="text-align:left">Via custom offset</td>
-  <td style="text-align:left">Confirmed via custom offset</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">EngineOn (bool)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">InputSteer (float)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">InputGasPedal (float)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">InputBrakePedal (float)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">IsGroundContact (bool)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">IsTurbo (bool)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">TurboTime (float)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">ReactorBoostLvl (enum)</td>
-  <td style="text-align:left">None, Lvl1, Lvl2</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">ReactorBoostType (enum)</td>
-  <td style="text-align:left">None, Up, Down, UpAndDown</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">SimulationTimeCoef (float)</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">Confirmed</td>
-  <td style="text-align:left">MATCH</td>
-</tr>
-<tr>
-  <td style="text-align:left">Class ID</td>
-  <td style="text-align:left"><code class="addr">0x0A00C000</code></td>
-  <td style="text-align:left">Not specifically verified</td>
+  <td style="text-align:left">FallingState enum (FallingAir, FallingWater, RestingGround, RestingWater, GlidingGround)</td>
+  <td style="text-align:left">Openplanet</td>
   <td style="text-align:left"><strong>FILLS GAP</strong></td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>NEW FROM COMMUNITY</strong>: The Openplanet API confirms the class ID for CSceneVehicleVisState as <code class="addr">0x0A00C000</code> (Engine 0x0A = Scene, Class 00C). This can be verified in our binary.</p>
-<h3 id="34-per-wheel-data"><a class="anchor" href="#34-per-wheel-data">#</a>3.4 Per-Wheel Data</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Property</th>
-  <th style="text-align:left">Community (Openplanet)</th>
-  <th style="text-align:left">Our RE</th>
-  <th style="text-align:left">Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Wheel indexing</td>
-  <td style="text-align:left">FL=0, FR=1, RR=2, RL=3</td>
-  <td style="text-align:left">Not verified at this level</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">SteerAngle (float)</td>
-  <td style="text-align:left">Per wheel</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">WheelRot (float)</td>
-  <td style="text-align:left">Per wheel rotation</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">WheelRotSpeed (float)</td>
-  <td style="text-align:left">Per wheel rotation speed</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">DamperLen (float)</td>
-  <td style="text-align:left">Suspension damper length</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">SlipCoef (float)</td>
-  <td style="text-align:left">Tire slip coefficient</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">Icing01 (float)</td>
-  <td style="text-align:left">Ice accumulation</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">TireWear01 (float)</td>
-  <td style="text-align:left">Tire wear</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">BreakNormedCoef (float)</td>
-  <td style="text-align:left">Brake coefficient</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">GroundContactMaterial (EPlugSurfaceMaterialId)</td>
-  <td style="text-align:left">Per wheel</td>
-  <td style="text-align:left">Not individually mapped</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">FallingState (enum)</td>
-  <td style="text-align:left">FallingAir, FallingWater, RestingGround, RestingWater, GlidingGround</td>
-  <td style="text-align:left">Not documented</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="35-tminterface-physics-details"><a class="anchor" href="#35-tminterface-physics-details">#</a>3.5 TMInterface Physics Details</h3>
-<p>TMInterface (TMNF/TMUF only, not TM2020) exposes:</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Feature</th>
-  <th style="text-align:left">Detail</th>
-  <th style="text-align:left">Our RE Relevance</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Save state size</td>
-  <td style="text-align:left">~10KB per state file</td>
-  <td style="text-align:left">Gives estimate of physics state size</td>
-</tr>
-<tr>
-  <td style="text-align:left">Save/restore</td>
-  <td style="text-align:left">Complete race state including ghost</td>
-  <td style="text-align:left">Confirms state is fully capturable</td>
-</tr>
-<tr>
-  <td style="text-align:left">Bruteforce engine</td>
-  <td style="text-align:left">Modifies N inputs in time windows, evaluates finish time/checkpoint/position</td>
-  <td style="text-align:left">Confirms determinism is exploitable</td>
-</tr>
-<tr>
-  <td style="text-align:left">AngelScript callbacks</td>
-  <td style="text-align:left"><code>OnSimulationStep</code>, <code>OnBruteforceEvaluate</code>, <code>OnGameStateChanged</code></td>
-  <td style="text-align:left">Similar callback model to Openplanet</td>
-</tr>
-<tr>
-  <td style="text-align:left">Extended steering</td>
-  <td style="text-align:left">Values beyond standard -65536..65536 range</td>
-  <td style="text-align:left">Suggests integer overflow in input handling</td>
-</tr>
-<tr>
-  <td style="text-align:left">Analog input range</td>
-  <td style="text-align:left">0-65535 for acceleration, -65535..65535 for steering</td>
-  <td style="text-align:left">Raw input integer range confirmed</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="36-game-mechanics-community-knowledge"><a class="anchor" href="#36-game-mechanics-community-knowledge">#</a>3.6 Game Mechanics (Community Knowledge)</h3>
+<h3 id="game-mechanics-community-knowledge"><a class="anchor" href="#game-mechanics-community-knowledge">#</a>Game Mechanics (Community Knowledge)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1242,156 +813,26 @@
   <td style="text-align:left">Drift initiation speed</td>
   <td style="text-align:left">Minimum 191 km/h</td>
   <td style="text-align:left">Not verified in physics code</td>
-  <td style="text-align:left"><strong>GAP</strong></td>
 </tr>
 <tr>
   <td style="text-align:left">Gear shift speeds</td>
   <td style="text-align:left">4th gear at 235 km/h, 5th at 342 km/h (normal); 4th at 222, 5th at 314 (drift)</td>
   <td style="text-align:left">Not verified</td>
-  <td style="text-align:left"><strong>GAP</strong></td>
 </tr>
 <tr>
   <td style="text-align:left">Surface detection</td>
   <td style="text-align:left">Left front wheel determines surface</td>
   <td style="text-align:left">Not verified</td>
-  <td style="text-align:left"><strong>GAP - INTERESTING</strong></td>
-</tr>
-<tr>
-  <td style="text-align:left">Speed drift overlap</td>
-  <td style="text-align:left">Skid mark overlap triggers acceleration boost</td>
-  <td style="text-align:left">Not verified in physics model</td>
-  <td style="text-align:left"><strong>GAP</strong></td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="37-surface-materials-physicsid"><a class="anchor" href="#37-surface-materials-physicsid">#</a>3.7 Surface Materials (PhysicsId)</h3>
-<p>From official Nadeo documentation (doc.trackmania.com), 24 PhysicsId values:</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">PhysicsId</th>
-  <th style="text-align:left">Category</th>
-  <th style="text-align:left">In Our RE?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Asphalt</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Concrete</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Dirt</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Grass</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Green</td>
-  <td style="text-align:left">Standard (synthetic grass)</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Ice</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Metal</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">MetalTrans</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Pavement</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Plastic</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">ResonantMetal</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">RoadIce</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">RoadSynthetic</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Rock</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Rubber</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Sand</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Snow</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">Wood</td>
-  <td style="text-align:left">Standard</td>
-  <td style="text-align:left">Not cataloged individually</td>
-</tr>
-<tr>
-  <td style="text-align:left">NotCollidable</td>
-  <td style="text-align:left">Special</td>
-  <td style="text-align:left">Not cataloged</td>
-</tr>
-<tr>
-  <td style="text-align:left">TechMagnetic</td>
-  <td style="text-align:left">Special (magnetic)</td>
-  <td style="text-align:left">Not cataloged</td>
-</tr>
-<tr>
-  <td style="text-align:left">TechMagneticAccel</td>
-  <td style="text-align:left">Special (magnetic + accel)</td>
-  <td style="text-align:left">Not cataloged</td>
-</tr>
-<tr>
-  <td style="text-align:left">TechSuperMagnetic</td>
-  <td style="text-align:left">Special (strong magnetic)</td>
-  <td style="text-align:left">Not cataloged</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Plus 16 GameplayId values</strong>: Bumper, Bumper2, Cruise, ForceAcceleration, Fragile, FreeWheeling, NoBrakes, NoGrip, None, NoSteering, ReactorBoost, ReactorBoost2, Reset, SlowMotion, Turbo, Turbo2</p>
+<h3 id="surface-materials-physicsid"><a class="anchor" href="#surface-materials-physicsid">#</a>Surface Materials (PhysicsId)</h3>
+<p>From official Nadeo documentation, 24 PhysicsId values exist: Asphalt, Concrete, Dirt, Grass, Green, Ice, Metal, MetalTrans, Pavement, Plastic, ResonantMetal, RoadIce, RoadSynthetic, Rock, Rubber, Sand, Snow, Wood, NotCollidable, TechMagnetic, TechMagneticAccel, TechSuperMagnetic.</p>
+<p>Plus 16 GameplayId values: Bumper, Bumper2, Cruise, ForceAcceleration, Fragile, FreeWheeling, NoBrakes, NoGrip, None, NoSteering, ReactorBoost, ReactorBoost2, Reset, SlowMotion, Turbo, Turbo2.</p>
 <p>These map to the <code>EPlugSurfaceMaterialId</code> enum exposed by Openplanet per wheel contact.</p>
 <hr>
-<h2 id="4-api-endpoints-community-vs-re-comparison"><a class="anchor" href="#4-api-endpoints-community-vs-re-comparison">#</a>4. API Endpoints - Community vs RE Comparison</h2>
-<h3 id="41-authentication"><a class="anchor" href="#41-authentication">#</a>4.1 Authentication</h3>
+<h2 id="api-endpoints-community-vs-re-comparison"><a class="anchor" href="#api-endpoints-community-vs-re-comparison">#</a>API Endpoints -- Community vs RE Comparison</h2>
+<h3 id="authentication"><a class="anchor" href="#authentication">#</a>Authentication</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1438,15 +879,9 @@
   <td style="text-align:left">Not analyzed</td>
   <td style="text-align:left"><strong>FILLS GAP</strong></td>
 </tr>
-<tr>
-  <td style="text-align:left">Refresh URL</td>
-  <td style="text-align:left"><code>https://prod.trackmania.core.nadeo.online/v2/authentication/token/refresh</code></td>
-  <td style="text-align:left">Not extracted</td>
-  <td style="text-align:left"><strong>FILLS GAP</strong></td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="42-service-base-urls"><a class="anchor" href="#42-service-base-urls">#</a>4.2 Service Base URLs</h3>
+<h3 id="service-base-urls"><a class="anchor" href="#service-base-urls">#</a>Service Base URLs</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1459,7 +894,7 @@
 <tr>
   <td style="text-align:left">Core API</td>
   <td style="text-align:left"><code>https://prod.trackmania.core.nadeo.online/</code></td>
-  <td style="text-align:left">Confirmed in binary strings (doc 07/17)</td>
+  <td style="text-align:left">Confirmed in binary strings</td>
 </tr>
 <tr>
   <td style="text-align:left">Live Services</td>
@@ -1476,269 +911,47 @@
   <td style="text-align:left"><code>https://club.trackmania.nadeo.club</code></td>
   <td style="text-align:left">Not specifically found</td>
 </tr>
-<tr>
-  <td style="text-align:left">Competition</td>
-  <td style="text-align:left"><code>https://competition.trackmania.nadeo.club</code></td>
-  <td style="text-align:left">Not specifically found</td>
-</tr>
-<tr>
-  <td style="text-align:left">Matchmaking</td>
-  <td style="text-align:left"><code>https://matchmaking.trackmania.nadeo.club</code></td>
-  <td style="text-align:left">Not specifically found</td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="43-audience-values"><a class="anchor" href="#43-audience-values">#</a>4.3 Audience Values</h3>
+<h3 id="audience-values"><a class="anchor" href="#audience-values">#</a>Audience Values</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Audience</th>
   <th style="text-align:left">Services</th>
-  <th style="text-align:left">Our RE</th>
 </tr>
 </thead>
 <tbody>
 <tr>
   <td style="text-align:left">NadeoServices</td>
   <td style="text-align:left">Core API</td>
-  <td style="text-align:left">Not extracted from binary</td>
 </tr>
 <tr>
   <td style="text-align:left">NadeoLiveServices</td>
   <td style="text-align:left">Live API, Meet API</td>
-  <td style="text-align:left">Not extracted from binary</td>
 </tr>
 <tr>
   <td style="text-align:left">NadeoClubServices</td>
   <td style="text-align:left">Club, Competition, Matchmaking</td>
-  <td style="text-align:left">Not extracted from binary</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="44-jwt-token-payload-fields"><a class="anchor" href="#44-jwt-token-payload-fields">#</a>4.4 JWT Token Payload Fields</h3>
-<p>Community documents these JWT payload fields:</p>
-<ul>
-  <li><code>aud</code>: Audience identifier</li>
-  <li><code>exp</code>: Expiration timestamp</li>
-  <li><code>sub</code>: Nadeo account ID</li>
-  <li><code>rtk</code>: Boolean (true for refresh tokens)</li>
-  <li><code>refresh_aud</code>: Audience for refreshed tokens</li>
-  <li><code>usg</code>: Usage type ("Client" or "Server")</li>
-</ul>
-<p>These are <strong>not documented in our RE</strong> -- they are protocol-level details visible to anyone who decodes the JWT.</p>
-<h3 id="45-core-api-endpoints-community-documented"><a class="anchor" href="#45-core-api-endpoints-community-documented">#</a>4.5 Core API Endpoints (Community-Documented)</h3>
-<p><strong>Accounts</strong>: club-tags, display-names, trophy-history, trophy-summary, webidentities, zones <strong>Maps</strong>: authored, info (single/multiple by ID/UID), vote, submitted <strong>Records</strong>: account-records-v2, map-records-v2 (by ID and account), record-by-id <strong>Meta</strong>: routes, zones <strong>Skins</strong>: equipped, favorites, info</p>
-<h3 id="46-live-api-endpoints-community-documented"><a class="anchor" href="#46-live-api-endpoints-community-documented">#</a>4.6 Live API Endpoints (Community-Documented)</h3>
-<p><strong>Campaigns</strong>: TOTDs, map-info, seasonal campaigns (v1/v2), weekly grands/shorts <strong>Clubs</strong>: member, activities, campaigns, competitions, rooms, uploads <strong>Leaderboards</strong>: top, medals, player records, trophies, position, surround <strong>Maps</strong>: favorites, info, uploaded <strong>Map Review</strong>: connect, submitted, waiting-time</p>
-<h3 id="47-meet-api-endpoints-community-documented"><a class="anchor" href="#47-meet-api-endpoints-community-documented">#</a>4.7 Meet API Endpoints (Community-Documented)</h3>
-<p><strong>Challenges</strong>: info, leaderboard, map records <strong>Competitions</strong>: info, leaderboard, participants, rounds, teams, COTD, cups <strong>Matches</strong>: info, participants, teams <strong>Matchmaking</strong>: queue, IDs, divisions, rankings, progressions, ranks, status, heartbeat</p>
-<h3 id="48-dedicated-server-xml-rpc"><a class="anchor" href="#48-dedicated-server-xml-rpc">#</a>4.8 Dedicated Server XML-RPC</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Feature</th>
-  <th style="text-align:left">Community</th>
-  <th style="text-align:left">Our RE</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">GBX Remote protocol</td>
-  <td style="text-align:left">Documented at wiki.trackmania.io</td>
-  <td style="text-align:left">CXmlRpc classes confirmed in binary</td>
-</tr>
-<tr>
-  <td style="text-align:left">Scripted callbacks</td>
-  <td style="text-align:left"><code>Trackmania.Event.*</code> namespace</td>
-  <td style="text-align:left">Not analyzed at callback level</td>
-</tr>
-<tr>
-  <td style="text-align:left">Method reference</td>
-  <td style="text-align:left">Full list at wiki.trackmania.io</td>
-  <td style="text-align:left">Not analyzed</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="49-maniaexchange-api-v2"><a class="anchor" href="#49-maniaexchange-api-v2">#</a>4.9 ManiaExchange API v2</h3>
-<p>Base URL: <code>https://api2.mania.exchange/</code></p>
-<p>Key capabilities:</p>
-<ul>
-  <li>Map search and metadata</li>
-  <li>Map info by UID (single and batch)</li>
-  <li>Mappack management</li>
-  <li>Player awards</li>
-  <li>Track search</li>
-  <li>Requires User-Agent header</li>
-  <li>JSON-only responses</li>
-  <li>UTC timestamps</li>
-</ul>
+<h3 id="core-api-endpoints"><a class="anchor" href="#core-api-endpoints">#</a>Core API Endpoints</h3>
+<p><strong>Accounts</strong>: club-tags, display-names, trophy-history, trophy-summary, webidentities, zones. <strong>Maps</strong>: authored, info (single/multiple by ID/UID), vote, submitted. <strong>Records</strong>: account-records-v2, map-records-v2, record-by-id. <strong>Meta</strong>: routes, zones. <strong>Skins</strong>: equipped, favorites, info.</p>
+<h3 id="live-api-endpoints"><a class="anchor" href="#live-api-endpoints">#</a>Live API Endpoints</h3>
+<p><strong>Campaigns</strong>: TOTDs, map-info, seasonal campaigns, weekly grands/shorts. <strong>Clubs</strong>: member, activities, campaigns, competitions, rooms, uploads. <strong>Leaderboards</strong>: top, medals, player records, trophies, position, surround. <strong>Maps</strong>: favorites, info, uploaded.</p>
+<h3 id="meet-api-endpoints"><a class="anchor" href="#meet-api-endpoints">#</a>Meet API Endpoints</h3>
+<p><strong>Challenges</strong>: info, leaderboard, map records. <strong>Competitions</strong>: info, leaderboard, participants, rounds, teams, COTD, cups. <strong>Matches</strong>: info, participants, teams. <strong>Matchmaking</strong>: queue, IDs, divisions, rankings, progressions, ranks, status, heartbeat.</p>
 <hr>
-<h2 id="5-maniascript-community-documentation"><a class="anchor" href="#5-maniascript-community-documentation">#</a>5. ManiaScript - Community Documentation</h2>
-<h3 id="51-maniascript-reference-sources"><a class="anchor" href="#51-maniascript-reference-sources">#</a>5.1 ManiaScript Reference Sources</h3>
+<h2 id="maniascript-community-documentation"><a class="anchor" href="#maniascript-community-documentation">#</a>ManiaScript -- Community Documentation</h2>
+<h3 id="key-sources"><a class="anchor" href="#key-sources">#</a>Key Sources</h3>
 <p>Three independently maintained references exist:</p>
 <ol>
   <li><strong>BigBang1112/maniascript-reference</strong>: Auto-generated via Doxygen from game header files. Covers TM2020 (2026.2.2.1751), ManiaPlanet, and Turbo.</li>
   <li><strong>boss-bravo.fr</strong>: Alternative reference for TM2020 ManiaScript classes.</li>
   <li><strong>maniaplanet-community.gitbook.io</strong>: Narrative documentation and tutorials.</li>
 </ol>
-<h3 id="52-key-maniascript-classes-tm2020"><a class="anchor" href="#52-key-maniascript-classes-tm2020">#</a>5.2 Key ManiaScript Classes (TM2020)</h3>
-<p>From the Doxygen reference, key classes for understanding game internals:</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Class</th>
-  <th style="text-align:left">Relevance</th>
-  <th style="text-align:left">Our RE Equivalent</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">CSmMode</td>
-  <td style="text-align:left">Game mode script entry point</td>
-  <td style="text-align:left">CSmArena* classes</td>
-</tr>
-<tr>
-  <td style="text-align:left">CSmPlayer</td>
-  <td style="text-align:left">Player state in ManiaScript</td>
-  <td style="text-align:left">CSmArenaPhysics player management</td>
-</tr>
-<tr>
-  <td style="text-align:left">CSmPlayerDriver</td>
-  <td style="text-align:left">Bot AI controller (detailed in section 3)</td>
-  <td style="text-align:left">Not deeply analyzed</td>
-</tr>
-<tr>
-  <td style="text-align:left">CGameCtnApp</td>
-  <td style="text-align:left">Main application object</td>
-  <td style="text-align:left">CGameCtnApp (confirmed in binary)</td>
-</tr>
-<tr>
-  <td style="text-align:left">CMapBotPath</td>
-  <td style="text-align:left">Bot pathfinding</td>
-  <td style="text-align:left">Not analyzed</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="53-csmplayerdriver-details-bot-ai"><a class="anchor" href="#53-csmplayerdriver-details-bot-ai">#</a>5.3 CSmPlayerDriver Details (Bot AI)</h3>
-<p>The community ManiaScript reference reveals the bot AI system with:</p>
-<p><strong>Behaviors</strong>: Static, Turret, Scripted, IA, Patrol, Escape, Saunter, Orbit, Follow <strong>Path states</strong>: Static, None, Computing, Simple, Full, Incomplete, InFlock <strong>Attack filters</strong>: All, AllPlayers, AllBots, AllOpposite, OppositePlayers, OppositeBots, Nobody</p>
-<p><strong>Flocking system</strong>: cohesion, alignment, separation weights + radius + FOV -- this is a full boids implementation.</p>
-<p>This is ShootMania-focused but the class hierarchy is shared with TM2020.</p>
-<h3 id="54-openplanet-engine-namespaces"><a class="anchor" href="#54-openplanet-engine-namespaces">#</a>5.4 Openplanet Engine Namespaces</h3>
-<p>The Openplanet documentation exposes 20 engine namespaces for TM2020:</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Namespace</th>
-  <th style="text-align:left">Purpose</th>
-  <th style="text-align:left">Engines in Our RE</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">MwFoundations</td>
-  <td style="text-align:left">Core classes</td>
-  <td style="text-align:left">CMw* (17 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Game</td>
-  <td style="text-align:left">Game systems</td>
-  <td style="text-align:left">CGame* (728 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Graphic</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">Not explicitly mapped</td>
-</tr>
-<tr>
-  <td style="text-align:left">Function</td>
-  <td style="text-align:left">Utilities</td>
-  <td style="text-align:left">Not explicitly mapped</td>
-</tr>
-<tr>
-  <td style="text-align:left">Hms</td>
-  <td style="text-align:left">HMS renderer</td>
-  <td style="text-align:left">CHms* (41 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Control</td>
-  <td style="text-align:left">UI</td>
-  <td style="text-align:left">CControl* (39 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Plug</td>
-  <td style="text-align:left">Resources</td>
-  <td style="text-align:left">CPlug* (391 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Scene</td>
-  <td style="text-align:left">Scene graph</td>
-  <td style="text-align:left">CScene* (52 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">System</td>
-  <td style="text-align:left">Platform</td>
-  <td style="text-align:left">CSystem* (24 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Vision</td>
-  <td style="text-align:left">Camera/viewport</td>
-  <td style="text-align:left">CVision* (9 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Audio</td>
-  <td style="text-align:left">Sound</td>
-  <td style="text-align:left">CAudio* (19 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Script</td>
-  <td style="text-align:left">Scripting</td>
-  <td style="text-align:left">CScript* (9 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Net</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">CNet* (262 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Input</td>
-  <td style="text-align:left">Input devices</td>
-  <td style="text-align:left">CInput* (17 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">Xml</td>
-  <td style="text-align:left">XML/JSON</td>
-  <td style="text-align:left">CXml* (10 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">TrackMania</td>
-  <td style="text-align:left">TM-specific</td>
-  <td style="text-align:left">CTrackMania* (4 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">ShootMania</td>
-  <td style="text-align:left">SM-specific</td>
-  <td style="text-align:left">CSm* (11 classes)</td>
-</tr>
-<tr>
-  <td style="text-align:left">GameData</td>
-  <td style="text-align:left">Game data</td>
-  <td style="text-align:left">CWebServices<em> + CGameData</em></td>
-</tr>
-<tr>
-  <td style="text-align:left">Meta</td>
-  <td style="text-align:left">Metadata</td>
-  <td style="text-align:left">Not mapped</td>
-</tr>
-<tr>
-  <td style="text-align:left">MetaNotPersistent</td>
-  <td style="text-align:left">Volatile metadata</td>
-  <td style="text-align:left">Not mapped</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="55-openplanet-global-api"><a class="anchor" href="#55-openplanet-global-api">#</a>5.5 Openplanet Global API</h3>
-<p>Key functions exposed to plugins:</p>
+<h3 id="key-openplanet-global-api-functions"><a class="anchor" href="#key-openplanet-global-api-functions">#</a>Key Openplanet Global API Functions</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1773,7 +986,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="56-nadeoservices-plugin-api"><a class="anchor" href="#56-nadeoservices-plugin-api">#</a>5.6 NadeoServices Plugin API</h3>
+<h3 id="nadeoservices-plugin-api"><a class="anchor" href="#nadeoservices-plugin-api">#</a>NadeoServices Plugin API</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1795,24 +1008,12 @@
   <td style="text-align:left">Get current user's account ID</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>BaseURLCore()</code></td>
-  <td style="text-align:left">Core API base URL</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>BaseURLLive()</code></td>
-  <td style="text-align:left">Live API base URL</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>BaseURLMeet()</code></td>
-  <td style="text-align:left">Meet API base URL</td>
+  <td style="text-align:left"><code>BaseURLCore()</code> / <code>BaseURLLive()</code> / <code>BaseURLMeet()</code></td>
+  <td style="text-align:left">API base URLs</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Get/Post/Put/Delete/Patch(audience, url, ...)</code></td>
   <td style="text-align:left">HTTP methods</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>GetDisplayNameAsync(accountId)</code></td>
-  <td style="text-align:left">Resolve player names</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>LoginToAccountId(login)</code> / <code>AccountIdToLogin(id)</code></td>
@@ -1821,31 +1022,15 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="6-new-information-from-community-sources"><a class="anchor" href="#6-new-information-from-community-sources">#</a>6. New Information from Community Sources</h2>
-<h3 id="61-maniaplanet-engine-architecture-from-mania-tech-wiki"><a class="anchor" href="#61-maniaplanet-engine-architecture-from-mania-tech-wiki">#</a>6.1 ManiaPlanet Engine Architecture (from Mania Tech Wiki)</h3>
-<p>The community provides details about the engine internals that supplement our RE:</p>
-<p><strong>CMwEngineManager</strong>: Singleton that manages all 37+ engines. Contains <code>CMwEngineInfo[]</code> (namespaces) -> <code>CMwClassInfo[]</code> (type descriptors) -> <code>CMwMemberInfo[]</code> (properties/methods).</p>
-<p><strong>Reference Counting</strong>: Objects use <code>MwAddRef()</code>/<code>MwRelease()</code>. Zero-count triggers destruction. Optional <code>pDependants</code> child list.</p>
-<p><strong>CMwStack Late Binding</strong>: Not a LIFO stack -- it is a QUEUE. First two items stored inline (<code>m_ContainedItems</code>), rest on heap. Supports types: ITEM_MEMBER, ITEM_BOOL, ITEM_OBJECT, ITEM_ENUM, ITEM_ISO4, ITEM_VEC2, ITEM_VEC3, ITEM_INT3, ITEM_UINT3, ITEM_INT, ITEM_UINT, ITEM_FLOAT, ITEM_STRING, ITEM_WSTRING.</p>
-<p><strong>Three operations</strong>: Get property, set property, call method. Each requires CMwStack configured with member info and parameters.</p>
-<p><strong>Serialization Pipeline</strong>: <code>CSystemArchiveNod</code> handles .gbx file serialization. The loading path is: <code>LoadFileFrom -> DoLoadFile -> DoFidLoadFile -> DoLoadAll -> { DoLoadHeader -> DoLoadRef -> DoLoadBody }</code>.</p>
-<p><strong>File System Drives</strong>:</p>
-<ul>
-  <li>Resource (Resource.pak)</li>
-  <li>Personal (user folder)</li>
-  <li>ManiaPlanet (game installation)</li>
-  <li>Common (shared cache)</li>
-  <li>Temp</li>
-</ul>
-<p><strong>Stream Architecture</strong>: <code>CClassicBuffer</code> base class with implementations:</p>
-<ul>
-  <li><code>CSystemFile</code> (4 KB buffered reading)</li>
-  <li><code>CSystemFileMemMapped</code> (memory-mapped files)</li>
-  <li><code>CClassicBufferZlib</code> (compression)</li>
-  <li><code>CClassicBufferCrypted</code> (encryption with Blowfish CBC/CTR)</li>
-</ul>
-<h3 id="62-ghostreplay-sample-data-encoding"><a class="anchor" href="#62-ghostreplay-sample-data-encoding">#</a>6.2 Ghost/Replay Sample Data Encoding</h3>
-<p>The community documents the ghost sample data encoding:</p>
+<h2 id="new-information-from-community-sources"><a class="anchor" href="#new-information-from-community-sources">#</a>New Information from Community Sources</h2>
+<h3 id="maniaplanet-engine-architecture-from-mania-tech-wiki"><a class="anchor" href="#maniaplanet-engine-architecture-from-mania-tech-wiki">#</a>ManiaPlanet Engine Architecture (from Mania Tech Wiki)</h3>
+<p><strong>CMwEngineManager</strong> is a singleton managing all 37+ engines. It contains <code>CMwEngineInfo[]</code> (namespaces) -> <code>CMwClassInfo[]</code> (type descriptors) -> <code>CMwMemberInfo[]</code> (properties/methods).</p>
+<p><strong>Reference Counting</strong> uses <code>MwAddRef()</code>/<code>MwRelease()</code>. Zero-count triggers destruction.</p>
+<p><strong>CMwStack Late Binding</strong> is a QUEUE, not a LIFO stack. First two items stored inline, rest on heap. Supports 14 item types including ITEM_MEMBER, ITEM_OBJECT, ITEM_ISO4, ITEM_VEC3.</p>
+<p><strong>Serialization Pipeline</strong>: <code>CSystemArchiveNod</code> handles .gbx file serialization: <code>LoadFileFrom -> DoLoadFile -> DoFidLoadFile -> DoLoadAll -> { DoLoadHeader -> DoLoadRef -> DoLoadBody }</code>.</p>
+<p><strong>Stream Architecture</strong>: <code>CClassicBuffer</code> base class with <code>CSystemFile</code> (4 KB buffered), <code>CSystemFileMemMapped</code>, <code>CClassicBufferZlib</code> (compression), <code>CClassicBufferCrypted</code> (Blowfish CBC/CTR encryption).</p>
+<h3 id="ghostreplay-sample-data-encoding"><a class="anchor" href="#ghostreplay-sample-data-encoding">#</a>Ghost/Replay Sample Data Encoding</h3>
+<p>The community documents the ghost sample encoding at 50ms intervals (20 samples/second), zlib-compressed:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1892,10 +1077,8 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Sample period</strong>: 50ms (20 samples/second) <strong>Compression</strong>: zlib deflate for sample data</p>
-<p>This is NEW information not in our RE docs. The exact encoding of rotation angles and speed into integer types with specific range mappings is valuable for replay analysis.</p>
-<h3 id="63-trackmania-engine-class-ids-from-openplanet"><a class="anchor" href="#63-trackmania-engine-class-ids-from-openplanet">#</a>6.3 TrackMania Engine Class IDs (from Openplanet)</h3>
-<p>New class IDs confirmed through Openplanet:</p>
+<p>This encoding is NEW information not in our RE docs. The exact integer-to-float mappings are valuable for replay analysis.</p>
+<h3 id="trackmania-engine-class-ids-from-openplanet"><a class="anchor" href="#trackmania-engine-class-ids-from-openplanet">#</a>TrackMania Engine Class IDs (from Openplanet)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1921,189 +1104,31 @@
   <td style="text-align:left">TrackMania</td>
 </tr>
 <tr>
-  <td style="text-align:left">CTrackManiaNetworkServerInfo</td>
-  <td style="text-align:left"><code class="addr">0x24035000</code></td>
-  <td style="text-align:left">TrackMania</td>
-</tr>
-<tr>
-  <td style="text-align:left">CTrackManiaPlayerInfo</td>
-  <td style="text-align:left"><code class="addr">0x24036000</code></td>
-  <td style="text-align:left">TrackMania</td>
-</tr>
-<tr>
-  <td style="text-align:left">CTrackManiaMatchSettings</td>
-  <td style="text-align:left"><code class="addr">0x24041000</code></td>
-  <td style="text-align:left">TrackMania</td>
-</tr>
-<tr>
-  <td style="text-align:left">CTrackManiaControlCheckPointList</td>
-  <td style="text-align:left"><code class="addr">0x2406E000</code></td>
-  <td style="text-align:left">TrackMania</td>
-</tr>
-<tr>
-  <td style="text-align:left">CTrackManiaControlPlayerInfoCard</td>
-  <td style="text-align:left"><code class="addr">0x2408C000</code></td>
-  <td style="text-align:left">TrackMania</td>
-</tr>
-<tr>
-  <td style="text-align:left">CTrackManiaControlCard</td>
-  <td style="text-align:left"><code class="addr">0x2408F000</code></td>
-  <td style="text-align:left">TrackMania</td>
-</tr>
-<tr>
-  <td style="text-align:left">CTrackManiaControlMatchSettingsCard</td>
-  <td style="text-align:left"><code class="addr">0x240C4000</code></td>
-  <td style="text-align:left">TrackMania</td>
-</tr>
-<tr>
-  <td style="text-align:left">CGamePlayerProfileChunk_TrackManiaSettings</td>
-  <td style="text-align:left"><code class="addr">0x240D5000</code></td>
-  <td style="text-align:left">TrackMania</td>
-</tr>
-<tr>
   <td style="text-align:left">CSceneVehicleVisState</td>
   <td style="text-align:left"><code class="addr">0x0A00C000</code></td>
   <td style="text-align:left">Scene</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="64-vehicle-types-enum"><a class="anchor" href="#64-vehicle-types-enum">#</a>6.4 Vehicle Types Enum</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Value</th>
-  <th style="text-align:left">Name</th>
-  <th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">0</td>
-  <td style="text-align:left">CharacterPilot</td>
-  <td style="text-align:left">On-foot character</td>
-</tr>
-<tr>
-  <td style="text-align:left">1</td>
-  <td style="text-align:left">CarSport</td>
-  <td style="text-align:left">Stadium car (default)</td>
-</tr>
-<tr>
-  <td style="text-align:left">2</td>
-  <td style="text-align:left">CarSnow</td>
-  <td style="text-align:left">Snow car</td>
-</tr>
-<tr>
-  <td style="text-align:left">3</td>
-  <td style="text-align:left">CarRally</td>
-  <td style="text-align:left">Rally car</td>
-</tr>
-<tr>
-  <td style="text-align:left">4</td>
-  <td style="text-align:left">CarDesert</td>
-  <td style="text-align:left">Desert car</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="65-block-coordinate-system"><a class="anchor" href="#65-block-coordinate-system">#</a>6.5 Block Coordinate System</h3>
-<p>From community: block coordinates use (X, Y, Z) integers, rotation is 0-3 (90-degree increments). In GBX format version >= 6, coordinates are offset-adjusted by subtracting (1, 0, 1) from the stored values. Blocks with flags == <code class="addr">0xFFFFFFFF</code> are "null" blocks and should be skipped.</p>
-<h3 id="66-blowfish-encryption"><a class="anchor" href="#66-blowfish-encryption">#</a>6.6 Blowfish Encryption</h3>
-<p>The community documents <code>CClassicBufferCrypted</code> using Blowfish in CBC and CTR modes. This supplements our knowledge of the stream architecture and may be relevant for understanding encrypted game data.</p>
+<h3 id="block-coordinate-system"><a class="anchor" href="#block-coordinate-system">#</a>Block Coordinate System</h3>
+<p>From community: block coordinates use (X, Y, Z) integers, rotation is 0-3 (90-degree increments). In GBX format version >= 6, coordinates are offset-adjusted by subtracting (1, 0, 1). Blocks with flags == <code class="addr">0xFFFFFFFF</code> are "null" blocks and should be skipped.</p>
 <hr>
-<h2 id="7-contradictions-to-investigate"><a class="anchor" href="#7-contradictions-to-investigate">#</a>7. Contradictions to Investigate</h2>
+<h2 id="contradictions-to-investigate"><a class="anchor" href="#contradictions-to-investigate">#</a>Contradictions to Investigate</h2>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="71-format-flag-byte-ordering"><a class="anchor" href="#71-format-flag-byte-ordering">#</a>7.1 Format Flag Byte Ordering</h3></summary>
+<summary><h3 id="format-flag-byte-ordering"><a class="anchor" href="#format-flag-byte-ordering">#</a>Format Flag Byte Ordering</h3></summary>
 <div class="collapsible-content">
-<p><strong>Community (Mania Tech Wiki)</strong>: Lists format bytes as:</p>
-<ul>
-  <li>Byte 5: Format type ('B'/'T')</li>
-  <li>Byte 6: Reference table compression ('U'/'C') -- "unused"</li>
-  <li>Byte 7: Body compression ('U'/'C')</li>
-  <li>Byte 8: Edit state ('R'/'E')</li>
-</ul>
-<p><strong>Our RE</strong>: Lists 4-character format descriptor at offset 0x05:</p>
-<ul>
-  <li>Byte 0: Format type ('B'/'T')</li>
-  <li>Byte 1: Body compression -> stored at <code>+0xD8</code></li>
-  <li>Byte 2: <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> compression -> stored at <code>+0xDC</code></li>
-  <li>Byte 3: Reference mode ('R'/'E')</li>
-</ul>
-<p><strong>Issue</strong>: The community says byte 6 (ref table compression) is "unused", but our RE shows bytes 1 and 2 both control compression. The actual semantics of bytes 1 vs 2 need clarification. Common format strings <code>"BUCR"</code> and <code>"BUCE"</code> suggest the 4 characters form a single descriptor where the meaning of each position should be verified against multiple files.</p>
-<p><strong>Action</strong>: Parse several real .Map.Gbx files and check the actual byte values at positions 5-8 to determine which controls body compression vs reference table compression.</p>
+<p><strong>Community</strong>: Lists byte 6 (ref table compression) as "unused."</p>
+<p><strong>Our RE</strong>: Lists bytes 1 and 2 both controlling compression.</p>
+<p><strong>Issue</strong>: The 4-character format string semantics (e.g., "BUCR") need verification against multiple real files to determine which byte controls body compression vs reference table compression.</p>
 </div>
 </details>
-<h3 id="72-chmszonedynamic-vs-nscenedyna"><a class="anchor" href="#72-chmszonedynamic-vs-nscenedyna">#</a>7.2 CHmsZoneDynamic vs NSceneDyna</h3>
-<p><strong>Community</strong>: References <code>CHmsZoneDynamic::PhysicsStep2</code> as the main physics driver (from TMNF era).</p>
-<p><strong>Our RE</strong>: Traces to <code>NSceneDyna::PhysicsStep</code> -> <code>NSceneDyna::PhysicsStep_V2</code> -> <code>NSceneDyna::InternalPhysicsStep</code>.</p>
-<p><strong>Assessment</strong>: Not a true contradiction. In TM2020, the <code>NSceneDyna</code> namespace likely absorbed or replaced what was <code>CHmsZoneDynamic</code> in TMNF. The HMS (Hierarchical Managed Scene) layer still exists in TM2020 (41 CHms* classes found) but the physics simulation appears to have been refactored into the Scene engine (NSceneDyna = Engine 0x0A). The community knowledge is based on older TMNF reverse engineering.</p>
-<h3 id="73-steering-range"><a class="anchor" href="#73-steering-range">#</a>7.3 Steering Range</h3>
-<p><strong>Community (donadigo/TMInterface)</strong>: Steering range is -65536 to 65536 (integer).</p>
-<p><strong>Our RE / Openplanet</strong>: <code>InputSteer</code> is a float from -1.0 to 1.0.</p>
-<p><strong>Assessment</strong>: Not a contradiction. The integer range is the raw replay/input file encoding. The float range is the normalized physics/vis value. The conversion is: <code>float_steer = int_steer / 65536.0</code>. Both are correct at their respective layers.</p>
+<h3 id="chmszonedynamic-vs-nscenedyna"><a class="anchor" href="#chmszonedynamic-vs-nscenedyna">#</a>CHmsZoneDynamic vs NSceneDyna</h3>
+<p><strong>Community</strong> references <code>CHmsZoneDynamic::PhysicsStep2</code> (TMNF era). <strong>Our RE</strong> traces to <code>NSceneDyna::PhysicsStep_V2</code>. Not a true contradiction -- the <code>NSceneDyna</code> namespace absorbed what was <code>CHmsZoneDynamic</code> in TMNF. The HMS layer still exists in TM2020 (41 CHms* classes) but physics simulation moved to the Scene engine.</p>
+<h3 id="steering-range"><a class="anchor" href="#steering-range">#</a>Steering Range</h3>
+<p><strong>Community</strong>: -65536 to 65536 (integer). <strong>Our RE</strong>: -1.0 to 1.0 (float). Not a contradiction -- the integer range is raw replay encoding, the float range is normalized physics value. Conversion: <code>float_steer = int_steer / 65536.0</code>.</p>
 <hr>
-<h2 id="8-gap-filling-opportunities"><a class="anchor" href="#8-gap-filling-opportunities">#</a>8. Gap-Filling Opportunities</h2>
-<h3 id="81-high-priority-gaps-our-re-can-fill-from-community"><a class="anchor" href="#81-high-priority-gaps-our-re-can-fill-from-community">#</a>8.1 High-Priority Gaps Our RE Can Fill from Community</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Gap</th>
-  <th style="text-align:left">Community Source</th>
-  <th style="text-align:left">Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Encapsulated chunk IDs</td>
-  <td style="text-align:left">Mania Tech Wiki lists 8 specific IDs</td>
-  <td style="text-align:left">Verify these IDs reset lookbackstring context in our parser</td>
-</tr>
-<tr>
-  <td style="text-align:left">Ghost sample encoding</td>
-  <td style="text-align:left">Community documents exact int16/int8 encoding for position/rotation/speed</td>
-  <td style="text-align:left">Add to doc 16 section 17</td>
-</tr>
-<tr>
-  <td style="text-align:left">CSceneVehicleVisState class ID (<code class="addr">0x0A00C000</code>)</td>
-  <td style="text-align:left">Openplanet</td>
-  <td style="text-align:left">Verify in binary class registry</td>
-</tr>
-<tr>
-  <td style="text-align:left">Per-wheel property names and offsets</td>
-  <td style="text-align:left">Openplanet VehicleState</td>
-  <td style="text-align:left">Map to our decompiled wheel struct</td>
-</tr>
-<tr>
-  <td style="text-align:left">FallingState and TurboLevel enums</td>
-  <td style="text-align:left">Openplanet</td>
-  <td style="text-align:left">Add to our enum catalog</td>
-</tr>
-<tr>
-  <td style="text-align:left">Vehicle type enum values</td>
-  <td style="text-align:left">Openplanet VehicleState</td>
-  <td style="text-align:left">Verify against binary</td>
-</tr>
-<tr>
-  <td style="text-align:left">Block coordinate offset (subtract 1,0,1 for v6+)</td>
-  <td style="text-align:left">GBX.NET source</td>
-  <td style="text-align:left">Verify in our map parsing code</td>
-</tr>
-<tr>
-  <td style="text-align:left">Blocks with flags <code class="addr">0xFFFFFFFF</code> are null</td>
-  <td style="text-align:left">GBX.NET source</td>
-  <td style="text-align:left">Verify in our parser</td>
-</tr>
-<tr>
-  <td style="text-align:left">Ubi-AppId value</td>
-  <td style="text-align:left">Community API docs</td>
-  <td style="text-align:left">Verify in binary strings</td>
-</tr>
-<tr>
-  <td style="text-align:left">JWT token payload fields</td>
-  <td style="text-align:left">Community API docs</td>
-  <td style="text-align:left">Protocol-level, no RE needed</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="82-high-priority-gaps-community-knowledge-fills"><a class="anchor" href="#82-high-priority-gaps-community-knowledge-fills">#</a>8.2 High-Priority Gaps Community Knowledge Fills</h3>
+<h2 id="gap-filling-opportunities"><a class="anchor" href="#gap-filling-opportunities">#</a>Gap-Filling Opportunities</h2>
+<h3 id="what-community-knowledge-fills-for-our-re"><a class="anchor" href="#what-community-knowledge-fills-for-our-re">#</a>What Community Knowledge Fills for Our RE</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2114,43 +1139,33 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><strong>Complete API endpoint catalog</strong></td>
+  <td style="text-align:left">Complete API endpoint catalog</td>
   <td style="text-align:left">80+ endpoints across Core/Live/Meet APIs</td>
   <td style="text-align:left">Enables comprehensive network traffic analysis</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>All 24 PhysicsId values</strong></td>
+  <td style="text-align:left">All 24 PhysicsId values</td>
   <td style="text-align:left">Complete surface material list with gameplay effects</td>
-  <td style="text-align:left">Maps to <code>EPlugSurfaceMaterialId</code> enum in physics</td>
+  <td style="text-align:left">Maps to <code>EPlugSurfaceMaterialId</code> enum</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>All 16 GameplayId values</strong></td>
+  <td style="text-align:left">All 16 GameplayId values</td>
   <td style="text-align:left">Turbo, reactor, cruise, etc.</td>
   <td style="text-align:left">Maps to surface effect triggers</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>ManiaExchange API v2</strong></td>
-  <td style="text-align:left">Complete external track exchange API</td>
-  <td style="text-align:left">Understanding map download flows</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>XML-RPC callback system</strong></td>
-  <td style="text-align:left">Full dedicated server scripting API</td>
-  <td style="text-align:left">Understanding server-client protocol</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Ghost sample encoding</strong></td>
+  <td style="text-align:left">Ghost sample encoding</td>
   <td style="text-align:left">Precise integer-to-float mappings for replay data</td>
   <td style="text-align:left">Critical for replay file parsing</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>ManiaScript class hierarchy</strong></td>
+  <td style="text-align:left">ManiaScript class hierarchy</td>
   <td style="text-align:left">Complete script API surface</td>
   <td style="text-align:left">Understanding what is exposed to modders</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="83-what-community-does-not-cover-our-re-unique-value"><a class="anchor" href="#83-what-community-does-not-cover-our-re-unique-value">#</a>8.3 What Community Does NOT Cover (Our RE Unique Value)</h3>
+<h3 id="what-our-re-uniquely-provides"><a class="anchor" href="#what-our-re-uniquely-provides">#</a>What Our RE Uniquely Provides</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2173,15 +1188,11 @@
 </tr>
 <tr>
   <td style="text-align:left">Memory layout offsets</td>
-  <td style="text-align:left">Exact struct offsets from decompiled code (e.g., vehicle state nibble at +0x128c)</td>
+  <td style="text-align:left">Exact struct offsets (e.g., vehicle state nibble at +0x128c)</td>
 </tr>
 <tr>
   <td style="text-align:left">Anti-tamper/packing</td>
   <td style="text-align:left">Entry point obfuscation in .D." section</td>
-</tr>
-<tr>
-  <td style="text-align:left">OpenSSL+QUIC integration</td>
-  <td style="text-align:left"><code>OpenSSL 1.1.1t+quic</code> confirmed in binary</td>
 </tr>
 <tr>
   <td style="text-align:left">2,027 class count</td>
@@ -2192,121 +1203,100 @@
   <td style="text-align:left">NHmsCollision broadphase, contact merging, continuous collision</td>
 </tr>
 <tr>
-  <td style="text-align:left">Water physics model</td>
-  <td style="text-align:left">Buoyancy, immersion, surface effects</td>
-</tr>
-<tr>
   <td style="text-align:left">Specific function addresses</td>
   <td style="text-align:left">Every FUN_ address mapped to subsystem and purpose</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="84-recommended-next-steps"><a class="anchor" href="#84-recommended-next-steps">#</a>8.4 Recommended Next Steps</h3>
+<h3 id="recommended-next-steps"><a class="anchor" href="#recommended-next-steps">#</a>Recommended Next Steps</h3>
 <ol>
-  <li><strong>Verify community class IDs</strong> against our binary's class registry (especially CSceneVehicleVisState = <code class="addr">0x0A00C000</code>).</li>
-  <li><strong>Map the 24 PhysicsId values</strong> to our decompiled surface effect code.</li>
-  <li><strong>Integrate ghost sample encoding</strong> into our file format documentation.</li>
-  <li><strong>Cross-reference GBX.NET chunk implementations</strong> with our decompiled chunk readers for CGameCtnChallenge.</li>
-  <li><strong>Extract the Ubi-AppId</strong> from binary strings to confirm it matches <code>86263886-327a-4328-ac69-527f0d20a237</code>.</li>
-  <li><strong>Investigate the format flag byte semantics</strong> (section 7.1) by parsing real files.</li>
-  <li><strong>Map VehicleState per-wheel offsets</strong> to our decompiled wheel struct layout.</li>
-  <li><strong>Import the complete engine ID table</strong> (37 engines) into our class hierarchy documentation.</li>
+  <li>Verify community class IDs against our binary's class registry (especially CSceneVehicleVisState = <code class="addr">0x0A00C000</code>).</li>
+  <li>Map the 24 PhysicsId values to our decompiled surface effect code.</li>
+  <li>Integrate ghost sample encoding into our file format documentation.</li>
+  <li>Cross-reference GBX.NET chunk implementations with our decompiled chunk readers.</li>
+  <li>Extract the Ubi-AppId from binary strings to confirm <code>86263886-327a-4328-ac69-527f0d20a237</code>.</li>
+  <li>Investigate format flag byte semantics by parsing real files.</li>
+  <li>Map VehicleState per-wheel offsets to our decompiled wheel struct layout.</li>
+  <li>Import the complete engine ID table (37 engines) into our class hierarchy documentation.</li>
 </ol>
 <hr>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="20-browser-recreation-guide.md">20-browser-recreation-guide.md</a> -- Uses community tools and API docs for browser implementation</li>
+  <li><a href="26-real-file-analysis.md">26-real-file-analysis.md</a> -- Validates GBX spec against real files</li>
+  <li><a href="30-ghost-replay-format.md">30-ghost-replay-format.md</a> -- Uses community ghost sample encoding</li>
+  <li><a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> -- Primary Openplanet-sourced data</li>
+</ul>
 <h2 id="sources"><a class="anchor" href="#sources">#</a>Sources</h2>
 <ul>
   <li><a href="https://github.com/BigBang1112/gbx-net">GBX.NET GitHub</a></li>
-  <li><a href="https://explorer.gbx.tools/">GBX.NET Explorer</a></li>
   <li><a href="https://wiki.xaseco.org/wiki/GBX">Mania Tech Wiki - GBX</a></li>
-  <li><a href="https://wiki.xaseco.org/wiki/Class_IDs">Mania Tech Wiki - Class IDs</a></li>
   <li><a href="https://wiki.xaseco.org/wiki/ManiaPlanet_internals">Mania Tech Wiki - ManiaPlanet Internals</a></li>
   <li><a href="https://openplanet.dev/">Openplanet</a></li>
-  <li><a href="https://openplanet.dev/docs">Openplanet Documentation</a></li>
-  <li><a href="https://next.openplanet.dev/">Openplanet Trackmania Next API</a></li>
-  <li><a href="https://openplanet.dev/docs/reference/vehiclestate">VehicleState Plugin Reference</a></li>
-  <li><a href="https://github.com/openplanet-nl/vehiclestate">VehicleState Source</a></li>
-  <li><a href="https://next.openplanet.dev/Scene/CSceneVehicleVisState">CSceneVehicleVisState Reference</a></li>
   <li><a href="https://webservices.openplanet.dev/">Trackmania Web Services API</a></li>
-  <li><a href="https://webservices.openplanet.dev/auth">Web Services Authentication</a></li>
-  <li><a href="https://gist.github.com/codecat/4dfd3719e1f8d9e5ef439d639abe0de4">codecat's Web Services Gist</a></li>
-  <li><a href="https://api2.mania.exchange/">ManiaExchange API</a></li>
   <li><a href="https://donadigo.com/tminterface/">TMInterface</a></li>
-  <li><a href="https://donadigo.com/tmx1">TMX Replay Investigation</a></li>
-  <li><a href="https://github.com/donadigo/pygbx">pygbx</a></li>
-  <li><a href="https://github.com/donadigo/gbxtools">gbxtools</a></li>
   <li><a href="https://github.com/BigBang1112/maniascript-reference">ManiaScript Reference (BigBang1112)</a></li>
-  <li><a href="https://maniascript.boss-bravo.fr/">ManiaScript Reference (boss-bravo)</a></li>
-  <li><a href="https://maniaplanet-community.gitbook.io/maniascript">ManiaScript Documentation</a></li>
   <li><a href="https://wiki.trackmania.io/en/dedicated-server/XML-RPC/home">XML-RPC Documentation</a></li>
   <li><a href="https://doc.trackmania.com/">Official Trackmania Documentation</a></li>
-  <li><a href="https://doc.trackmania.com/create/nadeo-importer/04-how-to-create-the-meshparams-xml-file/">MeshParams Documentation</a></li>
-  <li><a href="https://www.trackmania.wiki/wiki/Game_Mechanics">Trackmania Wiki - Game Mechanics</a></li>
-  <li><a href="https://github.com/trackmania-rl/tmrl">tmrl (Reinforcement Learning)</a></li>
 </ul>
+<details><summary>Analysis metadata</summary>
+<ul>
+  <li><strong>Date</strong>: 2026-03-27</li>
+  <li><strong>Purpose</strong>: Catalog publicly available community reverse engineering projects, documentation, and tools for Trackmania, and cross-reference their findings with our RE work.</li>
+</ul>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="map-structure.html">&larr; Map Structure Encyclopedia</a><a class="next" href="ghidra-gaps.html">Ghidra Gap Research &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="dll-intelligence.html">&larr; DLL Intelligence</a><a class="next" href="tmnf-crossref.html">TMNF Comparison &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-community-projects-catalog">1. Community Projects Catalog</a></li>
-  <li class="toc-h3"><a href="#11-gbx-parsing-libraries">1.1 GBX Parsing Libraries</a></li>
-  <li class="toc-h3"><a href="#12-gbx-analysis-tools">1.2 GBX Analysis Tools</a></li>
-  <li class="toc-h3"><a href="#13-physics-tas-tools">1.3 Physics / TAS Tools</a></li>
-  <li class="toc-h3"><a href="#14-openplanet-ecosystem">1.4 Openplanet Ecosystem</a></li>
-  <li class="toc-h3"><a href="#15-api-documentation">1.5 API Documentation</a></li>
-  <li class="toc-h3"><a href="#16-wikis-and-references">1.6 Wikis and References</a></li>
-  <li class="toc-h3"><a href="#17-maniascript-references">1.7 ManiaScript References</a></li>
-<li class=""><a href="#2-gbx-format-community-vs-re-comparison">2. GBX Format - Community vs RE Comparison</a></li>
-  <li class="toc-h3"><a href="#21-header-structure">2.1 Header Structure</a></li>
-  <li class="toc-h3"><a href="#22-chunk-system">2.2 Chunk System</a></li>
-  <li class="toc-h3"><a href="#23-engine-ids">2.3 Engine IDs</a></li>
-  <li class="toc-h3"><a href="#24-data-types">2.4 Data Types</a></li>
-  <li class="toc-h3"><a href="#25-cgamectnchallenge-map-chunks">2.5 CGameCtnChallenge (Map) Chunks</a></li>
-  <li class="toc-h3"><a href="#26-compression">2.6 Compression</a></li>
-  <li class="toc-h3"><a href="#27-class-id-remapping">2.7 Class ID Remapping</a></li>
-<li class=""><a href="#3-physics-community-vs-re-comparison">3. Physics - Community vs RE Comparison</a></li>
-  <li class="toc-h3"><a href="#31-simulation-architecture">3.1 Simulation Architecture</a></li>
-  <li class="toc-h3"><a href="#32-input-system">3.2 Input System</a></li>
-  <li class="toc-h3"><a href="#33-vehicle-state-cscenevehiclevisstate">3.3 Vehicle State (CSceneVehicleVisState)</a></li>
-  <li class="toc-h3"><a href="#34-per-wheel-data">3.4 Per-Wheel Data</a></li>
-  <li class="toc-h3"><a href="#35-tminterface-physics-details">3.5 TMInterface Physics Details</a></li>
-  <li class="toc-h3"><a href="#36-game-mechanics-community-knowledge">3.6 Game Mechanics (Community Knowledge)</a></li>
-  <li class="toc-h3"><a href="#37-surface-materials-physicsid">3.7 Surface Materials (PhysicsId)</a></li>
-<li class=""><a href="#4-api-endpoints-community-vs-re-comparison">4. API Endpoints - Community vs RE Comparison</a></li>
-  <li class="toc-h3"><a href="#41-authentication">4.1 Authentication</a></li>
-  <li class="toc-h3"><a href="#42-service-base-urls">4.2 Service Base URLs</a></li>
-  <li class="toc-h3"><a href="#43-audience-values">4.3 Audience Values</a></li>
-  <li class="toc-h3"><a href="#44-jwt-token-payload-fields">4.4 JWT Token Payload Fields</a></li>
-  <li class="toc-h3"><a href="#45-core-api-endpoints-community-documented">4.5 Core API Endpoints (Community-Documented)</a></li>
-  <li class="toc-h3"><a href="#46-live-api-endpoints-community-documented">4.6 Live API Endpoints (Community-Documented)</a></li>
-  <li class="toc-h3"><a href="#47-meet-api-endpoints-community-documented">4.7 Meet API Endpoints (Community-Documented)</a></li>
-  <li class="toc-h3"><a href="#48-dedicated-server-xml-rpc">4.8 Dedicated Server XML-RPC</a></li>
-  <li class="toc-h3"><a href="#49-maniaexchange-api-v2">4.9 ManiaExchange API v2</a></li>
-<li class=""><a href="#5-maniascript-community-documentation">5. ManiaScript - Community Documentation</a></li>
-  <li class="toc-h3"><a href="#51-maniascript-reference-sources">5.1 ManiaScript Reference Sources</a></li>
-  <li class="toc-h3"><a href="#52-key-maniascript-classes-tm2020">5.2 Key ManiaScript Classes (TM2020)</a></li>
-  <li class="toc-h3"><a href="#53-csmplayerdriver-details-bot-ai">5.3 CSmPlayerDriver Details (Bot AI)</a></li>
-  <li class="toc-h3"><a href="#54-openplanet-engine-namespaces">5.4 Openplanet Engine Namespaces</a></li>
-  <li class="toc-h3"><a href="#55-openplanet-global-api">5.5 Openplanet Global API</a></li>
-  <li class="toc-h3"><a href="#56-nadeoservices-plugin-api">5.6 NadeoServices Plugin API</a></li>
-<li class=""><a href="#6-new-information-from-community-sources">6. New Information from Community Sources</a></li>
-  <li class="toc-h3"><a href="#61-maniaplanet-engine-architecture-from-mania-tech-wiki">6.1 ManiaPlanet Engine Architecture (from Mania Tech Wiki)</a></li>
-  <li class="toc-h3"><a href="#62-ghostreplay-sample-data-encoding">6.2 Ghost/Replay Sample Data Encoding</a></li>
-  <li class="toc-h3"><a href="#63-trackmania-engine-class-ids-from-openplanet">6.3 TrackMania Engine Class IDs (from Openplanet)</a></li>
-  <li class="toc-h3"><a href="#64-vehicle-types-enum">6.4 Vehicle Types Enum</a></li>
-  <li class="toc-h3"><a href="#65-block-coordinate-system">6.5 Block Coordinate System</a></li>
-  <li class="toc-h3"><a href="#66-blowfish-encryption">6.6 Blowfish Encryption</a></li>
-<li class=""><a href="#7-contradictions-to-investigate">7. Contradictions to Investigate</a></li>
-  <li class="toc-h3"><a href="#71-format-flag-byte-ordering">7.1 Format Flag Byte Ordering</a></li>
-  <li class="toc-h3"><a href="#72-chmszonedynamic-vs-nscenedyna">7.2 CHmsZoneDynamic vs NSceneDyna</a></li>
-  <li class="toc-h3"><a href="#73-steering-range">7.3 Steering Range</a></li>
-<li class=""><a href="#8-gap-filling-opportunities">8. Gap-Filling Opportunities</a></li>
-  <li class="toc-h3"><a href="#81-high-priority-gaps-our-re-can-fill-from-community">8.1 High-Priority Gaps Our RE Can Fill from Community</a></li>
-  <li class="toc-h3"><a href="#82-high-priority-gaps-community-knowledge-fills">8.2 High-Priority Gaps Community Knowledge Fills</a></li>
-  <li class="toc-h3"><a href="#83-what-community-does-not-cover-our-re-unique-value">8.3 What Community Does NOT Cover (Our RE Unique Value)</a></li>
-  <li class="toc-h3"><a href="#84-recommended-next-steps">8.4 Recommended Next Steps</a></li>
+<li class=""><a href="#community-projects-catalog">Community Projects Catalog</a></li>
+  <li class="toc-h3"><a href="#gbx-parsing-libraries">GBX Parsing Libraries</a></li>
+  <li class="toc-h3"><a href="#gbx-analysis-tools">GBX Analysis Tools</a></li>
+  <li class="toc-h3"><a href="#physics-tas-tools">Physics / TAS Tools</a></li>
+  <li class="toc-h3"><a href="#openplanet-ecosystem">Openplanet Ecosystem</a></li>
+  <li class="toc-h3"><a href="#api-documentation">API Documentation</a></li>
+  <li class="toc-h3"><a href="#wikis-and-references">Wikis and References</a></li>
+  <li class="toc-h3"><a href="#maniascript-references">ManiaScript References</a></li>
+<li class=""><a href="#gbx-format-community-vs-re-comparison">GBX Format -- Community vs RE Comparison</a></li>
+  <li class="toc-h3"><a href="#header-structure">Header Structure</a></li>
+  <li class="toc-h3"><a href="#chunk-system">Chunk System</a></li>
+  <li class="toc-h3"><a href="#engine-ids">Engine IDs</a></li>
+  <li class="toc-h3"><a href="#cgamectnchallenge-map-chunks">CGameCtnChallenge (Map) Chunks</a></li>
+  <li class="toc-h3"><a href="#compression">Compression</a></li>
+<li class=""><a href="#physics-community-vs-re-comparison">Physics -- Community vs RE Comparison</a></li>
+  <li class="toc-h3"><a href="#simulation-architecture">Simulation Architecture</a></li>
+  <li class="toc-h3"><a href="#input-system">Input System</a></li>
+  <li class="toc-h3"><a href="#vehicle-state-cscenevehiclevisstate">Vehicle State (CSceneVehicleVisState)</a></li>
+  <li class="toc-h3"><a href="#per-wheel-data-from-openplanet">Per-Wheel Data (from Openplanet)</a></li>
+  <li class="toc-h3"><a href="#game-mechanics-community-knowledge">Game Mechanics (Community Knowledge)</a></li>
+  <li class="toc-h3"><a href="#surface-materials-physicsid">Surface Materials (PhysicsId)</a></li>
+<li class=""><a href="#api-endpoints-community-vs-re-comparison">API Endpoints -- Community vs RE Comparison</a></li>
+  <li class="toc-h3"><a href="#authentication">Authentication</a></li>
+  <li class="toc-h3"><a href="#service-base-urls">Service Base URLs</a></li>
+  <li class="toc-h3"><a href="#audience-values">Audience Values</a></li>
+  <li class="toc-h3"><a href="#core-api-endpoints">Core API Endpoints</a></li>
+  <li class="toc-h3"><a href="#live-api-endpoints">Live API Endpoints</a></li>
+  <li class="toc-h3"><a href="#meet-api-endpoints">Meet API Endpoints</a></li>
+<li class=""><a href="#maniascript-community-documentation">ManiaScript -- Community Documentation</a></li>
+  <li class="toc-h3"><a href="#key-sources">Key Sources</a></li>
+  <li class="toc-h3"><a href="#key-openplanet-global-api-functions">Key Openplanet Global API Functions</a></li>
+  <li class="toc-h3"><a href="#nadeoservices-plugin-api">NadeoServices Plugin API</a></li>
+<li class=""><a href="#new-information-from-community-sources">New Information from Community Sources</a></li>
+  <li class="toc-h3"><a href="#maniaplanet-engine-architecture-from-mania-tech-wiki">ManiaPlanet Engine Architecture (from Mania Tech Wiki)</a></li>
+  <li class="toc-h3"><a href="#ghostreplay-sample-data-encoding">Ghost/Replay Sample Data Encoding</a></li>
+  <li class="toc-h3"><a href="#trackmania-engine-class-ids-from-openplanet">TrackMania Engine Class IDs (from Openplanet)</a></li>
+  <li class="toc-h3"><a href="#block-coordinate-system">Block Coordinate System</a></li>
+<li class=""><a href="#contradictions-to-investigate">Contradictions to Investigate</a></li>
+  <li class="toc-h3"><a href="#format-flag-byte-ordering">Format Flag Byte Ordering</a></li>
+  <li class="toc-h3"><a href="#chmszonedynamic-vs-nscenedyna">CHmsZoneDynamic vs NSceneDyna</a></li>
+  <li class="toc-h3"><a href="#steering-range">Steering Range</a></li>
+<li class=""><a href="#gap-filling-opportunities">Gap-Filling Opportunities</a></li>
+  <li class="toc-h3"><a href="#what-community-knowledge-fills-for-our-re">What Community Knowledge Fills for Our RE</a></li>
+  <li class="toc-h3"><a href="#what-our-re-uniquely-provides">What Our RE Uniquely Provides</a></li>
+  <li class="toc-h3"><a href="#recommended-next-steps">Recommended Next Steps</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 <li class=""><a href="#sources">Sources</a></li>
 </ul>
 </nav>

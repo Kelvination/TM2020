@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item active" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item active" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,27 +121,7 @@
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
                         <h1 id="tmnf-tm2020-cross-reference-analysis"><a class="anchor" href="#tmnf-tm2020-cross-reference-analysis">#</a>TMNF / TM2020 Cross-Reference Analysis</h1>
-<p><strong>TMNF Binary</strong>: <code>TmForever.exe</code>, x86 32-bit, base <code class="addr">0x00400000</code>, 68,015 functions <strong>TM2020 Binary</strong>: <code>Trackmania.exe</code>, x86-64, base <code class="addr">0x140000000</code>, 131,311 functions <strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: TMNF diary.md (2395 lines), TM2020 RE docs (00-08), TM2020 decompiled physics</p>
-<hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-executive-summary">Executive Summary</a></li>
-  <li><a href="#2-architectural-comparison">Architectural Comparison</a></li>
-  <li><a href="#3-physics-engine-comparison">Physics Engine Comparison</a></li>
-  <li><a href="#4-vehicle-state-structure-comparison">Vehicle State Structure Comparison</a></li>
-  <li><a href="#5-tuning-system-comparison">Tuning System Comparison</a></li>
-  <li><a href="#6-force-model-comparison">Force Model Comparison</a></li>
-  <li><a href="#7-file-format-evolution">File Format Evolution</a></li>
-  <li><a href="#8-rendering-pipeline-evolution">Rendering Pipeline Evolution</a></li>
-  <li><a href="#9-network-protocol-evolution">Network Protocol Evolution</a></li>
-  <li><a href="#10-pattern-transfer-table">Pattern Transfer Table</a></li>
-  <li><a href="#11-lessons-for-recreation">Lessons for Recreation</a></li>
-  <li><a href="#12-confidence-assessment">Confidence Assessment</a></li>
-</ol>
-<hr>
-<h2 id="1-executive-summary"><a class="anchor" href="#1-executive-summary">#</a>1. Executive Summary</h2>
-<p>TMNF (2008) and TM2020 (2020) share the same engine lineage -- Nadeo's ManiaPlanet/GameBox engine. Despite 12 years of development, the core architectural patterns are remarkably preserved. The physics engine, class hierarchy, file format system, and serialization framework are evolutionary, not revolutionary. However, the 32-to-64-bit transition means <strong>no struct offsets transfer directly</strong> -- every field has shifted due to pointer widening and struct reorganization.</p>
-<h3 id="key-findings"><a class="anchor" href="#key-findings">#</a>Key Findings</h3>
+<p>TMNF (2008) and TM2020 (2020) share the same GameBox engine lineage. This document maps what transfers between them and what does not. Despite 12 years of evolution, the physics pipeline, class hierarchy, and serialization framework are preserved. The 32-to-64-bit transition means <strong>no struct offsets transfer directly</strong> -- pointer widening shifts every field.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -191,9 +179,8 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="2-architectural-comparison"><a class="anchor" href="#2-architectural-comparison">#</a>2. Architectural Comparison</h2>
-<h3 id="21-class-hierarchy-what-is-shared"><a class="anchor" href="#21-class-hierarchy-what-is-shared">#</a>2.1 Class Hierarchy -- What Is Shared</h3>
-<p>Both games build on the same fundamental class hierarchy rooted in <code>CMwNod</code>.</p>
+<h2 id="how-the-class-hierarchies-compare"><a class="anchor" href="#how-the-class-hierarchies-compare">#</a>How the Class Hierarchies Compare</h2>
+<p>Both games build on the same CMwNod-rooted class hierarchy. The core engine subsystem structure is preserved across 12 years.</p>
 <p><strong>Application layer (<span class="badge badge-verified">VERIFIED</span> in both):</strong></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CMwNod
   CMwEngine
@@ -215,8 +202,8 @@
   <li>TMNF: RTTI data confirms <code>CMwNod</code> -> <code>CSceneObject</code> -> <code>CSceneMobil</code> -> <code>CSceneVehicle</code> -> <code>CSceneVehicleCar</code> (vtable at <code class="addr">0x00ceef6c</code>)</li>
   <li>TM2020: String evidence confirms <code>CGbxApp::Init1</code>, <code>CGameCtnApp::UpdateGame</code>, <code>CTrackMania</code> (at <code class="addr">0x141cfb978</code>)</li>
 </ul>
-<p><strong>Key difference</strong>: TM2020 introduces <code>CGameManiaPlanet</code> as an intermediate layer between <code>CGameCtnApp</code> and <code>CTrackMania</code>. This platform abstraction layer did not exist in TMNF. [<span class="badge badge-verified">VERIFIED</span>]</p>
-<h3 id="22-engine-subsystems"><a class="anchor" href="#22-engine-subsystems">#</a>2.2 Engine Subsystems</h3>
+<p>TM2020 introduces <code>CGameManiaPlanet</code> between <code>CGameCtnApp</code> and <code>CTrackMania</code>. This platform abstraction layer did not exist in TMNF. [<span class="badge badge-verified">VERIFIED</span>]</p>
+<h3 id="engine-subsystems"><a class="anchor" href="#engine-subsystems">#</a>Engine Subsystems</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -289,22 +276,11 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="23-hms-namespace-evolution"><a class="anchor" href="#23-hms-namespace-evolution">#</a>2.3 "Hms" Namespace Evolution</h3>
-<p>In TMNF, the <code>CHms*</code> prefix (meaning unknown -- never documented by Nadeo) covers both rendering infrastructure and physics:</p>
-<ul>
-  <li><code>CHmsCollisionManager</code> -- collision detection</li>
-  <li><code>CHmsForceField</code>, <code>CHmsForceFieldBall</code>, <code>CHmsForceFieldUniform</code> -- force fields</li>
-  <li><code>CHmsZoneDynamic</code> -- physics zones (hosts the simulation loop at vtable[42])</li>
-  <li><code>CHmsItem::CCallbackComputeForces</code> -- force computation callbacks</li>
-</ul>
-<p>In TM2020, the physics-related functionality has migrated to the <code>NScene*</code> and <code>NHmsCollision</code> namespaces:</p>
-<ul>
-  <li><code>NHmsCollision::SMgr</code> -- collision manager</li>
-  <li><code>NSceneDyna::PhysicsStep_V2</code> -- dynamics step</li>
-  <li><code>NSceneVehiclePhy::ComputeForces</code> -- vehicle forces</li>
-</ul>
-<p><strong>The callback-based force computation architecture is preserved</strong>: TMNF uses <code>CHmsItem::CCallbackComputeForces</code> vtable dispatch; TM2020 uses <code>NSceneVehiclePhy::ComputeForces</code> with a switch statement. Both delegate to model-specific sub-functions. [<span class="badge badge-verified">VERIFIED</span>]</p>
-<h3 id="24-what-is-new-in-tm2020"><a class="anchor" href="#24-what-is-new-in-tm2020">#</a>2.4 What Is New in TM2020</h3>
+<h3 id="the-hms-namespace-evolution"><a class="anchor" href="#the-hms-namespace-evolution">#</a>The "Hms" Namespace Evolution</h3>
+<p>In TMNF, <code>CHms<em></code> covers both rendering and physics: <code>CHmsCollisionManager</code>, <code>CHmsForceField</em></code>, <code>CHmsZoneDynamic</code> (hosts the simulation loop at vtable[42]), and <code>CHmsItem::CCallbackComputeForces</code>.</p>
+<p>In TM2020, physics migrated to <code>NScene*</code> and <code>NHmsCollision</code> namespaces: <code>NHmsCollision::SMgr</code>, <code>NSceneDyna::PhysicsStep_V2</code>, <code>NSceneVehiclePhy::ComputeForces</code>.</p>
+<p>The callback-based force computation architecture is preserved. TMNF uses <code>CHmsItem::CCallbackComputeForces</code> vtable dispatch. TM2020 uses <code>NSceneVehiclePhy::ComputeForces</code> with a switch statement. Both delegate to model-specific sub-functions. [<span class="badge badge-verified">VERIFIED</span>]</p>
+<h3 id="tm2020-additions"><a class="anchor" href="#tm2020-additions">#</a>TM2020 Additions</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -367,7 +343,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="25-what-has-been-removed-or-deprecated"><a class="anchor" href="#25-what-has-been-removed-or-deprecated">#</a>2.5 What Has Been Removed or Deprecated</h3>
+<h3 id="removed-or-deprecated-features"><a class="anchor" href="#removed-or-deprecated-features">#</a>Removed or Deprecated Features</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -417,9 +393,9 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="3-physics-engine-comparison"><a class="anchor" href="#3-physics-engine-comparison">#</a>3. Physics Engine Comparison</h2>
-<h3 id="31-simulation-pipeline"><a class="anchor" href="#31-simulation-pipeline">#</a>3.1 Simulation Pipeline</h3>
-<p>Both games use the same multi-layer physics pipeline. The naming conventions have evolved but the structure is identical:</p>
+<h2 id="how-the-physics-engines-compare"><a class="anchor" href="#how-the-physics-engines-compare">#</a>How the Physics Engines Compare</h2>
+<p>Both games use the same multi-layer physics pipeline. Naming conventions evolved, but the structure is identical.</p>
+<h3 id="simulation-pipeline"><a class="anchor" href="#simulation-pipeline">#</a>Simulation Pipeline</h3>
 <p><strong>TMNF Pipeline:</strong></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CHmsZoneDynamic::PhysicsStep2 (vtable[42], 100 Hz)
   -&gt; FUN_0057f770 (variable sub-step integrator)
@@ -489,7 +465,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="32-tick-rate-and-sub-stepping"><a class="anchor" href="#32-tick-rate-and-sub-stepping">#</a>3.2 Tick Rate and Sub-Stepping</h3>
+<h3 id="tick-rate-and-sub-stepping"><a class="anchor" href="#tick-rate-and-sub-stepping">#</a>Tick Rate and Sub-Stepping</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -532,8 +508,8 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Critical difference</strong>: TM2020 caps at 1,000 sub-steps (line 126: <code>if (uVar16 < 0x3e9)</code>), whereas TMNF allows up to 10,000. TM2020 computes velocity magnitude from 4 separate vector components (linear + 3 angular terms from offsets 0x1348-0x135C), while TMNF uses 2 terms (linear + angular). [<span class="badge badge-verified">VERIFIED</span>]</p>
-<h3 id="33-integration-method"><a class="anchor" href="#33-integration-method">#</a>3.3 Integration Method</h3>
+<p>TM2020 caps at 1,000 sub-steps, while TMNF allowed up to 10,000. TM2020 computes velocity magnitude from 4 separate vector components (linear + 3 angular from offsets 0x1348-0x135C). TMNF uses 2 terms (linear + angular). [<span class="badge badge-verified">VERIFIED</span>]</p>
+<h3 id="integration-method"><a class="anchor" href="#integration-method">#</a>Integration Method</h3>
 <p>Both use <strong>Forward Euler integration</strong> with sub-stepping for stability. [<span class="badge badge-verified">VERIFIED</span>]</p>
 <p><strong>TMNF (FUN_005645d0, 988 bytes):</strong></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>position += velocity * dt + applied_impulse * dt
@@ -544,8 +520,8 @@ quaternion += 0.5 * [0, omega] * q * dt</code></pre></div>
 vel.y += force.y * dt + gravity.y * mass * dt
 vel.z += force.z * dt + gravity.z * mass * dt
 angular_vel += torque * angular_mass * dt</code></pre></div>
-<p><strong>Shared pattern</strong>: Both apply gravity and fluid friction OUTSIDE the force callback, in the integrator/pre-step phase. The force callback only produces contact forces, engine forces, and friction. [<span class="badge badge-verified">VERIFIED</span> in both]</p>
-<h3 id="34-gravity-handling"><a class="anchor" href="#34-gravity-handling">#</a>3.4 Gravity Handling</h3>
+<p>Both apply gravity and fluid friction OUTSIDE the force callback, in the integrator/pre-step phase. The force callback only produces contact forces, engine forces, and friction. [<span class="badge badge-verified">VERIFIED</span> in both]</p>
+<h3 id="gravity-handling"><a class="anchor" href="#gravity-handling">#</a>Gravity Handling</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -577,16 +553,16 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Key insight from TMNF</strong>: The gravity constant (9.81 or similar) is almost certainly stored in a GBX resource file, not in the executable. Both TMNF and TM2020 failed to find 9.81 in their .rdata sections. The <code>GravityCoef</code> tuning parameter (3.0 in TMNF Stadium) acts as a multiplier on top of the base gravity, explaining why the game feels heavier than real physics. [<span class="badge badge-verified">VERIFIED</span> for TMNF, <span class="badge badge-plausible">PLAUSIBLE</span> for TM2020]</p>
-<h3 id="35-sleep-state-system"><a class="anchor" href="#35-sleep-state-system">#</a>3.5 Sleep State System</h3>
+<p>The gravity constant is stored in a GBX resource file, not in the executable. The <code>GravityCoef</code> tuning parameter (3.0 in TMNF Stadium) multiplies the base gravity, explaining why the game feels heavier than real physics. [<span class="badge badge-verified">VERIFIED</span> for TMNF, <span class="badge badge-plausible">PLAUSIBLE</span> for TM2020]</p>
+<h3 id="sleep-state-system"><a class="anchor" href="#sleep-state-system">#</a>Sleep State System</h3>
 <p>TM2020 has an explicit sleep state system in <code>NSceneDyna::ComputeGravityAndSleepStateAndNewVels</code>:</p>
 <ul>
   <li><code>DAT_141ebccfc</code> -- sleep detection enabled flag</li>
   <li><code>DAT_141ebcd00</code> -- sleep velocity damping factor</li>
   <li><code>DAT_141ebcd04</code> -- sleep velocity threshold (squared)</li>
 </ul>
-<p>TMNF: No explicit sleep state was documented in the diary. The TMNF integrator does not appear to have a similar sleep optimization. This may be a TM2020 addition for performance with many dynamic objects. [UNCERTAIN -- TMNF sleep may exist but was not investigated]</p>
-<h3 id="36-collision-system"><a class="anchor" href="#36-collision-system">#</a>3.6 Collision System</h3>
+<p>TMNF: No explicit sleep state was documented. This may be a TM2020 addition for performance with many dynamic objects. [UNCERTAIN -- TMNF sleep may exist but was not investigated]</p>
+<h3 id="collision-system"><a class="anchor" href="#collision-system">#</a>Collision System</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -628,18 +604,17 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Shared</strong>: Both systems perform per-wheel raycasts against terrain geometry to determine surface contact, normal vectors, and material type. The <code>NHmsCollision</code> prefix is preserved across both games. [<span class="badge badge-verified">VERIFIED</span>]</p>
-<h3 id="37-water-physics"><a class="anchor" href="#37-water-physics">#</a>3.7 Water Physics</h3>
+<p>Both perform per-wheel raycasts against terrain geometry. The <code>NHmsCollision</code> prefix is preserved. [<span class="badge badge-verified">VERIFIED</span>]</p>
+<h3 id="water-physics"><a class="anchor" href="#water-physics">#</a>Water Physics</h3>
 <p>Both games have water physics:</p>
 <ul>
   <li><strong>TMNF</strong>: Tuning parameters include WaterGravity=1.0, WaterReboundMinHSpeed=55.556 (200 km/h), WaterBumpMinSpeed=50.0, WaterAngularFriction=0.1, curves for bump slowdown/friction/rebound</li>
   <li><strong>TM2020</strong>: <code>NSceneDyna::ComputeWaterForces</code> at <code class="addr">0x1407f8290</code> (370 bytes) -- buoyancy and drag</li>
 </ul>
-<p>The TMNF implementation includes speed-dependent curves for water interaction that may inform understanding of TM2020's water forces. [<span class="badge badge-plausible">PLAUSIBLE</span>]</p>
 <hr>
-<h2 id="4-vehicle-state-structure-comparison"><a class="anchor" href="#4-vehicle-state-structure-comparison">#</a>4. Vehicle State Structure Comparison</h2>
-<p><strong>WARNING: Offsets do NOT transfer between 32-bit and 64-bit builds.</strong> Pointer fields that were 4 bytes in TMNF are 8 bytes in TM2020, causing cascading shifts throughout every struct.</p>
-<h3 id="41-cscenevehiclecar-tmnf-vs-vehicle-state-tm2020"><a class="anchor" href="#41-cscenevehiclecar-tmnf-vs-vehicle-state-tm2020">#</a>4.1 CSceneVehicleCar (TMNF) vs Vehicle State (TM2020)</h3>
+<h2 id="how-vehicle-state-structures-compare"><a class="anchor" href="#how-vehicle-state-structures-compare">#</a>How Vehicle State Structures Compare</h2>
+<p><strong>WARNING: Offsets do NOT transfer between 32-bit and 64-bit builds.</strong> Pointer fields that were 4 bytes in TMNF are 8 bytes in TM2020, causing cascading shifts.</p>
+<h3 id="cscenevehiclecar-tmnf-vs-vehicle-state-tm2020"><a class="anchor" href="#cscenevehiclecar-tmnf-vs-vehicle-state-tm2020">#</a>CSceneVehicleCar (TMNF) vs Vehicle State (TM2020)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -680,39 +655,11 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <td style="text-align:left">Not directly mapped</td>
 </tr>
 <tr>
-  <td style="text-align:left">Steer target</td>
-  <td style="text-align:left">+0x58</td>
-  <td style="text-align:left">float</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">[UNCERTAIN]</td>
-</tr>
-<tr>
-  <td style="text-align:left">Smoothed steer</td>
-  <td style="text-align:left">+0x5E8</td>
-  <td style="text-align:left">float</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">[UNCERTAIN]</td>
-</tr>
-<tr>
   <td style="text-align:left">State flags</td>
   <td style="text-align:left">+0x2E4 (byte)</td>
   <td style="text-align:left">byte</td>
   <td style="text-align:left">+0x128C (low nibble)</td>
   <td style="text-align:left">Both check <code>& 0xF</code> for state enum</td>
-</tr>
-<tr>
-  <td style="text-align:left">Turbo state</td>
-  <td style="text-align:left">+0x69C</td>
-  <td style="text-align:left">int</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">[UNCERTAIN]</td>
-</tr>
-<tr>
-  <td style="text-align:left">Turbo flag</td>
-  <td style="text-align:left">+0x6A0</td>
-  <td style="text-align:left">int</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">[UNCERTAIN]</td>
 </tr>
 <tr>
   <td style="text-align:left">Boost duration</td>
@@ -743,13 +690,6 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <td style="text-align:left">PhysicsStep_TM state copy</td>
 </tr>
 <tr>
-  <td style="text-align:left">Previous transform</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"></td>
-  <td style="text-align:left">+0x104 to +0x174 (112B)</td>
-  <td style="text-align:left">PhysicsStep_TM</td>
-</tr>
-<tr>
   <td style="text-align:left">Vehicle model ptr</td>
   <td style="text-align:left">[via tuning chain]</td>
   <td style="text-align:left">ptr (4B)</td>
@@ -763,31 +703,12 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <td style="text-align:left">model+0x1790</td>
   <td style="text-align:left">ComputeForces switch</td>
 </tr>
-<tr>
-  <td style="text-align:left">Contact/physics flags</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"></td>
-  <td style="text-align:left">+0x1C7C</td>
-  <td style="text-align:left">PhysicsStep_TM</td>
-</tr>
-<tr>
-  <td style="text-align:left">State enum</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"></td>
-  <td style="text-align:left">+0x1C90</td>
-  <td style="text-align:left">BeforeMgrDynaUpdate</td>
-</tr>
 </tbody>
 </table></div>
-<p><strong>Key structural differences:</strong></p>
-<ol>
-  <li>TMNF vehicle state struct: estimated ~2,100 bytes (highest accessed: 0x840)</li>
-  <li>TM2020 vehicle state struct: estimated ~7,328 bytes (highest accessed: 0x1CA0)</li>
-  <li>The 3.5x size increase reflects: 64-bit pointers, additional vehicle types, reactor/boost systems, expanded contact tracking</li>
-</ol>
-<h3 id="42-vehicle-status-nibble"><a class="anchor" href="#42-vehicle-status-nibble">#</a>4.2 Vehicle Status Nibble</h3>
+<p>TMNF vehicle state struct: ~2,100 bytes (highest accessed: 0x840). TM2020 vehicle state struct: ~7,328 bytes (highest accessed: 0x1CA0). The 3.5x size increase reflects 64-bit pointers, additional vehicle types, reactor/boost systems, and expanded contact tracking.</p>
+<h3 id="vehicle-status-nibble"><a class="anchor" href="#vehicle-status-nibble">#</a>Vehicle Status Nibble</h3>
 <p>Both games use a status nibble to control vehicle behavior:</p>
-<p><strong>TMNF</strong> (byte at CSceneVehicleCar+0x2E4, bits):</p>
+<p><strong>TMNF</strong> (byte at CSceneVehicleCar+0x2E4):</p>
 <ul>
   <li>Bit 0x02: has_contact</li>
   <li>Bit 0x08: special_mode</li>
@@ -799,8 +720,8 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <li>Value 2: Checked in PhysicsStep_TM (skips normal processing)</li>
   <li>Others: Normal force computation</li>
 </ul>
-<p>The pattern of a status nibble controlling force computation is preserved, though the specific bit/value meanings differ. [<span class="badge badge-verified">VERIFIED</span> structural pattern, UNCERTAIN value mapping]</p>
-<h3 id="43-wheel-structure"><a class="anchor" href="#43-wheel-structure">#</a>4.3 Wheel Structure</h3>
+<p>The pattern is preserved, though specific bit/value meanings differ. [<span class="badge badge-verified">VERIFIED</span> structural pattern, UNCERTAIN value mapping]</p>
+<h3 id="wheel-structure"><a class="anchor" href="#wheel-structure">#</a>Wheel Structure</h3>
 <p><strong>TMNF wheel struct</strong>: 764 bytes (0x2FC stride), accessed via <code>base + index * 0x2FC</code></p>
 <div class="table-wrapper"><table>
 <thead>
@@ -887,10 +808,10 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>New in TM2020</strong>: TireWear01 and Icing01 are not present in TMNF's wheel struct. These support the expanded surface gameplay (ice coverage, tire degradation). The naming convention has also changed from raw offsets to named properties exposed via telemetry/scripting. [<span class="badge badge-verified">VERIFIED</span>]</p>
+<p>TireWear01 and Icing01 are new in TM2020. These support expanded surface gameplay (ice coverage, tire degradation). [<span class="badge badge-verified">VERIFIED</span>]</p>
 <hr>
-<h2 id="5-tuning-system-comparison"><a class="anchor" href="#5-tuning-system-comparison">#</a>5. Tuning System Comparison</h2>
-<h3 id="51-class-id-evolution"><a class="anchor" href="#51-class-id-evolution">#</a>5.1 Class ID Evolution</h3>
+<h2 id="how-the-tuning-systems-compare"><a class="anchor" href="#how-the-tuning-systems-compare">#</a>How the Tuning Systems Compare</h2>
+<h3 id="class-id-evolution"><a class="anchor" href="#class-id-evolution">#</a>Class ID Evolution</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -921,8 +842,8 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p>TM2020's backward compatibility remap table (200+ entries at <code>FUN_1402f2610</code>) includes mappings from engine 0x0A (old Scene) to engine 0x09 (modern Plug), confirming the TMNF-era class IDs are still understood. [<span class="badge badge-verified">VERIFIED</span>]</p>
-<h3 id="52-esteermodel-force-model-selector"><a class="anchor" href="#52-esteermodel-force-model-selector">#</a>5.2 ESteerModel (Force Model Selector)</h3>
+<p>TM2020's backward compatibility remap table (200+ entries at <code>FUN_1402f2610</code>) includes mappings from engine 0x0A (old Scene) to engine 0x09 (modern Plug). [<span class="badge badge-verified">VERIFIED</span>]</p>
+<h3 id="esteermodel-force-model-selector"><a class="anchor" href="#esteermodel-force-model-selector">#</a>ESteerModel (Force Model Selector)</h3>
 <p><strong>TMNF</strong> (at tuning offset 0x354):</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1033,10 +954,9 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p><strong>TMNF insight</strong>: TMNF StadiumCar uses Steer06 (M6), the most complex model with burnout mechanics, RPM simulation, 6-gear ratios, and per-axle braking. The M6 model (10,660 bytes) is significantly larger than M5 (3,844 bytes). If TM2020's case 5 corresponds to the same Steer06 model, it would explain why <code>FUN_140851f00</code> takes an extra parameter compared to cases 0-2. [<span class="badge badge-plausible">PLAUSIBLE</span>]</p>
-<p><strong>New in TM2020</strong>: Cases 0-2 share the same function (FUN_140869cd0), suggesting three sub-variants handled by the same code. Case 6 and case 0xB are entirely new -- potentially for Rally/Snow/Desert vehicles or new TM2020-specific modes. [UNCERTAIN]</p>
-<h3 id="53-tuning-value-comparison-where-known"><a class="anchor" href="#53-tuning-value-comparison-where-known">#</a>5.3 Tuning Value Comparison (Where Known)</h3>
-<p>The following TMNF StadiumCar values are extracted from <code>Stadium.pak</code>. TM2020 values are NOT known (stored in GBX resources, not extracted), but the parameter names persist:</p>
+<p>TMNF StadiumCar uses Steer06 (M6), the most complex model with burnout mechanics, RPM simulation, 6-gear ratios, and per-axle braking. If TM2020's case 5 corresponds to the same Steer06 model, <code>FUN_140851f00</code> should contain similar logic. Cases 0-2 share the same function, suggesting three sub-variants. Case 6 and case 0xB are entirely new. [<span class="badge badge-plausible">PLAUSIBLE</span>]</p>
+<h3 id="tuning-value-comparison-where-known"><a class="anchor" href="#tuning-value-comparison-where-known">#</a>Tuning Value Comparison (Where Known)</h3>
+<p>TMNF StadiumCar values from <code>Stadium.pak</code>. TM2020 values are stored in GBX resources, not extracted.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1072,12 +992,6 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <td style="text-align:left">[UNCERTAIN]</td>
 </tr>
 <tr>
-  <td style="text-align:left">BrakeBase</td>
-  <td style="text-align:left">1.0</td>
-  <td style="text-align:left">[inside force model]</td>
-  <td style="text-align:left">[UNCERTAIN]</td>
-</tr>
-<tr>
   <td style="text-align:left">Spring.FreqHz</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left"><code>"Spring.FreqHz"</code> at <code class="addr">0x141bb3ec0</code></td>
@@ -1089,21 +1003,9 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <td style="text-align:left"><code>"Spring.DampingRatio"</code> at <code class="addr">0x141bb3ed0</code></td>
   <td style="text-align:left">Different from TMNF AbsorbingValKi/Ka</td>
 </tr>
-<tr>
-  <td style="text-align:left">Tunings.CoefFriction</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>"Tunings.CoefFriction"</code> at <code class="addr">0x141cb72c8</code></td>
-  <td style="text-align:left">NEW -- global friction coefficient</td>
-</tr>
-<tr>
-  <td style="text-align:left">Tunings.CoefAcceleration</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>"Tunings.CoefAcceleration"</code> at <code class="addr">0x141cb72a8</code></td>
-  <td style="text-align:left">NEW -- global accel coefficient</td>
-</tr>
 </tbody>
 </table></div>
-<h3 id="54-suspension-model-evolution"><a class="anchor" href="#54-suspension-model-evolution">#</a>5.4 Suspension Model Evolution</h3>
+<h3 id="suspension-model-evolution"><a class="anchor" href="#suspension-model-evolution">#</a>Suspension Model Evolution</h3>
 <p><strong>TMNF</strong> (EShockModel, 3 models):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Demo01: F = Ki * RelSpeedMultCoef * (rest - compression)  [spring only]
 Demo02: F = Ki * RelSpeedMultCoef * (rest - compression) - Ka * velocity  [spring + damper]
@@ -1116,34 +1018,11 @@ Spring.Length -- rest length
 DamperCompression -- compression damping coefficient
 DamperRestStateValue -- rest state value
 CollisionDamper / CollisionBounce -- collision-specific parameters</code></pre></div>
-<p><strong>Evolution</strong>: TM2020 uses standard engineering notation (frequency + damping ratio) instead of TMNF's game-specific parameter names (AbsorbingValKi/Ka). The underlying spring-damper model is the same physics, but the parameterization has been professionalized. The mathematical equivalence is: <code>FreqHz = sqrt(Ki / mass) / (2<em>pi)</code>, <code>DampingRatio = Ka / (2 </em> sqrt(Ki * mass))</code>. [<span class="badge badge-verified">VERIFIED</span> structural similarity, <span class="badge badge-plausible">PLAUSIBLE</span> equivalence]</p>
+<p>TM2020 uses standard engineering notation instead of TMNF's game-specific names. The underlying spring-damper model is the same physics: <code>FreqHz = sqrt(Ki / mass) / (2<em>pi)</code>, <code>DampingRatio = Ka / (2 </em> sqrt(Ki * mass))</code>. [<span class="badge badge-verified">VERIFIED</span> structural similarity, <span class="badge badge-plausible">PLAUSIBLE</span> equivalence]</p>
 <hr>
-<h2 id="6-force-model-comparison"><a class="anchor" href="#6-force-model-comparison">#</a>6. Force Model Comparison</h2>
-<h3 id="61-m6-force-model-tmnf-vs-computeforces-tm2020"><a class="anchor" href="#61-m6-force-model-tmnf-vs-computeforces-tm2020">#</a>6.1 M6 Force Model (TMNF) vs ComputeForces (TM2020)</h3>
-<p>The TMNF M6 model (FUN_0084fd30, 10,660 bytes) is fully decompiled and annotated. The TM2020 ComputeForces (FUN_1408427d0, 1,713 bytes) is a thin dispatcher. Comparing their structures:</p>
-<p><strong>TMNF M6 phases:</strong></p>
-<ol>
-  <li>Phase 0: Init (rotation matrix copy, surface detection, type-6 check)</li>
-  <li>Phase 1: Burnout state machine (4 states: normal/burnout/donut/after-burnout)</li>
-  <li>Phase 2: Per-wheel lateral friction (static/dynamic with linear blending)</li>
-  <li>Phase 3: Drive force (accel curves, braking, speed limiting)</li>
-  <li>Phase 4: Slip flag storage</li>
-  <li>Phase 5: Donut mode continuation</li>
-  <li>Phase 6: Epilogue (velocity history)</li>
-</ol>
-<p><strong>TM2020 ComputeForces phases:</strong></p>
-<ol>
-  <li>Profiling tag begin</li>
-  <li>Resolve vehicle model pointer (via 0x110, then 0x1BB0)</li>
-  <li>Status check (nibble & 0xF == 1 -> zero forces)</li>
-  <li>Turbo/boost time-limited force (offsets 0x16E0/E4/E8)</li>
-  <li>Speed clamping (model+0x2F0)</li>
-  <li>Pre-force setup (FUN_140841ca0)</li>
-  <li>Force vector selection (model+0x1790 < 6 vs >= 6)</li>
-  <li>Pre-model setup (FUN_140841f40)</li>
-  <li>Model dispatch (switch on model+0x1790)</li>
-  <li>State copy (transform matrix 0x90-0x100 -> 0x104-0x174)</li>
-</ol>
+<h2 id="how-the-force-models-compare"><a class="anchor" href="#how-the-force-models-compare">#</a>How the Force Models Compare</h2>
+<h3 id="m6-force-model-tmnf-vs-computeforces-tm2020"><a class="anchor" href="#m6-force-model-tmnf-vs-computeforces-tm2020">#</a>M6 Force Model (TMNF) vs ComputeForces (TM2020)</h3>
+<p>The TMNF M6 model (FUN_0084fd30, 10,660 bytes) is fully decompiled. The TM2020 ComputeForces (FUN_1408427d0, 1,713 bytes) is a thin dispatcher.</p>
 <p><strong>Shared patterns</strong> [<span class="badge badge-verified">VERIFIED</span>]:</p>
 <ul>
   <li>Both zero forces when vehicle is in reset/inactive state</li>
@@ -1152,8 +1031,11 @@ CollisionDamper / CollisionBounce -- collision-specific parameters</code></pre><
   <li>Both copy transform matrix state at the end</li>
   <li>Both dispatch to model-specific force functions via a switch</li>
 </ul>
-<p><strong>Key difference</strong>: The turbo system in TM2020 is simpler at the dispatcher level (3 fields: duration, strength, start_time at +0x16E0-0x16E8), while TMNF's turbo is a 4-state machine embedded in the M6 force model with burnout, donut, and after-burnout sub-states. This suggests TM2020 may have moved the complex state machine into the per-model functions. [<span class="badge badge-plausible">PLAUSIBLE</span>]</p>
-<h3 id="62-friction-model"><a class="anchor" href="#62-friction-model">#</a>6.2 Friction Model</h3>
+<p>The turbo system in TM2020 is simpler at the dispatcher level (3 fields: duration, strength, start_time at +0x16E0-0x16E8). TMNF's turbo is a 4-state machine embedded in M6 with burnout, donut, and after-burnout sub-states. [<span class="badge badge-plausible">PLAUSIBLE</span>]</p>
+<h3 id="turboboost-system-evolution"><a class="anchor" href="#turboboost-system-evolution">#</a>Turbo/Boost System Evolution</h3>
+<p><strong>CRITICAL DIFFERENCE</strong>: The TM2020 boost force formula <code>(elapsed/duration) * strength</code> means the force <strong>ramps UP linearly</strong> from 0 to maximum, the OPPOSITE of TMNF which decays from maximum to 0. Confirmed by decompiled code at <code>NSceneVehiclePhy__ComputeForces.c</code> lines 105-106. [<span class="badge badge-verified">VERIFIED</span>]</p>
+<p>TM2020 adds ReactorBoost (Legacy and Oriented variants), TurboRoulette (randomized boost), and ManiaScript triggers <code>Vehicle_TriggerTurbo</code> and <code>Vehicle_TriggerTurboBrake</code>.</p>
+<h3 id="friction-model"><a class="anchor" href="#friction-model">#</a>Friction Model</h3>
 <p><strong>TMNF M6 friction</strong> (Phase 2, per wheel):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>raw_force = -SideFriction1 * 0.5 * lateral_vel * friction_mod
 friction_cap = surface.friction * slope_lateral * MaxSideFriction(speed) * compression * sliding_coef
@@ -1163,70 +1045,16 @@ if |raw_force| &lt;= friction_cap:
 else:
     wheel.sliding = 1  (dynamic friction)
     force = lerp(friction_cap, raw_force, MaxSideFrictionBlendCoef)  // 0.018 = very slow blend</code></pre></div>
-<p><strong>TM2020 friction</strong> (from doc 04-physics-vehicle.md):</p>
+<p><strong>TM2020 friction</strong>:</p>
 <ul>
   <li>Separate <code>FrictionDynaIterCount</code> and <code>FrictionStaticIterCount</code> (at <code class="addr">0x141bed9e8</code>/0x141beda38)</li>
   <li><code>Tunings.CoefFriction</code> at struct offset 0x58</li>
-  <li>Iterative Gauss-Seidel-style contact solver (inferred from separate iteration counts)</li>
+  <li>Iterative Gauss-Seidel-style contact solver</li>
 </ul>
-<p><strong>Evolution</strong>: TMNF uses a per-wheel analytical friction model with linear blending (not Coulomb snap). TM2020 adds an iterative friction solver with configurable iteration counts for static and dynamic friction separately. This suggests TM2020 has moved toward a more physically accurate constraint-based solver, while TMNF used a simpler force-based approach. [<span class="badge badge-plausible">PLAUSIBLE</span> -- TM2020 solver not fully decompiled]</p>
-<h3 id="63-speed-dependent-curves"><a class="anchor" href="#63-speed-dependent-curves">#</a>6.3 Speed-Dependent Curves</h3>
-<p>TMNF uses <code>CFuncKeysReal</code> curves with piecewise linear interpolation for all speed-dependent parameters. Input scaling is universally <code>* 3.6</code> (m/s to km/h conversion via double at DAT_00c8bb20). Twelve curve wrappers are identified.</p>
-<p>TM2020 likely uses the same <code>CFuncKeysReal</code> system -- the class name appears in TMNF RTTI and the GBX chunk format supports serialized curve objects. The string <code>"CFuncKeysReal"</code> is expected in TM2020's string table (not explicitly confirmed in RE docs but implied by GBX compatibility). [<span class="badge badge-plausible">PLAUSIBLE</span>]</p>
-<p><strong>TMNF curve data that may inform TM2020 analysis:</strong></p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Curve</th>
-  <th style="text-align:left">TMNF Shape</th>
-  <th style="text-align:left">Expected in TM2020?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">AccelCurve</td>
-  <td style="text-align:left">Peak 16 at 0 km/h, drops to 1 at 800 km/h</td>
-  <td style="text-align:left">Yes, likely similar shape for Stadium</td>
-</tr>
-<tr>
-  <td style="text-align:left">MaxSideFriction</td>
-  <td style="text-align:left">80 at 0-100 km/h, drops to 55 at 500 km/h</td>
-  <td style="text-align:left">Yes, grip vs speed is fundamental</td>
-</tr>
-<tr>
-  <td style="text-align:left">SteerDriveTorque</td>
-  <td style="text-align:left">Peak 16 at 0, plateaus 3.75 above 500 km/h</td>
-  <td style="text-align:left">Yes</td>
-</tr>
-<tr>
-  <td style="text-align:left">ModulationFromWheelCompression</td>
-  <td style="text-align:left">10% at 0 compression, 100% at 97.5%</td>
-  <td style="text-align:left">Critical for grip feel</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="64-turboboost-system-evolution"><a class="anchor" href="#64-turboboost-system-evolution">#</a>6.4 Turbo/Boost System Evolution</h3>
-<p><strong>TMNF turbo</strong> (embedded in M6 model):</p>
-<ul>
-  <li>TurboBoost = 5.0, TurboDuration = 250 ms</li>
-  <li>Turbo2Boost = 20.0, Turbo2Duration = 100 ms</li>
-  <li>Applied via event triggers (events 7, 0x1A, 0x1E)</li>
-  <li>Decay: linear over duration (force starts high and decreases to 0)</li>
-</ul>
-<p><strong>TM2020 turbo</strong> (ComputeForces dispatcher):</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Offset +0x16E0: duration, +0x16E4: strength, +0x16E8: start_time
-boost_force = ((current_tick - start_time) / duration) * strength * model_scale</code></pre></div>
-<ul>
-  <li>Two turbo levels: Turbo and Turbo2</li>
-  <li>ReactorBoost (Legacy and Oriented variants)</li>
-  <li>TurboRoulette (randomized boost)</li>
-  <li>Vehicle_TriggerTurbo and Vehicle_TriggerTurboBrake via ManiaScript</li>
-</ul>
-<p><strong>CRITICAL DIFFERENCE</strong>: The TM2020 boost force formula <code>(elapsed/duration) * strength</code> means the force <strong>ramps UP linearly</strong> from 0 to maximum, the OPPOSITE of TMNF which decays from maximum to 0. This is confirmed by the decompiled code at <code>NSceneVehiclePhy__ComputeForces.c</code> lines 105-106. This means in TM2020, the car accelerates MORE as the boost is about to expire. This is a fundamental behavioral change for recreation. [<span class="badge badge-verified">VERIFIED</span> from decompiled code]</p>
-<p><strong>Evolution</strong>: TM2020 has significantly expanded the boost system beyond TMNF's simple two-level turbo. The oriented reactor boost and turbo roulette are entirely new. The boost force direction is REVERSED from TMNF (ramp-up vs decay). [<span class="badge badge-verified">VERIFIED</span>]</p>
+<p>TMNF uses a per-wheel analytical friction model with linear blending. TM2020 adds an iterative friction solver with separate iteration counts for static and dynamic friction. [<span class="badge badge-plausible">PLAUSIBLE</span> -- TM2020 solver not fully decompiled]</p>
 <hr>
-<h2 id="7-file-format-evolution"><a class="anchor" href="#7-file-format-evolution">#</a>7. File Format Evolution</h2>
-<h3 id="71-gbx-header"><a class="anchor" href="#71-gbx-header">#</a>7.1 GBX Header</h3>
+<h2 id="how-gbx-file-formats-evolved"><a class="anchor" href="#how-gbx-file-formats-evolved">#</a>How GBX File Formats Evolved</h2>
+<h3 id="gbx-header"><a class="anchor" href="#gbx-header">#</a>GBX Header</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1281,17 +1109,8 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 </tr>
 </tbody>
 </table></div>
-<h3 id="72-version-6-format-tm2020-only"><a class="anchor" href="#72-version-6-format-tm2020-only">#</a>7.2 Version 6 Format (TM2020 Only)</h3>
-<p>Version 6 adds a 4-byte format descriptor after the version:</p>
-<ul>
-  <li>Byte 0: B=Binary, T=Text</li>
-  <li>Byte 1: C=Compressed body, U=Uncompressed</li>
-  <li>Byte 2: C=Compressed stream, U=Uncompressed</li>
-  <li>Byte 3: R=With references, E=No external refs</li>
-</ul>
-<p>This provides self-describing compression and format metadata that TMNF versions 3-5 lack. [<span class="badge badge-verified">VERIFIED</span>]</p>
-<h3 id="73-class-id-remapping"><a class="anchor" href="#73-class-id-remapping">#</a>7.3 Class ID Remapping</h3>
-<p>TM2020 maintains backward compatibility with TMNF-era class IDs via ~200 remappings in <code>FUN_1402f2610</code>:</p>
+<h3 id="class-id-remapping"><a class="anchor" href="#class-id-remapping">#</a>Class ID Remapping</h3>
+<p>TM2020 maintains backward compatibility via ~200 remappings in <code>FUN_1402f2610</code>:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1323,22 +1142,8 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 </tr>
 </tbody>
 </table></div>
-<p>The bulk of remappings convert:</p>
-<ul>
-  <li>Engine 0x24 (old Game) -> 0x03 (modern Game)</li>
-  <li>Engines 0x08/0x0A (old Graphic/Scene) -> 0x09 (modern Plug)</li>
-</ul>
-<p><strong>TMNF class ID 0x0A029 (CSceneVehicleCarTuning) -> 0x090ED (CPlugVehicleCarPhyTuning)</strong> is confirmed by community tools (gbx-net Unwrap.txt). [<span class="badge badge-verified">VERIFIED</span>]</p>
-<h3 id="74-chunk-format"><a class="anchor" href="#74-chunk-format">#</a>7.4 Chunk Format</h3>
-<p>Both games use the same chunk-based serialization within GBX bodies:</p>
-<ul>
-  <li>Chunks identified by <code>(class_id_prefix << 12) | chunk_number</code></li>
-  <li>TMNF: 106 chunks for CSceneVehicleCarTuning (<code class="addr">0x0A029000</code> - <code class="addr">0x0A029069</code>)</li>
-  <li>TM2020: Same chunk range supported via class ID remapping</li>
-  <li>Both use <code>CClassicArchive</code> for read/write operations</li>
-</ul>
-<p><strong>TMNF insight</strong>: The complete chunk-to-field-name mapping (35+ chunks, 80+ parameters) recovered from TMNF can be applied to understanding TM2020's vehicle tuning serialization. The chunk IDs are stable across versions. [<span class="badge badge-verified">VERIFIED</span>]</p>
-<h3 id="75-file-type-expansion"><a class="anchor" href="#75-file-type-expansion">#</a>7.5 File Type Expansion</h3>
+<p>TMNF class ID 0x0A029 (CSceneVehicleCarTuning) -> 0x090ED (CPlugVehicleCarPhyTuning) is confirmed by community tools. [<span class="badge badge-verified">VERIFIED</span>]</p>
+<h3 id="file-type-expansion"><a class="anchor" href="#file-type-expansion">#</a>File Type Expansion</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1382,7 +1187,7 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 </tbody>
 </table></div>
 <hr>
-<h2 id="8-rendering-pipeline-evolution"><a class="anchor" href="#8-rendering-pipeline-evolution">#</a>8. Rendering Pipeline Evolution</h2>
+<h2 id="how-the-rendering-pipelines-diverged"><a class="anchor" href="#how-the-rendering-pipelines-diverged">#</a>How the Rendering Pipelines Diverged</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1403,29 +1208,14 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
   <td style="text-align:left">Deferred shading with G-buffer + forward for transparents</td>
 </tr>
 <tr>
-  <td style="text-align:left">Technology gen</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>, pre-"Tech3"]</span></td>
-  <td style="text-align:left">"Tech3" (3rd-gen rendering)</td>
-</tr>
-<tr>
   <td style="text-align:left">Ambient occlusion</td>
   <td style="text-align:left">None / basic</td>
   <td style="text-align:left">NVIDIA HBAO+ (20-field config)</td>
 </tr>
 <tr>
-  <td style="text-align:left">Bloom</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">HDR Bloom (3 quality levels)</td>
-</tr>
-<tr>
   <td style="text-align:left">Shadows</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">PSSM (4 cascades) + shadow volumes + shadow cache + clip-map</td>
-</tr>
-<tr>
-  <td style="text-align:left">Tone mapping</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">Filmic with auto-exposure</td>
 </tr>
 <tr>
   <td style="text-align:left">Particles</td>
@@ -1438,25 +1228,15 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
   <td style="text-align:left">Volumetric (ray marching)</td>
 </tr>
 <tr>
-  <td style="text-align:left">Reflections</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">SSR (temporal)</td>
-</tr>
-<tr>
   <td style="text-align:left">Materials</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">PBR (GGX BRDF)</td>
 </tr>
-<tr>
-  <td style="text-align:left">Shaders</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">200+ HLSL files in Tech3/, Effects/, Engines/, Lightmap/</td>
-</tr>
 </tbody>
 </table></div>
-<p>The rendering pipeline is the area of greatest divergence. The move from D3D9 forward rendering to D3D11 deferred shading represents a fundamental architectural change. TMNF rendering analysis would provide minimal insight into TM2020's pipeline. [<span class="badge badge-verified">VERIFIED</span> divergence]</p>
+<p>The rendering pipeline is the area of greatest divergence. TMNF analysis provides minimal insight into TM2020's pipeline. [<span class="badge badge-verified">VERIFIED</span> divergence]</p>
 <hr>
-<h2 id="9-network-protocol-evolution"><a class="anchor" href="#9-network-protocol-evolution">#</a>9. Network Protocol Evolution</h2>
+<h2 id="how-the-network-protocols-evolved"><a class="anchor" href="#how-the-network-protocols-evolved">#</a>How the Network Protocols Evolved</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1480,11 +1260,6 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
   <td style="text-align:left">API protocol</td>
   <td style="text-align:left">XML-RPC</td>
   <td style="text-align:left">REST (JSON) + XML-RPC (legacy, still present)</td>
-</tr>
-<tr>
-  <td style="text-align:left">API domain</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>core.trackmania.nadeo.live</code>, <code>.nadeo.club</code></td>
 </tr>
 <tr>
   <td style="text-align:left">DRM</td>
@@ -1513,10 +1288,10 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 </tr>
 </tbody>
 </table></div>
-<p><strong>Shared</strong>: The XML-RPC server protocol from TMNF dedicated servers is still present in TM2020, providing backward compatibility for server controller tools. [<span class="badge badge-verified">VERIFIED</span> -- string "XML-RPC" present in both]</p>
+<p>The XML-RPC server protocol from TMNF dedicated servers is still present in TM2020. [<span class="badge badge-verified">VERIFIED</span>]</p>
 <hr>
-<h2 id="10-pattern-transfer-table"><a class="anchor" href="#10-pattern-transfer-table">#</a>10. Pattern Transfer Table</h2>
-<h3 id="101-direct-transfers-high-confidence"><a class="anchor" href="#101-direct-transfers-high-confidence">#</a>10.1 Direct Transfers (High Confidence)</h3>
+<h2 id="what-transfers-between-games"><a class="anchor" href="#what-transfers-between-games">#</a>What Transfers Between Games</h2>
+<h3 id="direct-transfers-high-confidence"><a class="anchor" href="#direct-transfers-high-confidence">#</a>Direct Transfers (High Confidence)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1613,13 +1388,6 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
-  <td style="text-align:left">Piecewise linear curve eval</td>
-  <td style="text-align:left">FUN_005ca5f0 (CFuncKeysReal)</td>
-  <td style="text-align:left">CFuncKeysReal (implied)</td>
-  <td style="text-align:left">Same class in GBX format</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
   <td style="text-align:left">Gravity from GBX, not hardcoded</td>
   <td style="text-align:left">Not in .rdata</td>
   <td style="text-align:left">Not in .rdata</td>
@@ -1635,7 +1403,7 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 </tr>
 </tbody>
 </table></div>
-<h3 id="102-structural-transfers-medium-confidence"><a class="anchor" href="#102-structural-transfers-medium-confidence">#</a>10.2 Structural Transfers (Medium Confidence)</h3>
+<h3 id="structural-transfers-medium-confidence"><a class="anchor" href="#structural-transfers-medium-confidence">#</a>Structural Transfers (Medium Confidence)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1683,18 +1451,6 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
   <td style="text-align:left">UNCERTAIN</td>
 </tr>
 <tr>
-  <td style="text-align:left">m/s -> km/h curve input scaling (3.6)</td>
-  <td style="text-align:left">DAT_00c8bb20 (double 3.6)</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">Slope adherence system</td>
-  <td style="text-align:left">FUN_0084a4d0, sin(t*pi/2) smoothing</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">UNCERTAIN</td>
-</tr>
-<tr>
   <td style="text-align:left">Surface material struct (friction at +0x20)</td>
   <td style="text-align:left">Wheel offset 0x128 -> material</td>
   <td style="text-align:left">EPlugSurfaceMaterialId / GameplayId</td>
@@ -1702,14 +1458,14 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 </tr>
 </tbody>
 </table></div>
-<h3 id="103-non-transferable-do-not-assume-these-match"><a class="anchor" href="#103-non-transferable-do-not-assume-these-match">#</a>10.3 Non-Transferable (Do NOT assume these match)</h3>
+<h3 id="non-transferable-do-not-assume-these-match"><a class="anchor" href="#non-transferable-do-not-assume-these-match">#</a>Non-Transferable (Do NOT assume these match)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Aspect</th>
   <th style="text-align:left">TMNF</th>
   <th style="text-align:left">TM2020</th>
-  <th style="text-align:left">Why It Doesn't Transfer</th>
+  <th style="text-align:left">Why It Does Not Transfer</th>
 </tr>
 </thead>
 <tbody>
@@ -1732,22 +1488,10 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
   <td style="text-align:left">Completely different address space</td>
 </tr>
 <tr>
-  <td style="text-align:left">Constant addresses (e.g., DAT_00da3988=0.5)</td>
-  <td style="text-align:left"><code class="addr">0x00da3988</code></td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">Different binary layout</td>
-</tr>
-<tr>
   <td style="text-align:left">Thread-local storage offsets</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">+0x1b8 (profiling), +0x1190 (class cache)</td>
   <td style="text-align:left">Different TLS layouts</td>
-</tr>
-<tr>
-  <td style="text-align:left">Engine initialization order</td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left">CGbxApp::Init1 (80KB), Init2</td>
-  <td style="text-align:left">Expanded significantly</td>
 </tr>
 <tr>
   <td style="text-align:left">Render-related offsets</td>
@@ -1758,108 +1502,43 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 </tbody>
 </table></div>
 <hr>
-<h2 id="11-lessons-for-recreation"><a class="anchor" href="#11-lessons-for-recreation">#</a>11. Lessons for Recreation</h2>
-<h3 id="111-what-tmnf-tells-us-about-tm2020-that-we-cannot-determine-from-tm2020-alone"><a class="anchor" href="#111-what-tmnf-tells-us-about-tm2020-that-we-cannot-determine-from-tm2020-alone">#</a>11.1 What TMNF Tells Us About TM2020 That We Cannot Determine From TM2020 Alone</h3>
+<h2 id="what-tmnf-reveals-about-tm2020"><a class="anchor" href="#what-tmnf-reveals-about-tm2020">#</a>What TMNF Reveals About TM2020</h2>
+<p>These insights from TMNF fill gaps in TM2020 knowledge that cannot be determined from TM2020 alone.</p>
 <ol>
-  <li><strong>The physics model selector is an enum called ESteerModel</strong> with values Steer01 through Steer06+. In TM2020, we only see integer values 0-6 and 0xB in the switch. TMNF's gbx-net <code>.chunkl</code> data maps these to named enum variants, suggesting TM2020's case 5 is likely Steer06 (M6). [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
+  <li><strong>The physics model selector is an enum called ESteerModel</strong> with values Steer01 through Steer06+. In TM2020, you only see integer values 0-6 and 0xB in the switch. TMNF's gbx-net data maps these to named enum variants. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
 </ol>
 <ol>
-  <li><strong>The M6/Steer06 force model has a burnout state machine</strong> with 4 states (normal, burnout, donut, after-burnout). If TM2020's Stadium car still uses M6, its force model function (FUN_140851f00) should contain the same state machine. This provides a decompilation target. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
+  <li><strong>The M6/Steer06 force model has a burnout state machine</strong> with 4 states (normal, burnout, donut, after-burnout). If TM2020's Stadium car still uses M6, <code>FUN_140851f00</code> should contain the same state machine. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
 </ol>
 <ol>
-  <li><strong>Gravity is NOT 9.81 m/s^2</strong> -- it is 9.81 * GravityCoef, where GravityCoef = 3.0 for TMNF ground and 2.5 for air. The effective gravity is ~29.4 m/s^2 on ground, ~24.5 in air. This explains the "heavy" feel of Trackmania physics. TM2020 almost certainly uses similar GravityCoef values since the game feel is preserved. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
+  <li><strong>Gravity is NOT 9.81 m/s^2</strong>. Effective gravity is 9.81 * GravityCoef. TMNF uses GravityCoef = 3.0 for ground, 2.5 for air. Effective gravity is ~29.4 m/s^2 on ground, ~24.5 in air. TM2020 almost certainly uses similar values. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
 </ol>
 <ol>
-  <li><strong>Speed-dependent curves use m/s internally but km/h for keyframes</strong>, with a universal 3.6x scaling factor. All 12 TMNF curve wrappers multiply by <code>double 3.6</code> before evaluation. TM2020 likely uses the same convention. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
+  <li><strong>Speed-dependent curves use m/s internally but km/h for keyframes</strong>, with a universal 3.6x scaling factor. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
 </ol>
 <ol>
-  <li><strong>The friction model is NOT Coulomb friction</strong> -- it uses continuous linear blending between static and dynamic friction with a very small blend coefficient (0.018 in TMNF). This prevents the snap behavior of pure Coulomb friction and creates a smooth sliding transition. TM2020's separate FrictionDynaIterCount/FrictionStaticIterCount suggests a more sophisticated solver, but the underlying blending principle may persist. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
+  <li><strong>The friction model is NOT Coulomb friction</strong>. It uses continuous linear blending between static and dynamic friction with a small blend coefficient (0.018 in TMNF). [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
 </ol>
 <ol>
-  <li><strong>ModulationFromWheelCompression is critical for grip feel</strong> -- forces are scaled by suspension compression, with only 10% grip at zero compression. This means a wheel barely touching the ground has almost no grip. This is almost certainly present in TM2020 but has not been identified. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
+  <li><strong>ModulationFromWheelCompression is critical for grip feel</strong>. Forces scale by suspension compression: only 10% grip at zero compression. [<span class="badge badge-plausible">PLAUSIBLE</span>]</li>
 </ol>
 <ol>
-  <li><strong>The quaternion derivative constant 0.5</strong> is the standard mathematical formula <code>dq/dt = 0.5 <em> omega </em> q</code>, NOT a physics toggle or gravity constant. Initial TMNF analysis misidentified this as a physics feature disable (because Ghidra typed the 8-byte double as a 4-byte float showing 0.0). TM2020 analysis should be aware of the same Ghidra typing trap. [<span class="badge badge-verified">VERIFIED</span> lesson]</li>
+  <li><strong>The quaternion derivative constant 0.5</strong> is the standard formula <code>dq/dt = 0.5 <em> omega </em> q</code>, NOT a physics toggle. Initial TMNF analysis misidentified this because Ghidra typed the 8-byte double as a 4-byte float showing 0.0. [<span class="badge badge-verified">VERIFIED</span> lesson]</li>
 </ol>
 <ol>
-  <li><strong>Double-precision constants masquerade as 0.0 in Ghidra</strong> when typed as 4-byte floats. The critical constants <code>0.5 (0x3FE0000000000000)</code>, <code>1.0 (0x3FF0000000000000)</code>, <code>-1.0 (0xBFF0000000000000)</code> all have <code class="addr">0x00000000</code> in their first 4 bytes. Any Ghidra <code>_DAT_*</code> constant showing 0.0 that is referenced by x87/SSE QWORD load instructions should be re-examined as a double. [<span class="badge badge-verified">VERIFIED</span> lesson]</li>
+  <li><strong>Double-precision constants masquerade as 0.0 in Ghidra</strong> when typed as 4-byte floats. The critical constants <code>0.5</code>, <code>1.0</code>, <code>-1.0</code> all have <code class="addr">0x00000000</code> in their first 4 bytes. [<span class="badge badge-verified">VERIFIED</span> lesson]</li>
 </ol>
-<h3 id="112-gaps-tmnf-can-fill-in-tm2020-knowledge"><a class="anchor" href="#112-gaps-tmnf-can-fill-in-tm2020-knowledge">#</a>11.2 Gaps TMNF Can Fill in TM2020 Knowledge</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">TM2020 Open Question</th>
-  <th style="text-align:left">TMNF Answer</th>
-  <th style="text-align:left">Applicability</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">What are the 7 force model cases?</td>
-  <td style="text-align:left">Cases 0-2=simple, 3=Steer04, 4=Steer05, 5=Steer06, 6+0xB=new</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span> for 0-5</td>
-</tr>
-<tr>
-  <td style="text-align:left">Where is gravity 9.81?</td>
-  <td style="text-align:left">In GBX resource files, multiplied by GravityCoef</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">Full tire model details?</td>
-  <td style="text-align:left">Per-wheel lateral friction with blending, compression modulation</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">How does deterministic physics work?</td>
-  <td style="text-align:left">Fixed tick (100 Hz) + identical sub-step count from same velocity = same result</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">Turbo system internals?</td>
-  <td style="text-align:left">Event-triggered, time-limited with linear decay, 4-state machine in M6</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">Suspension model?</td>
-  <td style="text-align:left">Spring-damper: F = Ki<em>(rest-x) - Ka</em>v, applied at wheel position</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">Surface material struct layout?</td>
-  <td style="text-align:left">+0x14=speed_mod, +0x18=accel_mod, +0x1C=brake_mod, +0x20=friction_coeff</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-</tr>
-<tr>
-  <td style="text-align:left">What is NSceneDyna stride 0x38/0xE0?</td>
-  <td style="text-align:left">TMNF physics state = 47 floats (188 bytes) per rigid body</td>
-  <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span> (TM2020 body=56 bytes min, 224 with extended state)</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="113-what-tmnf-cannot-tell-us-about-tm2020"><a class="anchor" href="#113-what-tmnf-cannot-tell-us-about-tm2020">#</a>11.3 What TMNF CANNOT Tell Us About TM2020</h3>
+<h3 id="what-tmnf-cannot-reveal-about-tm2020"><a class="anchor" href="#what-tmnf-cannot-reveal-about-tm2020">#</a>What TMNF Cannot Reveal About TM2020</h3>
 <ol>
-  <li><strong>Multi-vehicle physics</strong>: TMNF has only StadiumCar. TM2020's Rally, Snow, and Desert vehicles likely use different force models (cases 3, 4, 6, or 0xB). Their tuning parameters are unknown.</li>
-</ol>
-<ol>
-  <li><strong>ReactorBoost oriented variants</strong>: TMNF has basic reactor (barrel roll), but TM2020 adds <code>ReactorBoost_Oriented</code> and <code>ReactorBoost2_Oriented</code> which are directional. These are new mechanics.</li>
-</ol>
-<ol>
-  <li><strong>ManiaScript integration</strong>: TMNF has no scripting engine. TM2020 exposes physics modifiers via ManiaScript (<code>SetPlayer_Delayed_*</code>), adding a runtime tuning layer that TMNF lacks entirely.</li>
-</ol>
-<ol>
-  <li><strong>Render-physics coupling</strong>: TM2020's visual state extraction (<code>NSceneVehicleVis::*</code>) is more complex than TMNF's due to deferred rendering, LOD systems, and separate visual/physics update frequencies.</li>
-</ol>
-<ol>
-  <li><strong>TurboRoulette randomization</strong>: The randomized boost system is entirely new and has no TMNF precedent.</li>
-</ol>
-<ol>
-  <li><strong>Surface gameplay effects</strong>: TM2020 has 22+ surface effects vs TMNF's simpler surface system. Effects like Cruise, SlowMotion, Bumper, VehicleTransform are new.</li>
-</ol>
-<ol>
-  <li><strong>Anti-cheat and replay verification</strong>: TM2020's server-side replay verification is architecturally different from TMNF's approach.</li>
+  <li><strong>Multi-vehicle physics</strong>: TMNF has only StadiumCar. TM2020's Rally, Snow, and Desert vehicles use different force models.</li>
+  <li><strong>ReactorBoost oriented variants</strong>: Directional boosts are new.</li>
+  <li><strong>ManiaScript integration</strong>: Runtime tuning via <code>SetPlayer_Delayed_*</code> has no TMNF precedent.</li>
+  <li><strong>TurboRoulette randomization</strong>: Entirely new.</li>
+  <li><strong>Surface gameplay effects</strong>: TM2020 has 22+ effects vs TMNF's simpler system.</li>
+  <li><strong>Anti-cheat and replay verification</strong>: Architecturally different from TMNF.</li>
 </ol>
 <hr>
-<h2 id="12-confidence-assessment"><a class="anchor" href="#12-confidence-assessment">#</a>12. Confidence Assessment</h2>
+<h2 id="confidence-assessment"><a class="anchor" href="#confidence-assessment">#</a>Confidence Assessment</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1877,12 +1556,12 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 <tr>
   <td style="text-align:left">Forward Euler integration in both</td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
-  <td style="text-align:left">Decompiled in both: FUN_005645d0 (TMNF), ComputeGravity (TM2020)</td>
+  <td style="text-align:left">Decompiled in both</td>
 </tr>
 <tr>
   <td style="text-align:left">Velocity-dependent sub-stepping in both</td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
-  <td style="text-align:left">Decompiled in both: FUN_0057f770 (TMNF), PhysicsStep_TM (TM2020)</td>
+  <td style="text-align:left">Decompiled in both</td>
 </tr>
 <tr>
   <td style="text-align:left">Force model switch pattern preserved</td>
@@ -1892,7 +1571,7 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 <tr>
   <td style="text-align:left">GBX format backward compatible</td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
-  <td style="text-align:left">Class ID remap table in TM2020 includes TMNF-era IDs</td>
+  <td style="text-align:left">Class ID remap table includes TMNF-era IDs</td>
 </tr>
 <tr>
   <td style="text-align:left">TM2020 case 5 = TMNF Steer06/M6</td>
@@ -1902,32 +1581,22 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 <tr>
   <td style="text-align:left">Gravity stored in GBX, not executable</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-  <td style="text-align:left">Both binaries lack 9.81 in .rdata; TMNF GravityCoef=3.0</td>
+  <td style="text-align:left">Both lack 9.81 in .rdata</td>
 </tr>
 <tr>
   <td style="text-align:left">Same friction blending approach</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-  <td style="text-align:left">Linear blend in TMNF; TM2020 has iter counts suggesting solver evolution</td>
+  <td style="text-align:left">Linear blend in TMNF; TM2020 has iter counts</td>
 </tr>
 <tr>
   <td style="text-align:left">Suspension is spring-damper in both</td>
   <td style="text-align:left"><span class="badge badge-plausible">PLAUSIBLE</span></td>
-  <td style="text-align:left">TMNF: Demo03 verified; TM2020: Spring.FreqHz/DampingRatio strings</td>
+  <td style="text-align:left">TMNF: Demo03 verified; TM2020: Spring.FreqHz strings</td>
 </tr>
 <tr>
   <td style="text-align:left">TMNF curve shapes apply to TM2020 Stadium</td>
   <td style="text-align:left">UNCERTAIN</td>
   <td style="text-align:left">Same car concept but 12 years of tuning changes</td>
-</tr>
-<tr>
-  <td style="text-align:left">TM2020 cases 6/0xB are for new vehicle types</td>
-  <td style="text-align:left">UNCERTAIN</td>
-  <td style="text-align:left">No evidence beyond inference from vehicle transform strings</td>
-</tr>
-<tr>
-  <td style="text-align:left">Same RPM/gear system in TM2020</td>
-  <td style="text-align:left">UNCERTAIN</td>
-  <td style="text-align:left">TMNF M6 has gears; TM2020 has CPlugVehicleGearBox but details unknown</td>
 </tr>
 <tr>
   <td style="text-align:left">Struct offsets transfer (32->64 bit)</td>
@@ -1937,66 +1606,68 @@ boost_force = ((current_tick - start_time) / duration) * strength * model_scale<
 <tr>
   <td style="text-align:left">Rendering techniques transfer</td>
   <td style="text-align:left">FALSE</td>
-  <td style="text-align:left">Completely different APIs (D3D9 vs D3D11) and pipelines</td>
+  <td style="text-align:left">Completely different APIs (D3D9 vs D3D11)</td>
 </tr>
 </tbody>
 </table></div>
-<hr>
-<p><em>This document cross-references the TMNF physics diary (119 KB, 6 sessions of reverse engineering) against TM2020 RE documentation (7 reports, 55 decompiled functions). All claims cite evidence from both codebases. Items marked [<span class="badge badge-verified">VERIFIED</span>] have dual-source confirmation. Items marked [<span class="badge badge-plausible">PLAUSIBLE</span>] have strong circumstantial evidence. Items marked [UNCERTAIN] require further investigation. Items marked [FALSE] are explicitly incorrect assumptions to avoid.</em></p>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="physics.html">10-physics-deep-dive.md</a> -- TM2020 physics system analysis</li>
+  <li><a href="physics.html">04-physics-vehicle.md</a> -- TM2020 vehicle physics</li>
+  <li><a href="file-formats.html">06-file-formats.md</a> -- GBX format overview</li>
+  <li><a href="file-formats.html">16-fileformat-deep-dive.md</a> -- Full GBX format specification</li>
+  <li><a href="21-competitive-mechanics.md">21-competitive-mechanics.md</a> -- Competitive timing and determinism</li>
+  <li><a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> -- Openplanet vehicle state fields</li>
+</ul>
+<details><summary>Analysis metadata</summary>
+<p><strong>TMNF Binary</strong>: <code>TmForever.exe</code>, x86 32-bit, base <code class="addr">0x00400000</code>, 68,015 functions <strong>TM2020 Binary</strong>: <code>Trackmania.exe</code>, x86-64, base <code class="addr">0x140000000</code>, 131,311 functions <strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: TMNF diary.md (2395 lines), TM2020 RE docs (00-08), TM2020 decompiled physics</p>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="game-files.html">&larr; Game Files</a><a class="next" href="ghidra-findings.html">Ghidra Research &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="community.html">&larr; Community Knowledge</a><a class="next" href="ghidra-findings.html">Ghidra Research &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-executive-summary">1. Executive Summary</a></li>
-  <li class="toc-h3"><a href="#key-findings">Key Findings</a></li>
-<li class=""><a href="#2-architectural-comparison">2. Architectural Comparison</a></li>
-  <li class="toc-h3"><a href="#21-class-hierarchy-what-is-shared">2.1 Class Hierarchy -- What Is Shared</a></li>
-  <li class="toc-h3"><a href="#22-engine-subsystems">2.2 Engine Subsystems</a></li>
-  <li class="toc-h3"><a href="#23-hms-namespace-evolution">2.3 &quot;Hms&quot; Namespace Evolution</a></li>
-  <li class="toc-h3"><a href="#24-what-is-new-in-tm2020">2.4 What Is New in TM2020</a></li>
-  <li class="toc-h3"><a href="#25-what-has-been-removed-or-deprecated">2.5 What Has Been Removed or Deprecated</a></li>
-<li class=""><a href="#3-physics-engine-comparison">3. Physics Engine Comparison</a></li>
-  <li class="toc-h3"><a href="#31-simulation-pipeline">3.1 Simulation Pipeline</a></li>
-  <li class="toc-h3"><a href="#32-tick-rate-and-sub-stepping">3.2 Tick Rate and Sub-Stepping</a></li>
-  <li class="toc-h3"><a href="#33-integration-method">3.3 Integration Method</a></li>
-  <li class="toc-h3"><a href="#34-gravity-handling">3.4 Gravity Handling</a></li>
-  <li class="toc-h3"><a href="#35-sleep-state-system">3.5 Sleep State System</a></li>
-  <li class="toc-h3"><a href="#36-collision-system">3.6 Collision System</a></li>
-  <li class="toc-h3"><a href="#37-water-physics">3.7 Water Physics</a></li>
-<li class=""><a href="#4-vehicle-state-structure-comparison">4. Vehicle State Structure Comparison</a></li>
-  <li class="toc-h3"><a href="#41-cscenevehiclecar-tmnf-vs-vehicle-state-tm2020">4.1 CSceneVehicleCar (TMNF) vs Vehicle State (TM2020)</a></li>
-  <li class="toc-h3"><a href="#42-vehicle-status-nibble">4.2 Vehicle Status Nibble</a></li>
-  <li class="toc-h3"><a href="#43-wheel-structure">4.3 Wheel Structure</a></li>
-<li class=""><a href="#5-tuning-system-comparison">5. Tuning System Comparison</a></li>
-  <li class="toc-h3"><a href="#51-class-id-evolution">5.1 Class ID Evolution</a></li>
-  <li class="toc-h3"><a href="#52-esteermodel-force-model-selector">5.2 ESteerModel (Force Model Selector)</a></li>
-  <li class="toc-h3"><a href="#53-tuning-value-comparison-where-known">5.3 Tuning Value Comparison (Where Known)</a></li>
-  <li class="toc-h3"><a href="#54-suspension-model-evolution">5.4 Suspension Model Evolution</a></li>
-<li class=""><a href="#6-force-model-comparison">6. Force Model Comparison</a></li>
-  <li class="toc-h3"><a href="#61-m6-force-model-tmnf-vs-computeforces-tm2020">6.1 M6 Force Model (TMNF) vs ComputeForces (TM2020)</a></li>
-  <li class="toc-h3"><a href="#62-friction-model">6.2 Friction Model</a></li>
-  <li class="toc-h3"><a href="#63-speed-dependent-curves">6.3 Speed-Dependent Curves</a></li>
-  <li class="toc-h3"><a href="#64-turboboost-system-evolution">6.4 Turbo/Boost System Evolution</a></li>
-<li class=""><a href="#7-file-format-evolution">7. File Format Evolution</a></li>
-  <li class="toc-h3"><a href="#71-gbx-header">7.1 GBX Header</a></li>
-  <li class="toc-h3"><a href="#72-version-6-format-tm2020-only">7.2 Version 6 Format (TM2020 Only)</a></li>
-  <li class="toc-h3"><a href="#73-class-id-remapping">7.3 Class ID Remapping</a></li>
-  <li class="toc-h3"><a href="#74-chunk-format">7.4 Chunk Format</a></li>
-  <li class="toc-h3"><a href="#75-file-type-expansion">7.5 File Type Expansion</a></li>
-<li class=""><a href="#8-rendering-pipeline-evolution">8. Rendering Pipeline Evolution</a></li>
-<li class=""><a href="#9-network-protocol-evolution">9. Network Protocol Evolution</a></li>
-<li class=""><a href="#10-pattern-transfer-table">10. Pattern Transfer Table</a></li>
-  <li class="toc-h3"><a href="#101-direct-transfers-high-confidence">10.1 Direct Transfers (High Confidence)</a></li>
-  <li class="toc-h3"><a href="#102-structural-transfers-medium-confidence">10.2 Structural Transfers (Medium Confidence)</a></li>
-  <li class="toc-h3"><a href="#103-non-transferable-do-not-assume-these-match">10.3 Non-Transferable (Do NOT assume these match)</a></li>
-<li class=""><a href="#11-lessons-for-recreation">11. Lessons for Recreation</a></li>
-  <li class="toc-h3"><a href="#111-what-tmnf-tells-us-about-tm2020-that-we-cannot-determine-from-tm2020-alone">11.1 What TMNF Tells Us About TM2020 That We Cannot Determine From TM2020 Alone</a></li>
-  <li class="toc-h3"><a href="#112-gaps-tmnf-can-fill-in-tm2020-knowledge">11.2 Gaps TMNF Can Fill in TM2020 Knowledge</a></li>
-  <li class="toc-h3"><a href="#113-what-tmnf-cannot-tell-us-about-tm2020">11.3 What TMNF CANNOT Tell Us About TM2020</a></li>
-<li class=""><a href="#12-confidence-assessment">12. Confidence Assessment</a></li>
+<li class=""><a href="#how-the-class-hierarchies-compare">How the Class Hierarchies Compare</a></li>
+  <li class="toc-h3"><a href="#engine-subsystems">Engine Subsystems</a></li>
+  <li class="toc-h3"><a href="#the-hms-namespace-evolution">The &quot;Hms&quot; Namespace Evolution</a></li>
+  <li class="toc-h3"><a href="#tm2020-additions">TM2020 Additions</a></li>
+  <li class="toc-h3"><a href="#removed-or-deprecated-features">Removed or Deprecated Features</a></li>
+<li class=""><a href="#how-the-physics-engines-compare">How the Physics Engines Compare</a></li>
+  <li class="toc-h3"><a href="#simulation-pipeline">Simulation Pipeline</a></li>
+  <li class="toc-h3"><a href="#tick-rate-and-sub-stepping">Tick Rate and Sub-Stepping</a></li>
+  <li class="toc-h3"><a href="#integration-method">Integration Method</a></li>
+  <li class="toc-h3"><a href="#gravity-handling">Gravity Handling</a></li>
+  <li class="toc-h3"><a href="#sleep-state-system">Sleep State System</a></li>
+  <li class="toc-h3"><a href="#collision-system">Collision System</a></li>
+  <li class="toc-h3"><a href="#water-physics">Water Physics</a></li>
+<li class=""><a href="#how-vehicle-state-structures-compare">How Vehicle State Structures Compare</a></li>
+  <li class="toc-h3"><a href="#cscenevehiclecar-tmnf-vs-vehicle-state-tm2020">CSceneVehicleCar (TMNF) vs Vehicle State (TM2020)</a></li>
+  <li class="toc-h3"><a href="#vehicle-status-nibble">Vehicle Status Nibble</a></li>
+  <li class="toc-h3"><a href="#wheel-structure">Wheel Structure</a></li>
+<li class=""><a href="#how-the-tuning-systems-compare">How the Tuning Systems Compare</a></li>
+  <li class="toc-h3"><a href="#class-id-evolution">Class ID Evolution</a></li>
+  <li class="toc-h3"><a href="#esteermodel-force-model-selector">ESteerModel (Force Model Selector)</a></li>
+  <li class="toc-h3"><a href="#tuning-value-comparison-where-known">Tuning Value Comparison (Where Known)</a></li>
+  <li class="toc-h3"><a href="#suspension-model-evolution">Suspension Model Evolution</a></li>
+<li class=""><a href="#how-the-force-models-compare">How the Force Models Compare</a></li>
+  <li class="toc-h3"><a href="#m6-force-model-tmnf-vs-computeforces-tm2020">M6 Force Model (TMNF) vs ComputeForces (TM2020)</a></li>
+  <li class="toc-h3"><a href="#turboboost-system-evolution">Turbo/Boost System Evolution</a></li>
+  <li class="toc-h3"><a href="#friction-model">Friction Model</a></li>
+<li class=""><a href="#how-gbx-file-formats-evolved">How GBX File Formats Evolved</a></li>
+  <li class="toc-h3"><a href="#gbx-header">GBX Header</a></li>
+  <li class="toc-h3"><a href="#class-id-remapping">Class ID Remapping</a></li>
+  <li class="toc-h3"><a href="#file-type-expansion">File Type Expansion</a></li>
+<li class=""><a href="#how-the-rendering-pipelines-diverged">How the Rendering Pipelines Diverged</a></li>
+<li class=""><a href="#how-the-network-protocols-evolved">How the Network Protocols Evolved</a></li>
+<li class=""><a href="#what-transfers-between-games">What Transfers Between Games</a></li>
+  <li class="toc-h3"><a href="#direct-transfers-high-confidence">Direct Transfers (High Confidence)</a></li>
+  <li class="toc-h3"><a href="#structural-transfers-medium-confidence">Structural Transfers (Medium Confidence)</a></li>
+  <li class="toc-h3"><a href="#non-transferable-do-not-assume-these-match">Non-Transferable (Do NOT assume these match)</a></li>
+<li class=""><a href="#what-tmnf-reveals-about-tm2020">What TMNF Reveals About TM2020</a></li>
+  <li class="toc-h3"><a href="#what-tmnf-cannot-reveal-about-tm2020">What TMNF Cannot Reveal About TM2020</a></li>
+<li class=""><a href="#confidence-assessment">Confidence Assessment</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

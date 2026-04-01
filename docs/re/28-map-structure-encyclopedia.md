@@ -1,36 +1,14 @@
 # Map Structure Encyclopedia
 
-**Purpose**: Comprehensive reference for the internal structure of Trackmania 2020 maps -- blocks, items, waypoints, decorations, and how they all connect. Written for someone building a map loader or editor.
-
-**Sources**: Ghidra decompilation of Trackmania.exe, Openplanet plugin analysis, NadeoImporterMaterialLib.txt, class_hierarchy.json RTTI extraction, hex analysis of real .Map.Gbx files.
-
-**Date**: 2026-03-27
+This reference covers everything inside a Trackmania 2020 map: blocks, items, waypoints, decorations, coordinates, materials, and how they connect. Use it when building a map loader, editor, or renderer.
 
 ---
 
-## Table of Contents
+## Map Coordinate System
 
-1. [Map Coordinate System](#1-map-coordinate-system)
-2. [Block Types and Categories](#2-block-types-and-categories)
-3. [The Waypoint System](#3-the-waypoint-system)
-4. [Item Placement System](#4-item-placement-system)
-5. [Map Environments and Decorations](#5-map-environments-and-decorations)
-6. [Map Loading Pipeline](#6-map-loading-pipeline)
-7. [Map Metadata](#7-map-metadata)
-8. [Map Validation Rules](#8-map-validation-rules)
-9. [Block Naming Convention](#9-block-naming-convention)
-10. [Surface and Material System](#10-surface-and-material-system)
-11. [GBX Map File Binary Layout](#11-gbx-map-file-binary-layout)
-12. [Real File Hex Analysis](#12-real-file-hex-analysis)
-13. [Class Reference](#13-class-reference)
+### World Space
 
----
-
-## 1. Map Coordinate System
-
-### 1.1 World Space
-
-Trackmania 2020 uses a **left-handed coordinate system** consistent with Direct3D 11:
+Trackmania 2020 uses a **left-handed coordinate system** (left-handed means the cross product of +X and +Y points in +Z) consistent with Direct3D 11:
 
 | Axis | Direction | Role |
 |------|-----------|------|
@@ -38,11 +16,11 @@ Trackmania 2020 uses a **left-handed coordinate system** consistent with Direct3
 | Y | Up | Vertical (elevation) |
 | Z | Forward | Depth |
 
-**Evidence**: Orbital camera code rotates around Y for horizontal angle, uses `vec3(0, 0, -1)` for vertical rotation axis. The projection matrix follows D3D conventions where `projected.w > 0` means the point is behind the camera.
+**Evidence**: Orbital camera code rotates around Y for horizontal angle and uses `vec3(0, 0, -1)` for vertical rotation axis. The projection matrix follows D3D conventions where `projected.w > 0` means the point is behind the camera.
 
-### 1.2 The 32-Meter Block Grid
+### The 32-Meter Block Grid
 
-The map world is organized on a discrete 3D grid. Each grid cell is **32 meters** on the X and Z axes:
+The map world sits on a discrete 3D grid. Each cell is **32 meters** on X and Z:
 
 ```
 Grid unit (X, Z) = 32 meters
@@ -51,11 +29,11 @@ Block height     = 1 grid Y unit = 8 meters
                    (some blocks span multiple Y units)
 ```
 
-**Evidence**: Openplanet Finetuner plugin uses `Math::Ceil(distance / 32.0f)` to convert world meters to block units for render distance calculations.
+**Evidence**: Openplanet Finetuner plugin uses `Math::Ceil(distance / 32.0f)` to convert world meters to block units.
 
-### 1.3 Block Coordinates vs World Position
+### Block Coordinates vs World Position
 
-Blocks are placed at integer grid coordinates `(x, y, z)` stored as `Nat3` (three uint32 values). The mapping to world position:
+Blocks are placed at integer grid coordinates `(x, y, z)` stored as `Nat3` (three uint32 values):
 
 ```
 world_x = block_x * 32.0
@@ -63,11 +41,11 @@ world_y = block_y * 8.0
 world_z = block_z * 32.0
 ```
 
-Items (anchored objects) use free-floating `Vec3` world coordinates with no grid snapping. Their positions are stored as three IEEE 754 floats representing meters directly.
+Items (anchored objects) use free-floating `Vec3` world coordinates with no grid snapping. Their positions are three IEEE 754 floats in meters.
 
-### 1.4 Map Origin and Size
+### Map Origin and Size
 
-Maps have a fixed grid size defined by the decoration. The standard Stadium decoration is **48x48** blocks on X/Z. From real map-export.json data:
+Standard Stadium maps use a **48x48** block grid on X/Z:
 
 ```
 MapSizeX: 48
@@ -75,14 +53,14 @@ MapSizeY: 255    (maximum possible height levels)
 MapSizeZ: 48
 ```
 
-This means the standard Stadium map world spans:
+World span:
 - X: 0 to 1536 meters (48 * 32)
 - Y: 0 to 2040 meters (255 * 8)
 - Z: 0 to 1536 meters (48 * 32)
 
-The default terrain (grass) sits at approximately Y=9 in grid units (72 meters world space), confirmed by real map data showing grass-remover blocks placed at `Y: 9`.
+Default terrain (grass) sits at approximately Y=9 in grid units (72 meters world space).
 
-### 1.5 Speed and Unit Conversions
+### Speed and Unit Conversions
 
 | Conversion | Factor |
 |-----------|--------|
@@ -93,11 +71,11 @@ The default terrain (grass) sits at approximately Y=9 in grid units (72 meters w
 
 ---
 
-## 2. Block Types and Categories
+## Block Types and Categories
 
-### 2.1 The Block Class Hierarchy
+### Block Class Hierarchy
 
-Every block placed on the map is an instance of `CGameCtnBlock`. Block *definitions* (templates) are `CGameCtnBlockInfo` subclasses. The complete hierarchy from RTTI:
+Every placed block is a `CGameCtnBlock` instance. Block definitions (templates) are `CGameCtnBlockInfo` subclasses:
 
 ```
 CGameCtnBlockInfo                        -- Base block definition
@@ -124,54 +102,21 @@ CGameCtnBlockInfoVariant                 -- Base variant
   +-- CGameCtnBlockInfoVariantAir        -- Placed elevated (auto-generates pylons)
 ```
 
-### 2.2 Block Categories
+### Block Categories
 
-Based on block naming patterns extracted from game files and map exports:
+**Road Blocks** -- Named `Stadium{Road|RoadMain}{Shape}{Variant}`: Straight, Curve, Turn, Slope, SlopeBase, SlopeEnd, Tilt, Cross, Chicane, DiagLeft, DiagRight. Width variants: `x2`, `x3`, `x4`. Mirror variants: `Mirror` suffix.
 
-#### Road Blocks
-Drivable road surfaces. Named `Stadium{Road|RoadMain}{Shape}{Variant}`:
-- **Straight**: `StadiumRoadMainStraight`
-- **Curve/Turn**: `StadiumRoadMainCurve`, `StadiumRoadMainTurn`
-- **Slope**: `StadiumRoadMainSlope`, `StadiumRoadMainSlopeBase`, `StadiumRoadMainSlopeEnd`
-- **Tilt**: `StadiumRoadMainTilt`
-- **Cross**: `StadiumRoadMainCross` (intersection)
-- **Chicane**: `StadiumRoadMainChicane` (S-curve)
-- **Diagonal**: `StadiumRoadMainDiagLeft`, `StadiumRoadMainDiagRight`
-- Width variants: `x2`, `x3`, `x4` suffixes
-- Mirror variants: `Mirror` suffix
+**Platform Blocks** -- Named `StadiumPlatform{Shape}{Variant}`. Same shapes as roads but without road markings.
 
-#### Platform Blocks
-Flat surfaces without built-in road markings. Named `StadiumPlatform{Shape}{Variant}`:
-- Same shape vocabulary as road blocks (Straight, Curve, Slope, etc.)
-- Used for freestyle/creative building
+**Decoration Blocks** -- `StadiumDecoWall*`, `StadiumDecoHill*`, `StadiumGrass*`, `StadiumWater*`.
 
-#### Decoration Blocks
-Non-drivable visual elements:
-- `StadiumDecoWall*` -- Wall decorations
-- `StadiumDecoHill*` -- Hillside decorations
-- `StadiumGrass*` -- Grass terrain
-- `StadiumWater*` -- Water elements
+**Waypoint Blocks** -- `StadiumGate*` for Start, Finish, Checkpoint gates. Identified by `|BlockInfo|Start`, `|BlockInfo|Finish`, `|BlockInfo|Checkpoint`, `|BlockInfo|Start/Finish` string tags.
 
-#### Special/Waypoint Blocks
-Blocks with gameplay significance (see Section 3):
-- `StadiumGate*` -- Start, Finish, Checkpoint gates
-- Identified by `|BlockInfo|Start`, `|BlockInfo|Finish`, `|BlockInfo|Checkpoint`, `|BlockInfo|Start/Finish` string tags
+**Support Structures** -- `StadiumPillar*`, `StadiumPylon*`. Created automatically when air-variant blocks are placed.
 
-#### Support Structures
-- `StadiumPillar*` -- Support pillars
-- `StadiumPylon*` -- Auto-generated pylons
-- These are typically created automatically by the engine when air-variant blocks are placed
+**Custom Blocks** -- User-created, referenced by file path: `Z_Backdrop\GrassRemover.Block.Gbx_CustomBlock`.
 
-#### Custom Blocks
-User-created blocks referenced by file path rather than built-in name:
-```
-Z_Backdrop\GrassRemover.Block.Gbx_CustomBlock
-```
-Custom blocks use the `_CustomBlock` suffix in their serialized name and reference a `.Block.Gbx` file.
-
-### 2.3 Grid Blocks vs Free Blocks
-
-There are two fundamental placement modes:
+### Grid Blocks vs Free Blocks
 
 | Mode | Storage | Coordinates | Snapping |
 |------|---------|-------------|----------|
@@ -180,9 +125,9 @@ There are two fundamental placement modes:
 | Ghost block | Grid block with ghost flag | Nat3 (x, y, z) | 32m grid, overlapping allowed |
 | Macroblock | Template group of blocks | Template-relative positions | 32m grid |
 
-In the binary format, a block with `flags == 0xFFFFFFFF` is a **free block** and uses additional fields for arbitrary position and rotation instead of grid coordinates.
+A block with `flags == 0xFFFFFFFF` is a **free block** and uses additional fields for arbitrary position and rotation.
 
-### 2.4 Block Data Format (Binary)
+### Block Data Format (Binary)
 
 Within body chunk `0x03043011`, each block is serialized as:
 
@@ -197,9 +142,7 @@ Offset  Size    Type                Field
                                                      0xFFFFFFFF: free block (additional data follows)
 ```
 
-For free blocks (`flags == 0xFFFFFFFF`), additional position/rotation data follows.
-
-### 2.5 Block Rotation
+### Block Rotation
 
 Grid blocks support 4 cardinal orientations:
 
@@ -210,13 +153,11 @@ Grid blocks support 4 cardinal orientations:
 | 2 (South) | -Z | 180 degrees |
 | 3 (West) | -X | 270 degrees |
 
-Free blocks and items use full quaternion rotation for arbitrary orientation.
+Free blocks and items use full quaternion rotation.
 
 ---
 
-## 3. The Waypoint System
-
-### 3.1 Waypoint Types
+## The Waypoint System
 
 Waypoints define the race route. They are stored as properties on blocks and anchored objects via `CGameWaypointSpecialProperty` and `CAnchorData.EWaypointType`.
 
@@ -227,29 +168,13 @@ Waypoints define the race route. They are stored as properties on blocks and anc
 | **Checkpoint** | Intermediate timing gate | 0 or more |
 | **StartFinish** | Combined start/finish for multilap | Exactly 1 (multilap maps only) |
 
-**Evidence**: Binary strings `|BlockInfo|Checkpoint`, `|BlockInfo|Finish`, `|BlockInfo|Start`, `|BlockInfo|Start/Finish` in Trackmania.exe. The `CBlockModel.EWayPointType` enum and `CAnchorData.EWaypointType` enum both define these four types.
+### Waypoint Connectivity
 
-### 3.2 Waypoint Connectivity
+Route validation determines whether a car can drive from Start to Finish through all Checkpoints. The system uses clip connections (block-to-block), checkpoint ordering verification via `CGameEditorPluginMapConnectResults`, and trigger volumes (`CSceneTriggerAction`, `CGameTriggerGate`) placed at gate positions.
 
-Route validation determines whether a car can drive from Start to Finish passing through all Checkpoints. The connectivity system works through:
+### The Clip System (Block Connectivity)
 
-1. **Clip connections**: Blocks connect via the clip system (see Section 3.4). A valid route requires an unbroken chain of connected road surfaces from start to finish.
-
-2. **Checkpoint ordering**: Checkpoints must be reachable in sequence. The map editor's validation test (`CGameEditorPluginMapConnectResults`) verifies this by simulating the route.
-
-3. **Trigger zones**: Waypoint detection uses trigger volumes (`CSceneTriggerAction`, `CGameTriggerGate`) placed at gate positions. When the car enters the trigger volume, the checkpoint/finish is registered.
-
-### 3.3 Multilap Configuration
-
-For multilap maps:
-- A single **StartFinish** waypoint replaces separate Start and Finish gates
-- The car crosses the StartFinish line multiple times (typically 3 or 5 laps)
-- Lap count is stored in the map parameters (`CGameCtnChallengeParameters`)
-- Checkpoints are visited once per lap
-
-### 3.4 The Clip System (Block Connectivity)
-
-Blocks connect to adjacent blocks via **clips** -- typed connection points on block faces:
+Blocks connect via **clips** (typed connection points on block faces):
 
 ```
 CGameCtnBlockInfoClip                    -- Base clip connection type
@@ -257,44 +182,26 @@ CGameCtnBlockInfoClip                    -- Base clip connection type
   +-- CGameCtnBlockInfoClipVertical      -- Connects blocks vertically (Y-axis stacking)
 ```
 
-Supporting classes:
-```
-CBlockClip          -- Individual clip instance on a placed block
-CBlockClipList      -- Collection of clips for a block
-```
+Each block face has zero or more clip points. Clips have a **type** -- only matching types connect. The editor validates adjacent blocks have compatible clips on shared faces. Invalid connections produce the "red placement" indicator.
 
-How clips work:
-- Each block face has zero or more clip points
-- Clips have a **type** -- only matching types connect
-- The editor validates that adjacent blocks have compatible clips on shared faces
-- Invalid connections produce the "red placement" indicator in the editor
-- Clip validation is performed by `CGameEditorPluginMapConnectResults` / `GetConnectResults`
-
-The map loading pipeline has dedicated stages for clip initialization:
-- Stage 11: `InitChallengeData_ClassicClipsBaked` -- grid block clips
-- Stage 12: `InitChallengeData_FreeClipsBaked` -- free-placed block clips
-- Stage 13: `InitChallengeData_Clips` -- all clip connections
-- Stage 14: `CreateFreeClips` -- free block clip objects
-- Stage 21: `ConnectAdditionalDataClipsToBakedClips` -- final wiring
+The map loading pipeline has 5 dedicated stages for clip initialization (stages 11-14 and 21).
 
 ---
 
-## 4. Item Placement System
+## Item Placement System
 
-### 4.1 Items vs Blocks
+### Items vs Blocks
 
 | Aspect | Blocks | Items |
 |--------|--------|-------|
 | Placement | Grid-snapped (32m) or free | Always free (arbitrary position) |
 | Class | `CGameCtnBlock` | `CGameCtnAnchoredObject` |
 | Definition | `CGameCtnBlockInfo` subclass | `CGameItemModel` |
-| Coordinates | Integer grid OR float world | Float world (Vec3) |
-| Rotation | 4 cardinal directions (grid) or quaternion (free) | Euler angles (pitch, yaw, roll) or quaternion |
-| Connectivity | Clip system | None (items don't connect to each other) |
-| Collision | Built into block model | Defined by item's `CPlugStaticObjectModel` |
-| Source | Built-in game content | Built-in OR user-created `.Item.Gbx` files |
+| Rotation | 4 cardinal directions (grid) or quaternion (free) | Euler angles or quaternion |
+| Connectivity | Clip system | None (items do not connect) |
+| Source | Built-in game content | Built-in OR user-created `.Item.Gbx` |
 
-### 4.2 Item Placement Binary Format
+### Item Placement Binary Format
 
 Items are stored in body chunk `0x03043040` as `CGameCtnAnchoredObject` instances:
 
@@ -308,23 +215,15 @@ Offset  Size    Type                Field
 +0x24   ...     ...                 [additional version-dependent fields]
 ```
 
-### 4.3 Item Coordinate System
+### Item Coordinates
 
-From real map-export.json data showing item placement:
+From real map-export.json data:
 
 ```json
 {
   "Name": "PillarWorld/Pillar_Color6.Item.Gbx",
-  "Position": {
-    "X": -116.60455322265625,
-    "Y": 273.8827209472656,
-    "Z": -171.2347412109375
-  },
-  "Rotation": {
-    "X": -1.5707963267948966,
-    "Y": 0.0,
-    "Z": 0.0
-  },
+  "Position": { "X": -116.60, "Y": 273.88, "Z": -171.23 },
+  "Rotation": { "X": -1.5707963, "Y": 0.0, "Z": 0.0 },
   "Pivot": { "X": 0, "Y": 0, "Z": 0 },
   "AnimPhaseOffset": "None",
   "DifficultyColor": "Default",
@@ -332,130 +231,67 @@ From real map-export.json data showing item placement:
 }
 ```
 
-Key observations:
-- **Position** is in world meters -- can be negative (items can extend beyond the standard grid)
-- **Rotation** is in Euler angles (radians) with X=pitch, Y=yaw, Z=roll
-- **Pivot** defines the rotation center offset
-- **AnimPhaseOffset** controls animation timing for kinematic items
-- **DifficultyColor** and **LightmapQuality** are per-item metadata
+Positions are in world meters and can be negative (items extend beyond the standard grid). Rotation uses Euler angles (radians) with X=pitch, Y=yaw, Z=roll.
 
-### 4.4 Embedded vs Referenced Items
+### Embedded vs Referenced Items
 
-Items can be:
+1. **Built-in**: Referenced by well-known name resolved against game asset packs.
+2. **Embedded**: Custom `.Item.Gbx` data stored inside the map file (body chunk `0x03043054`). Increases file size but makes the map self-contained.
+3. **Referenced externally**: Items from the user's `Items/` folder, referenced by relative path.
 
-1. **Built-in**: Referenced by a well-known name resolved against the game's asset packs. No embedding needed.
-
-2. **Embedded**: Custom `.Item.Gbx` files whose data is stored *inside* the map file.
-   - Body chunk `0x03043054` stores embedded item data
-   - Loading stage 18: `InitEmbeddedItemModels` loads the embedded item model data
-   - Loading stage 19: `LoadEmbededItems` instantiates the items
-   - Loading stage 20: `InitAllAnchoredObjects` initializes all placed item instances
-
-3. **Referenced externally**: Items that live in the user's `Items/` folder, referenced by relative path (e.g., `PillarWorld/Pillar_Color6.Item.Gbx`).
-
-Embedded items increase map file size but ensure the map is self-contained and playable by anyone without requiring them to install custom items separately. There are embed size limits for online play (see Section 8).
-
-### 4.5 Item Model Pipeline
-
-The internal hierarchy for a placed item:
+### Item Model Pipeline
 
 ```
-CGameCtnAnchoredObject              -- Instance on the map (position + rotation)
+CGameCtnAnchoredObject              -- Instance on map (position + rotation)
   -> CGameItemModel                 -- Item definition
        -> CPlugStaticObjectModel    -- Static 3D geometry + collision
             -> CPlugSolid2Model     -- Modern mesh (vertices, indices, materials, LODs)
-       -> CGameWaypointSpecialProperty  -- If item is a waypoint (checkpoint, etc.)
+       -> CGameWaypointSpecialProperty  -- If item is a waypoint
 ```
-
-Items can also act as waypoints. The editor has a `CbBeforeIsCheckpoint` callback for designating items as checkpoints.
 
 ---
 
-## 5. Map Environments and Decorations
+## Map Environments and Decorations
 
-### 5.1 The Decoration System
+### The Decoration System
 
-Every map references a **decoration** that defines its visual theme, skybox, lighting mood, and grid size. The decoration is loaded in the very first stage of the map pipeline.
-
-**Evidence**: `CGameCtnChallenge::LoadDecorationAndCollection` is stage 1, and `CGameCtnChallenge::InternalLoadDecorationAndCollection` is stage 2.
-
-The decoration class hierarchy:
+Every map references a **decoration** that defines its visual theme, skybox, lighting mood, and grid size. The decoration loads in stage 1 of the map pipeline.
 
 ```
 CGameCtnDecoration                       -- Base decoration definition
-CGameCtnDecorationSize                   -- Grid dimensions
-  .SizeX (uint)                          -- X extent in blocks
-  .SizeY (uint)                          -- Y extent (height levels)
-  .SizeZ (uint)                          -- Z extent in blocks
+CGameCtnDecorationSize                   -- Grid dimensions (SizeX, SizeY, SizeZ)
 CGameCtnDecorationMood                   -- Time-of-day / lighting mood
 CGameCtnDecorationMaterialModifiers      -- Material appearance adjustments
 ```
 
-### 5.2 Decoration Names in Real Maps
-
-From hex analysis of actual .Map.Gbx headers:
-
-| Map | Decoration String | Meaning |
-|-----|-------------------|---------|
-| CraterWorld.Map.Gbx | `NoStadium48x48Day` | No skybox structure, 48x48 grid, daytime |
-| Kacky394.Map.Gbx | `48x48Screen155Sunrise` | Screen-style arena, 48x48, sunrise mood |
-| TechFlow.Map.Gbx | `NoStadium48x48Day` | No skybox, 48x48, daytime |
-| Mac1.Map.Gbx | `48x48Screen155Day` | Screen arena, 48x48, daytime |
-| PillarWorld.Map.Gbx | `NoStadium48x48Day` | No skybox, 48x48, daytime |
+### Decoration Names
 
 Decoration name format: `{StructureType}{GridSize}{Mood}`
 
-**Structure types** observed:
-- `NoStadium` -- No stadium structure visible (void/clean background)
-- `48x48Screen155` -- Screen-style arena with visible LED walls
+| Map | Decoration String | Meaning |
+|-----|-------------------|---------|
+| CraterWorld | `NoStadium48x48Day` | No skybox, 48x48 grid, daytime |
+| Kacky394 | `48x48Screen155Sunrise` | Screen arena, 48x48, sunrise |
+| TechFlow | `NoStadium48x48Day` | No skybox, 48x48, daytime |
+| Mac1 | `48x48Screen155Day` | Screen arena, 48x48, daytime |
 
-**Grid sizes**: `48x48` is the standard Stadium size.
+**Structure types**: `NoStadium` (void/clean background), `48x48Screen155` (LED wall arena).
 
-**Moods** (time of day):
-- `Day` -- Standard daytime
-- `Sunrise` -- Sunrise lighting
-- `Night`, `Sunset` -- Other times (from game file evidence)
+**Moods**: `Day`, `Sunrise`, `Night`, `Sunset`.
 
-### 5.3 Collections and Environment Packs
-
-The `CGameCtnCollection` class represents a block collection -- the set of all available block types for an environment. TM2020 has one primary collection: **Stadium** (title: `TMStadium`).
-
-From the XML header embedded in map files:
-```xml
-<header type="map" exever="3.3.0" exebuild="2026-02-02_17_51"
-        title="TMStadium" lightmap="0">
-```
-
-All TM2020 maps use `title="TMStadium"` and the map type `TrackMania\TM_Race`.
-
-### 5.4 Environment Theme Packs (.pak Files)
-
-The game ships with multiple visual theme packs that change the decoration appearance without changing gameplay:
+### Environment Theme Packs (.pak Files)
 
 | Pack File | Size | Visual Theme |
 |-----------|------|-------------|
-| **Stadium.pak** | 1.63 GB | Main stadium environment -- all block models, textures, materials |
+| **Stadium.pak** | 1.63 GB | Main stadium -- all block models, textures, materials |
 | **GreenCoast.pak** | 569 MB | Lush green coastal theme |
 | **BlueBay.pak** | 530 MB | Blue bay/ocean theme |
 | **RedIsland.pak** | 776 MB | Red desert/volcanic island theme |
 | **WhiteShore.pak** | 411 MB | White/snowy shore theme |
 
-Additional supporting packs:
+Theme packs provide alternative 3D models, textures, and skybox assets. The same block names work across all themes -- only the visual appearance changes.
 
-| Pack File | Size | Purpose |
-|-----------|------|---------|
-| Maniaplanet.pak | 169 MB | Core ManiaPlanet engine assets |
-| Maniaplanet_Core.pak | 33.7 MB | Core engine resources |
-| Maniaplanet_ModelsSport.pak | 123 MB | Sport car models |
-| Skins_Stadium.pak | 264 MB | Stadium car skins |
-| Skins_StadiumPrestige.pak | 959 MB | Prestige car skins |
-| Trackmania.Title.Pack.Gbx | 744 MB | Title pack (master game definition) |
-
-The theme packs provide alternative 3D models, textures, and skybox assets. The same block *names* and *geometry templates* work across all themes -- only the visual appearance changes. A map created in the GreenCoast theme can be loaded in any other theme.
-
-### 5.5 Vehicle Models per Environment
-
-Maps reference a vehicle model:
+### Vehicle Models
 
 | Path | Vehicle | Default For |
 |------|---------|-------------|
@@ -463,21 +299,16 @@ Maps reference a vehicle model:
 | `\Vehicles\Items\CarSnow.Item.gbx` | Snow car | Snow surfaces |
 | `\Vehicles\Items\CarRally.Item.gbx` | Rally car | Rally surfaces |
 | `\Vehicles\Items\CarDesert.Item.gbx` | Desert car | Desert surfaces |
-| `\Trackmania\Items\Vehicles\StadiumCar.ObjectInfo.Gbx` | Legacy Stadium car | Legacy format |
 
 Vehicle type is stored in body chunk `0x0304300D`.
 
 ---
 
-## 6. Map Loading Pipeline
+## Map Loading Pipeline
 
-### 6.1 Overview
+Loading a .Map.Gbx into a playable map follows a **22-stage pipeline**. Each stage has a dedicated profiling marker.
 
-Loading a .Map.Gbx file into a playable map is a **22-stage pipeline**. Each stage has a dedicated profiling marker string in the binary.
-
-### 6.2 Phase 1: GBX Deserialization
-
-Before the 22-stage pipeline begins, the raw GBX binary must be parsed:
+### Phase 1: GBX Deserialization
 
 ```
 1. Read GBX header (magic "GBX", version 6, format flags "BUCR")
@@ -489,71 +320,48 @@ Before the 22-stage pipeline begins, the raw GBX binary must be parsed:
 7. Read 0xFACADE01 end sentinel
 ```
 
-### 6.3 Phase 2: Map Initialization (22 Stages)
+### Phase 2: Map Initialization (22 Stages)
 
-After deserialization, the map object undergoes initialization:
-
-| Stage | Method | Purpose | Performance Impact |
-|-------|--------|---------|-------------------|
-| 1 | `LoadDecorationAndCollection` | Load decoration theme + block collection | SLOW -- loads large .pak assets |
+| Stage | Method | Purpose | Speed |
+|-------|--------|---------|-------|
+| 1 | `LoadDecorationAndCollection` | Load decoration theme + block collection | SLOW |
 | 2 | `InternalLoadDecorationAndCollection` | Internal decoration setup | Moderate |
-| 3 | `UpdateBakedBlockList` | Sync baked block data with serialized | Fast |
+| 3 | `UpdateBakedBlockList` | Sync baked block data | Fast |
 | 4 | `AutoSetIdsForLightMap` | Assign lightmap UV set IDs | Fast |
-| 5 | `LoadAndInstanciateBlocks` | Create block objects from serialized data | SLOW -- proportional to block count |
+| 5 | `LoadAndInstanciateBlocks` | Create block objects from serialized data | SLOW |
 | 6 | `InitChallengeData_ClassicBlocks` | Initialize standard road/platform blocks | Moderate |
 | 7 | `InitChallengeData_Terrain` | Initialize terrain heightmap | Moderate |
-| 8 | `InitChallengeData_DefaultTerrainBaked` | Set up default terrain from baked data | Fast |
+| 8 | `InitChallengeData_DefaultTerrainBaked` | Set up default terrain | Fast |
 | 9 | `InitChallengeData_Genealogy` | Build block parent-child relationships | Fast |
 | 10 | `InitChallengeData_PylonsBaked` | Load pre-baked pylon structures | Fast |
-| 11 | `InitChallengeData_ClassicClipsBaked` | Load baked clip connections (grid blocks) | Fast |
-| 12 | `InitChallengeData_FreeClipsBaked` | Load baked clip connections (free blocks) | Fast |
-| 13 | `InitChallengeData_Clips` | Initialize all clip connection data | Moderate |
-| 14 | `CreateFreeClips` | Create clip objects for free-placed blocks | Moderate |
-| 15 | `InitPylonsList` | Build pylon/support object list | Fast |
+| 11 | `InitChallengeData_ClassicClipsBaked` | Grid block clip connections | Fast |
+| 12 | `InitChallengeData_FreeClipsBaked` | Free block clip connections | Fast |
+| 13 | `InitChallengeData_Clips` | All clip connections | Moderate |
+| 14 | `CreateFreeClips` | Create free-block clip objects | Moderate |
+| 15 | `InitPylonsList` | Build pylon/support list | Fast |
 | 16 | `CreatePlayFields` | Create playable field areas | Fast |
-| 17 | `TransferIdForLightMapFromBakedBlocksToBlocks` | Copy lightmap IDs from baked to active | Fast |
-| 18 | `InitEmbeddedItemModels` | Load embedded custom item model data | SLOW if many embedded items |
+| 17 | `TransferIdForLightMapFromBakedBlocksToBlocks` | Copy lightmap IDs | Fast |
+| 18 | `InitEmbeddedItemModels` | Load embedded custom item data | SLOW |
 | 19 | `LoadEmbededItems` | Instantiate embedded items | Moderate |
 | 20 | `InitAllAnchoredObjects` | Initialize all placed items | Moderate |
-| 21 | `ConnectAdditionalDataClipsToBakedClips` | Wire up additional clip data | Fast |
+| 21 | `ConnectAdditionalDataClipsToBakedClips` | Final clip wiring | Fast |
 | 22 | `RemoveNonBlocksFromBlockStock` | Clean up non-block entries | Fast |
 
-### 6.4 Phase 3: Runtime Preparation
-
-After the 22 stages, additional processing occurs:
-
-1. **Lightmap generation/loading**: If the map has pre-baked lightmaps, they are loaded. If lightmap data is absent (`lightmap="0"` in the XML header), lighting is computed at runtime or uses a default.
-
-2. **Physics mesh generation**: Collision meshes are built from the block and item geometry. Each block's `CPlugStaticObjectModel` provides its collision shape, assembled into the world collision mesh.
-
-3. **Filtered block list construction**: The engine builds categorized views:
-   - `GetClassicBlocks()` -- Standard road/platform blocks
-   - `GetTerrainBlocks()` -- Ground/terrain modification blocks
-   - `GetGhostBlocks()` -- Non-physical overlay blocks
-
-4. **Zone and terrain finalization**: The auto-terrain system (`CGameCtnAutoTerrain`) fills gaps between placed blocks with appropriate terrain geometry.
-
-### 6.5 What's Slow vs What's Fast
-
-For a map loader implementation, the bottlenecks are:
+### Bottleneck Summary
 
 | Operation | Cost | Why |
 |-----------|------|-----|
 | LZO decompression | Fast | Simple algorithm, small data |
-| Lookback string resolution | Fast | In-memory table lookup |
-| Block instantiation | Moderate | Proportional to block count (hundreds to thousands) |
-| Decoration/pack loading | SLOW | Requires loading megabytes of 3D assets from .pak files |
+| Block instantiation | Moderate | Proportional to block count |
+| Decoration/pack loading | SLOW | Megabytes of 3D assets |
 | Embedded item parsing | SLOW | Each embedded item is a full GBX sub-file |
-| Lightmap generation | VERY SLOW | Full radiosity computation if not pre-baked |
-| Clip connectivity | Moderate | Graph traversal over all block pairs |
+| Lightmap generation | VERY SLOW | Full radiosity if not pre-baked |
 
 ---
 
-## 7. Map Metadata
+## Map Metadata
 
-### 7.1 Header Chunk Data
-
-Map metadata is stored in the header chunks, accessible without decompressing the body:
+### Header Chunk Data
 
 | Chunk ID | Content |
 |----------|---------|
@@ -561,12 +369,10 @@ Map metadata is stored in the header chunks, accessible without decompressing th
 | `0x03043003` | Map name, mood, decoration name, map type, author display name |
 | `0x03043004` | Version info |
 | `0x03043005` | XML community reference string |
-| `0x03043007` | Thumbnail (JPEG image) + comments |
+| `0x03043007` | Thumbnail (JPEG) + comments |
 | `0x03043008` | Author zone path, author extra info |
 
-### 7.2 The XML Header (Chunk 0x03043005)
-
-Maps embed an XML string in the header that summarizes key metadata. From a real TechFlow.Map.Gbx:
+### The XML Header (Chunk 0x03043005)
 
 ```xml
 <header type="map" exever="3.3.0" exebuild="2026-02-02_17_51"
@@ -579,261 +385,117 @@ Maps embed an XML string in the header that summarizes key metadata. From a real
 </header>
 ```
 
-Fields:
-- `type`: Always `"map"` for map files
-- `exever`: Game version that created the map (e.g., `"3.3.0"`)
-- `exebuild`: Build date of the creating game version
-- `title`: Title ID (`"TMStadium"`)
-- `lightmap`: Lightmap state (`"0"` = none baked)
-- `uid`: 27-character unique map identifier (base64-encoded UUID)
-- `name`: Display name
-- `author`: Author's account ID (base64-encoded UUID)
+### Medal Times
 
-### 7.3 Thumbnail
+Stored in body chunk `0x0304304B` as uint32 milliseconds. A value of `0xFFFFFFFF` means "not set."
 
-The thumbnail is stored in header chunk `0x03043007`:
-
-```
-+0x00   4       uint32    version           Chunk version
-+0x04   4       uint32    thumbnail_size    Size of JPEG data in bytes
-...     15      bytes     "<Thumbnail.jpg>"  Marker string
-...     var     bytes     jpeg_data          JPEG image (thumbnail_size bytes)
-...     16      bytes     "</Thumbnail.jpg>"  End marker string
-...     var     bytes     comments_data      Additional comments (XML or text)
-```
-
-The chunk `0x03043007` has the "heavy" flag (bit 31 set in the size field), meaning parsers can skip it when only light metadata is needed. This is visible in the hex dumps: chunk sizes with `0x80000000` ORed.
-
-### 7.4 Map Types
-
-| Map Type | String | Description |
-|----------|--------|-------------|
-| Race | `TrackMania\TM_Race` | Standard point-to-point or multilap race |
-| Platform | `TrackMania\TM_Platform` | Platform mode (minimize restarts) |
-
-The map type string appears in body chunk data and the XML header.
-
-### 7.5 Medal Times
-
-Medal/objective times are stored in body chunk `0x0304304B` and in the `CGameCtnChallengeParameters` object:
-
-| Medal | Color | Description |
-|-------|-------|-------------|
-| Author | Blue/Developer | Time set by the map author |
-| Gold | Gold | Target time for skilled play |
-| Silver | Silver | Intermediate target |
-| Bronze | Bronze | Easy target |
-
-Times are stored as `uint32` in milliseconds. A value of `0xFFFFFFFF` means "not set."
-
-### 7.6 Author Information
-
-| Chunk | Field | Format |
-|-------|-------|--------|
-| `0x03043002` | Author login | Base64-encoded UUID (27 chars) |
-| `0x03043003` | Author display name | UTF-8 string |
-| `0x03043008` | Author zone path | Hierarchical zone string (e.g., `World|Europe|France`) |
-| `0x03043042` | Author data (newer format) | Extended author metadata |
-
-The author login is a base64-encoded binary UUID. Converting to the standard hyphenated hex UUID format:
-```
-Login (base64) -> decode -> format as UUID with hyphens = AccountID
-AccountID -> remove hyphens -> hex to bytes -> base64 = Login
-```
+| Medal | Color |
+|-------|-------|
+| Author | Blue/Developer |
+| Gold | Gold |
+| Silver | Silver |
+| Bronze | Bronze |
 
 ---
 
-## 8. Map Validation Rules
+## Map Validation Rules
 
-### 8.1 Route Validation
+### Route Validation
 
-For a map to be considered **valid for racing** (required for online play and leaderboard submission):
+For a valid racing map:
+1. Exactly one Start waypoint (or one StartFinish for multilap)
+2. Exactly one Finish waypoint (or StartFinish serves as both)
+3. A drivable path from Start to Finish through all Checkpoints
+4. Author time set (validation drive completed)
+5. All checkpoints reachable during the validation drive
 
-1. **Exactly one start**: The map must contain exactly one Start waypoint (or one StartFinish for multilap)
-2. **Exactly one finish**: The map must contain exactly one Finish waypoint (or the StartFinish serves as both)
-3. **Connected route**: There must be a drivable path from Start to Finish passing through all Checkpoints
-4. **Author time set**: The map author must have completed a validation drive, setting the Author medal time
-5. **All checkpoints reachable**: Every Checkpoint on the map must be crossed during the validation drive
+### Ghost Block Rules
 
-The editor validates connectivity through `CGameEditorPluginMapConnectResults`. When the map author clicks "Test" in the editor, the game enters `CGameCtnEditorCommon::Trackmania_GameState_EditorCheckStartPlaying` mode.
-
-### 8.2 Multilap Requirements
-
-For multilap maps:
-- Must use **StartFinish** instead of separate Start + Finish
-- Lap count must be set in parameters
-- All checkpoints must be reachable from the StartFinish gate and loop back to it
-
-### 8.3 Online Play Constraints
-
-For a map to be uploaded and played online:
-
-| Constraint | Limit | Evidence |
-|-----------|-------|---------|
-| Must be validated | Author time required | Editor enforces |
-| Embed size | Limited (exact value varies by context) | Server-side validation |
-| Block count | No hard limit documented, but very large maps cause performance issues | Practical |
-| Map file size | Varies -- servers reject excessively large files | Server-side |
-| Title | Must be `TMStadium` | Server validates |
-
-### 8.4 Ghost Block Rules
-
-Ghost blocks (`GetGhostBlocks()`) are blocks placed with the ghost mode enabled:
-- They occupy the grid but do **not** contribute to collision
-- They do **not** participate in route validation
-- They are used for visual decoration overlapping other blocks
-- They maintain grid alignment but allow overlapping placement that would otherwise be rejected
+Ghost blocks occupy the grid but do **not** contribute to collision or route validation. They serve as visual decoration that can overlap other blocks.
 
 ---
 
-## 9. Block Naming Convention
+## Block Naming Convention
 
-### 9.1 Name Structure
+TM2020 Stadium block names follow: `{Environment}{Category}{Shape}{Variant}{Modifier}`
 
-TM2020 Stadium block names follow a hierarchical pattern:
-
-```
-{Environment}{Category}{Shape}{Variant}{Modifier}
-```
-
-### 9.2 Environment Prefix
-
-Always `Stadium` for TM2020.
-
-### 9.3 Category Tokens
+### Category Tokens
 
 | Token | Description |
 |-------|-------------|
 | `Road` / `RoadMain` | Drivable road surface |
 | `Platform` | Flat platform surface |
 | `DecoWall` / `DecoHill` | Decorative wall/hill |
-| `Pillar` | Support pillar |
 | `Gate` | Start/Finish/Checkpoint gate |
 | `Water` | Water element |
 | `Grass` | Grass terrain |
 
-### 9.4 Shape Tokens
+### Shape Tokens
 
 | Token | Geometry |
 |-------|----------|
 | `Straight` | Straight segment |
-| `Curve` / `Turn` | Curved segment (various radii) |
+| `Curve` / `Turn` | Curved segment |
 | `Slope` / `Tilt` | Inclined surface |
-| `SlopeBase` / `SlopeEnd` | Slope transition at start/end |
-| `Cross` | Intersection / crossroad |
+| `Cross` | Intersection |
 | `DiagLeft` / `DiagRight` | Diagonal pieces |
 | `Chicane` | S-curve |
 
-### 9.5 Variant Suffixes
-
-| Suffix | Meaning |
-|--------|---------|
-| `x2` / `x3` / `x4` | Width multiplier |
-| `Narrow` | Narrower variant |
-| `Mirror` | Mirrored geometry |
-| `In` / `Out` | Border direction (inward/outward curve) |
-
-### 9.6 Examples
+### Examples
 
 ```
 StadiumRoadMainStraight           -- Basic straight road
 StadiumRoadMainCurvex2            -- Double-width curve
 StadiumPlatformSlopeMirror        -- Mirrored platform slope
 StadiumDecoWallStraight           -- Decorative wall, straight
-StadiumGrassMainSlope             -- Grass slope terrain
 ```
 
 ---
 
-## 10. Surface and Material System
+## Surface and Material System
 
-### 10.1 Key Finding: Gameplay Effects Are NOT Material-Driven
+### Gameplay Effects Are NOT Material-Driven
 
-All 208 stock materials in `NadeoImporterMaterialLib.txt` have `DGameplayId(None)`. Gameplay effects (turbo, reactor boost, no-grip, slow motion, etc.) are applied through **block/item types and trigger zones**, not through materials.
+All 208 stock materials have `DGameplayId(None)`. Gameplay effects (turbo, reactor boost, no-grip, slow motion) come from **block/item types and trigger zones**, not materials.
 
-Materials only control:
+Materials control:
 - **Surface physics** (friction, tire sound) via `DSurfaceId`
 - **Texture mapping** (UV layers: BaseMaterial + Lightmap)
 - **Visual appearance** (vertex color via `DColor0`)
 
-### 10.2 Complete Surface ID Table
-
-There are 19 unique surface types that determine physics behavior:
+### Surface ID Table (19 unique types)
 
 | Surface ID | Physics Behavior | Friction | Example Materials |
 |-----------|-----------------|----------|-------------------|
-| `Asphalt` | High-grip road | High | RoadTech, PlatformTech, OpenTechBorders |
+| `Asphalt` | High-grip road | High | RoadTech, PlatformTech |
 | `Concrete` | Structural surface | Medium-High | Waterground, ItemPillarConcrete |
-| `Dirt` | Off-road surface | Medium | RoadDirt |
+| `Dirt` | Off-road | Medium | RoadDirt |
 | `Grass` | Natural ground | Low | Grass, DecoHill |
-| `Green` | Vegetation | Low | DecoGreen |
 | `Ice` | Ice surface | Very Low | PlatformIce |
-| `Metal` | Metallic surface | Medium | Technics, Structure, Pylon |
-| `MetalTrans` | Transparent metal | N/A (pass-through or low) | LightSpot, Ad screens |
+| `Metal` | Metallic | Medium | Technics, Structure, Pylon |
 | `NotCollidable` | No collision | N/A | Chrono digits, GlassWaterWall |
-| `Pavement` | Paved sidewalk | Medium-High | PlatformPavement |
-| `Plastic` | Inflatable/bouncy | Medium | ItemInflatable*, ItemObstacle |
-| `ResonantMetal` | Metallic with ring | Medium | Structure, TrackWallClips |
-| `RoadIce` | Icy road | Very Low | RoadIce |
-| `RoadSynthetic` | Synthetic road | Medium | RoadBump, ScreenBack |
-| `Rock` | Natural rock | Medium | Various deco |
-| `Rubber` | Bouncy rubber | Medium-High (bounce) | TrackBorders |
-| `Sand` | Sandy surface | Low | Various deco |
-| `Snow` | Snow surface | Low | Various deco |
-| `Wood` | Wooden surface | Medium | TrackWall |
+| `Plastic` | Bouncy | Medium | ItemInflatable*, ItemObstacle |
+| `Rubber` | Bouncy rubber | Medium-High | TrackBorders |
+| `Sand` | Sandy | Low | Various deco |
+| `Snow` | Snow | Low | Various deco |
+| `Wood` | Wooden | Medium | TrackWall |
 
-### 10.3 Material Categories (208 Total)
-
-| Category | Count | Materials | Surface Types |
-|----------|-------|-----------|--------------|
-| Roads | 4 | RoadTech, RoadBump, RoadDirt, RoadIce | Asphalt, RoadSynthetic, Dirt, RoadIce |
-| Platforms | 3 | PlatformTech, OpenTechBorders, ItemInflatableFloor | Asphalt, Plastic |
-| Inflatables | 2 | ItemInflatableMat, ItemInflatableTube | Plastic, Metal |
-| Track Elements | 6+ | TrackBorders, TrackBordersOff, TrackWall, TrackWallClips, PoolBorders, WaterBorders | Rubber, Wood, Plastic, ResonantMetal |
-| Technics | 5+ | Structure, Technics, TechnicsTrims, Pylon, Waterground | Metal, Concrete, ResonantMetal |
-| Decoration | 5+ | Grass, DecoHill, DecoHill2, DecoGreen, GlassWaterWall | Grass, Green, NotCollidable |
-| Racing UI | 5+ | RaceArch*, Speedometer, Chrono digits | NotCollidable |
-| Ad Screens | 10+ | Ad*Screen, 16x9ScreenOff | MetalTrans |
-| Items | 10+ | ItemPillar*, ItemTrackBarrier*, ItemObstacle*, ItemRamp | Various |
-| Custom/Mod | 20+ | Custom*, CustomMod* variants | Various |
-
-### 10.4 Material Library Format
-
-The `NadeoImporterMaterialLib.txt` uses this grammar:
-
-```
-DLibrary(<library_name>)
-  DMaterial(<material_name>)
-    DSurfaceId(<surface_id>)
-    DGameplayId(<gameplay_id>)
-    DUvLayer(<layer_type>, <channel_index>)
-    [DColor0()]
-    [DLinkFull(<media_path>)]
-```
-
-Every TM2020 material is in `DLibrary(Stadium)`.
-
-### 10.5 UV Layer Requirements
+### UV Layer Requirements
 
 | Material Type | UV0 | UV1 | Notes |
 |---------------|-----|-----|-------|
-| Standard (roads, platforms, technics) | BaseMaterial | Lightmap | Both required |
-| Decals (DecalCurbs, etc.) | BaseMaterial | -- | No lightmap (projected) |
-| Grass | Lightmap | -- | UNUSUAL: lightmap on channel 0 |
-| Dynamic items (obstacles, lights) | BaseMaterial | -- | No lightmap (dynamic) |
+| Standard (roads, platforms) | BaseMaterial | Lightmap | Both required |
+| Grass | Lightmap | -- | Lightmap on channel 0 (unusual) |
+| Dynamic items | BaseMaterial | -- | No lightmap |
 | Custom* materials | Lightmap | -- | Engine-provided textures |
-| CustomMod* materials | BaseMaterial | Lightmap | User-moddable |
-| FX materials (Boost_SpecialFX, etc.) | BaseMaterial | -- | Visual effect only |
 
-**Critical for item creators**: Every drivable surface mesh MUST have a Lightmap UV layer. Without it, NadeoImporter will abort with `"Mesh has no LM UVs => abort"`.
+Every drivable surface mesh MUST have a Lightmap UV layer. Without it, NadeoImporter aborts with `"Mesh has no LM UVs => abort"`.
 
 ---
 
-## 11. GBX Map File Binary Layout
+## GBX Map File Binary Layout
 
-### 11.1 File Structure Overview
-
-A `.Map.Gbx` file is a GBX version 6 binary file with class ID `0x03043000` (CGameCtnChallenge):
+### File Structure
 
 ```
 +=========================================+
@@ -850,9 +512,6 @@ A `.Map.Gbx` file is a GBX version 6 binary file with class ID `0x03043000` (CGa
 | NODE COUNT (uint32)                     |
 +=========================================+
 | REFERENCE TABLE                         |
-|   External node count (uint32)          |
-|   Ancestor folders (if > 0)             |
-|   Reference entries                     |
 +=========================================+
 | BODY (compressed)                       |
 |   Uncompressed size (uint32)            |
@@ -861,340 +520,106 @@ A `.Map.Gbx` file is a GBX version 6 binary file with class ID `0x03043000` (CGa
 +=========================================+
 ```
 
-### 11.2 Format Flags
-
-All real map files observed use `BUCR`:
-- **B**: Binary format
-- **U**: Body wrapper uncompressed
-- **C**: Body stream compressed (LZO)
-- **R**: With external references
-
-### 11.3 Header Chunks
-
-| Chunk ID | Heavy? | Typical Size | Content |
-|----------|--------|--------------|---------|
-| `0x03043002` | No | ~57 bytes | Map UID, environment, author |
-| `0x03043003` | No | ~225 bytes | Map name, mood, decoration |
-| `0x03043004` | No | 4 bytes | Version |
-| `0x03043005` | No | ~525 bytes | XML metadata |
-| `0x03043007` | **Yes** | ~24-100 KB | Thumbnail JPEG |
-| `0x03043008` | No | ~82 bytes | Author info |
-
-The heavy flag on chunk `0x03043007` means the thumbnail can be skipped for quick metadata reads.
-
-### 11.4 Body Chunks
+### Body Chunks
 
 | Chunk ID | Skippable | Content |
 |----------|-----------|---------|
 | `0x0304300D` | Yes | Vehicle/player model reference |
 | `0x03043011` | No | Block data array (primary block storage) |
-| `0x0304301F` | Yes | Block parameters + additional block data |
-| `0x03043022` | Yes | [UNKNOWN] |
-| `0x03043024` | Yes | Music reference |
-| `0x03043025` | Yes | [UNKNOWN] |
-| `0x03043026` | Yes | [UNKNOWN] |
-| `0x03043028` | Yes | [UNKNOWN] |
-| `0x03043029` | Yes | [UNKNOWN] |
-| `0x03043034` | Yes | [UNKNOWN] |
-| `0x03043036` | Yes | [UNKNOWN] |
-| `0x03043038` | Yes | [UNKNOWN] |
-| `0x03043040` | Yes | Anchored object (item) placement data |
+| `0x0304301F` | Yes | Block parameters + additional data |
+| `0x03043040` | Yes | Anchored object (item) placement |
 | `0x03043042` | Yes | Author data (newer format) |
-| `0x03043043` | Yes | Genealogy / block relationships |
 | `0x03043044` | Yes | Script metadata |
-| `0x03043048` | Yes | Baked blocks data |
-| `0x03043049` | Yes | [UNKNOWN] |
+| `0x03043048` | Yes | Baked blocks |
 | `0x0304304B` | Yes | Objectives / medal times |
 | `0x03043054` | Yes | Embedded items |
-| `0x03043056` | Yes | [UNKNOWN] |
 | `0xFACADE01` | -- | End sentinel |
 
-### 11.5 LookbackString System
+### LookbackString System
 
-Block and item names use string interning. The first Id read in a context must establish the lookback version:
+Block and item names use string interning:
 
 ```
 First Id read:    uint32 = 3 (version marker)
 Subsequent reads: uint32 flags_and_index
-  Bits 31-30 = 0b11: New string follows (read length-prefixed string, add to table)
-  Bits 31-30 = 0b10: Reference to previously-seen string at index (bits 29-0)
-  Bits 31-30 = 0b01: Well-known string (predefined):
+  Bits 31-30 = 0b11: New string follows (read and add to table)
+  Bits 31-30 = 0b10: Reference at index (bits 29-0)
+  Bits 31-30 = 0b01: Well-known string:
     0x40000001 = "Unassigned"
-    0x40000002 = "" (empty)
     0x40000003 = "Stadium"
     0x40000004 = "Valley"
     0x40000005 = "Canyon"
     0x40000006 = "Lagoon"
 ```
 
-The lookback table is per-node -- it resets for each serialization context.
-
 ---
 
-## 12. Real File Hex Analysis
+## Real File Hex Analysis
 
-### 12.1 File Header Pattern
+### File Header Pattern
 
-Every .Map.Gbx starts with the same byte sequence. Here is the annotated hex from CraterWorld.Map.Gbx:
-
+Every .Map.Gbx starts with:
 ```
-Offset  Bytes                           Interpretation
-------  -----                           --------------
 0x0000  47 42 58                        Magic: "GBX"
-0x0003  06 00                           Version: 6 (little-endian uint16)
-0x0005  42 55 43 52                     Format flags: "BUCR"
-0x0009  00 30 04 03                     Class ID: 0x03043000 (CGameCtnChallenge)
-                                        NOTE: stored little-endian, reads as 0x00300403 in hex dump
-                                        but the value is 0x03043000
+0x0003  06 00                           Version: 6
+0x0005  42 55 43 52                     Format: "BUCR"
+0x0009  00 30 04 03                     Class ID: 0x03043000
 ```
 
-Wait -- let me re-examine. The bytes at offset 0x0009 are `5b fa 00 00` in the first file. Let me re-read.
-
-Actually, looking at the CraterWorld hex dump more carefully:
-
-```
-0x0000: 47 42 58 06 00 42 55 43 52 00 30 04 03 5b fa 00
-
-Byte-by-byte:
-0x00-02: "GBX"                          Magic
-0x03-04: 06 00                          Version 6
-0x05-08: 42 55 43 52                    "BUCR" format flags
-0x09-0C: 00 30 04 03                    Class ID = 0x03043000 (LE)
-0x0D-10: 5b fa 00 00                    User data size = 0x0000FA5B = 64,091 bytes
-0x11-14: 06 00 00 00                    Header chunk count = 6
-```
-
-### 12.2 Header Chunk Table
-
-Continuing from CraterWorld.Map.Gbx:
-
-```
-Header chunk index (6 entries, 8 bytes each):
-  Chunk 0: 02 30 04 03  39 00 00 00    ID=0x03043002  Size=0x39 (57 bytes)
-  Chunk 1: 03 30 04 03  f1 00 00 00    ID=0x03043003  Size=0xF1 (241 bytes)
-  Chunk 2: 04 30 04 03  04 00 00 00    ID=0x03043004  Size=0x04 (4 bytes)
-  Chunk 3: 05 30 04 03  63 02 00 80    ID=0x03043005  Size=0x263 (611 bytes) HEAVY
-  Chunk 4: 07 30 04 03  44 f6 00 80    ID=0x03043007  Size=0xF644 (63,044 bytes) HEAVY
-  Chunk 5: 08 30 04 03  52 00 00 00    ID=0x03043008  Size=0x52 (82 bytes)
-```
-
-Note: Chunks 3 (0x03043005) and 4 (0x03043007) have bit 31 set in the size (`0x80000000`), marking them as "heavy" chunks. The actual size is obtained by masking: `size & 0x7FFFFFFF`.
-
-### 12.3 Comparing Multiple Map Headers
+### Comparing Multiple Maps
 
 | Field | CraterWorld | Kacky394 | TechFlow | PillarWorld |
 |-------|-------------|----------|----------|-------------|
-| Magic | GBX | GBX | GBX | GBX |
 | Version | 6 | 6 | 6 | 6 |
 | Format | BUCR | BUCR | BUCR | BUCR |
 | Class ID | 0x03043000 | 0x03043000 | 0x03043000 | 0x03043000 |
 | Header chunks | 6 | 6 | 6 | 6 |
-| Thumbnail size | ~63 KB | ~100 KB | ~24 KB | ~22 KB |
 | Decoration | NoStadium48x48Day | 48x48Screen155Sunrise | NoStadium48x48Day | NoStadium48x48Day |
-| Map type | TrackMania\TM_Race | TrackMania\TM_Race | TrackMania\TM_Race | TrackMania\TM_Race |
 
-All maps share: version 6, BUCR format, 6 header chunks, same class ID, same map type. The differences are in user data size (driven mainly by thumbnail size) and decoration name.
-
-### 12.4 Map Name and Author Extraction
-
-From the hex dump, these strings are visible in the header chunk data (uncompressed):
-
-**CraterWorld.Map.Gbx** (offset ~0xCC):
-```
-0b 00 00 00 43 72 61 74 65 72 57 6f 72 6c 64    Length=11 "CraterWorld"
-```
-
-**Author login** (27-char base64 at ~0x8C):
-```
-58 43 68 77 44 75 38 46 52 6d 57 48 2d 67 48     "XChwDu8FRmWH-gH"
-71 58 55 62 42 74 67                               "qXUbBtg"
-```
-
-This author login (`XChwDu8FRmWH-gHqXUbBtg`) appears in ALL the examined maps -- consistent with them all being created by the same author.
+All maps share version 6, BUCR format, 6 header chunks, same class ID, and same map type (`TrackMania\TM_Race`).
 
 ---
 
-## 13. Class Reference
+## Class Reference
 
-### 13.1 Map Structure Classes (CGameCtnChallenge)
+### Map Structure Classes
 
-`CGameCtnChallenge` is the root map class (class ID `0x03043000`). Legacy name: "Challenge" from the TMN/TMUF era.
-
-**Known methods** (from RTTI):
-
+`CGameCtnChallenge` is the root map class (class ID `0x03043000`). Known methods:
 ```
-AutoSetIdsForLightMap
-ConnectAdditionalDataClipsToBakedClips
-CreateFreeClips
-CreatePlayFields
-InitAllAnchoredObjects
-InitChallengeData_ClassicBlocks
-InitChallengeData_ClassicClipsBaked
-InitChallengeData_Clips
-InitChallengeData_DefaultTerrainBaked
-InitChallengeData_FreeClipsBaked
-InitChallengeData_Genealogy
-InitChallengeData_PylonsBaked
-InitChallengeData_Terrain
-InitEmbeddedItemModels
-InitPylonsList
-InternalLoadDecorationAndCollection
-LoadAndInstanciateBlocks
-LoadDecorationAndCollection
-LoadEmbededItems
-RemoveNonBlocksFromBlockStock
-SFilteredBlockLists
-TransferIdForLightMapFromBakedBlocksToBlocks
-UpdateBakedBlockList
+AutoSetIdsForLightMap, ConnectAdditionalDataClipsToBakedClips, CreateFreeClips,
+CreatePlayFields, InitAllAnchoredObjects, InitChallengeData_ClassicBlocks,
+InitChallengeData_Clips, InitChallengeData_Terrain, InitEmbeddedItemModels,
+LoadAndInstanciateBlocks, LoadDecorationAndCollection, LoadEmbededItems,
+RemoveNonBlocksFromBlockStock, UpdateBakedBlockList
 ```
 
-**Related map classes**:
-
-| Class | Purpose |
-|-------|---------|
-| `CGameCtnChallengeInfo` | Map metadata (UID, name, author) |
-| `CGameCtnChallengeParameters` | Map parameters (time limits, medal times, lap count) |
-| `CGameCtnChallengeGroup` | Group of maps (campaign chapters) |
-| `CGameCtnCollection` | Block collection for an environment |
-| `CGameCtnCatalog` | Block catalog |
-| `CGameCtnCampaign` | Campaign structure |
-| `CGameCtnChapter` | Campaign chapter |
-
-### 13.2 Block Classes
-
-| Class | Purpose |
-|-------|---------|
-| `CGameCtnBlock` | Placed block instance on the map |
-| `CGameCtnBlockInfo` | Base block type definition |
-| `CGameCtnBlockInfoClassic` | Standard grid-snapped block |
-| `CGameCtnBlockInfoClip` | Clip connection block (base) |
-| `CGameCtnBlockInfoClipHorizontal` | Horizontal clip block |
-| `CGameCtnBlockInfoClipVertical` | Vertical clip block |
-| `CGameCtnBlockInfoFlat` | Flat terrain block |
-| `CGameCtnBlockInfoFrontier` | Zone boundary block |
-| `CGameCtnBlockInfoMobil` | Moving/animated block |
-| `CGameCtnBlockInfoMobilLink` | Mobile block link |
-| `CGameCtnBlockInfoPylon` | Auto-generated support pillar |
-| `CGameCtnBlockInfoRectAsym` | Rectangular asymmetric block |
-| `CGameCtnBlockInfoRoad` | Road block |
-| `CGameCtnBlockInfoSlope` | Sloped surface block |
-| `CGameCtnBlockInfoTransition` | Terrain transition block |
-| `CGameCtnBlockInfoVariant` | Base variant |
-| `CGameCtnBlockInfoVariantAir` | Air (elevated) variant |
-| `CGameCtnBlockInfoVariantGround` | Ground variant |
-| `CGameCtnBlockSkin` | Block skin/appearance override |
-| `CGameCtnBlockUnit` | Single cell of a multi-cell block |
-| `CGameCtnBlockUnitInfo` | Block unit metadata |
-
-### 13.3 Item/Anchor Classes
-
-| Class | Purpose |
-|-------|---------|
-| `CGameCtnAnchoredObject` | Placed item instance on the map |
-| `CGameCtnAnchorPoint` | Anchor point on a block |
-| `CGameItemModel` | Item model definition (root) |
-| `CGameItemModelTreeRoot` | Item model hierarchy root |
-| `CGameItemPlacementParam` | Item placement parameters |
-| `CItemAnchor` | Item anchor point |
-| `CGameBlockItem` | Block-as-item wrapper |
-| `CGameBlockItemVariantChooser` | Block item variant selection |
-| `CGameBlockInfoGroups` | Block info group collection |
-| `CGameBlockInfoTreeRoot` | Block info tree root |
-| `CAnchorData` | Anchor/waypoint data (has `EWaypointType`) |
-| `CGameWaypointSpecialProperty` | Waypoint properties (start/finish/CP) |
-
-### 13.4 Zone/Terrain Classes
-
-| Class | Purpose |
-|-------|---------|
-| `CGameCtnZone` | Base zone |
-| `CGameCtnZoneFlat` | Flat terrain zone |
-| `CGameCtnZoneFrontier` | Zone border |
-| `CGameCtnZoneTransition` | Zone transition |
-| `CGameCtnZoneFusionInfo` | Zone fusion data |
-| `CGameCtnZoneGenealogy` | Zone genealogy/history |
-| `CGameCtnAutoTerrain` | Auto-generated terrain fill |
-| `CGameCtnPylonColumn` | Pylon column (support pillar) |
-
-### 13.5 Decoration Classes
-
-| Class | Purpose |
-|-------|---------|
-| `CGameCtnDecoration` | Map decoration definition |
-| `CGameCtnDecorationSize` | Grid dimensions (SizeX, SizeY, SizeZ) |
-| `CGameCtnDecorationMood` | Time-of-day / lighting mood |
-| `CGameCtnDecorationMaterialModifiers` | Material appearance overrides |
-
-### 13.6 Editor Classes
-
-| Class | Purpose |
-|-------|---------|
-| `CGameCtnEditorCommon` | Common map editor logic |
-| `CGameCtnEditorCommonInterface` | Editor UI / inventory system |
-| `CGameCtnEditorHistory` | Undo/redo history |
-| `CGameCtnEditorFree` | Main map editor mode |
-| `CGameCtnEditorPuzzle` | Puzzle editor mode (limited block set) |
-| `CGameEditorMapMacroBlockInstance` | Macroblock instance in editor |
-| `CGameEditorPluginMapConnectResults` | Block connection validation |
-| `CMapEditorInventory` | Script-accessible block inventory |
-| `CMapEditorCursor` | Editor placement cursor |
-
-### 13.7 Macroblock Classes
-
-| Class | Purpose |
-|-------|---------|
-| `CGameCtnMacroBlockInfo` | Macroblock template (multi-block group) |
-| `CGameCtnMacroBlockJunction` | Connection point between macroblocks |
-| `CGameCtnMacroDecals` | Decals within a macroblock |
-
-### 13.8 Script API Classes (Block/Map)
-
-| Class | Purpose |
-|-------|---------|
-| `CBlockModel` | Script API: block model (exposes `EWayPointType`) |
-| `CBlockModelClip` | Script API: clip model |
-| `CBlockModelVariant` | Script API: variant |
-| `CBlockModelVariantAir` | Script API: air variant |
-| `CBlockModelVariantGround` | Script API: ground variant |
-| `CBlockClip` | Script API: clip connection |
-| `CBlockClipList` | Script API: clip list |
-| `CBlockUnit` | Script API: block unit |
-| `CBlockUnitModel` | Script API: block unit model |
-
-### 13.9 Key Class ID Quick Reference
+### Key Class ID Quick Reference
 
 | Class ID | Class | File Extension |
 |----------|-------|---------------|
 | `0x03043000` | CGameCtnChallenge | `.Map.Gbx` |
 | `0x03093000` | CGameCtnReplayRecord | `.Replay.Gbx` |
-| `0x09005000` | CPlugSolid | (legacy mesh) |
 | `0x09011000` | CPlugBitmap | `Texture.Gbx` |
 | `0x09026000` | CPlugShaderApply | `Material.Gbx` |
 | `0x090BB000` | CPlugSolid2Model | `.Solid2.gbx` |
 
-Legacy class ID `0x24003000` remaps to `0x03043000` (CGameCtnChallenge) for backward compatibility with old ManiaPlanet files.
+Legacy class ID `0x24003000` remaps to `0x03043000` for backward compatibility.
 
 ---
 
-## Appendix A: Quick Reference for Map Loader Implementors
+## Quick Reference for Map Loader Implementors
 
 ### Minimum Viable Parser
 
-To load a map and extract block/item data, you need to:
-
-1. Parse the GBX header (magic, version, format flags, class ID)
-2. Read header chunks (extract metadata: name, author, UID, thumbnail)
+1. Parse GBX header (magic, version, format flags, class ID)
+2. Read header chunks (name, author, UID, thumbnail)
 3. Skip or parse the reference table
 4. Decompress the body (LZO)
-5. Parse body chunks, focusing on:
-   - `0x03043011` -- block data array
-   - `0x03043040` -- item placement array
-   - `0x0304304B` -- medal times
-   - `0x03043054` -- embedded items (if self-contained maps needed)
-6. Handle the LookbackString system for block/item name resolution
+5. Parse body chunks: `0x03043011` (blocks), `0x03043040` (items), `0x0304304B` (medal times), `0x03043054` (embedded items)
+6. Handle LookbackString for block/item name resolution
 7. Apply class ID remapping for legacy files
 
-### Data You Get Per Block
+### Data Per Block
 
 ```
 block_name:  string    (e.g., "StadiumRoadMainStraight")
@@ -1205,7 +630,7 @@ coord_z:     uint32    (grid Z position)
 flags:       uint32    (bit 15 = is_ground, 0xFFFFFFFF = free block)
 ```
 
-### Data You Get Per Item
+### Data Per Item
 
 ```
 item_name:   string    (e.g., "PillarWorld/Pillar_Color6.Item.Gbx")
@@ -1222,6 +647,22 @@ world_position.y = block.coord_y * 8.0
 world_position.z = block.coord_z * 32.0
 ```
 
-### End Sentinel
+The body chunk stream ends with `0xFACADE01`. Stop parsing when you read this as a chunk ID.
 
-The body chunk stream always ends with `0xFACADE01`. If you read this value as a chunk ID, stop parsing.
+---
+
+## Related Pages
+
+- [26-real-file-analysis.md](26-real-file-analysis.md) -- Byte-by-byte hex analysis of real .Map.Gbx files
+- [16-fileformat-deep-dive.md](16-fileformat-deep-dive.md) -- GBX format specification
+- [20-browser-recreation-guide.md](20-browser-recreation-guide.md) -- Map loading for browser recreation
+- [30-ghost-replay-format.md](30-ghost-replay-format.md) -- Replay files that embed maps
+- [29-community-knowledge.md](29-community-knowledge.md) -- Community GBX parsing tools
+
+<details><summary>Analysis metadata</summary>
+
+- **Purpose**: Comprehensive reference for the internal structure of Trackmania 2020 maps
+- **Sources**: Ghidra decompilation of Trackmania.exe, Openplanet plugin analysis, NadeoImporterMaterialLib.txt, class_hierarchy.json RTTI extraction, hex analysis of real .Map.Gbx files
+- **Date**: 2026-03-27
+
+</details>

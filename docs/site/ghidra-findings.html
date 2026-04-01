@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item active" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item active" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,27 +121,11 @@
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
                         <h1 id="ghidra-research-findings"><a class="anchor" href="#ghidra-research-findings">#</a>Ghidra Research Findings</h1>
-<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020) <strong>Date</strong>: 2026-03-27 <strong>Tools</strong>: PyGhidra bridge via <code>bridge_query.py</code> <strong>Note</strong>: Findings from both the automated Ghidra agent and manual queries</p>
-<hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-audio-system">Audio System</a></li>
-  <li><a href="#2-input-system">Input System</a></li>
-  <li><a href="#3-camera-system">Camera System</a></li>
-  <li><a href="#4-compression-system">Compression System</a></li>
-  <li><a href="#5-gravity-system">Gravity System</a></li>
-  <li><a href="#6-thread-model">Thread Model</a></li>
-  <li><a href="#7-deferred-rendering-pipeline">Deferred Rendering Pipeline</a></li>
-  <li><a href="#8-txaa-implementation">TXAA Implementation</a></li>
-  <li><a href="#9-alternative-graphics-apis">Alternative Graphics APIs</a></li>
-  <li><a href="#10-maniascript-engine">ManiaScript Engine</a></li>
-</ol>
-<hr>
-<h2 id="1-audio-system"><a class="anchor" href="#1-audio-system">#</a>1. Audio System</h2>
-<h3 id="phase-1-openal-audio-initialization"><a class="anchor" href="#phase-1-openal-audio-initialization">#</a>[Phase 1] OpenAL Audio Initialization</h3>
-<p><strong>Query</strong>: <code>search_strings "CAudioEngine"</code>, <code>decompile 0x14138c090</code> <strong>Evidence</strong>: Decompiled in <code>decompiled/audio/COalAudioPort_InitImplem.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The game uses <strong>OpenAL</strong> (via <code>OpenAL64_bundled.dll</code>) for all spatial audio:</p>
-<p><strong>Initialization sequence</strong> (COalAudioPort::InitImplem at <code class="addr">0x14138c090</code>):</p>
+<p>Ghidra analysis of Trackmania.exe revealed detailed internals for 10 subsystems. Key discoveries include the full deferred rendering pipeline (19 passes), OpenAL audio initialization with XOR-obfuscated function pointers, all ManiaScript token types, and the dual zlib/LZO compression story.</p>
+<p>Findings come from both the automated Ghidra agent and manual queries via <code>bridge_query.py</code>.</p>
+<h2 id="audio-openal-initialization"><a class="anchor" href="#audio-openal-initialization">#</a>Audio: OpenAL Initialization</h2>
+<p>The game uses OpenAL (via <code>OpenAL64_bundled.dll</code>) for all spatial audio.</p>
+<p><code>COalAudioPort::InitImplem</code> at <code class="addr">0x14138c090</code> runs this sequence:</p>
 <ol>
   <li>Dynamically loads OpenAL DLL via <code>LoadLibrary</code></li>
   <li>Resolves function pointers: <code>alcOpenDevice</code>, <code>alcGetProcAddress</code>, <code>alcGetError</code>, <code>alcIsExtensionPresent</code></li>
@@ -144,6 +136,7 @@
   <li>Checks for EFX (Environmental effects) support</li>
   <li>Logs: <code>"[Audio] Initialized, using device '<name>', sources = N+M, EFX enabled/disabled"</code></li>
 </ol>
+<p>Function pointers at +0x298 and +0x2B1 are XOR/ADD obfuscated as an anti-tamper measure.</p>
 <p><strong>COalAudioPort struct offsets</strong>:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -201,20 +194,10 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Anti-tamper note</strong>: Function pointers at +0x298 and +0x2B1 are obfuscated with XOR/ADD operations.</p>
 <p><strong>ALC constants used</strong>: 0x1000 (MAJOR_VERSION), 0x1001 (MINOR_VERSION), 0x1005 (DEFAULT_DEVICE_SPECIFIER), 0x1010 (MONO_SOURCES), 0x1011 (STEREO_SOURCES)</p>
-<hr>
-<h2 id="2-input-system"><a class="anchor" href="#2-input-system">#</a>2. Input System</h2>
-<h3 id="phase-2-input-port-frame-update"><a class="anchor" href="#phase-2-input-port-frame-update">#</a>[Phase 2] Input Port Frame Update</h3>
-<p><strong>Query</strong>: <code>search_strings "CInputPort"</code>, <code>decompile 0x1402acea0</code> <strong>Evidence</strong>: Decompiled in <code>decompiled/input/CInputPort_Update_StartFrame.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p><strong>CInputPort::Update_StartFrame</strong> (<code class="addr">0x1402acea0</code>) runs each frame:</p>
-<ol>
-  <li>Reads global tick counter (<code>DAT_141ffad50</code>)</li>
-  <li>Checks 150ms timeout for device connectivity</li>
-  <li>Processes input event queue</li>
-  <li>Calls virtual methods for per-device update</li>
-  <li>Clears event queue</li>
-</ol>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="input-per-frame-update"><a class="anchor" href="#input-per-frame-update">#</a>Input: Per-Frame Update</h2>
+<p><code>CInputPort::Update_StartFrame</code> (<code class="addr">0x1402acea0</code>) processes input each frame. It reads a global tick counter, checks a 150ms device connectivity timeout, processes the input event queue, calls virtual methods for per-device updates, then clears the queue.</p>
 <p><strong>CInputPort struct offsets</strong>:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -267,13 +250,10 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Event types</strong>: 0xC and 0x5 set activity flags <strong>Virtual method offsets</strong>: +0x120 (device state change), +0x128 (per-device update), +0x1A8 (main polling)</p>
-<hr>
-<h2 id="3-camera-system"><a class="anchor" href="#3-camera-system">#</a>3. Camera System</h2>
-<h3 id="phase-3-camera-class-enumeration"><a class="anchor" href="#phase-3-camera-class-enumeration">#</a>[Phase 3] Camera Class Enumeration</h3>
-<p><strong>Query</strong>: <code>search_strings "CGameCamera"</code>, <code>search_strings "NGameCamera"</code> <strong>Evidence</strong>: Decompiled in <code>decompiled/camera/NGameCamera_SCamSys_StaticInit.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p><code>NGameCamera::SCamSys</code> allocates <strong>0x6C0 = 1728 bytes</strong> per instance.</p>
-<p><strong>Camera control classes</strong>:</p>
+<p>Event types 0xC and 0x5 set activity flags. Virtual method offsets: +0x120 (device state change), +0x128 (per-device update), +0x1A8 (main polling).</p>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="camera-12-controller-classes"><a class="anchor" href="#camera-12-controller-classes">#</a>Camera: 12 Controller Classes</h2>
+<p><code>NGameCamera::SCamSys</code> allocates <strong>0x6C0 = 1728 bytes</strong> per instance. Twelve camera controller classes were found:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -332,18 +312,11 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Camera model files</strong> (loaded from .gbx):</p>
-<ul>
-  <li><code>VehicleCameraRace2Model.gbx</code>, <code>VehicleCameraRace3Model.gbx</code></li>
-  <li><code>VehicleCameraInternalModel.gbx</code>, <code>VehicleCameraHelicoModel.gbx</code></li>
-  <li><code>VehicleCameraHmdExternalModel.gbx</code></li>
-</ul>
-<p><strong>Spectator camera types</strong> (from ForceSpectator XML-RPC): 0=replay, 1=follow, 2=free</p>
-<p><strong>Audio-camera coupling</strong>: <code>CameraWooshVolumedB</code>, <code>CameraWooshMinSpeedKmh</code></p>
-<hr>
-<h2 id="4-compression-system"><a class="anchor" href="#4-compression-system">#</a>4. Compression System</h2>
-<h3 id="phase-8-compression-zlib-strings-present-gbx-body-uses-lzo1x"><a class="anchor" href="#phase-8-compression-zlib-strings-present-gbx-body-uses-lzo1x">#</a>[Phase 8] Compression: zlib Strings Present, GBX Body Uses LZO1X</h3>
-<p><strong>Query</strong>: <code>search_strings "zlib"</code>, <code>search_strings "LZO"</code>, <code>search_strings "lzo"</code> <strong>Confidence</strong>: PARTIALLY CORRECTED (see update below)</p>
+<p>Camera model files loaded from <code>.gbx</code>: <code>VehicleCameraRace2Model.gbx</code>, <code>VehicleCameraRace3Model.gbx</code>, <code>VehicleCameraInternalModel.gbx</code>, <code>VehicleCameraHelicoModel.gbx</code>, <code>VehicleCameraHmdExternalModel.gbx</code>.</p>
+<p>Spectator camera types (from ForceSpectator XML-RPC): 0=replay, 1=follow, 2=free. Audio-camera coupling uses <code>CameraWooshVolumedB</code> and <code>CameraWooshMinSpeedKmh</code>.</p>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="compression-zlib-present-gbx-body-uses-lzo1x"><a class="anchor" href="#compression-zlib-present-gbx-body-uses-lzo1x">#</a>Compression: zlib Present, GBX Body Uses LZO1X</h2>
+<p>zlib strings appear in the binary. LZO does not appear as a string -- but LZO1X is the actual GBX body compressor.</p>
 <p><strong>zlib</strong>: CONFIRMED present in binary strings</p>
 <ul>
   <li><code class="addr">0x14199b2b8</code>: <code>"zlib compression"</code></li>
@@ -351,19 +324,18 @@
   <li><code class="addr">0x141be0f40</code>: <code>"zlib corrupt"</code></li>
   <li><code class="addr">0x141be0ff0</code>: <code>"bad zlib header"</code></li>
 </ul>
-<p><strong>LZO</strong>: NOT FOUND as a string (0 string matches for "LZO"/"lzo")</p>
-<p><strong>CORRECTION (from docs 16, 26, 29)</strong>: The original conclusion that "TM2020 uses zlib exclusively for GBX body compression" was <strong>incorrect</strong>. Real file analysis (doc 26) confirmed that GBX body compression uses <strong>LZO1X</strong>, not zlib:</p>
+<p><strong>LZO</strong>: NOT FOUND as a string (0 matches)</p>
+<p><strong>CORRECTION (from docs 16, 26, 29)</strong>: The original conclusion that "TM2020 uses zlib exclusively for GBX body compression" was <strong>incorrect</strong>. Real file analysis (doc 26) confirmed GBX body compression uses <strong>LZO1X</strong>, not zlib:</p>
 <ul>
   <li>Compressed data in real .Map.Gbx and .Profile.Gbx files fails zlib/deflate decompression</li>
   <li>Byte patterns match LZO1X encoding (first byte encodes literal run length)</li>
   <li>Community tools (GBX.NET, pygbx) all use LZO for GBX body decompression</li>
-  <li>The decompression function <code>FUN_140127aa0</code> implements LZO1X (no "LZO" string because it is a compiled implementation, not a named library)</li>
+  <li>The decompression function <code>FUN_140127aa0</code> implements LZO1X (no "LZO" string because the algorithm is compiled in, not linked as a named library)</li>
 </ul>
-<p><strong>Both are present</strong>: zlib strings exist in the binary for <strong>other purposes</strong> (likely lightmap compression, ghost data, or internal data streams per doc 29 Section 2.6). LZO1X is used for GBX body compression but has no string signature because the algorithm is compiled directly into the binary rather than linked as a named library.</p>
-<hr>
-<h2 id="5-gravity-system"><a class="anchor" href="#5-gravity-system">#</a>5. Gravity System</h2>
-<h3 id="phase-7-gravitycoef-and-gameplay-gravity"><a class="anchor" href="#phase-7-gravitycoef-and-gameplay-gravity">#</a>[Phase 7] GravityCoef and Gameplay Gravity</h3>
-<p><strong>Query</strong>: <code>search_strings "Gravity"</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<p><strong>Both are present</strong>: zlib strings exist for <strong>other purposes</strong> (likely lightmap compression, ghost data, or internal data streams per doc 29 Section 2.6). LZO1X handles GBX body compression but has no string signature.</p>
+<p>Confidence: PARTIALLY CORRECTED</p>
+<h2 id="gravity-normalized-0-1-coefficient-with-250ms-delay"><a class="anchor" href="#gravity-normalized-0-1-coefficient-with-250ms-delay">#</a>Gravity: Normalized 0-1 Coefficient with 250ms Delay</h2>
+<p>GravityCoef is a normalized value (0 to 1), not a physical m/s^2 value. Setting gravity has a 250ms smoothed transition. The GravityCoef API is deprecated in favor of <code>SetPlayer_Delayed_AccelCoef</code>.</p>
 <p><strong>Gravity-related strings found</strong>:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -426,38 +398,27 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Key findings</strong>:</p>
-<ol>
-  <li>GravityCoef is a normalized value: <strong>0 to 1</strong> (not a physical m/s² value)</li>
-  <li>Setting gravity has a <strong>250ms delay</strong> (smoothed transition)</li>
-  <li>The GravityCoef API is <strong>deprecated</strong> in favor of <code>SetPlayer_Delayed_AccelCoef</code></li>
-  <li><code>TechGravityChange</code> and <code>TechGravityReset</code> are <strong>gameplay surface effects</strong> (blocks/items can modify gravity)</li>
-  <li><code>DefaultGravitySpawn</code> provides the initial gravity configuration</li>
-</ol>
-<p><strong>Cross-reference with TMNF</strong>: The TMNF diary documents GravityCoef=3.0 (a multiplier on base 9.81). TM2020's 0-1 range is different — it's likely a normalized coefficient where 1.0 = full gravity.</p>
-<hr>
-<h2 id="6-thread-model"><a class="anchor" href="#6-thread-model">#</a>6. Thread Model</h2>
-<h3 id="phase-5-thread-pool-architecture"><a class="anchor" href="#phase-5-thread-pool-architecture">#</a>[Phase 5] Thread Pool Architecture</h3>
-<p><strong>Query</strong>: <code>search_strings "ThreadPool"</code>, <code>search_strings "CreateThread"</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>TM2020 uses a <strong>dual thread pool system</strong>:</p>
-<p><strong>1. Windows Thread Pool API</strong> (imported via kernel32):</p>
+<p><code>TechGravityChange</code> and <code>TechGravityReset</code> are gameplay surface effects (blocks/items can modify gravity). <code>DefaultGravitySpawn</code> provides the initial gravity configuration.</p>
+<p><strong>Cross-reference with TMNF</strong>: The TMNF diary documents GravityCoef=3.0 (a multiplier on base 9.81). TM2020's 0-1 range works differently -- 1.0 likely means full gravity.</p>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="thread-model-dual-thread-pool"><a class="anchor" href="#thread-model-dual-thread-pool">#</a>Thread Model: Dual Thread Pool</h2>
+<p>TM2020 uses a dual thread pool system. The custom pool maps well to Web Workers for browser recreation.</p>
+<p><strong>Windows Thread Pool API</strong> (imported via kernel32):</p>
 <ul>
   <li><code>CreateThreadpoolTimer</code>, <code>SetThreadpoolTimer</code>, <code>WaitForThreadpoolTimerCallbacks</code>, <code>CloseThreadpoolTimer</code></li>
   <li><code>CreateThreadpoolWait</code>, <code>SetThreadpoolWait</code>, <code>CloseThreadpoolWait</code></li>
   <li><code>CreateThreadpoolWork</code>, <code>SubmitThreadpoolWork</code>, <code>CloseThreadpoolWork</code></li>
 </ul>
-<p><strong>2. Custom NClassicThreadPool</strong>:</p>
+<p><strong>Custom NClassicThreadPool</strong>:</p>
 <ul>
-  <li><code>NClassicThreadPool::Destroy</code> (<code class="addr">0x141d094b8</code>) — Pool destruction</li>
-  <li><code>NThreadPool_AddJobs</code> (<code class="addr">0x141d094f8</code>) — Submit jobs</li>
-  <li><code>NClassicThreadPool::TaskWaitComplete</code> (<code class="addr">0x141d09510</code>) — Barrier/sync point</li>
+  <li><code>NClassicThreadPool::Destroy</code> (<code class="addr">0x141d094b8</code>)</li>
+  <li><code>NThreadPool_AddJobs</code> (<code class="addr">0x141d094f8</code>)</li>
+  <li><code>NClassicThreadPool::TaskWaitComplete</code> (<code class="addr">0x141d09510</code>)</li>
 </ul>
-<p><strong>Implication for browser recreation</strong>: The custom thread pool maps well to Web Workers. The <code>AddJobs</code>/<code>TaskWaitComplete</code> pattern is a standard fork-join model.</p>
-<hr>
-<h2 id="7-deferred-rendering-pipeline"><a class="anchor" href="#7-deferred-rendering-pipeline">#</a>7. Deferred Rendering Pipeline</h2>
-<h3 id="phase-10-complete-pipeline-pass-ordering"><a class="anchor" href="#phase-10-complete-pipeline-pass-ordering">#</a>[Phase 10] Complete Pipeline Pass Ordering</h3>
-<p><strong>Query</strong>: <code>search_strings "Deferred"</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (108 string matches)</p>
-<p>The deferred pipeline uses a <strong>Tech3</strong> shader framework with the following pass ordering (reconstructed from the <code>Down3x3</code>/<code>Down2x2</code> dependency chain strings):</p>
+<p>The <code>AddJobs</code>/<code>TaskWaitComplete</code> pattern is a standard fork-join model.</p>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="deferred-rendering-19-pass-pipeline"><a class="anchor" href="#deferred-rendering-19-pass-pipeline">#</a>Deferred Rendering: 19-Pass Pipeline</h2>
+<p>108 string matches confirm a Tech3 shader framework with this pass ordering (reconstructed from <code>Down3x3</code>/<code>Down2x2</code> dependency chain strings):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Pipeline Execution Order:
 ═══════════════════════════════════════════════════════
 1.  DipCulling              - Frustum/occlusion culling
@@ -480,7 +441,8 @@
 18. LensFlares              - Lens flare effects
 19. FxTXAA                  - Temporal anti-aliasing
 ═══════════════════════════════════════════════════════</code></pre></div>
-<h3 id="g-buffer-layout-bitmap-targets"><a class="anchor" href="#g-buffer-layout-bitmap-targets">#</a>G-Buffer Layout (Bitmap targets)</h3>
+<h3 id="g-buffer-layout"><a class="anchor" href="#g-buffer-layout">#</a>G-Buffer Layout</h3>
+<p>Three separate normal buffers (face, vertex, pixel) suggest the engine blends them for different quality levels or effects.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -527,63 +489,60 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Note</strong>: Three separate normal buffers (face, vertex, pixel) suggest the engine blends them for different quality levels or effects.</p>
-<h3 id="deferred-aa-options"><a class="anchor" href="#deferred-aa-options">#</a>Deferred AA Options</h3>
+<h3 id="aa-options"><a class="anchor" href="#aa-options">#</a>AA Options</h3>
 <ul>
-  <li><code>|DeferredAntialiasing| FXAA</code> — Fast approximate AA</li>
-  <li><code>|DeferredAntialiasing| TXAA</code> — Temporal AA (NVIDIA + Ubisoft)</li>
-  <li><code>|DeferredAntialiasing|None</code> — No AA</li>
+  <li><code>|DeferredAntialiasing| FXAA</code> -- Fast approximate AA</li>
+  <li><code>|DeferredAntialiasing| TXAA</code> -- Temporal AA (NVIDIA + Ubisoft)</li>
+  <li><code>|DeferredAntialiasing|None</code> -- No AA</li>
 </ul>
 <p>Config: <code>CSystemConfigDisplay::EDeferredAA</code>, stored as <code>m_DeferredAA</code></p>
 <h3 id="hlsl-shader-file-list-tech3-framework"><a class="anchor" href="#hlsl-shader-file-list-tech3-framework">#</a>HLSL Shader File List (Tech3 Framework)</h3>
-<p>All shaders live under the <code>Tech3/</code> path prefix:</p>
+<p>All shaders live under the <code>Tech3/</code> path prefix.</p>
 <p><strong>Deferred Pipeline Shaders</strong>:</p>
 <ul>
-  <li><code>DeferredDecalGeom_p.hlsl</code> / <code>_v.hlsl</code> — Decal projection</li>
-  <li><code>DeferredFull_Warp_p.hlsl</code> — Full-screen warp effect</li>
-  <li><code>DeferredCameraMotion_p.hlsl</code> / <code>_v.hlsl</code> — Motion vectors</li>
-  <li><code>DeferredZBufferToDist01_p.hlsl</code> — Depth to linear distance</li>
-  <li><code>DeferredGeomFakeOcc_p.hlsl</code> / <code>_v.hlsl</code> — Fake occlusion</li>
-  <li><code>DeferredGeomCameraMap_p.hlsl</code> / <code>_v.hlsl</code> — Camera map effect</li>
-  <li><code>DeferredFogGlobal_p.hlsl</code> — Global fog</li>
-  <li><code>DeferredFaceNormalFromDepth_p.hlsl</code> — Normal reconstruction from depth</li>
-  <li><code>DeferredDeCompFaceNormal_p.hlsl</code> — Normal decompression</li>
-  <li><code>DeferredGeomLightFxSphere_p.hlsl</code> — Sphere light</li>
-  <li><code>DeferredGeomLightFxCylinder_p.hlsl</code> — Cylinder light</li>
-  <li><code>DeferredGeomLightSpot_p.hlsl</code> — Spot light</li>
-  <li><code>DeferredGeomLightBall_p.hlsl</code> — Ball/point light</li>
-  <li><code>DeferredGeomFogBoxOutside_p.hlsl</code> / <code>_v.hlsl</code> — Fog volume (outside)</li>
-  <li><code>DeferredGeomFogBoxInside_p.hlsl</code> / <code>_v.hlsl</code> — Fog volume (inside)</li>
-  <li><code>DeferredDecal_FullTri_p.hlsl</code> / <code>_v.hlsl</code> — Full-triangle decal</li>
-  <li><code>DeferredGeomShadowVol_p.hlsl</code> / <code>_v.hlsl</code> — Shadow volumes</li>
-  <li><code>DeferredGeomProjector_p.hlsl</code> / <code>_v.hlsl</code> — Projected textures</li>
-  <li><code>DeferredGeomBurnSphere_p.hlsl</code> / <code>_v.hlsl</code> — Burn sphere effects</li>
-  <li><code>SSReflect_Deferred_LastFrames_p.hlsl</code> — Temporal SSR</li>
-  <li><code>SSReflect_Deferred_p.hlsl</code> — Screen-space reflections</li>
-  <li><code>DeferredFog_p.hlsl</code> — Fog</li>
-  <li><code>DeferredDecal_Boxs_p.hlsl</code> — Box decals</li>
-  <li><code>DeferredDecal_Boxs_CBuffer_v.hlsl</code> / <code>_SRView_v.hlsl</code> — Box decal variants</li>
-  <li><code>DeferredWaterFog_p.hlsl</code> / <code>_v.hlsl</code> — Water fog</li>
-  <li><code>DeferredWaterFog_FullTri_p.hlsl</code> / <code>_v.hlsl</code> — Full-tri water fog</li>
-  <li><code>DeferredShadowPssm_p.hlsl</code> / <code>_v.hlsl</code> — PSSM shadows</li>
-  <li><code>DeferredOutput_ImpostorConvert_c.hlsl</code> — Impostor compute</li>
-  <li><code>Deferred_AddAmbient_Fresnel_p.hlsl</code> — Ambient + Fresnel</li>
-  <li><code>Deferred_SetILightDir_p.hlsl</code> — Set indirect light direction</li>
-  <li><code>Deferred_ReProjectLm_p.hlsl</code> — Lightmap reprojection</li>
-  <li><code>Deferred_AddLightLm_p.hlsl</code> — Add lightmap lighting</li>
-  <li><code>Deferred_SetLDirFromMask_p.hlsl</code> — Light direction from mask</li>
+  <li><code>DeferredDecalGeom_p.hlsl</code> / <code>_v.hlsl</code> -- Decal projection</li>
+  <li><code>DeferredFull_Warp_p.hlsl</code> -- Full-screen warp effect</li>
+  <li><code>DeferredCameraMotion_p.hlsl</code> / <code>_v.hlsl</code> -- Motion vectors</li>
+  <li><code>DeferredZBufferToDist01_p.hlsl</code> -- Depth to linear distance</li>
+  <li><code>DeferredGeomFakeOcc_p.hlsl</code> / <code>_v.hlsl</code> -- Fake occlusion</li>
+  <li><code>DeferredGeomCameraMap_p.hlsl</code> / <code>_v.hlsl</code> -- Camera map effect</li>
+  <li><code>DeferredFogGlobal_p.hlsl</code> -- Global fog</li>
+  <li><code>DeferredFaceNormalFromDepth_p.hlsl</code> -- Normal reconstruction from depth</li>
+  <li><code>DeferredDeCompFaceNormal_p.hlsl</code> -- Normal decompression</li>
+  <li><code>DeferredGeomLightFxSphere_p.hlsl</code> -- Sphere light</li>
+  <li><code>DeferredGeomLightFxCylinder_p.hlsl</code> -- Cylinder light</li>
+  <li><code>DeferredGeomLightSpot_p.hlsl</code> -- Spot light</li>
+  <li><code>DeferredGeomLightBall_p.hlsl</code> -- Ball/point light</li>
+  <li><code>DeferredGeomFogBoxOutside_p.hlsl</code> / <code>_v.hlsl</code> -- Fog volume (outside)</li>
+  <li><code>DeferredGeomFogBoxInside_p.hlsl</code> / <code>_v.hlsl</code> -- Fog volume (inside)</li>
+  <li><code>DeferredDecal_FullTri_p.hlsl</code> / <code>_v.hlsl</code> -- Full-triangle decal</li>
+  <li><code>DeferredGeomShadowVol_p.hlsl</code> / <code>_v.hlsl</code> -- Shadow volumes</li>
+  <li><code>DeferredGeomProjector_p.hlsl</code> / <code>_v.hlsl</code> -- Projected textures</li>
+  <li><code>DeferredGeomBurnSphere_p.hlsl</code> / <code>_v.hlsl</code> -- Burn sphere effects</li>
+  <li><code>SSReflect_Deferred_LastFrames_p.hlsl</code> -- Temporal SSR</li>
+  <li><code>SSReflect_Deferred_p.hlsl</code> -- Screen-space reflections</li>
+  <li><code>DeferredFog_p.hlsl</code> -- Fog</li>
+  <li><code>DeferredDecal_Boxs_p.hlsl</code> -- Box decals</li>
+  <li><code>DeferredDecal_Boxs_CBuffer_v.hlsl</code> / <code>_SRView_v.hlsl</code> -- Box decal variants</li>
+  <li><code>DeferredWaterFog_p.hlsl</code> / <code>_v.hlsl</code> -- Water fog</li>
+  <li><code>DeferredWaterFog_FullTri_p.hlsl</code> / <code>_v.hlsl</code> -- Full-tri water fog</li>
+  <li><code>DeferredShadowPssm_p.hlsl</code> / <code>_v.hlsl</code> -- PSSM shadows</li>
+  <li><code>DeferredOutput_ImpostorConvert_c.hlsl</code> -- Impostor compute</li>
+  <li><code>Deferred_AddAmbient_Fresnel_p.hlsl</code> -- Ambient + Fresnel</li>
+  <li><code>Deferred_SetILightDir_p.hlsl</code> -- Set indirect light direction</li>
+  <li><code>Deferred_ReProjectLm_p.hlsl</code> -- Lightmap reprojection</li>
+  <li><code>Deferred_AddLightLm_p.hlsl</code> -- Add lightmap lighting</li>
+  <li><code>Deferred_SetLDirFromMask_p.hlsl</code> -- Light direction from mask</li>
 </ul>
 <p><strong>Specialty shaders</strong>:</p>
 <ul>
-  <li><code>Tech3 DeferredWrite CarSkinSkelDmg.Shader.Gbx</code> — Car skin with skeletal damage</li>
-  <li><code>Tech3 DeferredWrite TreeSprite.Shader.Gbx</code> — Tree sprite billboard</li>
-  <li><code>Tech3 DeferredInput DecalSprite.Shader.Gbx</code> — Decal sprite</li>
+  <li><code>Tech3 DeferredWrite CarSkinSkelDmg.Shader.Gbx</code> -- Car skin with skeletal damage</li>
+  <li><code>Tech3 DeferredWrite TreeSprite.Shader.Gbx</code> -- Tree sprite billboard</li>
+  <li><code>Tech3 DeferredInput DecalSprite.Shader.Gbx</code> -- Decal sprite</li>
 </ul>
-<hr>
-<h2 id="8-txaa-implementation"><a class="anchor" href="#8-txaa-implementation">#</a>8. TXAA Implementation</h2>
-<h3 id="phase-10-nvidia-gfsdk-ubisoft-custom"><a class="anchor" href="#phase-10-nvidia-gfsdk-ubisoft-custom">#</a>[Phase 10] NVIDIA GFSDK + Ubisoft Custom</h3>
-<p><strong>Query</strong>: <code>search_strings "TXAA"</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>Two TXAA implementations exist:</p>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="txaa-nvidia-gfsdk-ubisoft-custom"><a class="anchor" href="#txaa-nvidia-gfsdk-ubisoft-custom">#</a>TXAA: NVIDIA GFSDK + Ubisoft Custom</h2>
+<p>Two TXAA implementations exist. Uses <code>ResolveFromMotionVectors</code>, confirming motion vector-based temporal reprojection generated by the <code>CameraMotion</code> pass.</p>
 <p><strong>NVIDIA GFSDK TXAA</strong> (SDK integration):</p>
 <ul>
   <li><code>GFSDK_TXAA_DX11_InitializeContext</code> (<code class="addr">0x141c0f120</code>)</li>
@@ -592,29 +551,25 @@
 </ul>
 <p><strong>Ubisoft Custom TXAA</strong> (<code>UBI_TXAA</code> / <code>UBI TXAA</code>):</p>
 <ul>
-  <li>Likely a custom implementation by Ubisoft/Nadeo</li>
-  <li>May be the fallback when NVIDIA hardware is not present</li>
+  <li>Likely a custom Ubisoft/Nadeo implementation</li>
+  <li>May serve as fallback when NVIDIA hardware is absent</li>
 </ul>
-<p><strong>Implementation detail</strong>: Uses <code>ResolveFromMotionVectors</code> — confirms motion vector-based temporal reprojection, which the <code>CameraMotion</code> pass generates.</p>
-<p><strong>WebGPU translation</strong>: TAA can be implemented in WebGPU using compute shaders with motion vectors. The motion vector pass + history buffer approach is standard.</p>
-<hr>
-<h2 id="9-alternative-graphics-apis"><a class="anchor" href="#9-alternative-graphics-apis">#</a>9. Alternative Graphics APIs</h2>
-<h3 id="phase-10-d3d12-code-exists-vulkan-minimal"><a class="anchor" href="#phase-10-d3d12-code-exists-vulkan-minimal">#</a>[Phase 10] D3D12 Code Exists, Vulkan Minimal</h3>
-<p><strong>Query</strong>: <code>search_strings "D3D12"</code>, <code>search_strings "Vulkan"</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (code exists) / <span class="badge badge-plausible">PLAUSIBLE</span> (not actively used)</p>
+<p>TAA can be implemented in WebGPU using compute shaders with motion vectors. The motion vector pass + history buffer approach is standard.</p>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="graphics-apis-d3d11-active-d3d12-infrastructure-exists"><a class="anchor" href="#graphics-apis-d3d11-active-d3d12-infrastructure-exists">#</a>Graphics APIs: D3D11 Active, D3D12 Infrastructure Exists</h2>
+<p>D3D11 is the sole active rendering API. D3D12 shader infrastructure exists but appears unused. Vulkan has minimal presence.</p>
 <p><strong>D3D12</strong>: 3 string references, all in shader infrastructure:</p>
 <ul>
-  <li><code>NPlugGpuHlsl_D3D12::NRootSign_SParam</code> — Root signature parameter struct</li>
-  <li><code>NPlugGpuHlsl_D3D12::NRootSign::EParamType</code> — Parameter type enum</li>
-  <li><code>NPlugGpuHlsl_D3D12::SRootSign</code> — Root signature struct</li>
+  <li><code>NPlugGpuHlsl_D3D12::NRootSign_SParam</code> -- Root signature parameter struct</li>
+  <li><code>NPlugGpuHlsl_D3D12::NRootSign::EParamType</code> -- Parameter type enum</li>
+  <li><code>NPlugGpuHlsl_D3D12::SRootSign</code> -- Root signature struct</li>
 </ul>
-<p>This means D3D12 <strong>shader infrastructure exists in the binary</strong> but the renderer appears to use D3D11 exclusively. The D3D12 code may be for future use or for the Nadeo engine's cross-project sharing.</p>
-<p><strong>Vulkan</strong>: 1 string reference (<code>"Vulkan"</code> at <code class="addr">0x141c099e8</code>), likely a graphics API enum label. No Vulkan API calls were found in imports.</p>
-<p><strong>Resolves Open Question</strong>: D3D12/Vulkan are NOT actively used for rendering. D3D11 is the sole rendering API. However, D3D12 shader infrastructure exists.</p>
-<hr>
-<h2 id="10-maniascript-engine"><a class="anchor" href="#10-maniascript-engine">#</a>10. ManiaScript Engine</h2>
-<h3 id="phase-11-complete-token-type-enumeration"><a class="anchor" href="#phase-11-complete-token-type-enumeration">#</a>[Phase 11] Complete Token Type Enumeration</h3>
-<p><strong>Query</strong>: <code>search_strings "ManiaScript"</code>, <code>search_strings "MANIASCRIPT"</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (40+ token strings found)</p>
-<h3 id="maniascript-data-types"><a class="anchor" href="#maniascript-data-types">#</a>ManiaScript Data Types</h3>
+<p><strong>Vulkan</strong>: 1 string reference (<code>"Vulkan"</code> at <code class="addr">0x141c099e8</code>), likely a graphics API enum label. No Vulkan API calls found in imports.</p>
+<p>D3D12/Vulkan are NOT actively used for rendering. The D3D12 code may exist for the Nadeo engine's cross-project sharing or future use.</p>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span> (code exists) / <span class="badge badge-plausible">PLAUSIBLE</span> (not actively used)</p>
+<h2 id="maniascript-complete-token-specification"><a class="anchor" href="#maniascript-complete-token-specification">#</a>ManiaScript: Complete Token Specification</h2>
+<p>40+ token strings reveal a full scripting language. The token list below defines the complete lexer specification for browser recreation.</p>
+<h3 id="data-types"><a class="anchor" href="#data-types">#</a>Data Types</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -673,7 +628,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="maniascript-keywords"><a class="anchor" href="#maniascript-keywords">#</a>ManiaScript Keywords</h3>
+<h3 id="keywords"><a class="anchor" href="#keywords">#</a>Keywords</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -712,7 +667,7 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="maniascript-collection-operations"><a class="anchor" href="#maniascript-collection-operations">#</a>ManiaScript Collection Operations</h3>
+<h3 id="collection-operations"><a class="anchor" href="#collection-operations">#</a>Collection Operations</h3>
 <p>All dot-prefixed operations on arrays/maps:</p>
 <ul>
   <li><code>.add</code>, <code>.addfirst</code>, <code>.remove</code>, <code>.removekey</code></li>
@@ -722,9 +677,9 @@
   <li><code>.containsonly</code>, <code>.containsoneof</code></li>
   <li><code>.keyof</code></li>
   <li><code>.tojson</code>, <code>.fromjson</code></li>
-  <li><code>.cloudrequestsave</code>, <code>.cloudisready</code> (cloud storage!)</li>
+  <li><code>.cloudrequestsave</code>, <code>.cloudisready</code> (cloud storage)</li>
 </ul>
-<h3 id="maniascript-directives"><a class="anchor" href="#maniascript-directives">#</a>ManiaScript Directives</h3>
+<h3 id="directives"><a class="anchor" href="#directives">#</a>Directives</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -763,11 +718,11 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="maniascript-tuning-system"><a class="anchor" href="#maniascript-tuning-system">#</a>ManiaScript Tuning System</h3>
+<h3 id="tuning-system"><a class="anchor" href="#tuning-system">#</a>Tuning System</h3>
 <ul>
-  <li><code>TUNING_START</code> — Begin tuning block</li>
-  <li><code>TUNING_END</code> — End tuning block</li>
-  <li><code>TUNING_MARK</code> — Mark a tuning checkpoint</li>
+  <li><code>TUNING_START</code> -- Begin tuning block</li>
+  <li><code>TUNING_END</code> -- End tuning block</li>
+  <li><code>TUNING_MARK</code> -- Mark a tuning checkpoint</li>
 </ul>
 <h3 id="lexer-token-types"><a class="anchor" href="#lexer-token-types">#</a>Lexer Token Types</h3>
 <ul>
@@ -775,43 +730,48 @@
   <li>IDENT, COMMENT, STRING_OPERATOR, CONCAT_AND_STRING</li>
   <li>LOCAL_STRUCT</li>
 </ul>
-<p><strong>Browser recreation note</strong>: ManiaScript is a full scripting language that would need to be implemented as a JavaScript interpreter/transpiler. The token list above defines the complete lexer specification.</p>
+<p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="22-ghidra-gap-findings.md">22-ghidra-gap-findings.md</a> -- Additional gap-filling research including force models and surface effects</li>
+  <li><a href="18-validation-review.md">18-validation-review.md</a> -- Corrections to claims made in this and other documents</li>
+  <li><a href="20-browser-recreation-guide.md">20-browser-recreation-guide.md</a> -- How these findings translate to browser implementation</li>
+  <li><a href="23-visual-reference.md">23-visual-reference.md</a> -- Visual diagrams of the rendering pipeline and engine architecture</li>
+</ul>
+<details><summary>Analysis metadata</summary>
+<ul>
+  <li><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020)</li>
+  <li><strong>Date</strong>: 2026-03-27</li>
+  <li><strong>Tools</strong>: PyGhidra bridge via <code>bridge_query.py</code></li>
+  <li><strong>Note</strong>: Findings from both the automated Ghidra agent and manual queries</li>
+</ul>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="tmnf-crossref.html">&larr; TMNF Comparison</a><a class="next" href="validation.html">Validation Review &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="tmnf-crossref.html">&larr; TMNF Comparison</a><a class="next" href="ghidra-gaps.html">Ghidra Gap Research &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-audio-system">1. Audio System</a></li>
-  <li class="toc-h3"><a href="#phase-1-openal-audio-initialization">[Phase 1] OpenAL Audio Initialization</a></li>
-<li class=""><a href="#2-input-system">2. Input System</a></li>
-  <li class="toc-h3"><a href="#phase-2-input-port-frame-update">[Phase 2] Input Port Frame Update</a></li>
-<li class=""><a href="#3-camera-system">3. Camera System</a></li>
-  <li class="toc-h3"><a href="#phase-3-camera-class-enumeration">[Phase 3] Camera Class Enumeration</a></li>
-<li class=""><a href="#4-compression-system">4. Compression System</a></li>
-  <li class="toc-h3"><a href="#phase-8-compression-zlib-strings-present-gbx-body-uses-lzo1x">[Phase 8] Compression: zlib Strings Present, GBX Body Uses LZO1X</a></li>
-<li class=""><a href="#5-gravity-system">5. Gravity System</a></li>
-  <li class="toc-h3"><a href="#phase-7-gravitycoef-and-gameplay-gravity">[Phase 7] GravityCoef and Gameplay Gravity</a></li>
-<li class=""><a href="#6-thread-model">6. Thread Model</a></li>
-  <li class="toc-h3"><a href="#phase-5-thread-pool-architecture">[Phase 5] Thread Pool Architecture</a></li>
-<li class=""><a href="#7-deferred-rendering-pipeline">7. Deferred Rendering Pipeline</a></li>
-  <li class="toc-h3"><a href="#phase-10-complete-pipeline-pass-ordering">[Phase 10] Complete Pipeline Pass Ordering</a></li>
-  <li class="toc-h3"><a href="#g-buffer-layout-bitmap-targets">G-Buffer Layout (Bitmap targets)</a></li>
-  <li class="toc-h3"><a href="#deferred-aa-options">Deferred AA Options</a></li>
+<li class=""><a href="#audio-openal-initialization">Audio: OpenAL Initialization</a></li>
+<li class=""><a href="#input-per-frame-update">Input: Per-Frame Update</a></li>
+<li class=""><a href="#camera-12-controller-classes">Camera: 12 Controller Classes</a></li>
+<li class=""><a href="#compression-zlib-present-gbx-body-uses-lzo1x">Compression: zlib Present, GBX Body Uses LZO1X</a></li>
+<li class=""><a href="#gravity-normalized-0-1-coefficient-with-250ms-delay">Gravity: Normalized 0-1 Coefficient with 250ms Delay</a></li>
+<li class=""><a href="#thread-model-dual-thread-pool">Thread Model: Dual Thread Pool</a></li>
+<li class=""><a href="#deferred-rendering-19-pass-pipeline">Deferred Rendering: 19-Pass Pipeline</a></li>
+  <li class="toc-h3"><a href="#g-buffer-layout">G-Buffer Layout</a></li>
+  <li class="toc-h3"><a href="#aa-options">AA Options</a></li>
   <li class="toc-h3"><a href="#hlsl-shader-file-list-tech3-framework">HLSL Shader File List (Tech3 Framework)</a></li>
-<li class=""><a href="#8-txaa-implementation">8. TXAA Implementation</a></li>
-  <li class="toc-h3"><a href="#phase-10-nvidia-gfsdk-ubisoft-custom">[Phase 10] NVIDIA GFSDK + Ubisoft Custom</a></li>
-<li class=""><a href="#9-alternative-graphics-apis">9. Alternative Graphics APIs</a></li>
-  <li class="toc-h3"><a href="#phase-10-d3d12-code-exists-vulkan-minimal">[Phase 10] D3D12 Code Exists, Vulkan Minimal</a></li>
-<li class=""><a href="#10-maniascript-engine">10. ManiaScript Engine</a></li>
-  <li class="toc-h3"><a href="#phase-11-complete-token-type-enumeration">[Phase 11] Complete Token Type Enumeration</a></li>
-  <li class="toc-h3"><a href="#maniascript-data-types">ManiaScript Data Types</a></li>
-  <li class="toc-h3"><a href="#maniascript-keywords">ManiaScript Keywords</a></li>
-  <li class="toc-h3"><a href="#maniascript-collection-operations">ManiaScript Collection Operations</a></li>
-  <li class="toc-h3"><a href="#maniascript-directives">ManiaScript Directives</a></li>
-  <li class="toc-h3"><a href="#maniascript-tuning-system">ManiaScript Tuning System</a></li>
+<li class=""><a href="#txaa-nvidia-gfsdk-ubisoft-custom">TXAA: NVIDIA GFSDK + Ubisoft Custom</a></li>
+<li class=""><a href="#graphics-apis-d3d11-active-d3d12-infrastructure-exists">Graphics APIs: D3D11 Active, D3D12 Infrastructure Exists</a></li>
+<li class=""><a href="#maniascript-complete-token-specification">ManiaScript: Complete Token Specification</a></li>
+  <li class="toc-h3"><a href="#data-types">Data Types</a></li>
+  <li class="toc-h3"><a href="#keywords">Keywords</a></li>
+  <li class="toc-h3"><a href="#collection-operations">Collection Operations</a></li>
+  <li class="toc-h3"><a href="#directives">Directives</a></li>
+  <li class="toc-h3"><a href="#tuning-system">Tuning System</a></li>
   <li class="toc-h3"><a href="#lexer-token-types">Lexer Token Types</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

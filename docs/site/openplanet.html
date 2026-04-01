@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item active" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item active" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,24 +121,11 @@
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
                         <h1 id="openplanet-plugin-intelligence-extraction"><a class="anchor" href="#openplanet-plugin-intelligence-extraction">#</a>Openplanet Plugin Intelligence Extraction</h1>
-<p><strong>Source</strong>: Openplanet plugins installed at <code>Trackmania/Openplanet/Plugins/</code> <strong>Date</strong>: 2026-03-27 <strong>Confidence</strong>: HIGH — These are working plugins that read live game memory. Field names and offsets are <span class="badge badge-verified">VERIFIED</span> against the running game.</p>
+<p>Openplanet is a modding framework that injects into TrackMania 2020 and reads live game memory via AngelScript plugins. Every field and offset below is <span class="badge badge-verified">VERIFIED</span> against the running game. This data provides the most trustworthy struct layouts available outside of full binary RE.</p>
+<p>The struct offset tables for <code>CSceneVehicleVisState</code>, wheel state, and scene manager hierarchy are the primary value of this document.</p>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-vehicle-state-structure">Vehicle State Structure (CSceneVehicleVisState)</a></li>
-  <li><a href="#2-vehicle-types--enumerations">Vehicle Types & Enumerations</a></li>
-  <li><a href="#3-wheel-state-structure">Wheel State Structure</a></li>
-  <li><a href="#4-scene-manager-architecture">Scene Manager Architecture</a></li>
-  <li><a href="#5-nadeo-services-api">Nadeo Services API</a></li>
-  <li><a href="#6-authentication-flow">Authentication Flow</a></li>
-  <li><a href="#7-camera-system">Camera System</a></li>
-  <li><a href="#8-rendering-internals">Rendering Internals</a></li>
-  <li><a href="#9-game-coordinate-system">Game Coordinate System</a></li>
-</ol>
-<hr>
-<h2 id="1-vehicle-state-structure-cscenevehiclevisstate"><a class="anchor" href="#1-vehicle-state-structure-cscenevehiclevisstate">#</a>1. Vehicle State Structure (CSceneVehicleVisState)</h2>
-<p><strong>Source</strong>: <code>VehicleState/Debugger/Main.as</code>, <code>VehicleState/StateWrappers.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (working plugin reads these fields from live game memory)</p>
-<p>The <code>CSceneVehicleVisState</code> is the primary vehicle state visible to the rendering/visual system. It mirrors physics state for display purposes. All fields below are confirmed accessible in TM2020 (code name: TMNEXT).</p>
+<h2 id="vehicle-state-structure-cscenevehiclevisstate"><a class="anchor" href="#vehicle-state-structure-cscenevehiclevisstate">#</a>Vehicle State Structure (CSceneVehicleVisState)</h2>
+<p>The <code>CSceneVehicleVisState</code> struct mirrors physics state for the rendering/visual system. All fields are confirmed accessible in TM2020 (code name: TMNEXT).</p>
 <h3 id="input-fields"><a class="anchor" href="#input-fields">#</a>Input Fields</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -348,7 +343,7 @@
 <tr>
   <td style="text-align:left"><code>ReactorFinalTimer</code></td>
   <td style="text-align:left">float (0-1)</td>
-  <td style="text-align:left">Counts 0→1 in final second of boost</td>
+  <td style="text-align:left">Counts 0->1 in final second of boost</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ReactorInputsX</code></td>
@@ -461,8 +456,9 @@
 </tbody>
 </table></div>
 <hr>
-<h2 id="2-vehicle-types-enumerations"><a class="anchor" href="#2-vehicle-types-enumerations">#</a>2. Vehicle Types & Enumerations</h2>
-<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="vehicle-types-and-enumerations"><a class="anchor" href="#vehicle-types-and-enumerations">#</a>Vehicle Types and Enumerations</h2>
+<p>Vehicle type is determined by reading a <code>uint8</code> index from the VisState and matching the corresponding <code>CGameItemModel.Id</code> against known MwIds:</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>IdCarSport, IdCarSnow, IdCarRally, IdCarDesert, IdCharacterPilot</code></pre></div>
 <h3 id="vehicletype-enum"><a class="anchor" href="#vehicletype-enum">#</a>VehicleType Enum</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -500,8 +496,6 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Evidence</strong>: Vehicle type is determined by looking up a <code>uint8</code> index in the VisState, then matching the corresponding <code>CGameItemModel.Id</code> against known MwIds:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>IdCarSport, IdCarSnow, IdCarRally, IdCarDesert, IdCharacterPilot</code></pre></div>
 <h3 id="turbolevel-enum"><a class="anchor" href="#turbolevel-enum">#</a>TurboLevel Enum</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -581,13 +575,13 @@
 </tr>
 </tbody>
 </table></div>
-<p><strong>Note</strong>: Values are always even (0, 2, 4, 6, 8). The plugin author notes this "may be completely incorrect and give unexpected results" — the raw memory values may have different semantics.</p>
+<p>Values are always even (0, 2, 4, 6, 8). The plugin author notes this "may be completely incorrect and give unexpected results" -- the raw memory values may have different semantics.</p>
 <hr>
-<h2 id="3-wheel-state-structure"><a class="anchor" href="#3-wheel-state-structure">#</a>3. Wheel State Structure</h2>
-<p><strong>Source</strong>: <code>VehicleState/StateWrappers.as</code> (MP4/Turbo variant with explicit offsets) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (MP4/Turbo offsets confirmed, TM2020 uses Openplanet's native reflection which doesn't expose raw offsets)</p>
+<h2 id="wheel-state-structure"><a class="anchor" href="#wheel-state-structure">#</a>Wheel State Structure</h2>
+<p>Wheel data is accessed per-wheel from <code>CSceneVehicleVisState</code>. The MP4/Turbo variant exposes explicit offsets; TM2020 uses Openplanet's native reflection.</p>
 <h3 id="wheel-order"><a class="anchor" href="#wheel-order">#</a>Wheel Order</h3>
 <p>Clockwise from front-left: <strong>FL(0), FR(1), RR(2), RL(3)</strong></p>
-<p><strong>IMPORTANT</strong>: The Openplanet VehicleState plugin swaps the indices for public API to be FL(0), FR(1), RL(2), RR(3) — but internally the memory layout is FL, FR, RR, RL (clockwise).</p>
+<p><strong>IMPORTANT</strong>: The Openplanet VehicleState plugin swaps the indices for its public API to be FL(0), FR(1), RL(2), RR(3). Internally the memory layout is FL, FR, RR, RL (clockwise).</p>
 <h3 id="per-wheel-fields-tm2020-tmnext"><a class="anchor" href="#per-wheel-fields-tm2020-tmnext">#</a>Per-Wheel Fields (TM2020 / TMNEXT)</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -678,7 +672,7 @@
 +0x14: GroundContact    (uint32, 1=touching)
 +0x18: SlipCoef         (float)
 +0x20: IsWet            (uint32, 1=wet) [MP4 only]</code></pre></div>
-<p><strong>Note</strong>: TM2020 wheel struct is likely larger (has additional fields: BreakNormedCoef, Dirt, Falling, Icing01, TireWear01) but exact offsets are resolved via Openplanet reflection, not hardcoded.</p>
+<p>TM2020 wheel struct is larger (has additional fields: BreakNormedCoef, Dirt, Falling, Icing01, TireWear01) but exact offsets are resolved via Openplanet reflection, not hardcoded.</p>
 </div>
 </details>
 <h3 id="visstate-layout-mp4-version-for-reference"><a class="anchor" href="#visstate-layout-mp4-version-for-reference">#</a>VisState Layout (MP4 version, for reference)</h3>
@@ -706,9 +700,8 @@
   +0x83C: GearPercent      (float)</code></pre></div>
 <p><strong>CRITICAL</strong>: These MP4 offsets do NOT apply to TM2020. TM2020 uses Openplanet's native reflection system to find offsets dynamically. The struct layout in TM2020 is different (larger, more fields).</p>
 <hr>
-<h2 id="4-scene-manager-architecture"><a class="anchor" href="#4-scene-manager-architecture">#</a>4. Scene Manager Architecture</h2>
-<p><strong>Source</strong>: <code>VehicleState/Internal/SceneVis.as</code>, <code>VehicleState/Internal/Vehicle/VehicleNext.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The scene system uses an indexed manager array accessible through <code>ISceneVis</code>:</p>
+<h2 id="scene-manager-architecture"><a class="anchor" href="#scene-manager-architecture">#</a>Scene Manager Architecture</h2>
+<p>The scene system uses an indexed manager array accessible through <code>ISceneVis</code>. The vehicle visualization manager sits at a specific index that changes across game patches.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>ISceneVis:
   +0x08: managerCount (uint32)
   +0x10: managers[0]  (pointer, 8 bytes each)
@@ -750,20 +743,20 @@
 +0x218: vehicle count   (uint32)</code></pre></div>
 <p><strong>Version History for VehiclesOffset</strong>:</p>
 <ul>
-  <li>Before 2023-03-03: 0x1C8 → 0x1E0</li>
+  <li>Before 2023-03-03: 0x1C8 -> 0x1E0</li>
   <li>2023-12-21: 0x210</li>
 </ul>
 <h3 id="vehicle-array"><a class="anchor" href="#vehicle-array">#</a>Vehicle Array</h3>
 <p>Array of pointers, each 8 bytes:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vehicles[i * 0x8] → CSceneVehicleVis pointer</code></pre></div>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vehicles[i * 0x8] -&gt; CSceneVehicleVis pointer</code></pre></div>
 <p>Each CSceneVehicleVis starts with a uint32 entity ID at offset 0x0:</p>
 <ul>
   <li>Entity IDs with mask <code class="addr">0x02000000</code> are local player vehicles</li>
   <li>Entity IDs with mask <code class="addr">0x04000000</code> are replay/editor vehicles</li>
 </ul>
 <hr>
-<h2 id="5-nadeo-services-api"><a class="anchor" href="#5-nadeo-services-api">#</a>5. Nadeo Services API</h2>
-<p><strong>Source</strong>: <code>NadeoServices/NadeoServices.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (working API client)</p>
+<h2 id="nadeo-services-api"><a class="anchor" href="#nadeo-services-api">#</a>Nadeo Services API</h2>
+<p>Openplanet plugins use the game's built-in authentication to access Nadeo's REST APIs. Three service endpoints exist, each requiring a specific audience token.</p>
 <h3 id="base-urls"><a class="anchor" href="#base-urls">#</a>Base URLs</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -794,21 +787,21 @@
 <h3 id="authentication-header"><a class="anchor" href="#authentication-header">#</a>Authentication Header</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Authorization: nadeo_v1 t=&lt;token&gt;</code></pre></div>
 <h3 id="audience-system"><a class="anchor" href="#audience-system">#</a>Audience System</h3>
-<p>Two audience types:</p>
+<p>Two audience types control API access:</p>
 <ul>
-  <li><strong>NadeoServices</strong> — Core API access. Token obtained directly from game's internal auth (no refresh needed).</li>
-  <li><strong>NadeoLiveServices</strong> — Live/Meet API access. Token obtained via <code>Authentication_GetToken</code> API call to the game.</li>
+  <li><strong>NadeoServices</strong> -- Core API access. Token obtained directly from the game's internal auth (no refresh needed).</li>
+  <li><strong>NadeoLiveServices</strong> -- Live/Meet API access. Token obtained via <code>Authentication_GetToken</code> API call to the game.</li>
 </ul>
 <p><strong>DEPRECATED</strong> (as of 2024-01-31): <code>NadeoClubServices</code> audience. Now maps to <code>NadeoLiveServices</code>.</p>
-<h3 id="account-id-login-conversion"><a class="anchor" href="#account-id-login-conversion">#</a>Account ID ↔ Login Conversion</h3>
+<h3 id="account-id-login-conversion"><a class="anchor" href="#account-id-login-conversion">#</a>Account ID / Login Conversion</h3>
 <p>Login is a base64-encoded UUID. Account ID is a hyphenated hex UUID:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Login → decode base64 → format as UUID with hyphens
-AccountID → remove hyphens → hex to bytes → encode base64</code></pre></div>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Login -&gt; decode base64 -&gt; format as UUID with hyphens
+AccountID -&gt; remove hyphens -&gt; hex to bytes -&gt; encode base64</code></pre></div>
 <h3 id="display-name-resolution"><a class="anchor" href="#display-name-resolution">#</a>Display Name Resolution</h3>
 <p>Batched API: up to 209 account IDs per <code>RetrieveDisplayName</code> request.</p>
 <hr>
-<h2 id="6-authentication-flow"><a class="anchor" href="#6-authentication-flow">#</a>6. Authentication Flow</h2>
-<p><strong>Source</strong>: <code>NadeoServices/AccessToken.as</code>, <code>NadeoServices/CoreToken.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="authentication-flow"><a class="anchor" href="#authentication-flow">#</a>Authentication Flow</h2>
+<p>Two token types authenticate plugins against Nadeo services.</p>
 <h3 id="core-token"><a class="anchor" href="#core-token">#</a>Core Token</h3>
 <p>Direct from game internals: <code>Internal::NadeoServices::GetCoreToken()</code>. Always considered authenticated. No refresh needed.</p>
 <h3 id="access-token-livemeet"><a class="anchor" href="#access-token-livemeet">#</a>Access Token (Live/Meet)</h3>
@@ -821,10 +814,10 @@ AccountID → remove hyphens → hex to bytes → encode base64</code></pre></di
 6. Read api.Authentication_Token on success
 7. Read api.Authentication_ErrorCode on failure</code></pre></div>
 <p><strong>Token Lifetime</strong>: 55 minutes (Nadeo's validation window) + random 1-60 seconds jitter.</p>
-<p><strong>Retry Strategy on Failure</strong>: Exponential backoff: 1s → 2s → 4s → 8s → 16s → ... The plugin notes "this is intentionally mimicking Nadeo's code" for the retry pattern.</p>
+<p><strong>Retry Strategy on Failure</strong>: Exponential backoff: 1s -> 2s -> 4s -> 8s -> 16s -> ... The plugin notes "this is intentionally mimicking Nadeo's code" for the retry pattern.</p>
 <hr>
-<h2 id="7-camera-system"><a class="anchor" href="#7-camera-system">#</a>7. Camera System</h2>
-<p><strong>Source</strong>: <code>Camera/Impl.as</code>, <code>Camera/Export.as</code>, <code>NGameCamera_SCamSys_StaticInit.c</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="camera-system"><a class="anchor" href="#camera-system">#</a>Camera System</h2>
+<p>The camera system exposes projection math and orbital camera parameters used by the map editor.</p>
 <h3 id="projection"><a class="anchor" href="#projection">#</a>Projection</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vec4 projected = projectionMatrix * worldPos;
 vec2 screenPos = displayPos + (projected.xy / projected.w + 1) / 2 * displaySize;
@@ -844,7 +837,7 @@ axis = axis * Rotate(v, vec3(0,0,-1))
 axis = axis * Rotate(h, vec3(0,1,0))
 cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 <h3 id="camera-types-from-decompiled-camera-init"><a class="anchor" href="#camera-types-from-decompiled-camera-init">#</a>Camera Types (from decompiled camera init)</h3>
-<p>See <code>decompiled/camera/NGameCamera_SCamSys_StaticInit.c</code> for complete list:</p>
+<p>See <code>decompiled/camera/NGameCamera_SCamSys_StaticInit.c</code> for the complete list:</p>
 <ul>
   <li>Race cameras: 3 variants (Race, Race2, Race3)</li>
   <li>First/third person</li>
@@ -857,8 +850,7 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
   <li>Camera effects (shake, script, inertial tracking)</li>
 </ul>
 <hr>
-<h2 id="8-rendering-internals"><a class="anchor" href="#8-rendering-internals">#</a>8. Rendering Internals</h2>
-<p><strong>Source</strong>: <code>Finetuner/src/01_RenderDistance.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="rendering-internals"><a class="anchor" href="#rendering-internals">#</a>Rendering Internals</h2>
 <h3 id="block-size"><a class="anchor" href="#block-size">#</a>Block Size</h3>
 <p><strong>32 meters</strong> per block unit. Evidence: <code>Math::Ceil(distance / 32.0f)</code> converts meters to blocks.</p>
 <h3 id="default-far-clip"><a class="anchor" href="#default-far-clip">#</a>Default Far Clip</h3>
@@ -868,13 +860,12 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 </ul>
 <h3 id="key-rendering-types"><a class="anchor" href="#key-rendering-types">#</a>Key Rendering Types</h3>
 <ul>
-  <li><code>CHmsCamera</code> — Has <code>.FarZ</code> property for clip distance</li>
-  <li><code>CVisionViewport</code> — Has <code>.AsyncRender</code> property for async rendering</li>
+  <li><code>CHmsCamera</code> -- Has <code>.FarZ</code> property for clip distance</li>
+  <li><code>CVisionViewport</code> -- Has <code>.AsyncRender</code> property for async rendering</li>
 </ul>
 <hr>
-<h2 id="9-game-coordinate-system"><a class="anchor" href="#9-game-coordinate-system">#</a>9. Game Coordinate System</h2>
-<p><strong>Source</strong>: Inferred from camera code and vehicle state <strong>Confidence</strong>: <span class="badge badge-plausible">PLAUSIBLE</span></p>
-<p>Based on the orbital camera code:</p>
+<h2 id="game-coordinate-system"><a class="anchor" href="#game-coordinate-system">#</a>Game Coordinate System</h2>
+<p>Based on the orbital camera code, the coordinate system works as follows:</p>
 <ul>
   <li><strong>Y-axis is UP</strong> (orbital camera rotates around Y for horizontal angle)</li>
   <li><strong>Z-axis is forward</strong> (vec3(0, 0, -1) for vertical rotation axis)</li>
@@ -888,15 +879,13 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 </ul>
 <p>Speed conversion: <strong>1 m/s = 3.6 km/h</strong> (confirmed by <code>FrontSpeed * 3.6f</code> in debugger code)</p>
 <hr>
-<h2 id="10-material-surface-system"><a class="anchor" href="#10-material-surface-system">#</a>10. Material & Surface System</h2>
-<p><strong>Source</strong>: <code>NadeoImporterMaterialLib.txt</code> (208 materials, 1374 lines) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<h3 id="critical-finding-gameplay-effects-are-not-material-driven"><a class="anchor" href="#critical-finding-gameplay-effects-are-not-material-driven">#</a>Critical Finding: Gameplay Effects are NOT Material-Driven</h3>
-<p>ALL 208 materials in the library have <code>DGameplayId(None)</code>. Gameplay effects (turbo, reactor boost, no-grip, slow motion, etc.) are applied through <strong>block/item types or trigger zones</strong>, NOT through material properties.</p>
+<h2 id="material-and-surface-system"><a class="anchor" href="#material-and-surface-system">#</a>Material and Surface System</h2>
+<p>ALL 208 materials in the stock library have <code>DGameplayId(None)</code>. Gameplay effects (turbo, reactor boost, no-grip, slow motion) are applied through block/item types or trigger zones, NOT through material properties.</p>
 <p>Materials only affect:</p>
 <ul>
-  <li><strong>Surface ID</strong> → physics collision properties (friction, sound)</li>
-  <li><strong>UV layers</strong> → texture mapping (BaseMaterial layer 0, Lightmap layer 1)</li>
-  <li><strong>Color</strong> → optional vertex color tinting (DColor0)</li>
+  <li><strong>Surface ID</strong> -- physics collision properties (friction, sound)</li>
+  <li><strong>UV layers</strong> -- texture mapping (BaseMaterial layer 0, Lightmap layer 1)</li>
+  <li><strong>Color</strong> -- optional vertex color tinting (DColor0)</li>
 </ul>
 <h3 id="complete-surface-id-table-19-unique-types"><a class="anchor" href="#complete-surface-id-table-19-unique-types">#</a>Complete Surface ID Table (19 unique types)</h3>
 <div class="table-wrapper"><table>
@@ -1014,8 +1003,8 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
     DColor0()               -- Optional vertex color</code></pre></div>
 <h3 id="uv-layer-types"><a class="anchor" href="#uv-layer-types">#</a>UV Layer Types</h3>
 <ul>
-  <li><code>BaseMaterial</code> (layer 0) — Primary diffuse/PBR texture</li>
-  <li><code>Lightmap</code> (layer 1) — Baked lighting data</li>
+  <li><code>BaseMaterial</code> (layer 0) -- Primary diffuse/PBR texture</li>
+  <li><code>Lightmap</code> (layer 1) -- Baked lighting data</li>
 </ul>
 <h3 id="material-categories-208-total"><a class="anchor" href="#material-categories-208-total">#</a>Material Categories (208 total)</h3>
 <ul>
@@ -1030,27 +1019,25 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
   <li>Water: WaterBorders, Underwater</li>
 </ul>
 <hr>
-<h2 id="11-editor-internals"><a class="anchor" href="#11-editor-internals">#</a>11. Editor Internals</h2>
-<p><strong>Source</strong>: <code>EditorDeveloper/Main.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="editor-internals"><a class="anchor" href="#editor-internals">#</a>Editor Internals</h2>
 <h3 id="editor-ui-structure"><a class="anchor" href="#editor-ui-structure">#</a>Editor UI Structure</h3>
 <p>The editor uses a <code>CControlContainer</code> hierarchy accessed via:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>editor.EditorInterface.InterfaceScene.Mobils[0]  → root CControlContainer</code></pre></div>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>editor.EditorInterface.InterfaceScene.Mobils[0]  -&gt; root CControlContainer</code></pre></div>
 <h3 id="known-ui-frame-ids"><a class="anchor" href="#known-ui-frame-ids">#</a>Known UI Frame IDs</h3>
 <ul>
-  <li><code>FrameDeveloperTools</code> — Hidden Nadeo developer tools (can be shown via Openplanet)</li>
-  <li><code>FrameEditTools</code> — Main editing toolbar</li>
-  <li><code>ButtonOffZone</code> — Off-zone placement button (hidden by default)</li>
-  <li><code>FrameLightTools</code> — Lighting controls</li>
+  <li><code>FrameDeveloperTools</code> -- Hidden Nadeo developer tools (can be shown via Openplanet)</li>
+  <li><code>FrameEditTools</code> -- Main editing toolbar</li>
+  <li><code>ButtonOffZone</code> -- Off-zone placement button (hidden by default)</li>
+  <li><code>FrameLightTools</code> -- Lighting controls</li>
 </ul>
 <h3 id="orbital-camera-parameters-tm2020"><a class="anchor" href="#orbital-camera-parameters-tm2020">#</a>Orbital Camera Parameters (TM2020)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>editor.OrbitalCameraControl:
   .m_ParamScrollAreaStart = 0.7  (default)
   .m_ParamScrollAreaMax = 0.98   (default)</code></pre></div>
 <h3 id="binary-patching-offzone-enable"><a class="anchor" href="#binary-patching-offzone-enable">#</a>Binary Patching (Offzone Enable)</h3>
-<p>Pattern: <code>0F 84 ?? ?? ?? ?? 4C 8D 45 ?? BA 13</code> → <code>90 90 90 90 90 90</code> (NOP out conditional jump)</p>
+<p>Pattern: <code>0F 84 ?? ?? ?? ?? 4C 8D 45 ?? BA 13</code> -> <code>90 90 90 90 90 90</code> (NOP out conditional jump)</p>
 <hr>
-<h2 id="12-display-configuration-system"><a class="anchor" href="#12-display-configuration-system">#</a>12. Display Configuration System</h2>
-<p><strong>Source</strong>: <code>Finetuner/src/*.as</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
+<h2 id="display-configuration-system"><a class="anchor" href="#display-configuration-system">#</a>Display Configuration System</h2>
 <h3 id="systemconfigdisplay-properties"><a class="anchor" href="#systemconfigdisplay-properties">#</a>SystemConfig.Display Properties</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -1110,9 +1097,8 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
   <li>MediaTracker</li>
 </ul>
 <hr>
-<h2 id="13-complete-configuration-schema-defaultjson"><a class="anchor" href="#13-complete-configuration-schema-defaultjson">#</a>13. Complete Configuration Schema (Default.json)</h2>
-<p><strong>Source</strong>: <code>Documents/Trackmania/Config/Default.json</code> (219 lines) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (actual game configuration)</p>
-<p>The Default.json contains the full configuration schema. Key categories:</p>
+<h2 id="complete-configuration-schema-defaultjson"><a class="anchor" href="#complete-configuration-schema-defaultjson">#</a>Complete Configuration Schema (Default.json)</h2>
+<p>The Default.json (219 lines) contains the full configuration schema. Key categories follow.</p>
 <h3 id="display-configuration-65-parameters"><a class="anchor" href="#display-configuration-65-parameters">#</a>Display Configuration (65 parameters)</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -1336,7 +1322,7 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 <tr>
   <td style="text-align:left"><code>SmMaxPlayerResimStepPerFrame</code></td>
   <td style="text-align:left"><strong>100</strong></td>
-  <td style="text-align:left"><strong>Max physics resim steps per frame — STRONG evidence for 100Hz tick rate</strong></td>
+  <td style="text-align:left"><strong>Max physics resim steps per frame -- STRONG evidence for 100Hz tick rate</strong></td>
 </tr>
 <tr>
   <td style="text-align:left"><code>TmMaxOpponents</code></td>
@@ -1508,14 +1494,31 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
   <li>GpuSync: immediate (no latency)</li>
 </ul>
 <p>This represents the absolute minimum viable rendering target for a browser recreation.</p>
+<hr>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="25-openplanet-deep-mining.md">25-openplanet-deep-mining.md</a> -- Extended data extraction beyond this first pass</li>
+  <li><a href="physics.html">04-physics-vehicle.md</a> -- Decompiled vehicle physics code</li>
+  <li><a href="physics.html">10-physics-deep-dive.md</a> -- Deep physics analysis</li>
+  <li><a href="29-community-knowledge.md">29-community-knowledge.md</a> -- Community projects that cross-reference this data</li>
+  <li><a href="tmnf-crossref.html">14-tmnf-crossref.md</a> -- TMNF/TM2020 comparison using these structs</li>
+</ul>
+<hr>
+<details><summary>Analysis metadata</summary>
+<ul>
+  <li><strong>Source</strong>: Openplanet plugins installed at <code>Trackmania/Openplanet/Plugins/</code></li>
+  <li><strong>Date</strong>: 2026-03-27</li>
+  <li><strong>Confidence</strong>: HIGH -- These are working plugins that read live game memory. Field names and offsets are <span class="badge badge-verified">VERIFIED</span> against the running game.</li>
+  <li><strong>Plugin sources</strong>: <code>VehicleState/Debugger/Main.as</code>, <code>VehicleState/StateWrappers.as</code>, <code>VehicleState/Internal/SceneVis.as</code>, <code>VehicleState/Internal/Vehicle/VehicleNext.as</code>, <code>NadeoServices/NadeoServices.as</code>, <code>NadeoServices/AccessToken.as</code>, <code>NadeoServices/CoreToken.as</code>, <code>Camera/Impl.as</code>, <code>Camera/Export.as</code>, <code>Finetuner/src/01_RenderDistance.as</code>, <code>EditorDeveloper/Main.as</code>, <code>NadeoImporterMaterialLib.txt</code></li>
+</ul>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="validation.html">&larr; Validation Review</a><a class="next" href="recreation.html">Browser Recreation Guide &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="ui-manialink.html">&larr; UI &amp; ManiaLink</a><a class="next" href="openplanet-mining.html">Openplanet Deep Mining &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-vehicle-state-structure-cscenevehiclevisstate">1. Vehicle State Structure (CSceneVehicleVisState)</a></li>
+<li class=""><a href="#vehicle-state-structure-cscenevehiclevisstate">Vehicle State Structure (CSceneVehicleVisState)</a></li>
   <li class="toc-h3"><a href="#input-fields">Input Fields</a></li>
   <li class="toc-h3"><a href="#motion-fields">Motion Fields</a></li>
   <li class="toc-h3"><a href="#enginedrivetrain">Engine/Drivetrain</a></li>
@@ -1524,53 +1527,52 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
   <li class="toc-h3"><a href="#reactor-boost">Reactor Boost</a></li>
   <li class="toc-h3"><a href="#visual-effects">Visual Effects</a></li>
   <li class="toc-h3"><a href="#race-state">Race State</a></li>
-<li class=""><a href="#2-vehicle-types-enumerations">2. Vehicle Types &amp; Enumerations</a></li>
+<li class=""><a href="#vehicle-types-and-enumerations">Vehicle Types and Enumerations</a></li>
   <li class="toc-h3"><a href="#vehicletype-enum">VehicleType Enum</a></li>
   <li class="toc-h3"><a href="#turbolevel-enum">TurboLevel Enum</a></li>
   <li class="toc-h3"><a href="#fallingstate-enum">FallingState Enum</a></li>
-<li class=""><a href="#3-wheel-state-structure">3. Wheel State Structure</a></li>
+<li class=""><a href="#wheel-state-structure">Wheel State Structure</a></li>
   <li class="toc-h3"><a href="#wheel-order">Wheel Order</a></li>
   <li class="toc-h3"><a href="#per-wheel-fields-tm2020-tmnext">Per-Wheel Fields (TM2020 / TMNEXT)</a></li>
   <li class="toc-h3"><a href="#wheel-struct-layout-mp4-version-0x24-bytes-per-wheel">Wheel Struct Layout (MP4 version, 0x24 bytes per wheel)</a></li>
   <li class="toc-h3"><a href="#visstate-layout-mp4-version-for-reference">VisState Layout (MP4 version, for reference)</a></li>
-<li class=""><a href="#4-scene-manager-architecture">4. Scene Manager Architecture</a></li>
+<li class=""><a href="#scene-manager-architecture">Scene Manager Architecture</a></li>
   <li class="toc-h3"><a href="#known-manager-indices-tm2020">Known Manager Indices (TM2020)</a></li>
   <li class="toc-h3"><a href="#vehicle-manager-structure-nscenevehiclevis_smgr">Vehicle Manager Structure (NSceneVehicleVis_SMgr)</a></li>
   <li class="toc-h3"><a href="#vehicle-array">Vehicle Array</a></li>
-<li class=""><a href="#5-nadeo-services-api">5. Nadeo Services API</a></li>
+<li class=""><a href="#nadeo-services-api">Nadeo Services API</a></li>
   <li class="toc-h3"><a href="#base-urls">Base URLs</a></li>
   <li class="toc-h3"><a href="#authentication-header">Authentication Header</a></li>
   <li class="toc-h3"><a href="#audience-system">Audience System</a></li>
-  <li class="toc-h3"><a href="#account-id-login-conversion">Account ID ↔ Login Conversion</a></li>
+  <li class="toc-h3"><a href="#account-id-login-conversion">Account ID / Login Conversion</a></li>
   <li class="toc-h3"><a href="#display-name-resolution">Display Name Resolution</a></li>
-<li class=""><a href="#6-authentication-flow">6. Authentication Flow</a></li>
+<li class=""><a href="#authentication-flow">Authentication Flow</a></li>
   <li class="toc-h3"><a href="#core-token">Core Token</a></li>
   <li class="toc-h3"><a href="#access-token-livemeet">Access Token (Live/Meet)</a></li>
-<li class=""><a href="#7-camera-system">7. Camera System</a></li>
+<li class=""><a href="#camera-system">Camera System</a></li>
   <li class="toc-h3"><a href="#projection">Projection</a></li>
   <li class="toc-h3"><a href="#editor-orbital-camera-tm2020">Editor Orbital Camera (TM2020)</a></li>
   <li class="toc-h3"><a href="#camera-types-from-decompiled-camera-init">Camera Types (from decompiled camera init)</a></li>
-<li class=""><a href="#8-rendering-internals">8. Rendering Internals</a></li>
+<li class=""><a href="#rendering-internals">Rendering Internals</a></li>
   <li class="toc-h3"><a href="#block-size">Block Size</a></li>
   <li class="toc-h3"><a href="#default-far-clip">Default Far Clip</a></li>
   <li class="toc-h3"><a href="#key-rendering-types">Key Rendering Types</a></li>
-<li class=""><a href="#9-game-coordinate-system">9. Game Coordinate System</a></li>
-<li class=""><a href="#10-material-surface-system">10. Material &amp; Surface System</a></li>
-  <li class="toc-h3"><a href="#critical-finding-gameplay-effects-are-not-material-driven">Critical Finding: Gameplay Effects are NOT Material-Driven</a></li>
+<li class=""><a href="#game-coordinate-system">Game Coordinate System</a></li>
+<li class=""><a href="#material-and-surface-system">Material and Surface System</a></li>
   <li class="toc-h3"><a href="#complete-surface-id-table-19-unique-types">Complete Surface ID Table (19 unique types)</a></li>
   <li class="toc-h3"><a href="#material-format">Material Format</a></li>
   <li class="toc-h3"><a href="#uv-layer-types">UV Layer Types</a></li>
   <li class="toc-h3"><a href="#material-categories-208-total">Material Categories (208 total)</a></li>
-<li class=""><a href="#11-editor-internals">11. Editor Internals</a></li>
+<li class=""><a href="#editor-internals">Editor Internals</a></li>
   <li class="toc-h3"><a href="#editor-ui-structure">Editor UI Structure</a></li>
   <li class="toc-h3"><a href="#known-ui-frame-ids">Known UI Frame IDs</a></li>
   <li class="toc-h3"><a href="#orbital-camera-parameters-tm2020">Orbital Camera Parameters (TM2020)</a></li>
   <li class="toc-h3"><a href="#binary-patching-offzone-enable">Binary Patching (Offzone Enable)</a></li>
-<li class=""><a href="#12-display-configuration-system">12. Display Configuration System</a></li>
+<li class=""><a href="#display-configuration-system">Display Configuration System</a></li>
   <li class="toc-h3"><a href="#systemconfigdisplay-properties">SystemConfig.Display Properties</a></li>
   <li class="toc-h3"><a href="#viewport-properties">Viewport Properties</a></li>
   <li class="toc-h3"><a href="#game-modes-from-stats-plugin">Game Modes (from Stats plugin)</a></li>
-<li class=""><a href="#13-complete-configuration-schema-defaultjson">13. Complete Configuration Schema (Default.json)</a></li>
+<li class=""><a href="#complete-configuration-schema-defaultjson">Complete Configuration Schema (Default.json)</a></li>
   <li class="toc-h3"><a href="#display-configuration-65-parameters">Display Configuration (65 parameters)</a></li>
   <li class="toc-h3"><a href="#network-configuration-18-parameters">Network Configuration (18 parameters)</a></li>
   <li class="toc-h3"><a href="#gamephysics-configuration">Game/Physics Configuration</a></li>
@@ -1578,6 +1580,7 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
   <li class="toc-h3"><a href="#input-configuration">Input Configuration</a></li>
   <li class="toc-h3"><a href="#advertising-anzu-sdk">Advertising (Anzu SDK)</a></li>
   <li class="toc-h3"><a href="#safe-mode-configuration">Safe Mode Configuration</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 

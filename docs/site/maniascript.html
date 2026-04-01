@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item active" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -112,65 +120,30 @@
                 <div class="content-body">
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
-                        <h1 id="maniascript-language-reference"><a class="anchor" href="#maniascript-language-reference">#</a>ManiaScript Language Reference</h1>
-<p><strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: Ghidra RE (docs 12, 13, 15), decompiled <code>CScriptEngine__Run.c</code>, <code>class_hierarchy.json</code>, community documentation (ManiaScript Book, boss-bravo.fr, maniaplanet/documentation, maniaplanet.github.io/maniascript-reference) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (binary tokens) + COMMUNITY-CONFIRMED (syntax/semantics)</p>
+                        <h1 id="maniascript-language-reference"><a class="anchor" href="#maniascript-language-reference">#</a>ManiaScript language reference</h1>
+<h2 id="maniascript-in-30-seconds"><a class="anchor" href="#maniascript-in-30-seconds">#</a>ManiaScript in 30 seconds</h2>
+<p>ManiaScript is Trackmania's built-in scripting language. It controls game modes, UI pages, editor plugins, and server logic. The language is statically typed, uses cooperative multitasking (<code>yield</code>/<code>sleep</code>/<code>wait</code>), and gives you access to engine objects but not the ability to define your own classes. Scripts run on the main thread, synchronized to each frame.</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#RequireContext CMlScript
+
+main() {
+    declare Integer Counter = 0;
+    while (True) {
+        foreach (Event in PendingEvents) {
+            if (Event.Type == CMlScriptEvent::Type::MouseClick) {
+                Counter += 1;
+                log(&quot;Clicks: &quot; ^ Counter);
+            }
+        }
+        yield;  // return control to the engine, resume next frame
+    }
+}</code></pre></div>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-language-overview">Language Overview</a></li>
-  <li><a href="#2-data-types-12-primitive-types">Data Types (12 Primitive Types)</a></li>
-  <li><a href="#3-variable-declarations">Variable Declarations</a></li>
-  <li><a href="#4-operators">Operators</a></li>
-  <li><a href="#5-control-flow">Control Flow</a></li>
-  <li><a href="#6-functions">Functions</a></li>
-  <li><a href="#7-collections-arrays-and-maps">Collections (Arrays and Maps)</a></li>
-  <li><a href="#8-collection-operations-17-dot-methods">Collection Operations (17 Dot Methods)</a></li>
-  <li><a href="#9-coroutines-and-cooperative-multitasking">Coroutines and Cooperative Multitasking</a></li>
-  <li><a href="#10-preprocessor-directives-7">Preprocessor Directives (7)</a></li>
-  <li><a href="#11-script-contexts">Script Contexts</a></li>
-  <li><a href="#12-classes-and-object-model">Classes and Object Model</a></li>
-  <li><a href="#13-events">Events</a></li>
-  <li><a href="#14-network-variables">Network Variables</a></li>
-  <li><a href="#15-persistent-and-cloud-storage">Persistent and Cloud Storage</a></li>
-  <li><a href="#16-serialization-json">Serialization (JSON)</a></li>
-  <li><a href="#17-debug-and-tuning">Debug and Tuning</a></li>
-  <li><a href="#18-built-in-api-script-managers">Built-in API: Script Managers</a></li>
-  <li><a href="#19-game-mode-scripting">Game Mode Scripting</a></li>
-  <li><a href="#20-manialink-scripting">ManiaLink Scripting</a></li>
-  <li><a href="#21-map-editor-plugin-scripting">Map Editor Plugin Scripting</a></li>
-  <li><a href="#22-standard-libraries">Standard Libraries</a></li>
-  <li><a href="#23-lexer-and-token-types">Lexer and Token Types</a></li>
-  <li><a href="#24-script-engine-internals-from-re">Script Engine Internals (from RE)</a></li>
-  <li><a href="#25-browser-recreation-interpretertranspiler-approach">Browser Recreation: Interpreter/Transpiler Approach</a></li>
-</ol>
-<hr>
-<h2 id="1-language-overview"><a class="anchor" href="#1-language-overview">#</a>1. Language Overview</h2>
-<p>ManiaScript is the embedded scripting language in the ManiaPlanet/Trackmania engine, created by Nadeo. It is interpreted by <code>CScriptEngine</code>, a singleton engine class confirmed at binary address <code class="addr">0x140874270</code> (the <code>CScriptEngine::Run</code> entry point).</p>
-<p><strong>Key characteristics</strong>:</p>
-<ul>
-  <li><strong>Statically typed</strong> with type inference on declarations</li>
-  <li><strong>Cooperative multitasking</strong> via <code>yield</code>, <code>sleep</code>, <code>wait</code>, <code>meanwhile</code></li>
-  <li><strong>No user-defined classes</strong> -- scripts work exclusively with engine-provided class instances</li>
-  <li><strong>Pointer/alias semantics</strong> for object references (<code>=</code> for stable ID binding, <code><=></code> for dynamic alias)</li>
-  <li><strong>Main-thread execution only</strong> -- all script runs on the main thread, even when triggered from <code>CGameManialinkBrowser::UpdateAsync</code> on a worker thread</li>
-  <li><strong>Interpreted</strong> -- bytecode interpreter at <code>FUN_1408d1ea0</code>, invoked by <code>CScriptEngine::Run</code></li>
-  <li><strong>Frame-synchronized</strong> -- scripts yield control each frame via <code>yield;</code> and are resumed by the engine</li>
-</ul>
-<p><strong>Language targets</strong>:</p>
-<ul>
-  <li>Game mode rules (server-side)</li>
-  <li>ManiaLink UI pages (client-side)</li>
-  <li>Map editor plugins</li>
-  <li>MediaTracker scripted camera effects</li>
-  <li>Server plugins</li>
-</ul>
-<hr>
-<h2 id="2-data-types-12-primitive-types"><a class="anchor" href="#2-data-types-12-primitive-types">#</a>2. Data Types (12 Primitive Types)</h2>
-<p>All 12 types confirmed via binary strings at <code>MANIASCRIPT_TYPE_*</code> tokens in the Trackmania.exe binary.</p>
+<h1 id="language-basics"><a class="anchor" href="#language-basics">#</a>Language basics</h1>
+<h2 id="data-types"><a class="anchor" href="#data-types">#</a>Data types</h2>
+<p>ManiaScript has 12 primitive types. All are confirmed via <code>MANIASCRIPT_TYPE_*</code> binary tokens in Trackmania.exe.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-  <th style="text-align:left">#</th>
   <th style="text-align:left">Token (Binary)</th>
   <th style="text-align:left">ManiaScript Type</th>
   <th style="text-align:left">C++ Equivalent</th>
@@ -180,7 +153,6 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left">1</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_VOID</code></td>
   <td style="text-align:left"><code>Void</code></td>
   <td style="text-align:left">void</td>
@@ -188,7 +160,6 @@
   <td style="text-align:left">-- (return type only)</td>
 </tr>
 <tr>
-  <td style="text-align:left">2</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_BOOLEAN</code></td>
   <td style="text-align:left"><code>Boolean</code></td>
   <td style="text-align:left">bool</td>
@@ -196,7 +167,6 @@
   <td style="text-align:left"><code>True</code>, <code>False</code></td>
 </tr>
 <tr>
-  <td style="text-align:left">3</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_INTEGER</code></td>
   <td style="text-align:left"><code>Integer</code></td>
   <td style="text-align:left">int32_t</td>
@@ -204,7 +174,6 @@
   <td style="text-align:left"><code>42</code>, <code>-7</code>, <code>0xFF</code></td>
 </tr>
 <tr>
-  <td style="text-align:left">4</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_REAL</code></td>
   <td style="text-align:left"><code>Real</code></td>
   <td style="text-align:left">float</td>
@@ -212,7 +181,6 @@
   <td style="text-align:left"><code>3.14</code>, <code>2.</code> (trailing dot required)</td>
 </tr>
 <tr>
-  <td style="text-align:left">5</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_TEXT</code></td>
   <td style="text-align:left"><code>Text</code></td>
   <td style="text-align:left">string</td>
@@ -220,7 +188,6 @@
   <td style="text-align:left"><code>"hello"</code>, <code>"""multiline"""</code></td>
 </tr>
 <tr>
-  <td style="text-align:left">6</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_VEC2</code></td>
   <td style="text-align:left"><code>Vec2</code></td>
   <td style="text-align:left">float[2]</td>
@@ -228,7 +195,6 @@
   <td style="text-align:left"><code><1.0, 2.0></code></td>
 </tr>
 <tr>
-  <td style="text-align:left">7</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_VEC3</code></td>
   <td style="text-align:left"><code>Vec3</code></td>
   <td style="text-align:left">float[3]</td>
@@ -236,7 +202,6 @@
   <td style="text-align:left"><code><1.0, 2.0, 3.0></code></td>
 </tr>
 <tr>
-  <td style="text-align:left">8</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_INT2</code></td>
   <td style="text-align:left"><code>Int2</code></td>
   <td style="text-align:left">int32_t[2]</td>
@@ -244,7 +209,6 @@
   <td style="text-align:left"><code><1, 2></code></td>
 </tr>
 <tr>
-  <td style="text-align:left">9</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_INT3</code></td>
   <td style="text-align:left"><code>Int3</code></td>
   <td style="text-align:left">int32_t[3]</td>
@@ -252,7 +216,6 @@
   <td style="text-align:left"><code><1, 2, 3></code></td>
 </tr>
 <tr>
-  <td style="text-align:left">10</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_ISO4</code></td>
   <td style="text-align:left"><code>Iso4</code></td>
   <td style="text-align:left">float[12]</td>
@@ -260,7 +223,6 @@
   <td style="text-align:left">3x3 rotation matrix + vec3 translation</td>
 </tr>
 <tr>
-  <td style="text-align:left">11</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_IDENT</code></td>
   <td style="text-align:left"><code>Ident</code></td>
   <td style="text-align:left">uint32_t (MwId)</td>
@@ -268,7 +230,6 @@
   <td style="text-align:left">Interned resource identifier</td>
 </tr>
 <tr>
-  <td style="text-align:left">12</td>
   <td style="text-align:left"><code>MANIASCRIPT_TYPE_CLASS</code></td>
   <td style="text-align:left"><code>Class</code></td>
   <td style="text-align:left">pointer</td>
@@ -277,10 +238,10 @@
 </tr>
 </tbody>
 </table></div>
-<h3 id="21-type-details"><a class="anchor" href="#21-type-details">#</a>2.1 Type Details</h3>
+<h3 id="type-details"><a class="anchor" href="#type-details">#</a>Type details</h3>
 <p><strong>Boolean</strong>: Always <code>True</code> or <code>False</code> (capitalized). Default value: <code>False</code>.</p>
 <p><strong>Integer</strong>: Signed 32-bit. Default: <code>0</code>.</p>
-<p><strong>Real</strong>: IEEE 754 single-precision float. Literals require a trailing dot if no decimal digits: <code>2.</code> not <code>2</code>. Default: <code>0.0</code>.</p>
+<p><strong>Real</strong>: IEEE 754 single-precision float. Literals require a trailing dot when no decimal digits follow: <code>2.</code> not <code>2</code>. Default: <code>0.0</code>.</p>
 <p><strong>Text</strong>: UTF-8 string. Default: <code>""</code>. Supports:</p>
 <ul>
   <li>Escape sequences: <code>\n</code>, <code>\\</code>, <code>\"</code></li>
@@ -288,37 +249,37 @@
   <li>String interpolation in triple-quoted: <code>"""{{{expression}}}"""</code></li>
   <li>Concatenation operator: <code>^</code> (also auto-converts Integer, Real, Boolean to Text)</li>
 </ul>
-<p><strong>Vec2 / Vec3</strong>: Floating-point vectors. Components accessed via <code>.X</code>, <code>.Y</code>, <code>.Z</code>.</p>
+<p><strong>Vec2 / Vec3</strong>: Floating-point vectors. Access components via <code>.X</code>, <code>.Y</code>, <code>.Z</code>.</p>
 <p><strong>Int2 / Int3</strong>: Integer vectors. Same component access as Vec2/Vec3.</p>
-<p><strong>Iso4</strong>: 4x4 isometric transform (3x3 rotation + translation). Used for positions and orientations in 3D space.</p>
-<p><strong>Ident</strong>: Interned identifier (MwId). Used for referencing resources like models, sounds, and images. <code>NullId</code> is the empty ident.</p>
-<p><strong>Class</strong>: A reference (pointer) to an engine-provided object. Cannot be user-instantiated. Accessed through engine API properties.</p>
+<p><strong>Iso4</strong>: 4x4 isometric transform (3x3 rotation + translation). Used for 3D positions and orientations.</p>
+<p><strong>Ident</strong>: Interned identifier (MwId). References resources like models, sounds, and images. <code>NullId</code> is the empty ident.</p>
+<p><strong>Class</strong>: A reference (pointer) to an engine-provided object. You cannot instantiate classes directly. Access them through engine API properties.</p>
 <hr>
-<h2 id="3-variable-declarations"><a class="anchor" href="#3-variable-declarations">#</a>3. Variable Declarations</h2>
-<h3 id="31-basic-declaration"><a class="anchor" href="#31-basic-declaration">#</a>3.1 Basic Declaration</h3>
+<h2 id="variable-declarations"><a class="anchor" href="#variable-declarations">#</a>Variable declarations</h2>
+<p>Variables are declared with <code>declare</code>, supporting explicit types and type inference.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare Integer MyVar;              // Explicit type, default value (0)
 declare Integer MyVar = 42;         // Explicit type with initial value
 declare MyVar = 42;                 // Type inferred from initializer (Integer)
 declare Text[] Names;               // Array of Text (requires explicit type)
 declare Text[Integer] Lookup;       // Associative array (map)</code></pre></div>
-<h3 id="32-scope-rules"><a class="anchor" href="#32-scope-rules">#</a>3.2 Scope Rules</h3>
+<h3 id="scope-rules"><a class="anchor" href="#scope-rules">#</a>Scope rules</h3>
 <ul>
   <li><strong>Local variables</strong>: Declared inside functions with <code>declare</code>. Block-scoped (curly brackets).</li>
   <li><strong>Global variables</strong>: Declared outside functions. Cannot use initial values; explicit type required.</li>
   <li>Variables are immutable in type once declared.</li>
   <li>Default values: <code>0</code> for Integer, <code>0.0</code> for Real, <code>False</code> for Boolean, <code>""</code> for Text, <code>NullId</code> for Ident.</li>
 </ul>
-<h3 id="33-extension-variables-attached-to-objects"><a class="anchor" href="#33-extension-variables-attached-to-objects">#</a>3.3 Extension Variables (Attached to Objects)</h3>
-<p>Variables can be attached to engine objects using the <code>for</code> keyword:</p>
+<h3 id="extension-variables"><a class="anchor" href="#extension-variables">#</a>Extension variables</h3>
+<p>You can attach variables to engine objects using the <code>for</code> keyword:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare Integer CustomScore for Players[0];
 declare Text Tag for LocalUser = &quot;default&quot;;</code></pre></div>
 <p>When reading an extension variable from an object that has not had it set, the default value is returned. The <code>= value</code> in the declaration sets the read-default, not an assignment.</p>
-<h3 id="34-aliases-as"><a class="anchor" href="#34-aliases-as">#</a>3.4 Aliases (<code>as</code>)</h3>
-<p>Extension variables can be given local aliases to avoid ambiguity:</p>
+<h3 id="aliases"><a class="anchor" href="#aliases">#</a>Aliases</h3>
+<p>Extension variables can have local aliases to avoid ambiguity:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare Integer CustomScore for Players[0] as Score1;
 declare Integer CustomScore for Players[1] as Score2;</code></pre></div>
-<h3 id="35-pointer-vs-alias-binding"><a class="anchor" href="#35-pointer-vs-alias-binding">#</a>3.5 Pointer vs. Alias Binding</h3>
-<p>Two binding modes for object references:</p>
+<h3 id="pointer-vs-alias-binding"><a class="anchor" href="#pointer-vs-alias-binding">#</a>Pointer vs. alias binding</h3>
+<p>Two binding modes exist for object references:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Alias binding (dynamic) -- tracks array position
 declare CPlayer FirstPlayer &lt;=&gt; Players[0];
 // If Players[0] changes, FirstPlayer follows the new Players[0]
@@ -326,7 +287,7 @@ declare CPlayer FirstPlayer &lt;=&gt; Players[0];
 // Assignment binding (stable) -- tracks object identity
 declare CPlayer StableRef = Players[0];
 // Tracks this specific player even if their array index changes</code></pre></div>
-<h3 id="36-declaration-modifiers"><a class="anchor" href="#36-declaration-modifiers">#</a>3.6 Declaration Modifiers</h3>
+<h3 id="declaration-modifiers"><a class="anchor" href="#declaration-modifiers">#</a>Declaration modifiers</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -359,8 +320,8 @@ declare CPlayer StableRef = Players[0];
 </tbody>
 </table></div>
 <hr>
-<h2 id="4-operators"><a class="anchor" href="#4-operators">#</a>4. Operators</h2>
-<h3 id="41-arithmetic"><a class="anchor" href="#41-arithmetic">#</a>4.1 Arithmetic</h3>
+<h2 id="operators"><a class="anchor" href="#operators">#</a>Operators</h2>
+<h3 id="arithmetic"><a class="anchor" href="#arithmetic">#</a>Arithmetic</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -403,7 +364,7 @@ declare CPlayer StableRef = Players[0];
 </tr>
 </tbody>
 </table></div>
-<h3 id="42-string"><a class="anchor" href="#42-string">#</a>4.2 String</h3>
+<h3 id="string"><a class="anchor" href="#string">#</a>String</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -420,7 +381,7 @@ declare CPlayer StableRef = Players[0];
 </tr>
 </tbody>
 </table></div>
-<h3 id="43-comparison"><a class="anchor" href="#43-comparison">#</a>4.3 Comparison</h3>
+<h3 id="comparison"><a class="anchor" href="#comparison">#</a>Comparison</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -462,7 +423,7 @@ declare CPlayer StableRef = Players[0];
 </tr>
 </tbody>
 </table></div>
-<h3 id="44-logical"><a class="anchor" href="#44-logical">#</a>4.4 Logical</h3>
+<h3 id="logical"><a class="anchor" href="#logical">#</a>Logical</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -487,7 +448,7 @@ declare CPlayer StableRef = Players[0];
 </tr>
 </tbody>
 </table></div>
-<h3 id="45-assignment"><a class="anchor" href="#45-assignment">#</a>4.5 Assignment</h3>
+<h3 id="assignment"><a class="anchor" href="#assignment">#</a>Assignment</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -514,12 +475,12 @@ declare CPlayer StableRef = Players[0];
 </tr>
 </tbody>
 </table></div>
-<h3 id="46-vector-construction"><a class="anchor" href="#46-vector-construction">#</a>4.6 Vector Construction</h3>
+<h3 id="vector-construction"><a class="anchor" href="#vector-construction">#</a>Vector construction</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare Vec3 Pos = &lt;1.0, 2.0, 3.0&gt;;
 declare Int3 Coord = &lt;5, 10, 15&gt;;</code></pre></div>
 <hr>
-<h2 id="5-control-flow"><a class="anchor" href="#5-control-flow">#</a>5. Control Flow</h2>
-<h3 id="51-conditional"><a class="anchor" href="#51-conditional">#</a>5.1 Conditional</h3>
+<h2 id="control-flow"><a class="anchor" href="#control-flow">#</a>Control flow</h2>
+<h3 id="conditional"><a class="anchor" href="#conditional">#</a>Conditional</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">if (Condition) {
     // ...
 } else if (OtherCondition) {
@@ -527,16 +488,16 @@ declare Int3 Coord = &lt;5, 10, 15&gt;;</code></pre></div>
 } else {
     // ...
 }</code></pre></div>
-<h3 id="52-while-loop"><a class="anchor" href="#52-while-loop">#</a>5.2 While Loop</h3>
+<h3 id="while-loop"><a class="anchor" href="#while-loop">#</a>While loop</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">while (Condition) {
     // ...
 }</code></pre></div>
-<h3 id="53-for-loop-range-based"><a class="anchor" href="#53-for-loop-range-based">#</a>5.3 For Loop (Range-based)</h3>
+<h3 id="for-loop-range-based"><a class="anchor" href="#for-loop-range-based">#</a>For loop (range-based)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">for (I, 0, 10) {
     // I goes from 0 to 10 inclusive
     log(I);
 }</code></pre></div>
-<h3 id="54-foreach"><a class="anchor" href="#54-foreach">#</a>5.4 Foreach</h3>
+<h3 id="foreach"><a class="anchor" href="#foreach">#</a>Foreach</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Iterate values
 foreach (Player in Players) {
     log(Player.Login);
@@ -546,7 +507,7 @@ foreach (Player in Players) {
 foreach (Key =&gt; Value in MyMap) {
     log(Key ^ &quot;: &quot; ^ Value);
 }</code></pre></div>
-<h3 id="55-switch-case"><a class="anchor" href="#55-switch-case">#</a>5.5 Switch / Case</h3>
+<h3 id="switch-case"><a class="anchor" href="#switch-case">#</a>Switch / case</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">switch (Event.Type) {
     case CMlScriptEvent::Type::MouseClick: {
         log(&quot;Click on &quot; ^ Event.ControlId);
@@ -558,7 +519,7 @@ foreach (Key =&gt; Value in MyMap) {
         // ...
     }
 }</code></pre></div>
-<h3 id="56-switchtype-type-based-dispatch"><a class="anchor" href="#56-switchtype-type-based-dispatch">#</a>5.6 SwitchType (Type-based dispatch)</h3>
+<h3 id="switchtype-type-based-dispatch"><a class="anchor" href="#switchtype-type-based-dispatch">#</a>SwitchType (type-based dispatch)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">switchtype (Event) {
     case CSmModeEvent: {
         // Handle ShootMania event
@@ -570,7 +531,7 @@ foreach (Key =&gt; Value in MyMap) {
         // Unknown event type
     }
 }</code></pre></div>
-<h3 id="57-flow-control-keywords"><a class="anchor" href="#57-flow-control-keywords">#</a>5.7 Flow Control Keywords</h3>
+<h3 id="flow-control-keywords"><a class="anchor" href="#flow-control-keywords">#</a>Flow control keywords</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -594,8 +555,8 @@ foreach (Key =&gt; Value in MyMap) {
 </tbody>
 </table></div>
 <hr>
-<h2 id="6-functions"><a class="anchor" href="#6-functions">#</a>6. Functions</h2>
-<h3 id="61-declaration"><a class="anchor" href="#61-declaration">#</a>6.1 Declaration</h3>
+<h2 id="functions"><a class="anchor" href="#functions">#</a>Functions</h2>
+<p>You declare functions with a return type, name, and typed parameters.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">Integer Add(Integer A, Integer B) {
     return A + B;
 }
@@ -608,7 +569,7 @@ Text GetGreeting() {
     return &quot;Welcome!&quot;;
 }</code></pre></div>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="62-entry-point"><a class="anchor" href="#62-entry-point">#</a>6.2 Entry Point</h3></summary>
+<summary><h3 id="entry-point"><a class="anchor" href="#entry-point">#</a>Entry point</h3></summary>
 <div class="collapsible-content">
 <p>The <code>main()</code> function is the script entry point:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">main() {
@@ -620,11 +581,47 @@ Text GetGreeting() {
 <p>For simple scripts (ManiaLink), a bare script body without <code>main()</code> is allowed.</p>
 </div>
 </details>
-<h3 id="63-no-overloading-or-variadic-functions"><a class="anchor" href="#63-no-overloading-or-variadic-functions">#</a>6.3 No Overloading or Variadic Functions</h3>
+<h3 id="no-overloading-or-variadic-functions"><a class="anchor" href="#no-overloading-or-variadic-functions">#</a>No overloading or variadic functions</h3>
 <p>ManiaScript does not support function overloading or variadic parameters. Engine API methods may have overloaded variants, but user-defined functions cannot.</p>
 <hr>
-<h2 id="7-collections-arrays-and-maps"><a class="anchor" href="#7-collections-arrays-and-maps">#</a>7. Collections (Arrays and Maps)</h2>
-<h3 id="71-array-ordered-list"><a class="anchor" href="#71-array-ordered-list">#</a>7.1 Array (Ordered List)</h3>
+<h2 id="preprocessor-directives"><a class="anchor" href="#preprocessor-directives">#</a>Preprocessor directives</h2>
+<p>Seven directives are confirmed as lexer tokens in the binary.</p>
+<h3 id="requirecontext"><a class="anchor" href="#requirecontext">#</a><code>#RequireContext</code></h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#RequireContext CSmMode</code></pre></div>
+<p>Specifies the required script execution context class. The script only loads if attached to the correct context. See <a href="#script-contexts">Script contexts</a> for available contexts.</p>
+<h3 id="setting"><a class="anchor" href="#setting">#</a><code>#Setting</code></h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Setting S_TimeLimit 300 as &quot;Time limit&quot;
+#Setting S_PointsLimit 100 as _(&quot;Points limit&quot;)
+#Setting S_UseTieBreak True as &quot;Use tie-break&quot;</code></pre></div>
+<p>Declares a configurable setting variable. Server administrators and players can modify settings without editing script code. The <code>as</code> clause provides a display name; <code>_()</code> marks it for translation. Supported types: Integer, Real, Boolean, Text.</p>
+<h3 id="struct"><a class="anchor" href="#struct">#</a><code>#Struct</code></h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Struct K_PlayerData {
+    Integer Score;
+    Text Name;
+    Boolean IsAlive;
+}</code></pre></div>
+<p>Defines a struct type. Struct names conventionally start with <code>K_</code>. You can use structs as variable types, in arrays, and serialize them to/from JSON.</p>
+<h3 id="include"><a class="anchor" href="#include">#</a><code>#Include</code></h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Include &quot;MathLib&quot; as MathLib
+#Include &quot;TextLib&quot; as TextLib
+#Include &quot;Libs/Nadeo/Message.Script.txt&quot; as Message</code></pre></div>
+<p>Imports a library script. The <code>as</code> clause provides a namespace alias. Call library functions as <code>Namespace::FunctionName()</code>.</p>
+<h3 id="extends"><a class="anchor" href="#extends">#</a><code>#Extends</code></h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Extends &quot;Modes/TrackMania/Base/TrackmaniaBase.Script.txt&quot;</code></pre></div>
+<p>Extends a base script. Game modes use this to inherit from Nadeo's base mode framework. The base script provides the <code>main()</code> function with structured labels for code injection (see <a href="#game-mode-scripting">Game mode scripting</a>).</p>
+<h3 id="command"><a class="anchor" href="#command">#</a><code>#Command</code></h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Command MyCommand(Integer Param) as &quot;Execute my command&quot;</code></pre></div>
+<p>Registers a callable command. You can invoke commands from the server admin interface or other scripts.</p>
+<h3 id="const"><a class="anchor" href="#const">#</a><code>#Const</code></h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Const C_MaxPlayers 64
+#Const C_Version &quot;1.0.0&quot;
+#Const CompatibleMapTypes &quot;TrackMania\\TM_Race,TrackMania\\TM_Royal&quot;</code></pre></div>
+<p>Defines a compile-time constant. Constants conventionally start with <code>C_</code>. Standard game mode constants include <code>CompatibleMapTypes</code>, <code>Version</code>, and <code>ScriptName</code>.</p>
+<hr>
+<h1 id="collections-and-coroutines"><a class="anchor" href="#collections-and-coroutines">#</a>Collections and coroutines</h1>
+<h2 id="collections-arrays-and-maps"><a class="anchor" href="#collections-arrays-and-maps">#</a>Collections (arrays and maps)</h2>
+<p>ManiaScript provides two collection types: ordered arrays and associative maps (key-value dictionaries).</p>
+<h3 id="array-ordered-list"><a class="anchor" href="#array-ordered-list">#</a>Array (ordered list)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare Text[] Names = [&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;];
 declare Integer[] Empty;
 
@@ -635,7 +632,7 @@ log(Names[0]);  // &quot;Alice&quot;
 foreach (Name in Names) {
     log(Name);
 }</code></pre></div>
-<h3 id="72-associative-array-map"><a class="anchor" href="#72-associative-array-map">#</a>7.2 Associative Array (Map)</h3>
+<h3 id="associative-array-map"><a class="anchor" href="#associative-array-map">#</a>Associative array (map)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare Text[Integer] IdToName = [1 =&gt; &quot;Alice&quot;, 2 =&gt; &quot;Bob&quot;];
 declare Integer[Text] NameToScore;
 
@@ -646,12 +643,12 @@ log(IdToName[1]);  // &quot;Alice&quot;
 foreach (Id =&gt; Name in IdToName) {
     log(Id ^ &quot;: &quot; ^ Name);
 }</code></pre></div>
-<h3 id="73-valid-keyvalue-type-combinations"><a class="anchor" href="#73-valid-keyvalue-type-combinations">#</a>7.3 Valid Key/Value Type Combinations</h3>
+<h3 id="valid-keyvalue-type-combinations"><a class="anchor" href="#valid-keyvalue-type-combinations">#</a>Valid key/value type combinations</h3>
 <p>Keys can be: <code>Integer</code>, <code>Text</code>, <code>Ident</code>, <code>Boolean</code>, enum types, or Class references. Values can be: any ManiaScript type including arrays (nested).</p>
 <hr>
-<h2 id="8-collection-operations-17-dot-methods"><a class="anchor" href="#8-collection-operations-17-dot-methods">#</a>8. Collection Operations (17 Dot Methods)</h2>
-<p>All confirmed via binary string search in Trackmania.exe. These are dot-prefixed method calls on array/map instances.</p>
-<h3 id="81-mutation-operations"><a class="anchor" href="#81-mutation-operations">#</a>8.1 Mutation Operations</h3>
+<h2 id="collection-operations"><a class="anchor" href="#collection-operations">#</a>Collection operations</h2>
+<p>All 17 dot methods are confirmed via binary string search in Trackmania.exe. These are dot-prefixed method calls on array/map instances.</p>
+<h3 id="mutation-operations"><a class="anchor" href="#mutation-operations">#</a>Mutation operations</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -688,7 +685,7 @@ foreach (Id =&gt; Name in IdToName) {
 </tr>
 </tbody>
 </table></div>
-<h3 id="82-access-operations"><a class="anchor" href="#82-access-operations">#</a>8.2 Access Operations</h3>
+<h3 id="access-operations"><a class="anchor" href="#access-operations">#</a>Access operations</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -720,7 +717,7 @@ foreach (Id =&gt; Name in IdToName) {
 </tr>
 </tbody>
 </table></div>
-<h3 id="83-sorting-operations"><a class="anchor" href="#83-sorting-operations">#</a>8.3 Sorting Operations</h3>
+<h3 id="sorting-operations"><a class="anchor" href="#sorting-operations">#</a>Sorting operations</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -752,7 +749,7 @@ foreach (Id =&gt; Name in IdToName) {
 </tr>
 </tbody>
 </table></div>
-<h3 id="84-query-operations"><a class="anchor" href="#84-query-operations">#</a>8.4 Query Operations</h3>
+<h3 id="query-operations"><a class="anchor" href="#query-operations">#</a>Query operations</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -785,13 +782,12 @@ foreach (Id =&gt; Name in IdToName) {
 </tbody>
 </table></div>
 <hr>
-<h2 id="9-coroutines-and-cooperative-multitasking"><a class="anchor" href="#9-coroutines-and-cooperative-multitasking">#</a>9. Coroutines and Cooperative Multitasking</h2>
-<p>ManiaScript has built-in cooperative multitasking through four coroutine primitives. All confirmed as lexer tokens in the binary (addresses <code class="addr">0x141c023a8</code>, <code class="addr">0x141c024c8</code>, <code class="addr">0x141c024b0</code>).</p>
-<h3 id="91-yield"><a class="anchor" href="#91-yield">#</a>9.1 Yield</h3>
+<h2 id="coroutines-and-cooperative-multitasking"><a class="anchor" href="#coroutines-and-cooperative-multitasking">#</a>Coroutines and cooperative multitasking</h2>
+<p>ManiaScript uses cooperative multitasking through four coroutine primitives (a coroutine is a function that can pause and resume across frames). All are confirmed as lexer tokens in the binary (addresses <code class="addr">0x141c023a8</code>, <code class="addr">0x141c024c8</code>, <code class="addr">0x141c024b0</code>).</p>
+<h3 id="yield"><a class="anchor" href="#yield">#</a>Yield</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">yield;</code></pre></div>
-<p>Pauses execution and returns control to the engine. The script resumes at the next frame. This is the fundamental scheduling primitive.</p>
+<p>Pauses execution and returns control to the engine. The script resumes at the next frame. Every ManiaScript main loop must include <code>yield;</code> to prevent infinite loops.</p>
 <p><strong>Implementation</strong>: The script sets its return state and returns from the bytecode interpreter <code>FUN_1408d1ea0</code>. The engine re-enters the same context on the next frame.</p>
-<p><strong>Usage</strong>: Every ManiaScript main loop must include <code>yield;</code> to prevent infinite loops:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">main() {
     while (True) {
         foreach (Event in PendingEvents) {
@@ -800,66 +796,91 @@ foreach (Id =&gt; Name in IdToName) {
         yield;
     }
 }</code></pre></div>
-<h3 id="92-sleep"><a class="anchor" href="#92-sleep">#</a>9.2 Sleep</h3>
+<h3 id="sleep"><a class="anchor" href="#sleep">#</a>Sleep</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">sleep(1000);  // Pause for 1000 milliseconds</code></pre></div>
 <p>Pauses execution for the specified duration in milliseconds. The engine checks the timer each frame by comparing the timestamp at <code>*(context+0xC4)</code> against the global tick counter <code>DAT_141ffad50</code>.</p>
-<h3 id="93-wait"><a class="anchor" href="#93-wait">#</a>9.3 Wait</h3>
+<h3 id="wait"><a class="anchor" href="#wait">#</a>Wait</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">wait(Player.IsSpawned);
 wait(Http.IsCompleted);</code></pre></div>
 <p>Evaluates the condition expression each frame. If <code>False</code>, the script yields. When the condition becomes <code>True</code>, execution continues. Equivalent to:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">while (!Condition) yield;</code></pre></div>
-<h3 id="94-meanwhile"><a class="anchor" href="#94-meanwhile">#</a>9.4 Meanwhile</h3>
+<h3 id="meanwhile"><a class="anchor" href="#meanwhile">#</a>Meanwhile</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// The meanwhile block runs concurrently with the parent flow
 meanwhile {
     // This block executes each frame alongside the outer code
     UpdateUI();
 }</code></pre></div>
-<p>Creates a parallel execution branch within the script using the same fiber mechanism but with additional context for tracking multiple execution points. This enables concurrent tasks within a single script (e.g., updating a HUD while the main game logic runs).</p>
-<h3 id="95-execution-model"><a class="anchor" href="#95-execution-model">#</a>9.5 Execution Model</h3>
+<p>Creates a parallel execution branch within the script. This enables concurrent tasks within a single script (e.g., updating a HUD while the main game logic runs).</p>
+<h3 id="execution-model"><a class="anchor" href="#execution-model">#</a>Execution model</h3>
 <p>ManiaScript runs at specific points within each frame, always on the main thread:</p>
 <ol>
-  <li><strong>During gameplay states</strong> (state machine values 0xFE4, 0x1013, 0x1032): Script is invoked as part of the gameplay dispatch.</li>
+  <li><strong>During gameplay states</strong> (state machine values 0xFE4, 0x1013, 0x1032): Script runs as part of the gameplay dispatch.</li>
   <li><strong>During menu/UI</strong>: <code>CGameManialinkBrowser::UpdateAsync</code> runs on a worker thread, but actual script execution via <code>CScriptEngine::Run</code> is always main-thread.</li>
   <li><strong>Relative to physics</strong>: Script runs AFTER the physics step. The arena client processes physics first, then dispatches script events.</li>
 </ol>
 <hr>
-<h2 id="10-preprocessor-directives-7"><a class="anchor" href="#10-preprocessor-directives-7">#</a>10. Preprocessor Directives (7)</h2>
-<p>All 7 confirmed as lexer tokens in the binary.</p>
-<h3 id="101-requirecontext"><a class="anchor" href="#101-requirecontext">#</a>10.1 <code>#RequireContext</code></h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#RequireContext CSmMode</code></pre></div>
-<p>Specifies the required script execution context class. This provides type safety: the script will only load if attached to the correct context. Available contexts are listed in <a href="#11-script-contexts">Section 11</a>.</p>
-<h3 id="102-setting"><a class="anchor" href="#102-setting">#</a>10.2 <code>#Setting</code></h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Setting S_TimeLimit 300 as &quot;Time limit&quot;
-#Setting S_PointsLimit 100 as _(&quot;Points limit&quot;)
-#Setting S_UseTieBreak True as &quot;Use tie-break&quot;</code></pre></div>
-<p>Declares a configurable setting variable. Settings can be modified by server administrators and players without editing script code. The <code>as</code> clause provides a display name; <code>_()</code> marks it for translation. Supported types: Integer, Real, Boolean, Text.</p>
-<h3 id="103-struct"><a class="anchor" href="#103-struct">#</a>10.3 <code>#Struct</code></h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Struct K_PlayerData {
-    Integer Score;
-    Text Name;
-    Boolean IsAlive;
-}</code></pre></div>
-<p>Defines a struct type. Struct names conventionally start with <code>K_</code>. Structs can be used as variable types, in arrays, and serialized to/from JSON.</p>
-<h3 id="104-include"><a class="anchor" href="#104-include">#</a>10.4 <code>#Include</code></h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Include &quot;MathLib&quot; as MathLib
-#Include &quot;TextLib&quot; as TextLib
-#Include &quot;Libs/Nadeo/Message.Script.txt&quot; as Message</code></pre></div>
-<p>Imports a library script. The <code>as</code> clause provides a namespace alias. Library functions are called as <code>Namespace::FunctionName()</code>.</p>
-<h3 id="105-extends"><a class="anchor" href="#105-extends">#</a>10.5 <code>#Extends</code></h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Extends &quot;Modes/TrackMania/Base/TrackmaniaBase.Script.txt&quot;</code></pre></div>
-<p>Extends a base script. Used primarily for game modes to inherit from Nadeo's base mode framework. The base script provides the <code>main()</code> function with structured labels for code injection (see <a href="#19-game-mode-scripting">Section 19</a>).</p>
-<h3 id="106-command"><a class="anchor" href="#106-command">#</a>10.6 <code>#Command</code></h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Command MyCommand(Integer Param) as &quot;Execute my command&quot;</code></pre></div>
-<p>Registers a callable command. Commands can be invoked from the server admin interface or other scripts.</p>
-<h3 id="107-const"><a class="anchor" href="#107-const">#</a>10.7 <code>#Const</code></h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Const C_MaxPlayers 64
-#Const C_Version &quot;1.0.0&quot;
-#Const CompatibleMapTypes &quot;TrackMania\\TM_Race,TrackMania\\TM_Royal&quot;</code></pre></div>
-<p>Defines a compile-time constant. Constants conventionally start with <code>C_</code>. Standard game mode constants include <code>CompatibleMapTypes</code>, <code>Version</code>, and <code>ScriptName</code>.</p>
+<h2 id="serialization-json"><a class="anchor" href="#serialization-json">#</a>Serialization (JSON)</h2>
+<p>ManiaScript supports JSON serialization for structs and collections through <code>.tojson()</code> and <code>.fromjson()</code> methods.</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Serialize to JSON
+declare Text JsonString = MyStruct.tojson();
+
+// Deserialize from JSON
+declare K_PlayerData Data;
+Data.fromjson(JsonString);</code></pre></div>
+<h3 id="usage-with-structs"><a class="anchor" href="#usage-with-structs">#</a>Usage with structs</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Struct K_Config {
+    Integer MaxPlayers;
+    Text ServerName;
+    Boolean IsPublic;
+}
+
+// Serialize
+declare K_Config Config;
+Config.MaxPlayers = 64;
+Config.ServerName = &quot;My Server&quot;;
+Config.IsPublic = True;
+declare Text Json = Config.tojson();
+// Json == &#x27;{&quot;MaxPlayers&quot;:64,&quot;ServerName&quot;:&quot;My Server&quot;,&quot;IsPublic&quot;:true}&#x27;
+
+// Deserialize
+declare K_Config Loaded;
+Loaded.fromjson(Json);</code></pre></div>
+<h3 id="xml-parsing"><a class="anchor" href="#xml-parsing">#</a>XML parsing</h3>
+<p>Via the <code>CParsingManager</code> (<code>Xml</code> global):</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare CXmlDocument Doc = Xml.Create(XmlText);
+declare CXmlNode Root = Doc.Root;
+// Traverse nodes...
+Xml.Destroy(Doc);</code></pre></div>
 <hr>
-<h2 id="11-script-contexts"><a class="anchor" href="#11-script-contexts">#</a>11. Script Contexts</h2>
-<p>Each ManiaScript script runs within a specific context class that determines which API is available. The context is set via <code>#RequireContext</code> and validated at load time.</p>
-<h3 id="111-context-class-hierarchy"><a class="anchor" href="#111-context-class-hierarchy">#</a>11.1 Context Class Hierarchy</h3>
+<h2 id="persistent-and-cloud-storage"><a class="anchor" href="#persistent-and-cloud-storage">#</a>Persistent and cloud storage</h2>
+<p>Persistent variables survive server changes, game restarts, and reinstalls (if the profile is preserved).</p>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare persistent Integer Persistent_BestScore for LocalUser;
+declare persistent Text Persistent_Settings for LocalUser;</code></pre></div>
+<h3 id="cloud-storage-operations"><a class="anchor" href="#cloud-storage-operations">#</a>Cloud storage operations</h3>
+<p>Two collection operations for cloud persistence are confirmed in the binary:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Operation</th>
+  <th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>.cloudrequestsave</code></td>
+  <td style="text-align:left">Request save of collection data to Nadeo cloud storage</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>.cloudisready</code></td>
+  <td style="text-align:left">Check if a pending cloud operation has completed</td>
+</tr>
+</tbody>
+</table></div>
+<p>These enable asynchronous cloud save/load for script data beyond simple persistent variables.</p>
+<hr>
+<h1 id="script-contexts-and-apis"><a class="anchor" href="#script-contexts-and-apis">#</a>Script contexts and APIs</h1>
+<h2 id="script-contexts"><a class="anchor" href="#script-contexts">#</a>Script contexts</h2>
+<p>Each ManiaScript script runs within a specific context class that determines which API is available. Set the context via <code>#RequireContext</code> -- the engine validates it at load time.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -941,7 +962,7 @@ meanwhile {
 </tr>
 </tbody>
 </table></div>
-<h3 id="112-context-specific-api-access"><a class="anchor" href="#112-context-specific-api-access">#</a>11.2 Context-Specific API Access</h3>
+<h3 id="context-specific-api-access"><a class="anchor" href="#context-specific-api-access">#</a>Context-specific API access</h3>
 <p>Each context provides different global variables and managers:</p>
 <p><strong>CSmMode</strong> (game mode):</p>
 <ul>
@@ -967,7 +988,7 @@ meanwhile {
   <li><code>PlaceMode</code>, <code>EditMode</code></li>
   <li>Block/item placement methods</li>
 </ul>
-<h3 id="113-context-classes-in-binary"><a class="anchor" href="#113-context-classes-in-binary">#</a>11.3 Context Classes in Binary</h3>
+<h3 id="context-classes-in-binary"><a class="anchor" href="#context-classes-in-binary">#</a>Context classes in binary</h3>
 <p>From the class hierarchy (2,027 classes), the script engine infrastructure consists of 9 core classes:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CScriptEngine                    -- Script VM singleton (has Run, Compilation methods)
 CScriptBaseEvent                 -- Script event base
@@ -979,10 +1000,9 @@ CScriptSetting                   -- Script setting (#Setting storage)
 CScriptTraitsMetadata            -- Script traits
 CScriptTraitsPersistent          -- Persistent script traits</code></pre></div>
 <hr>
-<h2 id="12-classes-and-object-model"><a class="anchor" href="#12-classes-and-object-model">#</a>12. Classes and Object Model</h2>
-<h3 id="121-no-user-defined-classes"><a class="anchor" href="#121-no-user-defined-classes">#</a>12.1 No User-Defined Classes</h3>
-<p>ManiaScript does <strong>not</strong> allow defining new classes. Scripts interact exclusively with engine-provided class instances. You cannot instantiate objects directly; you work with objects provided by the context (e.g., <code>Players[0]</code>, <code>Page.GetFirstChild("id")</code>).</p>
-<h3 id="122-class-references"><a class="anchor" href="#122-class-references">#</a>12.2 Class References</h3>
+<h2 id="classes-and-object-model"><a class="anchor" href="#classes-and-object-model">#</a>Classes and object model</h2>
+<p>ManiaScript does not allow you to define new classes. You interact exclusively with engine-provided class instances. You cannot instantiate objects directly; work with objects provided by the context (e.g., <code>Players[0]</code>, <code>Page.GetFirstChild("id")</code>).</p>
+<h3 id="class-references"><a class="anchor" href="#class-references">#</a>Class references</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Get a reference to an existing object
 declare CSmPlayer Target = Players[0];
 
@@ -994,16 +1014,15 @@ log(Target.Score.Points);
 if (Target != Null) {
     // Safe to use
 }</code></pre></div>
-<h3 id="123-casting"><a class="anchor" href="#123-casting">#</a>12.3 Casting</h3>
+<h3 id="casting"><a class="anchor" href="#casting">#</a>Casting</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare MyLabel &lt;=&gt; (Page.GetFirstChild(&quot;label_id&quot;) as CMlLabel);
 declare MyQuad &lt;=&gt; (Page.GetFirstChild(&quot;quad_id&quot;) as CMlQuad);</code></pre></div>
 <p>The <code>as</code> operator casts a class reference to a more specific type. Returns <code>Null</code> if the cast is invalid.</p>
-<h3 id="124-enum-access"><a class="anchor" href="#124-enum-access">#</a>12.4 Enum Access</h3>
+<h3 id="enum-access"><a class="anchor" href="#enum-access">#</a>Enum access</h3>
 <p>Enums are accessed via their class scope:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">if (Event.Type == CMlScriptEvent::Type::MouseClick) { ... }
 if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned) { ... }</code></pre></div>
-<h3 id="125-key-api-classes-tm2020"><a class="anchor" href="#125-key-api-classes-tm2020">#</a>12.5 Key API Classes (TM2020)</h3>
-<p>From the Doxygen-generated reference (boss-bravo.fr, BigBang1112/maniascript-reference) and our binary class hierarchy:</p>
+<h3 id="key-api-classes-tm2020"><a class="anchor" href="#key-api-classes-tm2020">#</a>Key API classes (TM2020)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1131,9 +1150,8 @@ if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned) { ... }</code></pre>
 </tbody>
 </table></div>
 <hr>
-<h2 id="13-events"><a class="anchor" href="#13-events">#</a>13. Events</h2>
-<h3 id="131-event-driven-architecture"><a class="anchor" href="#131-event-driven-architecture">#</a>13.1 Event-Driven Architecture</h3>
-<p>ManiaScript uses a pull-based event model. Events accumulate in <code>PendingEvents</code> arrays and are processed in the script's main loop:</p>
+<h2 id="events"><a class="anchor" href="#events">#</a>Events</h2>
+<p>ManiaScript uses a pull-based event model. Events accumulate in <code>PendingEvents</code> arrays and you process them in the script's main loop.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">foreach (Event in PendingEvents) {
     switch (Event.Type) {
         case CSmModeEvent::EType::OnPlayerRequestRespawn: {
@@ -1144,8 +1162,7 @@ if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned) { ... }</code></pre>
         }
     }
 }</code></pre></div>
-<h3 id="132-game-mode-events-csmmodeevent"><a class="anchor" href="#132-game-mode-events-csmmodeevent">#</a>13.2 Game Mode Events (CSmModeEvent)</h3>
-<p>Key event types for TrackMania game modes:</p>
+<h3 id="game-mode-events-csmmodeevent"><a class="anchor" href="#game-mode-events-csmmodeevent">#</a>Game mode events (CSmModeEvent)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1180,7 +1197,7 @@ if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned) { ... }</code></pre>
 </tr>
 </tbody>
 </table></div>
-<h3 id="133-manialink-events-cmlscriptevent"><a class="anchor" href="#133-manialink-events-cmlscriptevent">#</a>13.3 ManiaLink Events (CMlScriptEvent)</h3>
+<h3 id="manialink-events-cmlscriptevent"><a class="anchor" href="#manialink-events-cmlscriptevent">#</a>ManiaLink events (CMlScriptEvent)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1227,7 +1244,7 @@ if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned) { ... }</code></pre>
   <li><code>Event.CustomEventType</code> -- Type string for custom events</li>
   <li><code>Event.CustomEventData</code> -- Data array for custom events</li>
 </ul>
-<h3 id="134-map-editor-events-cmapeditorpluginevent"><a class="anchor" href="#134-map-editor-events-cmapeditorpluginevent">#</a>13.4 Map Editor Events (CMapEditorPluginEvent)</h3>
+<h3 id="map-editor-events-cmapeditorpluginevent"><a class="anchor" href="#map-editor-events-cmapeditorpluginevent">#</a>Map editor events (CMapEditorPluginEvent)</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1254,7 +1271,7 @@ if (Player.SpawnStatus == CSmPlayer::ESpawnStatus::Spawned) { ... }</code></pre>
 </tr>
 </tbody>
 </table></div>
-<h3 id="135-custom-events-cross-layer-communication"><a class="anchor" href="#135-custom-events-cross-layer-communication">#</a>13.5 Custom Events (Cross-Layer Communication)</h3>
+<h3 id="custom-events-cross-layer-communication"><a class="anchor" href="#custom-events-cross-layer-communication">#</a>Custom events (cross-layer communication)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Sending from ManiaLink layer:
 SendCustomEvent(&quot;MyEventType&quot;, [&quot;data1&quot;, &quot;data2&quot;]);
 
@@ -1267,9 +1284,8 @@ foreach (Event in PendingEvents) {
     }
 }</code></pre></div>
 <hr>
-<h2 id="14-network-variables"><a class="anchor" href="#14-network-variables">#</a>14. Network Variables</h2>
-<p>ManiaScript provides <code>netread</code> and <code>netwrite</code> modifiers for cross-layer communication between game mode scripts and ManiaLink UI scripts.</p>
-<h3 id="141-declaration"><a class="anchor" href="#141-declaration">#</a>14.1 Declaration</h3>
+<h2 id="network-variables"><a class="anchor" href="#network-variables">#</a>Network variables</h2>
+<p><code>netread</code> and <code>netwrite</code> modifiers enable cross-layer communication between game mode scripts (server) and ManiaLink UI scripts (client).</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// In game mode script (server-side):
 declare netwrite Integer Net_Score for UI;
 declare netwrite Text Net_Message for UI;
@@ -1277,8 +1293,7 @@ declare netwrite Text Net_Message for UI;
 // In ManiaLink script (client-side):
 declare netread Integer Net_Score for UI;
 declare netread Text Net_Message for UI;</code></pre></div>
-<h3 id="142-scopes"><a class="anchor" href="#142-scopes">#</a>14.2 Scopes</h3>
-<p>Network variables can be scoped to three object types:</p>
+<h3 id="scopes"><a class="anchor" href="#scopes">#</a>Scopes</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1305,140 +1320,19 @@ declare netread Text Net_Message for UI;</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="143-naming-convention"><a class="anchor" href="#143-naming-convention">#</a>14.3 Naming Convention</h3>
-<p>Network variables should be prefixed with <code>Net_</code> by convention.</p>
-<h3 id="144-limitations"><a class="anchor" href="#144-limitations">#</a>14.4 Limitations</h3>
+<h3 id="naming-convention"><a class="anchor" href="#naming-convention">#</a>Naming convention</h3>
+<p>Prefix network variables with <code>Net_</code> by convention.</p>
+<h3 id="limitations"><a class="anchor" href="#limitations">#</a>Limitations</h3>
 <ul>
-  <li>Cannot name a <code>netread</code>/<code>netwrite</code> variable with the same name as a standard variable</li>
-  <li>Cannot modify a <code>netread</code> variable (will crash the script)</li>
-  <li>Do not work with bots (will crash)</li>
-  <li>Alternative approach: use triple-bracket interpolation <code>{{{S_PointLimit}}}</code> for simple value passing from game mode to ManiaLink, but this does not allow dynamic updates</li>
+  <li>You cannot name a <code>netread</code>/<code>netwrite</code> variable with the same name as a standard variable.</li>
+  <li>Modifying a <code>netread</code> variable crashes the script.</li>
+  <li>Network variables do not work with bots (causes a crash).</li>
+  <li>Alternative approach: use triple-bracket interpolation <code>{{{S_PointLimit}}}</code> for simple value passing from game mode to ManiaLink. This does not allow dynamic updates.</li>
 </ul>
 <hr>
-<h2 id="15-persistent-and-cloud-storage"><a class="anchor" href="#15-persistent-and-cloud-storage">#</a>15. Persistent and Cloud Storage</h2>
-<h3 id="151-persistent-variables"><a class="anchor" href="#151-persistent-variables">#</a>15.1 Persistent Variables</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare persistent Integer Persistent_BestScore for LocalUser;
-declare persistent Text Persistent_Settings for LocalUser;</code></pre></div>
-<p>Persistent variables are saved in the player's profile. They survive server changes, game restarts, and reinstalls (if profile is preserved). The <code>persistent</code> modifier was historically called "script cloud" by Nadeo.</p>
-<h3 id="152-cloud-storage-operations"><a class="anchor" href="#152-cloud-storage-operations">#</a>15.2 Cloud Storage Operations</h3>
-<p>Two collection operations for cloud persistence are confirmed in the binary:</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Operation</th>
-  <th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>.cloudrequestsave</code></td>
-  <td style="text-align:left">Request save of collection data to Nadeo cloud storage</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>.cloudisready</code></td>
-  <td style="text-align:left">Check if a pending cloud operation has completed</td>
-</tr>
-</tbody>
-</table></div>
-<p>These enable asynchronous cloud save/load for script data beyond simple persistent variables.</p>
-<hr>
-<h2 id="16-serialization-json"><a class="anchor" href="#16-serialization-json">#</a>16. Serialization (JSON)</h2>
-<h3 id="161-collection-serialization"><a class="anchor" href="#161-collection-serialization">#</a>16.1 Collection Serialization</h3>
-<p>Two collection operations confirmed in binary:</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Serialize to JSON
-declare Text JsonString = MyStruct.tojson();
-
-// Deserialize from JSON
-declare K_PlayerData Data;
-Data.fromjson(JsonString);</code></pre></div>
-<h3 id="162-usage-with-structs"><a class="anchor" href="#162-usage-with-structs">#</a>16.2 Usage with Structs</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Struct K_Config {
-    Integer MaxPlayers;
-    Text ServerName;
-    Boolean IsPublic;
-}
-
-// Serialize
-declare K_Config Config;
-Config.MaxPlayers = 64;
-Config.ServerName = &quot;My Server&quot;;
-Config.IsPublic = True;
-declare Text Json = Config.tojson();
-// Json == &#x27;{&quot;MaxPlayers&quot;:64,&quot;ServerName&quot;:&quot;My Server&quot;,&quot;IsPublic&quot;:true}&#x27;
-
-// Deserialize
-declare K_Config Loaded;
-Loaded.fromjson(Json);</code></pre></div>
-<h3 id="163-xml-parsing"><a class="anchor" href="#163-xml-parsing">#</a>16.3 XML Parsing</h3>
-<p>Via the <code>CParsingManager</code> (<code>Xml</code> global):</p>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">declare CXmlDocument Doc = Xml.Create(XmlText);
-declare CXmlNode Root = Doc.Root;
-// Traverse nodes...
-Xml.Destroy(Doc);</code></pre></div>
-<hr>
-<h2 id="17-debug-and-tuning"><a class="anchor" href="#17-debug-and-tuning">#</a>17. Debug and Tuning</h2>
-<h3 id="171-debug-statements-4"><a class="anchor" href="#171-debug-statements-4">#</a>17.1 Debug Statements (4)</h3>
-<p>All confirmed as binary tokens:</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Keyword</th>
-  <th style="text-align:left">Purpose</th>
-  <th style="text-align:left">Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>log</code></td>
-  <td style="text-align:left">Output message to script console</td>
-  <td style="text-align:left"><code>log("Player count: " ^ Players.count);</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>assert</code></td>
-  <td style="text-align:left">Debug assertion (halts in debug builds)</td>
-  <td style="text-align:left"><code>assert(Player != Null);</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>dump</code></td>
-  <td style="text-align:left">Print variable value to debug output</td>
-  <td style="text-align:left"><code>dump(MyVariable);</code></td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>dumptype</code></td>
-  <td style="text-align:left">Print variable type information</td>
-  <td style="text-align:left"><code>dumptype(MyVariable);</code></td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="172-tuning-system-3"><a class="anchor" href="#172-tuning-system-3">#</a>17.2 Tuning System (3)</h3>
-<p>Performance profiling keywords confirmed in binary:</p>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-  <th style="text-align:left">Keyword</th>
-  <th style="text-align:left">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><code>TUNING_START</code></td>
-  <td style="text-align:left">Begin a tuning/profiling block</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>TUNING_END</code></td>
-  <td style="text-align:left">End a tuning block</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code>TUNING_MARK</code></td>
-  <td style="text-align:left">Mark a profiling checkpoint</td>
-</tr>
-</tbody>
-</table></div>
-<p>These insert profiling instrumentation into the script for performance measurement by the engine's profiling system (the same system that uses <code>"CScriptEngine::Run(%s)"</code> profiling tags).</p>
-<hr>
-<h2 id="18-built-in-api-script-managers"><a class="anchor" href="#18-built-in-api-script-managers">#</a>18. Built-in API: Script Managers</h2>
-<p>The engine exposes subsystem functionality to ManiaScript through <code><em>Script</em></code> and <code><em>ScriptHandler</em></code> classes. From the binary class hierarchy:</p>
-<h3 id="181-script-manager-classes"><a class="anchor" href="#181-script-manager-classes">#</a>18.1 Script Manager Classes</h3>
+<h2 id="built-in-api-script-managers"><a class="anchor" href="#built-in-api-script-managers">#</a>Built-in API: script managers</h2>
+<p>The engine exposes subsystem functionality to ManiaScript through <code><em>Script</em></code> and <code><em>ScriptHandler</em></code> classes.</p>
+<h3 id="script-manager-classes"><a class="anchor" href="#script-manager-classes">#</a>Script manager classes</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1540,7 +1434,7 @@ Xml.Destroy(Doc);</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="182-script-handler-architecture"><a class="anchor" href="#182-script-handler-architecture">#</a>18.2 Script Handler Architecture</h3>
+<h3 id="script-handler-architecture"><a class="anchor" href="#script-handler-architecture">#</a>Script handler architecture</h3>
 <p>Script handlers bridge ManiaLink layers to the game logic:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameManialinkScriptHandler           -- Mutable script handler
 CGameManialinkScriptHandler_ReadOnly  -- Read-only variant
@@ -1551,7 +1445,7 @@ CGameCtnEditorPluginScriptHandler     -- CTN plugin handler
 CGameScriptHandlerBrowser             -- Browser handler
 CGameScriptHandlerPlaygroundInterface -- Playground UI handler
 CGameScriptHandlerPlaygroundInterface_ReadOnly -- Read-only playground handler</code></pre></div>
-<h3 id="183-http-api"><a class="anchor" href="#183-http-api">#</a>18.3 HTTP API</h3>
+<h3 id="http-api"><a class="anchor" href="#http-api">#</a>HTTP API</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Create request
 declare CHttpRequest Req = Http.CreateGet(&quot;https://api.example.com/data&quot;);
 
@@ -1568,15 +1462,15 @@ if (Req.StatusCode == 200) {
 Http.Destroy(Req);</code></pre></div>
 <p>Available methods: <code>CreateGet()</code>, <code>CreatePost()</code>, <code>CreatePut()</code>, <code>CreateDelete()</code>, <code>CreatePatch()</code>.</p>
 <hr>
-<h2 id="19-game-mode-scripting"><a class="anchor" href="#19-game-mode-scripting">#</a>19. Game Mode Scripting</h2>
-<h3 id="191-script-location"><a class="anchor" href="#191-script-location">#</a>19.1 Script Location</h3>
-<p>Game mode scripts are located at:</p>
+<h2 id="game-mode-scripting"><a class="anchor" href="#game-mode-scripting">#</a>Game mode scripting</h2>
+<p>Game mode scripts control match flow, player spawning, scoring, and UI layers on the server.</p>
+<h3 id="script-location"><a class="anchor" href="#script-location">#</a>Script location</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Scripts/Modes/TrackMania/&lt;ModeName&gt;.Script.txt</code></pre></div>
-<h3 id="192-base-mode-framework"><a class="anchor" href="#192-base-mode-framework">#</a>19.2 Base Mode Framework</h3>
+<h3 id="base-mode-framework"><a class="anchor" href="#base-mode-framework">#</a>Base mode framework</h3>
 <p>TM2020 game modes extend Nadeo's base framework using <code>#Extends</code>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Extends &quot;Modes/TrackMania/Base/TrackmaniaBase.Script.txt&quot;</code></pre></div>
-<p>The base script provides a <code>main()</code> function with a structured lifecycle of <strong>labels</strong> that child scripts inject code into.</p>
-<h3 id="193-lifecycle-labels"><a class="anchor" href="#193-lifecycle-labels">#</a>19.3 Lifecycle Labels</h3>
+<p>The base script provides a <code>main()</code> function with a structured lifecycle of labels that child scripts inject code into.</p>
+<h3 id="lifecycle-labels"><a class="anchor" href="#lifecycle-labels">#</a>Lifecycle labels</h3>
 <p>The game mode lifecycle follows this hierarchy:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Server -&gt; Match -&gt; Map -&gt; Round -&gt; Turn -&gt; PlayLoop</code></pre></div>
 <p>Each level has Init/Start/End labels:</p>
@@ -1687,8 +1581,7 @@ Http.Destroy(Req);</code></pre></div>
 </tbody>
 </table></div>
 <p>Labels are prefixed by context: <code>Match_StartMap</code> vs <code>Lobby_StartMap</code> depending on matchmaking status.</p>
-<h3 id="194-built-in-nadeo-game-modes"><a class="anchor" href="#194-built-in-nadeo-game-modes">#</a>19.4 Built-in Nadeo Game Modes</h3>
-<p>Available base modes for <code>#Extends</code>:</p>
+<h3 id="built-in-nadeo-game-modes"><a class="anchor" href="#built-in-nadeo-game-modes">#</a>Built-in Nadeo game modes</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1727,7 +1620,7 @@ Http.Destroy(Req);</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="195-player-management"><a class="anchor" href="#195-player-management">#</a>19.5 Player Management</h3>
+<h3 id="player-management"><a class="anchor" href="#player-management">#</a>Player management</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Spawn a player
 declare CSmPlayer Player &lt;=&gt; Players[0];
 SpawnPlayer(Player, 0, -1, MapLandmarks_PlayerSpawn[0].PlayerSpawn, Now + 1000);
@@ -1739,7 +1632,7 @@ log(Player.SpawnStatus);  // CSmPlayer::ESpawnStatus::Spawned
 
 // Unspawn
 UnspawnPlayer(Player);</code></pre></div>
-<h3 id="196-score-management"><a class="anchor" href="#196-score-management">#</a>19.6 Score Management</h3>
+<h3 id="score-management"><a class="anchor" href="#score-management">#</a>Score management</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Set points
 Player.Score.Points = 100;
 
@@ -1748,7 +1641,7 @@ Player.Score.BestRace.Time = RaceTime;
 
 // Custom score columns
 Scores_SetSortCriteria(&quot;BestRace&quot;);</code></pre></div>
-<h3 id="197-ui-layer-management"><a class="anchor" href="#197-ui-layer-management">#</a>19.7 UI Layer Management</h3>
+<h3 id="ui-layer-management"><a class="anchor" href="#ui-layer-management">#</a>UI layer management</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Create a ManiaLink UI layer
 declare CUILayer Layer = UIManager.UILayerCreate();
 Layer.ManialinkPage = &quot;&quot;&quot;
@@ -1770,12 +1663,11 @@ UIManager.UIAll.UILayers.add(Layer);
 // Or attach to specific player
 declare CUIConfig PlayerUI = UIManager.GetUI(Player);
 PlayerUI.UILayers.add(Layer);</code></pre></div>
-<h3 id="198-multiplayer-determinism"><a class="anchor" href="#198-multiplayer-determinism">#</a>19.8 Multiplayer Determinism</h3>
-<p>In multiplayer, game mode scripts at state 0x1032 execute via <code>virtual (*param_1 + 0x370)</code> for network-synchronized script execution. Scripts must execute deterministically across all clients to maintain synchronization.</p>
+<h3 id="multiplayer-determinism"><a class="anchor" href="#multiplayer-determinism">#</a>Multiplayer determinism</h3>
+<p>In multiplayer, game mode scripts at state 0x1032 execute via <code>virtual (*param_1 + 0x370)</code> for network-synchronized script execution. Scripts must execute deterministically across all clients.</p>
 <hr>
-<h2 id="20-manialink-scripting"><a class="anchor" href="#20-manialink-scripting">#</a>20. ManiaLink Scripting</h2>
-<h3 id="201-manialink-xml-structure"><a class="anchor" href="#201-manialink-xml-structure">#</a>20.1 ManiaLink XML Structure</h3>
-<p>ManiaLink is an XML-based UI description language. Scripts are embedded within <code><script></code> tags:</p>
+<h2 id="manialink-scripting"><a class="anchor" href="#manialink-scripting">#</a>ManiaLink scripting</h2>
+<p>ManiaLink is an XML-based UI description language. Scripts are embedded within <code><script></code> tags.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;manialink version=&quot;3&quot;&gt;
     &lt;quad id=&quot;myButton&quot; pos=&quot;0 0&quot; size=&quot;30 8&quot;
           bgcolor=&quot;09F&quot; scriptevents=&quot;1&quot;/&gt;
@@ -1797,7 +1689,7 @@ PlayerUI.UILayers.add(Layer);</code></pre></div>
         }
     --&gt;&lt;/script&gt;
 &lt;/manialink&gt;</code></pre></div>
-<h3 id="202-element-access"><a class="anchor" href="#202-element-access">#</a>20.2 Element Access</h3>
+<h3 id="element-access"><a class="anchor" href="#element-access">#</a>Element access</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Get element by ID (returns CMlControl, must cast)
 declare CMlLabel Label &lt;=&gt; (Page.GetFirstChild(&quot;label_id&quot;) as CMlLabel);
 declare CMlQuad Quad &lt;=&gt; (Page.GetFirstChild(&quot;quad_id&quot;) as CMlQuad);
@@ -1815,8 +1707,7 @@ Quad.Opacity = 0.8;
 
 Entry.Value;  // Read text input
 Gauge.Ratio = 0.75;  // 75% filled</code></pre></div>
-<h3 id="203-ui-control-types"><a class="anchor" href="#203-ui-control-types">#</a>20.3 UI Control Types</h3>
-<p>From the official ManiaScript reference:</p>
+<h3 id="ui-control-types"><a class="anchor" href="#ui-control-types">#</a>UI control types</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1873,7 +1764,7 @@ Gauge.Ratio = 0.75;  // 75% filled</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="204-visibility-and-interaction"><a class="anchor" href="#204-visibility-and-interaction">#</a>20.4 Visibility and Interaction</h3>
+<h3 id="visibility-and-interaction"><a class="anchor" href="#visibility-and-interaction">#</a>Visibility and interaction</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Show/hide elements
 Label.Show();
 Label.Hide();
@@ -1886,20 +1777,20 @@ Label.Size = &lt;50.0, 10.0&gt;;
 // Interaction attributes (in XML)
 // scriptevents=&quot;1&quot; -- Required for mouse events
 // focusareacolor1/2 -- Hover colors</code></pre></div>
-<h3 id="205-page-actions"><a class="anchor" href="#205-page-actions">#</a>20.5 Page Actions</h3>
+<h3 id="page-actions"><a class="anchor" href="#page-actions">#</a>Page actions</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Trigger a page action (navigates to URL or triggers callback)
 TriggerPageAction(&quot;MyAction&quot;);
 
 // Open external link
 OpenLink(&quot;https://trackmania.com&quot;, CMlScript::LinkType::ExternalBrowser);</code></pre></div>
-<h3 id="206-menu-navigation-gamepad"><a class="anchor" href="#206-menu-navigation-gamepad">#</a>20.6 Menu Navigation (Gamepad)</h3>
+<h3 id="menu-navigation-gamepad"><a class="anchor" href="#menu-navigation-gamepad">#</a>Menu navigation (gamepad)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">EnableMenuNavigation(True, True, BackButton, 0);
 // Parameters: EnableInputs, WithAutoFocus, AutoBackControl, InputPriority</code></pre></div>
 <hr>
-<h2 id="21-map-editor-plugin-scripting"><a class="anchor" href="#21-map-editor-plugin-scripting">#</a>21. Map Editor Plugin Scripting</h2>
-<h3 id="211-context"><a class="anchor" href="#211-context">#</a>21.1 Context</h3>
+<h2 id="map-editor-plugin-scripting"><a class="anchor" href="#map-editor-plugin-scripting">#</a>Map editor plugin scripting</h2>
+<p>Map editor plugins let you automate block placement, validation, and testing from ManiaScript.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#RequireContext CMapEditorPlugin</code></pre></div>
-<h3 id="212-available-properties"><a class="anchor" href="#212-available-properties">#</a>21.2 Available Properties</h3>
+<h3 id="available-properties"><a class="anchor" href="#available-properties">#</a>Available properties</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1941,11 +1832,11 @@ OpenLink(&quot;https://trackmania.com&quot;, CMlScript::LinkType::ExternalBrowse
 </tr>
 </tbody>
 </table></div>
-<h3 id="213-place-modes"><a class="anchor" href="#213-place-modes">#</a>21.3 Place Modes</h3>
+<h3 id="place-modes"><a class="anchor" href="#place-modes">#</a>Place modes</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Unknown, Terraform, Block, Macroblock, Skin, CopyPaste,
 Test, Plugin, CustomSelection, OffZone, BlockProperty,
 Path, GhostBlock, Item, Light</code></pre></div>
-<h3 id="214-block-operations"><a class="anchor" href="#214-block-operations">#</a>21.4 Block Operations</h3>
+<h3 id="block-operations"><a class="anchor" href="#block-operations">#</a>Block operations</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">// Test if a block can be placed
 declare Boolean CanPlace = CanPlaceBlock(BlockModel, Coord, Dir);
 
@@ -1958,17 +1849,17 @@ RemoveBlock(Coord);
 // Undo/Redo
 Undo();
 Redo();</code></pre></div>
-<h3 id="215-shadow-computation"><a class="anchor" href="#215-shadow-computation">#</a>21.5 Shadow Computation</h3>
+<h3 id="shadow-computation"><a class="anchor" href="#shadow-computation">#</a>Shadow computation</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">ComputeShadows(CMapEditorPlugin::ShadowsQuality::High);</code></pre></div>
 <p>Quality levels: <code>NotComputed</code>, <code>VeryFast</code>, <code>Fast</code>, <code>Default</code>, <code>High</code>, <code>Ultra</code>.</p>
-<h3 id="216-testing"><a class="anchor" href="#216-testing">#</a>21.6 Testing</h3>
+<h3 id="testing"><a class="anchor" href="#testing">#</a>Testing</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">TestMapFromStart();
 TestMapFromCoord(&lt;10, 5, 10&gt;, CMapEditorPlugin::CardinalDirections::North);
 TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 <hr>
-<h2 id="22-standard-libraries"><a class="anchor" href="#22-standard-libraries">#</a>22. Standard Libraries</h2>
-<p>ManiaScript includes standard libraries imported via <code>#Include</code>:</p>
-<h3 id="221-mathlib"><a class="anchor" href="#221-mathlib">#</a>22.1 MathLib</h3>
+<h2 id="standard-libraries"><a class="anchor" href="#standard-libraries">#</a>Standard libraries</h2>
+<p>ManiaScript includes standard libraries imported via <code>#Include</code>.</p>
+<h3 id="mathlib"><a class="anchor" href="#mathlib">#</a>MathLib</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Include &quot;MathLib&quot; as MathLib</code></pre></div>
 <div class="table-wrapper"><table>
 <thead>
@@ -2052,7 +1943,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="222-textlib"><a class="anchor" href="#222-textlib">#</a>22.2 TextLib</h3>
+<h3 id="textlib"><a class="anchor" href="#textlib">#</a>TextLib</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Include &quot;TextLib&quot; as TextLib</code></pre></div>
 <div class="table-wrapper"><table>
 <thead>
@@ -2136,19 +2027,80 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="223-animlib"><a class="anchor" href="#223-animlib">#</a>22.3 AnimLib</h3>
+<h3 id="animlib"><a class="anchor" href="#animlib">#</a>AnimLib</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Include &quot;AnimLib&quot; as AnimLib</code></pre></div>
 <p>Animation easing functions for UI animations.</p>
-<h3 id="224-nadeo-libraries"><a class="anchor" href="#224-nadeo-libraries">#</a>22.4 Nadeo Libraries</h3>
+<h3 id="nadeo-libraries"><a class="anchor" href="#nadeo-libraries">#</a>Nadeo libraries</h3>
 <p>Nadeo provides additional libraries for game mode development:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">#Include &quot;Libs/Nadeo/Message.Script.txt&quot; as Message
 #Include &quot;Libs/Nadeo/Layers.Script.txt&quot; as Layers
 #Include &quot;Libs/Nadeo/Scores.Script.txt&quot; as Scores
 #Include &quot;Libs/Nadeo/Interface.Script.txt&quot; as Interface</code></pre></div>
 <hr>
-<h2 id="23-lexer-and-token-types"><a class="anchor" href="#23-lexer-and-token-types">#</a>23. Lexer and Token Types</h2>
+<h2 id="debug-and-tuning"><a class="anchor" href="#debug-and-tuning">#</a>Debug and tuning</h2>
+<h3 id="debug-statements"><a class="anchor" href="#debug-statements">#</a>Debug statements</h3>
+<p>Four debug keywords are confirmed as binary tokens:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Keyword</th>
+  <th style="text-align:left">Purpose</th>
+  <th style="text-align:left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>log</code></td>
+  <td style="text-align:left">Output message to script console</td>
+  <td style="text-align:left"><code>log("Player count: " ^ Players.count);</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>assert</code></td>
+  <td style="text-align:left">Debug assertion (halts in debug builds)</td>
+  <td style="text-align:left"><code>assert(Player != Null);</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>dump</code></td>
+  <td style="text-align:left">Print variable value to debug output</td>
+  <td style="text-align:left"><code>dump(MyVariable);</code></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>dumptype</code></td>
+  <td style="text-align:left">Print variable type information</td>
+  <td style="text-align:left"><code>dumptype(MyVariable);</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tuning-system"><a class="anchor" href="#tuning-system">#</a>Tuning system</h3>
+<p>Three performance profiling keywords are confirmed in the binary:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Keyword</th>
+  <th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>TUNING_START</code></td>
+  <td style="text-align:left">Begin a tuning/profiling block</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TUNING_END</code></td>
+  <td style="text-align:left">End a tuning block</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>TUNING_MARK</code></td>
+  <td style="text-align:left">Mark a profiling checkpoint</td>
+</tr>
+</tbody>
+</table></div>
+<p>These insert profiling instrumentation into the script for the engine's profiling system (the same system that uses <code>"CScriptEngine::Run(%s)"</code> profiling tags).</p>
+<hr>
+<h1 id="engine-internals"><a class="anchor" href="#engine-internals">#</a>Engine internals</h1>
+<h2 id="lexer-and-token-types"><a class="anchor" href="#lexer-and-token-types">#</a>Lexer and token types</h2>
 <p>From binary string search at the ManiaScript token table in Trackmania.exe.</p>
-<h3 id="231-lexer-token-categories"><a class="anchor" href="#231-lexer-token-categories">#</a>23.1 Lexer Token Categories</h3>
+<h3 id="lexer-token-categories"><a class="anchor" href="#lexer-token-categories">#</a>Lexer token categories</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2210,7 +2162,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="232-keyword-tokens"><a class="anchor" href="#232-keyword-tokens">#</a>23.2 Keyword Tokens</h3>
+<h3 id="keyword-tokens"><a class="anchor" href="#keyword-tokens">#</a>Keyword tokens</h3>
 <p>All confirmed in binary:</p>
 <p><strong>Coroutine</strong>: <code>SLEEP</code>, <code>YIELD</code>, <code>WAIT</code>, <code>MEANWHILE</code></p>
 <p><strong>Debug</strong>: <code>ASSERT</code>, <code>DUMP</code>, <code>DUMPTYPE</code>, <code>LOG</code></p>
@@ -2220,11 +2172,11 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 <p><strong>Declarations</strong>: <code>declare</code>, <code>persistent</code>, <code>netread</code>, <code>netwrite</code>, <code>metadata</code></p>
 <p><strong>Operators</strong>: <code>as</code>, <code>is</code> (type check)</p>
 <hr>
-<h2 id="24-script-engine-internals-from-re"><a class="anchor" href="#24-script-engine-internals-from-re">#</a>24. Script Engine Internals (from RE)</h2>
+<h2 id="script-engine-internals-from-re"><a class="anchor" href="#script-engine-internals-from-re">#</a>Script engine internals (from RE)</h2>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="241-cscriptenginerun-0x140874270"><a class="anchor" href="#241-cscriptenginerun-0x140874270">#</a>24.1 CScriptEngine::Run (<code class="addr">0x140874270</code>)</h3></summary>
+<summary><h3 id="cscriptenginerun-0x140874270"><a class="anchor" href="#cscriptenginerun-0x140874270">#</a>CScriptEngine::Run (<code class="addr">0x140874270</code>)</h3></summary>
 <div class="collapsible-content">
-<p>Decompiled from <code>Trackmania.exe</code>. Size: 316 bytes.</p>
+<p>The main entry point for executing ManiaScript. Decompiled from <code>Trackmania.exe</code>. Size: 316 bytes.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">void CScriptEngine__Run(longlong engine, longlong context, undefined4 mode) {
     // 1. Link context to engine
     *(longlong *)(engine + 0x60) = context;
@@ -2283,7 +2235,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 <details class="collapsible collapsed-by-default">
 <summary></div>
 </details>
-<h3 id="242-key-memory-layout"><a class="anchor" href="#242-key-memory-layout">#</a>24.2 Key Memory Layout</h3></summary>
+<h3 id="key-memory-layout"><a class="anchor" href="#key-memory-layout">#</a>Key memory layout</h3></summary>
 <div class="collapsible-content">
 <p><strong>CScriptEngine offsets</strong>:</p>
 <div class="table-wrapper"><table>
@@ -2418,26 +2370,21 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 </table></div>
 </div>
 </details>
-<h3 id="243-bytecode-interpreter"><a class="anchor" href="#243-bytecode-interpreter">#</a>24.3 Bytecode Interpreter</h3>
-<p>The actual bytecode interpreter is at <code>FUN_1408d1ea0</code>. Its internal structure is <strong><span class="badge badge-unknown">UNKNOWN</span></strong> -- the opcode format, instruction encoding, and stack layout have not been reverse-engineered. This is identified as one of the highest-priority unknowns in the RE documentation.</p>
-<h3 id="244-script-to-engine-binding"><a class="anchor" href="#244-script-to-engine-binding">#</a>24.4 Script-to-Engine Binding</h3>
+<h3 id="bytecode-interpreter"><a class="anchor" href="#bytecode-interpreter">#</a>Bytecode interpreter</h3>
+<p>The actual bytecode interpreter is at <code>FUN_1408d1ea0</code>. Its internal structure is unknown -- the opcode format, instruction encoding, and stack layout have not been reverse-engineered. This is one of the highest-priority unknowns in the RE documentation.</p>
+<h3 id="script-to-engine-binding"><a class="anchor" href="#script-to-engine-binding">#</a>Script-to-engine binding</h3>
 <p>ManiaScript calls engine functions through a binding layer protected by MSVC Control Flow Guard (<code>_guard_check_icall</code>). This validates function pointer targets before indirect calls, including script-to-engine bindings.</p>
-<h3 id="245-engine-singleton"><a class="anchor" href="#245-engine-singleton">#</a>24.5 Engine Singleton</h3>
+<h3 id="engine-singleton"><a class="anchor" href="#engine-singleton">#</a>Engine singleton</h3>
 <p><code>CScriptEngine</code> is one of 12 engine singletons:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CMwEngine -&gt; CMwEngineMain, CGameEngine, CPlugEngine, CSceneEngine,
              CVisionEngine, CNetEngine, CInputEngine, CSystemEngine,
              CScriptEngine, CControlEngine, CAudioSourceEngine</code></pre></div>
 <p>The engine has two confirmed methods in the binary: <code>Compilation</code> and <code>Run</code>.</p>
 <hr>
-<h2 id="25-browser-recreation-interpretertranspiler-approach"><a class="anchor" href="#25-browser-recreation-interpretertranspiler-approach">#</a>25. Browser Recreation: Interpreter/Transpiler Approach</h2>
-<h3 id="251-overview"><a class="anchor" href="#251-overview">#</a>25.1 Overview</h3>
-<p>For a browser-based recreation of Trackmania, ManiaScript requires either:</p>
-<ol>
-  <li><strong>JavaScript interpreter</strong>: Parse ManiaScript source, build AST, interpret in JS</li>
-  <li><strong>JavaScript transpiler</strong>: Parse ManiaScript source, compile to equivalent JS</li>
-</ol>
-<h3 id="252-lexer-specification"><a class="anchor" href="#252-lexer-specification">#</a>25.2 Lexer Specification</h3>
-<p>The complete lexer token set is documented in <a href="#23-lexer-and-token-types">Section 23</a>. A ManiaScript lexer needs to handle:</p>
+<h2 id="browser-recreation-interpretertranspiler-approach"><a class="anchor" href="#browser-recreation-interpretertranspiler-approach">#</a>Browser recreation: interpreter/transpiler approach</h2>
+<p>For a browser-based recreation, ManiaScript requires either a JavaScript interpreter (parse source, build AST, interpret in JS) or a JavaScript transpiler (parse source, compile to equivalent JS).</p>
+<h3 id="lexer-specification"><a class="anchor" href="#lexer-specification">#</a>Lexer specification</h3>
+<p>A ManiaScript lexer must handle:</p>
 <ul>
   <li>C-style comments (<code>//</code>, <code>/<em> </em>/</code>)</li>
   <li>String literals with escape sequences and triple-quoting</li>
@@ -2447,7 +2394,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
   <li>Directive tokens (<code>#RequireContext</code>, <code>#Setting</code>, etc.)</li>
   <li>The 40+ keyword tokens</li>
 </ul>
-<h3 id="253-type-system-mapping"><a class="anchor" href="#253-type-system-mapping">#</a>25.3 Type System Mapping</h3>
+<h3 id="type-system-mapping"><a class="anchor" href="#type-system-mapping">#</a>Type system mapping</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2510,7 +2457,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<h3 id="254-coroutine-implementation"><a class="anchor" href="#254-coroutine-implementation">#</a>25.4 Coroutine Implementation</h3>
+<h3 id="coroutine-implementation"><a class="anchor" href="#coroutine-implementation">#</a>Coroutine implementation</h3>
 <p>The <code>yield</code>/<code>sleep</code>/<code>wait</code>/<code>meanwhile</code> coroutine model maps to several JavaScript approaches:</p>
 <p><strong>Option A: Generator functions</strong> (recommended)</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">function* scriptMain(ctx) {
@@ -2531,7 +2478,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
     }
 }</code></pre></div>
 <p><code>sleep(ms)</code> maps to yielding until <code>performance.now()</code> exceeds the target time. <code>wait(condition)</code> maps to yielding until a condition closure returns true. <code>meanwhile</code> requires spawning a secondary generator/coroutine.</p>
-<h3 id="255-collection-operations"><a class="anchor" href="#255-collection-operations">#</a>25.5 Collection Operations</h3>
+<h3 id="collection-operations-1"><a class="anchor" href="#collection-operations-1">#</a>Collection operations</h3>
 <p>All 17 dot operations need custom Array/Map wrapper classes:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">class MsArray {
     add(elem) { this._data.push(elem); }
@@ -2551,7 +2498,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
     tojson() { return JSON.stringify(this._data); }
     fromjson(str) { this._data = JSON.parse(str); }
 }</code></pre></div>
-<h3 id="256-engine-api-binding"><a class="anchor" href="#256-engine-api-binding">#</a>25.6 Engine API Binding</h3>
+<h3 id="engine-api-binding"><a class="anchor" href="#engine-api-binding">#</a>Engine API binding</h3>
 <p>Each script context class needs a JavaScript counterpart that exposes the same properties and methods. The 700+ ManiaScript API classes require stubs or implementations:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-javascript">class CSmMode {
     get Players() { return this._players; }
@@ -2561,14 +2508,14 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
     SpawnPlayer(player, clan, raceStartTime, spawn, startTime) { ... }
     UnspawnPlayer(player) { ... }
 }</code></pre></div>
-<h3 id="257-network-variable-simulation"><a class="anchor" href="#257-network-variable-simulation">#</a>25.7 Network Variable Simulation</h3>
+<h3 id="network-variable-simulation"><a class="anchor" href="#network-variable-simulation">#</a>Network variable simulation</h3>
 <p>For browser recreation, <code>netread</code>/<code>netwrite</code> can be simulated using:</p>
 <ul>
   <li>SharedArrayBuffer for multi-worker scenarios</li>
   <li>Simple object properties for single-thread</li>
   <li>WebSocket messages for true client-server separation</li>
 </ul>
-<h3 id="258-complexity-estimate"><a class="anchor" href="#258-complexity-estimate">#</a>25.8 Complexity Estimate</h3>
+<h3 id="complexity-estimate"><a class="anchor" href="#complexity-estimate">#</a>Complexity estimate</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2616,9 +2563,9 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 </tbody>
 </table></div>
 <hr>
-<h2 id="appendix-a-complete-script-class-inventory"><a class="anchor" href="#appendix-a-complete-script-class-inventory">#</a>Appendix A: Complete Script Class Inventory</h2>
+<h2 id="appendix-a-complete-script-class-inventory"><a class="anchor" href="#appendix-a-complete-script-class-inventory">#</a>Appendix A: complete script class inventory</h2>
 <p>From <code>class_hierarchy.json</code> (2,027 total classes), script-relevant classes:</p>
-<h3 id="core-script-engine"><a class="anchor" href="#core-script-engine">#</a>Core Script Engine</h3>
+<h3 id="core-script-engine"><a class="anchor" href="#core-script-engine">#</a>Core script engine</h3>
 <ul>
   <li><code>CScriptEngine</code> (methods: <code>Compilation</code>, <code>Run</code>)</li>
   <li><code>CScriptBaseEvent</code>, <code>CScriptBaseConstEvent</code></li>
@@ -2628,7 +2575,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
   <li><code>CScriptSetting</code></li>
   <li><code>CScriptTraitsMetadata</code>, <code>CScriptTraitsPersistent</code></li>
 </ul>
-<h3 id="game-mode"><a class="anchor" href="#game-mode">#</a>Game Mode</h3>
+<h3 id="game-mode"><a class="anchor" href="#game-mode">#</a>Game mode</h3>
 <ul>
   <li><code>CSmMode</code> (methods: <code>EActionInput</code>, <code>SpawnBotPlayer</code>, <code>SpawnPlayer</code>)</li>
   <li><code>CSmPlayer</code> (methods: <code>ESpawnStatus</code>)</li>
@@ -2637,7 +2584,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
   <li><code>CSmArenaRules</code> (methods: <code>CreateAndDestroyEntities</code>, <code>UpdateEvents</code>, <code>UpdateTimed</code>)</li>
   <li><code>CMapType</code></li>
 </ul>
-<h3 id="script-handlers"><a class="anchor" href="#script-handlers">#</a>Script Handlers</h3>
+<h3 id="script-handlers"><a class="anchor" href="#script-handlers">#</a>Script handlers</h3>
 <ul>
   <li><code>CGameManialinkScriptHandler</code></li>
   <li><code>CGameManialinkScriptHandler_ReadOnly</code></li>
@@ -2649,7 +2596,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
   <li><code>CGameScriptHandlerPlaygroundInterface</code></li>
   <li><code>CGameScriptHandlerPlaygroundInterface_ReadOnly</code></li>
 </ul>
-<h3 id="script-managers"><a class="anchor" href="#script-managers">#</a>Script Managers</h3>
+<h3 id="script-managers"><a class="anchor" href="#script-managers">#</a>Script managers</h3>
 <ul>
   <li><code>CInputScriptManager</code>, <code>CInputScriptPad</code>, <code>CInputScriptEvent</code></li>
   <li><code>CAudioScriptManager</code>, <code>CAudioScriptMusic</code>, <code>CAudioScriptSound</code></li>
@@ -2660,7 +2607,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
   <li><code>CXmlScriptParsingManager</code></li>
 </ul>
 <hr>
-<h2 id="appendix-b-community-reference-links"><a class="anchor" href="#appendix-b-community-reference-links">#</a>Appendix B: Community Reference Links</h2>
+<h2 id="appendix-b-community-reference-links"><a class="anchor" href="#appendix-b-community-reference-links">#</a>Appendix B: community reference links</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2713,7 +2660,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 </tbody>
 </table></div>
 <hr>
-<h2 id="appendix-c-cross-reference-to-re-documentation"><a class="anchor" href="#appendix-c-cross-reference-to-re-documentation">#</a>Appendix C: Cross-Reference to RE Documentation</h2>
+<h2 id="appendix-c-cross-reference-to-re-documentation"><a class="anchor" href="#appendix-c-cross-reference-to-re-documentation">#</a>Appendix C: cross-reference to RE documentation</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2726,17 +2673,17 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 <tr>
   <td style="text-align:left">Token types (40+)</td>
   <td style="text-align:left">doc 15 Section 10</td>
-  <td style="text-align:left">Sections 2, 8, 23</td>
+  <td style="text-align:left">Data types, Collection operations, Lexer and token types</td>
 </tr>
 <tr>
   <td style="text-align:left">Script engine runtime</td>
   <td style="text-align:left">doc 12 Sections 5, 15</td>
-  <td style="text-align:left">Section 24</td>
+  <td style="text-align:left">Script engine internals</td>
 </tr>
 <tr>
   <td style="text-align:left">CScriptEngine::Run decompilation</td>
   <td style="text-align:left"><code>decompiled/architecture/CScriptEngine__Run.c</code></td>
-  <td style="text-align:left">Section 24.1</td>
+  <td style="text-align:left">Script engine internals</td>
 </tr>
 <tr>
   <td style="text-align:left">Script class hierarchy</td>
@@ -2746,172 +2693,174 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 <tr>
   <td style="text-align:left">Subsystem class map</td>
   <td style="text-align:left">doc 13 Sections 13.4, 14.3, 18</td>
-  <td style="text-align:left">Sections 11, 18</td>
+  <td style="text-align:left">Script contexts, Built-in API</td>
 </tr>
 <tr>
   <td style="text-align:left">Community knowledge</td>
   <td style="text-align:left">doc 29 Section 5</td>
-  <td style="text-align:left">Sections 11-22</td>
+  <td style="text-align:left">Script contexts through Standard libraries</td>
 </tr>
 <tr>
   <td style="text-align:left">Frame loop integration</td>
   <td style="text-align:left">doc 12 Section 6</td>
-  <td style="text-align:left">Section 9.5</td>
+  <td style="text-align:left">Coroutines and cooperative multitasking</td>
 </tr>
 <tr>
   <td style="text-align:left">Network state machine</td>
   <td style="text-align:left">doc 12 Section 16</td>
-  <td style="text-align:left">Section 19.8</td>
+  <td style="text-align:left">Game mode scripting</td>
 </tr>
 </tbody>
 </table></div>
+<hr>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related pages</h2>
+<ul>
+  <li><a href="34-ui-manialink-reference.md">34-ui-manialink-reference.md</a> -- ManiaLink XML format, layout system, control hierarchy, and UI styling</li>
+  <li><a href="class-hierarchy.html">13-subsystem-class-map.md</a> -- Engine subsystem architecture including the script engine</li>
+  <li><a href="29-community-knowledge.md">29-community-knowledge.md</a> -- Community-sourced ManiaScript documentation and tutorials</li>
+  <li><a href="15-binary-token-analysis.md">15-binary-token-analysis.md</a> -- Binary string analysis confirming lexer tokens</li>
+</ul>
+<hr>
+<details>
+<summary>Analysis metadata</summary>
+<p><strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: Ghidra RE (docs 12, 13, 15), decompiled <code>CScriptEngine__Run.c</code>, <code>class_hierarchy.json</code>, community documentation (ManiaScript Book, boss-bravo.fr, maniaplanet/documentation, maniaplanet.github.io/maniascript-reference) <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (binary tokens) + COMMUNITY-CONFIRMED (syntax/semantics)</p>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="ghost-replay.html">&larr; Ghost &amp; Replay Format</a><a class="next" href="ui-manialink.html">UI &amp; ManiaLink &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="audio.html">&larr; Audio System</a><a class="next" href="ui-manialink.html">UI &amp; ManiaLink &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-language-overview">1. Language Overview</a></li>
-<li class=""><a href="#2-data-types-12-primitive-types">2. Data Types (12 Primitive Types)</a></li>
-  <li class="toc-h3"><a href="#21-type-details">2.1 Type Details</a></li>
-<li class=""><a href="#3-variable-declarations">3. Variable Declarations</a></li>
-  <li class="toc-h3"><a href="#31-basic-declaration">3.1 Basic Declaration</a></li>
-  <li class="toc-h3"><a href="#32-scope-rules">3.2 Scope Rules</a></li>
-  <li class="toc-h3"><a href="#33-extension-variables-attached-to-objects">3.3 Extension Variables (Attached to Objects)</a></li>
-  <li class="toc-h3"><a href="#34-aliases-as">3.4 Aliases (`as`)</a></li>
-  <li class="toc-h3"><a href="#35-pointer-vs-alias-binding">3.5 Pointer vs. Alias Binding</a></li>
-  <li class="toc-h3"><a href="#36-declaration-modifiers">3.6 Declaration Modifiers</a></li>
-<li class=""><a href="#4-operators">4. Operators</a></li>
-  <li class="toc-h3"><a href="#41-arithmetic">4.1 Arithmetic</a></li>
-  <li class="toc-h3"><a href="#42-string">4.2 String</a></li>
-  <li class="toc-h3"><a href="#43-comparison">4.3 Comparison</a></li>
-  <li class="toc-h3"><a href="#44-logical">4.4 Logical</a></li>
-  <li class="toc-h3"><a href="#45-assignment">4.5 Assignment</a></li>
-  <li class="toc-h3"><a href="#46-vector-construction">4.6 Vector Construction</a></li>
-<li class=""><a href="#5-control-flow">5. Control Flow</a></li>
-  <li class="toc-h3"><a href="#51-conditional">5.1 Conditional</a></li>
-  <li class="toc-h3"><a href="#52-while-loop">5.2 While Loop</a></li>
-  <li class="toc-h3"><a href="#53-for-loop-range-based">5.3 For Loop (Range-based)</a></li>
-  <li class="toc-h3"><a href="#54-foreach">5.4 Foreach</a></li>
-  <li class="toc-h3"><a href="#55-switch-case">5.5 Switch / Case</a></li>
-  <li class="toc-h3"><a href="#56-switchtype-type-based-dispatch">5.6 SwitchType (Type-based dispatch)</a></li>
-  <li class="toc-h3"><a href="#57-flow-control-keywords">5.7 Flow Control Keywords</a></li>
-<li class=""><a href="#6-functions">6. Functions</a></li>
-  <li class="toc-h3"><a href="#61-declaration">6.1 Declaration</a></li>
-  <li class="toc-h3"><a href="#62-entry-point">6.2 Entry Point</a></li>
-  <li class="toc-h3"><a href="#63-no-overloading-or-variadic-functions">6.3 No Overloading or Variadic Functions</a></li>
-<li class=""><a href="#7-collections-arrays-and-maps">7. Collections (Arrays and Maps)</a></li>
-  <li class="toc-h3"><a href="#71-array-ordered-list">7.1 Array (Ordered List)</a></li>
-  <li class="toc-h3"><a href="#72-associative-array-map">7.2 Associative Array (Map)</a></li>
-  <li class="toc-h3"><a href="#73-valid-keyvalue-type-combinations">7.3 Valid Key/Value Type Combinations</a></li>
-<li class=""><a href="#8-collection-operations-17-dot-methods">8. Collection Operations (17 Dot Methods)</a></li>
-  <li class="toc-h3"><a href="#81-mutation-operations">8.1 Mutation Operations</a></li>
-  <li class="toc-h3"><a href="#82-access-operations">8.2 Access Operations</a></li>
-  <li class="toc-h3"><a href="#83-sorting-operations">8.3 Sorting Operations</a></li>
-  <li class="toc-h3"><a href="#84-query-operations">8.4 Query Operations</a></li>
-<li class=""><a href="#9-coroutines-and-cooperative-multitasking">9. Coroutines and Cooperative Multitasking</a></li>
-  <li class="toc-h3"><a href="#91-yield">9.1 Yield</a></li>
-  <li class="toc-h3"><a href="#92-sleep">9.2 Sleep</a></li>
-  <li class="toc-h3"><a href="#93-wait">9.3 Wait</a></li>
-  <li class="toc-h3"><a href="#94-meanwhile">9.4 Meanwhile</a></li>
-  <li class="toc-h3"><a href="#95-execution-model">9.5 Execution Model</a></li>
-<li class=""><a href="#10-preprocessor-directives-7">10. Preprocessor Directives (7)</a></li>
-  <li class="toc-h3"><a href="#101-requirecontext">10.1 `#RequireContext`</a></li>
-  <li class="toc-h3"><a href="#102-setting">10.2 `#Setting`</a></li>
-  <li class="toc-h3"><a href="#103-struct">10.3 `#Struct`</a></li>
-  <li class="toc-h3"><a href="#104-include">10.4 `#Include`</a></li>
-  <li class="toc-h3"><a href="#105-extends">10.5 `#Extends`</a></li>
-  <li class="toc-h3"><a href="#106-command">10.6 `#Command`</a></li>
-  <li class="toc-h3"><a href="#107-const">10.7 `#Const`</a></li>
-<li class=""><a href="#11-script-contexts">11. Script Contexts</a></li>
-  <li class="toc-h3"><a href="#111-context-class-hierarchy">11.1 Context Class Hierarchy</a></li>
-  <li class="toc-h3"><a href="#112-context-specific-api-access">11.2 Context-Specific API Access</a></li>
-  <li class="toc-h3"><a href="#113-context-classes-in-binary">11.3 Context Classes in Binary</a></li>
-<li class=""><a href="#12-classes-and-object-model">12. Classes and Object Model</a></li>
-  <li class="toc-h3"><a href="#121-no-user-defined-classes">12.1 No User-Defined Classes</a></li>
-  <li class="toc-h3"><a href="#122-class-references">12.2 Class References</a></li>
-  <li class="toc-h3"><a href="#123-casting">12.3 Casting</a></li>
-  <li class="toc-h3"><a href="#124-enum-access">12.4 Enum Access</a></li>
-  <li class="toc-h3"><a href="#125-key-api-classes-tm2020">12.5 Key API Classes (TM2020)</a></li>
-<li class=""><a href="#13-events">13. Events</a></li>
-  <li class="toc-h3"><a href="#131-event-driven-architecture">13.1 Event-Driven Architecture</a></li>
-  <li class="toc-h3"><a href="#132-game-mode-events-csmmodeevent">13.2 Game Mode Events (CSmModeEvent)</a></li>
-  <li class="toc-h3"><a href="#133-manialink-events-cmlscriptevent">13.3 ManiaLink Events (CMlScriptEvent)</a></li>
-  <li class="toc-h3"><a href="#134-map-editor-events-cmapeditorpluginevent">13.4 Map Editor Events (CMapEditorPluginEvent)</a></li>
-  <li class="toc-h3"><a href="#135-custom-events-cross-layer-communication">13.5 Custom Events (Cross-Layer Communication)</a></li>
-<li class=""><a href="#14-network-variables">14. Network Variables</a></li>
-  <li class="toc-h3"><a href="#141-declaration">14.1 Declaration</a></li>
-  <li class="toc-h3"><a href="#142-scopes">14.2 Scopes</a></li>
-  <li class="toc-h3"><a href="#143-naming-convention">14.3 Naming Convention</a></li>
-  <li class="toc-h3"><a href="#144-limitations">14.4 Limitations</a></li>
-<li class=""><a href="#15-persistent-and-cloud-storage">15. Persistent and Cloud Storage</a></li>
-  <li class="toc-h3"><a href="#151-persistent-variables">15.1 Persistent Variables</a></li>
-  <li class="toc-h3"><a href="#152-cloud-storage-operations">15.2 Cloud Storage Operations</a></li>
-<li class=""><a href="#16-serialization-json">16. Serialization (JSON)</a></li>
-  <li class="toc-h3"><a href="#161-collection-serialization">16.1 Collection Serialization</a></li>
-  <li class="toc-h3"><a href="#162-usage-with-structs">16.2 Usage with Structs</a></li>
-  <li class="toc-h3"><a href="#163-xml-parsing">16.3 XML Parsing</a></li>
-<li class=""><a href="#17-debug-and-tuning">17. Debug and Tuning</a></li>
-  <li class="toc-h3"><a href="#171-debug-statements-4">17.1 Debug Statements (4)</a></li>
-  <li class="toc-h3"><a href="#172-tuning-system-3">17.2 Tuning System (3)</a></li>
-<li class=""><a href="#18-built-in-api-script-managers">18. Built-in API: Script Managers</a></li>
-  <li class="toc-h3"><a href="#181-script-manager-classes">18.1 Script Manager Classes</a></li>
-  <li class="toc-h3"><a href="#182-script-handler-architecture">18.2 Script Handler Architecture</a></li>
-  <li class="toc-h3"><a href="#183-http-api">18.3 HTTP API</a></li>
-<li class=""><a href="#19-game-mode-scripting">19. Game Mode Scripting</a></li>
-  <li class="toc-h3"><a href="#191-script-location">19.1 Script Location</a></li>
-  <li class="toc-h3"><a href="#192-base-mode-framework">19.2 Base Mode Framework</a></li>
-  <li class="toc-h3"><a href="#193-lifecycle-labels">19.3 Lifecycle Labels</a></li>
-  <li class="toc-h3"><a href="#194-built-in-nadeo-game-modes">19.4 Built-in Nadeo Game Modes</a></li>
-  <li class="toc-h3"><a href="#195-player-management">19.5 Player Management</a></li>
-  <li class="toc-h3"><a href="#196-score-management">19.6 Score Management</a></li>
-  <li class="toc-h3"><a href="#197-ui-layer-management">19.7 UI Layer Management</a></li>
-  <li class="toc-h3"><a href="#198-multiplayer-determinism">19.8 Multiplayer Determinism</a></li>
-<li class=""><a href="#20-manialink-scripting">20. ManiaLink Scripting</a></li>
-  <li class="toc-h3"><a href="#201-manialink-xml-structure">20.1 ManiaLink XML Structure</a></li>
-  <li class="toc-h3"><a href="#202-element-access">20.2 Element Access</a></li>
-  <li class="toc-h3"><a href="#203-ui-control-types">20.3 UI Control Types</a></li>
-  <li class="toc-h3"><a href="#204-visibility-and-interaction">20.4 Visibility and Interaction</a></li>
-  <li class="toc-h3"><a href="#205-page-actions">20.5 Page Actions</a></li>
-  <li class="toc-h3"><a href="#206-menu-navigation-gamepad">20.6 Menu Navigation (Gamepad)</a></li>
-<li class=""><a href="#21-map-editor-plugin-scripting">21. Map Editor Plugin Scripting</a></li>
-  <li class="toc-h3"><a href="#211-context">21.1 Context</a></li>
-  <li class="toc-h3"><a href="#212-available-properties">21.2 Available Properties</a></li>
-  <li class="toc-h3"><a href="#213-place-modes">21.3 Place Modes</a></li>
-  <li class="toc-h3"><a href="#214-block-operations">21.4 Block Operations</a></li>
-  <li class="toc-h3"><a href="#215-shadow-computation">21.5 Shadow Computation</a></li>
-  <li class="toc-h3"><a href="#216-testing">21.6 Testing</a></li>
-<li class=""><a href="#22-standard-libraries">22. Standard Libraries</a></li>
-  <li class="toc-h3"><a href="#221-mathlib">22.1 MathLib</a></li>
-  <li class="toc-h3"><a href="#222-textlib">22.2 TextLib</a></li>
-  <li class="toc-h3"><a href="#223-animlib">22.3 AnimLib</a></li>
-  <li class="toc-h3"><a href="#224-nadeo-libraries">22.4 Nadeo Libraries</a></li>
-<li class=""><a href="#23-lexer-and-token-types">23. Lexer and Token Types</a></li>
-  <li class="toc-h3"><a href="#231-lexer-token-categories">23.1 Lexer Token Categories</a></li>
-  <li class="toc-h3"><a href="#232-keyword-tokens">23.2 Keyword Tokens</a></li>
-<li class=""><a href="#24-script-engine-internals-from-re">24. Script Engine Internals (from RE)</a></li>
-  <li class="toc-h3"><a href="#241-cscriptenginerun-0x140874270">24.1 CScriptEngine::Run (0x140874270)</a></li>
-  <li class="toc-h3"><a href="#242-key-memory-layout">24.2 Key Memory Layout</a></li>
-  <li class="toc-h3"><a href="#243-bytecode-interpreter">24.3 Bytecode Interpreter</a></li>
-  <li class="toc-h3"><a href="#244-script-to-engine-binding">24.4 Script-to-Engine Binding</a></li>
-  <li class="toc-h3"><a href="#245-engine-singleton">24.5 Engine Singleton</a></li>
-<li class=""><a href="#25-browser-recreation-interpretertranspiler-approach">25. Browser Recreation: Interpreter/Transpiler Approach</a></li>
-  <li class="toc-h3"><a href="#251-overview">25.1 Overview</a></li>
-  <li class="toc-h3"><a href="#252-lexer-specification">25.2 Lexer Specification</a></li>
-  <li class="toc-h3"><a href="#253-type-system-mapping">25.3 Type System Mapping</a></li>
-  <li class="toc-h3"><a href="#254-coroutine-implementation">25.4 Coroutine Implementation</a></li>
-  <li class="toc-h3"><a href="#255-collection-operations">25.5 Collection Operations</a></li>
-  <li class="toc-h3"><a href="#256-engine-api-binding">25.6 Engine API Binding</a></li>
-  <li class="toc-h3"><a href="#257-network-variable-simulation">25.7 Network Variable Simulation</a></li>
-  <li class="toc-h3"><a href="#258-complexity-estimate">25.8 Complexity Estimate</a></li>
-<li class=""><a href="#appendix-a-complete-script-class-inventory">Appendix A: Complete Script Class Inventory</a></li>
-  <li class="toc-h3"><a href="#core-script-engine">Core Script Engine</a></li>
-  <li class="toc-h3"><a href="#game-mode">Game Mode</a></li>
-  <li class="toc-h3"><a href="#script-handlers">Script Handlers</a></li>
-  <li class="toc-h3"><a href="#script-managers">Script Managers</a></li>
-<li class=""><a href="#appendix-b-community-reference-links">Appendix B: Community Reference Links</a></li>
-<li class=""><a href="#appendix-c-cross-reference-to-re-documentation">Appendix C: Cross-Reference to RE Documentation</a></li>
+<li class=""><a href="#maniascript-in-30-seconds">ManiaScript in 30 seconds</a></li>
+<li class=""><a href="#data-types">Data types</a></li>
+  <li class="toc-h3"><a href="#type-details">Type details</a></li>
+<li class=""><a href="#variable-declarations">Variable declarations</a></li>
+  <li class="toc-h3"><a href="#scope-rules">Scope rules</a></li>
+  <li class="toc-h3"><a href="#extension-variables">Extension variables</a></li>
+  <li class="toc-h3"><a href="#aliases">Aliases</a></li>
+  <li class="toc-h3"><a href="#pointer-vs-alias-binding">Pointer vs. alias binding</a></li>
+  <li class="toc-h3"><a href="#declaration-modifiers">Declaration modifiers</a></li>
+<li class=""><a href="#operators">Operators</a></li>
+  <li class="toc-h3"><a href="#arithmetic">Arithmetic</a></li>
+  <li class="toc-h3"><a href="#string">String</a></li>
+  <li class="toc-h3"><a href="#comparison">Comparison</a></li>
+  <li class="toc-h3"><a href="#logical">Logical</a></li>
+  <li class="toc-h3"><a href="#assignment">Assignment</a></li>
+  <li class="toc-h3"><a href="#vector-construction">Vector construction</a></li>
+<li class=""><a href="#control-flow">Control flow</a></li>
+  <li class="toc-h3"><a href="#conditional">Conditional</a></li>
+  <li class="toc-h3"><a href="#while-loop">While loop</a></li>
+  <li class="toc-h3"><a href="#for-loop-range-based">For loop (range-based)</a></li>
+  <li class="toc-h3"><a href="#foreach">Foreach</a></li>
+  <li class="toc-h3"><a href="#switch-case">Switch / case</a></li>
+  <li class="toc-h3"><a href="#switchtype-type-based-dispatch">SwitchType (type-based dispatch)</a></li>
+  <li class="toc-h3"><a href="#flow-control-keywords">Flow control keywords</a></li>
+<li class=""><a href="#functions">Functions</a></li>
+  <li class="toc-h3"><a href="#entry-point">Entry point</a></li>
+  <li class="toc-h3"><a href="#no-overloading-or-variadic-functions">No overloading or variadic functions</a></li>
+<li class=""><a href="#preprocessor-directives">Preprocessor directives</a></li>
+  <li class="toc-h3"><a href="#requirecontext">`#RequireContext`</a></li>
+  <li class="toc-h3"><a href="#setting">`#Setting`</a></li>
+  <li class="toc-h3"><a href="#struct">`#Struct`</a></li>
+  <li class="toc-h3"><a href="#include">`#Include`</a></li>
+  <li class="toc-h3"><a href="#extends">`#Extends`</a></li>
+  <li class="toc-h3"><a href="#command">`#Command`</a></li>
+  <li class="toc-h3"><a href="#const">`#Const`</a></li>
+<li class=""><a href="#collections-arrays-and-maps">Collections (arrays and maps)</a></li>
+  <li class="toc-h3"><a href="#array-ordered-list">Array (ordered list)</a></li>
+  <li class="toc-h3"><a href="#associative-array-map">Associative array (map)</a></li>
+  <li class="toc-h3"><a href="#valid-keyvalue-type-combinations">Valid key/value type combinations</a></li>
+<li class=""><a href="#collection-operations">Collection operations</a></li>
+  <li class="toc-h3"><a href="#mutation-operations">Mutation operations</a></li>
+  <li class="toc-h3"><a href="#access-operations">Access operations</a></li>
+  <li class="toc-h3"><a href="#sorting-operations">Sorting operations</a></li>
+  <li class="toc-h3"><a href="#query-operations">Query operations</a></li>
+<li class=""><a href="#coroutines-and-cooperative-multitasking">Coroutines and cooperative multitasking</a></li>
+  <li class="toc-h3"><a href="#yield">Yield</a></li>
+  <li class="toc-h3"><a href="#sleep">Sleep</a></li>
+  <li class="toc-h3"><a href="#wait">Wait</a></li>
+  <li class="toc-h3"><a href="#meanwhile">Meanwhile</a></li>
+  <li class="toc-h3"><a href="#execution-model">Execution model</a></li>
+<li class=""><a href="#serialization-json">Serialization (JSON)</a></li>
+  <li class="toc-h3"><a href="#usage-with-structs">Usage with structs</a></li>
+  <li class="toc-h3"><a href="#xml-parsing">XML parsing</a></li>
+<li class=""><a href="#persistent-and-cloud-storage">Persistent and cloud storage</a></li>
+  <li class="toc-h3"><a href="#cloud-storage-operations">Cloud storage operations</a></li>
+<li class=""><a href="#script-contexts">Script contexts</a></li>
+  <li class="toc-h3"><a href="#context-specific-api-access">Context-specific API access</a></li>
+  <li class="toc-h3"><a href="#context-classes-in-binary">Context classes in binary</a></li>
+<li class=""><a href="#classes-and-object-model">Classes and object model</a></li>
+  <li class="toc-h3"><a href="#class-references">Class references</a></li>
+  <li class="toc-h3"><a href="#casting">Casting</a></li>
+  <li class="toc-h3"><a href="#enum-access">Enum access</a></li>
+  <li class="toc-h3"><a href="#key-api-classes-tm2020">Key API classes (TM2020)</a></li>
+<li class=""><a href="#events">Events</a></li>
+  <li class="toc-h3"><a href="#game-mode-events-csmmodeevent">Game mode events (CSmModeEvent)</a></li>
+  <li class="toc-h3"><a href="#manialink-events-cmlscriptevent">ManiaLink events (CMlScriptEvent)</a></li>
+  <li class="toc-h3"><a href="#map-editor-events-cmapeditorpluginevent">Map editor events (CMapEditorPluginEvent)</a></li>
+  <li class="toc-h3"><a href="#custom-events-cross-layer-communication">Custom events (cross-layer communication)</a></li>
+<li class=""><a href="#network-variables">Network variables</a></li>
+  <li class="toc-h3"><a href="#scopes">Scopes</a></li>
+  <li class="toc-h3"><a href="#naming-convention">Naming convention</a></li>
+  <li class="toc-h3"><a href="#limitations">Limitations</a></li>
+<li class=""><a href="#built-in-api-script-managers">Built-in API: script managers</a></li>
+  <li class="toc-h3"><a href="#script-manager-classes">Script manager classes</a></li>
+  <li class="toc-h3"><a href="#script-handler-architecture">Script handler architecture</a></li>
+  <li class="toc-h3"><a href="#http-api">HTTP API</a></li>
+<li class=""><a href="#game-mode-scripting">Game mode scripting</a></li>
+  <li class="toc-h3"><a href="#script-location">Script location</a></li>
+  <li class="toc-h3"><a href="#base-mode-framework">Base mode framework</a></li>
+  <li class="toc-h3"><a href="#lifecycle-labels">Lifecycle labels</a></li>
+  <li class="toc-h3"><a href="#built-in-nadeo-game-modes">Built-in Nadeo game modes</a></li>
+  <li class="toc-h3"><a href="#player-management">Player management</a></li>
+  <li class="toc-h3"><a href="#score-management">Score management</a></li>
+  <li class="toc-h3"><a href="#ui-layer-management">UI layer management</a></li>
+  <li class="toc-h3"><a href="#multiplayer-determinism">Multiplayer determinism</a></li>
+<li class=""><a href="#manialink-scripting">ManiaLink scripting</a></li>
+  <li class="toc-h3"><a href="#element-access">Element access</a></li>
+  <li class="toc-h3"><a href="#ui-control-types">UI control types</a></li>
+  <li class="toc-h3"><a href="#visibility-and-interaction">Visibility and interaction</a></li>
+  <li class="toc-h3"><a href="#page-actions">Page actions</a></li>
+  <li class="toc-h3"><a href="#menu-navigation-gamepad">Menu navigation (gamepad)</a></li>
+<li class=""><a href="#map-editor-plugin-scripting">Map editor plugin scripting</a></li>
+  <li class="toc-h3"><a href="#available-properties">Available properties</a></li>
+  <li class="toc-h3"><a href="#place-modes">Place modes</a></li>
+  <li class="toc-h3"><a href="#block-operations">Block operations</a></li>
+  <li class="toc-h3"><a href="#shadow-computation">Shadow computation</a></li>
+  <li class="toc-h3"><a href="#testing">Testing</a></li>
+<li class=""><a href="#standard-libraries">Standard libraries</a></li>
+  <li class="toc-h3"><a href="#mathlib">MathLib</a></li>
+  <li class="toc-h3"><a href="#textlib">TextLib</a></li>
+  <li class="toc-h3"><a href="#animlib">AnimLib</a></li>
+  <li class="toc-h3"><a href="#nadeo-libraries">Nadeo libraries</a></li>
+<li class=""><a href="#debug-and-tuning">Debug and tuning</a></li>
+  <li class="toc-h3"><a href="#debug-statements">Debug statements</a></li>
+  <li class="toc-h3"><a href="#tuning-system">Tuning system</a></li>
+<li class=""><a href="#lexer-and-token-types">Lexer and token types</a></li>
+  <li class="toc-h3"><a href="#lexer-token-categories">Lexer token categories</a></li>
+  <li class="toc-h3"><a href="#keyword-tokens">Keyword tokens</a></li>
+<li class=""><a href="#script-engine-internals-from-re">Script engine internals (from RE)</a></li>
+  <li class="toc-h3"><a href="#cscriptenginerun-0x140874270">CScriptEngine::Run (0x140874270)</a></li>
+  <li class="toc-h3"><a href="#key-memory-layout">Key memory layout</a></li>
+  <li class="toc-h3"><a href="#bytecode-interpreter">Bytecode interpreter</a></li>
+  <li class="toc-h3"><a href="#script-to-engine-binding">Script-to-engine binding</a></li>
+  <li class="toc-h3"><a href="#engine-singleton">Engine singleton</a></li>
+<li class=""><a href="#browser-recreation-interpretertranspiler-approach">Browser recreation: interpreter/transpiler approach</a></li>
+  <li class="toc-h3"><a href="#lexer-specification">Lexer specification</a></li>
+  <li class="toc-h3"><a href="#type-system-mapping">Type system mapping</a></li>
+  <li class="toc-h3"><a href="#coroutine-implementation">Coroutine implementation</a></li>
+  <li class="toc-h3"><a href="#collection-operations-1">Collection operations</a></li>
+  <li class="toc-h3"><a href="#engine-api-binding">Engine API binding</a></li>
+  <li class="toc-h3"><a href="#network-variable-simulation">Network variable simulation</a></li>
+  <li class="toc-h3"><a href="#complexity-estimate">Complexity estimate</a></li>
+<li class=""><a href="#appendix-a-complete-script-class-inventory">Appendix A: complete script class inventory</a></li>
+  <li class="toc-h3"><a href="#core-script-engine">Core script engine</a></li>
+  <li class="toc-h3"><a href="#game-mode">Game mode</a></li>
+  <li class="toc-h3"><a href="#script-handlers">Script handlers</a></li>
+  <li class="toc-h3"><a href="#script-managers">Script managers</a></li>
+<li class=""><a href="#appendix-b-community-reference-links">Appendix B: community reference links</a></li>
+<li class=""><a href="#appendix-c-cross-reference-to-re-documentation">Appendix C: cross-reference to RE documentation</a></li>
+<li class=""><a href="#related-pages">Related pages</a></li>
 </ul>
 </nav>
 

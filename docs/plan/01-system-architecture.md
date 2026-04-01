@@ -1,28 +1,12 @@
 # OpenTM System Architecture
 
-**Version**: 1.0
-**Date**: 2026-03-27
-**Status**: Design (pre-implementation)
-**Scope**: Complete technical architecture for a browser-based Trackmania 2020 recreation using WASM
-**Source Evidence**: All references cite RE documents 00-20 plus community tools analysis
+This document specifies the complete technical architecture for OpenTM, a browser-based Trackmania 2020 recreation using WASM. It covers every module, data flow trace, threading model, state machine, build system, and performance budget.
 
 ---
 
-## Table of Contents
+## Module Dependency Graph
 
-1. [Module Dependency Graph](#1-module-dependency-graph)
-2. [Data Flow Architecture](#2-data-flow-architecture)
-3. [Threading Model](#3-threading-model)
-4. [State Machine](#4-state-machine)
-5. [Build System](#5-build-system)
-6. [Performance Budget](#6-performance-budget)
-7. [Critical Unknowns That Block Architecture](#7-critical-unknowns-that-block-architecture)
-
----
-
-## 1. Module Dependency Graph
-
-### 1.1 Module Definitions
+### Module Definitions
 
 Every module is an npm workspace package under `packages/`. Rust/WASM modules are compiled via wasm-pack and published as npm packages within the monorepo.
 
@@ -350,7 +334,7 @@ interface AssetManager {
 }
 ```
 
-### 1.2 Dependency Graph
+### Dependency Graph
 
 ```
                            @opentm/core
@@ -386,7 +370,7 @@ Legend:
 - `editor` depends on `core`, `map`, `renderer`, `camera`, `gbx-parser`
 - `ui` depends on `core`, `network`
 
-### 1.3 Module Size Summary
+### Module Size Summary
 
 | Module | Language | Est. LOC | MVP? | Build Phase |
 |--------|----------|----------|------|-------------|
@@ -408,9 +392,9 @@ Legend:
 
 ---
 
-## 2. Data Flow Architecture
+## Data Flow Architecture
 
-### 2.1 Load a Map
+### Load a Map
 
 Trace from URL to rendered scene:
 
@@ -510,7 +494,7 @@ User provides URL or selects map
 
 **Total latency budget for map load**: Target < 5 seconds on 100 Mbps connection with warm cache, < 15 seconds cold. The bottleneck is asset fetching (step 4). Mitigate with: (a) aggressive IndexedDB caching, (b) parallel fetch of block meshes, (c) progressive loading (render blocks as they arrive), (d) texture streaming (load low-res first, swap to high-res).
 
-### 2.2 One Physics Frame
+### One Physics Frame
 
 Trace from input to vehicle state output:
 
@@ -623,7 +607,7 @@ requestAnimationFrame callback fires
 [7] Renderer draws vehicle at interpolated position
 ```
 
-### 2.3 One Render Frame
+### One Render Frame
 
 Trace from scene graph to presented pixels:
 
@@ -731,7 +715,7 @@ requestAnimationFrame fires
       c. Browser composites with HTML overlay (HUD, menus)
 ```
 
-### 2.4 Record a Ghost
+### Record a Ghost
 
 ```
 Race begins (first gas input detected)
@@ -778,7 +762,7 @@ Race begins (first gas input detected)
          checks that finish time matches claimed time (anti-cheat)
 ```
 
-### 2.5 Play a Ghost
+### Play a Ghost
 
 ```
 User requests ghost playback (own ghost or downloaded)
@@ -842,9 +826,9 @@ User requests ghost playback (own ghost or downloaded)
 
 ---
 
-## 3. Threading Model
+## Threading Model
 
-### 3.1 Thread Allocation
+### Thread Allocation
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -910,7 +894,7 @@ User requests ghost playback (own ghost or downloaded)
 └─────────────────────────────────────────────────────────┘
 ```
 
-### 3.2 SharedArrayBuffer Layout for Physics <-> Main Thread
+### SharedArrayBuffer Layout for Physics-Main Thread Communication
 
 The SAB is the critical shared memory between the main thread and physics worker. It must be allocated once at startup with `new SharedArrayBuffer(TOTAL_SIZE)`. Both threads access it through typed array views.
 
@@ -996,7 +980,7 @@ Physics worker (loop):
 
 **Critical design decision**: The main thread NEVER blocks waiting for physics output. It always renders using the most recently available physics state, interpolated with the fractional tick alpha. This means rendering can run at 60fps even if physics runs at 100Hz -- the two loops are decoupled. If physics falls behind (> 10ms for a step), the main thread continues rendering the stale state and catches up next frame.
 
-### 3.3 Worker Initialization
+### Worker Initialization
 
 ```typescript
 // main.ts
@@ -1016,9 +1000,9 @@ const assetWorker2 = new Worker(new URL('./workers/asset.ts', import.meta.url), 
 
 ---
 
-## 4. State Machine
+## State Machine
 
-### 4.1 Browser State Machine
+### Browser State Machine
 
 TM2020 has 60+ states in a coroutine-based state machine within `CGameCtnApp::UpdateGame` (216KB function) [doc 12 Section 1, VERIFIED]. The browser recreation maps these to a simplified state machine using TypeScript async generators (matching the fiber/coroutine pattern documented in doc 12 Section 4.3).
 
@@ -1060,7 +1044,7 @@ States (browser):
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 4.2 State Definitions
+### State Definitions
 
 #### Boot
 - **TM2020 equivalent**: States 0x000 (Game Init) through 0x3E7 (Init Complete) [doc 12 Section 1.3]
@@ -1230,7 +1214,7 @@ States (browser):
 - **Destroys**: Nothing
 - **Transitions**: -> MainMenu (back)
 
-### 4.3 State Machine Implementation
+### State Machine Implementation
 
 ```typescript
 type GameState =
@@ -1301,9 +1285,9 @@ async function* gameStateMachine(ctx: GameContext): AsyncGenerator<GameState> {
 
 ---
 
-## 5. Build System
+## Build System
 
-### 5.1 Monorepo Structure
+### Monorepo Structure
 
 **Tool**: Turborepo (chosen over Nx for simplicity and speed)
 
@@ -1386,7 +1370,7 @@ opentm/
       package.json
 ```
 
-### 5.2 Rust WASM Compilation
+### Rust WASM Compilation
 
 ```toml
 # packages/physics/rust/Cargo.toml
@@ -1419,7 +1403,7 @@ cd packages/physics/rust && wasm-pack build --target web --release --out-dir ../
 
 **Determinism**: Rust on WASM uses IEEE 754 single-precision for `f32` operations. The WASM spec mandates deterministic floating-point for non-NaN values. We use `f32` exclusively (never `f64`) in the physics module and avoid non-deterministic operations (`f32::sqrt` is deterministic in WASM, but `f32::sin`/`cos` may vary -- use a lookup table or Taylor series for trigonometric functions in the physics path).
 
-### 5.3 TypeScript Bundling
+### TypeScript Bundling
 
 **Tool**: Vite 6+ with the following plugins:
 - `vite-plugin-wasm`: load .wasm files as ES modules
@@ -1462,7 +1446,7 @@ export default defineConfig({
 });
 ```
 
-### 5.4 Turborepo Pipeline
+### Turborepo Pipeline
 
 ```jsonc
 // turbo.json
@@ -1498,7 +1482,7 @@ export default defineConfig({
 }
 ```
 
-### 5.5 Testing Strategy Per Module
+### Testing Strategy Per Module
 
 | Module | Test Type | Tool | What is Tested | Data Source |
 |--------|-----------|------|---------------|-------------|
@@ -1523,9 +1507,9 @@ export default defineConfig({
 
 ---
 
-## 6. Performance Budget
+## Performance Budget
 
-### 6.1 Frame Budget Allocation (60 FPS Target)
+### Frame Budget Allocation (60 FPS Target)
 
 Total budget: **16.67ms** per frame.
 
@@ -1580,7 +1564,7 @@ Total budget: **16.67ms** per frame.
 | **Total typical** | **~3.8ms** | Well within 10ms tick budget |
 | **Worst case (max substeps ~50)** | **~8ms** | High speed, many contacts |
 
-### 6.2 What Happens When Budget is Exceeded
+### What Happens When Budget is Exceeded
 
 **Scenario 1: Main thread rendering exceeds 16.67ms** (dropped to < 60 FPS)
 
@@ -1662,7 +1646,7 @@ function onFrame(deltaMs: number) {
 - Draw call batching: group blocks by material (same mesh + texture = one instanced draw call). Target < 200 unique draw calls after batching.
 - LOD: blocks beyond 500m use simplified meshes (50% triangle count). Beyond 1000m, use impostor billboards or skip.
 
-### 6.3 Memory Budget
+### Memory Budget
 
 | Resource | Budget | Notes |
 |----------|--------|-------|
@@ -1675,9 +1659,9 @@ function onFrame(deltaMs: number) {
 
 ---
 
-## 7. Critical Unknowns That Block Architecture
+## Critical Unknowns That Block Architecture
 
-### 7.1 Block Mesh Extraction Pipeline
+### Block Mesh Extraction Pipeline
 
 - **What we assume**: Block meshes can be extracted from .pak files using NadeoImporter or community tools and served as pre-converted glTF assets from a CDN.
 - **Evidence**: NadeoImporter is an official Nadeo tool that exports meshes. gbx-net has partial .pak parsing. Community has extracted individual blocks manually. NadeoPak files confirmed to use "NadeoPak" magic header, not GBX [doc 26 Section 10].
@@ -1685,7 +1669,7 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: LOW. The community HAS extracted blocks; the question is whether it can be automated for ALL ~500 block types.
 - **Validation**: Before any code: write a Node.js script that extracts 10 Stadium road blocks to glTF using gbx-net. If this works, the pipeline is viable. Estimated effort: 2-3 days.
 
-### 7.2 GBX Body Compression is LZO, Not zlib
+### GBX Body Compression is LZO, Not zlib
 
 - **What we assume**: GBX body compression uses LZO1X (confirmed by doc 26), and we need an LZO decompressor in the browser.
 - **Evidence**: Doc 26 (real file analysis) byte-matched 5 GBX files and confirmed LZO body compression. Doc 15 found zlib strings in the binary, but doc 26 proved LZO is used for GBX bodies. zlib is used elsewhere (lightmaps, possibly ghosts).
@@ -1693,7 +1677,7 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: LOW for body compression being LZO. Medium for there being mixed compression across different file types.
 - **Validation**: Parse 100 diverse .Gbx files (maps, items, ghosts) and verify each decompresses successfully with LZO. Test zlib fallback for any that fail. Effort: 1 day.
 
-### 7.3 Physics Force Model Accuracy
+### Physics Force Model Accuracy
 
 - **What we assume**: The decompiled CarSport force model (doc 22, case 5, 350+ LOC) can be ported to Rust and will produce physics that "feel right" after parameter tuning against TMInterface data.
 - **Evidence**: Three force models are decompiled with actual code: cases 0/1/2 (base 4-wheel), case 3 (2-wheel bicycle), case 5 (CarSport with 9 sub-functions) [doc 22]. Pacejka-like tire model documented. Drift state machine documented (3 states). However, the per-wheel sub-function FUN_1408570e0 is NOT decompiled, nor are the airborne control model (FUN_14085c1b0) or boost model (FUN_140857b20).
@@ -1705,7 +1689,7 @@ function onFrame(deltaMs: number) {
   3. Feed the same inputs and compare positions. If position divergence exceeds 1m after 100 ticks, there is a structural error that needs re-decompilation.
   4. Effort: 2 weeks (this is the single most important validation).
 
-### 7.4 WebGPU Availability and Capability
+### WebGPU Availability and Capability
 
 - **What we assume**: WebGPU is available in all target browsers (Chrome, Firefox, Safari) with support for: 4+ MRT (color attachments), compute shaders, depth textures as shader input, 2D array textures (for shadow cascades).
 - **Evidence**: WebGPU is production-ready in Chrome (since 113), Firefox (since 132), and Safari (since 18). The spec mandates up to 8 color attachments (we need 4). Compute shaders, depth texture binding, and array textures are all in the core spec.
@@ -1713,7 +1697,7 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: LOW for the features listed. WebGPU has been stable for years by 2026.
 - **Validation**: Run the WebGPU conformance tests (webgpu:*) in Chrome, Firefox, and Safari. Create a minimal test that renders to 4 MRT + depth and reads back results. Effort: 1 day.
 
-### 7.5 SharedArrayBuffer Availability
+### SharedArrayBuffer Availability
 
 - **What we assume**: SharedArrayBuffer is available with correct COOP/COEP headers, enabling zero-copy physics-to-render communication.
 - **Evidence**: SAB has been available since Chrome 68, Firefox 79, Safari 15 -- with the COOP/COEP header requirement since the Spectre mitigations. This is a mature API.
@@ -1721,7 +1705,7 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: LOW if we control the hosting environment. HIGH if embedded in third-party iframes.
 - **Validation**: Set COOP/COEP headers in Vite dev server config (already specified in Section 5.3). Test SAB allocation in all target browsers. Effort: 1 hour.
 
-### 7.6 Deterministic Physics Across Browsers
+### Deterministic Physics Across Browsers
 
 - **What we assume**: Rust compiled to WASM produces bit-exact floating-point results across Chrome, Firefox, and Safari, enabling cross-browser ghost validation.
 - **Evidence**: The WASM spec (IEEE 754-2019 compliance) guarantees deterministic results for basic arithmetic (+, -, *, /) and `sqrt`. However, `sin`, `cos`, `tan`, `exp`, `log` are NOT required to be deterministic across implementations. TM2020 likely achieves determinism by using only basic arithmetic in the physics hot path (Forward Euler with no trig in the integration loop).
@@ -1729,7 +1713,7 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: MEDIUM. The force model likely uses `atan2` for slip angle computation and `sin`/`cos` for rotation updates. If these differ by even 1 ULP, the error will compound over thousands of ticks.
 - **Validation**: Create a WASM test module that runs 10,000 iterations of the physics step with known inputs. Compare output across Chrome, Firefox, Safari byte-by-byte. If any difference: replace non-deterministic operations with lookup tables or Taylor series polynomial approximations compiled into the WASM. Effort: 3 days.
 
-### 7.7 Turbo Ramp Direction
+### Turbo Ramp Direction
 
 - **What we assume**: Turbo boost force ramps linearly from 0 to max over its duration (i.e., ramp UP), as decompiled in doc 10 Section 4.3: `force = (elapsed/duration) * strength * modelScale`.
 - **Evidence**: Decompiled code clearly shows `elapsed/duration` which starts at 0 and increases to 1. However, doc 18 (validation review) Issue 6 flagged this as counterintuitive and potentially a decompilation error, because TMNF turbo decays (ramp DOWN) per doc 14.
@@ -1737,7 +1721,7 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: MEDIUM. Ramp-UP makes sense physically (the surface continues to push the car while on it) but contradicts TMNF community documentation.
 - **Validation**: Use TMInterface to capture speed data while driving over a turbo pad. Plot speed vs time. The curve shape will unambiguously show ramp-up vs ramp-down. Effort: 2 hours.
 
-### 7.8 Surface Friction Coefficients
+### Surface Friction Coefficients
 
 - **What we assume**: Each of the 19 surface types has distinct friction coefficients that affect vehicle handling. We approximate these values (Section 19.2 of doc 20) because the actual values are not decompiled.
 - **Evidence**: 208 materials are catalogued with surface IDs [doc 19 Section 10]. The surface ID determines physics behavior, confirmed by distinct handling on ice vs asphalt in gameplay. The decompiled force models reference surface ID per wheel contact [doc 22].
@@ -1745,7 +1729,7 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: HIGH for exact values (we have no decompiled coefficients). Low for relative ordering (ice < grass < dirt < asphalt is obvious from gameplay).
 - **Validation**: Use Openplanet to measure deceleration rate on each surface type (drive at known speed, release throttle, measure time to stop). Derive friction coefficient from deceleration. Effort: 4 hours for all 19 surface types.
 
-### 7.9 Tick Rate Confirmation
+### Tick Rate Confirmation
 
 - **What we assume**: Physics tick rate is 100Hz (10ms per tick).
 - **Evidence**: 100Hz is community-established across TMNF and TM2020. TMInterface operates at this rate. However, doc 18 (validation review) Issue 25 notes this was never confirmed from a decompiled constant.
@@ -1753,7 +1737,7 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: VERY LOW. The entire TM community, TMInterface, and all replay tools assume 100Hz. If it were different, the community would have noticed.
 - **Validation**: Use TMInterface to record a replay at maximum resolution. Count the number of state samples per second of game time. Effort: 30 minutes.
 
-### 7.10 Ghost Binary Format for Official Ghosts
+### Ghost Binary Format for Official Ghosts
 
 - **What we assume**: We use our own ghost format (JSON + LZ4) for the MVP. Loading official TM2020 ghosts is deferred.
 - **Evidence**: The ghost binary format uses int16/int8 encoding for position/rotation/speed [doc 29 Section 6.2] but the full format is not documented. gbx-net has partial ghost parsing.
@@ -1761,10 +1745,30 @@ function onFrame(deltaMs: number) {
 - **Likelihood of being wrong**: N/A -- this is a scope decision, not an assumption. We explicitly defer official ghost loading.
 - **Validation**: When ready to implement: use gbx-net's ghost parser as reference. Test with 50+ downloaded ghosts from TMX. Effort: 2-3 weeks.
 
-### 7.11 Map Block Naming Convention Stability
+### Map Block Naming Convention Stability
 
 - **What we assume**: Block names in .Map.Gbx files (e.g., "StadiumRoadMainStraight") are stable across game versions and can be used as lookup keys into our pre-extracted mesh library.
 - **Evidence**: gbx-net and gbx-ts use block names for identification. The community map editor (tm-editor-route) relies on block names. Block names appear in GBX body chunks as LookbackStrings.
 - **What breaks if wrong**: If Nadeo changes block names in an update, maps using old names will fail to load. Our mesh library keys become invalid.
 - **Likelihood of being wrong**: LOW. Block names have been stable across 6+ years of TM2020 updates. New blocks are added, old blocks are not renamed.
 - **Validation**: Parse 100 maps from different TM2020 versions (2020-2026). Verify block names are consistent. Effort: 2 hours.
+
+---
+
+## Related Pages
+
+- [Executive Summary](00-executive-summary.md) -- Project overview and risk register
+- [Physics Engine](02-physics-engine.md) -- Detailed physics design referenced by the threading model
+- [Renderer Design](03-renderer-design.md) -- WebGPU pipeline feeding from this architecture
+- [Asset Pipeline](04-asset-pipeline.md) -- GBX parser and asset loading details
+- [MVP Tasks](08-mvp-tasks.md) -- Task breakdown implementing this architecture
+
+<details><summary>Document metadata</summary>
+
+- **Version**: 1.0
+- **Date**: 2026-03-27
+- **Status**: Design (pre-implementation)
+- **Scope**: Complete technical architecture for a browser-based Trackmania 2020 recreation using WASM
+- **Source Evidence**: All references cite RE documents 00-20 plus community tools analysis
+
+</details>

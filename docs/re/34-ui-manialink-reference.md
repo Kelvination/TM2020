@@ -1,32 +1,14 @@
-# UI/ManiaLink System Reference
+# UI/ManiaLink system reference
 
-**Source**: `class_hierarchy.json` (2,027 classes), `13-subsystem-class-map.md` (Section 4), `19-openplanet-intelligence.md`, `29-community-knowledge.md`, Openplanet `DefaultStyle.toml`, ManiaLink community documentation
-**Confidence**: MIXED -- Native control hierarchy is VERIFIED from binary RTTI; ManiaLink XML format is community-documented (HIGH confidence); scripting API is VERIFIED via Openplanet; HUD module system is VERIFIED from class hierarchy
-**Date**: 2026-03-27
+## What ManiaLink is and why it matters
 
----
+ManiaLink is the XML-based UI system built into Trackmania's engine. It handles all in-game interfaces: HUD elements, scoreboards, menus, and custom game mode overlays. You define layout in XML, style with attributes and built-in style presets, and script interactivity with ManiaScript.
 
-## Table of Contents
-
-1. [Architecture Overview](#1-architecture-overview)
-2. [CControl Class Hierarchy (Native Controls)](#2-ccontrol-class-hierarchy-native-controls)
-3. [CGameManialink Class Hierarchy (Script-Exposed Controls)](#3-cgamemanialink-class-hierarchy-script-exposed-controls)
-4. [ManiaLink XML Format](#4-manialink-xml-format)
-5. [Layout System (Positioning, Sizing, Anchoring)](#5-layout-system-positioning-sizing-anchoring)
-6. [Style System](#6-style-system)
-7. [Built-in Controls Reference](#7-built-in-controls-reference)
-8. [ManiaLink Scripting](#8-manialink-scripting)
-9. [ManiaApp System (Application Layer)](#9-maniaapp-system-application-layer)
-10. [HUD Elements and Playground Modules](#10-hud-elements-and-playground-modules)
-11. [Game Control Cards](#11-game-control-cards)
-12. [UI Effect and Animation System](#12-ui-effect-and-animation-system)
-13. [Openplanet DefaultStyle (Modern UI Theme)](#13-openplanet-defaultstyle-modern-ui-theme)
-14. [Browser HTML/CSS Equivalents](#14-browser-htmlcss-equivalents)
-15. [Unknowns and Gaps](#15-unknowns-and-gaps)
+ManiaLink operates through three layers: native C++ controls (`CControl*`) handle rendering, script-exposed wrappers (`CGameManialink*`) provide the ManiaScript API, and XML markup lets you declaratively build pages. Understanding this stack is essential for building custom UI or reverse-engineering the engine's rendering pipeline.
 
 ---
 
-## 1. Architecture Overview
+## Architecture overview
 
 The Trackmania 2020 UI system operates on three layers:
 
@@ -43,7 +25,7 @@ Layer 1: CControl* classes                (Native C++ UI controls, Engine 0x07)
 Layer 0: CHms* / CDx11*                   (GPU rendering)
 ```
 
-### Key Singletons
+### Key singletons
 
 | Class | Role |
 |-------|------|
@@ -54,7 +36,7 @@ Layer 0: CHms* / CDx11*                   (GPU rendering)
 | `CControlStyleSheet` | Style collection for native controls |
 | `CGameManialinkStylesheet` | ManiaLink CSS-like styles |
 
-### Engine Assignment
+### Engine assignment
 
 The UI/Control system spans two engine IDs:
 
@@ -67,14 +49,11 @@ The UI/Control system spans two engine IDs:
 
 ---
 
-## 2. CControl Class Hierarchy (Native Controls)
+## CControl class hierarchy (native controls)
 
-**Source**: Binary RTTI extraction (class_hierarchy.json)
-**Confidence**: VERIFIED
+These are the C++ engine controls that render on screen. They are not directly accessible from ManiaScript; `CGameManialink*` wrappers expose them to scripts. Source: Binary RTTI extraction. Confidence: VERIFIED.
 
-These are the C++ engine controls that render on screen. They are not directly accessible from ManiaScript; instead, `CGameManialink*` wrappers expose them to scripts.
-
-### 2.1 Complete Hierarchy (39 classes)
+### Complete hierarchy (39 classes)
 
 ```
 CMwNod
@@ -119,7 +98,7 @@ CMwNod
   +-- CControlEngine                      -- UI engine singleton (update pipeline)
 ```
 
-### 2.2 CControlEngine Update Pipeline
+### CControlEngine update pipeline
 
 The `CControlEngine` singleton drives the per-frame UI update through 7 methods:
 
@@ -133,7 +112,7 @@ The `CControlEngine` singleton drives the per-frame UI update through 7 methods:
 | `ControlsFocus` | Focus | Update focus/hover state for controls |
 | `ControlsValues` | Values | Update control display values |
 
-### 2.3 CControlTextEdition Methods
+### CControlTextEdition methods
 
 | Method | Purpose |
 |--------|---------|
@@ -142,20 +121,17 @@ The `CControlEngine` singleton drives the per-frame UI update through 7 methods:
 | `UpdateDisplaylinesNear` | Update visible lines near cursor |
 | `UpdateFormattedTextNear` | Update formatted/styled text near cursor |
 
-### 2.4 CControlEffectSimi
+### CControlEffectSimi
 
 Has a nested `SKeyVal` struct for keyframe animation data. This drives the ManiaLink animation system at the native level.
 
 ---
 
-## 3. CGameManialink Class Hierarchy (Script-Exposed Controls)
+## CGameManialink class hierarchy (script-exposed controls)
 
-**Source**: Binary RTTI extraction (class_hierarchy.json)
-**Confidence**: VERIFIED
+These classes wrap native `CControl*` instances and expose them to ManiaScript. Each has an `UpdateControl` method called per-frame. Source: Binary RTTI extraction. Confidence: VERIFIED.
 
-These classes wrap native `CControl*` instances and expose them to ManiaScript. Each has an `UpdateControl` method called per-frame.
-
-### 3.1 Complete Hierarchy (31 classes)
+### Complete hierarchy (31 classes)
 
 ```
 CMwNod
@@ -192,7 +168,7 @@ CMwNod
   +-- CGameManialink3dWorld               -- 3D scene world embedded in UI
 ```
 
-### 3.2 Native-to-Script Control Mapping
+### Native-to-script control mapping
 
 | Native (CControl*) | Script (CGameManialink*) | ManiaLink XML | ManiaScript Cast |
 |---------------------|--------------------------|---------------|------------------|
@@ -202,7 +178,7 @@ CMwNod
 | `CControlTextEdition` | `CGameManialinkTextEdit` | `<textedit>` | `CMlTextEdit` |
 | `CControlFrame` | `CGameManialinkFrame` | `<frame>` | `CMlFrame` |
 | `CControlGraph` | `CGameManialinkGraph` | `<graph>` | `CMlGraph` |
-| `CControlSlider` | `CGameManialinkSlider` | `<gauge>` | `CMlGauge` |
+| `CControlSlider` | `CGameManialinkGauge` | `<gauge>` | `CMlGauge` |
 | `CControlMediaPlayer` | `CGameManialinkMediaPlayer` | `<video>` / `<audio>` | `CMlMediaPlayer` |
 | `CControlMiniMap` | `CGameManialinkMiniMap` | `<minimap>` | `CMlMinimap` |
 | `CControlColorChooser2` | `CGameManialinkColorChooser` | (not in XML) | `CMlColorChooser` |
@@ -213,18 +189,17 @@ CMwNod
 | -- | `CGameManialinkOldTable` | (not in XML, deprecated) | -- |
 | -- | `CGameManialinkFileEntry` | `<fileentry>` | `CMlFileEntry` |
 
-### 3.3 Per-Frame Update
+### Per-frame update
 
 Every `CGameManialink*` control has an `UpdateControl` method called each frame. The `CGameManialinkPage` has both `SetContents` (XML parsing) and `Update` (per-frame). The `CGameManialinkBrowser` has `UpdateAsync` and `UpdateFiber` for asynchronous page loading.
 
 ---
 
-## 4. ManiaLink XML Format
+## ManiaLink XML format
 
-**Source**: Community documentation (doc.maniaplanet.com, wiki.trackmania.io, maniaplanet-community.gitbook.io)
-**Confidence**: HIGH (widely used by content creators, consistent across sources)
+ManiaLink XML is the markup language you write to build UI pages. TM2020 uses version 3 exclusively.
 
-### 4.1 Basic Structure
+### Basic structure
 
 ```xml
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
@@ -245,7 +220,7 @@ Every `CGameManialink*` control has an `UpdateControl` method called each frame.
 </manialink>
 ```
 
-### 4.2 Version History
+### Version history
 
 | Version | Engine | Era | Key Changes |
 |---------|--------|-----|-------------|
@@ -254,9 +229,7 @@ Every `CGameManialink*` control has an `UpdateControl` method called each frame.
 | 2 | ManiaPlanet 3 | 2014 | ScriptEvents, improved styling |
 | 3 | ManiaPlanet 4 / TM2020 | 2017+ | **Current version** -- new coordinate system, `z-index`, `scale`, `rot`, class attribute |
 
-**TM2020 uses version 3 exclusively.**
-
-### 4.3 Root Element Attributes
+### Root element attributes
 
 ```xml
 <manialink version="3" name="UniqueIdentifier" background="...">
@@ -268,9 +241,9 @@ Every `CGameManialink*` control has an `UpdateControl` method called each frame.
 | `name` | String | Unique identifier for the ManiaLink page |
 | `background` | String | Background type: `default_image`, `True`/`1`, `hide`/`False`/`0`, `stars`, `stations`, `title` |
 
-### 4.4 Complete Element Reference
+### Complete element reference
 
-#### Common Attributes (all elements)
+#### Common attributes (all elements)
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -290,7 +263,7 @@ Every `CGameManialink*` control has an `UpdateControl` method called each frame.
 | `url` | String | -- | External URL to open on click |
 | `manialink` | String | -- | ManiaLink page to navigate to on click |
 
-#### `<quad>` -- Image/Rectangle Display
+#### `<quad>` -- image/rectangle display
 
 Displays an image, colored rectangle, or built-in style element.
 
@@ -309,7 +282,7 @@ Displays an image, colored rectangle, or built-in style element.
 
 **HTML equivalent**: `<div>` with `background-image` or `<img>`
 
-#### `<label>` -- Text Display
+#### `<label>` -- text display
 
 Displays text with formatting options.
 
@@ -331,7 +304,7 @@ Displays text with formatting options.
 
 **HTML equivalent**: `<span>` or `<p>` with CSS `font-*` properties
 
-#### `<entry>` -- Single-Line Text Input
+#### `<entry>` -- single-line text input
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -348,7 +321,7 @@ Displays text with formatting options.
 
 **HTML equivalent**: `<input type="text">`
 
-#### `<textedit>` -- Multi-Line Text Editor
+#### `<textedit>` -- multi-line text editor
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -368,7 +341,7 @@ Displays text with formatting options.
 
 **HTML equivalent**: `<textarea>`
 
-#### `<fileentry>` -- File Chooser
+#### `<fileentry>` -- file chooser
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -386,7 +359,7 @@ Displays text with formatting options.
 
 **HTML equivalent**: `<input type="file">`
 
-#### `<gauge>` -- Progress Bar
+#### `<gauge>` -- progress bar
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -400,9 +373,9 @@ Displays text with formatting options.
 
 **HTML equivalent**: `<progress>` or `<div>` with percentage width
 
-#### `<graph>` -- Line Chart
+#### `<graph>` -- line chart
 
-Populated via ManiaScript. The XML element just establishes the container.
+Populated via ManiaScript. The XML element establishes the container.
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -419,7 +392,7 @@ Curve.Width = 2.0;
 
 **HTML equivalent**: `<canvas>` or `<svg>` with chart.js / d3.js
 
-#### `<frame>` -- Container/Group
+#### `<frame>` -- container/group
 
 Groups child elements with shared position offset.
 
@@ -436,9 +409,9 @@ Groups child elements with shared position offset.
 
 **HTML equivalent**: `<div>` with `position: relative`
 
-#### `<framemodel>` -- Reusable Frame Template
+#### `<framemodel>` -- reusable frame template
 
-Defines a template that can be instantiated multiple times.
+Defines a template you can instantiate multiple times.
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -453,7 +426,7 @@ Defines a template that can be instantiated multiple times.
 
 **HTML equivalent**: `<template>` element
 
-#### `<frameinstance>` -- Template Instance
+#### `<frameinstance>` -- template instance
 
 Creates an instance of a `<framemodel>`.
 
@@ -468,7 +441,7 @@ Creates an instance of a `<framemodel>`.
 
 **HTML equivalent**: JavaScript `template.content.cloneNode(true)`
 
-#### `<audio>` -- Audio Playback
+#### `<audio>` -- audio playback
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -480,7 +453,7 @@ Creates an instance of a `<framemodel>`.
 
 **HTML equivalent**: `<audio>`
 
-#### `<video>` -- Video Playback
+#### `<video>` -- video playback
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -492,7 +465,7 @@ Creates an instance of a `<framemodel>`.
 
 **HTML equivalent**: `<video>`
 
-#### `<include>` -- Include External File
+#### `<include>` -- include external file
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
@@ -504,7 +477,7 @@ Creates an instance of a `<framemodel>`.
 
 **HTML equivalent**: Server-side includes / JavaScript `fetch()`
 
-#### `<dico>` -- Translation Dictionary
+#### `<dico>` -- translation dictionary
 
 Defines translations for multilingual ManiaLink pages.
 
@@ -524,11 +497,11 @@ Defines translations for multilingual ManiaLink pages.
 
 ---
 
-## 5. Layout System (Positioning, Sizing, Anchoring)
+## Layout system
 
-### 5.1 Coordinate System
+ManiaLink version 3 uses a screen-relative coordinate system with the origin at center and Y increasing upward (opposite of HTML/CSS).
 
-ManiaLink version 3 uses a screen-relative coordinate system:
+### Coordinate system
 
 ```
         (-160, 90)              (0, 90)               (160, 90)
@@ -554,11 +527,11 @@ ManiaLink version 3 uses a screen-relative coordinate system:
 | Z-axis | Depth layering | Higher z-index = rendered on top |
 | Aspect ratio | 16:9 | Units maintain aspect ratio |
 
-**CRITICAL**: Unlike HTML/CSS where Y increases downward, ManiaLink Y increases **upward**. This means `pos="0 -10"` moves an element **down** from its parent.
+**CRITICAL**: Unlike HTML/CSS where Y increases downward, ManiaLink Y increases **upward**. `pos="0 -10"` moves an element **down** from its parent.
 
-### 5.2 Positioning
+### Positioning
 
-Elements are positioned relative to their parent frame:
+Position elements relative to their parent frame:
 
 ```xml
 <!-- Absolute position (relative to screen center) -->
@@ -571,7 +544,7 @@ Elements are positioned relative to their parent frame:
 </frame>
 ```
 
-### 5.3 Alignment (Anchor Point)
+### Alignment (anchor point)
 
 `halign` and `valign` control the anchor point of the element:
 
@@ -601,7 +574,7 @@ valign="top" (default)      valign="center"          valign="bottom"
 | `center2` | Alternative center (legacy) | -- |
 | `bottom` | Anchor at bottom edge | -- |
 
-### 5.4 Scale and Rotation
+### Scale and rotation
 
 ```xml
 <quad pos="0 0" size="20 10" scale="1.5" rot="45" bgcolor="F00A" />
@@ -610,7 +583,7 @@ valign="top" (default)      valign="center"          valign="bottom"
 - `scale="1.5"` -- scales the element to 150% around its anchor point
 - `rot="45"` -- rotates 45 degrees clockwise around its anchor point
 
-### 5.5 Z-Index Layering
+### Z-index layering
 
 ```xml
 <quad pos="0 0" z-index="-1" size="320 180" bgcolor="000F" />  <!-- Background -->
@@ -622,18 +595,18 @@ Range: approximately -999 to 999. Higher values render on top.
 
 ---
 
-## 6. Style System
+## Style system
 
-### 6.1 Built-in Quad Styles
+ManiaLink provides built-in visual style presets applied through `style` and `substyle` attributes.
 
-ManiaLink provides a rich library of pre-built visual styles. Apply with `style="StyleName" substyle="SubStyleName"`:
+### Built-in quad styles
 
 ```xml
 <quad pos="0 0" size="40 20" style="Bgs1" substyle="BgWindow1" />
 <quad pos="0 0" size="64 64" style="Icons64x64_1" substyle="ArrowGreen" />
 ```
 
-#### Major Style Categories
+#### Major style categories
 
 | Style | Purpose | Substyle Count | Examples |
 |-------|---------|----------------|----------|
@@ -658,7 +631,7 @@ ManiaLink provides a rich library of pre-built visual styles. Apply with `style=
 | `TitleLogos` | Title pack logos | 4 | Author, Collection, Icon, Title |
 | `UiSMSpectatorScoreBig` | Spectator score UI | 18 | PlayerSlot, HandleLeft/Right, TableBg, UIRange |
 
-#### Bgs1 Complete Substyle List
+#### Bgs1 complete substyle list
 
 ```
 ArrowDown, ArrowLeft, ArrowRight, ArrowUp,
@@ -677,9 +650,7 @@ NavButton, NavButtonBlink, NavButtonQuit,
 ProgressBar, ProgressBarSmall, Shadow
 ```
 
-### 6.2 Label Styles
-
-Label styles control text appearance:
+### Label styles
 
 | Style | Description |
 |-------|-------------|
@@ -689,7 +660,7 @@ Label styles control text appearance:
 | `BgMainMenuTitleHeader` | Main menu title header |
 | (60+ additional styles) | Various text styles for specific UI contexts |
 
-### 6.3 Frame3d Styles
+### Frame3d styles
 
 For 3D frame elements:
 
@@ -706,7 +677,7 @@ For 3D frame elements:
 | `TitleEditor` | Editor title |
 | `Window` | Window frame |
 
-### 6.4 Color Format
+### Color format
 
 Colors use hexadecimal notation with multiple formats:
 
@@ -721,9 +692,9 @@ Colors use hexadecimal notation with multiple formats:
 
 ---
 
-## 7. Built-in Controls Reference
+## Built-in controls reference
 
-### 7.1 Quad (CControlQuad / CGameManialinkQuad)
+### Quad (CControlQuad / CGameManialinkQuad)
 
 The most versatile element. Displays images, colors, or built-in styles.
 
@@ -752,7 +723,7 @@ The most versatile element. Displays images, colors, or built-in styles.
 | `BgColor` | Vec3 | Background color RGB |
 | `Opacity` | Real | Opacity (0-1) |
 
-### 7.2 Label (CControlLabel / CGameManialinkLabel)
+### Label (CControlLabel / CGameManialinkLabel)
 
 Text display with rich formatting.
 
@@ -777,7 +748,7 @@ Text display with rich formatting.
 | `MaxLine` | Integer | Max visible lines |
 | `Opacity` | Real | Opacity |
 
-### 7.3 Entry (CControlEntry / CGameManialinkEntry)
+### Entry (CControlEntry / CGameManialinkEntry)
 
 Single-line text input field.
 
@@ -795,7 +766,7 @@ Single-line text input field.
 | `StartEdition()` | Method | Focus the input |
 | `HtmlControl` | -- | Corresponding HTML input |
 
-### 7.4 TextEdit (CControlTextEdition / CGameManialinkTextEdit)
+### TextEdit (CControlTextEdition / CGameManialinkTextEdit)
 
 Multi-line text editor with optional line numbers.
 
@@ -812,7 +783,7 @@ Multi-line text editor with optional line numbers.
 | `MaxLine` | Integer | Max lines |
 | `LineCount` | Integer | Current line count (read-only) |
 
-### 7.5 Gauge (CControlSlider / CGameManialinkGauge)
+### Gauge (CControlSlider / CGameManialinkGauge)
 
 Progress bar / gauge display.
 
@@ -830,7 +801,7 @@ Progress bar / gauge display.
 | `DrawBg` | Boolean | Whether to draw background |
 | `Clan` | Integer | Clan/team color |
 
-### 7.6 Graph (CControlGraph / CGameManialinkGraph)
+### Graph (CControlGraph / CGameManialinkGraph)
 
 Line chart display populated via script.
 
@@ -853,7 +824,7 @@ Line chart display populated via script.
 | `Width` | Real | Line width |
 | `SortPoints` | Boolean | Auto-sort points by X |
 
-### 7.7 Frame (CControlFrame / CGameManialinkFrame)
+### Frame (CControlFrame / CGameManialinkFrame)
 
 Invisible container that groups elements.
 
@@ -873,7 +844,7 @@ Invisible container that groups elements.
 | `ScrollAnimOffset` | Vec2 | Animated scroll offset |
 | `DisablePreload` | Boolean | Disable texture preloading |
 
-### 7.8 MiniMap (CControlMiniMap / CGameManialinkMiniMap)
+### MiniMap (CControlMiniMap / CGameManialinkMiniMap)
 
 Displays a top-down map view.
 
@@ -888,7 +859,7 @@ Displays a top-down map view.
 | `MapYaw` | Real | Map rotation |
 | `ZoomFactor` | Real | Zoom level |
 
-### 7.9 Audio (CGameManialinkMediaPlayer)
+### Audio (CGameManialinkMediaPlayer)
 
 ```xml
 <audio data="file://Media/Sounds/click.ogg" play="0" loop="0" id="ClickSound" />
@@ -901,7 +872,7 @@ Displays a top-down map view.
 | `IsPlaying` | Check if currently playing |
 | `Volume` | Get/set volume |
 
-### 7.10 Video (CGameManialinkMediaPlayer)
+### Video (CGameManialinkMediaPlayer)
 
 ```xml
 <video id="IntroVideo" pos="-80 45" size="160 90"
@@ -912,11 +883,9 @@ Shares the same ManiaScript API as Audio.
 
 ---
 
-## 8. ManiaLink Scripting
+## ManiaLink scripting
 
-### 8.1 Script Context
-
-ManiaLink scripts run within specific context classes depending on where the ManiaLink is loaded:
+ManiaLink scripts run within specific context classes depending on where you load them.
 
 | Context | Class | When Used |
 |---------|-------|-----------|
@@ -925,7 +894,7 @@ ManiaLink scripts run within specific context classes depending on where the Man
 | Title pack menu | `CMlScript` | Menu pages |
 | Editor plugin | `CMlScript` | Editor UI |
 
-### 8.2 Script Structure
+### Script structure
 
 ```xml
 <script><!--
@@ -963,7 +932,7 @@ ManiaLink scripts run within specific context classes depending on where the Man
 --></script>
 ```
 
-### 8.3 Event Types (CMlScriptEvent::Type)
+### Event types (CMlScriptEvent::Type)
 
 | Event Type | Trigger | Event Properties |
 |------------|---------|-----------------|
@@ -975,7 +944,7 @@ ManiaLink scripts run within specific context classes depending on where the Man
 | `MenuNavigation` | Gamepad/keyboard menu navigation | `MenuCmd` |
 | `PluginCustomEvent` | Custom event from server/plugin | `CustomEventType`, `CustomEventData` |
 
-### 8.4 Event Properties
+### Event properties
 
 | Property | Type | Description |
 |----------|------|-------------|
@@ -988,7 +957,7 @@ ManiaLink scripts run within specific context classes depending on where the Man
 | `CustomEventType` | Text | Custom event type string |
 | `CustomEventData` | Text[] | Custom event data array |
 
-### 8.5 Page API (CMlPage)
+### Page API (CMlPage)
 
 The `Page` global object provides access to all controls:
 
@@ -998,7 +967,7 @@ The `Page` global object provides access to all controls:
 | `Page.MainFrame` | CMlFrame | Root frame of the page |
 | `Page.FocusedControl` | CMlControl | Currently focused control |
 
-**Type Casting**: Controls must be cast to their specific type:
+**Type Casting**: You must cast controls to their specific type:
 
 ```
 declare MyQuad = (Page.GetFirstChild("qid") as CMlQuad);
@@ -1009,7 +978,7 @@ declare MyFrame = (Page.GetFirstChild("fid") as CMlFrame);
 declare MyGraph = (Page.GetFirstChild("grid") as CMlGraph);
 ```
 
-### 8.6 Common Control Properties (CMlControl base)
+### Common control properties (CMlControl base)
 
 All ManiaLink controls expose:
 
@@ -1030,7 +999,7 @@ All ManiaLink controls expose:
 | `Hide()` | Void | Make hidden |
 | `Focus()` | Void | Set keyboard focus |
 
-### 8.7 Animation API (AnimMgr)
+### Animation API (AnimMgr)
 
 The `AnimMgr` global provides programmatic UI animation:
 
@@ -1045,7 +1014,7 @@ AnimMgr.Add(MyQuad, "<quad size=\"40 20\" opacity=\"0.5\" />", 500, CAnimManager
 AnimMgr.Flush(MyControl);
 ```
 
-**Easing Functions** (`CAnimManager::EAnimManagerEasing` / `CGameManialinkAnimManager::EAnimManagerEasing`):
+**Easing functions** (`CAnimManager::EAnimManagerEasing` / `CGameManialinkAnimManager::EAnimManagerEasing`):
 
 | Easing | Description |
 |--------|-------------|
@@ -1081,7 +1050,7 @@ AnimMgr.Flush(MyControl);
 | `EaseOutBounce` | Bounce end |
 | `EaseInOutBounce` | Bounce both |
 
-### 8.8 Declare Modes (for UI Layers)
+### Declare modes (for UI layers)
 
 When ManiaLink runs as a game mode UI layer, variables can have special persistence:
 
@@ -1099,11 +1068,11 @@ declare netread Integer Net_ServerValue for UI;
 
 ---
 
-## 9. ManiaApp System (Application Layer)
+## ManiaApp system (application layer)
 
-### 9.1 ManiaApp Hierarchy
+The `CGameManiaApp*` classes form the application layer that hosts ManiaLink pages.
 
-The `CGameManiaApp*` classes form the application layer that hosts ManiaLink pages:
+### ManiaApp hierarchy
 
 ```
 CGameManiaApp                             -- Base ManiaApp (has Update method)
@@ -1118,7 +1087,7 @@ CGameManiaApp                             -- Base ManiaApp (has Update method)
   +-- CGameManiaAppTitleLayerScriptHandler -- Title layer scripting
 ```
 
-### 9.2 CGameManiaAppPlayground
+### CGameManiaAppPlayground
 
 The primary entry point for in-game UI. Available as the script context for game mode ManiaLink layers.
 
@@ -1128,9 +1097,9 @@ The primary entry point for in-game UI. Available as the script context for game
 - Access to game state, scores, and other players
 - Can send/receive `CustomEvents` between layers
 
-### 9.3 UI Layer System (CGameUILayer)
+### UI layer system (CGameUILayer)
 
-Game modes create UI by adding **layers** -- each layer is a ManiaLink page:
+Game modes create UI by adding layers -- each layer is a ManiaLink page:
 
 ```
 CGamePlaygroundUIConfig               -- Manages UI layers
@@ -1146,7 +1115,7 @@ Each `CGameUILayer` has:
 | `IsVisible` | Boolean | Visibility toggle |
 | `AttachId` | Text | Which player/entity this layer attaches to |
 
-### 9.4 ManiaPlanet Application Root
+### ManiaPlanet application root
 
 ```
 CGameManiaPlanet                          -- Top-level application
@@ -1161,11 +1130,11 @@ CGameManiaPlanet                          -- Top-level application
 
 ---
 
-## 10. HUD Elements and Playground Modules
+## HUD elements and playground modules
 
-### 10.1 Module Architecture
+The HUD uses a module system with client/server components.
 
-The HUD in Trackmania uses a module system with client/server components:
+### Module architecture
 
 ```
 CGamePlaygroundModuleManagerClient / Server
@@ -1182,7 +1151,7 @@ CGamePlaygroundModuleManagerClient / Server
        +-- Throttle       -- Throttle/input display
 ```
 
-### 10.2 HUD Model Classes
+### HUD model classes
 
 | Class | Purpose |
 |-------|---------|
@@ -1202,9 +1171,7 @@ CGamePlaygroundModuleManagerClient / Server
 | `CHudModule` | Abstract HUD module base |
 | `CModulePlaygroundPlayerStateComponentModel` | Concrete player state component |
 
-### 10.3 Standard TM2020 HUD Elements
-
-These are the built-in HUD elements visible during gameplay:
+### Standard TM2020 HUD elements
 
 | HUD Element | Module Class | ManiaLink Layer | Description |
 |-------------|-------------|-----------------|-------------|
@@ -1218,9 +1185,9 @@ These are the built-in HUD elements visible during gameplay:
 | **Gear/RPM** | Custom layer | Openplanet plugin | Engine data overlay |
 | **Respawn counter** | Custom layer | Game mode layer | Number of respawns |
 
-### 10.4 Custom HUD via ManiaLink
+### Custom HUD via ManiaLink
 
-Game mode scripts can create custom HUD layers:
+Game mode scripts create custom HUD layers:
 
 ```
 // In game mode script (CSmMode / CTmMode)
@@ -1240,11 +1207,11 @@ MyLayer.Type = CUILayer::EUILayerType::Normal;
 
 ---
 
-## 11. Game Control Cards
+## Game control cards
 
-### 11.1 Card Widget System (17 classes)
+Cards are reusable UI widgets for displaying structured data.
 
-Cards are reusable UI widgets for displaying structured data:
+### Card widget system (17 classes)
 
 ```
 CGameControlCard                          -- Base card widget
@@ -1267,9 +1234,7 @@ CGameControlGrid                          -- Game-specific grid layout
 CGameControlGridCard                      -- Grid of card widgets
 ```
 
-### 11.2 TrackMania-Specific Cards
-
-From the class_hierarchy.json, TrackMania adds its own card specializations:
+### TrackMania-specific cards
 
 | Class | Engine ID | Purpose |
 |-------|-----------|---------|
@@ -1280,9 +1245,9 @@ From the class_hierarchy.json, TrackMania adds its own card specializations:
 
 ---
 
-## 12. UI Effect and Animation System
+## UI effect and animation system
 
-### 12.1 Native Effect Classes
+### Native effect classes
 
 ```
 CControlEffect                            -- Base effect
@@ -1293,15 +1258,15 @@ CControlEffect                            -- Base effect
   +-- CControlEffectSimi                  -- Similarity transform (scale+rotate+translate)
 ```
 
-### 12.2 CControlEffectSimi Keyframes
+### CControlEffectSimi keyframes
 
 The `SKeyVal` struct defines keyframe values for similarity transform animations. This is the underlying mechanism for ManiaLink's `AnimMgr`.
 
-### 12.3 CControlSimi2
+### CControlSimi2
 
 A 2D similarity transform (3 DOF: translate X/Y, uniform scale, rotation). Used for efficient 2D UI transformations.
 
-### 12.4 Animation System Flow
+### Animation system flow
 
 ```
 ManiaScript: AnimMgr.Add(control, xmlTarget, duration, easing)
@@ -1321,14 +1286,11 @@ Native rendering (GPU)
 
 ---
 
-## 13. Openplanet DefaultStyle (Modern UI Theme)
+## Openplanet DefaultStyle (modern UI theme)
 
-**Source**: `Trackmania/Openplanet/DefaultStyle.toml`
-**Confidence**: VERIFIED (actual file from game installation)
+Openplanet uses ImGui-style theming. While not ManiaLink, it shows the modern TM2020 UI aesthetic. Source: `Trackmania/Openplanet/DefaultStyle.toml`. Confidence: VERIFIED.
 
-Openplanet uses ImGui-style theming. While not ManiaLink, it shows the modern TM2020 UI aesthetic:
-
-### 13.1 Layout Parameters
+### Layout parameters
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
@@ -1347,7 +1309,7 @@ Openplanet uses ImGui-style theming. While not ManiaLink, it shows the modern TM
 | `FramePadding` | [7, 4] | Frame content padding |
 | `Alpha` | 1 | Global opacity |
 
-### 13.2 Color Palette
+### Color palette
 
 | Element | Color | Hex | Description |
 |---------|-------|-----|-------------|
@@ -1375,13 +1337,13 @@ Openplanet uses ImGui-style theming. While not ManiaLink, it shows the modern TM
 | TextLink | Blue | `#3366FF` | Hyperlinks |
 | ModalWindowDimBg | Near-black | `#0F0F0FE5` | Modal overlay |
 
-**Design language**: Dark theme with `#566AFF` blue accent. Very consistent with TM2020's overall dark/neon aesthetic.
+**Design language**: Dark theme with `#566AFF` blue accent. Consistent with TM2020's dark/neon aesthetic.
 
 ---
 
-## 14. Browser HTML/CSS Equivalents
+## Browser HTML/CSS equivalents
 
-### 14.1 Element Mapping
+### Element mapping
 
 | ManiaLink Element | HTML Equivalent | CSS Properties Needed |
 |-------------------|----------------|----------------------|
@@ -1402,7 +1364,7 @@ Openplanet uses ImGui-style theming. While not ManiaLink, it shows the modern TM
 | `<dico>` | i18next / i18n lib | Translation system |
 | `<include>` | `fetch()` + DOM insert | Async include |
 
-### 14.2 Coordinate System Conversion
+### Coordinate system conversion
 
 ManiaLink coordinates must be converted for browser rendering:
 
@@ -1432,7 +1394,7 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 }
 ```
 
-### 14.3 Style System Mapping
+### Style system mapping
 
 | ManiaLink | CSS Equivalent |
 |-----------|---------------|
@@ -1447,7 +1409,7 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 | `rot="45"` | `transform: rotate(45deg);` |
 | `style="Bgs1" substyle="BgWindow1"` | Background image from sprite sheet |
 
-### 14.4 Animation Mapping
+### Animation mapping
 
 | ManiaLink AnimMgr | CSS/JS Equivalent |
 |-------------------|-------------------|
@@ -1461,9 +1423,9 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 
 ---
 
-## 15. Unknowns and Gaps
+## Unknowns and gaps
 
-### 15.1 Known Unknowns (Need Further RE)
+### Known unknowns (need further RE)
 
 | Area | Gap | Priority |
 |------|-----|----------|
@@ -1478,7 +1440,7 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 | CGameManialinkPlayerList | How does this differ from a frame with label children? | LOW |
 | Style sprite sheet format | How are built-in quad styles stored on disk? | MEDIUM |
 
-### 15.2 What We Know Well (60%+)
+### What is well understood (60%+)
 
 - Complete class hierarchy (all 70 UI classes enumerated)
 - ManiaLink XML elements and attributes (community-documented)
@@ -1489,7 +1451,7 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 - Card widget system
 - Openplanet UI theme parameters
 
-### 15.3 What Remains Poorly Understood (20%)
+### What remains poorly understood (20%)
 
 - Native CControl rendering pipeline internals
 - CControlLayout algorithm specifics
@@ -1502,8 +1464,23 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 
 ---
 
-## Sources
+## Related pages
 
+- [31-maniascript-reference.md](31-maniascript-reference.md) -- ManiaScript language reference, syntax, coroutines, and script contexts
+- [13-subsystem-class-map.md](13-subsystem-class-map.md) -- Engine subsystem architecture including the UI/Control system
+- [29-community-knowledge.md](29-community-knowledge.md) -- Community-sourced ManiaLink and ManiaScript documentation
+- [19-openplanet-intelligence.md](19-openplanet-intelligence.md) -- Openplanet plugin system and UI structure
+
+---
+
+<details>
+<summary>Analysis metadata</summary>
+
+**Source**: `class_hierarchy.json` (2,027 classes), `13-subsystem-class-map.md` (Section 4), `19-openplanet-intelligence.md`, `29-community-knowledge.md`, Openplanet `DefaultStyle.toml`, ManiaLink community documentation
+**Confidence**: MIXED -- Native control hierarchy is VERIFIED from binary RTTI; ManiaLink XML format is community-documented (HIGH confidence); scripting API is VERIFIED via Openplanet; HUD module system is VERIFIED from class hierarchy
+**Date**: 2026-03-27
+
+**Sources**:
 - Binary RTTI: `class_hierarchy.json` (5,886 lines, 2,027 Nadeo classes)
 - Subsystem analysis: `13-subsystem-class-map.md` (Section 4: UI/Control System)
 - Openplanet intelligence: `19-openplanet-intelligence.md` (Editor UI structure)
@@ -1519,3 +1496,5 @@ function manialinkToCSS(mlX, mlY, mlW, mlH, halign, valign) {
 - [ManiaPlanet Library Manialink](https://github.com/maniaplanet/library-manialink)
 - [MLHook Openplanet Plugin](https://openplanet.dev/plugin/mlhook)
 - [CMlScriptIngame Reference](https://maniaplanet.github.io/maniascript-reference/struct_c_ml_script_ingame.html)
+
+</details>

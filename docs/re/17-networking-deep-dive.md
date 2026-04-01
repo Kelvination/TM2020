@@ -1,38 +1,12 @@
 # Trackmania 2020 Networking Deep Dive
 
-**Binary**: `Trackmania.exe` (Trackmania 2020 by Nadeo/Ubisoft)
-**Date**: 2026-03-27
-**Source**: Ghidra 12.x decompilation, RTTI class extraction, debug string analysis
-**Purpose**: Exhaustive networking documentation for browser engine recreation
+The networking subsystem spans 11 logical layers, from raw sockets to game-specific online services. It includes 562+ classes across REST APIs, real-time TCP+UDP game connections, voice chat (Vivox), text chat (XMPP), and anti-cheat infrastructure. This document covers everything needed to recreate the online experience in a browser.
 
 ---
 
-## Table of Contents
+## How the Network Architecture Is Layered
 
-1. [Architecture Overview](#1-architecture-overview)
-2. [Authentication Tutorial](#2-authentication-tutorial)
-3. [Authentication Flow (Decompiled)](#3-authentication-flow-decompiled)
-4. [HTTP Client Architecture](#4-http-client-architecture)
-5. [API Reference](#5-api-reference)
-6. [Web Services Task Taxonomy](#6-web-services-task-taxonomy)
-7. [Game Protocol (TCP+UDP)](#7-game-protocol-tcpudp)
-8. [Real-time Multiplayer Protocol](#8-real-time-multiplayer-protocol)
-9. [XML-RPC Dedicated Server Protocol](#9-xml-rpc-dedicated-server-protocol)
-10. [Voice and Text Chat](#10-voice-and-text-chat)
-11. [Anti-Cheat System](#11-anti-cheat-system)
-12. [Matchmaking](#12-matchmaking)
-13. [File Transfer and Ghost Upload System](#13-file-transfer-and-ghost-upload-system)
-14. [Complete Class Taxonomy](#14-complete-class-taxonomy)
-15. [Browser Multiplayer Architecture](#15-browser-multiplayer-architecture)
-16. [Minimum Viable Online Specification](#16-minimum-viable-online-specification)
-17. [Key Unknowns](#17-key-unknowns)
-18. [Sequence Diagrams](#18-sequence-diagrams)
-
----
-
-## 1. Architecture Overview
-
-The networking subsystem is a deeply layered architecture spanning 11 logical layers, from raw sockets up to game-specific online services.
+The networking subsystem spans 11 logical layers, from raw sockets up to game-specific online services.
 
 ```
 +=========================================================================+
@@ -171,7 +145,7 @@ The per-frame network update follows a strict order:
 
 ---
 
-## 2. Authentication Tutorial
+## How to Authenticate with Nadeo APIs
 
 This section is a practical guide for implementing authentication in a browser client. It synthesizes information from decompiled binary analysis, Openplanet plugin source code, and community-verified API behavior.
 
@@ -388,7 +362,7 @@ This is NOT a standard Bearer token format. The `nadeo_v1` prefix and `t=` param
 
 ---
 
-## 3. Authentication Flow (Decompiled)
+## How Authentication Works (Decompiled)
 
 ### Complete Authentication Chain
 
@@ -629,7 +603,7 @@ Evidence for offline mode:
 
 ---
 
-## 4. HTTP Client Architecture
+## How the HTTP Client Works (curl Multi-Handle)
 
 ### curl Multi-Handle Architecture
 
@@ -791,7 +765,7 @@ Exposed to ManiaScript via:
 
 ---
 
-## 5. API Reference
+## API Endpoint Reference
 
 ### Confidence Legend
 
@@ -1107,7 +1081,7 @@ Based on the task class naming pattern `CNetNadeoServicesTask_<Verb><Resource>`,
 
 ---
 
-## 6. Web Services Task Taxonomy
+## How Web Services Tasks Are Organized (562 Classes)
 
 ### Overview
 
@@ -1423,7 +1397,7 @@ Result types follow the pattern `CWebServicesTaskResult_<DataType>`. Key categor
 
 ---
 
-## 7. Game Protocol (TCP+UDP)
+## How the Game Protocol Uses TCP+UDP
 
 ### Dual-Stack Architecture
 
@@ -1556,7 +1530,7 @@ The game supports UPnP for automatic port forwarding. [UNKNOWN] whether STUN/TUR
 
 ---
 
-## 8. Real-time Multiplayer Protocol
+## How Real-Time Multiplayer Synchronizes
 
 ### Deterministic Simulation Model
 
@@ -1650,7 +1624,7 @@ The tunnel system allows arbitrary data to be sent through the game connection, 
 
 ---
 
-## 9. XML-RPC Dedicated Server Protocol
+## How the XML-RPC Server Protocol Works
 
 ### Architecture
 
@@ -1793,7 +1767,7 @@ Callbacks are asynchronous notifications from the server to connected controller
 
 ---
 
-## 10. Voice and Text Chat
+## How Voice and Text Chat Work
 
 ### Vivox Voice Chat
 
@@ -1902,7 +1876,7 @@ Game Client                XMPP Servers
 
 ---
 
-## 11. Anti-Cheat System
+## How the Anti-Cheat System Works
 
 ### Architecture
 
@@ -2006,7 +1980,7 @@ A separate access-control system with periodic server verification:
 
 ---
 
-## 12. Matchmaking
+## How Matchmaking Works
 
 ### Architecture
 
@@ -2094,7 +2068,7 @@ Confirmed mode: **2v2 matchmaking** (from UI string "Play and compete with your 
 
 ---
 
-## 13. File Transfer and Ghost Upload System
+## How File Transfer and Ghost Upload Work
 
 ### Architecture
 
@@ -2245,7 +2219,7 @@ Based on the anti-cheat system architecture:
 
 ---
 
-## 14. Complete Class Taxonomy
+## Complete Networking Class Taxonomy
 
 ### CNet* (262 classes) -- Full Categorization
 
@@ -2427,11 +2401,11 @@ CGameNetwork                     -- Base network
 
 ---
 
-## 15. Browser Multiplayer Architecture
+## How to Build Browser Multiplayer
 
 This section provides a concrete architecture for implementing Trackmania 2020's multiplayer features in a web browser.
 
-### 15.1 Architecture Overview
+### Architecture Overview
 
 ```
 +-------------------------------------------------------------------+
@@ -2466,7 +2440,7 @@ This section provides a concrete architecture for implementing Trackmania 2020's
 +-------------------+  +-------------------+  +-------------------+
 ```
 
-### 15.2 Authentication: OAuth2 Flow Adaptation
+### Authentication: OAuth2 Flow Adaptation
 
 The native game uses `UPC_TicketGet()` from a Windows DLL. For browser clients, there are two approaches:
 
@@ -2513,7 +2487,7 @@ If building a fully custom multiplayer server (not connecting to Nadeo's infrast
 2. CORS: Ubisoft and Nadeo APIs do not set `Access-Control-Allow-Origin` for browser origins
 3. Credentials: The Ubi-AppId and auth flow should not be exposed in client-side JavaScript
 
-### 15.3 Real-Time Multiplayer: WebSocket vs WebRTC
+### Real-Time Multiplayer: WebSocket vs WebRTC
 
 The native game uses TCP+UDP dual-stack per connection. In the browser, the mapping is:
 
@@ -2560,7 +2534,7 @@ Simpler to implement but adds ~1-5ms latency for time-critical data due to TCP h
 
 Reimplement the game server natively with WebSocket/WebRTC endpoints. No translation proxy needed. This is the right approach if building a custom multiplayer experience rather than connecting to existing Nadeo dedicated servers.
 
-### 15.4 REST API: Standard fetch()
+### REST API: Standard fetch()
 
 All Nadeo REST APIs can be called with standard `fetch()`:
 
@@ -2593,7 +2567,7 @@ const records = await nadeoFetch(
 
 **Note**: These calls will likely need to go through a CORS proxy since Nadeo's servers do not set browser-friendly CORS headers.
 
-### 15.5 What Needs Server-Side Proxy
+### What Needs Server-Side Proxy
 
 | Component | Needs Proxy? | Reason |
 |-----------|-------------|--------|
@@ -2604,7 +2578,7 @@ const records = await nadeoFetch(
 | Vivox voice | N/A | Replace with WebRTC entirely |
 | Ghost upload/download | LIKELY | CORS on upload endpoints |
 
-### 15.6 Vivox Voice Chat Replacement
+### Vivox Voice Chat Replacement
 
 The native game uses Vivox (`VoiceChat.dll`) for voice chat with token-based authentication:
 
@@ -2639,7 +2613,7 @@ For browser: use standard WebRTC audio with a signaling server. The channel mana
 
 ---
 
-## 16. Minimum Viable Online Specification
+## Minimum Viable Online Specification
 
 This section defines the minimum set of features needed for a browser-based Trackmania experience with online functionality. Each tier builds on the previous.
 
@@ -2776,7 +2750,7 @@ For Tier 0 (minimum viable):
 
 ---
 
-## 17. Key Unknowns
+## Key Unknowns
 
 ### Critical Unknowns (Block Browser Recreation)
 
@@ -2869,9 +2843,9 @@ Dependencies: openssl (1.1.1t+quic), curl
 
 ---
 
-## 18. Sequence Diagrams
+## Sequence Diagrams
 
-### 18.1 Full Authentication Sequence (Native Game)
+### Full Authentication Sequence (Native Game)
 
 ```
 UbiConnect    Game Client      UPC DLL        Ubisoft API          Nadeo Core API
@@ -2933,7 +2907,7 @@ UbiConnect    Game Client      UPC DLL        Ubisoft API          Nadeo Core AP
     |              |<----------------------------------------------------|
 ```
 
-### 18.2 Joining a Game Server
+### Joining a Game Server
 
 ```
 Game Client             Nadeo API              Game Server (Dedicated)
@@ -2995,7 +2969,7 @@ Game Client             Nadeo API              Game Server (Dedicated)
     |<---------------------------------------------->|
 ```
 
-### 18.3 Submitting a Time (Leaderboard)
+### Submitting a Time (Leaderboard)
 
 ```
 Game Client                     Nadeo Core API             Nadeo Live API
@@ -3054,7 +3028,7 @@ Game Client                     Nadeo Core API             Nadeo Live API
     |<-------------------------------------------------|
 ```
 
-### 18.4 Matchmaking Flow
+### Matchmaking Flow
 
 ```
 Game Client              Nadeo API           Harbour/Matchmaking      Game Server
@@ -3099,7 +3073,7 @@ Game Client              Nadeo API           Harbour/Matchmaking      Game Serve
     |                       |                      |                      |
 ```
 
-### 18.5 Voice Chat Session (Vivox)
+### Voice Chat Session (Vivox)
 
 ```
 Game Client               Nadeo API              Vivox Servers
@@ -3139,3 +3113,22 @@ Game Client               Nadeo API              Vivox Servers
     |   VoiceChatEvent_       |               |
     |   SpeakingHasChanged    |               |
 ```
+
+## Related Pages
+
+- [07-networking.md](07-networking.md) -- Networking overview
+- [20-browser-recreation-guide.md](20-browser-recreation-guide.md) -- Browser recreation architecture
+- [21-competitive-mechanics.md](21-competitive-mechanics.md) -- Determinism and ghost validation
+- [24-audio-deep-dive.md](24-audio-deep-dive.md) -- Voice chat architecture (Vivox)
+- [12-architecture-deep-dive.md](12-architecture-deep-dive.md) -- Game architecture and state machines
+- [13-subsystem-class-map.md](13-subsystem-class-map.md) -- Subsystem class catalog
+- [30-ghost-replay-format.md](30-ghost-replay-format.md) -- Ghost upload format
+
+<details><summary>Analysis metadata</summary>
+
+**Binary**: `Trackmania.exe` (Trackmania 2020 by Nadeo/Ubisoft)
+**Date**: 2026-03-27
+**Source**: Ghidra 12.x decompilation, RTTI class extraction, debug string analysis
+**Purpose**: Exhaustive networking documentation for browser engine recreation
+
+</details>

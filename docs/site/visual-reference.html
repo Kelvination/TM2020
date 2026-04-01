@@ -33,33 +33,41 @@
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
+<div class="nav-subsection">Core Systems</div>
 <a class="nav-item" href="index.html"><span class="nav-text">Overview</span></a>
-<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
-<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
-<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
-<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
 <a class="nav-item" href="architecture.html"><span class="nav-text">Architecture</span></a>
-<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
-<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
-<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
-<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
-<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
-<a class="nav-item" href="validation.html"><span class="nav-text">Validation Review</span></a>
-<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
-<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
+<a class="nav-item" href="class-hierarchy.html"><span class="nav-text">Class System</span></a>
+<a class="nav-item" href="binary.html"><span class="nav-text">Binary Analysis</span></a>
+<div class="nav-subsection">Physics &amp; Driving</div>
+<a class="nav-item" href="physics.html"><span class="nav-text">Physics &amp; Vehicle</span></a>
 <a class="nav-item" href="competitive.html"><span class="nav-text">Competitive Mechanics</span></a>
-<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
-<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
-<a class="nav-item active" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
-<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
-<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
-<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure Encyclopedia</span></a>
-<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
-<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<div class="nav-subsection">Rendering</div>
+<a class="nav-item" href="rendering.html"><span class="nav-text">Rendering &amp; Graphics</span></a>
+<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">File Formats &amp; Data</div>
+<a class="nav-item" href="file-formats.html"><span class="nav-text">File Formats</span></a>
+<a class="nav-item" href="game-files.html"><span class="nav-text">Game Files</span></a>
+<a class="nav-item" href="map-structure.html"><span class="nav-text">Map Structure</span></a>
 <a class="nav-item" href="ghost-replay.html"><span class="nav-text">Ghost &amp; Replay Format</span></a>
+<a class="nav-item" href="real-files.html"><span class="nav-text">Real File Analysis</span></a>
+<div class="nav-subsection">Networking &amp; Audio</div>
+<a class="nav-item" href="networking.html"><span class="nav-text">Networking</span></a>
+<a class="nav-item" href="audio.html"><span class="nav-text">Audio System</span></a>
+<div class="nav-subsection">Scripting &amp; UI</div>
 <a class="nav-item" href="maniascript.html"><span class="nav-text">ManiaScript Reference</span></a>
 <a class="nav-item" href="ui-manialink.html"><span class="nav-text">UI &amp; ManiaLink</span></a>
-<a class="nav-item" href="shaders.html"><span class="nav-text">Shader Catalog</span></a>
+<div class="nav-subsection">External Intelligence</div>
+<a class="nav-item" href="openplanet.html"><span class="nav-text">Openplanet Intelligence</span></a>
+<a class="nav-item" href="openplanet-mining.html"><span class="nav-text">Openplanet Deep Mining</span></a>
+<a class="nav-item" href="dll-intelligence.html"><span class="nav-text">DLL Intelligence</span></a>
+<a class="nav-item" href="community.html"><span class="nav-text">Community Knowledge</span></a>
+<a class="nav-item" href="tmnf-crossref.html"><span class="nav-text">TMNF Comparison</span></a>
+<div class="nav-subsection">Research &amp; Validation</div>
+<a class="nav-item" href="ghidra-findings.html"><span class="nav-text">Ghidra Research</span></a>
+<a class="nav-item" href="ghidra-gaps.html"><span class="nav-text">Ghidra Gap Research</span></a>
+<a class="nav-item" href="validation.html"><span class="nav-text">Errata &amp; Corrections</span></a>
+<a class="nav-item active" href="visual-reference.html"><span class="nav-text">Visual Reference &amp; Glossary</span></a>
+<a class="nav-item" href="recreation.html"><span class="nav-text">Browser Recreation Guide</span></a>
 <div class="nav-section">Planning</div>
 <a class="nav-item" href="plan-overview.html"><span class="nav-text">Executive Summary</span></a>
 <a class="nav-item" href="plan-architecture.html"><span class="nav-text">System Architecture</span></a>
@@ -113,24 +121,10 @@
                     <div class="content-main">
                         <div class="disclaimer">This documentation is produced through reverse engineering for educational purposes. All findings are based on static analysis of embedded debug strings, not official documentation.</div>
                         <h1 id="visual-reference-glossary-cross-document-index"><a class="anchor" href="#visual-reference-glossary-cross-document-index">#</a>Visual Reference, Glossary & Cross-Document Index</h1>
-<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020 by Nadeo/Ubisoft) <strong>Date</strong>: 2026-03-27 <strong>Purpose</strong>: Visual diagrams, comprehensive glossary, address reference, and cross-document index for all reverse engineering documentation.</p>
+<p>This document provides ASCII architecture diagrams, a comprehensive glossary, an address reference table, and a cross-document index for all reverse engineering documentation. Use it as a visual map of the engine and a lookup for any address or term.</p>
 <hr>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">#</a>Table of Contents</h2>
-<ol>
-  <li><a href="#1-engine-architecture-diagram">Engine Architecture Diagram</a></li>
-  <li><a href="#2-complete-class-hierarchy-tree">Complete Class Hierarchy Tree</a></li>
-  <li><a href="#3-deferred-rendering-pipeline-diagram">Deferred Rendering Pipeline Diagram</a></li>
-  <li><a href="#4-physics-pipeline-diagram">Physics Pipeline Diagram</a></li>
-  <li><a href="#5-game-state-machine-diagram">Game State Machine Diagram</a></li>
-  <li><a href="#6-network-protocol-stack-diagram">Network Protocol Stack Diagram</a></li>
-  <li><a href="#7-gbx-file-format-diagram">GBX File Format Diagram</a></li>
-  <li><a href="#8-comprehensive-glossary">Comprehensive Glossary</a></li>
-  <li><a href="#9-address-reference-table">Address Reference Table</a></li>
-  <li><a href="#10-cross-document-index">Cross-Document Index</a></li>
-</ol>
-<hr>
-<h2 id="1-engine-architecture-diagram"><a class="anchor" href="#1-engine-architecture-diagram">#</a>1. Engine Architecture Diagram</h2>
-<h3 id="11-full-system-overview"><a class="anchor" href="#11-full-system-overview">#</a>1.1 Full System Overview</h3>
+<h2 id="engine-architecture-diagram"><a class="anchor" href="#engine-architecture-diagram">#</a>Engine Architecture Diagram</h2>
+<h3 id="full-system-overview"><a class="anchor" href="#full-system-overview">#</a>Full System Overview</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>╔═══════════════════════════════════════════════════════════════════════════════╗
 ║                           TRACKMANIA 2020 ENGINE                             ║
 ║                     ManiaPlanet / GameBox Engine (C++)                        ║
@@ -170,17 +164,14 @@
 ║  │  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌──────────┐ ┌───────────┐    │  ║
 ║  │  │ CScene    │ │ CVision   │ │ CSystem   │ │ CNet     │ │ CScript   │    │  ║
 ║  │  │ Engine    │ │ Engine    │ │ Engine    │ │ Engine   │ │ Engine    │    │  ║
-║  │  │           │ │           │ │           │ │          │ │           │    │  ║
 ║  │  │ 3D scene  │ │ D3D11     │ │ File sys  │ │ TCP/UDP  │ │ Mania-    │    │  ║
 ║  │  │ Entities  │ │ Deferred  │ │ Fid/Pak   │ │ libcurl  │ │ Script VM │    │  ║
-║  │  │ NScene*   │ │ Tech3     │ │ GBX       │ │ OpenSSL  │ │ 12 types  │    │  ║
-║  │  │ Physics   │ │ Shaders   │ │ Config    │ │ XMPP     │ │ 50+ tok.  │    │  ║
+║  │  │ Physics   │ │ Shaders   │ │ GBX       │ │ OpenSSL  │ │ 12 types  │    │  ║
 ║  │  └───────────┘ └───────────┘ └───────────┘ └──────────┘ └───────────┘    │  ║
 ║  │                                                                             │  ║
 ║  │  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌──────────┐ ┌───────────┐    │  ║
 ║  │  │ CInput    │ │ CAudio    │ │ CControl  │ │ CPlug    │ │ CMw       │    │  ║
 ║  │  │ Engine    │ │ Engine    │ │ Engine    │ │ Engine   │ │ Engine    │    │  ║
-║  │  │           │ │           │ │           │ │          │ │           │    │  ║
 ║  │  │ DInput8   │ │ OpenAL    │ │ UI layout │ │ Assets   │ │ Core      │    │  ║
 ║  │  │ XInput    │ │ Vorbis    │ │ Effects   │ │ Material │ │ Class reg │    │  ║
 ║  │  │ Keyboard  │ │ Spatial   │ │ Focus     │ │ Meshes   │ │ MwClassId │    │  ║
@@ -190,7 +181,6 @@
 ║  │  ┌───────────┐ ┌───────────┐                                               │  ║
 ║  │  │ CHms      │ │ CGame     │                                               │  ║
 ║  │  │ Engine    │ │ Engine    │                                               │  ║
-║  │  │           │ │           │                                               │  ║
 ║  │  │ Zone/     │ │ Game      │                                               │  ║
 ║  │  │ Portal    │ │ Logic     │                                               │  ║
 ║  │  │ Renderer  │ │ Orchestr. │                                               │  ║
@@ -199,27 +189,23 @@
 ║                                    │                                             ║
 ║  ┌─────────────────────────────────┴─────────────────────────────────────────┐  ║
 ║  │                            CMwNod BASE LAYER                               │  ║
-║  │                                                                             │  ║
 ║  │  ┌──────────────┐  ┌──────────────────┐  ┌──────────────────────────┐     │  ║
 ║  │  │ Class System  │  │ Serialization    │  │ Fiber / Coroutine        │     │  ║
 ║  │  │ 2,027 classes │  │ CClassicArchive  │  │ CMwCmdFiber (88 bytes)  │     │  ║
 ║  │  │ MwClassIds    │  │ GBX read/write   │  │ Cooperative multitask   │     │  ║
-║  │  │ TLS-cached    │  │ Chunk system     │  │ Render-safe yielding    │     │  ║
-║  │  │ 200+ remaps   │  │ FACADE01         │  │ Dialog workflows        │     │  ║
+║  │  │ 200+ remaps   │  │ Chunk system     │  │ Render-safe yielding    │     │  ║
 ║  │  └──────────────┘  └──────────────────┘  └──────────────────────────┘     │  ║
 ║  └─────────────────────────────────────────────────────────────────────────────┘  ║
 ║                                                                               ║
 ╠═══════════════════════════════════════════════════════════════════════════════╣
 ║                         EXTERNAL DEPENDENCIES                                 ║
-║                                                                               ║
 ║  ┌────────────────┐ ┌───────────────┐ ┌─────────────┐ ┌───────────────────┐  ║
 ║  │ Ubisoft Connect │ │ Vivox         │ │ XMPP        │ │ Nadeo Services    │  ║
 ║  │ upc_r2_loader64│ │ VoiceChat.dll │ │ *.chat.     │ │ core.trackmania.  │  ║
-║  │ DRM, auth,     │ │ Voice chat    │ │ maniaplanet │ │ nadeo.live        │  ║
-║  │ achievements   │ │               │ │ .com        │ │ REST API          │  ║
+║  │ DRM, auth      │ │ Voice chat    │ │ maniaplanet │ │ nadeo.live        │  ║
 ║  └────────────────┘ └───────────────┘ └─────────────┘ └───────────────────┘  ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝</code></pre></div>
-<h3 id="12-data-flow-between-subsystems"><a class="anchor" href="#12-data-flow-between-subsystems">#</a>1.2 Data Flow Between Subsystems</h3>
+<h3 id="data-flow-between-subsystems"><a class="anchor" href="#data-flow-between-subsystems">#</a>Data Flow Between Subsystems</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>                     ┌──────────────────┐
                      │    User Input     │
                      │  Keyboard/Gamepad │
@@ -252,7 +238,6 @@
              │                     ┌──────────────────┐
              │                     │  NSceneDyna       │
              │                     │  Rigid body sim   │
-             │                     │  Gravity, sleep   │
              │                     │  Forward Euler    │
              │                     └────────┬─────────┘
              │                               │ positions, velocities
@@ -261,7 +246,6 @@
              │                     │  NHmsCollision    │
              │                     │  Static/Dynamic/  │
              │                     │  Continuous (CCD) │
-             │                     │  Tree broadphase  │
              │                     └────────┬─────────┘
              │                               │ contacts
              v                               v
@@ -282,296 +266,125 @@
     │                  CAudioEngine                      │
     │         OpenAL spatial audio + Vorbis              │
     └──────────────────────────────────────────────────┘</code></pre></div>
-<h3 id="13-startup-sequence"><a class="anchor" href="#13-startup-sequence">#</a>1.3 Startup Sequence</h3>
+<h3 id="startup-sequence"><a class="anchor" href="#startup-sequence">#</a>Startup Sequence</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>entry (0x14291e317)                     [.D.&quot; section, obfuscated]
-  │
-  ├── Unpacker/protector stub
   │
   v
 WinMainCRTStartup (0x141521c28)        [MSVC CRT VS2019]
   │
-  ├── __scrt_initialize_crt(1)
-  ├── _initterm()                       C++ static constructors
-  │
   v
 WinMain (0x140aa7470)                   [640x480 default window]
-  │
-  ├── Profiling system init (FUN_1401171d0)
-  ├── &quot;Startup&quot; profiling tag
   │
   v
 CGbxGame::InitApp (0x1400a6ec0)
   │
   ├── CSystemEngine::InitForGbxGame     File system, config, platform
-  │     ├── StaticInit                   Class registration
-  │     ├── CaptureInfoOsCpu            Hardware detection
-  │     └── InitSysCfgVision            Graphics config
   │
   v
 CGbxApp::Init1 (0x140aaac00)            [80 KB function!]
   │
-  ├── CVisionEngine init                 Graphics subsystem
-  ├── CInputEngine init                  Input subsystem
-  ├── CAudioEngine init                  Audio subsystem
-  ├── CNetEngine init                    Network subsystem
+  ├── CVisionEngine init
+  ├── CInputEngine init
+  ├── CAudioEngine init
+  ├── CNetEngine init
   │
   v
 CGbxApp::Init2 (0x140ab00a0)
   │
-  ├── D3D11 device creation              CDx11Viewport::DeviceCreate
+  ├── D3D11 device creation
   ├── Viewport configuration
-  ├── RenderWaitingFrame
   │
   v
 CGameManiaPlanet::Start (0x140cb8870)
   │
-  ├── Register playground types
-  ├── Set game name &quot;Trackmania&quot;
-  │
   v
 CGameCtnApp::Start (0x140b4eba0)
-  │
-  ├── Menu/network startup
   │
   v
 CGameCtnApp::UpdateGame (0x140b78f10)   [Main loop begins, 216 KB]</code></pre></div>
 <hr>
-<h2 id="2-complete-class-hierarchy-tree"><a class="anchor" href="#2-complete-class-hierarchy-tree">#</a>2. Complete Class Hierarchy Tree</h2>
-<h3 id="21-core-engine-hierarchy"><a class="anchor" href="#21-core-engine-hierarchy">#</a>2.1 Core Engine Hierarchy</h3>
+<h2 id="complete-class-hierarchy-tree"><a class="anchor" href="#complete-class-hierarchy-tree">#</a>Complete Class Hierarchy Tree</h2>
+<h3 id="core-engine-hierarchy"><a class="anchor" href="#core-engine-hierarchy">#</a>Core Engine Hierarchy</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CMwNod (universal base class) ─── 2,027 known subclasses
   │
   ├── CMwEngine (engine base)
-  │     ├── CMwEngineMain              Main engine loop
-  │     ├── CGameEngine                Game logic orchestration
-  │     ├── CPlugEngine                Resource/asset management
-  │     ├── CSceneEngine               Scene graph + rendering
-  │     ├── CVisionEngine              Low-level rendering (D3D11)
-  │     ├── CNetEngine                 Network stack
-  │     ├── CInputEngine               Input devices
-  │     ├── CSystemEngine              File system, config, OS
-  │     ├── CScriptEngine              ManiaScript VM
-  │     ├── CControlEngine             UI layout/effects/focus
-  │     └── CAudioSourceEngine         Audio source management
+  │     ├── CMwEngineMain, CGameEngine, CPlugEngine, CSceneEngine
+  │     ├── CVisionEngine, CNetEngine, CInputEngine, CSystemEngine
+  │     ├── CScriptEngine, CControlEngine, CAudioSourceEngine
   │
   ├── CMwCmd (command/binding system)
-  │     ├── CMwCmdFastCall             Fast virtual call
-  │     ├── CMwCmdFastCallStatic       Fast static call
-  │     ├── CMwCmdFastCallStaticParam  Static call with params
-  │     ├── CMwCmdFastCallUser         User-defined call
-  │     └── CMwCmdFiber                Fiber/coroutine (88 bytes)
+  │     ├── CMwCmdFastCall, CMwCmdFastCallStatic
+  │     └── CMwCmdFiber (88 bytes, coroutine)
   │
-  ├── CMwCmdBuffer
-  │     ├── CMwCmdBufferCore           Core command buffer
-  │     └── CMwCmdContainer            Container for commands
-  │
-  ├── CMwId                            Interned string/identifier
-  ├── CMwClassInfoViewer               Runtime class introspection
-  ├── CMwNetworkEntitiesManager        Networked entity replication
-  ├── CMwRefBuffer                     Reference-counted buffer
-  └── CMwStatsValue                    Statistics tracking</code></pre></div>
-<h3 id="22-application-hierarchy"><a class="anchor" href="#22-application-hierarchy">#</a>2.2 Application Hierarchy</h3>
+  ├── CMwId (interned string/identifier)
+  └── CMwStatsValue (statistics tracking)</code></pre></div>
+<h3 id="application-hierarchy"><a class="anchor" href="#application-hierarchy">#</a>Application Hierarchy</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CMwNod
-  └── CGbxApp                          GameBox application base
-        └── CGbxGame                   Game-specific bootstrap
-              └── CGameApp             Game application logic
-                    └── CGameCtnApp    Creation TrackMania Nations
-                          └── CGameManiaPlanet   Platform layer
-                                └── CTrackMania   TrackMania-specific
-                                      ├── CTrackManiaMenus
-                                      ├── CTrackManiaNetwork
-                                      └── CTrackManiaIntro</code></pre></div>
-<h3 id="23-game-logic-classes-cgame-728-classes"><a class="anchor" href="#23-game-logic-classes-cgame-728-classes">#</a>2.3 Game Logic Classes (CGame*, 728 classes)</h3>
+  └── CGbxApp -&gt; CGbxGame -&gt; CGameApp -&gt; CGameCtnApp -&gt; CGameManiaPlanet -&gt; CTrackMania</code></pre></div>
+<h3 id="game-logic-classes-cgame-728-classes"><a class="anchor" href="#game-logic-classes-cgame-728-classes">#</a>Game Logic Classes (CGame*, 728 classes)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGame*
   ├── CGameCtn* (162)                  Maps, blocks, editors, replays
   │     ├── CGameCtnChallenge          Map file (class 0x03043000)
   │     ├── CGameCtnBlock              Placed block instance
-  │     ├── CGameCtnBlockInfo          Block type definition
-  │     │     ├── CGameCtnBlockInfoClassic
-  │     │     ├── CGameCtnBlockInfoClip
-  │     │     │     ├── CGameCtnBlockInfoClipHorizontal
-  │     │     │     └── CGameCtnBlockInfoClipVertical
-  │     │     ├── CGameCtnBlockInfoFlat
-  │     │     ├── CGameCtnBlockInfoFrontier
-  │     │     ├── CGameCtnBlockInfoPylon
-  │     │     ├── CGameCtnBlockInfoRoad
-  │     │     ├── CGameCtnBlockInfoSlope
-  │     │     └── CGameCtnBlockInfoTransition
+  │     ├── CGameCtnBlockInfo          Block type definition (11+ subclasses)
   │     ├── CGameCtnAnchoredObject     Placed item
-  │     ├── CGameCtnCollector          Collectible resource
   │     ├── CGameCtnEditor*            Editor types (Map, Mesh, etc.)
   │     ├── CGameCtnMediaBlock* (65+)  MediaTracker blocks
   │     ├── CGameCtnReplayRecord       Replay file
-  │     ├── CGameCtnGhost              Ghost data
-  │     ├── CGameCtnNetwork            Game-level networking
-  │     └── CGameCtnZone*              Zone system
+  │     └── CGameCtnGhost              Ghost data
   │
   ├── CGameEditor* (54)               Editor mode controllers
   ├── CGameDataFileTask_* (44)        Async file loading tasks
   ├── CGameScript* (42)               ManiaScript API bindings
   ├── CGamePlayground* (39)           Gameplay session management
   ├── CGameControl* (33)              Game-specific UI controls
-  │     └── CGameControlCamera*        Camera controllers (12 types)
-  │           ├── CGameControlCameraTrackManiaRace
-  │           ├── CGameControlCameraTrackManiaRace2
-  │           ├── CGameControlCameraTrackManiaRace3
-  │           ├── CGameControlCameraFirstPerson
-  │           ├── CGameControlCameraFree
-  │           ├── CGameControlCameraOrbital3d
-  │           ├── CGameControlCameraEditorOrbital
-  │           ├── CGameControlCameraHelico
-  │           ├── CGameControlCameraVehicleInternal
-  │           ├── CGameControlCameraHmdExternal
-  │           ├── CGameControlCameraTarget
-  │           └── CGameControlCameraEffectShake
-  │
+  │     └── CGameControlCamera* (12)  Camera controllers
   ├── CGameModule* (31)               HUD modules
-  ├── CGameManialink* (28)            ManiaLink UI controls
-  ├── CGameUser* (25)                 User management
-  ├── CGameMasterServer* (24)         Legacy master server
-  ├── CGameScore* (24)                Scores, leaderboards, trophies
-  ├── CGamePlayer* (19)               Player profiles
-  ├── CGameDirectLinkScript_* (14)    Deep link handlers
-  ├── CGameNet* (14)                  Game-level networking
-  ├── CGameObject* (7)                Dynamic objects
-  └── CGameVehicle* (3)               Vehicle model wrappers</code></pre></div>
-<h3 id="24-resourceasset-classes-cplug-391-classes"><a class="anchor" href="#24-resourceasset-classes-cplug-391-classes">#</a>2.4 Resource/Asset Classes (CPlug*, 391 classes)</h3>
+  └── CGameManialink* (28)            ManiaLink UI controls</code></pre></div>
+<h3 id="resourceasset-classes-cplug-391-classes"><a class="anchor" href="#resourceasset-classes-cplug-391-classes">#</a>Resource/Asset Classes (CPlug*, 391 classes)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CPlug*
   ├── CPlugAnim* (77)                  Animation system
   ├── CPlugFile* (36)                  File format handlers
-  │     ├── CPlugFileDds, CPlugFilePng, CPlugFileJpg
-  │     ├── CPlugFileWav, CPlugFileSndGen
-  │     ├── CPlugFileFbx
-  │     └── CPlugFileAudioMotors
   ├── CPlugBitmap* (28)                Textures
   ├── CPlugVehicle* (18)               Vehicle physics/visuals
-  │     ├── CPlugVehicleCarPhyShape
-  │     ├── CPlugVehicleWheelPhyModel
-  │     └── CPlugVehicleVisState
   ├── CPlugVisual* (15)                Visual primitives
-  │     ├── CPlugVisual2D
-  │     │     ├── CPlugVisualLines2D
-  │     │     └── CPlugVisualQuads2D
-  │     └── CPlugVisual3D
-  │           ├── CPlugVisualIndexed
-  │           │     ├── CPlugVisualIndexedLines
-  │           │     ├── CPlugVisualIndexedStrip
-  │           │     └── CPlugVisualIndexedTriangles
-  │           └── CPlugVisualLines
   ├── CPlugFx* (15)                    Visual effects
   ├── CPlugMaterial* (12)              Materials + shaders
   ├── CPlugParticle* (9)               Particle system
-  │     ├── CPlugParticleEmitterModel
-  │     ├── CPlugParticleGpuModel
-  │     ├── CPlugParticleGpuSpawn
-  │     └── CPlugParticleImpactModel
-  ├── CPlugShader* (4)                 Shader programs
-  │     ├── CPlugShaderApply
-  │     ├── CPlugShaderPass
-  │     └── CPlugShaderGeneric
   ├── CPlugSolid2Model                 Primary 3D mesh format
   ├── CPlugStaticObjectModel           Static objects (items, scenery)
-  ├── CPlugDynaObjectModel             Dynamic/kinematic objects
-  ├── CPlugSkel                        Skeleton
   ├── CPlugEntRecordData               Ghost replay data
-  ├── CPlugTree*                       Scene graph nodes
-  ├── CPlugPrefab                      Reusable compositions
   └── CPlugSurface                     Collision surfaces</code></pre></div>
-<h3 id="25-networking-classes-cnet-262-classes"><a class="anchor" href="#25-networking-classes-cnet-262-classes">#</a>2.5 Networking Classes (CNet*, 262 classes)</h3>
+<h3 id="networking-classes-cnet-262-classes"><a class="anchor" href="#networking-classes-cnet-262-classes">#</a>Networking Classes (CNet*, 262 classes)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CNet*
-  ├── Core (17)
-  │     ├── CNetClient                 Client connection
-  │     ├── CNetServer                 Server connection
-  │     ├── CNetConnection             TCP+UDP dual-stack
-  │     ├── CNetEngine                 Network stack manager
-  │     └── CNetHttpClient             HTTP/REST (wraps libcurl)
+  ├── Core (17): CNetClient, CNetServer, CNetConnection, CNetEngine, CNetHttpClient
   ├── CNetNadeoServicesTask_* (157)    Nadeo API calls
   ├── CNetUbiServicesTask_* (38)       Ubisoft Connect API calls
   ├── CNetMasterServer* (24)           Legacy master server
-  ├── CNetUplayPC* (11)                UPlay integration
   ├── CNetForm* (7)                    Typed network messages
-  │     ├── CNetFormConnectionAdmin
-  │     ├── CNetFormPing / CNetFormNewPing
-  │     ├── CNetFormRpcCall
-  │     └── CNetFileTransferForm
   └── CNetFileTransfer* (5)            File upload/download</code></pre></div>
-<h3 id="26-other-major-families"><a class="anchor" href="#26-other-major-families">#</a>2.6 Other Major Families</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CWebServices* (297)                    Online service tasks/results
-  ├── CWebServicesTaskResult_* (168)   Typed async result containers
-  ├── CWebServicesTask_* (108)         Async task definitions
-  └── CWebServices*Service (15)        Service facades
-
-CHms* (41)                             Hierarchical Managed Scene
-  ├── CHmsZone*                        Zone/portal management
-  ├── CHmsLight*                       Lighting (probes, maps, arrays)
-  ├── CHmsViewport                     Render viewport
-  ├── CHmsShadowGroup                  Shadow groups
-  └── CHmsSolidVisCst_TmCar           Car rendering constants
-
-CScene* (52)                           Scene objects
-  ├── CSceneVehicleVis*                Vehicle visualization
-  ├── CSceneFx* (14)                   Post-FX (bloom, blur, DOF, etc.)
-  └── CSceneMgr*                       Physics/visual managers
-
-CControl* (39)                         UI widget system
-  ├── CControlContainer / CControlFrame
-  ├── CControlButton / CControlLabel / CControlEntry
-  └── CControlEffect*                  UI effects
-
-CSystem* (24)                          System layer
-  ├── CSystemFid*                      File ID system
-  ├── CSystemConfig*                   Configuration
-  ├── CSystemArchiveNod                GBX loading
-  └── CSystemPlatform*                 OS abstraction</code></pre></div>
 <hr>
-<h2 id="3-deferred-rendering-pipeline-diagram"><a class="anchor" href="#3-deferred-rendering-pipeline-diagram">#</a>3. Deferred Rendering Pipeline Diagram</h2>
-<h3 id="31-complete-19-pass-pipeline"><a class="anchor" href="#31-complete-19-pass-pipeline">#</a>3.1 Complete 19-Pass Pipeline</h3>
+<h2 id="deferred-rendering-pipeline-diagram"><a class="anchor" href="#deferred-rendering-pipeline-diagram">#</a>Deferred Rendering Pipeline Diagram</h2>
+<h3 id="complete-19-pass-pipeline"><a class="anchor" href="#complete-19-pass-pipeline">#</a>Complete 19-Pass Pipeline</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code> FRAME START
      │
      v
 ┌─────────────────────────────────────────────────────────────────┐
 │                    EARLY PASSES (Setup)                          │
-│                                                                  │
-│  SetCst_Frame ──&gt; SetCst_Zone ──&gt; GenAutoMipMap                 │
-│       │                                                          │
-│       v                                                          │
-│  ShadowCreateVolumes ──&gt; ShadowRenderCaster ──&gt; ShadowRenderPSSM│
-│       │                                                          │
-│       v                                                          │
-│  ShadowCacheUpdate ──&gt; CreateProjectors ──&gt; UpdateTexture        │
-│       │                                                          │
-│       v                                                          │
-│  Decal3dDiscard ──&gt; ParticlesUpdateEmitters ──&gt; ParticlesUpdate  │
-└───────┬─────────────────────────────────────────────────────────┘
-        │
-        v
-┌─────────────────────────────────────────────────────────────────┐
-│                  SCENE SETUP (Geometry prep)                     │
-│                                                                  │
-│  CubeReflect ──&gt; TexOverlay ──&gt; LightFromMap ──&gt; VertexAnim     │
-│       │                                                          │
-│       v                                                          │
-│  Hemisphere ──&gt; LightOcc ──&gt; WaterReflect ──&gt; Underlays         │
+│  SetCst_Frame -&gt; SetCst_Zone -&gt; GenAutoMipMap                   │
+│  ShadowCreateVolumes -&gt; ShadowRenderCaster -&gt; ShadowRenderPSSM │
+│  ShadowCacheUpdate -&gt; CreateProjectors -&gt; UpdateTexture         │
+│  Decal3dDiscard -&gt; ParticlesUpdateEmitters -&gt; ParticlesUpdate   │
 └───────┬─────────────────────────────────────────────────────────┘
         │
         v
 ┌─────────────────────────────────────────────────────────────────┐
 │               G-BUFFER FILL (Deferred Write)                    │
-│                                                                  │
 │     Pass 1: DipCulling        Frustum/occlusion culling         │
-│         │                                                        │
-│         v                                                        │
 │     Pass 2: DeferredWrite     G-buffer fill (albedo, material)  │
-│         │                     Writes: MDiffuse, MSpecular       │
-│         v                                                        │
 │     Pass 3: DeferredWriteFN   Face normal generation            │
-│         │                     Writes: FaceNormalInC              │
-│         v                                                        │
 │     Pass 4: DeferredWriteVN   Vertex normal pass                │
-│         │                     Writes: VertexNormalInC            │
-│         v                                                        │
 │     Pass 5: DeferredDecals    Deferred decal projection         │
-│         │                     Reads: DeferredZ; Writes: MDiffuse│
-│         v                                                        │
 │     Pass 6: DeferredBurn      Burn mark effects                 │
 │                                                                  │
 │  G-Buffer Layout:                                                │
@@ -588,281 +401,120 @@ CSystem* (24)                          System layer
         v
 ┌─────────────────────────────────────────────────────────────────┐
 │              SHADOW &amp; OCCLUSION (Reads G-Buffer)                │
-│                                                                  │
 │     Pass 7: DeferredShadow    PSSM shadow map sampling          │
-│         │                     4 cascade splits                   │
-│         v                                                        │
 │     Pass 8: DeferredAmbOcc    SSAO / HBAO+ pass                │
-│         │                     NVIDIA HBAO+ or homemade fallback │
-│         v                                                        │
 │     Pass 9: DeferredFakeOcc   Fake occlusion (far objects)      │
 └───────┬─────────────────────────────────────────────────────────┘
         │
         v
 ┌─────────────────────────────────────────────────────────────────┐
 │                  DEFERRED LIGHTING                               │
-│                                                                  │
 │     Pass 10: CameraMotion     Motion vector generation          │
-│         │                     (feeds TAA and motion blur)        │
-│         v                                                        │
 │     Pass 11: DeferredRead     G-buffer read (start lighting)    │
-│         │                     Reads all G-buffer targets         │
-│         v                                                        │
 │     Pass 12: DeferredReadFull Full G-buffer resolve             │
-│         │                     DiffuseAmbient output              │
-│         v                                                        │
 │     Pass 13: Reflects_Cull    Reflection probe culling          │
-│         │                                                        │
-│         v                                                        │
 │     Pass 14: DeferredLighting Light accumulation                │
-│                               Point/Spot/Sphere/Cylinder lights  │
-│                               Ambient + Fresnel + Lightmap       │
-│                               SSR (temporal screen-space reflect)│
+│              Point/Spot/Sphere/Cylinder lights, SSR             │
 └───────┬─────────────────────────────────────────────────────────┘
         │
         v
 ┌─────────────────────────────────────────────────────────────────┐
 │                FORWARD / TRANSPARENT                             │
-│                                                                  │
-│  ShadowRender ──&gt; CustomAfterDecals ──&gt; Alpha01 (alpha-tested)  │
-│  ForestRender ──&gt; GrassRender ──&gt; ParticlesRender               │
-│  AlphaBlend ──&gt; AlphaBlendSoap ──&gt; BufferRefract                │
-│  GhostLayer ──&gt; GhostLayerBlend                                 │
+│  Alpha01 (alpha-tested) -&gt; AlphaBlend -&gt; GhostLayer             │
+│  ForestRender -&gt; GrassRender -&gt; ParticlesRender                 │
 └───────┬─────────────────────────────────────────────────────────┘
         │
         v
 ┌─────────────────────────────────────────────────────────────────┐
 │                   POST-PROCESSING                                │
-│                                                                  │
 │     Pass 15: CustomEnding     Custom post-lighting effects      │
-│         │                                                        │
-│         v                                                        │
-│     Pass 16: DeferredFogVol   Volumetric fog (box volumes)      │
-│         │                     Ray marching compute shader        │
-│         v                                                        │
+│     Pass 16: DeferredFogVol   Volumetric fog (ray marching)     │
 │     Pass 17: DeferredFog      Global fog                        │
-│         │                                                        │
-│         v                                                        │
 │     Pass 18: LensFlares       Lens flare effects                │
-│         │                                                        │
-│         v                                                        │
 │     Pass 19: FxTXAA           Temporal anti-aliasing            │
-│                               NVIDIA GFSDK or UBI_TXAA fallback │
 │                                                                  │
-│  Additional post chain:                                          │
-│  FxDepthOfField ──&gt; FxMotionBlur ──&gt; FxBlur ──&gt; FxColors        │
-│  FxColorGrading ──&gt; FxToneMap ──&gt; FxBloom ──&gt; FxFXAA            │
+│  Additional: FxDepthOfField -&gt; FxMotionBlur -&gt; FxBlur -&gt;        │
+│  FxColors -&gt; FxColorGrading -&gt; FxToneMap -&gt; FxBloom -&gt; FxFXAA   │
 └───────┬─────────────────────────────────────────────────────────┘
         │
         v
 ┌─────────────────────────────────────────────────────────────────┐
 │                    FINAL OUTPUT                                  │
-│                                                                  │
-│  ResolveMsaaHdr ──&gt; ResolveMsaa ──&gt; StretchRect                 │
-│  BlurAA ──&gt; DownSSAA ──&gt; Overlays ──&gt; GUI                       │
-│                              │                                   │
-│                              v                                   │
-│                      SwapChainPresent                            │
+│  ResolveMsaaHdr -&gt; StretchRect -&gt; Overlays -&gt; GUI               │
+│                              -&gt; SwapChainPresent                 │
 └─────────────────────────────────────────────────────────────────┘</code></pre></div>
-<h3 id="32-shader-organization-200-hlsl-files"><a class="anchor" href="#32-shader-organization-200-hlsl-files">#</a>3.2 Shader Organization (200+ HLSL files)</h3>
+<h3 id="shader-organization-200-hlsl-files"><a class="anchor" href="#shader-organization-200-hlsl-files">#</a>Shader Organization (200+ HLSL files)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Shaders/
-  ├── Tech3/                            (~100+ files, Nadeo 3rd-gen tech)
-  │     ├── Block_TDSN_DefWrite_*.hlsl  Block geometry deferred write
-  │     ├── Block_DefReadP1_*.hlsl      Block deferred read pass 1
-  │     ├── CarSkin_DefWrite_*.hlsl     Car skin rendering
-  │     ├── Deferred*_*.hlsl            Deferred pipeline passes
-  │     ├── DeferredGeomLight*_*.hlsl   Deferred light geometry
-  │     ├── DeferredShadowPssm_*.hlsl   PSSM shadow sampling
-  │     ├── SSReflect_Deferred_*.hlsl   Screen-space reflections
-  │     ├── Trees/Tree_*.hlsl           Vegetation
-  │     ├── Sea_*.hlsl                  Water surface
-  │     └── BodyAnim_*.hlsl             Character animation
-  │
-  ├── Effects/                          (~60+ files)
-  │     ├── PostFx/                     Post-processing effects
-  │     │     ├── HBAO_plus/*.hlsl      NVIDIA HBAO+
-  │     │     ├── Bloom*.hlsl           HDR bloom
-  │     │     ├── TM_*.hlsl             Tone mapping (filmic)
-  │     │     ├── FXAA_p.hlsl           FXAA
-  │     │     ├── DoF_*.hlsl            Depth of field
-  │     │     └── ColorGrading_p.hlsl   LUT color grading
-  │     ├── Particles/*.hlsl            GPU particle system
-  │     │     └── SelfShadow/*.hlsl     Particle self-shadowing (6 passes)
-  │     ├── Fog/*.hlsl                  Volumetric fog
-  │     ├── TemporalAA/*.hlsl           TAA
-  │     └── MotionBlur2d_p.hlsl         Motion blur
-  │
-  ├── Engines/                          (~60+ files, low-level utilities)
-  ├── Lightmap/                         (~30+ files)
-  ├── Garage/                           Menu/garage reflections
-  ├── Painter/                          Skin/livery editor
-  ├── Bench/                            GPU benchmark
-  └── Clouds/                           Cloud/sky rendering</code></pre></div>
+  ├── Tech3/           (~100+ files) Block geometry, car skin, deferred pipeline
+  ├── Effects/         (~60+ files)  Post-FX, particles, fog, temporal AA
+  ├── Engines/         (~60+ files)  Low-level utilities
+  ├── Lightmap/        (~30+ files)
+  ├── Garage/          Menu/garage reflections
+  ├── Painter/         Skin/livery editor
+  └── Clouds/          Cloud/sky rendering</code></pre></div>
 <hr>
-<h2 id="4-physics-pipeline-diagram"><a class="anchor" href="#4-physics-pipeline-diagram">#</a>4. Physics Pipeline Diagram</h2>
-<h3 id="41-per-frame-physics-pipeline"><a class="anchor" href="#41-per-frame-physics-pipeline">#</a>4.1 Per-Frame Physics Pipeline</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code> FRAME START (every tick, ~100 Hz PLAUSIBLE)
+<h2 id="physics-pipeline-diagram"><a class="anchor" href="#physics-pipeline-diagram">#</a>Physics Pipeline Diagram</h2>
+<h3 id="per-frame-physics-pipeline"><a class="anchor" href="#per-frame-physics-pipeline">#</a>Per-Frame Physics Pipeline</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code> FRAME START (every tick, ~100 Hz)
      │
      v
-┌─────────────────────────────────────────────────────────────────┐
-│  CSmArenaClient::UpdatePhysics (0x141312870)                    │
-│  or CSmArenaServer::UpdatePhysics (0x141339cc0)                 │
-└───────┬─────────────────────────────────────────────────────────┘
-        │
-        v
-┌─────────────────────────────────────────────────────────────────┐
-│  CSmArenaPhysics::Players_BeginFrame (0x1412c2cc0)              │
-│  Initialize per-player physics state for this tick              │
-└───────┬─────────────────────────────────────────────────────────┘
-        │
-        v
-┌─────────────────────────────────────────────────────────────────┐
-│  CSmArenaPhysics::UpdatePlayersInputs (0x1412bf000)             │
-│  Read and apply player inputs (steer, gas, brake)               │
-└───────┬─────────────────────────────────────────────────────────┘
-        │
-        v
-┌─────────────────────────────────────────────────────────────────┐
-│  CSmArenaPhysics::Players_UpdateTimed (0x1412c7d10)             │
-│  Per-player timed update                                        │
-│                                                                  │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │  FOR EACH VEHICLE:                                        │  │
-│  │                                                            │  │
-│  │  ArenaPhysics_CarPhyUpdate (0x1412e8490)                  │  │
-│  │      │                                                     │  │
-│  │      v                                                     │  │
-│  │  PhysicsStep_TM (0x141501800)    ◄── Main per-vehicle loop │  │
-│  │      │                                                     │  │
-│  │      ├── Convert tick to microseconds (* 1,000,000)        │  │
-│  │      │                                                     │  │
-│  │      ├── Check vehicle status nibble (offset +0x128C)      │  │
-│  │      │   ├── 0x1: Reset/inactive -&gt; zero forces            │  │
-│  │      │   ├── 0x2: [UNKNOWN] -&gt; skip                        │  │
-│  │      │   └── Other: proceed to simulation                  │  │
-│  │      │                                                     │  │
-│  │      ├── ┌──────────────────────────────────────────────┐  │  │
-│  │      │   │  ADAPTIVE SUB-STEPPING LOOP                  │  │  │
-│  │      │   │                                               │  │  │
-│  │      │   │  steps = (linear_vel + angular_vel) * scale   │  │  │
-│  │      │   │          / threshold                          │  │  │
-│  │      │   │  steps = clamp(steps + 1, 1, 1000)            │  │  │
-│  │      │   │                                               │  │  │
-│  │      │   │  FOR EACH SUB-STEP:                           │  │  │
-│  │      │   │    │                                           │  │  │
-│  │      │   │    ├── Collision check (FUN_141501090)         │  │  │
-│  │      │   │    │                                           │  │  │
-│  │      │   │    ├── NSceneVehiclePhy::ComputeForces         │  │  │
-│  │      │   │    │   (0x1408427d0) [See 4.2]                │  │  │
-│  │      │   │    │                                           │  │  │
-│  │      │   │    ├── Force application (FUN_1414ffee0)       │  │  │
-│  │      │   │    │                                           │  │  │
-│  │      │   │    └── Integration (FUN_14083df50)             │  │  │
-│  │      │   │        Forward Euler                           │  │  │
-│  │      │   └──────────────────────────────────────────────┘  │  │
-│  │      │                                                     │  │
-│  │      └── NSceneDyna::PhysicsStep (0x1407bd0e0)             │  │
-│  │            └── PhysicsStep_V2 (0x140803920) [See 4.3]      │  │
-│  │                                                            │  │
-│  └───────────────────────────────────────────────────────────┘  │
-└───────┬─────────────────────────────────────────────────────────┘
-        │
-        v
-┌─────────────────────────────────────────────────────────────────┐
-│  Post-Physics Updates                                           │
-│                                                                  │
-│  Bullet_UpdateBeforeMgr (0x141317300)   Projectile updates      │
-│  Bullet_AfterMgr                        Post-manager update     │
-│  Gates_UpdateTimed                      Gate/checkpoint updates  │
-│  Players_ObjectsInContact               Contact response        │
-│  BestTargets_BeginFrame                 Target acquisition      │
-│  Players_FindBestTarget                 Target finding           │
-│  ArmorReplenish_EndFrame                Armor recovery           │
-│  Actors_ObjectsBeginFrame               Actor initialization    │
-│  Actors_UpdateTimed                     Actor timed updates      │
-│  Players_EndFrame                       Frame finalization       │
-└─────────────────────────────────────────────────────────────────┘</code></pre></div>
-<h3 id="42-vehicle-force-model-dispatch"><a class="anchor" href="#42-vehicle-force-model-dispatch">#</a>4.2 Vehicle Force Model Dispatch</h3>
+ CSmArenaPhysics::Players_BeginFrame (0x1412c2cc0)
+     │
+     v
+ CSmArenaPhysics::UpdatePlayersInputs (0x1412bf000)
+     │
+     v
+ CSmArenaPhysics::Players_UpdateTimed (0x1412c7d10)
+     │
+     │  FOR EACH VEHICLE:
+     │    ArenaPhysics_CarPhyUpdate (0x1412e8490)
+     │        │
+     │        v
+     │    PhysicsStep_TM (0x141501800)
+     │        ├── Convert tick to microseconds (* 1,000,000)
+     │        ├── Check vehicle status nibble (offset +0x128C)
+     │        └── ADAPTIVE SUB-STEPPING LOOP (1 to 1000 steps):
+     │              ├── Collision check (FUN_141501090)
+     │              ├── NSceneVehiclePhy::ComputeForces (0x1408427d0)
+     │              ├── Force application (FUN_1414ffee0)
+     │              └── Integration: Forward Euler (FUN_14083df50)
+     │
+     v
+ NSceneDyna::PhysicsStep (0x1407bd0e0) -&gt; PhysicsStep_V2 (0x140803920)
+     │
+     v
+ Post-Physics: Gates_UpdateTimed, Players_ObjectsInContact, Players_EndFrame</code></pre></div>
+<h3 id="vehicle-force-model-dispatch"><a class="anchor" href="#vehicle-force-model-dispatch">#</a>Vehicle Force Model Dispatch</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>NSceneVehiclePhy::ComputeForces (0x1408427d0)
      │
-     ├── Check status nibble at vehicle+0x128C
-     │   └── If nibble == 1: zero all forces, return
+     ├── Speed clamping (maxSpeed at vehicle_model+0x2F0)
      │
-     ├── Speed clamping
-     │   └── If |velocity|^2 &gt; maxSpeed^2: scale to maxSpeed
-     │       maxSpeed at vehicle_model+0x2F0
+     ├── Switch on vehicle_model+0x1790:
+     │   Case 0,1,2: FUN_140869cd0  (Base/legacy)
+     │   Case 3:     FUN_14086b060  (M4 model)
+     │   Case 4:     FUN_14086bc50  (M5/TMNF-era)
+     │   Case 5:     FUN_140851f00  (CarSport/Stadium)
+     │   Case 6:     FUN_14085c9e0  (Snow/Rally)
+     │   Case 0xB:   FUN_14086d3b0  (Desert)
      │
-     ├── Force model dispatch (switch on vehicle_model+0x1790)
-     │
-     │   ┌─────────┬─────────────────────────────────────────────────┐
-     │   │ Case    │ Function          │ Suspected Model             │
-     │   ├─────────┼───────────────────┼─────────────────────────────┤
-     │   │ 0, 1, 2 │ FUN_140869cd0    │ Base/legacy car model       │
-     │   │ 3       │ FUN_14086b060    │ M4 model                    │
-     │   │ 4       │ FUN_14086bc50    │ M5 / TMNF-era model         │
-     │   │ 5       │ FUN_140851f00    │ CarSport/Stadium (SPECUL.)  │
-     │   │ 6       │ FUN_14085c9e0    │ Snow/Rally (SPECULATIVE)    │
-     │   │ 0xB(11) │ FUN_14086d3b0    │ Desert (SPECULATIVE)        │
-     │   └─────────┴───────────────────┴─────────────────────────────┘
-     │
-     └── Turbo/boost force (if active)
-         ├── Check boost duration at vehicle+0x16E0
-         ├── Check boost start time at vehicle+0x16E8
-         ├── Compute: (elapsed/duration) * strength * modelScale
-         │   strength at vehicle+0x16E4
-         │   modelScale at vehicle_model+0xE0
-         └── Apply via FUN_1407bdf40</code></pre></div>
-<h3 id="43-rigid-body-dynamics-nscenedyna"><a class="anchor" href="#43-rigid-body-dynamics-nscenedyna">#</a>4.3 Rigid Body Dynamics (NSceneDyna)</h3>
+     └── Turbo/boost: (elapsed/duration) * strength * modelScale
+         Applied via FUN_1407bdf40</code></pre></div>
+<h3 id="rigid-body-dynamics-nscenedyna"><a class="anchor" href="#rigid-body-dynamics-nscenedyna">#</a>Rigid Body Dynamics (NSceneDyna)</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>NSceneDyna::PhysicsStep_V2 (0x140803920)
      │
-     ├── Increment step counter at param_1[0xf4b]
-     │
-     ├── Compute time step: param_2[2] * DAT_141d1fa9c
-     │
-     ├── DynamicCollisionCreateCache (0x1407f9da0)
-     │   └── Pre-allocate collision cache
-     │
      ├── InternalPhysicsStep (0x1408025a0, 4991 bytes)
-     │   │
      │   ├── ComputeGravityAndSleepStateAndNewVels (0x1407f89d0)
-     │   │   │
-     │   │   ├── For each dynamic body:
-     │   │   │   ├── Sleep check: if |vel| &lt; threshold -&gt; apply damping
-     │   │   │   │   Sleep threshold: DAT_141ebcd04
-     │   │   │   │   Sleep damping:   DAT_141ebcd00
-     │   │   │   │   Sleep enabled:   DAT_141ebccfc
-     │   │   │   │
-     │   │   │   ├── Gravity: force = mass * dt * gravity_vector
-     │   │   │   │   (gravity is parameterized, NOT hardcoded 9.81)
-     │   │   │   │
-     │   │   │   ├── Linear velocity integration:
-     │   │   │   │   vel.xyz += force.xyz * dt
-     │   │   │   │
-     │   │   │   └── Angular velocity integration:
-     │   │   │       angVel.xyz += torque.xyz * invInertia.xyz * dt
-     │   │   │
+     │   │   ├── Sleep check (damping if |vel| &lt; threshold)
+     │   │   ├── Gravity: force = mass * dt * gravity_vector
      │   │   └── Body stride: 0x38 (56 bytes) per body
-     │   │
-     │   ├── ComputeExternalForces (0x1407f81c0)
-     │   │
-     │   ├── ComputeWaterForces (0x1407f8290)
-     │   │   └── Buoyancy + drag for submerged bodies
-     │   │
+     │   ├── ComputeExternalForces / ComputeWaterForces
      │   ├── Static collision detection
-     │   │   ├── Dynas_StaticCollisionDetection (0x1407fc730)
-     │   │   ├── Dyna_GetItemsForStaticCollision (0x1407fc3c0)
-     │   │   └── BroadPhase_BruteForce (fallback)
-     │   │
-     │   ├── Friction solver
-     │   │   ├── FrictionDynaIterCount iterations (dynamic)
-     │   │   └── FrictionStaticIterCount iterations (static)
-     │   │
-     │   └── Collision response
+     │   └── Friction solver (static + dynamic iterations)
      │
-     └── Clear accumulated forces (zero at body+0x08, stride 0x38)</code></pre></div>
+     └── Clear accumulated forces</code></pre></div>
 <hr>
-<h2 id="5-game-state-machine-diagram"><a class="anchor" href="#5-game-state-machine-diagram">#</a>5. Game State Machine Diagram</h2>
-<h3 id="51-complete-state-transition-map-mermaid-notation"><a class="anchor" href="#51-complete-state-transition-map-mermaid-notation">#</a>5.1 Complete State Transition Map (Mermaid notation)</h3>
+<h2 id="game-state-machine-diagram"><a class="anchor" href="#game-state-machine-diagram">#</a>Game State Machine Diagram</h2>
+<h3 id="complete-state-transition-map"><a class="anchor" href="#complete-state-transition-map">#</a>Complete State Transition Map</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-mermaid">stateDiagram-v2
     direction TB
 
@@ -878,501 +530,225 @@ CSystem* (24)                          System layer
         WaitLogin_0x484 --&gt; LoginCheck_0x488: auth response
         LoginCheck_0x488 --&gt; NetTest_0x496: login OK
         NetTest_0x496 --&gt; ProfileLoad_0x497: net OK
-        ProfileLoad_0x497 --&gt; NetValidation2_0x499
-        NetValidation2_0x499 --&gt; WaitAsyncLoad_0x4B3
+        ProfileLoad_0x497 --&gt; WaitAsyncLoad_0x4B3
         WaitAsyncLoad_0x4B3 --&gt; SmokeTest_0x4E3: resources loaded
         SmokeTest_0x4E3 --&gt; MasterServer_0x4F9
     }
 
-    state &quot;Phase 2: Connection&quot; as connection {
-        MasterServer_0x4F9 --&gt; CheckConnection_0x501
-        CheckConnection_0x501 --&gt; OnlineConnect_0x587
-        OnlineConnect_0x587 --&gt; WaitConnect_0x59D
-        WaitConnect_0x59D --&gt; ValidateVersion_0x5DC
-        ValidateVersion_0x5DC --&gt; ConnectionReady_0x61D
-    }
-
-    state &quot;Phase 3: Online&quot; as online {
-        ConnectionReady_0x61D --&gt; OnlineReady_0x636
-        OnlineReady_0x636 --&gt; MenusReady_0x6D7
-    }
-
-    state &quot;Phase 4: Dialog&quot; as dialog {
-        MenusReady_0x6D7 --&gt; Dialog_0x733
-        Dialog_0x733 --&gt; DialogResult_0x852
-    }
-
-    state &quot;Phase 5: Menu Result&quot; as menuresult {
-        DialogResult_0x852 --&gt; MenuResult_0x9A5
-        MenuResult_0x9A5 --&gt; MenuDispatch_0xAFF
-    }
-
     state &quot;Phase 6: Gameplay&quot; as gameplay {
-        MenuDispatch_0xAFF --&gt; GameplayInit_0xB43
         GameplayInit_0xB43 --&gt; LocalLoopSetUp
         LocalLoopSetUp --&gt; LocalLoopPreparePlaying
         LocalLoopPreparePlaying --&gt; LocalLoopPlaying: ====ACTIVE GAMEPLAY====
         LocalLoopPlaying --&gt; LocalLoopUnpreparePlaying: race end
-        LocalLoopUnpreparePlaying --&gt; MenuDispatch_0xAFF: back to menus
-        LocalLoopPlaying --&gt; LocalLoopEditor: enter editor
-        LocalLoopEditor --&gt; LocalLoopPlaying: test in editor
-        LocalLoopPlaying --&gt; LocalLoopScript: script execution
-        LocalLoopScript --&gt; LocalLoopPlaying
-        GameplayInit_0xB43 --&gt; GameplayEnd_0xCC6
     }
 
     state &quot;Phase 7: Map Loading&quot; as maploading {
-        MenuDispatch_0xAFF --&gt; LoadChallenge_0xCD1
         LoadChallenge_0xCD1 --&gt; MapParsing_0xD50
         MapParsing_0xD50 --&gt; MapReady_0xDE5
-        MapReady_0xDE5 --&gt; GameplayInit_0xB43
-    }
-
-    state &quot;Phase 8: Replay/Podium&quot; as replay {
-        GameplayEnd_0xCC6 --&gt; ReplayValidate_0xE14
-        ReplayValidate_0xE14 --&gt; Podium_0xEA0
-        Podium_0xEA0 --&gt; Results_0xF3D
-        Results_0xF3D --&gt; MenuDispatch_0xAFF: next map
     }
 
     gameplay --&gt; QuitGame: user quits
-    menuresult --&gt; QuitGame: quit from menu
     QuitGame --&gt; [*]</code></pre></div>
-<h3 id="52-normal-gameplay-flow-linear"><a class="anchor" href="#52-normal-gameplay-flow-linear">#</a>5.2 Normal Gameplay Flow (Linear)</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>STARTUP ──&gt; LOGIN ──&gt; CONNECT ──&gt; MENUS
-                                    │
-                          ┌─────────┴─────────┐
-                          │                    │
-                          v                    v
-                   ┌─────────────┐    ┌──────────────┐
-                   │ LOAD MAP    │    │   EDITOR     │
-                   │ (22 stages) │    │   (15+ types)│
-                   └──────┬──────┘    └──────┬───────┘
-                          │                   │
-                          v                   │
-                   ┌─────────────┐            │
-                   │  SET UP     │ &lt;──────────┘ test play
-                   │  Playground │
-                   └──────┬──────┘
-                          │
-                          v
-                   ┌─────────────┐
-                   │  PREPARE    │
-                   │  PLAYING    │
-                   └──────┬──────┘
-                          │
-                          v
+<h3 id="normal-gameplay-flow"><a class="anchor" href="#normal-gameplay-flow">#</a>Normal Gameplay Flow</h3>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>STARTUP -&gt; LOGIN -&gt; CONNECT -&gt; MENUS
+                                 │
+                       ┌─────────┴─────────┐
+                       v                    v
+                 ┌─────────────┐    ┌──────────────┐
+                 │ LOAD MAP    │    │   EDITOR     │
+                 │ (22 stages) │    │   (15+ types)│
+                 └──────┬──────┘    └──────┬───────┘
+                        v                   │
+                 ┌─────────────┐            │
+                 │  SET UP     │ &lt;──────────┘ test play
+                 │  Playground │
+                 └──────┬──────┘
+                        v
               ╔═══════════════════════╗
-              ║   ACTIVE GAMEPLAY     ║ &lt;── Race is running
-              ║                       ║
+              ║   ACTIVE GAMEPLAY     ║
               ║   Physics at ~100 Hz  ║
               ║   Rendering 60+ FPS   ║
-              ║   Network sync        ║
-              ║   ManiaScript exec    ║
               ╚═══════════╤═══════════╝
-                          │
-                          v
-                   ┌─────────────┐
-                   │  UNPREPARE  │
-                   │  PLAYING    │
-                   └──────┬──────┘
-                          │
-                ┌─────────┴─────────┐
-                │                    │
-                v                    v
-         ┌────────────┐      ┌────────────┐
-         │  REPLAY     │      │  NEXT MAP  │
-         │  VALIDATE   │      │  /MENUS    │
-         └──────┬──────┘      └────────────┘
-                │
-                v
-         ┌────────────┐
-         │   PODIUM    │
-         └──────┬──────┘
-                │
-                v
-            RESULTS</code></pre></div>
-<h3 id="53-network-state-machine-nested"><a class="anchor" href="#53-network-state-machine-nested">#</a>5.3 Network State Machine (Nested)</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CGameCtnNetwork MainLoop States:
-  ┌─────────────────────────────────────────────┐
-  │                                              │
-  │  MainLoop_Menus (0x140af9a40)               │
-  │    ├── MainLoop_Menus_ApplyCommand           │
-  │    ├── MainLoop_Menus_Lan                    │
-  │    ├── MainLoop_Menus_Internet               │
-  │    └── MainLoop_Menus_DialogJoin             │
-  │         │                                    │
-  │         v                                    │
-  │  MainLoop_SetUp (0x140afc320)               │
-  │         │                                    │
-  │         v                                    │
-  │  MainLoop_Prepare                            │
-  │         │                                    │
-  │         v                                    │
-  │  MainLoop_PlaygroundPrepare                  │
-  │         │                                    │
-  │         v                                    │
-  │  MainLoop_PlaygroundPlay (0x140aff380)  &lt;──── Active gameplay
-  │         │                                    │
-  │         v                                    │
-  │  MainLoop_PlaygroundExit                     │
-  │         │                                    │
-  │         v                                    │
-  │  MainLoop_SpectatorSwitch                    │
-  │                                              │
-  └─────────────────────────────────────────────┘
-
-CSmArenaClient Sub-Loop:
-  ┌─────────────────────────────────────────────┐
-  │  MainLoop_PlayGameEdition                    │
-  │  MainLoop_SoloPlayGameEdition                │
-  │  MainLoop_RecordGhost                        │
-  │  MainLoop_SoloCommon                         │
-  │  MainLoop_SoloPlayGameScript                 │
-  │  MainLoop_PlayGameNetwork                    │
-  │  MainLoop_RecordGhostUntilSpot               │
-  │  MainLoop_TestAnim                           │
-  └─────────────────────────────────────────────┘</code></pre></div>
+                        │
+                 ┌──────┴──────┐
+                 v              v
+          ┌────────────┐  ┌────────────┐
+          │  REPLAY     │  │  NEXT MAP  │
+          │  VALIDATE   │  │  /MENUS    │
+          └──────┬──────┘  └────────────┘
+                 v
+            PODIUM -&gt; RESULTS</code></pre></div>
 <hr>
-<h2 id="6-network-protocol-stack-diagram"><a class="anchor" href="#6-network-protocol-stack-diagram">#</a>6. Network Protocol Stack Diagram</h2>
-<h3 id="61-full-protocol-layer-diagram"><a class="anchor" href="#61-full-protocol-layer-diagram">#</a>6.1 Full Protocol Layer Diagram</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>╔═══════════════════════════════════════════════════════════════════════╗
-║  LAYER 10: Game Logic / ManiaScript                                  ║
-║                                                                       ║
-║  CGameManiaPlanetNetwork    CGameCtnNetwork    CPlaygroundClient     ║
-║  Game state sync            Map/score sync      Gameplay events       ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 9: Game Network Forms                                         ║
-║                                                                       ║
-║  CGameNetFormPlayground     CGameNetFormTimeSync   CGameNetFormAdmin  ║
-║  CGameNetFormCallVote       CGameNetFormBuddy      CGameNetFormTunnel ║
-║  CGameNetFormVoiceChat      CGameNetFormPlaygroundSync                ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 8: Nadeo Services (core.trackmania.nadeo.live)                ║
-║                                                                       ║
-║  CNetNadeoServices (157 task types)                                  ║
-║  Maps, Records, Leaderboards, Matchmaking, Season, Zone, Trophy      ║
-║  Auth: nadeoservices_token_create_from_ubiservices_v2                ║
-║  Token format: &quot;nadeo_v1 t=&lt;token&gt;&quot;                                  ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 7: Ubisoft Services (public-ubiservices.ubi.com)              ║
-║                                                                       ║
-║  CNetUbiServices (38 task types)                                     ║
-║  Sessions, Profiles, Friends, Party, Notifications, Consent          ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 6: Ubisoft Connect / UPC (upc_r2_loader64.dll)               ║
-║                                                                       ║
-║  UPC_TicketGet     UPC_ContextCreate     UPC_Update                  ║
-║  UPC_ProductListGet   UPC_Streaming*     UPC_EventRegisterHandler    ║
-║  CNetUplayPC (11 task types): achievements, friends, sessions        ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 5: XML-RPC Protocol (ManiaPlanet server control)              ║
-║                                                                       ║
-║  CXmlRpc    CGameServerScriptXmlRpc                                  ║
-║  22 callbacks: ManiaPlanet.ServerStart, PlayerConnect, BeginMap, etc. ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 4: Master Server (Legacy ManiaPlanet)                         ║
-║                                                                       ║
-║  CNetMasterServer    CGameMasterServer                               ║
-║  Connect, OpenSession, Subscribe, ImportAccount                      ║
-║  GetApplicationConfig, GetClientConfigUrls                           ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 3: File Transfer                                              ║
-║                                                                       ║
-║  CNetFileTransfer    CNetFileTransferDownload / Upload / Nod         ║
-║  Maps, skins, replays transferred via TCP reliable channel           ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 2: Network Engine                                             ║
-║                                                                       ║
-║  CNetEngine     CNetServer     CNetClient     CNetConnection        ║
-║  CNetHttpClient (wraps libcurl)                                      ║
-║  Dual TCP+UDP per connection                                         ║
-║  ├── TCP: Reliable ordered (state, chat, admin, files)               ║
-║  └── UDP: Unreliable (positions, inputs, time-critical)              ║
-║  Port 2350 (server), 3450 (P2P), dynamic (client)                   ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  LAYER 1: Transport / Platform                                       ║
-║                                                                       ║
-║  WS2_32.DLL (Winsock2)     libcurl (static)    OpenSSL 1.1.1t+quic  ║
-║  IPHLPAPI.DLL (IP enum)                                             ║
-╠═══════════════════════════════════════════════════════════════════════╣
-║  EXTERNAL: Voice &amp; Text Chat                                         ║
-║                                                                       ║
-║  Vivox (VoiceChat.dll)            XMPP (*.chat.maniaplanet.com)      ║
-║  Voice chat rooms                 Text messaging, club chat           ║
-╚═══════════════════════════════════════════════════════════════════════╝</code></pre></div>
-<h3 id="62-authentication-flow"><a class="anchor" href="#62-authentication-flow">#</a>6.2 Authentication Flow</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>┌──────────────┐    ┌──────────────────┐    ┌──────────────────┐
-│  Game Client  │    │  Ubisoft Connect  │    │  Nadeo Services   │
-│              │    │  (UPC SDK)        │    │  (REST API)       │
-└──────┬───────┘    └────────┬─────────┘    └────────┬─────────┘
-       │                     │                        │
-       │  1. UPC_TicketGet   │                        │
-       │────────────────────&gt;│                        │
-       │  UPlay auth ticket  │                        │
-       │&lt;────────────────────│                        │
-       │                     │                        │
-       │  2. CreateSession   │                        │
-       │────────────────────&gt;│                        │
-       │  UbiServices session│                        │
-       │&lt;────────────────────│                        │
-       │                     │                        │
-       │  3. Token exchange  │                        │
-       │───────────────────────────────────────────&gt;  │
-       │  nadeoservices_token_create_from_ubiservices │
-       │  Nadeo access token + refresh token          │
-       │&lt;─────────────────────────────────────────────│
-       │                     │                        │
-       │  4. API calls with: Authorization: nadeo_v1 t=&lt;token&gt;  │
-       │───────────────────────────────────────────&gt;  │
-       │                     │                        │
-       │  5. Token refresh (55 min lifetime + jitter) │
-       │───────────────────────────────────────────&gt;  │
-       │  nadeoservices_token_refresh_v2              │
-       │&lt;─────────────────────────────────────────────│</code></pre></div>
-<h3 id="63-api-domains"><a class="anchor" href="#63-api-domains">#</a>6.3 API Domains</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Production:
-  ├── https://prod.trackmania.core.nadeo.online   (Core API, audience: NadeoServices)
-  ├── https://live-services.trackmania.nadeo.live  (Live API, audience: NadeoLiveServices)
-  ├── https://meet.trackmania.nadeo.club           (Meet API, audience: NadeoLiveServices)
-  ├── https://{env}public-ubiservices.ubi.com      (Ubisoft services, templated)
-  └── *.chat.maniaplanet.com                       (XMPP text chat)
-
-Test:
-  ├── http://test.nadeo.com
-  └── http://test2.nadeo.com
-
-Deprecated:
-  └── NadeoClubServices (now maps to NadeoLiveServices, deprecated 2024-01-31)</code></pre></div>
+<h2 id="network-protocol-stack-diagram"><a class="anchor" href="#network-protocol-stack-diagram">#</a>Network Protocol Stack Diagram</h2>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>┌─────────────────────────────────────────────┐
+│  MainLoop_Menus (0x140af9a40)               │
+│  MainLoop_SetUp (0x140afc320)               │
+│  MainLoop_PlaygroundPlay (0x140aff380)      │
+│                                              │
+│  CSmArenaClient Sub-Loop:                    │
+│    MainLoop_RecordGhost                      │
+│    MainLoop_SoloCommon                       │
+│    MainLoop_PlayGameNetwork                  │
+│    MainLoop_PlayGameScript                   │
+└─────────────────────────────────────────────┘</code></pre></div>
 <hr>
-<h2 id="7-gbx-file-format-diagram"><a class="anchor" href="#7-gbx-file-format-diagram">#</a>7. GBX File Format Diagram</h2>
-<h3 id="71-binary-file-layout"><a class="anchor" href="#71-binary-file-layout">#</a>7.1 Binary File Layout</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset    Size     Field                    Notes
-──────────────────────────────────────────────────────────────
-0x00      3        Magic: &quot;GBX&quot;             FUN_140900e60 reads
-0x03      2        Version (uint16)         3-6 supported; 1-2 rejected
-
-  ┌── Version 6+ only (FUN_140901850) ──────────────────────┐
-  │ 0x05    1    Format type  &#x27;B&#x27;=Binary / &#x27;T&#x27;=Text         │
-  │ 0x06    1    Body compr.  &#x27;C&#x27;=Compressed / &#x27;U&#x27;=Uncompr. │
-  │ 0x07    1    Stream compr.&#x27;C&#x27;=Compressed / &#x27;U&#x27;=Uncompr. │
-  │ 0x08    1    Ref mode     &#x27;R&#x27;=With refs / &#x27;E&#x27;=No ext    │
-  │                                                          │
-  │  Common: &quot;BUCR&quot; (binary, uncompr body, compr stream, refs)
-  │          &quot;BUCE&quot; (binary, uncompr body, compr stream, no refs)
-  └──────────────────────────────────────────────────────────┘
-
-0x09      4        Class ID (uint32)        MwClassId of root node
-                                            e.g. 0x03043000 = CGameCtnChallenge
-0x0D      4        User data size (uint32)
-0x11      4        Header chunk count
-
-  ┌── Header Chunk Index ───────────────────────────────────┐
-  │   For each header chunk:                                 │
-  │     4    Chunk ID (uint32)                               │
-  │     4    Chunk size (uint32, bit 31 = &quot;heavy&quot; skip flag) │
-  └──────────────────────────────────────────────────────────┘
-
-  ┌── Header Chunk Data ────────────────────────────────────┐
-  │   Concatenated payloads for each header chunk            │
-  │                                                          │
-  │   Map header chunks (class 0x03043000):                  │
-  │     0x03043002  Map info                                 │
-  │     0x03043003  Common header (name, mood, size, etc.)   │
-  │     0x03043004  Version info                             │
-  │     0x03043005  Community reference                      │
-  │     0x03043007  Thumbnail (JPEG embedded)                │
-  │     0x03043008  Author info                              │
-  └──────────────────────────────────────────────────────────┘
-
-  ┌── Node Count ───────────────────────────────────────────┐
-  │     4    Node count (uint32)                             │
-  └──────────────────────────────────────────────────────────┘
-
-  ┌── Reference Table (FUN_140902530) ──────────────────────┐
-  │     4    External ref count (uint32, max 49,999)         │
-  │     4    Ancestor level count (uint32, max 99)           │
-  │   For each ancestor level:                               │
-  │     [string]  Folder path                                │
-  │   For each reference:                                    │
-  │     4    Chunk ID                                        │
-  │     4    Size (v5+)                                      │
-  │     [ptr] File reference (via Fid system)                │
-  │     0xDEADBEEF placeholder during resolution             │
-  └──────────────────────────────────────────────────────────┘
-
-  ┌── Body (FUN_1409031d0) ─────────────────────────────────┐
-  │                                                          │
-  │   If compressed (format flag byte 2 = &#x27;C&#x27;):              │
-  │     4    Uncompressed size (uint32)                      │
-  │     4    Compressed size (uint32)                        │
-  │     [data]  zlib-compressed body                         │
-  │                                                          │
-  │   Chunk stream (after decompression):                    │
-  │   ┌────────────────────────────────────────────────┐     │
-  │   │  Repeating:                                     │     │
-  │   │    4    Chunk ID (uint32)                       │     │
-  │   │    ...  Chunk data (varies by chunk type)       │     │
-  │   │                                                 │     │
-  │   │  Until sentinel: 0xFACADE01                     │     │
-  │   │  (or alternate: 0x01001000 = CMwNod_End)        │     │
-  │   └────────────────────────────────────────────────┘     │
-  └──────────────────────────────────────────────────────────┘</code></pre></div>
-<h3 id="72-class-id-structure"><a class="anchor" href="#72-class-id-structure">#</a>7.2 Class ID Structure</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  Class ID (32-bit):
-  ┌────────────┬────────────────────┬──────────────────┐
-  │ Bits 31-24 │    Bits 23-12      │    Bits 11-0     │
-  │ Engine ID  │    Class Index     │    Sub-index     │
-  │  (8 bits)  │     (12 bits)      │    (12 bits)     │
-  └────────────┴────────────────────┴──────────────────┘
-
-  Engine IDs:
-  ┌─────────┬────────────────┬──────────────────────────────────┐
-  │ ID      │ Name           │ Example Classes                   │
-  ├─────────┼────────────────┼──────────────────────────────────┤
-  │ 0x01    │ System/MwNod   │ CMwNod end marker (0x01001000)   │
-  │ 0x03    │ Game           │ CGameCtnChallenge (0x03043000)   │
-  │ 0x06    │ [UNKNOWN]      │ 0x06004000, 0x06005000           │
-  │ 0x09    │ Plug           │ CPlugSolid2Model (0x090BB000)    │
-  │ 0x0A    │ Scene (legacy) │ Remapped to 0x09 in modern       │
-  │ 0x0C    │ Control        │ UI controls                       │
-  │ 0x11    │ [UNKNOWN]      │ 0x11001000                        │
-  │ 0x2E    │ [UNKNOWN]      │ Various legacy remaps             │
-  └─────────┴────────────────┴──────────────────────────────────┘
-
-  Class Registry (two-level, at DAT_141ff9d58):
-  ┌──────────────────┐
-  │  Level 1: Engine  │──&gt; indexed by class_id &gt;&gt; 24
-  │  Array of ptrs    │
-  └────────┬─────────┘
-           │
-           v
-  ┌──────────────────────────────┐
-  │  Level 2: Class Info          │──&gt; indexed by (class_id &gt;&gt; 12) &amp; 0xFFF
-  │  +0x08: Class name (char*)   │
-  │  +0x10: [UNKNOWN, parent?]   │
-  │  +0x30: Factory fn ptr       │    NULL = abstract class
-  └──────────────────────────────┘</code></pre></div>
-<h3 id="73-lookbackstring-encoding"><a class="anchor" href="#73-lookbackstring-encoding">#</a>7.3 LookbackString Encoding</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  String flag prefix (2 bits):
-  ┌───────┬──────────────────────────────────────────┐
-  │ Flag  │ Meaning                                   │
-  ├───────┼──────────────────────────────────────────┤
-  │ 0b11  │ New string (followed by length + chars)   │
-  │ 0b10  │ Reference to previously seen string       │
-  │ 0b00  │ Empty string                               │
-  │ 0b01  │ [UNKNOWN] (community documentation gap)   │
-  └───────┴──────────────────────────────────────────┘</code></pre></div>
-<h3 id="74-file-id-fid-system-hierarchy"><a class="anchor" href="#74-file-id-fid-system-hierarchy">#</a>7.4 File ID (Fid) System Hierarchy</h3>
-<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CSystemFidsDrive              Mounted drive (e.g., &quot;GameData&quot;)
-  └── CSystemFidsFolder       Directory
-        ├── CSystemFidFile    Individual file entry
-        │     └── CSystemFidContainer   File content stream
-        └── CSystemFidsFolder  Subdirectory
-              └── ...
-
-Pack Types (6):
-  ├── .pack.gbx               Generic resource pack
-  ├── .skin.pack.gbx           Skin resource pack
-  ├── .Title.Pack.Gbx          Title/game pack
-  ├── .Media.Pack.Gbx          Media resources
-  ├── Model.Pack.Gbx           Model resources
-  └── -wip.pack.gbx            Work-in-progress</code></pre></div>
+<h2 id="gbx-file-format-diagram"><a class="anchor" href="#gbx-file-format-diagram">#</a>GBX File Format Diagram</h2>
+<div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>+========================================+  ◄── Offset 0x00
+| Magic: &quot;GBX&quot; (3 bytes)                |
+| Version: uint16 LE (6 for TM2020)     |
+| Format: &quot;BUCR&quot; (4 bytes, v6+)         |
+| Class ID: uint32 LE (e.g. 0x03043000) |
+| User Data Size: uint32 LE             |
++========================================+  ◄── If user_data_size &gt; 0
+| Num Header Chunks: uint32             |
+| Header Chunk Index:                    |
+|   [ chunk_id(4) | size_flags(4) ] × N |
+| Header Chunk Data (concatenated)       |
++========================================+
+| Num Nodes: uint32                      |
++========================================+
+| Num External Refs: uint32              |
+| [Reference Table entries if &gt; 0]       |
++========================================+  ◄── Body Section
+| IF format byte2 == &#x27;C&#x27;:               |
+|   Uncompressed Size: uint32           |
+|   Compressed Size: uint32             |
+|   [LZO/zlib compressed data]          |
+| ELSE (byte2 == &#x27;U&#x27;):                  |
+|   [Raw chunk stream]                   |
++========================================+
+| Body Chunk Stream (decompressed):      |
+|   chunk_id (uint32)                    |
+|   [&quot;SKIP&quot; + size] or [inline data]     |
+|   ...repeating...                      |
+|   0xFACADE01 (end sentinel)            |
++========================================+</code></pre></div>
 <hr>
-<h2 id="8-comprehensive-glossary"><a class="anchor" href="#8-comprehensive-glossary">#</a>8. Comprehensive Glossary</h2>
-<h3 id="a"><a class="anchor" href="#a">#</a>A</h3>
-<p><strong>AccelCoef</strong> -- Acceleration coefficient modifier (float 0.0-1.0) applied to vehicle physics with a 250ms delay. Deprecated in favor of <code>SetPlayer_Delayed_AccelCoef</code>. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 9.</p>
-<p><strong>AdherenceCoef</strong> -- Grip/adherence coefficient (float 0.0-1.0) modifying tire grip with 250ms delay. Deprecated. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 9.</p>
-<p><strong>Adaptive Sub-stepping</strong> -- Velocity-dependent physics sub-stepping where faster vehicles get more simulation steps per tick. Capped at 1000 sub-steps maximum. Step count = <code>(linear_vel + angular_vel) * scale / threshold + 1</code>. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 2.4, <a href="physics.html">10-physics-deep-dive.md</a> Section 1.</p>
-<h3 id="b"><a class="anchor" href="#b">#</a>B</h3>
-<p><strong>BUCE / BUCR</strong> -- GBX version 6 format flags. "BUCE" = Binary, Uncompressed body, Compressed stream, no External refs. "BUCR" = with References. Ref: <a href="file-formats.html">06-file-formats.md</a> Section 2.</p>
-<p><strong>BroadPhase</strong> -- First stage of collision detection using spatial acceleration (tree-based BVH or k-d tree) to cheaply cull non-interacting pairs. Fallback to brute-force exists. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 6.4.</p>
-<h3 id="c"><a class="anchor" href="#c">#</a>C</h3>
-<p><strong>CClassicArchive</strong> -- The core serialization class for reading/writing GBX file data. Manages stream access, chunk iteration, error handling. Error flag at offset +0x28. Ref: <a href="file-formats.html">06-file-formats.md</a> Section 4.</p>
-<p><strong>CGameCtnApp</strong> -- The "Creation TrackMania Nations" application class. Contains the central <code>UpdateGame</code> function (216 KB, 34,959 bytes decompiled) implementing the main game state machine with 60+ states. Ref: <a href="architecture.html">08-game-architecture.md</a> Section 3, <a href="architecture.html">12-architecture-deep-dive.md</a> Section 1.</p>
-<p><strong>CGameCtnChallenge</strong> -- The map file class. Legacy name "Challenge", modern extension <code>.Map.Gbx</code>. Class ID <code class="addr">0x03043000</code>. Has a 22-stage loading pipeline. Ref: <a href="file-formats.html">06-file-formats.md</a> Sections 3, 9.</p>
-<p><strong>CGameCtnNetwork</strong> -- Game-level networking class managing the network state machine (Menus, SetUp, PlaygroundPlay, etc.). Ref: <a href="architecture.html">08-game-architecture.md</a> Section 5.</p>
-<p><strong>CGbxApp</strong> -- GameBox application base class. Performs two-phase initialization: Init1 (80 KB, subsystem creation) and Init2 (D3D11 device, viewport). Ref: <a href="architecture.html">08-game-architecture.md</a> Section 1.4.</p>
-<p><strong>CHms</strong> -- Hierarchical Managed Scene prefix. 41 classes managing zones, portals, lighting, and scene elements for the rendering pipeline. Ref: <a href="class-hierarchy.html">02-class-hierarchy.md</a> Section 5.5.</p>
-<p><strong>CMwCmdFiber</strong> -- Cooperative fiber/coroutine class (88 bytes per instance). Used for dialog workflows, network operations, editor save/load, and script execution. Includes render-thread safety checks. Ref: <a href="architecture.html">08-game-architecture.md</a> Section 7.</p>
-<p><strong>CMwNod</strong> -- Universal base class for all 2,027 Nadeo engine objects. Provides: virtual destructor, <code>GetMwClassId()</code>, <code>Archive()</code> for serialization, reference counting (<code>MwAddRef</code>/<code>MwRelease</code>), command/property binding. Ref: <a href="class-hierarchy.html">02-class-hierarchy.md</a> Section 3.</p>
-<p><strong>COalAudioPort</strong> -- OpenAL audio port implementation. Initializes via <code>alcOpenDevice</code>, creates ALC context, queries mono/stereo source counts and EFX support. Function pointers are XOR-obfuscated. Ref: <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 1.</p>
-<p><strong>CPlugSolid2Model</strong> -- The primary 3D model format class for meshes, materials, and UV layers. Class ID <code class="addr">0x090BB000</code>. Ref: <a href="class-hierarchy.html">02-class-hierarchy.md</a> Section 5.2, <a href="file-formats.html">06-file-formats.md</a> Section 3.</p>
-<p><strong>CSceneVehicleVisState</strong> -- Vehicle visual state structure mirroring physics state for rendering. Contains input, motion, engine, contact, turbo, reactor, and visual effect fields. Ref: <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Section 1.</p>
-<p><strong>CSmArenaPhysics</strong> -- Per-arena physics manager orchestrating per-player physics state, inputs, timed updates, bullets, gates, and actors. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 2.1.</p>
-<p><strong>CSystemArchiveNod</strong> -- System-level archive managing GBX file loading from the file system. Entry point: <code>LoadGbx</code> at <code class="addr">0x140904730</code>. Thread-safety warnings exist for non-MainThread usage. Ref: <a href="file-formats.html">06-file-formats.md</a> Section 4.</p>
-<p><strong>CreateByMwClassId</strong> -- Factory function at <code class="addr">0x1402cf380</code> that instantiates objects by their numeric class ID. Uses the two-level class registry at <code>DAT_141ff9d58</code>. Ref: <a href="file-formats.html">06-file-formats.md</a> Section 5.</p>
-<h3 id="d"><a class="anchor" href="#d">#</a>D</h3>
-<p><strong>D3D11</strong> -- Direct3D 11, the sole active graphics API. Feature level 11.0 minimum, SM 5.0. D3D12 shader infrastructure exists but is unused. Vulkan has 1 string reference with no API calls. Ref: <a href="rendering.html">05-rendering-graphics.md</a> Section 1, <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 9.</p>
-<p><strong>Deferred Shading</strong> -- Primary rendering path using a G-buffer with 9 named render targets. Forward path used for transparents. Pipeline selection via <code>IsDeferred</code> config flag. Ref: <a href="rendering.html">05-rendering-graphics.md</a> Section 2.</p>
-<p><strong>DeferredZ</strong> -- Depth buffer render target in the G-buffer. Format: D24_UNORM_S8_UINT (<span class="badge badge-verified">VERIFIED</span>). Ref: <a href="rendering.html">05-rendering-graphics.md</a> Section 2, <a href="20-browser-recreation-guide.md">20-browser-recreation-guide.md</a> Section 3.</p>
-<h3 id="e"><a class="anchor" href="#e">#</a>E</h3>
-<p><strong>EPlugSurfaceGameplayId</strong> -- Enum of 22+ surface gameplay effects: Turbo, Turbo2, NoGrip, NoSteering, NoBrakes, Fragile, Bouncy, Bumper, SlowMotion, ReactorBoost, VehicleTransform (Rally/Snow/Desert), Cruise, FreeWheeling, Reset, ForceAcceleration. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 5.2.</p>
-<p><strong>EPlugSurfaceMaterialId</strong> -- Enum of physical material identities (19 unique types: Asphalt, Concrete, Dirt, Grass, Ice, Metal, Plastic, etc.) affecting friction, sound, and particle effects. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 5.1, <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Section 10.</p>
-<h3 id="f"><a class="anchor" href="#f">#</a>F</h3>
-<p><strong>FACADE01</strong> -- The hex value <code class="addr">0xFACADE01</code> used as the end-of-chunks sentinel marker in GBX body chunk streams. When encountered during parsing, it signals that all chunks have been read. The alternate marker <code class="addr">0x01001000</code> (CMwNod_End) also terminates parsing. Ref: <a href="file-formats.html">06-file-formats.md</a> Section 3.</p>
-<p><strong>Fid</strong> -- File Identifier. The Nadeo engine's virtual file system uses a hierarchy: <code>CSystemFidsDrive</code> -> <code>CSystemFidsFolder</code> -> <code>CSystemFidFile</code> -> <code>CSystemFidContainer</code>. Ref: <a href="file-formats.html">06-file-formats.md</a> Section 7.</p>
-<p><strong>Forward Euler</strong> -- The numerical integration method used for physics. Position += velocity <em> dt, velocity += acceleration </em> dt. Combined with adaptive sub-stepping for stability. Ref: <a href="physics.html">10-physics-deep-dive.md</a> Section 10.</p>
-<h3 id="g"><a class="anchor" href="#g">#</a>G</h3>
-<p><strong>G-Buffer</strong> -- Geometry buffer in the deferred rendering pipeline. 9 named targets: MDiffuse, MSpecular, PixelNormalInC, FaceNormalInC, VertexNormalInC, DeferredZ, LightMask, PreShade, DiffuseAmbient. Core MRT is 4 targets + depth. Ref: <a href="rendering.html">05-rendering-graphics.md</a> Section 2, <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 7.</p>
-<p><strong>GBX</strong> -- GameBox, Nadeo's proprietary binary serialization format. Magic bytes "GBX", versions 3-6, chunk-based body with <code>FACADE01</code> sentinel. Compression via zlib (LZO not found). 431 known file extensions. Ref: <a href="file-formats.html">06-file-formats.md</a>.</p>
-<p><strong>GravityCoef</strong> -- Normalized gravity coefficient (0.0-1.0, not m/s^2). Applied with 250ms smoothed transition. Deprecated in favor of <code>SetPlayer_Delayed_AccelCoef</code>. The standard 9.81 float was NOT found in <code>.rdata</code>/<code>.data</code> sections. Ref: <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 5.</p>
-<h3 id="h"><a class="anchor" href="#h">#</a>H</h3>
-<p><strong>HBAO+</strong> -- Horizon-Based Ambient Occlusion Plus. NVIDIA's SSAO implementation integrated as a post-processing pass, with a fallback "homemade" Nadeo implementation. 20-field configuration struct. Ref: <a href="rendering.html">05-rendering-graphics.md</a> Section 7.</p>
-<p><strong>HLSL</strong> -- High-Level Shading Language. 200+ shader files organized under Tech3/, Effects/, Engines/, Lightmap/. All five D3D11 stages used (vertex, hull, domain, geometry, pixel) plus compute shaders. Ref: <a href="rendering.html">05-rendering-graphics.md</a> Section 6.</p>
-<h3 id="i"><a class="anchor" href="#i">#</a>I</h3>
-<p><strong>iso4</strong> -- Isometric 4x4 transform stored as 48 bytes (3x3 rotation matrix + vec3 position, implicit homogeneous row). Used for <code>Location</code> in vehicle state. Ref: <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Sections 1, 9.</p>
-<h3 id="l"><a class="anchor" href="#l">#</a>L</h3>
-<p><strong>LookbackString</strong> -- String serialization system in GBX files using a 2-bit flag prefix: 0b11 = new string, 0b10 = reference to previous, 0b00 = empty, 0b01 = <span class="badge badge-unknown">UNKNOWN</span>. Ref: <a href="20-browser-recreation-guide.md">20-browser-recreation-guide.md</a> Section 4.</p>
-<h3 id="m"><a class="anchor" href="#m">#</a>M</h3>
-<p><strong>ManiaScript</strong> -- Nadeo's custom interpreted scripting language. 12 built-in types (Void, Boolean, Integer, Real, Text, Vec2, Vec3, Int2, Int3, Iso4, Ident, Class), 7 directives (#RequireContext, #Setting, #Struct, #Include, #Extends, #Command, #Const), 20+ collection operations, coroutine keywords (sleep, yield, wait, meanwhile). Ref: <a href="architecture.html">08-game-architecture.md</a> Section 8, <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 10.</p>
-<p><strong>MwClassId</strong> -- 32-bit numeric class identifier used for serialization and factory creation. Hierarchical: Engine ID (bits 31-24), Class index (bits 23-12), Sub-index (bits 11-0). 200+ legacy-to-modern remappings exist for backward compatibility. Ref: <a href="file-formats.html">06-file-formats.md</a> Section 5.</p>
-<h3 id="n"><a class="anchor" href="#n">#</a>N</h3>
-<p><strong>NClassicThreadPool</strong> -- Custom thread pool with <code>AddJobs</code>/<code>TaskWaitComplete</code> fork-join pattern. Runs alongside Windows ThreadPool API. Ref: <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 6.</p>
-<p><strong>NHmsCollision</strong> -- Collision detection namespace. Three modes: Static (world geometry), Discrete (per-tick dynamic), Continuous (CCD for fast objects). Tree-based broadphase acceleration. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 6.</p>
-<p><strong>NSceneDyna</strong> -- Rigid body dynamics engine namespace. Handles gravity, forces, collision response, velocity integration. Body stride 0x38 (56 bytes). Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 7.</p>
-<p><strong>NSceneVehiclePhy</strong> -- Vehicle-specific physics layer namespace. Manages car forces, wheel model, contact points, turbo, stunt tracking. Core function: <code>ComputeForces</code> at <code class="addr">0x1408427d0</code>. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 3.</p>
-<h3 id="o"><a class="anchor" href="#o">#</a>O</h3>
-<p><strong>OpenAL</strong> -- Audio API used via <code>OpenAL64_bundled.dll</code> (dynamically loaded). Provides spatial 3D audio with EFX environmental effects support. Ref: <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 1.</p>
-<p><strong>Openplanet</strong> -- Third-party modding framework for Trackmania that provides runtime access to game memory. Source of <span class="badge badge-verified">VERIFIED</span> vehicle state field names and offsets. Ref: <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a>.</p>
-<h3 id="p"><a class="anchor" href="#p">#</a>P</h3>
-<p><strong>PhysicsStep_TM</strong> -- The main per-vehicle physics step function at <code class="addr">0x141501800</code>. Converts ticks to microseconds, runs adaptive sub-stepping, dispatches force computation, and calls rigid body integration. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 2, <a href="physics.html">10-physics-deep-dive.md</a> Section 1.2.</p>
-<p><strong>PSSM</strong> -- Parallel-Split Shadow Maps. 4 cascade splits (<code>MapShadowSplit0</code> through <code>MapShadowSplit3</code>) for the directional light. Primary shadow technique. Ref: <a href="rendering.html">05-rendering-graphics.md</a> Section 8.</p>
-<h3 id="r"><a class="anchor" href="#r">#</a>R</h3>
-<p><strong>ReactorBoost</strong> -- Directional boost system distinct from turbo. Types: Legacy (non-oriented), Oriented (direction-sensitive), Level 1 and Level 2. Involves air control vectors, ground mode flag. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 8.2, <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Section 1.</p>
-<h3 id="s"><a class="anchor" href="#s">#</a>S</h3>
-<p><strong>SPlugVehiclePhyRestStateValues</strong> -- Structure storing vehicle rest state (ride height, default damper values). Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 4.3.</p>
-<h3 id="t"><a class="anchor" href="#t">#</a>T</h3>
-<p><strong>Tech3</strong> -- Nadeo's third-generation rendering technology. The dominant shader prefix <code>"Tech3/"</code> organizes HLSL shaders. Internal names use <code>"T3"</code> prefix (T3Bloom, T3ToneMap). Block material naming: TDSN = Texture+Diffuse+Specular+Normal. Ref: <a href="rendering.html">05-rendering-graphics.md</a> Section 6.</p>
-<p><strong>TLS</strong> -- Thread-Local Storage. Used for: (1) TLS callbacks at program entry (3 callbacks for anti-debug/unpacking); (2) TLS-cached class lookups for performance in the class registry (2-entry MRU cache at TLS offsets +0x1190 through +0x11AC). Ref: <a href="binary.html">01-binary-overview.md</a>, <a href="file-formats.html">06-file-formats.md</a> Section 5.</p>
-<p><strong>TXAA</strong> -- Temporal Anti-Aliasing. Dual implementation: NVIDIA GFSDK TXAA (hardware path using <code>GFSDK_TXAA_DX11_ResolveFromMotionVectors</code>) and Ubisoft custom <code>UBI_TXAA</code> (fallback). Fed by <code>CameraMotion</code> pass motion vectors. Ref: <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 8.</p>
-<p><strong>TurboRoulette</strong> -- Randomized turbo system with levels: None, Roulette_1, Roulette_2, Roulette_3. Separate color coding (TurboColor_Roulette1/2/3). Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 8.3.</p>
-<h3 id="u"><a class="anchor" href="#u">#</a>U</h3>
-<p><strong>UPC</strong> -- Ubisoft Platform Client. DRM/authentication SDK loaded from <code>upc_r2_loader64.dll</code>. <code>UPC_TicketGet</code> is the only direct import. 20+ functions resolved dynamically. Supports cloud streaming APIs. Ref: <a href="networking.html">07-networking.md</a> Layer 6.</p>
-<p><strong>UpdateGame</strong> -- See CGameCtnApp. The 216 KB main loop function implementing the game state machine. Called every frame. Ref: <a href="architecture.html">08-game-architecture.md</a> Section 3.</p>
-<h3 id="v"><a class="anchor" href="#v">#</a>V</h3>
-<p><strong>VehicleTransform</strong> -- Surface gameplay effect that transforms the vehicle between types: <code>VehicleTransform_CarRally</code>, <code>VehicleTransform_CarSnow</code>, <code>VehicleTransform_CarDesert</code>, <code>VehicleTransform_Reset</code>. Ref: <a href="physics.html">04-physics-vehicle.md</a> Section 3.3.</p>
-<p><strong>VehicleType</strong> -- Enum: CharacterPilot(0), CarSport(1), CarSnow(2), CarRally(3), CarDesert(4). CarSport (Stadium) is the default. Ref: <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Section 2.</p>
-<h3 id="w"><a class="anchor" href="#w">#</a>W</h3>
-<p><strong>Wheel Order</strong> -- Memory layout: FL(0), FR(1), RR(2), RL(3) -- clockwise from front-left. Per-wheel fields: DamperLen, WheelRot, WheelRotSpeed, SteerAngle, SlipCoef, GroundContactMaterial, Dirt, Icing01, TireWear01. Ref: <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Section 3.</p>
-<h3 id="x"><a class="anchor" href="#x">#</a>X</h3>
-<p><strong>XML-RPC</strong> -- Remote procedure call protocol (xmlrpc-c library, statically linked). 22 ManiaPlanet server callbacks (ServerStart, PlayerConnect, BeginMap, etc.). Same protocol as TMNF/TM2 server controllers. Ref: <a href="networking.html">07-networking.md</a> Layer 5.</p>
-<p><strong>XMPP</strong> -- Extensible Messaging and Presence Protocol. Used for text chat via <code>*.chat.maniaplanet.com</code>. Ref: <a href="networking.html">07-networking.md</a>.</p>
-<h3 id="z"><a class="anchor" href="#z">#</a>Z</h3>
-<p><strong>zlib</strong> -- Compression library used for GBX body chunk compression. <span class="badge badge-verified">VERIFIED</span> present in binary (<code>"zlib compression"</code> string). LZO NOT found (0 matches). TM2020 uses zlib exclusively. Ref: <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 4.</p>
+<h2 id="comprehensive-glossary"><a class="anchor" href="#comprehensive-glossary">#</a>Comprehensive Glossary</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+  <th style="text-align:left">Term</th>
+  <th style="text-align:left">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>BVH</strong></td>
+  <td style="text-align:left">Bounding Volume Hierarchy -- tree structure for fast spatial queries in collision detection</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>CCD</strong></td>
+  <td style="text-align:left">Continuous Collision Detection -- prevents fast objects from tunneling through thin geometry</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>CMwNod</strong></td>
+  <td style="text-align:left">Universal base class for all 2,027 engine classes. "Nod" = Node</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>D3D11</strong></td>
+  <td style="text-align:left">Direct3D 11 -- the graphics API used by TM2020</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Deferred rendering</strong></td>
+  <td style="text-align:left">Two-pass rendering: first fill G-buffer with geometry data, then compute lighting from the buffer</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>FACADE01</strong></td>
+  <td style="text-align:left"><code class="addr">0xFACADE01</code> -- the end-of-body sentinel in GBX chunk streams</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Fiber</strong></td>
+  <td style="text-align:left">Cooperative coroutine (CMwCmdFiber, 88 bytes). Yields at safe points during rendering</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Forward Euler</strong></td>
+  <td style="text-align:left">Integration method: <code>position += velocity * dt</code>. Simple, fast, used by TM physics</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>G-buffer</strong></td>
+  <td style="text-align:left">Geometry buffer -- multiple render targets storing albedo, normals, depth, etc. for deferred lighting</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>GBX</strong></td>
+  <td style="text-align:left">GameBox -- Nadeo's proprietary binary file format for all game data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>HBAO+</strong></td>
+  <td style="text-align:left">Horizon-Based Ambient Occlusion Plus -- NVIDIA's SSAO algorithm used for ambient shadow</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>iso4</strong></td>
+  <td style="text-align:left">3x3 rotation matrix + vec3 position (48 bytes). The engine's transform representation</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>LookbackString</strong></td>
+  <td style="text-align:left">String interning system in GBX: stores strings once, references by index afterward</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>LZO</strong></td>
+  <td style="text-align:left">Lempel-Ziv-Oberhumer -- fast compression algorithm used for GBX body data</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>ManiaScript</strong></td>
+  <td style="text-align:left">Nadeo's scripting language for game modes and UI. C-like syntax with coroutines</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>MRT</strong></td>
+  <td style="text-align:left">Multiple Render Targets -- writing to several textures simultaneously in one draw call</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>MwClassId</strong></td>
+  <td style="text-align:left">32-bit identifier for every class: `engine(8)</td>
+  <td style="text-align:left">class(12)</td>
+  <td style="text-align:left">chunk(12)`</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>NadeoPak</strong></td>
+  <td style="text-align:left">Binary pack file format (NOT GBX). Uses "NadeoPak" magic, version 18</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>PSSM</strong></td>
+  <td style="text-align:left">Parallel-Split Shadow Maps -- 4 shadow map cascades at different distances</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>RTTI</strong></td>
+  <td style="text-align:left">Run-Time Type Information -- metadata about classes embedded in the binary</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>SKIP</strong></td>
+  <td style="text-align:left"><code class="addr">0x534B4950</code> ("SKIP" in ASCII) -- marker for skippable chunks in GBX body streams</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Sub-stepping</strong></td>
+  <td style="text-align:left">Running multiple physics iterations per tick. TM2020 uses 1-1000 adaptive sub-steps</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>TXAA</strong></td>
+  <td style="text-align:left">Temporal Anti-Aliasing -- uses motion vectors and frame history to reduce aliasing</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>WGSL</strong></td>
+  <td style="text-align:left">WebGPU Shading Language -- the shader language for WebGPU (browser equivalent of HLSL)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>zlib</strong></td>
+  <td style="text-align:left">Compression library used for ghost sample data and some internal GBX data</td>
+</tr>
+</tbody>
+</table></div>
 <hr>
 <details class="collapsible collapsed-by-default">
-<summary><h2 id="9-address-reference-table"><a class="anchor" href="#9-address-reference-table">#</a>9. Address Reference Table</h2></summary>
+<summary><h2 id="address-reference-table"><a class="anchor" href="#address-reference-table">#</a>Address Reference Table</h2></summary>
 <div class="collapsible-content">
-<p>All known function and data addresses from the documentation, sorted by address.</p>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="91-functions-sorted-by-address"><a class="anchor" href="#91-functions-sorted-by-address">#</a>9.1 Functions (Sorted by Address)</h3></summary>
+<summary><h3 id="key-function-addresses"><a class="anchor" href="#key-function-addresses">#</a>Key Function Addresses</h3></summary>
 <div class="collapsible-content">
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">Address</th>
-  <th style="text-align:left">Function / Label</th>
+  <th style="text-align:left">Function</th>
   <th style="text-align:left">Subsystem</th>
   <th style="text-align:left">Size</th>
   <th style="text-align:left">Doc Reference</th>
@@ -1380,809 +756,179 @@ Pack Types (6):
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14002e300</code></td>
-  <td style="text-align:left">CMwCmdFiber::StaticRegistration</td>
-  <td style="text-align:left">Core</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140053250</code></td>
-  <td style="text-align:left">CVisPostFx_ToneMapping registration</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140053470</code></td>
-  <td style="text-align:left">CVisPostFx_BloomHdr registration</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14006bc80</code></td>
-  <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Largest function</td>
-  <td style="text-align:left">Unknown</td>
-  <td style="text-align:left">80,516 B</td>
-  <td style="text-align:left"><a href="binary.html">01</a> S4</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140101a30</code></td>
-  <td style="text-align:left">CGbxGame::InitApp helper</td>
+  <td style="text-align:left"><code class="addr">0x14291e317</code></td>
+  <td style="text-align:left">entry (obfuscated, in .D." section)</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140102cb0</code></td>
-  <td style="text-align:left">CGbxGame::InitApp</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1401171d0</code></td>
-  <td style="text-align:left">Profiling system init</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1401175b0</code></td>
-  <td style="text-align:left">Profile tag begin (internal)</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140117690</code></td>
-  <td style="text-align:left">Profile tag begin (wrapper)</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1401176a0</code></td>
-  <td style="text-align:left">Profile tag end</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14012ba00</code></td>
-  <td style="text-align:left">CClassicArchive::ReadData</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S4</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140127aa0</code></td>
-  <td style="text-align:left">zlib decompression function</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402a6360</code></td>
-  <td style="text-align:left">NHmsCollision::UpdateContinuous</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">328 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S6</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402a6960</code></td>
-  <td style="text-align:left">NHmsCollision::UpdateDiscrete</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">114 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S6</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402a6da0</code></td>
-  <td style="text-align:left">NHmsCollision::UpdateStatic</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">360 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S6</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402a8a70</code></td>
-  <td style="text-align:left">NHmsCollision::MergeContacts</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">1,717 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S6</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402a9c60</code></td>
-  <td style="text-align:left">NHmsCollision::StartPhyFrame</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">297 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S6</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402acea0</code></td>
-  <td style="text-align:left">CInputPort::Update_StartFrame</td>
-  <td style="text-align:left">Input</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402cf380</code></td>
-  <td style="text-align:left">CreateByMwClassId (class factory)</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402d0c40</code></td>
-  <td style="text-align:left">ChunkEndMarker (FACADE01)</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402d4270</code></td>
-  <td style="text-align:left">Fiber callback creation</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402d52e0</code></td>
-  <td style="text-align:left">Class registration helper</td>
-  <td style="text-align:left">Core</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402f20a0</code></td>
-  <td style="text-align:left">ClassIdLookup</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1402f2610</code></td>
-  <td style="text-align:left">ClassIdRemap (200+ entries)</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1403050a0</code></td>
-  <td style="text-align:left">CNetHttpClient::InternalConnect</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="networking.html">07</a> L2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1403089f0</code></td>
-  <td style="text-align:left">CNetServer::DoReception</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="networking.html">07</a> L2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14030c3f0</code></td>
-  <td style="text-align:left">CNetHttpClient::CreateRequest</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="networking.html">07</a> L2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1404efe80</code></td>
-  <td style="text-align:left">EPlugSurfaceMaterialId handler</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14062c780</code></td>
-  <td style="text-align:left">Animation FixedStepCount</td>
-  <td style="text-align:left">Animation</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14064d790</code></td>
-  <td style="text-align:left">EPlugSurfaceGameplayId handler</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407bd0e0</code></td>
-  <td style="text-align:left">NSceneDyna::PhysicsStep</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">126 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407bdf40</code></td>
-  <td style="text-align:left">Turbo force application</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407cfce0</code></td>
-  <td style="text-align:left">NSceneVehiclePhy::PhysicsStep_BeforeMgrDynaUpdate</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">1,723 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407d29a0</code></td>
-  <td style="text-align:left">NSceneVehiclePhy::ExtractVisStates</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">338 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407d2b90</code></td>
-  <td style="text-align:left">NSceneVehiclePhy::ProcessContactPoints</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">339 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407f3fc0</code></td>
-  <td style="text-align:left">Friction solver config</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">606 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407f81c0</code></td>
-  <td style="text-align:left">NSceneDyna::ComputeExternalForces</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">202 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407f8290</code></td>
-  <td style="text-align:left">NSceneDyna::ComputeWaterForces</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">370 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407f89d0</code></td>
-  <td style="text-align:left">NSceneDyna::ComputeGravityAndSleepStateAndNewVels</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">790 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407f9da0</code></td>
-  <td style="text-align:left">NSceneDyna::DynamicCollisionCreateCache</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">472 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407fc3c0</code></td>
-  <td style="text-align:left">NSceneDyna::Dyna_GetItemsForStaticCollision</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">318 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1407fc730</code></td>
-  <td style="text-align:left">NSceneDyna::Dynas_StaticCollisionDetection</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">180 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1408025a0</code></td>
-  <td style="text-align:left">NSceneDyna::InternalPhysicsStep</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">4,991 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140803920</code></td>
-  <td style="text-align:left">NSceneDyna::PhysicsStep_V2</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">1,351 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14083df50</code></td>
-  <td style="text-align:left">Physics integration step</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">10</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1408427d0</code></td>
-  <td style="text-align:left">NSceneVehiclePhy::ComputeForces</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">1,713 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140842ed0</code></td>
-  <td style="text-align:left">NSceneVehiclePhy::PairComputeForces</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">635 B</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140851f00</code></td>
-  <td style="text-align:left">Force model case 5 (CarSport?)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14085c9e0</code></td>
-  <td style="text-align:left">Force model case 6 (Snow/Rally?)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140869cd0</code></td>
-  <td style="text-align:left">Force model case 0/1/2 (base)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14086b060</code></td>
-  <td style="text-align:left">Force model case 3 (M4)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14086bc50</code></td>
-  <td style="text-align:left">Force model case 4 (M5/TMNF?)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14086d3b0</code></td>
-  <td style="text-align:left">Force model case 0xB (Desert?)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140874270</code></td>
-  <td style="text-align:left">CScriptEngine::Run</td>
-  <td style="text-align:left">ManiaScript</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S8</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1408de480</code></td>
-  <td style="text-align:left">Memory allocator (thunk)</td>
-  <td style="text-align:left">Core</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1408f1750</code></td>
-  <td style="text-align:left">CSystemEngine creation</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1408f56a0</code></td>
-  <td style="text-align:left">CSystemEngine::InitForGbxGame</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1408f85c0</code></td>
-  <td style="text-align:left">SysCfg read function</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140900560</code></td>
-  <td style="text-align:left">Associate node with archive</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140900e60</code></td>
-  <td style="text-align:left">GBX header magic/version validation</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140901850</code></td>
-  <td style="text-align:left">GBX v6 format flag parsing</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140902530</code></td>
-  <td style="text-align:left">Reference table loading</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140903140</code></td>
-  <td style="text-align:left">Body type label lookup</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1409031d0</code></td>
-  <td style="text-align:left">Body chunk loading</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140904730</code></td>
-  <td style="text-align:left">CSystemArchiveNod::LoadGbx (main entry)</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14091f4e0</code></td>
-  <td style="text-align:left">HBAO+ config registration</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140925fa0</code></td>
-  <td style="text-align:left">XML GBX loader</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140934b80</code></td>
-  <td style="text-align:left">JSON GBX loader</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140936810</code></td>
-  <td style="text-align:left">CSystemConfigDisplay registration</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S6</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14095d430</code></td>
-  <td style="text-align:left">CVisionViewport::PrepareShadowAndProjectors</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14097cfb0</code></td>
-  <td style="text-align:left">VisionShader::GetOrCreate (shader cache)</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14097ed30</code></td>
-  <td style="text-align:left">CVisionViewport::AllShaderBindTextures</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1409a45a0</code></td>
-  <td style="text-align:left">CVisPostFx_BloomHdr constructor</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14099dce0</code></td>
-  <td style="text-align:left">CVisPostFx_ToneMapping constructor</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1409aa750</code></td>
-  <td style="text-align:left">CDx11Viewport::DeviceCreate</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140a43610</code></td>
-  <td style="text-align:left">CVisionViewport::Shadow_UpdateGroups</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140a811a0</code></td>
-  <td style="text-align:left">Dxgi_Present_HookCallback</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="binary.html">01</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140aa3220</code></td>
-  <td style="text-align:left">CGbxApp::Init1</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">>0x4000</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140aa5090</code></td>
-  <td style="text-align:left">CGbxApp::Init2</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140aa7470</code></td>
-  <td style="text-align:left">WinMain (actual)</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">202 B</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140aaac00</code></td>
-  <td style="text-align:left">CGbxApp::Init1 (alt address)</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">80 KB</td>
-  <td style="text-align:left"><a href="index.html">00</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140ab00a0</code></td>
-  <td style="text-align:left">CGbxApp::Init2 (alt address)</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="index.html">00</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140af9a40</code></td>
-  <td style="text-align:left">CGameCtnNetwork::MainLoop_Menus</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140afc320</code></td>
-  <td style="text-align:left">CGameCtnNetwork::MainLoop_SetUp</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140aff380</code></td>
-  <td style="text-align:left">CGameCtnNetwork::MainLoop_PlaygroundPlay</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140b00500</code></td>
-  <td style="text-align:left">Network validation function</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">12</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140b4d140</code></td>
-  <td style="text-align:left">CGameApp::QuitGameAndExit</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S4</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140b4eba0</code></td>
-  <td style="text-align:left">CGameCtnApp::Start</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140b63ef0</code></td>
-  <td style="text-align:left">Startup tasks</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">12</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140b76b20</code></td>
-  <td style="text-align:left">CGameCtnApp::UpdateGame_Init</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">2,414 B</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140b77490</code></td>
-  <td style="text-align:left">CGameCtnApp::UpdateGame_StartUp</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140b78f10</code></td>
-  <td style="text-align:left">CGameCtnApp::UpdateGame (main loop)</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">34,959 B</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S3</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x140cb8870</code></td>
-  <td style="text-align:left">CGameManiaPlanet::Start</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141071b20</code></td>
-  <td style="text-align:left">NGameSlotPhy::SMgr tuning registration</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S5</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1412bf000</code></td>
-  <td style="text-align:left">CSmArenaPhysics::UpdatePlayersInputs</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1412c2cc0</code></td>
-  <td style="text-align:left">CSmArenaPhysics::Players_BeginFrame</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1412c7d10</code></td>
-  <td style="text-align:left">CSmArenaPhysics::Players_UpdateTimed</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1412e8490</code></td>
-  <td style="text-align:left">ArenaPhysics_CarPhyUpdate</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">10</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1412e9ea0</code></td>
-  <td style="text-align:left">CSmArena::SimulationStep</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141312870</code></td>
-  <td style="text-align:left">CSmArenaClient::UpdatePhysics</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141317300</code></td>
-  <td style="text-align:left">CSmArenaPhysics::Bullet_UpdateBeforeMgr</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141339cc0</code></td>
-  <td style="text-align:left">CSmArenaServer::UpdatePhysics</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14138c090</code></td>
-  <td style="text-align:left">COalAudioPort::InitImplem</td>
-  <td style="text-align:left">Audio</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1414a1c80</code></td>
-  <td style="text-align:left">CNetClient::DoReception</td>
-  <td style="text-align:left">Networking</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="networking.html">07</a> L2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1414ff9d0</code></td>
-  <td style="text-align:left">Post-force update (sub-step)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">10</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1414ffee0</code></td>
-  <td style="text-align:left">Force application (sub-step)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">10</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141501090</code></td>
-  <td style="text-align:left">Collision check (sub-step)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">10</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141501800</code></td>
-  <td style="text-align:left">PhysicsStep_TM (per-vehicle)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x1415009d0</code></td>
-  <td style="text-align:left">Physics step dispatch (sub-step)</td>
-  <td style="text-align:left">Physics</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="physics.html">10</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141521958</code></td>
-  <td style="text-align:left">tls_callback_1</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="binary.html">01</a> S2</td>
+  <td style="text-align:left"><a href="binary.html">01</a></td>
 </tr>
 <tr>
   <td style="text-align:left"><code class="addr">0x141521c28</code></td>
   <td style="text-align:left">WinMainCRTStartup (MSVC CRT)</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
+  <td style="text-align:left"><a href="architecture.html">08</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1415223d4</code></td>
-  <td style="text-align:left">tls_callback_2</td>
+  <td style="text-align:left"><code class="addr">0x140aa7470</code></td>
+  <td style="text-align:left">WinMain (actual)</td>
   <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="binary.html">01</a> S2</td>
+  <td style="text-align:left">202 B</td>
+  <td style="text-align:left"><a href="architecture.html">08</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14291e317</code></td>
-  <td style="text-align:left">entry (obfuscated, in .D." section)</td>
+  <td style="text-align:left"><code class="addr">0x140aaac00</code></td>
+  <td style="text-align:left">CGbxApp::Init1</td>
   <td style="text-align:left">Architecture</td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="binary.html">01</a> S2</td>
+  <td style="text-align:left">80 KB</td>
+  <td style="text-align:left"><a href="index.html">00</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14299e63a</code></td>
-  <td style="text-align:left">tls_callback_0</td>
+  <td style="text-align:left"><code class="addr">0x140ab00a0</code></td>
+  <td style="text-align:left">CGbxApp::Init2</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">-</td>
-  <td style="text-align:left"><a href="binary.html">01</a> S2</td>
+  <td style="text-align:left"><a href="index.html">00</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140b4eba0</code></td>
+  <td style="text-align:left">CGameCtnApp::Start</td>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="architecture.html">08</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140b78f10</code></td>
+  <td style="text-align:left">CGameCtnApp::UpdateGame (main loop)</td>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">34,959 B</td>
+  <td style="text-align:left"><a href="architecture.html">08</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140cb8870</code></td>
+  <td style="text-align:left">CGameManiaPlanet::Start</td>
+  <td style="text-align:left">Architecture</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="architecture.html">08</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1412c2cc0</code></td>
+  <td style="text-align:left">CSmArenaPhysics::Players_BeginFrame</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="physics.html">04</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1412bf000</code></td>
+  <td style="text-align:left">CSmArenaPhysics::UpdatePlayersInputs</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="physics.html">04</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x141501800</code></td>
+  <td style="text-align:left">PhysicsStep_TM (per-vehicle)</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="physics.html">04</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1408427d0</code></td>
+  <td style="text-align:left">NSceneVehiclePhy::ComputeForces</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">1,713 B</td>
+  <td style="text-align:left"><a href="physics.html">04</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140851f00</code></td>
+  <td style="text-align:left">Force model case 5 (CarSport?)</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="physics.html">04</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14085c9e0</code></td>
+  <td style="text-align:left">Force model case 6 (Snow/Rally?)</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="physics.html">04</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14086d3b0</code></td>
+  <td style="text-align:left">Force model case 0xB (Desert?)</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="physics.html">04</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1407bd0e0</code></td>
+  <td style="text-align:left">NSceneDyna::PhysicsStep</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="physics.html">10</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140803920</code></td>
+  <td style="text-align:left">NSceneDyna::PhysicsStep_V2</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="physics.html">10</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1408025a0</code></td>
+  <td style="text-align:left">NSceneDyna::InternalPhysicsStep</td>
+  <td style="text-align:left">Physics</td>
+  <td style="text-align:left">4,991 B</td>
+  <td style="text-align:left"><a href="physics.html">10</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140900e60</code></td>
+  <td style="text-align:left">GBX header magic/version validation</td>
+  <td style="text-align:left">File Formats</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="file-formats.html">06</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140901850</code></td>
+  <td style="text-align:left">GBX v6 format flag parsing</td>
+  <td style="text-align:left">File Formats</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="file-formats.html">06</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x140904730</code></td>
+  <td style="text-align:left">CSystemArchiveNod::LoadGbx</td>
+  <td style="text-align:left">File Formats</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="file-formats.html">06</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x14138c090</code></td>
+  <td style="text-align:left">COalAudioPort::InitImplem</td>
+  <td style="text-align:left">Audio</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1402acea0</code></td>
+  <td style="text-align:left">CInputPort::Update_StartFrame</td>
+  <td style="text-align:left">Input</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
+</tr>
+<tr>
+  <td style="text-align:left"><code class="addr">0x1409aa750</code></td>
+  <td style="text-align:left">CDx11Viewport::DeviceCreate</td>
+  <td style="text-align:left">Rendering</td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left"><a href="rendering.html">05</a></td>
 </tr>
 </tbody>
 </table></div>
 <details class="collapsible collapsed-by-default">
 <summary></div>
 </details>
-<h3 id="92-key-data-addresses"><a class="anchor" href="#92-key-data-addresses">#</a>9.2 Key Data Addresses</h3></summary>
+<h3 id="key-data-addresses"><a class="anchor" href="#key-data-addresses">#</a>Key Data Addresses</h3></summary>
 <div class="collapsible-content">
 <div class="table-wrapper"><table>
 <thead>
@@ -2190,93 +936,38 @@ Pack Types (6):
   <th style="text-align:left">Address</th>
   <th style="text-align:left">Data</th>
   <th style="text-align:left">Subsystem</th>
-  <th style="text-align:left">Doc Reference</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14201d2ec</code></td>
-  <td style="text-align:left">Shader model capability (0x400/0x500)</td>
-  <td style="text-align:left">Rendering</td>
-  <td style="text-align:left"><a href="rendering.html">05</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x14205c280</code></td>
-  <td style="text-align:left">Decompression buffer pool</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S3</td>
-</tr>
-<tr>
   <td style="text-align:left"><code class="addr">0x141ebccfc</code></td>
   <td style="text-align:left">Sleep detection enabled flag</td>
   <td style="text-align:left">Physics</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
 </tr>
 <tr>
   <td style="text-align:left"><code class="addr">0x141ebcd00</code></td>
   <td style="text-align:left">Sleep velocity damping factor</td>
   <td style="text-align:left">Physics</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
 </tr>
 <tr>
   <td style="text-align:left"><code class="addr">0x141ebcd04</code></td>
   <td style="text-align:left">Sleep velocity threshold (squared)</td>
   <td style="text-align:left">Physics</td>
-  <td style="text-align:left"><a href="physics.html">04</a> S7</td>
 </tr>
 <tr>
   <td style="text-align:left"><code class="addr">0x141f9cff4</code></td>
   <td style="text-align:left">Luna Mode flag</td>
   <td style="text-align:left">Architecture</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141f9d088</code></td>
-  <td style="text-align:left">Error callback pointer</td>
-  <td style="text-align:left">File Formats</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S4</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141fbbee8</code></td>
-  <td style="text-align:left">Headless mode flag</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141fbbf50</code></td>
-  <td style="text-align:left">Luna Mode check</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141fbbf90</code></td>
-  <td style="text-align:left">Global engine timestamp</td>
-  <td style="text-align:left">Architecture</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S1</td>
 </tr>
 <tr>
   <td style="text-align:left"><code class="addr">0x141ff9d58</code></td>
   <td style="text-align:left">Global class registry (two-level)</td>
   <td style="text-align:left">File Formats</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a> S5</td>
 </tr>
 <tr>
   <td style="text-align:left"><code class="addr">0x141ffad50</code></td>
   <td style="text-align:left">Global tick counter</td>
   <td style="text-align:left">Input</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a> S2</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141ffe240</code></td>
-  <td style="text-align:left">CMwCmdFiber class data</td>
-  <td style="text-align:left">Core</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S7</td>
-</tr>
-<tr>
-  <td style="text-align:left"><code class="addr">0x141ffe4d0</code></td>
-  <td style="text-align:left">CMwCmdFiber class ID</td>
-  <td style="text-align:left">Core</td>
-  <td style="text-align:left"><a href="architecture.html">08</a> S7</td>
 </tr>
 </tbody>
 </table></div>
@@ -2285,8 +976,7 @@ Pack Types (6):
 </details>
 </div>
 </details>
-<h2 id="10-cross-document-index"><a class="anchor" href="#10-cross-document-index">#</a>10. Cross-Document Index</h2>
-<p>For each major topic, the following table shows which documents discuss it and at what depth.</p>
+<h2 id="cross-document-index"><a class="anchor" href="#cross-document-index">#</a>Cross-Document Index</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -2298,296 +988,115 @@ Pack Types (6):
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><strong>Binary structure</strong> (PE headers, sections, protection)</td>
+  <td style="text-align:left"><strong>Binary structure</strong> (PE headers, sections)</td>
   <td style="text-align:left"><a href="binary.html">01</a></td>
   <td style="text-align:left"><a href="index.html">00</a></td>
   <td style="text-align:left">Comprehensive</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Class hierarchy</strong> (2,027 classes, naming, RTTI)</td>
+  <td style="text-align:left"><strong>Class hierarchy</strong> (2,027 classes, RTTI)</td>
   <td style="text-align:left"><a href="class-hierarchy.html">02</a></td>
   <td style="text-align:left"><a href="index.html">00</a>, <a href="class-hierarchy.html">13</a></td>
   <td style="text-align:left">Comprehensive</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Physics pipeline</strong> (top-level call chain, sub-stepping)</td>
+  <td style="text-align:left"><strong>Physics pipeline</strong> (call chain, sub-stepping)</td>
   <td style="text-align:left"><a href="physics.html">04</a>, <a href="physics.html">10</a></td>
-  <td style="text-align:left"><a href="index.html">00</a>, <a href="tmnf-crossref.html">14</a>, <a href="15-ghidra-research-findings.md">15</a>, <a href="20-browser-recreation-guide.md">20</a></td>
+  <td style="text-align:left"><a href="tmnf-crossref.html">14</a>, <a href="15-ghidra-research-findings.md">15</a></td>
   <td style="text-align:left">Deep</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Vehicle forces</strong> (7 force models, turbo, boost)</td>
+  <td style="text-align:left"><strong>Vehicle forces</strong> (7 models, turbo, boost)</td>
   <td style="text-align:left"><a href="physics.html">04</a>, <a href="physics.html">10</a></td>
   <td style="text-align:left"><a href="tmnf-crossref.html">14</a>, <a href="19-openplanet-intelligence.md">19</a></td>
   <td style="text-align:left">Moderate (internals unknown)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Collision detection</strong> (NHmsCollision, broadphase, CCD)</td>
-  <td style="text-align:left"><a href="physics.html">04</a></td>
-  <td style="text-align:left"><a href="physics.html">10</a></td>
-  <td style="text-align:left">Moderate</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Surface effects</strong> (22+ gameplay effects, friction)</td>
-  <td style="text-align:left"><a href="physics.html">04</a></td>
-  <td style="text-align:left"><a href="19-openplanet-intelligence.md">19</a></td>
-  <td style="text-align:left">Comprehensive</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Vehicle state</strong> (CSceneVehicleVisState fields)</td>
+  <td style="text-align:left"><strong>Vehicle state</strong> (CSceneVehicleVisState)</td>
   <td style="text-align:left"><a href="19-openplanet-intelligence.md">19</a></td>
   <td style="text-align:left"><a href="physics.html">04</a>, <a href="physics.html">10</a></td>
   <td style="text-align:left">Comprehensive (<span class="badge badge-verified">VERIFIED</span>)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Wheel/suspension</strong> (per-wheel fields, damper model)</td>
-  <td style="text-align:left"><a href="physics.html">04</a>, <a href="19-openplanet-intelligence.md">19</a></td>
-  <td style="text-align:left"><a href="physics.html">10</a></td>
-  <td style="text-align:left">Moderate</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Gravity</strong> (parameterized, GravityCoef, sleep state)</td>
-  <td style="text-align:left"><a href="physics.html">04</a>, <a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left"><a href="physics.html">10</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Water physics</strong> (buoyancy, drag)</td>
-  <td style="text-align:left"><a href="physics.html">04</a></td>
-  <td style="text-align:left"><a href="physics.html">10</a></td>
-  <td style="text-align:left">Basic</td>
-</tr>
-<tr>
   <td style="text-align:left"><strong>Rendering pipeline</strong> (deferred, 19 passes)</td>
   <td style="text-align:left"><a href="rendering.html">05</a>, <a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left"><a href="index.html">00</a>, <a href="rendering.html">11</a>, <a href="20-browser-recreation-guide.md">20</a></td>
+  <td style="text-align:left"><a href="rendering.html">11</a></td>
   <td style="text-align:left">Deep</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>G-buffer</strong> (9 render targets, layout)</td>
+  <td style="text-align:left"><strong>G-buffer</strong> (9 render targets)</td>
   <td style="text-align:left"><a href="rendering.html">05</a>, <a href="15-ghidra-research-findings.md">15</a></td>
   <td style="text-align:left"><a href="rendering.html">11</a></td>
-  <td style="text-align:left">Moderate (formats unconfirmed)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>D3D11 device</strong> (creation, feature levels, MSAA)</td>
-  <td style="text-align:left"><a href="rendering.html">05</a></td>
-  <td style="text-align:left"><a href="binary.html">01</a>, <a href="rendering.html">11</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Shaders</strong> (HLSL, 200+ files, Tech3)</td>
-  <td style="text-align:left"><a href="rendering.html">05</a></td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left">Comprehensive (file list)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Post-processing</strong> (HBAO+, bloom, tone map, AA)</td>
-  <td style="text-align:left"><a href="rendering.html">05</a></td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a>, <a href="20-browser-recreation-guide.md">20</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Shadows</strong> (PSSM, volumes, cache, fake)</td>
-  <td style="text-align:left"><a href="rendering.html">05</a></td>
-  <td style="text-align:left"><a href="rendering.html">11</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Particles</strong> (GPU compute, self-shadowing)</td>
-  <td style="text-align:left"><a href="rendering.html">05</a></td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left">Moderate</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>TXAA</strong> (NVIDIA + Ubisoft dual implementation)</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left"><a href="rendering.html">05</a></td>
   <td style="text-align:left">Moderate</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>GBX file format</strong> (header, body, chunks)</td>
   <td style="text-align:left"><a href="file-formats.html">06</a>, <a href="file-formats.html">16</a></td>
-  <td style="text-align:left"><a href="index.html">00</a>, <a href="20-browser-recreation-guide.md">20</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Class ID system</strong> (MwClassId, factory, remap)</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a></td>
-  <td style="text-align:left"><a href="class-hierarchy.html">02</a>, <a href="file-formats.html">16</a></td>
-  <td style="text-align:left">Comprehensive</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Serialization</strong> (CClassicArchive, chunk system)</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a></td>
-  <td style="text-align:left"><a href="file-formats.html">16</a></td>
+  <td style="text-align:left"><a href="26-real-file-analysis.md">26</a></td>
   <td style="text-align:left">Deep</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Map loading</strong> (22-stage pipeline)</td>
   <td style="text-align:left"><a href="file-formats.html">06</a></td>
-  <td style="text-align:left"><a href="file-formats.html">16</a>, <a href="20-browser-recreation-guide.md">20</a></td>
+  <td style="text-align:left"><a href="28-map-structure-encyclopedia.md">28</a></td>
   <td style="text-align:left">Moderate</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>File types</strong> (431 GBX extensions)</td>
-  <td style="text-align:left"><a href="file-formats.html">06</a></td>
-  <td style="text-align:left"><a href="game-files.html">09</a></td>
-  <td style="text-align:left">Comprehensive (list)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Compression</strong> (zlib confirmed, LZO absent)</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left"><a href="file-formats.html">06</a>, <a href="file-formats.html">16</a></td>
-  <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Networking architecture</strong> (10 layers)</td>
+  <td style="text-align:left"><strong>Networking</strong> (10-layer stack, auth)</td>
   <td style="text-align:left"><a href="networking.html">07</a>, <a href="networking.html">17</a></td>
-  <td style="text-align:left"><a href="index.html">00</a>, <a href="20-browser-recreation-guide.md">20</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>TCP+UDP dual protocol</strong></td>
-  <td style="text-align:left"><a href="networking.html">07</a></td>
-  <td style="text-align:left"><a href="networking.html">17</a></td>
-  <td style="text-align:left">Moderate</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Authentication</strong> (UPC -> UbiServices -> Nadeo)</td>
-  <td style="text-align:left"><a href="networking.html">07</a></td>
   <td style="text-align:left"><a href="19-openplanet-intelligence.md">19</a></td>
   <td style="text-align:left">Deep</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Nadeo Services API</strong> (maps, records, seasons)</td>
-  <td style="text-align:left"><a href="networking.html">07</a></td>
-  <td style="text-align:left"><a href="19-openplanet-intelligence.md">19</a>, <a href="networking.html">17</a></td>
-  <td style="text-align:left">Comprehensive</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>XML-RPC</strong> (server control, 22 callbacks)</td>
-  <td style="text-align:left"><a href="networking.html">07</a></td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left">Comprehensive</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Voice chat</strong> (Vivox)</td>
-  <td style="text-align:left"><a href="networking.html">07</a></td>
-  <td style="text-align:left"><a href="index.html">00</a></td>
-  <td style="text-align:left">Basic</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Text chat</strong> (XMPP)</td>
-  <td style="text-align:left"><a href="networking.html">07</a></td>
-  <td style="text-align:left"><a href="index.html">00</a></td>
-  <td style="text-align:left">Basic</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Game architecture</strong> (entry point, init, main loop)</td>
+  <td style="text-align:left"><strong>Game architecture</strong> (entry point, main loop)</td>
   <td style="text-align:left"><a href="architecture.html">08</a>, <a href="architecture.html">12</a></td>
-  <td style="text-align:left"><a href="index.html">00</a>, <a href="20-browser-recreation-guide.md">20</a></td>
+  <td style="text-align:left"><a href="index.html">00</a></td>
   <td style="text-align:left">Comprehensive</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>State machine</strong> (60+ states, 9 phases)</td>
   <td style="text-align:left"><a href="architecture.html">08</a>, <a href="architecture.html">12</a></td>
-  <td style="text-align:left"><a href="index.html">00</a></td>
+  <td style="text-align:left">-</td>
   <td style="text-align:left">Comprehensive</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Fiber/coroutine system</strong> (CMwCmdFiber)</td>
-  <td style="text-align:left"><a href="architecture.html">08</a></td>
-  <td style="text-align:left"><a href="architecture.html">12</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>ManiaScript</strong> (tokens, types, directives)</td>
+  <td style="text-align:left"><strong>ManiaScript</strong> (tokens, types)</td>
   <td style="text-align:left"><a href="architecture.html">08</a>, <a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left"><a href="index.html">00</a>, <a href="20-browser-recreation-guide.md">20</a></td>
+  <td style="text-align:left">-</td>
   <td style="text-align:left">Moderate (tokens only)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Audio system</strong> (OpenAL, Vorbis, spatial)</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left"><a href="index.html">00</a>, <a href="class-hierarchy.html">13</a>, <a href="20-browser-recreation-guide.md">20</a></td>
-  <td style="text-align:left">Moderate</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Input system</strong> (DInput8, XInput, CInputPort)</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left"><a href="index.html">00</a>, <a href="19-openplanet-intelligence.md">19</a>, <a href="20-browser-recreation-guide.md">20</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Camera system</strong> (12 types, orbital math)</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a>, <a href="19-openplanet-intelligence.md">19</a></td>
-  <td style="text-align:left"><a href="20-browser-recreation-guide.md">20</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Thread model</strong> (dual pool, NClassicThreadPool)</td>
-  <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
-  <td style="text-align:left"><a href="architecture.html">12</a></td>
-  <td style="text-align:left">Moderate</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Game files</strong> (directory structure, assets)</td>
-  <td style="text-align:left"><a href="game-files.html">09</a></td>
-  <td style="text-align:left"><a href="file-formats.html">06</a></td>
-  <td style="text-align:left">Comprehensive</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>TMNF comparison</strong> (physics differences)</td>
-  <td style="text-align:left"><a href="tmnf-crossref.html">14</a></td>
-  <td style="text-align:left"><a href="physics.html">10</a></td>
-  <td style="text-align:left">Deep</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Configuration</strong> (Default.json, 65+ display params)</td>
-  <td style="text-align:left"><a href="19-openplanet-intelligence.md">19</a></td>
-  <td style="text-align:left"><a href="rendering.html">05</a></td>
-  <td style="text-align:left">Comprehensive</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Materials</strong> (208 materials, 19 surface IDs)</td>
   <td style="text-align:left"><a href="19-openplanet-intelligence.md">19</a></td>
-  <td style="text-align:left"><a href="physics.html">04</a></td>
+  <td style="text-align:left"><a href="28-map-structure-encyclopedia.md">28</a></td>
   <td style="text-align:left">Comprehensive (<span class="badge badge-verified">VERIFIED</span>)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Editor internals</strong> (UI structure, orbital camera)</td>
-  <td style="text-align:left"><a href="19-openplanet-intelligence.md">19</a></td>
-  <td style="text-align:left">-</td>
-  <td style="text-align:left">Basic</td>
+  <td style="text-align:left"><strong>Ghost/Replay</strong></td>
+  <td style="text-align:left"><a href="30-ghost-replay-format.md">30</a></td>
+  <td style="text-align:left"><a href="class-hierarchy.html">13</a>, <a href="26-real-file-analysis.md">26</a></td>
+  <td style="text-align:left">Deep</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Browser recreation</strong> (feasibility, tech mapping)</td>
+  <td style="text-align:left"><strong>Browser recreation</strong></td>
   <td style="text-align:left"><a href="20-browser-recreation-guide.md">20</a></td>
   <td style="text-align:left">All others</td>
   <td style="text-align:left">Synthesis</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>Validation/corrections</strong> (error analysis)</td>
-  <td style="text-align:left"><a href="18-validation-review.md">18</a></td>
-  <td style="text-align:left">All others</td>
-  <td style="text-align:left">Meta-analysis</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>Open questions</strong> (what remains unknown)</td>
-  <td style="text-align:left"><a href="index.html">00</a> S8</td>
-  <td style="text-align:left"><a href="18-validation-review.md">18</a></td>
-  <td style="text-align:left">Tracking</td>
+  <td style="text-align:left"><strong>Community knowledge</strong></td>
+  <td style="text-align:left"><a href="29-community-knowledge.md">29</a></td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">Cross-reference</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="101-document-inventory"><a class="anchor" href="#101-document-inventory">#</a>10.1 Document Inventory</h3>
+<h3 id="document-inventory"><a class="anchor" href="#document-inventory">#</a>Document Inventory</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
   <th style="text-align:left">#</th>
   <th style="text-align:left">Document</th>
-  <th style="text-align:right">Lines</th>
   <th style="text-align:left">Focus Area</th>
 </tr>
 </thead>
@@ -2595,193 +1104,164 @@ Pack Types (6):
 <tr>
   <td style="text-align:left">00</td>
   <td style="text-align:left"><a href="index.html">Master Overview</a></td>
-  <td style="text-align:right">~568</td>
-  <td style="text-align:left">Executive summary, subsystem map, critical addresses, open questions</td>
+  <td style="text-align:left">Executive summary, subsystem map, open questions</td>
 </tr>
 <tr>
   <td style="text-align:left">01</td>
   <td style="text-align:left"><a href="binary.html">Binary Overview</a></td>
-  <td style="text-align:right">291</td>
-  <td style="text-align:left">PE headers, sections, imports, exports, code protection</td>
+  <td style="text-align:left">PE headers, imports, code protection</td>
 </tr>
 <tr>
   <td style="text-align:left">02</td>
   <td style="text-align:left"><a href="class-hierarchy.html">Class Hierarchy</a></td>
-  <td style="text-align:right">693</td>
-  <td style="text-align:left">2,027 classes, Nadeo RTTI, subsystem mapping</td>
+  <td style="text-align:left">2,027 classes, Nadeo RTTI</td>
 </tr>
 <tr>
   <td style="text-align:left">04</td>
   <td style="text-align:left"><a href="physics.html">Physics & Vehicle</a></td>
-  <td style="text-align:right">840</td>
-  <td style="text-align:left">Simulation pipeline, forces, collision, surfaces, turbo</td>
+  <td style="text-align:left">Simulation pipeline, forces, collision</td>
 </tr>
 <tr>
   <td style="text-align:left">05</td>
   <td style="text-align:left"><a href="rendering.html">Rendering & Graphics</a></td>
-  <td style="text-align:right">811</td>
-  <td style="text-align:left">D3D11, deferred pipeline, shaders, shadows, post-FX</td>
+  <td style="text-align:left">D3D11, deferred pipeline, shaders</td>
 </tr>
 <tr>
   <td style="text-align:left">06</td>
   <td style="text-align:left"><a href="file-formats.html">File Formats</a></td>
-  <td style="text-align:right">698</td>
-  <td style="text-align:left">GBX parsing, serialization, class IDs, map loading</td>
+  <td style="text-align:left">GBX parsing, serialization, class IDs</td>
 </tr>
 <tr>
   <td style="text-align:left">07</td>
   <td style="text-align:left"><a href="networking.html">Networking</a></td>
-  <td style="text-align:right">1,149</td>
-  <td style="text-align:left">10-layer protocol stack, auth, API domains, XML-RPC</td>
+  <td style="text-align:left">Protocol stack, auth, API domains</td>
 </tr>
 <tr>
   <td style="text-align:left">08</td>
   <td style="text-align:left"><a href="architecture.html">Game Architecture</a></td>
-  <td style="text-align:right">821</td>
-  <td style="text-align:left">Entry point, game loop, state machine, fibers, ManiaScript</td>
-</tr>
-<tr>
-  <td style="text-align:left">09</td>
-  <td style="text-align:left"><a href="game-files.html">Game Files Analysis</a></td>
-  <td style="text-align:right">~400</td>
-  <td style="text-align:left">Directory structure, asset inventory</td>
+  <td style="text-align:left">Entry point, state machine, fibers</td>
 </tr>
 <tr>
   <td style="text-align:left">10</td>
   <td style="text-align:left"><a href="physics.html">Physics Deep Dive</a></td>
-  <td style="text-align:right">~600</td>
-  <td style="text-align:left">Decompiled physics functions, 7 force models, tire model</td>
+  <td style="text-align:left">Decompiled physics functions</td>
 </tr>
 <tr>
   <td style="text-align:left">11</td>
   <td style="text-align:left"><a href="rendering.html">Rendering Deep Dive</a></td>
-  <td style="text-align:right">~500</td>
-  <td style="text-align:left">D3D11 device details, vertex formats, swap chain</td>
+  <td style="text-align:left">D3D11 device, vertex formats</td>
 </tr>
 <tr>
   <td style="text-align:left">12</td>
   <td style="text-align:left"><a href="architecture.html">Architecture Deep Dive</a></td>
-  <td style="text-align:right">~800</td>
-  <td style="text-align:left">Complete 60+ state map, coroutine pattern, frame loop</td>
-</tr>
-<tr>
-  <td style="text-align:left">13</td>
-  <td style="text-align:left"><a href="class-hierarchy.html">Subsystem Class Map</a></td>
-  <td style="text-align:right">~400</td>
-  <td style="text-align:left">Audio, camera, UI class hierarchies</td>
+  <td style="text-align:left">Complete state map, coroutines</td>
 </tr>
 <tr>
   <td style="text-align:left">14</td>
   <td style="text-align:left"><a href="tmnf-crossref.html">TMNF Cross-Reference</a></td>
-  <td style="text-align:right">~500</td>
-  <td style="text-align:left">TM2020 vs TMNF physics comparison</td>
+  <td style="text-align:left">TM2020 vs TMNF comparison</td>
 </tr>
 <tr>
   <td style="text-align:left">15</td>
   <td style="text-align:left"><a href="15-ghidra-research-findings.md">Ghidra Research Findings</a></td>
-  <td style="text-align:right">~400</td>
-  <td style="text-align:left">Audio, input, camera, compression, gravity, TXAA, ManiaScript</td>
+  <td style="text-align:left">Audio, input, camera, compression</td>
 </tr>
 <tr>
   <td style="text-align:left">16</td>
   <td style="text-align:left"><a href="file-formats.html">File Format Deep Dive</a></td>
-  <td style="text-align:right">~600</td>
-  <td style="text-align:left">Reference table, chunk parsing, LookbackString, class IDs</td>
+  <td style="text-align:left">Reference table, chunks, LookbackString</td>
 </tr>
 <tr>
   <td style="text-align:left">17</td>
   <td style="text-align:left"><a href="networking.html">Networking Deep Dive</a></td>
-  <td style="text-align:right">~500</td>
-  <td style="text-align:left">Protocol details, network update cycle</td>
+  <td style="text-align:left">Protocol details</td>
 </tr>
 <tr>
   <td style="text-align:left">18</td>
   <td style="text-align:left"><a href="18-validation-review.md">Validation Review</a></td>
-  <td style="text-align:right">~600</td>
-  <td style="text-align:left">Error analysis, corrections, confidence downgrades</td>
+  <td style="text-align:left">Error analysis, corrections</td>
 </tr>
 <tr>
   <td style="text-align:left">19</td>
   <td style="text-align:left"><a href="19-openplanet-intelligence.md">Openplanet Intelligence</a></td>
-  <td style="text-align:right">~600</td>
-  <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span> vehicle state, API, materials, config</td>
+  <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span> vehicle state, API, materials</td>
 </tr>
 <tr>
   <td style="text-align:left">20</td>
   <td style="text-align:left"><a href="20-browser-recreation-guide.md">Browser Recreation Guide</a></td>
-  <td style="text-align:right">~600</td>
-  <td style="text-align:left">Feasibility, tech mapping, MVP definition</td>
+  <td style="text-align:left">Feasibility, tech mapping, MVP</td>
+</tr>
+<tr>
+  <td style="text-align:left">26</td>
+  <td style="text-align:left"><a href="26-real-file-analysis.md">Real File Analysis</a></td>
+  <td style="text-align:left">Byte-by-byte GBX validation</td>
+</tr>
+<tr>
+  <td style="text-align:left">28</td>
+  <td style="text-align:left"><a href="28-map-structure-encyclopedia.md">Map Structure Encyclopedia</a></td>
+  <td style="text-align:left">Blocks, items, waypoints</td>
+</tr>
+<tr>
+  <td style="text-align:left">29</td>
+  <td style="text-align:left"><a href="29-community-knowledge.md">Community Knowledge</a></td>
+  <td style="text-align:left">Community tools cross-reference</td>
+</tr>
+<tr>
+  <td style="text-align:left">30</td>
+  <td style="text-align:left"><a href="30-ghost-replay-format.md">Ghost Replay Format</a></td>
+  <td style="text-align:left">Ghost samples, replay structure</td>
 </tr>
 </tbody>
 </table></div>
 <hr>
-<p><em>This document was generated as a visual reference companion for the Trackmania 2020 reverse engineering documentation suite. All addresses are from the Trackmania.exe binary (45,467,720 bytes, PE32+ x86-64, image base <code class="addr">0x140000000</code>). Items in the glossary and address table reference their source documents for traceability.</em></p>
+<h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
+<ul>
+  <li><a href="index.html">00-master-overview.md</a> -- Start here for a high-level summary</li>
+  <li><a href="20-browser-recreation-guide.md">20-browser-recreation-guide.md</a> -- Actionable implementation guidance</li>
+  <li><a href="18-validation-review.md">18-validation-review.md</a> -- Corrections and confidence downgrades</li>
+</ul>
+<details><summary>Analysis metadata</summary>
+<ul>
+  <li><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020 by Nadeo/Ubisoft)</li>
+  <li><strong>Date</strong>: 2026-03-27</li>
+  <li><strong>Purpose</strong>: Visual diagrams, comprehensive glossary, address reference, and cross-document index for all reverse engineering documentation</li>
+</ul>
+</details>
 
-                        <nav class="prev-next"><a class="prev" href="openplanet-mining.html">&larr; Openplanet Deep Mining</a><a class="next" href="real-files.html">Real File Analysis &rarr;</a></nav>
+                        <nav class="prev-next"><a class="prev" href="validation.html">&larr; Errata &amp; Corrections</a><a class="next" href="recreation.html">Browser Recreation Guide &rarr;</a></nav>
                     </div>
                     <nav class="page-toc" id="page-toc">
 <h3>On This Page</h3>
 <ul>
-<li class=""><a href="#table-of-contents">Table of Contents</a></li>
-<li class=""><a href="#1-engine-architecture-diagram">1. Engine Architecture Diagram</a></li>
-  <li class="toc-h3"><a href="#11-full-system-overview">1.1 Full System Overview</a></li>
-  <li class="toc-h3"><a href="#12-data-flow-between-subsystems">1.2 Data Flow Between Subsystems</a></li>
-  <li class="toc-h3"><a href="#13-startup-sequence">1.3 Startup Sequence</a></li>
-<li class=""><a href="#2-complete-class-hierarchy-tree">2. Complete Class Hierarchy Tree</a></li>
-  <li class="toc-h3"><a href="#21-core-engine-hierarchy">2.1 Core Engine Hierarchy</a></li>
-  <li class="toc-h3"><a href="#22-application-hierarchy">2.2 Application Hierarchy</a></li>
-  <li class="toc-h3"><a href="#23-game-logic-classes-cgame-728-classes">2.3 Game Logic Classes (CGame*, 728 classes)</a></li>
-  <li class="toc-h3"><a href="#24-resourceasset-classes-cplug-391-classes">2.4 Resource/Asset Classes (CPlug*, 391 classes)</a></li>
-  <li class="toc-h3"><a href="#25-networking-classes-cnet-262-classes">2.5 Networking Classes (CNet*, 262 classes)</a></li>
-  <li class="toc-h3"><a href="#26-other-major-families">2.6 Other Major Families</a></li>
-<li class=""><a href="#3-deferred-rendering-pipeline-diagram">3. Deferred Rendering Pipeline Diagram</a></li>
-  <li class="toc-h3"><a href="#31-complete-19-pass-pipeline">3.1 Complete 19-Pass Pipeline</a></li>
-  <li class="toc-h3"><a href="#32-shader-organization-200-hlsl-files">3.2 Shader Organization (200+ HLSL files)</a></li>
-<li class=""><a href="#4-physics-pipeline-diagram">4. Physics Pipeline Diagram</a></li>
-  <li class="toc-h3"><a href="#41-per-frame-physics-pipeline">4.1 Per-Frame Physics Pipeline</a></li>
-  <li class="toc-h3"><a href="#42-vehicle-force-model-dispatch">4.2 Vehicle Force Model Dispatch</a></li>
-  <li class="toc-h3"><a href="#43-rigid-body-dynamics-nscenedyna">4.3 Rigid Body Dynamics (NSceneDyna)</a></li>
-<li class=""><a href="#5-game-state-machine-diagram">5. Game State Machine Diagram</a></li>
-  <li class="toc-h3"><a href="#51-complete-state-transition-map-mermaid-notation">5.1 Complete State Transition Map (Mermaid notation)</a></li>
-  <li class="toc-h3"><a href="#52-normal-gameplay-flow-linear">5.2 Normal Gameplay Flow (Linear)</a></li>
-  <li class="toc-h3"><a href="#53-network-state-machine-nested">5.3 Network State Machine (Nested)</a></li>
-<li class=""><a href="#6-network-protocol-stack-diagram">6. Network Protocol Stack Diagram</a></li>
-  <li class="toc-h3"><a href="#61-full-protocol-layer-diagram">6.1 Full Protocol Layer Diagram</a></li>
-  <li class="toc-h3"><a href="#62-authentication-flow">6.2 Authentication Flow</a></li>
-  <li class="toc-h3"><a href="#63-api-domains">6.3 API Domains</a></li>
-<li class=""><a href="#7-gbx-file-format-diagram">7. GBX File Format Diagram</a></li>
-  <li class="toc-h3"><a href="#71-binary-file-layout">7.1 Binary File Layout</a></li>
-  <li class="toc-h3"><a href="#72-class-id-structure">7.2 Class ID Structure</a></li>
-  <li class="toc-h3"><a href="#73-lookbackstring-encoding">7.3 LookbackString Encoding</a></li>
-  <li class="toc-h3"><a href="#74-file-id-fid-system-hierarchy">7.4 File ID (Fid) System Hierarchy</a></li>
-<li class=""><a href="#8-comprehensive-glossary">8. Comprehensive Glossary</a></li>
-  <li class="toc-h3"><a href="#a">A</a></li>
-  <li class="toc-h3"><a href="#b">B</a></li>
-  <li class="toc-h3"><a href="#c">C</a></li>
-  <li class="toc-h3"><a href="#d">D</a></li>
-  <li class="toc-h3"><a href="#e">E</a></li>
-  <li class="toc-h3"><a href="#f">F</a></li>
-  <li class="toc-h3"><a href="#g">G</a></li>
-  <li class="toc-h3"><a href="#h">H</a></li>
-  <li class="toc-h3"><a href="#i">I</a></li>
-  <li class="toc-h3"><a href="#l">L</a></li>
-  <li class="toc-h3"><a href="#m">M</a></li>
-  <li class="toc-h3"><a href="#n">N</a></li>
-  <li class="toc-h3"><a href="#o">O</a></li>
-  <li class="toc-h3"><a href="#p">P</a></li>
-  <li class="toc-h3"><a href="#r">R</a></li>
-  <li class="toc-h3"><a href="#s">S</a></li>
-  <li class="toc-h3"><a href="#t">T</a></li>
-  <li class="toc-h3"><a href="#u">U</a></li>
-  <li class="toc-h3"><a href="#v">V</a></li>
-  <li class="toc-h3"><a href="#w">W</a></li>
-  <li class="toc-h3"><a href="#x">X</a></li>
-  <li class="toc-h3"><a href="#z">Z</a></li>
-<li class=""><a href="#9-address-reference-table">9. Address Reference Table</a></li>
-  <li class="toc-h3"><a href="#91-functions-sorted-by-address">9.1 Functions (Sorted by Address)</a></li>
-  <li class="toc-h3"><a href="#92-key-data-addresses">9.2 Key Data Addresses</a></li>
-<li class=""><a href="#10-cross-document-index">10. Cross-Document Index</a></li>
-  <li class="toc-h3"><a href="#101-document-inventory">10.1 Document Inventory</a></li>
+<li class=""><a href="#engine-architecture-diagram">Engine Architecture Diagram</a></li>
+  <li class="toc-h3"><a href="#full-system-overview">Full System Overview</a></li>
+  <li class="toc-h3"><a href="#data-flow-between-subsystems">Data Flow Between Subsystems</a></li>
+  <li class="toc-h3"><a href="#startup-sequence">Startup Sequence</a></li>
+<li class=""><a href="#complete-class-hierarchy-tree">Complete Class Hierarchy Tree</a></li>
+  <li class="toc-h3"><a href="#core-engine-hierarchy">Core Engine Hierarchy</a></li>
+  <li class="toc-h3"><a href="#application-hierarchy">Application Hierarchy</a></li>
+  <li class="toc-h3"><a href="#game-logic-classes-cgame-728-classes">Game Logic Classes (CGame*, 728 classes)</a></li>
+  <li class="toc-h3"><a href="#resourceasset-classes-cplug-391-classes">Resource/Asset Classes (CPlug*, 391 classes)</a></li>
+  <li class="toc-h3"><a href="#networking-classes-cnet-262-classes">Networking Classes (CNet*, 262 classes)</a></li>
+<li class=""><a href="#deferred-rendering-pipeline-diagram">Deferred Rendering Pipeline Diagram</a></li>
+  <li class="toc-h3"><a href="#complete-19-pass-pipeline">Complete 19-Pass Pipeline</a></li>
+  <li class="toc-h3"><a href="#shader-organization-200-hlsl-files">Shader Organization (200+ HLSL files)</a></li>
+<li class=""><a href="#physics-pipeline-diagram">Physics Pipeline Diagram</a></li>
+  <li class="toc-h3"><a href="#per-frame-physics-pipeline">Per-Frame Physics Pipeline</a></li>
+  <li class="toc-h3"><a href="#vehicle-force-model-dispatch">Vehicle Force Model Dispatch</a></li>
+  <li class="toc-h3"><a href="#rigid-body-dynamics-nscenedyna">Rigid Body Dynamics (NSceneDyna)</a></li>
+<li class=""><a href="#game-state-machine-diagram">Game State Machine Diagram</a></li>
+  <li class="toc-h3"><a href="#complete-state-transition-map">Complete State Transition Map</a></li>
+  <li class="toc-h3"><a href="#normal-gameplay-flow">Normal Gameplay Flow</a></li>
+<li class=""><a href="#network-protocol-stack-diagram">Network Protocol Stack Diagram</a></li>
+<li class=""><a href="#gbx-file-format-diagram">GBX File Format Diagram</a></li>
+<li class=""><a href="#comprehensive-glossary">Comprehensive Glossary</a></li>
+<li class=""><a href="#address-reference-table">Address Reference Table</a></li>
+  <li class="toc-h3"><a href="#key-function-addresses">Key Function Addresses</a></li>
+  <li class="toc-h3"><a href="#key-data-addresses">Key Data Addresses</a></li>
+<li class=""><a href="#cross-document-index">Cross-Document Index</a></li>
+  <li class="toc-h3"><a href="#document-inventory">Document Inventory</a></li>
+<li class=""><a href="#related-pages">Related Pages</a></li>
 </ul>
 </nav>
 
