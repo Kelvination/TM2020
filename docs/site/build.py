@@ -6,12 +6,20 @@ Converts markdown source files to a professional HTML documentation site.
 
 import re
 import os
+import json
 import html as html_module
 
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 RE_DIR = os.path.join(os.path.dirname(SITE_DIR), 're')
 PLAN_DIR = os.path.join(os.path.dirname(SITE_DIR), 'plan')
 SEMINAR_DIR = os.path.join(os.path.dirname(SITE_DIR), 'seminar')
+
+# Load address-to-name mapping for named hex addresses
+ADDR_NAMES_FILE = os.path.join(SITE_DIR, 'address_names.json')
+ADDRESS_NAMES = {}
+if os.path.exists(ADDR_NAMES_FILE):
+    with open(ADDR_NAMES_FILE, 'r', encoding='utf-8') as f:
+        ADDRESS_NAMES = json.load(f)
 
 # Page definitions: (output_file, title, source_files, nav_icon)
 # Entries with None as output_file are section separators shown in the sidebar.
@@ -134,23 +142,47 @@ def convert_inline(text):
     text = re.sub(r'\[UNKNOWN[^\]]*\]', lambda m: f'<span class="badge badge-unknown">{m.group(0)}</span>', text)
     text = re.sub(r'\bUNKNOWN\b(?![^<]*>)', '<span class="badge badge-unknown">UNKNOWN</span>', text)
 
-    # Address badges - add addr class to code tags containing hex addresses
-    text = re.sub(r'<code>(0x[0-9a-fA-F]{8,16})</code>',
-                  r'<code class="addr">\1</code>', text)
-    # Also catch bare hex addresses not already in code tags
-    def addr_replace(m):
+    # Named addresses - replace hex with symbolic names when mapping exists
+    def named_addr_code(m):
+        addr = m.group(1)
+        addr_lower = addr.lower()
+        # Look up in mapping (try both original case and lowercase)
+        name = ADDRESS_NAMES.get(addr_lower) or ADDRESS_NAMES.get(addr)
+        if name:
+            return (f'<span class="named-addr">'
+                    f'<span class="addr-name">{escape_html(name)}</span>'
+                    f'<code class="addr">{addr}</code>'
+                    f'</span>')
+        # Not in mapping - apply addr class for long addresses (8+ hex digits)
+        if len(addr) - 2 >= 8:
+            return f'<code class="addr">{addr}</code>'
+        return f'<code>{addr}</code>'
+
+    text = re.sub(r'<code>(0x[0-9a-fA-F]{2,16})</code>', named_addr_code, text)
+
+    # Also catch bare hex addresses (8-16 hex digits) not already in code tags
+    def bare_addr_replace(m):
+        addr = m.group(0)
         start = m.start()
         prefix = text[:start]
-        # Skip if inside a tag attribute or already in a code element
+        # Skip if inside a tag attribute or already in a code/span element
         if prefix.endswith('"') or prefix.endswith("'"):
-            return m.group(0)
+            return addr
         last_code_open = prefix.rfind('<code')
         last_code_close = prefix.rfind('</code>')
         if last_code_open > last_code_close:
-            return m.group(0)
-        return f'<code class="addr">{m.group(0)}</code>'
+            return addr
+        # Check naming mapping
+        addr_lower = addr.lower()
+        name = ADDRESS_NAMES.get(addr_lower) or ADDRESS_NAMES.get(addr)
+        if name:
+            return (f'<span class="named-addr">'
+                    f'<span class="addr-name">{escape_html(name)}</span>'
+                    f'<code class="addr">{addr}</code>'
+                    f'</span>')
+        return f'<code class="addr">{addr}</code>'
 
-    text = re.sub(r'(?<![\w"\'/>])0x[0-9a-fA-F]{8,16}(?![\w"\'<])', addr_replace, text)
+    text = re.sub(r'(?<![\w"\'/>])0x[0-9a-fA-F]{8,16}(?![\w"\'<])', bare_addr_replace, text)
 
     return text
 
@@ -621,6 +653,12 @@ def build_page(page_def):
                 <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
                     <span class="toggle-icon">&#9660;</span>
                     Hide Technical Details
+                </button>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
                 </button>
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
@@ -1130,6 +1168,37 @@ code.addr {
     font-weight: 500;
 }
 
+/* Named addresses: show symbol name, hide hex by default */
+.named-addr .addr {
+    display: none;
+    margin-left: 3px;
+    font-size: 0.85em;
+    opacity: 0.6;
+}
+
+.named-addr .addr::before {
+    content: "(";
+}
+
+.named-addr .addr::after {
+    content: ")";
+}
+
+body.show-addresses .named-addr .addr {
+    display: inline;
+}
+
+.addr-name {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--bg-code);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--code-addr);
+    font-weight: 500;
+    word-break: break-word;
+}
+
 /* Code blocks */
 .code-block {
     position: relative;
@@ -1394,15 +1463,113 @@ hr {
     }
 
     .content-wrapper {
-        padding: 16px;
+        padding: 12px;
     }
 
-    h1 { font-size: 22px; }
-    h2 { font-size: 18px; }
-    h3 { font-size: 16px; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 17px; }
+    h3 { font-size: 15px; }
+    h4 { font-size: 14px; }
+
+    body { font-size: 14px; }
 
     .prev-next { flex-direction: column; }
     .prev-next a { max-width: 100%; }
+
+    /* Named addresses on mobile */
+    .addr-name {
+        font-size: 0.82em;
+        padding: 1px 4px;
+        word-break: break-all;
+    }
+
+    .named-addr .addr {
+        font-size: 0.78em;
+    }
+
+    /* Tables on mobile */
+    .table-wrapper {
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 6px 8px;
+    }
+
+    th {
+        white-space: normal;
+    }
+
+    /* Code blocks on mobile */
+    .code-block pre {
+        padding: 12px;
+        font-size: 12px;
+    }
+
+    .code-block pre code {
+        font-size: 12px;
+    }
+
+    /* Inline code on mobile */
+    code {
+        font-size: 0.82em;
+        padding: 1px 4px;
+    }
+
+    /* Touch-friendly targets */
+    .sidebar-toggle button {
+        min-height: 44px;
+    }
+
+    .nav-item {
+        min-height: 44px;
+        padding: 10px 16px;
+    }
+
+    /* Disclaimer compact */
+    .disclaimer {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+
+    /* Collapsible sections on mobile */
+    details.collapsible summary {
+        padding: 8px 8px 8px 12px;
+    }
+
+    details.collapsible .collapsible-content {
+        padding: 0 0 0.5em 8px;
+    }
+
+    /* Scroll top button - larger touch target */
+    .scroll-top {
+        width: 44px;
+        height: 44px;
+        bottom: 16px;
+        right: 16px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+    .content-wrapper {
+        padding: 8px;
+    }
+
+    h1 { font-size: 18px; }
+    h2 { font-size: 16px; }
+
+    table { font-size: 11px; }
+    th, td { padding: 4px 6px; }
+
+    .addr-name {
+        font-size: 0.78em;
+    }
 }
 
 /* Collapsible sections */
@@ -1658,6 +1825,46 @@ def build_js():
             techToggleBtn.addEventListener("click", function() {
                 var isCurrentlyHidden = techToggleBtn.classList.contains("collapsed");
                 setTechSectionsState(!isCurrentlyHidden);
+            });
+        }
+
+        // Address toggle (show/hide hex addresses alongside symbol names)
+        var ADDR_TOGGLE_KEY = "tm2020-docs-addr-visible";
+        var addrToggleBtn = document.getElementById("addr-toggle");
+
+        function setAddrState(visible) {
+            if (visible) {
+                document.body.classList.add("show-addresses");
+            } else {
+                document.body.classList.remove("show-addresses");
+            }
+            if (addrToggleBtn) {
+                var icon = addrToggleBtn.querySelector(".toggle-icon");
+                if (visible) {
+                    addrToggleBtn.classList.remove("collapsed");
+                    icon.innerHTML = "&#9660;";
+                    addrToggleBtn.childNodes[addrToggleBtn.childNodes.length - 1].textContent = " Hide Hex Addresses";
+                } else {
+                    addrToggleBtn.classList.add("collapsed");
+                    icon.innerHTML = "&#9654;";
+                    addrToggleBtn.childNodes[addrToggleBtn.childNodes.length - 1].textContent = " Show Hex Addresses";
+                }
+            }
+            localStorage.setItem(ADDR_TOGGLE_KEY, visible ? "1" : "0");
+        }
+
+        // Initialize: default is hidden (only names shown)
+        var addrVisible = localStorage.getItem(ADDR_TOGGLE_KEY);
+        if (addrVisible === null) {
+            setAddrState(false);
+        } else {
+            setAddrState(addrVisible === "1");
+        }
+
+        if (addrToggleBtn) {
+            addrToggleBtn.addEventListener("click", function() {
+                var isCurrentlyVisible = document.body.classList.contains("show-addresses");
+                setAddrState(!isCurrentlyVisible);
             });
         }
 

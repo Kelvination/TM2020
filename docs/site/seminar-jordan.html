@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -128,7 +134,7 @@
 <p>This section covers TM2020's complete boot pipeline. You'll learn the 10-phase startup sequence, the 60+ state coroutine machine, and three strategies for translating it to JavaScript.</p>
 <p>The defining question of any game engine: what happens between <code>entry()</code> and the first rendered frame? TM2020 runs 10 phases before showing the main menu, then 5 more before you drive.</p>
 <h4 id="anti-tamper-crt-bootstrap-1ms"><a class="anchor" href="#anti-tamper-crt-bootstrap-1ms">#</a>Anti-Tamper + CRT Bootstrap (< 1ms)</h4>
-<p>The entry point at <code class="addr">0x14291e317</code> lives in <code>.D."</code> -- an obfuscated, anti-tamper protected region. It calls <code>FUN_1428eb7e6()</code> (unpacker/decoder loop), then transfers to <code>FUN_14291da78()</code> which jumps to real code. Standard MSVC CRT initialization runs: <code>__scrt_common_main_seh</code> calls <code>_initterm</code> for C++ static constructors, then dispatches to <code>WinMain</code> at <code>FUN_140aa7470</code>.</p>
+<p>The entry point at <span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span> lives in <code>.D."</code> -- an obfuscated, anti-tamper protected region. It calls <code>FUN_1428eb7e6()</code> (unpacker/decoder loop), then transfers to <code>FUN_14291da78()</code> which jumps to real code. Standard MSVC CRT initialization runs: <code>__scrt_common_main_seh</code> calls <code>_initterm</code> for C++ static constructors, then dispatches to <code>WinMain</code> at <code>FUN_140aa7470</code>.</p>
 <p><em>Source: doc 12 Section 3.1, decompiled boot chain</em></p>
 <h4 id="winmain-early-init-10ms"><a class="anchor" href="#winmain-early-init-10ms">#</a>WinMain Early Init (< 10ms)</h4>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>FUN_140aa7470 (WinMain, 202 bytes):
@@ -367,7 +373,7 @@ var     XX XX XX XX        num_nodes           node count for reference sizing</
      Bits 31-30 = 0b10 (0x80000000): back-reference, index = bits 29-0
      Bits 31-30 = 0b00: empty string</code></pre></div>
 <p><strong>Critical correction</strong>: Old documentation claimed <code>0b01</code> = "well-known string ID" (predefined like "Stadium", "Valley"). In TM2020, BOTH <code>0b01</code> and <code>0b11</code> mean "new inline string." The well-known string table exists but uses specific values like <code class="addr">0x40000001</code> = "Unassigned", <code class="addr">0x40000003</code> = "Stadium".</p>
-<p>The table resets per header chunk but is shared across all body chunks for a single node (with exceptions for encapsulated chunks like <code class="addr">0x03043040</code>, <code class="addr">0x03043054</code>).</p>
+<p>The table resets per header chunk but is shared across all body chunks for a single node (with exceptions for encapsulated chunks like <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span>, <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span>).</p>
 <p><em>Source: doc 16 Section 29, corrected from real file analysis in doc 26</em></p>
 <h4 id="body-chunk-stream"><a class="anchor" href="#body-chunk-stream">#</a>Body Chunk Stream</h4>
 <p>After decompression, the body is a sequential stream of chunks:</p>
@@ -382,7 +388,7 @@ var     XX XX XX XX        num_nodes           node count for reference sizing</
 
   If non-skippable:
     +0x04  bytes   chunk_data    Must be fully understood to continue!</code></pre></div>
-<p>The <code class="addr">0xFACADE01</code> sentinel is confirmed in <code>FUN_1402d0c40</code>. The "SKIP" marker is ASCII <code>S-K-I-P</code> = <code class="addr">0x534B4950</code>. Skippable chunks are safe to skip. Non-skippable chunks are the parser's nightmare -- if you can't parse one, you can't find the next chunk boundary.</p>
+<p>The <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel is confirmed in <code>FUN_1402d0c40</code>. The "SKIP" marker is ASCII <code>S-K-I-P</code> = <span class="named-addr"><span class="addr-name">GBX_SKIP_MARKER</span><code class="addr">0x534B4950</code></span>. Skippable chunks are safe to skip. Non-skippable chunks are the parser's nightmare -- if you can't parse one, you can't find the next chunk boundary.</p>
 <p><em>Source: doc 16 Sections 6-7</em></p>
 <h3 id="the-22-stage-map-loading-pipeline"><a class="anchor" href="#the-22-stage-map-loading-pipeline">#</a>The 22-Stage Map Loading Pipeline</h3>
 <p>After GBX deserialization, the map undergoes a 22-stage initialization pipeline. Each stage has a dedicated profiling marker:</p>
@@ -528,8 +534,8 @@ MODIFIERS:
 </tr>
 <tr>
   <td style="text-align:left">Storage chunk</td>
-  <td style="text-align:left"><code class="addr">0x03043011</code></td>
-  <td style="text-align:left"><code class="addr">0x03043040</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockData</span><code class="addr">0x03043011</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Collision</td>
@@ -701,7 +707,7 @@ interface SimpleReplay {
   <li><code>NetUpdate_AfterPhy</code> -- send local results</li>
   <li><code>NetLoop_Synchronize</code> -- ensure shared game timer</li>
 </ol>
-<p><em>Source: doc 17 Sections 7-8, debug strings at <code class="addr">0x141c2b348</code>-0x141c49c28</em></p>
+<p><em>Source: doc 17 Sections 7-8, debug strings at <span class="named-addr"><span class="addr-name">str_NetUpdate_BeforePhy</span><code class="addr">0x141c2b348</code></span>-0x141c49c28</em></p>
 <h3 id="minimum-browser-online-stack"><a class="anchor" href="#minimum-browser-online-stack">#</a>Minimum Browser Online Stack</h3>
 <p>For a browser client, the minimum viable online stack is:</p>
 <ol>
@@ -717,7 +723,7 @@ interface SimpleReplay {
 <h2 id="maniascript"><a class="anchor" href="#maniascript">#</a>ManiaScript</h2>
 <h3 id="the-engines-built-in-scripting-language"><a class="anchor" href="#the-engines-built-in-scripting-language">#</a>The Engine's Built-in Scripting Language</h3>
 <p>This section covers <code>CScriptEngine</code>, ManiaScript's type system, coroutine primitives, and whether to replicate it in a browser project.</p>
-<p>ManiaScript is interpreted by <code>CScriptEngine</code>, a singleton at <code class="addr">0x140874270</code> (<code>CScriptEngine::Run</code>):</p>
+<p>ManiaScript is interpreted by <code>CScriptEngine</code>, a singleton at <span class="named-addr"><span class="addr-name">CScriptEngine::Run</span><code class="addr">0x140874270</code></span> (<code>CScriptEngine::Run</code>):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// CScriptEngine::Run (316 bytes):
 void FUN_140874270(longlong engine, longlong context, undefined4 mode) {
     *(longlong *)(engine + 0x60) = context;        // Set current script
@@ -748,7 +754,7 @@ COROUTINE PRIMITIVES:
   wait(condition);  -- poll condition each frame
   meanwhile { }     -- parallel execution branch</code></pre></div>
 <p>The <code>yield</code> implementation: script sets return state, exits <code>FUN_1408d1ea0</code>. Engine re-enters same context next frame. <code>sleep</code> compares <code>*(context+0xC4)</code> against global tick counter <code>DAT_141ffad50</code>. <code>wait</code> is syntactic sugar for <code>while (!condition) yield;</code>.</p>
-<p><em>Source: doc 31 Sections 2, 9, confirmed at addresses <code class="addr">0x141c023a8</code>, <code class="addr">0x141c024c8</code>, 0x141c024b0</em></p>
+<p><em>Source: doc 31 Sections 2, 9, confirmed at addresses <span class="named-addr"><span class="addr-name">str_ManiaScript_SLEEP</span><code class="addr">0x141c023a8</code></span>, <span class="named-addr"><span class="addr-name">str_ManiaScript_WAIT</span><code class="addr">0x141c024c8</code></span>, 0x141c024b0</em></p>
 <h3 id="game-mode-lifecycle"><a class="anchor" href="#game-mode-lifecycle">#</a>Game Mode Lifecycle</h3>
 <p>Game modes use a hierarchy of labels injected via <code>#Extends</code>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>SERVER LIFECYCLE:

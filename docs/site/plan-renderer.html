@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -2302,7 +2308,7 @@ Output:
 <p><strong>What we don't know</strong>: The exact <code>DXGI_FORMAT</code> of each MRT target (doc 11: "Exact G-buffer DXGI formats: HIGH priority").</p>
 <p><strong>Impact on visual quality</strong>: MEDIUM. If the format is wrong (e.g., we use <code>rgba8unorm</code> for normals when TM2020 uses <code>rgba16float</code>), specular highlights will show banding artifacts on smooth surfaces. If the format is too large, we waste GPU memory.</p>
 <p><strong>Workaround</strong>: Our format choices (<code>rgba8unorm-srgb</code> for albedo, <code>rgba8unorm</code> for specular, <code>rg16float</code> for normals, <code>rgba8unorm</code> for light mask) are standard deferred renderer choices that match the evidence. The <code>DeferredDeCompFaceNormal_p.hlsl</code> shader confirms compressed normal storage, which aligns with our <code>rg16float</code> octahedral choice.</p>
-<p><strong>Research to resolve</strong>: Decompile the texture creation calls near the <code>DeferredWrite</code> setup code. Specifically, trace the <code>CDx11Viewport</code> calls that create the G-buffer render targets and extract the DXGI format parameters. Address range: near <code class="addr">0x1409aa750</code> (device creation) and <code class="addr">0x14095d430</code> (viewport setup).</p>
+<p><strong>Research to resolve</strong>: Decompile the texture creation calls near the <code>DeferredWrite</code> setup code. Specifically, trace the <code>CDx11Viewport</code> calls that create the G-buffer render targets and extract the DXGI format parameters. Address range: near <span class="named-addr"><span class="addr-name">CDx11Viewport::DeviceCreate</span><code class="addr">0x1409aa750</code></span> (device creation) and <span class="named-addr"><span class="addr-name">CVisionViewport::PrepareShadowAndProjectors</span><code class="addr">0x14095d430</code></span> (viewport setup).</p>
 <hr>
 <h4 id="unknown-2-g-buffer-mrt-count-simultaneous"><a class="anchor" href="#unknown-2-g-buffer-mrt-count-simultaneous">#</a>Unknown 2: G-Buffer MRT Count (Simultaneous)</h4>
 <p><strong>What we don't know</strong>: Whether TM2020 binds 4, 5, or 6 MRT outputs simultaneously during <code>DeferredWrite</code>, or uses multiple sub-passes.</p>

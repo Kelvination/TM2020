@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -153,14 +159,14 @@
 .AudioMotors      --[CPlugFileAudioMotors]-&gt; CPlugSoundEngine / CPlugSoundEngine2 --&gt; OpenAL Buffer</code></pre></div>
 <hr>
 <h2 id="how-openal-is-initialized"><a class="anchor" href="#how-openal-is-initialized">#</a>How OpenAL Is Initialized</h2>
-<p>The decompiled <code>COalAudioPort::InitImplem</code> (at <code class="addr">0x14138c090</code>) reveals the exact initialization:</p>
+<p>The decompiled <code>COalAudioPort::InitImplem</code> (at <span class="named-addr"><span class="addr-name">COalAudioPort::InitImplem</span><code class="addr">0x14138c090</code></span>) reveals the exact initialization:</p>
 <ol>
   <li><strong>Dynamic loading</strong>: <code>LoadLibrary("OpenAL64_bundled.dll")</code></li>
   <li><strong>Function resolution</strong>: Resolves <code>alcOpenDevice</code>, <code>alcGetProcAddress</code>, <code>alcGetError</code>, <code>alcIsExtensionPresent</code>, <code>alcGetString</code>, <code>alcCloseDevice</code></li>
-  <li><strong>Device opening</strong>: Tries named device first (from config <code>AudioDevice_Oal</code>), falls back to <code>ALC_DEFAULT_DEVICE_SPECIFIER</code> (<code>0x1005</code>)</li>
+  <li><strong>Device opening</strong>: Tries named device first (from config <code>AudioDevice_Oal</code>), falls back to <code>ALC_DEFAULT_DEVICE_SPECIFIER</code> (<span class="named-addr"><span class="addr-name">ALC_DEFAULT_DEVICE_SPECIFIER</span><code class="addr">0x1005</code></span>)</li>
   <li><strong>Context creation</strong>: <code>alcCreateContext</code> on the opened device</li>
   <li><strong>Version query</strong>: <code>alcGetIntegerv</code> with <code>ALC_MAJOR_VERSION</code>/<code>ALC_MINOR_VERSION</code> -- expects ALC 1.x</li>
-  <li><strong>Source count query</strong>: <code>ALC_MONO_SOURCES</code> (<code>0x1010</code>) and <code>ALC_STEREO_SOURCES</code> (<code>0x1011</code>)</li>
+  <li><strong>Source count query</strong>: <code>ALC_MONO_SOURCES</code> (<span class="named-addr"><span class="addr-name">ALC_MONO_SOURCES</span><code class="addr">0x1010</code></span>) and <code>ALC_STEREO_SOURCES</code> (<span class="named-addr"><span class="addr-name">ALC_STEREO_SOURCES</span><code class="addr">0x1011</code></span>)</li>
   <li><strong>String queries</strong>: <code>AL_VERSION</code>, <code>AL_RENDERER</code>, <code>AL_EXTENSIONS</code>, <code>AL_VENDOR</code></li>
   <li><strong>EFX check</strong>: <code>alcIsExtensionPresent</code> for EFX support</li>
   <li><strong>Log output</strong>: <code>"[Audio] Initialized, using device '<name>', sources = N+M, EFX enabled/disabled"</code></li>

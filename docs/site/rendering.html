@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -254,7 +260,7 @@
 </table></div>
 <p>The <code>"RenderingApi"</code> configuration field (<code>m_RenderingApi</code> at offset <code>0xb0</code> in <code>CSystemConfigDisplay</code>) suggests the architecture supports multiple backends. Only D3D11 is wired up.</p>
 <h3 id="device-creation"><a class="anchor" href="#device-creation">#</a>Device creation</h3>
-<p>The D3D11 device is created in <code>CDx11Viewport::DeviceCreate</code> at <code class="addr">0x1409aa750</code>. This function:</p>
+<p>The D3D11 device is created in <code>CDx11Viewport::DeviceCreate</code> at <span class="named-addr"><span class="addr-name">CDx11Viewport::DeviceCreate</span><code class="addr">0x1409aa750</code></span>. This function:</p>
 <ol>
   <li>Creates a DXGI factory via <code>CreateDXGIFactory1</code>.</li>
   <li>Enumerates adapters.</li>
@@ -276,25 +282,25 @@
 <tbody>
 <tr>
   <td style="text-align:left">D3D11.1</td>
-  <td style="text-align:left"><code>0xb001</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_1</span><code class="addr">0xb001</code></span></td>
   <td style="text-align:left">SM 5.0+</td>
   <td style="text-align:left"><code>0xafff < (int)*puVar2</code> check, sets <code>DAT_14201d2ec = 0x500</code></td>
 </tr>
 <tr>
   <td style="text-align:left">D3D11.0</td>
-  <td style="text-align:left"><code>0xb000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_0</span><code class="addr">0xb000</code></span></td>
   <td style="text-align:left">SM 5.0</td>
   <td style="text-align:left"><code>(int)*puVar2 < 0xb000</code></td>
 </tr>
 <tr>
   <td style="text-align:left">D3D10.1</td>
-  <td style="text-align:left"><code>0xa100</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_10_1</span><code class="addr">0xa100</code></span></td>
   <td style="text-align:left">SM 4.1</td>
   <td style="text-align:left"><code>(int)*puVar2 < 0xa100</code></td>
 </tr>
 <tr>
   <td style="text-align:left">D3D10.0</td>
-  <td style="text-align:left"><code>0xa000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_10_0</span><code class="addr">0xa000</code></span></td>
   <td style="text-align:left">SM 4.0</td>
   <td style="text-align:left">Minimum, sets <code>DAT_14201d2ec = 0x400</code></td>
 </tr>
@@ -312,7 +318,7 @@ if (0xafff &lt; (int)*puVar2) {
     (*(longlong **)(param_1 + 0x3fe9), 0x13, 8, &amp;local_4148);
 // 0x13 = D3D11_FEATURE_D3D11_OPTIONS (value 19)</code></pre></div>
 <p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
-<p>The code checks for Intel vendor ID <code>0x8086</code> and applies driver version workarounds:</p>
+<p>The code checks for Intel vendor ID <span class="named-addr"><span class="addr-name">INTEL_GPU_VENDOR_ID</span><code class="addr">0x8086</code></span> and applies driver version workarounds:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// At 0x1409aaa68
 if (((DAT_142057f98 != 0) &amp;&amp; (DAT_142057f90 == 0x8086))
     &amp;&amp; (DAT_142057f98 &lt; 0xa0012000a1106)) {
@@ -474,7 +480,7 @@ attr 2: R32G32_SFLOAT        offset 20  (UV)</code></pre></div>
 <h2 id="how-the-deferred-rendering-pipeline-works"><a class="anchor" href="#how-the-deferred-rendering-pipeline-works">#</a>How the deferred rendering pipeline works</h2>
 <p>The pipeline switches between deferred and forward paths. Deferred is the default. The string <code>"Current shading pipeline, if true Antialias_Deferred setting is used, otherwise it is Antialias_Forward."</code> confirms both paths exist.</p>
 <ul>
-  <li><code>"IsDeferred"</code> at <code class="addr">0x141cc3e88</code> controls the pipeline selection.</li>
+  <li><code>"IsDeferred"</code> at <span class="named-addr"><span class="addr-name">str_IsDeferred</span><code class="addr">0x141cc3e88</code></span> controls the pipeline selection.</li>
   <li>Deferred AA options: FXAA, TXAA.</li>
   <li>Forward AA options: MSAA 2/4/6/8/16 samples.</li>
 </ul>
@@ -483,7 +489,7 @@ attr 2: R32G32_SFLOAT        offset 20  (UV)</code></pre></div>
 <h4 id="phase-0-cpu-frame-setup"><a class="anchor" href="#phase-0-cpu-frame-setup">#</a>Phase 0: CPU frame setup</h4>
 <p>The CPU performs these tasks before GPU work begins:</p>
 <ol>
-  <li><strong>Input polling</strong>: <code>CInputPort::Update_StartFrame</code> at <code class="addr">0x1402acea0</code>.</li>
+  <li><strong>Input polling</strong>: <code>CInputPort::Update_StartFrame</code> at <span class="named-addr"><span class="addr-name">CInputPort::Update_StartFrame</span><code class="addr">0x1402acea0</code></span>.</li>
   <li><strong>Physics simulation</strong>: Up to 100 resim steps per frame at 100 Hz tick rate.</li>
   <li><strong>Scene graph update</strong>: The <code>CHmsZone</code>/<code>CHmsZoneElem</code> hierarchy updates transforms. <code>NHmsMgrInstDyna::AsyncRender_ApplyDeferredChanges</code> manages dynamic instances.</li>
   <li><strong>Visibility determination</strong>: Per-zone visible set computed. Zone element array at <code>param_1 + 0x1a98</code> with count at <code>param_1 + 0x1aa0</code>.</li>
@@ -634,7 +640,7 @@ ParticlesRender -&gt; ParticlesRenderRefract -&gt; ParticlesRender_UpScale</code
          +--&gt; &quot;StaticShadow0&quot;, &quot;CastStaticShadow&quot;
 ======================================================================</code></pre></div>
 <h3 id="pssm-cascade-count"><a class="anchor" href="#pssm-cascade-count">#</a>PSSM cascade count</h3>
-<p>The cascade count is either 4 (standard) or 1 (simplified). Simplified mode triggers when <code>flag & 0x40</code> is set at offset <code>0x5d0</code>, likely the "Minimum" shadow quality setting.</p>
+<p>The cascade count is either 4 (standard) or 1 (simplified). Simplified mode triggers when <code>flag & 0x40</code> is set at offset <span class="named-addr"><span class="addr-name">shadowConfig_qualityFlags</span><code class="addr">0x5d0</code></span>, likely the "Minimum" shadow quality setting.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// At 0x14095d5b0 -- CVisionViewport::VisibleZonePrepareShadowAndProjectors
 if ((*(byte *)(param_1 + 0x5d0) &amp; 0x40) == 0) {
     uVar12 = 4;  // 4 cascades
@@ -684,7 +690,7 @@ if ((*(byte *)(param_1 + 0x5d0) &amp; 0x40) == 0) {
 <h3 id="shadow-cache"><a class="anchor" href="#shadow-cache">#</a>Shadow cache</h3>
 <p>The engine caches static shadow maps to avoid re-rendering. <code>ShadowCache/UpdateShadowIndex_c.hlsl</code> incrementally updates the cache via compute shader.</p>
 <h3 id="shadow-groups"><a class="anchor" href="#shadow-groups">#</a>Shadow groups</h3>
-<p>Each zone iterates shadow casters. Each caster has a group index (5-bit value at offset <code>0x22c</code>). A bitmask tracks which of up to 32 shadow groups are present per zone.</p>
+<p>Each zone iterates shadow casters. Each caster has a group index (5-bit value at offset <span class="named-addr"><span class="addr-name">shadowCaster_groupIndex</span><code class="addr">0x22c</code></span>). A bitmask tracks which of up to 32 shadow groups are present per zone.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// Caster mask computation at 0x14095d620
 uVar13 = uVar13 | 1 &lt;&lt; (*(byte *)(lVar7 + 0x22c) &amp; 0x1f);</code></pre></div>
 <p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
@@ -725,7 +731,7 @@ uVar13 = uVar13 | 1 &lt;&lt; (*(byte *)(lVar7 + 0x22c) &amp; 0x1f);</code></pre>
 <h2 id="how-hbao-ambient-occlusion-works"><a class="anchor" href="#how-hbao-ambient-occlusion-works">#</a>How HBAO+ ambient occlusion works</h2>
 <p>NVIDIA HBAO+ (Horizon-Based Ambient Occlusion) runs as a full post-processing pass. Nadeo also ships a custom fallback (<code>UseHomeMadeHBAO</code>). The engine runs HBAO+ twice at different scales: a small-scale pass for contact shadows and a big-scale pass for room-scale occlusion. The results are combined (likely multiplied).</p>
 <h3 id="configuration-structure"><a class="anchor" href="#configuration-structure">#</a>Configuration structure</h3>
-<p><code>NSysCfgVision::SSSAmbOcc</code> registered at <code class="addr">0x14091f4e0</code>, size <code>0x4c</code> (76 bytes).</p>
+<p><code>NSysCfgVision::SSSAmbOcc</code> registered at <span class="named-addr"><span class="addr-name">NSysCfgVision::SSSAmbOcc_Registration</span><code class="addr">0x14091f4e0</code></span>, size <span class="named-addr"><span class="addr-name">SSSAmbOcc_SIZE</span><code class="addr">0x4c</code></span> (76 bytes).</p>
 <p><strong>Homemade AO parameters (offsets 0x00-0x18)</strong>:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -763,7 +769,7 @@ uVar13 = uVar13 | 1 &lt;&lt; (*(byte *)(lVar7 + 0x22c) &amp; 0x1f);</code></pre>
 </tr>
 <tr>
   <td style="text-align:left"><code>WorldSize</code></td>
-  <td style="text-align:left"><code>0x10</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">vehicleState_dynaBodyId</span><code class="addr">0x10</code></span></td>
   <td style="text-align:left">float</td>
   <td style="text-align:left">AO world-space radius (meters)</td>
 </tr>
@@ -806,7 +812,7 @@ uVar13 = uVar13 | 1 &lt;&lt; (*(byte *)(lVar7 + 0x22c) &amp; 0x1f);</code></pre>
 </tr>
 <tr>
   <td style="text-align:left"><code>NvHBAO.Bias</code></td>
-  <td style="text-align:left"><code>0x24</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">WHEEL_STRUCT_STRIDE_MP4</span><code class="addr">0x24</code></span></td>
   <td style="text-align:left">float</td>
   <td style="text-align:left">Depth bias to prevent self-occlusion</td>
 </tr>
@@ -818,7 +824,7 @@ uVar13 = uVar13 | 1 &lt;&lt; (*(byte *)(lVar7 + 0x22c) &amp; 0x1f);</code></pre>
 </tr>
 <tr>
   <td style="text-align:left"><code>NvHBAO.SmallScaleAO</code></td>
-  <td style="text-align:left"><code>0x2C</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SSolverParams_SIZE</span><code class="addr">0x2C</code></span></td>
   <td style="text-align:left">float</td>
   <td style="text-align:left">Small-scale AO multiplier</td>
 </tr>
@@ -845,7 +851,7 @@ uVar13 = uVar13 | 1 &lt;&lt; (*(byte *)(lVar7 + 0x22c) &amp; 0x1f);</code></pre>
 <h2 id="how-the-shader-system-works"><a class="anchor" href="#how-the-shader-system-works">#</a>How the shader system works</h2>
 <p>Shaders are pre-compiled into binary packages and loaded at runtime. Version validation uses git hashes: <code>"Shader binary is not up to date (GitHash): %016I64x != %016I64x"</code>.</p>
 <h3 id="shader-cache"><a class="anchor" href="#shader-cache">#</a>Shader cache</h3>
-<p><code>Vision::VisionShader_GetOrCreate</code> at <code class="addr">0x14097cfb0</code> implements thread-safe shader caching:</p>
+<p><code>Vision::VisionShader_GetOrCreate</code> at <span class="named-addr"><span class="addr-name">VisionShader::GetOrCreate</span><code class="addr">0x14097cfb0</code></span> implements thread-safe shader caching:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">plVar4 = *(longlong **)(param_2 + 0x18);  // Check if cached
 if (plVar4 == (longlong *)0x0) {
     // Cache miss -- lock mutex, create via vtable offset 0x770, store at offset 0x18
@@ -855,7 +861,7 @@ if (plVar4 == (longlong *)0x0) {
     FUN_1401560e0(param_1 + 0x216, local_148);
 }
 return plVar4;</code></pre></div>
-<p>Constant <code>0x3108</code> is a shader format/version identifier.</p>
+<p>Constant <span class="named-addr"><span class="addr-name">SHADER_FORMAT_VERSION_ID</span><code class="addr">0x3108</code></span> is a shader format/version identifier.</p>
 <p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <h3 id="shader-variant-system"><a class="anchor" href="#shader-variant-system">#</a>Shader variant system</h3>
 <p>The function creates up to 14 shader variants per material:</p>
@@ -885,7 +891,7 @@ return plVar4;</code></pre></div>
 </tr>
 <tr>
   <td style="text-align:left">7</td>
-  <td style="text-align:left">Advanced feature (SSR? TXAA?) -- requires viewport flag <code>0x8000</code></td>
+  <td style="text-align:left">Advanced feature (SSR? TXAA?) -- requires viewport flag <span class="named-addr"><span class="addr-name">VIEWPORT_FLAG_ADVANCED_SHADER</span><code class="addr">0x8000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">13</td>
@@ -1008,7 +1014,7 @@ Examples:
 <hr>
 <h2 id="how-post-processing-works"><a class="anchor" href="#how-post-processing-works">#</a>How post-processing works</h2>
 <h3 id="bloom-hdr"><a class="anchor" href="#bloom-hdr">#</a>Bloom HDR</h3>
-<p><code>CVisPostFx_BloomHdr</code> (class ID <code>0xC032000</code>, size <code>0x168</code>). Pipeline:</p>
+<p><code>CVisPostFx_BloomHdr</code> (class ID <code>0xC032000</code>, size <span class="named-addr"><span class="addr-name">CVisPostFx_BloomHdr_SIZE</span><code class="addr">0x168</code></span>). Pipeline:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. BloomSelectFilterDown2_p.hlsl   -- Threshold + 2x downsample
 2. BloomSelectFilterDown4_p.hlsl   -- 4x downsample
 3. Bloom_HorizonBlur_p.hlsl       -- Horizontal Gaussian blur per mip
@@ -1018,7 +1024,7 @@ Examples:
 <p>Configuration: <code>"BloomIntensUseCurve"</code>, <code>"MinIntensInBloomSrc"</code> (threshold), <code>"Bloom_Down%d"</code> (multi-level targets). Quality levels: None, Medium, High.</p>
 <p><strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span></p>
 <h3 id="tone-mapping"><a class="anchor" href="#tone-mapping">#</a>Tone mapping</h3>
-<p><code>CVisPostFx_ToneMapping</code> (class ID <code>0xC030000</code>, size <code>0x6F0</code>).</p>
+<p><code>CVisPostFx_ToneMapping</code> (class ID <code>0xC030000</code>, size <span class="named-addr"><span class="addr-name">CVisPostFx_ToneMapping_SIZE</span><code class="addr">0x6F0</code></span>).</p>
 <p>Luminance computation (auto-exposure):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. TM_GetLumi_p.hlsl              -- Extract luminance from HDR
 2. TM_GetLog2LumiDown1_p.hlsl     -- Log2 luminance + progressive downsample
@@ -1047,7 +1053,7 @@ Examples:
 <p><strong>FXAA</strong>: <code>Effects/PostFx/FXAA_p.hlsl</code>, referenced as <code>"DeferredAntialiasing| FXAA"</code>.</p>
 <p><strong>TXAA</strong>: Two implementations exist:</p>
 <ul>
-  <li><strong>NVIDIA GFSDK TXAA</strong> (hardware path): <code>GFSDK_TXAA_DX11_InitializeContext</code> at <code class="addr">0x141c0f120</code>, <code>GFSDK_TXAA_DX11_ResolveFromMotionVectors</code> at <code class="addr">0x141c0f178</code>.</li>
+  <li><strong>NVIDIA GFSDK TXAA</strong> (hardware path): <code>GFSDK_TXAA_DX11_InitializeContext</code> at <span class="named-addr"><span class="addr-name">GFSDK_TXAA_DX11_InitializeContext</span><code class="addr">0x141c0f120</code></span>, <code>GFSDK_TXAA_DX11_ResolveFromMotionVectors</code> at <span class="named-addr"><span class="addr-name">GFSDK_TXAA_DX11_ResolveFromMotionVectors</span><code class="addr">0x141c0f178</code></span>.</li>
   <li><strong>Ubisoft custom TXAA</strong> (software fallback): <code>Effects/TemporalAA/TemporalAA_p.hlsl</code>, referenced as <code>"UBI_TXAA"</code>.</li>
 </ul>
 <p>The <code>CameraMotion</code> pass generates per-pixel motion vectors via <code>DeferredCameraMotion_p.hlsl</code>. Each frame applies a sub-pixel jitter (<code>"PosOffsetAA"</code>) to the projection matrix.</p>
@@ -1271,17 +1277,17 @@ GPU Render:
 <tbody>
 <tr>
   <td style="text-align:left"><code>VisibleZonePrepareShadowAndProjectors</code></td>
-  <td style="text-align:left"><code class="addr">0x14095d430</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CVisionViewport::PrepareShadowAndProjectors</span><code class="addr">0x14095d430</code></span></td>
   <td style="text-align:left">Shadow preparation per visible zone</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Shadow_UpdateGroups</code></td>
-  <td style="text-align:left"><code class="addr">0x140a43610</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">Shadow_UpdateGroups</span><code class="addr">0x140a43610</code></span></td>
   <td style="text-align:left">Shadow group management</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>AllShaderBindTextures</code></td>
-  <td style="text-align:left"><code class="addr">0x14097ed30</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CVisionViewport::AllShaderBindTextures</span><code class="addr">0x14097ed30</code></span></td>
   <td style="text-align:left">Bind all shader textures</td>
 </tr>
 <tr>
@@ -1324,7 +1330,7 @@ GPU Render:
 <p>The <code>SHms*</code> structs define render state: <code>"SHmsFxBloomHdr"</code>, <code>"SHmsFxToneMap"</code>, <code>"SHmsPostFxState"</code>. The Hms system logs configuration at startup: <code>"[Hms] Shadows="</code>, <code>"[Hms] ShaderQuality="</code>.</p>
 <hr>
 <h2 id="display-configuration-csystemconfigdisplay"><a class="anchor" href="#display-configuration-csystemconfigdisplay">#</a>Display configuration (CSystemConfigDisplay)</h2>
-<p><code>CSystemConfigDisplay</code> registered at <code class="addr">0x140936810</code>, class ID <code>0xB013000</code>, size <code>0x160</code> bytes.</p>
+<p><code>CSystemConfigDisplay</code> registered at <span class="named-addr"><span class="addr-name">CSystemConfigDisplay_SettingsRegistration</span><code class="addr">0x140936810</code></span>, class ID <code>0xB013000</code>, size <span class="named-addr"><span class="addr-name">CSystemConfigDisplay_SIZE</span><code class="addr">0x160</code></span> bytes.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1355,13 +1361,13 @@ GPU Render:
 </tr>
 <tr>
   <td style="text-align:left"><code>m_Antialiasing</code></td>
-  <td style="text-align:left"><code>0x4C</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SSSAmbOcc_SIZE</span><code class="addr">0x4C</code></span></td>
   <td style="text-align:left">enum</td>
   <td style="text-align:left">Forward AA (MSAA samples)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>m_DeferredAA</code></td>
-  <td style="text-align:left"><code>0x50</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">vehicleState_collisionObjectAlt</span><code class="addr">0x50</code></span></td>
   <td style="text-align:left">enum</td>
   <td style="text-align:left">Deferred AA (None/FXAA/TXAA)</td>
 </tr>
@@ -1373,7 +1379,7 @@ GPU Render:
 </tr>
 <tr>
   <td style="text-align:left"><code>m_DisplaySync</code></td>
-  <td style="text-align:left"><code>0x58</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONTACT_POINT_STRIDE</span><code class="addr">0x58</code></span></td>
   <td style="text-align:left">enum</td>
   <td style="text-align:left">VSync mode</td>
 </tr>
@@ -1385,7 +1391,7 @@ GPU Render:
 </tr>
 <tr>
   <td style="text-align:left"><code>m_AllowVRR</code></td>
-  <td style="text-align:left"><code>0x74</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SCONSTRAINT_MODEL_SIZE</span><code class="addr">0x74</code></span></td>
   <td style="text-align:left">bool</td>
   <td style="text-align:left">Variable refresh rate</td>
 </tr>
@@ -1397,7 +1403,7 @@ GPU Render:
 </tr>
 <tr>
   <td style="text-align:left"><code>m_ShaderQuality</code></td>
-  <td style="text-align:left"><code>0x88</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">vehicleState_phyModelPtr</span><code class="addr">0x88</code></span></td>
   <td style="text-align:left">enum</td>
   <td style="text-align:left">Shader quality</td>
 </tr>
@@ -1409,7 +1415,7 @@ GPU Render:
 </tr>
 <tr>
   <td style="text-align:left"><code>m_Shadows</code></td>
-  <td style="text-align:left"><code>0x90</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">vehicleState_currentTransform</span><code class="addr">0x90</code></span></td>
   <td style="text-align:left">enum</td>
   <td style="text-align:left">Shadow quality</td>
 </tr>
@@ -1439,7 +1445,7 @@ GPU Render:
 </tr>
 <tr>
   <td style="text-align:left"><code>m_ZClipAuto</code></td>
-  <td style="text-align:left"><code>0xE0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">vehicleModelCustom_modelScale</span><code class="addr">0xE0</code></span></td>
   <td style="text-align:left">bool</td>
   <td style="text-align:left">Auto Z-clip</td>
 </tr>
@@ -1470,22 +1476,22 @@ GPU Render:
 <tbody>
 <tr>
   <td style="text-align:left">Minimum Feature Level</td>
-  <td style="text-align:left">D3D10.0 (<code>0xa000</code>)</td>
+  <td style="text-align:left">D3D10.0 (<span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_10_0</span><code class="addr">0xa000</code></span>)</td>
   <td style="text-align:left">Lowest tier sets SM 4.0</td>
 </tr>
 <tr>
   <td style="text-align:left">Recommended Feature Level</td>
-  <td style="text-align:left">D3D11.0 (<code>0xb000</code>)</td>
+  <td style="text-align:left">D3D11.0 (<span class="named-addr"><span class="addr-name">D3D_FEATURE_LEVEL_11_0</span><code class="addr">0xb000</code></span>)</td>
   <td style="text-align:left">Required for SM 5.0, compute shaders</td>
 </tr>
 <tr>
   <td style="text-align:left">Minimum Shader Model</td>
-  <td style="text-align:left">SM 4.0 (<code>0x400</code>)</td>
+  <td style="text-align:left">SM 4.0 (<span class="named-addr"><span class="addr-name">SHADER_MODEL_4_0</span><code class="addr">0x400</code></span>)</td>
   <td style="text-align:left"><code>DAT_14201d2ec = 0x400</code> at minimum</td>
 </tr>
 <tr>
   <td style="text-align:left">Recommended Shader Model</td>
-  <td style="text-align:left">SM 5.0 (<code>0x500</code>)</td>
+  <td style="text-align:left">SM 5.0 (<span class="named-addr"><span class="addr-name">SHADER_MODEL_5_0</span><code class="addr">0x500</code></span>)</td>
   <td style="text-align:left">Required for compute, UAVs</td>
 </tr>
 <tr>
@@ -1949,7 +1955,7 @@ Bind Group 3 (per-draw, update per draw call):
   <li>Whether forward rendering is used for main scene geometry or only UI/transparent objects.</li>
   <li>The <code>"UseHomeMadeHBAO"</code> implementation details.</li>
   <li>Complete <code>CVisionViewport</code> struct layout and vtable.</li>
-  <li>The <code>"Dxgi_Present_HookCallback"</code> export at <code class="addr">0x140a811a0</code>.</li>
+  <li>The <code>"Dxgi_Present_HookCallback"</code> export at <span class="named-addr"><span class="addr-name">Dxgi_Present_HookCallback</span><code class="addr">0x140a811a0</code></span>.</li>
   <li>Which D3D 11.1+ features (<code>"11_1_SHADER_EXTENSIONS"</code>, <code>"VIEWPORT_AND_RT_ARRAY_INDEX_FROM_ANY_SHADER_FEEDING_RASTERIZER"</code>) are actually used.</li>
   <li>The exact TXAA jitter pattern (Halton(2,3) or rotated grid).</li>
 </ul>
@@ -1967,52 +1973,52 @@ Bind Group 3 (per-draw, update per draw call):
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1409aa750</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CDx11Viewport::DeviceCreate</span><code class="addr">0x1409aa750</code></span></td>
   <td style="text-align:left"><code>CDx11Viewport::DeviceCreate</code></td>
   <td style="text-align:left">Graphics API</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14095d430</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CVisionViewport::PrepareShadowAndProjectors</span><code class="addr">0x14095d430</code></span></td>
   <td style="text-align:left"><code>CVisionViewport::VisibleZonePrepareShadowAndProjectors</code></td>
   <td style="text-align:left">Shadow system</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14091f4e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSysCfgVision::SSSAmbOcc_Registration</span><code class="addr">0x14091f4e0</code></span></td>
   <td style="text-align:left"><code>NSysCfgVision::SSSAmbOcc</code> registration</td>
   <td style="text-align:left">HBAO+</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14097cfb0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">VisionShader::GetOrCreate</span><code class="addr">0x14097cfb0</code></span></td>
   <td style="text-align:left"><code>Vision::VisionShader_GetOrCreate</code></td>
   <td style="text-align:left">Shader system</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140936810</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSystemConfigDisplay_SettingsRegistration</span><code class="addr">0x140936810</code></span></td>
   <td style="text-align:left"><code>CSystemConfigDisplay</code> registration</td>
   <td style="text-align:left">Display config</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140053470</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CVisPostFx_BloomHdr_Registration</span><code class="addr">0x140053470</code></span></td>
   <td style="text-align:left"><code>CVisPostFx_BloomHdr</code> class registration</td>
   <td style="text-align:left">Post-processing</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140053250</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CVisPostFx_ToneMapping_Registration</span><code class="addr">0x140053250</code></span></td>
   <td style="text-align:left"><code>CVisPostFx_ToneMapping</code> class registration</td>
   <td style="text-align:left">Post-processing</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1400532f0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CVisPostFx_MotionBlur_Registration</span><code class="addr">0x1400532f0</code></span></td>
   <td style="text-align:left"><code>CVisPostFx_MotionBlur</code> class registration</td>
   <td style="text-align:left">Post-processing</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14097ed30</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CVisionViewport::AllShaderBindTextures</span><code class="addr">0x14097ed30</code></span></td>
   <td style="text-align:left"><code>CVisionViewport::AllShaderBindTextures</code></td>
   <td style="text-align:left">Shader system</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140a24ac0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">MgrParticle_Update</span><code class="addr">0x140a24ac0</code></span></td>
   <td style="text-align:left"><code>MgrParticle_Update</code></td>
   <td style="text-align:left">Particle system</td>
 </tr>

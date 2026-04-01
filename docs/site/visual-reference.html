@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/x86asm.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
 <body>
     <div class="layout">
@@ -30,6 +29,12 @@
                 <button id="tech-toggle" class="tech-toggle" title="Toggle visibility of technical/binary detail sections">
                     <span class="toggle-icon">&#9660;</span>
                     Hide Technical Details
+                </button>
+            </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
                 </button>
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
@@ -656,7 +661,7 @@ CGameCtnApp::UpdateGame (0x140b78f10)   [Main loop begins, 216 KB]</code></pre><
 </tr>
 <tr>
   <td style="text-align:left"><strong>FACADE01</strong></td>
-  <td style="text-align:left"><code class="addr">0xFACADE01</code> -- the end-of-body sentinel in GBX chunk streams</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> -- the end-of-body sentinel in GBX chunk streams</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Fiber</strong></td>
@@ -718,7 +723,7 @@ CGameCtnApp::UpdateGame (0x140b78f10)   [Main loop begins, 216 KB]</code></pre><
 </tr>
 <tr>
   <td style="text-align:left"><strong>SKIP</strong></td>
-  <td style="text-align:left"><code class="addr">0x534B4950</code> ("SKIP" in ASCII) -- marker for skippable chunks in GBX body streams</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_SKIP_MARKER</span><code class="addr">0x534B4950</code></span> ("SKIP" in ASCII) -- marker for skippable chunks in GBX body streams</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Sub-stepping</strong></td>
@@ -757,168 +762,168 @@ CGameCtnApp::UpdateGame (0x140b78f10)   [Main loop begins, 216 KB]</code></pre><
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14291e317</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span></td>
   <td style="text-align:left">entry (obfuscated, in .D." section)</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="binary.html">01</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141521c28</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">WinMainCRTStartup</span><code class="addr">0x141521c28</code></span></td>
   <td style="text-align:left">WinMainCRTStartup (MSVC CRT)</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="architecture.html">08</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140aa7470</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">WinMain</span><code class="addr">0x140aa7470</code></span></td>
   <td style="text-align:left">WinMain (actual)</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">202 B</td>
   <td style="text-align:left"><a href="architecture.html">08</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140aaac00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGbxApp::Init1</span><code class="addr">0x140aaac00</code></span></td>
   <td style="text-align:left">CGbxApp::Init1</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">80 KB</td>
   <td style="text-align:left"><a href="index.html">00</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140ab00a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGbxApp::Init2</span><code class="addr">0x140ab00a0</code></span></td>
   <td style="text-align:left">CGbxApp::Init2</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="index.html">00</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140b4eba0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnApp::Start</span><code class="addr">0x140b4eba0</code></span></td>
   <td style="text-align:left">CGameCtnApp::Start</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="architecture.html">08</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140b78f10</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnApp::UpdateGame</span><code class="addr">0x140b78f10</code></span></td>
   <td style="text-align:left">CGameCtnApp::UpdateGame (main loop)</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">34,959 B</td>
   <td style="text-align:left"><a href="architecture.html">08</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140cb8870</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameManiaPlanet::Start</span><code class="addr">0x140cb8870</code></span></td>
   <td style="text-align:left">CGameManiaPlanet::Start</td>
   <td style="text-align:left">Architecture</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="architecture.html">08</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1412c2cc0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSmArenaPhysics::Players_BeginFrame</span><code class="addr">0x1412c2cc0</code></span></td>
   <td style="text-align:left">CSmArenaPhysics::Players_BeginFrame</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="physics.html">04</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1412bf000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSmArenaPhysics::UpdatePlayersInputs</span><code class="addr">0x1412bf000</code></span></td>
   <td style="text-align:left">CSmArenaPhysics::UpdatePlayersInputs</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="physics.html">04</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141501800</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><code class="addr">0x141501800</code></span></td>
   <td style="text-align:left">PhysicsStep_TM (per-vehicle)</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="physics.html">04</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408427d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><code class="addr">0x1408427d0</code></span></td>
   <td style="text-align:left">NSceneVehiclePhy::ComputeForces</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">1,713 B</td>
   <td style="text-align:left"><a href="physics.html">04</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140851f00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="addr">0x140851f00</code></span></td>
   <td style="text-align:left">Force model case 5 (CarSport?)</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="physics.html">04</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14085c9e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="addr">0x14085c9e0</code></span></td>
   <td style="text-align:left">Force model case 6 (Snow/Rally?)</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="physics.html">04</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14086d3b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="addr">0x14086d3b0</code></span></td>
   <td style="text-align:left">Force model case 0xB (Desert?)</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="physics.html">04</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1407bd0e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep</span><code class="addr">0x1407bd0e0</code></span></td>
   <td style="text-align:left">NSceneDyna::PhysicsStep</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="physics.html">10</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140803920</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><code class="addr">0x140803920</code></span></td>
   <td style="text-align:left">NSceneDyna::PhysicsStep_V2</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="physics.html">10</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408025a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::InternalPhysicsStep</span><code class="addr">0x1408025a0</code></span></td>
   <td style="text-align:left">NSceneDyna::InternalPhysicsStep</td>
   <td style="text-align:left">Physics</td>
   <td style="text-align:left">4,991 B</td>
   <td style="text-align:left"><a href="physics.html">10</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140900e60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="addr">0x140900e60</code></span></td>
   <td style="text-align:left">GBX header magic/version validation</td>
   <td style="text-align:left">File Formats</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="file-formats.html">06</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140901850</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="addr">0x140901850</code></span></td>
   <td style="text-align:left">GBX v6 format flag parsing</td>
   <td style="text-align:left">File Formats</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="file-formats.html">06</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140904730</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><code class="addr">0x140904730</code></span></td>
   <td style="text-align:left">CSystemArchiveNod::LoadGbx</td>
   <td style="text-align:left">File Formats</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="file-formats.html">06</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14138c090</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">COalAudioPort::InitImplem</span><code class="addr">0x14138c090</code></span></td>
   <td style="text-align:left">COalAudioPort::InitImplem</td>
   <td style="text-align:left">Audio</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1402acea0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CInputPort::Update_StartFrame</span><code class="addr">0x1402acea0</code></span></td>
   <td style="text-align:left">CInputPort::Update_StartFrame</td>
   <td style="text-align:left">Input</td>
   <td style="text-align:left">-</td>
   <td style="text-align:left"><a href="15-ghidra-research-findings.md">15</a></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1409aa750</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CDx11Viewport::DeviceCreate</span><code class="addr">0x1409aa750</code></span></td>
   <td style="text-align:left">CDx11Viewport::DeviceCreate</td>
   <td style="text-align:left">Rendering</td>
   <td style="text-align:left">-</td>
@@ -941,32 +946,32 @@ CGameCtnApp::UpdateGame (0x140b78f10)   [Main loop begins, 216 KB]</code></pre><
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141ebccfc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><code class="addr">0x141ebccfc</code></span></td>
   <td style="text-align:left">Sleep detection enabled flag</td>
   <td style="text-align:left">Physics</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141ebcd00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="addr">0x141ebcd00</code></span></td>
   <td style="text-align:left">Sleep velocity damping factor</td>
   <td style="text-align:left">Physics</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141ebcd04</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="addr">0x141ebcd04</code></span></td>
   <td style="text-align:left">Sleep velocity threshold (squared)</td>
   <td style="text-align:left">Physics</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141f9cff4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_LunaMode</span><code class="addr">0x141f9cff4</code></span></td>
   <td style="text-align:left">Luna Mode flag</td>
   <td style="text-align:left">Architecture</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141ff9d58</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_globalClassRegistry</span><code class="addr">0x141ff9d58</code></span></td>
   <td style="text-align:left">Global class registry (two-level)</td>
   <td style="text-align:left">File Formats</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141ffad50</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_globalTickCounter</span><code class="addr">0x141ffad50</code></span></td>
   <td style="text-align:left">Global tick counter</td>
   <td style="text-align:left">Input</td>
 </tr>

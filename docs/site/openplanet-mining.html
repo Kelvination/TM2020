@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -141,8 +147,8 @@
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  +0x00: uint32 EntityId</code></pre></div>
 <p>Entity ID bit masks for vehicle identification:</p>
 <ul>
-  <li><code class="addr">0x02000000</code> mask: Player vehicle (used when vehicleEntityId == 0 to find player)</li>
-  <li><code class="addr">0x04000000</code> mask: Replay/editor vehicle (checked to avoid editor car placement)</li>
+  <li><span class="named-addr"><span class="addr-name">ENTITY_ID_MASK_LOCAL_PLAYER</span><code class="addr">0x02000000</code></span> mask: Player vehicle (used when vehicleEntityId == 0 to find player)</li>
+  <li><span class="named-addr"><span class="addr-name">ENTITY_ID_MASK_REPLAY_EDITOR</span><code class="addr">0x04000000</code></span> mask: Replay/editor vehicle (checked to avoid editor car placement)</li>
 </ul>
 <h3 id="iscenevis-manager-array-alternative-layout"><a class="anchor" href="#iscenevis-manager-array-alternative-layout">#</a>ISceneVis Manager Array (Alternative Layout)</h3>
 <p>Two different manager arrays exist within <code>ISceneVis</code>:</p>
@@ -345,7 +351,7 @@ FLBreakNormedCoef + 0x04: int   FLFallingState</code></pre></div>
     -&gt; +0x84: CMwNod* vehicleVisPtr</code></pre></div>
 <p><strong>CGameCamera (MP4)</strong>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>  +0xD4: uint32 ViewingVisId</code></pre></div>
-<p>Special viewing ID <code class="addr">0x0FF00000</code> is used during intro/podium scenes (when camera is null).</p>
+<p>Special viewing ID <span class="named-addr"><span class="addr-name">CAMERA_VIEWING_ID_INTRO_PODIUM</span><code class="addr">0x0FF00000</code></span> is used during intro/podium scenes (when camera is null).</p>
 <p><strong>CNetClient NetConfig</strong>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>CNetClient:
   TCPSendingNodTotal.Offset + 4: IntPtr netConfigPtr  (pointer to NetConfig struct)
@@ -572,7 +578,7 @@ userMgr.TaskResult_Release(req.Id)  // cleanup</code></pre></div>
 </tr>
 </tbody>
 </table></div>
-<p>The <code class="addr">0x000FA000</code> value (1,024,000 bytes) appears as the comparison threshold. All patches change conditional branches to unconditional jumps.</p>
+<p>The <span class="named-addr"><span class="addr-name">EMBED_SIZE_LIMIT_BYTES</span><code class="addr">0x000FA000</code></span> value (1,024,000 bytes) appears as the comparison threshold. All patches change conditional branches to unconditional jumps.</p>
 <h3 id="max-challenge-size-pattern"><a class="anchor" href="#max-challenge-size-pattern">#</a>Max Challenge Size Pattern</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -838,7 +844,7 @@ app.ActiveMenus[0].CurrentFrame.IdName == &quot;FrameManiaPlanetMain&quot;</code
   <li><code>MapInfo.TMObjective_AuthorTime/GoldTime/SilverTime/BronzeTime</code> (uint)</li>
   <li><code>MapName</code> (direct on challenge)</li>
   <li><code>IdName</code> (UID)</li>
-  <li><code>Id.Value</code> (uint -- <code class="addr">0xFFFFFFFF</code> when invalid)</li>
+  <li><code>Id.Value</code> (uint -- <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> when invalid)</li>
 </ul>
 <p>Forever (via <code>Challenge</code>):</p>
 <ul>

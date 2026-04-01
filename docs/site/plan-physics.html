@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -724,7 +730,7 @@ pub struct VehiclePhyModel {
 <tr>
   <td style="text-align:left"><code>IsTurbo</code></td>
   <td style="text-align:left">bool</td>
-  <td style="text-align:left">boost_start_time != <code class="addr">0xFFFFFFFF</code> && within duration</td>
+  <td style="text-align:left">boost_start_time != <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> && within duration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>TurboTime</code></td>
@@ -1931,7 +1937,7 @@ VehiclePhyModel (populated at vehicle spawn)
 <tr>
   <td style="text-align:left">Gravity multiplier</td>
   <td style="text-align:left"><code>GravityCoef</code> (3.0)</td>
-  <td style="text-align:left"><code>"GravityCoef"</code> (<code class="addr">0x141bb3e18</code>)</td>
+  <td style="text-align:left"><code>"GravityCoef"</code> (<span class="named-addr"><span class="addr-name">str_GravityCoef</span><code class="addr">0x141bb3e18</code></span>)</td>
   <td style="text-align:left">Dynamics param</td>
   <td style="text-align:left">Vehicle GBX</td>
 </tr>
@@ -1945,14 +1951,14 @@ VehiclePhyModel (populated at vehicle spawn)
 <tr>
   <td style="text-align:left">Spring frequency</td>
   <td style="text-align:left"><code>AbsorbingValKi</code></td>
-  <td style="text-align:left"><code>"Spring.FreqHz"</code> (<code class="addr">0x141bb3ec0</code>)</td>
+  <td style="text-align:left"><code>"Spring.FreqHz"</code> (<span class="named-addr"><span class="addr-name">str_Spring_FreqHz</span><code class="addr">0x141bb3ec0</code></span>)</td>
   <td style="text-align:left">Suspension</td>
   <td style="text-align:left">Vehicle GBX</td>
 </tr>
 <tr>
   <td style="text-align:left">Damping ratio</td>
   <td style="text-align:left"><code>AbsorbingValKa</code></td>
-  <td style="text-align:left"><code>"Spring.DampingRatio"</code> (<code class="addr">0x141bb3ed0</code>)</td>
+  <td style="text-align:left"><code>"Spring.DampingRatio"</code> (<span class="named-addr"><span class="addr-name">str_Spring_DampingRatio</span><code class="addr">0x141bb3ed0</code></span>)</td>
   <td style="text-align:left">Suspension</td>
   <td style="text-align:left">Vehicle GBX</td>
 </tr>
@@ -1966,14 +1972,14 @@ VehiclePhyModel (populated at vehicle spawn)
 <tr>
   <td style="text-align:left">Friction coefficient</td>
   <td style="text-align:left">(per-surface)</td>
-  <td style="text-align:left"><code>"Tunings.CoefFriction"</code> (<code class="addr">0x141cb72c8</code>)</td>
+  <td style="text-align:left"><code>"Tunings.CoefFriction"</code> (<span class="named-addr"><span class="addr-name">str_Tunings_CoefFriction</span><code class="addr">0x141cb72c8</code></span>)</td>
   <td style="text-align:left">NGameSlotPhy+0x58</td>
   <td style="text-align:left">Per-player</td>
 </tr>
 <tr>
   <td style="text-align:left">Accel coefficient</td>
   <td style="text-align:left">(per-surface)</td>
-  <td style="text-align:left"><code>"Tunings.CoefAcceleration"</code> (<code class="addr">0x141cb72a8</code>)</td>
+  <td style="text-align:left"><code>"Tunings.CoefAcceleration"</code> (<span class="named-addr"><span class="addr-name">str_Tunings_CoefAcceleration</span><code class="addr">0x141cb72a8</code></span>)</td>
   <td style="text-align:left">NGameSlotPhy+0x5C</td>
   <td style="text-align:left">Per-player</td>
 </tr>
@@ -2572,13 +2578,13 @@ Compare:
 </tr>
 <tr>
   <td style="text-align:left"><code>DAT_141d21c00</code></td>
-  <td style="text-align:left"><code class="addr">0x7FFFFFFF</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">HEADER_CHUNK_SIZE_MASK</span><code class="addr">0x7FFFFFFF</code></span></td>
   <td style="text-align:left">Absolute value bitmask (clear sign bit)</td>
   <td style="text-align:left">HIGH (standard IEEE trick)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>DAT_141d21c30</code></td>
-  <td style="text-align:left"><code class="addr">0x80000000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">HEADER_CHUNK_HEAVY_FLAG</span><code class="addr">0x80000000</code></span></td>
   <td style="text-align:left">Sign flip bitmask (toggle sign bit)</td>
   <td style="text-align:left">HIGH (standard IEEE trick)</td>
 </tr>
@@ -2628,217 +2634,217 @@ Compare:
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141501800</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><code class="addr">0x141501800</code></span></td>
   <td style="text-align:left">PhysicsStep_TM</td>
   <td style="text-align:left">Per-vehicle main loop</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408427d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><code class="addr">0x1408427d0</code></span></td>
   <td style="text-align:left">NSceneVehiclePhy::ComputeForces</td>
   <td style="text-align:left">Force dispatcher</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140803920</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><code class="addr">0x140803920</code></span></td>
   <td style="text-align:left">NSceneDyna::PhysicsStep_V2</td>
   <td style="text-align:left">Rigid body orchestrator</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408025a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::InternalPhysicsStep</span><code class="addr">0x1408025a0</code></span></td>
   <td style="text-align:left">NSceneDyna::InternalPhysicsStep</td>
   <td style="text-align:left">Constraint solver dispatch</td>
   <td style="text-align:left">NO</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1407f89d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeGravityAndSleepStateAndNewVels</span><code class="addr">0x1407f89d0</code></span></td>
   <td style="text-align:left">ComputeGravityAndSleepStateAndNewVels</td>
   <td style="text-align:left">Gravity + sleep</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1407f8290</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeWaterForces</span><code class="addr">0x1407f8290</code></span></td>
   <td style="text-align:left">ComputeWaterForces</td>
   <td style="text-align:left">Water buoyancy/drag</td>
   <td style="text-align:left">YES (stub)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140869cd0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="addr">0x140869cd0</code></span></td>
   <td style="text-align:left">Force model cases 0/1/2</td>
   <td style="text-align:left">Base 4-wheel</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14086b060</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M4_Case3</span><code class="addr">0x14086b060</code></span></td>
   <td style="text-align:left">Force model case 3</td>
   <td style="text-align:left">Bicycle 2-wheel</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14086bc50</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M5_Case4</span><code class="addr">0x14086bc50</code></span></td>
   <td style="text-align:left">Force model case 4</td>
   <td style="text-align:left">M5 equivalent</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140851f00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_M6_CarSport_Case5</span><code class="addr">0x140851f00</code></span></td>
   <td style="text-align:left">Force model case 5</td>
   <td style="text-align:left">CarSport full</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14085c9e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="addr">0x14085c9e0</code></span></td>
   <td style="text-align:left">Force model case 6</td>
   <td style="text-align:left">Extended CarSport</td>
   <td style="text-align:left">YES (header)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14086d3b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewB_Case0xB</span><code class="addr">0x14086d3b0</code></span></td>
   <td style="text-align:left">Force model case 0xB</td>
   <td style="text-align:left">Desert/variant</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408570e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">PerWheelVisualStateUpdate</span><code class="addr">0x1408570e0</code></span></td>
   <td style="text-align:left">Per-wheel force</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">Partial</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14085ad30</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SteeringModel</span><code class="addr">0x14085ad30</code></span></td>
   <td style="text-align:left">Steering model</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">NO</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14085a0d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SuspensionContactUpdate</span><code class="addr">0x14085a0d0</code></span></td>
   <td style="text-align:left">Suspension/contact</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">NO</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14085ba50</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">AntiRollBar</span><code class="addr">0x14085ba50</code></span></td>
   <td style="text-align:left">Anti-roll bar</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">NO</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140858c90</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DampingModel</span><code class="addr">0x140858c90</code></span></td>
   <td style="text-align:left">Damping</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">NO</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140857380</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DriftSkidModel</span><code class="addr">0x140857380</code></span></td>
   <td style="text-align:left">Drift/skid</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">NO</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140857b20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">BoostReactorForce</span><code class="addr">0x140857b20</code></span></td>
   <td style="text-align:left">Boost/reactor force</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14085c1b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">AirborneControl</span><code class="addr">0x14085c1b0</code></span></td>
   <td style="text-align:left">Airborne control</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14085b600</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FinalForceIntegration</span><code class="addr">0x14085b600</code></span></td>
   <td style="text-align:left">Final force integration</td>
   <td style="text-align:left">Shared by 5/6/0xB</td>
   <td style="text-align:left">NO</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14042bcb0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CFuncKeysReal::SampleCurve</span><code class="addr">0x14042bcb0</code></span></td>
   <td style="text-align:left">Curve sampling</td>
   <td style="text-align:left">Utility</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408456b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SlopeGravityFactor</span><code class="addr">0x1408456b0</code></span></td>
   <td style="text-align:left">Slope gravity factor</td>
   <td style="text-align:left">Utility</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140845b60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">WheelContactSurfaceAccumulation</span><code class="addr">0x140845b60</code></span></td>
   <td style="text-align:left">Wheel contact surface</td>
   <td style="text-align:left">Utility</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14086af20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">LateralGripBicycleModel</span><code class="addr">0x14086af20</code></span></td>
   <td style="text-align:left">Lateral grip (2-wheel)</td>
   <td style="text-align:left">Case 3 helper</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14083d8e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SteeringInputProcessing</span><code class="addr">0x14083d8e0</code></span></td>
   <td style="text-align:left">Steering input</td>
   <td style="text-align:left">Input processing</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140845210</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ApplyLinearForce</span><code class="addr">0x140845210</code></span></td>
   <td style="text-align:left">Apply force</td>
   <td style="text-align:left">Thin wrapper</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140845260</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ApplyTorque</span><code class="addr">0x140845260</code></span></td>
   <td style="text-align:left">Apply torque</td>
   <td style="text-align:left">Thin wrapper</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1402a9c60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NHmsCollision::StartPhyFrame</span><code class="addr">0x1402a9c60</code></span></td>
   <td style="text-align:left">StartPhyFrame</td>
   <td style="text-align:left">Collision init</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1407f9da0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::DynamicCollisionCreateCache</span><code class="addr">0x1407f9da0</code></span></td>
   <td style="text-align:left">DynamicCollisionCreateCache</td>
   <td style="text-align:left">Collision cache</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1402a8a70</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NHmsCollision::MergeContacts</span><code class="addr">0x1402a8a70</code></span></td>
   <td style="text-align:left">MergeContacts</td>
   <td style="text-align:left">Contact merging</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1407d2b90</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</span><code class="addr">0x1407d2b90</code></span></td>
   <td style="text-align:left">ProcessContactPoints</td>
   <td style="text-align:left">Contact processing</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1407f3fc0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::SSolverParams_Registration</span><code class="addr">0x1407f3fc0</code></span></td>
   <td style="text-align:left">FrictionIterCount_Config</td>
   <td style="text-align:left">Solver config</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140842ed0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PairComputeForces</span><code class="addr">0x140842ed0</code></span></td>
   <td style="text-align:left">PairComputeForces</td>
   <td style="text-align:left">Vehicle-vehicle</td>
   <td style="text-align:left">YES</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1407d2870</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy_FragileBreak</span><code class="addr">0x1407d2870</code></span></td>
   <td style="text-align:left">Fragile break handler</td>
   <td style="text-align:left">Crash/reset</td>
   <td style="text-align:left">NO</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14083dca0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ComputeVelocityScale</span><code class="addr">0x14083dca0</code></span></td>
   <td style="text-align:left">Velocity scale factor</td>
   <td style="text-align:left">Sub-step calc</td>
   <td style="text-align:left">NO</td>

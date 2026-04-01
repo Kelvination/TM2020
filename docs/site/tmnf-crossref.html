@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -200,7 +206,7 @@
 <p><strong>Evidence:</strong></p>
 <ul>
   <li>TMNF: RTTI data confirms <code>CMwNod</code> -> <code>CSceneObject</code> -> <code>CSceneMobil</code> -> <code>CSceneVehicle</code> -> <code>CSceneVehicleCar</code> (vtable at <code class="addr">0x00ceef6c</code>)</li>
-  <li>TM2020: String evidence confirms <code>CGbxApp::Init1</code>, <code>CGameCtnApp::UpdateGame</code>, <code>CTrackMania</code> (at <code class="addr">0x141cfb978</code>)</li>
+  <li>TM2020: String evidence confirms <code>CGbxApp::Init1</code>, <code>CGameCtnApp::UpdateGame</code>, <code>CTrackMania</code> (at <span class="named-addr"><span class="addr-name">str_CTrackMania_GameState_LocalLoopSetUp</span><code class="addr">0x141cfb978</code></span>)</li>
 </ul>
 <p>TM2020 introduces <code>CGameManiaPlanet</code> between <code>CGameCtnApp</code> and <code>CTrackMania</code>. This platform abstraction layer did not exist in TMNF. [<span class="badge badge-verified">VERIFIED</span>]</p>
 <h3 id="engine-subsystems"><a class="anchor" href="#engine-subsystems">#</a>Engine Subsystems</h3>
@@ -295,7 +301,7 @@
 </tr>
 <tr>
   <td style="text-align:left">Multi-vehicle type support (Rally, Snow, Desert)</td>
-  <td style="text-align:left">VehicleTransform strings at <code class="addr">0x141be1300</code>-<code class="addr">0x141be1398</code></td>
+  <td style="text-align:left">VehicleTransform strings at <span class="named-addr"><span class="addr-name">str_VehicleTransform_CarRally</span><code class="addr">0x141be1300</code></span>-<span class="named-addr"><span class="addr-name">str_VehicleTransform_Reset</span><code class="addr">0x141be1398</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Fiber/coroutine system (<code>CMwCmdFiber</code>)</td>
@@ -515,7 +521,7 @@
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>position += velocity * dt + applied_impulse * dt
 velocity += (accumulated_force / mass) * dt
 quaternion += 0.5 * [0, omega] * q * dt</code></pre></div>
-<p><strong>TM2020 (NSceneDyna::ComputeGravityAndSleepStateAndNewVels, <code class="addr">0x1407f89d0</code>, 790 bytes):</strong></p>
+<p><strong>TM2020 (NSceneDyna::ComputeGravityAndSleepStateAndNewVels, <span class="named-addr"><span class="addr-name">NSceneDyna::ComputeGravityAndSleepStateAndNewVels</span><code class="addr">0x1407f89d0</code></span>, 790 bytes):</strong></p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vel.x += force.x * dt + gravity.x * mass * dt
 vel.y += force.y * dt + gravity.y * mass * dt
 vel.z += force.z * dt + gravity.z * mass * dt
@@ -609,7 +615,7 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 <p>Both games have water physics:</p>
 <ul>
   <li><strong>TMNF</strong>: Tuning parameters include WaterGravity=1.0, WaterReboundMinHSpeed=55.556 (200 km/h), WaterBumpMinSpeed=50.0, WaterAngularFriction=0.1, curves for bump slowdown/friction/rebound</li>
-  <li><strong>TM2020</strong>: <code>NSceneDyna::ComputeWaterForces</code> at <code class="addr">0x1407f8290</code> (370 bytes) -- buoyancy and drag</li>
+  <li><strong>TM2020</strong>: <code>NSceneDyna::ComputeWaterForces</code> at <span class="named-addr"><span class="addr-name">NSceneDyna::ComputeWaterForces</span><code class="addr">0x1407f8290</code></span> (370 bytes) -- buoyancy and drag</li>
 </ul>
 <hr>
 <h2 id="how-vehicle-state-structures-compare"><a class="anchor" href="#how-vehicle-state-structures-compare">#</a>How Vehicle State Structures Compare</h2>
@@ -680,7 +686,7 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
   <td style="text-align:left">+0x6F4</td>
   <td style="text-align:left">uint</td>
   <td style="text-align:left">+0x16E8</td>
-  <td style="text-align:left">Both use <code class="addr">0xFFFFFFFF</code> = no boost</td>
+  <td style="text-align:left">Both use <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> = no boost</td>
 </tr>
 <tr>
   <td style="text-align:left">Transform matrix</td>
@@ -776,35 +782,35 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 <tbody>
 <tr>
   <td style="text-align:left">RotSpeed</td>
-  <td style="text-align:left"><code class="addr">0x141be7950</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_RotSpeed</span><code class="addr">0x141be7950</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">DamperLength</td>
-  <td style="text-align:left"><code class="addr">0x141be7980</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_DamperLength</span><code class="addr">0x141be7980</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">SteerAngle</td>
-  <td style="text-align:left"><code class="addr">0x141be79b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_SteerAngle</span><code class="addr">0x141be79b0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Rot</td>
-  <td style="text-align:left"><code class="addr">0x141be79e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_Rot</span><code class="addr">0x141be79e0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">TireWear01</td>
-  <td style="text-align:left"><code class="addr">0x141be7a08</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_TireWear01</span><code class="addr">0x141be7a08</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">BreakNormedCoef</td>
-  <td style="text-align:left"><code class="addr">0x141be7a40</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_BreakNormedCoef</span><code class="addr">0x141be7a40</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">SlipCoef</td>
-  <td style="text-align:left"><code class="addr">0x141be7a70</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_SlipCoef</span><code class="addr">0x141be7a70</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Icing01</td>
-  <td style="text-align:left"><code class="addr">0x141be7aa0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_Icing01</span><code class="addr">0x141be7aa0</code></span></td>
 </tr>
 </tbody>
 </table></div>
@@ -976,7 +982,7 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 <tr>
   <td style="text-align:left">GravityCoef</td>
   <td style="text-align:left">3.0</td>
-  <td style="text-align:left"><code>"GravityCoef"</code> at <code class="addr">0x141bb3e18</code></td>
+  <td style="text-align:left"><code>"GravityCoef"</code> at <span class="named-addr"><span class="addr-name">str_GravityCoef</span><code class="addr">0x141bb3e18</code></span></td>
   <td style="text-align:left">[UNCERTAIN if same]</td>
 </tr>
 <tr>
@@ -994,13 +1000,13 @@ angular_vel += torque * angular_mass * dt</code></pre></div>
 <tr>
   <td style="text-align:left">Spring.FreqHz</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>"Spring.FreqHz"</code> at <code class="addr">0x141bb3ec0</code></td>
+  <td style="text-align:left"><code>"Spring.FreqHz"</code> at <span class="named-addr"><span class="addr-name">str_Spring_FreqHz</span><code class="addr">0x141bb3ec0</code></span></td>
   <td style="text-align:left">NEW naming convention in TM2020</td>
 </tr>
 <tr>
   <td style="text-align:left">Spring.DampingRatio</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
-  <td style="text-align:left"><code>"Spring.DampingRatio"</code> at <code class="addr">0x141bb3ed0</code></td>
+  <td style="text-align:left"><code>"Spring.DampingRatio"</code> at <span class="named-addr"><span class="addr-name">str_Spring_DampingRatio</span><code class="addr">0x141bb3ed0</code></span></td>
   <td style="text-align:left">Different from TMNF AbsorbingValKi/Ka</td>
 </tr>
 </tbody>
@@ -1047,7 +1053,7 @@ else:
     force = lerp(friction_cap, raw_force, MaxSideFrictionBlendCoef)  // 0.018 = very slow blend</code></pre></div>
 <p><strong>TM2020 friction</strong>:</p>
 <ul>
-  <li>Separate <code>FrictionDynaIterCount</code> and <code>FrictionStaticIterCount</code> (at <code class="addr">0x141bed9e8</code>/0x141beda38)</li>
+  <li>Separate <code>FrictionDynaIterCount</code> and <code>FrictionStaticIterCount</code> (at <span class="named-addr"><span class="addr-name">str_FrictionDynaIterCount</span><code class="addr">0x141bed9e8</code></span>/0x141beda38)</li>
   <li><code>Tunings.CoefFriction</code> at struct offset 0x58</li>
   <li>Iterative Gauss-Seidel-style contact solver</li>
 </ul>
@@ -1097,14 +1103,14 @@ else:
 </tr>
 <tr>
   <td style="text-align:left">End-of-chunks marker</td>
-  <td style="text-align:left"><code class="addr">0xFACADE01</code></td>
-  <td style="text-align:left"><code class="addr">0xFACADE01</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span></td>
   <td style="text-align:left">Identical sentinel</td>
 </tr>
 <tr>
   <td style="text-align:left">End marker class ID</td>
-  <td style="text-align:left"><code class="addr">0x01001000</code></td>
-  <td style="text-align:left"><code class="addr">0x01001000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CMwNod_End_CHUNK_ID</span><code class="addr">0x01001000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CMwNod_End_CHUNK_ID</span><code class="addr">0x01001000</code></span></td>
   <td style="text-align:left">Identical (CMwNod_End)</td>
 </tr>
 </tbody>
@@ -1121,23 +1127,23 @@ else:
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x24003000</code></td>
-  <td style="text-align:left"><code class="addr">0x03043000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_LEGACY_CLASS_ID</span><code class="addr">0x24003000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span></td>
   <td style="text-align:left">CGameCtnChallenge (Map)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x2403F000</code></td>
-  <td style="text-align:left"><code class="addr">0x03093000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnReplayRecord_LEGACY_CLASS_ID</span><code class="addr">0x2403F000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnReplayRecord_CLASS_ID</span><code class="addr">0x03093000</code></span></td>
   <td style="text-align:left">CGameCtnReplayRecord</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0A06A000</code></td>
-  <td style="text-align:left"><code class="addr">0x090E5000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CScene_OLD_CLASS_ID_0A06A</span><code class="addr">0x0A06A000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlug_NEW_CLASS_ID_090E5</span><code class="addr">0x090E5000</code></span></td>
   <td style="text-align:left">Scene -> Plug migration</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0A03D000</code></td>
-  <td style="text-align:left"><code class="addr">0x0C030000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CScene_OLD_CLASS_ID_0A03D</span><code class="addr">0x0A03D000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CControl_CLASS_ID_0C030</span><code class="addr">0x0C030000</code></span></td>
   <td style="text-align:left">Scene -> Control migration</td>
 </tr>
 </tbody>
@@ -1307,7 +1313,7 @@ else:
   <td style="text-align:left">CMwNod base class</td>
   <td style="text-align:left">RTTI throughout</td>
   <td style="text-align:left">CMwNod base</td>
-  <td style="text-align:left"><code>"CMwNod"</code> strings, factory at <code class="addr">0x1402cf380</code></td>
+  <td style="text-align:left"><code>"CMwNod"</code> strings, factory at <span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><code class="addr">0x1402cf380</code></span></td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
@@ -1325,7 +1331,7 @@ else:
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
-  <td style="text-align:left">Class ID <code class="addr">0x03043000</code> (Map)</td>
+  <td style="text-align:left">Class ID <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span> (Map)</td>
   <td style="text-align:left">GBX class ID</td>
   <td style="text-align:left">Same class ID</td>
   <td style="text-align:left">Body label table at FUN_140903140</td>
@@ -1342,7 +1348,7 @@ else:
   <td style="text-align:left">Velocity-dependent sub-stepping</td>
   <td style="text-align:left">FUN_0057f770</td>
   <td style="text-align:left">Adaptive sub-stepping</td>
-  <td style="text-align:left">PhysicsStep_TM (<code class="addr">0x141501800</code>)</td>
+  <td style="text-align:left">PhysicsStep_TM (<span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><code class="addr">0x141501800</code></span>)</td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 <tr>
@@ -1398,7 +1404,7 @@ else:
   <td style="text-align:left">4 wheels (FL/FR/RL/RR)</td>
   <td style="text-align:left">Wheel loop in M6</td>
   <td style="text-align:left">FL/FR/RL/RR naming</td>
-  <td style="text-align:left">String evidence <code class="addr">0x141bd2cc8</code></td>
+  <td style="text-align:left">String evidence <span class="named-addr"><span class="addr-name">str_FLReactor</span><code class="addr">0x141bd2cc8</code></span></td>
   <td style="text-align:left"><span class="badge badge-verified">VERIFIED</span></td>
 </tr>
 </tbody>
@@ -1620,7 +1626,7 @@ else:
   <li><a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> -- Openplanet vehicle state fields</li>
 </ul>
 <details><summary>Analysis metadata</summary>
-<p><strong>TMNF Binary</strong>: <code>TmForever.exe</code>, x86 32-bit, base <code class="addr">0x00400000</code>, 68,015 functions <strong>TM2020 Binary</strong>: <code>Trackmania.exe</code>, x86-64, base <code class="addr">0x140000000</code>, 131,311 functions <strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: TMNF diary.md (2395 lines), TM2020 RE docs (00-08), TM2020 decompiled physics</p>
+<p><strong>TMNF Binary</strong>: <code>TmForever.exe</code>, x86 32-bit, base <span class="named-addr"><span class="addr-name">TMNF_IMAGE_BASE</span><code class="addr">0x00400000</code></span>, 68,015 functions <strong>TM2020 Binary</strong>: <code>Trackmania.exe</code>, x86-64, base <span class="named-addr"><span class="addr-name">PE_IMAGE_BASE</span><code class="addr">0x140000000</code></span>, 131,311 functions <strong>Date</strong>: 2026-03-27 <strong>Sources</strong>: TMNF diary.md (2395 lines), TM2020 RE docs (00-08), TM2020 decompiled physics</p>
 </details>
 
                         <nav class="prev-next"><a class="prev" href="community.html">&larr; Community Knowledge</a><a class="next" href="ghidra-findings.html">Ghidra Research &rarr;</a></nav>

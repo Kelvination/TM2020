@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -144,7 +150,7 @@ if (fVar10 * fVar10 + fVar1 * fVar1 + fVar11 * fVar11 &lt; fVar12) {</code></pre
 <p><strong>Affects</strong>: Doc 10 Section 6.4</p>
 <p>Doc 10 claims the fragile check passes for "nibble values 4+ only." The code does unsigned subtraction:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">(1 &lt; (*(uint *)(lVar9 + 0x128c) &amp; 0xf) - 2)</code></pre></div>
-<p>For nibble=0: 0-2 = <code class="addr">0xFFFFFFFE</code> (unsigned), and <code>1 < 0xFFFFFFFE</code> is TRUE. For nibble=1: 1-2 = <code class="addr">0xFFFFFFFF</code>, and <code>1 < 0xFFFFFFFF</code> is TRUE. Only nibble values 2 and 3 fail. Missing this breaks fragile surface behavior for common vehicle states.</p>
+<p>For nibble=0: 0-2 = <code class="addr">0xFFFFFFFE</code> (unsigned), and <code>1 < 0xFFFFFFFE</code> is TRUE. For nibble=1: 1-2 = <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span>, and <code>1 < 0xFFFFFFFF</code> is TRUE. Only nibble values 2 and 3 fail. Missing this breaks fragile surface behavior for common vehicle states.</p>
 <p><strong>Fix</strong>: Correct to "nibble values 0, 1, and 4+ pass the check. Only nibble values 2 and 3 are excluded."</p>
 <h3 id="inferred-api-endpoints-lack-confidence-labels-major"><a class="anchor" href="#inferred-api-endpoints-lack-confidence-labels-major">#</a>Inferred API Endpoints Lack Confidence Labels (MAJOR)</h3>
 <p><strong>Affects</strong>: Doc 17 Section 4</p>
@@ -186,7 +192,7 @@ if (fVar10 * fVar10 + fVar1 * fVar1 + fVar11 * fVar11 &lt; fVar12) {</code></pre
 <p><strong>Fix</strong>: Reconcile the counts or explain inclusion criteria.</p>
 <h3 id="facade01-function-is-a-class-id-checker-minor"><a class="anchor" href="#facade01-function-is-a-class-id-checker-minor">#</a>FACADE01 Function Is a Class ID Checker (MINOR)</h3>
 <p><strong>Affects</strong>: Doc 16 Section 7</p>
-<p>The document conflates two uses of <code class="addr">0xFACADE01</code>. Function <code>FUN_1402d0c40</code> checks class IDs (returns 1 for end-class, non-1 otherwise). The <code class="addr">0xFACADE01</code> sentinel in the actual file stream should be cited from community documentation or a different code path.</p>
+<p>The document conflates two uses of <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span>. Function <code>FUN_1402d0c40</code> checks class IDs (returns 1 for end-class, non-1 otherwise). The <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel in the actual file stream should be cited from community documentation or a different code path.</p>
 <p><strong>Fix</strong>: Clarify the function's role and cite the sentinel separately.</p>
 <h3 id="lookbackstring-flags-are-community-sourced-minor"><a class="anchor" href="#lookbackstring-flags-are-community-sourced-minor">#</a>LookbackString Flags Are Community-Sourced (MINOR)</h3>
 <p><strong>Affects</strong>: Doc 16 Section 13</p>

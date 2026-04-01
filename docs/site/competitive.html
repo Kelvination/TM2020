@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -307,7 +313,7 @@ do {
 <ol>
   <li><strong>Server resimulation</strong>: The server re-runs physics with uploaded inputs to verify the claimed time.</li>
 </ol>
-<p><strong>Replay state copy size</strong>: During replay (SimulationMode == 1 at vehicle+0x1C90), the code copies 2,168 bytes (<code>0x878</code>) of vehicle state:</p>
+<p><strong>Replay state copy size</strong>: During replay (SimulationMode == 1 at vehicle+0x1C90), the code copies 2,168 bytes (<span class="named-addr"><span class="addr-name">REPLAY_STATE_COPY_SIZE</span><code class="addr">0x878</code></span>) of vehicle state:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">// NSceneVehiclePhy__PhysicsStep_BeforeMgrDynaUpdate.c:106
 FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code></pre></div>
 <hr>
@@ -457,112 +463,112 @@ FUN_1418d7510(lVar19 + 0x1280, *(undefined8 *)(lVar19 + 0x1c98), 0x878);</code><
 <tbody>
 <tr>
   <td style="text-align:left"><code>Turbo</code></td>
-  <td style="text-align:left"><code class="addr">0x141be126c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Turbo</span><code class="addr">0x141be126c</code></span></td>
   <td style="text-align:left">Speed boost level 1. Force ramps UP linearly (see below).</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Turbo2</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1288</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Turbo2</span><code class="addr">0x141be1288</code></span></td>
   <td style="text-align:left">Speed boost level 2. Same ramp-up mechanic, higher strength.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ForceAcceleration</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1258</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ForceAcceleration</span><code class="addr">0x141be1258</code></span></td>
   <td style="text-align:left">Forces constant acceleration regardless of input.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NoSteering</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1238</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoSteering</span><code class="addr">0x141be1238</code></span></td>
   <td style="text-align:left">Disables steering -- car goes straight.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NoBrakes</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoBrakes</span><code class="addr">0x141be12b0</code></span></td>
   <td style="text-align:left">Disables brake input.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NoGrip</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1244</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoGrip</span><code class="addr">0x141be1244</code></span></td>
   <td style="text-align:left">Zero friction. Car slides on momentum.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>FreeWheeling</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1278</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FreeWheeling</span><code class="addr">0x141be1278</code></span></td>
   <td style="text-align:left">Engine disengaged -- coasting only.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Fragile</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12a8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Fragile</span><code class="addr">0x141be12a8</code></span></td>
   <td style="text-align:left">Car breaks on hard impact.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>SlowMotion</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SlowMotion</span><code class="addr">0x141be12d0</code></span></td>
   <td style="text-align:left">Reduces simulation speed (<code>SimulationTimeCoef</code>).</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Cruise</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1390</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Cruise</span><code class="addr">0x141be1390</code></span></td>
   <td style="text-align:left">Sets cruise control to fixed speed.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Bouncy</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12bc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bouncy</span><code class="addr">0x141be12bc</code></span></td>
   <td style="text-align:left">High restitution surface -- car bounces.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Bumper</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12c4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bumper</span><code class="addr">0x141be12c4</code></span></td>
   <td style="text-align:left">Bumper level 1.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Bumper2</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12f8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bumper2</span><code class="addr">0x141be12f8</code></span></td>
   <td style="text-align:left">Bumper level 2.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Reset</code></td>
-  <td style="text-align:left"><code class="addr">0x141be124c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Reset</span><code class="addr">0x141be124c</code></span></td>
   <td style="text-align:left">Resets vehicle to last checkpoint.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ReactorBoost_Legacy</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost_Legacy</span><code class="addr">0x141be12e0</code></span></td>
   <td style="text-align:left">Non-directional reactor boost.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ReactorBoost2_Legacy</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1290</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost2_Legacy</span><code class="addr">0x141be1290</code></span></td>
   <td style="text-align:left">Non-directional reactor boost level 2.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ReactorBoost_Oriented</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1378</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost_Oriented</span><code class="addr">0x141be1378</code></span></td>
   <td style="text-align:left">Directional reactor boost.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ReactorBoost2_Oriented</code></td>
-  <td style="text-align:left"><code class="addr">0x141be13b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost2_Oriented</span><code class="addr">0x141be13b0</code></span></td>
   <td style="text-align:left">Directional reactor boost level 2.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>VehicleTransform_CarRally</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1300</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarRally</span><code class="addr">0x141be1300</code></span></td>
   <td style="text-align:left">Transforms car to Rally.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>VehicleTransform_CarSnow</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1320</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarSnow</span><code class="addr">0x141be1320</code></span></td>
   <td style="text-align:left">Transforms car to Snow.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>VehicleTransform_CarDesert</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1358</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarDesert</span><code class="addr">0x141be1358</code></span></td>
   <td style="text-align:left">Transforms car to Desert.</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>VehicleTransform_Reset</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1398</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_Reset</span><code class="addr">0x141be1398</code></span></td>
   <td style="text-align:left">Transforms back to Stadium.</td>
 </tr>
 </tbody>
@@ -636,17 +642,17 @@ float force = t * strength * model_scale;</code></pre></div>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code>0x58</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONTACT_POINT_STRIDE</span><code class="addr">0x58</code></span></td>
   <td style="text-align:left"><code>Tunings.CoefFriction</code></td>
   <td style="text-align:left">Global friction multiplier</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>0x5C</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">slotPhyMgr_coefAcceleration</span><code class="addr">0x5C</code></span></td>
   <td style="text-align:left"><code>Tunings.CoefAcceleration</code></td>
   <td style="text-align:left">Global acceleration multiplier</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code>0x60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">slotPhyMgr_sensibility</span><code class="addr">0x60</code></span></td>
   <td style="text-align:left"><code>Tunings.Sensibility</code></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
@@ -940,7 +946,7 @@ for (i = 1; i &lt; buffer_size; i++) {
 <h3 id="sub-step-cap-speed"><a class="anchor" href="#sub-step-cap-speed">#</a>Sub-Step Cap Speed</h3>
 <p>At what speed does the 1000 sub-step cap affect collision accuracy? Test wall clipping at increasing velocities.</p>
 <h3 id="sleep-threshold-value"><a class="anchor" href="#sleep-threshold-value">#</a>Sleep Threshold Value</h3>
-<p>What is <code>DAT_141ebcd04</code>? Read address <code class="addr">0x141ebcd04</code> via a memory tool, or measure when a car stops on a flat surface.</p>
+<p>What is <code>DAT_141ebcd04</code>? Read address <span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="addr">0x141ebcd04</code></span> via a memory tool, or measure when a car stops on a flat surface.</p>
 <h3 id="reactor-boost-oriented-force-direction"><a class="anchor" href="#reactor-boost-oriented-force-direction">#</a>Reactor Boost Oriented Force Direction</h3>
 <p>Does <code>ReactorBoost_Oriented</code> apply force in the pad's facing direction or the car's? Hit an oriented reactor from different angles and observe trajectory.</p>
 <h3 id="checkpoint-state-completeness"><a class="anchor" href="#checkpoint-state-completeness">#</a>Checkpoint State Completeness</h3>

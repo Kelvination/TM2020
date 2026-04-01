@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -180,27 +186,27 @@
 <tbody>
 <tr>
   <td style="text-align:left"><code>CPlugVehiclePhyTunings</code></td>
-  <td style="text-align:left"><code class="addr">0x090EC000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehiclePhyTunings_CLASS_ID</span><code class="addr">0x090EC000</code></span></td>
   <td style="text-align:left">Read/Write up to TM2</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugVehicleCarPhyTuning</code></td>
-  <td style="text-align:left"><code class="addr">0x090ED000</code> (remapped from <code class="addr">0x0A029000</code>)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehicleCarPhyTuning_CLASS_ID</span><code class="addr">0x090ED000</code></span> (remapped from <span class="named-addr"><span class="addr-name">CPlugVehicleCarPhyTuning_LEGACY_CLASS_ID</span><code class="addr">0x0A029000</code></span>)</td>
   <td style="text-align:left">Partial</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugVehiclePhyModelCustom</code></td>
-  <td style="text-align:left"><code class="addr">0x0911E000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehiclePhyModelCustom_CLASS_ID</span><code class="addr">0x0911E000</code></span></td>
   <td style="text-align:left">Partial (AccelCoef, ControlCoef, GravityCoef)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugVehicleGearBox</code></td>
-  <td style="text-align:left"><code class="addr">0x09094000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehicleGearBox_CLASS_ID</span><code class="addr">0x09094000</code></span></td>
   <td style="text-align:left">Partial</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CPlugVehicleWheelPhyModel</code></td>
-  <td style="text-align:left"><code class="addr">0x0912E000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehicleWheelPhyModel_CLASS_ID</span><code class="addr">0x0912E000</code></span></td>
   <td style="text-align:left">Partial (IsDriving, IsSteering, WheelId)</td>
 </tr>
 <tr>
@@ -210,7 +216,7 @@
 </tr>
 </tbody>
 </table></div>
-<p>GBX.NET's <code>VehicleTunings.Gbx</code> support ends at TM2. TM2020 files may use newer chunk versions. The chunk format is backward-compatible (class ID remapping from <code>0x0A029</code> to <code>0x090ED</code> is confirmed).</p>
+<p>GBX.NET's <code>VehicleTunings.Gbx</code> support ends at TM2. TM2020 files may use newer chunk versions. The chunk format is backward-compatible (class ID remapping from <span class="named-addr"><span class="addr-name">CSceneVehicleCarTuning_CLASS_ID_TMNF</span><code class="addr">0x0A029</code></span> to <span class="named-addr"><span class="addr-name">CPlugVehicleCarPhyTuning_CLASS_ID_SHORT</span><code class="addr">0x090ED</code></span> is confirmed).</p>
 <details class="collapsible collapsed-by-default">
 <summary><h3 id="method-d-openplanet-memory-dump-runtime-sniffing"><a class="anchor" href="#method-d-openplanet-memory-dump-runtime-sniffing">#</a>Method D: Openplanet Memory Dump (Runtime Sniffing)</h3></summary>
 <div class="collapsible-content">
@@ -425,7 +431,7 @@ model+0x16E4  TurboForceValue</code></pre></div>
 <tbody>
 <tr>
   <td style="text-align:left">Speed display conversion</td>
-  <td style="text-align:left">.rdata <code class="addr">0x141d1f71c</code></td>
+  <td style="text-align:left">.rdata <span class="named-addr"><span class="addr-name">CONST_MS_TO_KMH_3_6</span><code class="addr">0x141d1f71c</code></span></td>
   <td style="text-align:left">3.6 (m/s to km/h)</td>
 </tr>
 <tr>
@@ -435,17 +441,17 @@ model+0x16E4  TurboForceValue</code></pre></div>
 </tr>
 <tr>
   <td style="text-align:left">Sleep damping</td>
-  <td style="text-align:left">.rdata <code class="addr">0x141ebcd00</code></td>
+  <td style="text-align:left">.rdata <span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="addr">0x141ebcd00</code></span></td>
   <td style="text-align:left">0.9</td>
 </tr>
 <tr>
   <td style="text-align:left">Sleep threshold</td>
-  <td style="text-align:left">.rdata <code class="addr">0x141ebcd04</code></td>
+  <td style="text-align:left">.rdata <span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="addr">0x141ebcd04</code></span></td>
   <td style="text-align:left">0.01 m/s</td>
 </tr>
 <tr>
   <td style="text-align:left">Brake/reverse threshold</td>
-  <td style="text-align:left">.rdata <code class="addr">0x141d1f624</code></td>
+  <td style="text-align:left">.rdata <span class="named-addr"><span class="addr-name">CONST_BRAKE_REVERSE_THRESHOLD_2_0</span><code class="addr">0x141d1f624</code></span></td>
   <td style="text-align:left">2.0 m/s</td>
 </tr>
 </tbody>

@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -138,112 +144,112 @@
 <tr>
   <td style="text-align:left">Float 1.0</td>
   <td style="text-align:left">1.0</td>
-  <td style="text-align:left"><code class="addr">0x141d1f3c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_UNIT_NORMAL_SCALE</span><code class="addr">0x141d1f3c8</code></span></td>
   <td style="text-align:left">Unity value, used everywhere as DAT_141d1f3c8</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Float -1.0</td>
   <td style="text-align:left">-1.0</td>
-  <td style="text-align:left"><code class="addr">0x141d1fd80</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_FLOAT_NEG_1_0</span><code class="addr">0x141d1fd80</code></span></td>
   <td style="text-align:left">Negative direction flip</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Float 0.5</td>
   <td style="text-align:left">0.5</td>
-  <td style="text-align:left"><code class="addr">0x141d1f1ac</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_FLOAT_0_5</span><code class="addr">0x141d1f1ac</code></span></td>
   <td style="text-align:left">Half multiplier (e.g. half-force in friction)</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Float 3.0</td>
   <td style="text-align:left">3.0</td>
-  <td style="text-align:left"><code class="addr">0x141d1f6e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_FLOAT_3_0</span><code class="addr">0x141d1f6e0</code></span></td>
   <td style="text-align:left">Smoothstep coefficient: <code>3t^2 - 2t^3</code></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Float 3.6</td>
   <td style="text-align:left">3.6</td>
-  <td style="text-align:left"><code class="addr">0x141d1f71c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_MS_TO_KMH_3_6</span><code class="addr">0x141d1f71c</code></span></td>
   <td style="text-align:left">m/s to km/h conversion factor</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Float 2.0</td>
   <td style="text-align:left">2.0</td>
-  <td style="text-align:left"><code class="addr">0x141d1f624</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_BRAKE_REVERSE_THRESHOLD_2_0</span><code class="addr">0x141d1f624</code></span></td>
   <td style="text-align:left">Speed threshold for brake/reverse detection (m/s)</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Float 0.1</td>
   <td style="text-align:left">0.1</td>
-  <td style="text-align:left"><code class="addr">0x141d1ef7c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="addr">0x141d1ef7c</code></span></td>
   <td style="text-align:left">Velocity threshold for sliding detection</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Pi</td>
   <td style="text-align:left">3.14159274</td>
-  <td style="text-align:left"><code class="addr">0x141d1f6f8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_PI</span><code class="addr">0x141d1f6f8</code></span></td>
   <td style="text-align:left">Angle calculations</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">2*Pi</td>
   <td style="text-align:left">6.28318548</td>
-  <td style="text-align:left"><code class="addr">0x141d1f79c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_TWO_PI</span><code class="addr">0x141d1f79c</code></span></td>
   <td style="text-align:left">Full rotation (wheel spin range)</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Pi/6</td>
   <td style="text-align:left">0.52359879</td>
-  <td style="text-align:left"><code class="addr">0x141d1f1c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_PI_OVER_6_POS</span><code class="addr">0x141d1f1c8</code></span></td>
   <td style="text-align:left">+30 degrees (max steer angle display range)</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">-Pi/6</td>
   <td style="text-align:left">-0.52359879</td>
-  <td style="text-align:left"><code class="addr">0x141d1fcfc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_PI_OVER_6_NEG</span><code class="addr">0x141d1fcfc</code></span></td>
   <td style="text-align:left">-30 degrees (min steer angle display range)</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Epsilon</td>
   <td style="text-align:left">1.0e-5</td>
-  <td style="text-align:left"><code class="addr">0x141d1ed34</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MIN_SPEED_THRESHOLD</span><code class="addr">0x141d1ed34</code></span></td>
   <td style="text-align:left">Curve lookup tolerance</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Tiny Epsilon</td>
   <td style="text-align:left">1.0e-10</td>
-  <td style="text-align:left"><code class="addr">0x141d1ecc4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MIN_NORMAL_LEN_SQ</span><code class="addr">0x141d1ecc4</code></span></td>
   <td style="text-align:left">Near-zero velocity threshold</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Float Max</td>
   <td style="text-align:left">3.4028235e+38</td>
-  <td style="text-align:left"><code class="addr">0x141d1fc24</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_NORMAL_LEN_SQ</span><code class="addr">0x141d1fc24</code></span></td>
   <td style="text-align:left">Max float sentinel</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">1000.0</td>
   <td style="text-align:left">1000.0</td>
-  <td style="text-align:left"><code class="addr">0x141d1fa9c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_MAX_SUBSTEP_FLOAT</span><code class="addr">0x141d1fa9c</code></span></td>
   <td style="text-align:left">Timestep conversion (ms to internal units)</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">15.0</td>
   <td style="text-align:left">15.0</td>
-  <td style="text-align:left"><code class="addr">0x141d1f81c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_MAX_GROUND_DETECT_DISTANCE_15</span><code class="addr">0x141d1f81c</code></span></td>
   <td style="text-align:left">Max ground detection distance</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
@@ -263,15 +269,15 @@
 <tbody>
 <tr>
   <td style="text-align:left">Sign flip</td>
-  <td style="text-align:left"><code class="addr">0x80000000</code></td>
-  <td style="text-align:left"><code class="addr">0x141d21c30</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">HEADER_CHUNK_HEAVY_FLAG</span><code class="addr">0x80000000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_FLOAT_SIGN_FLIP_MASK</span><code class="addr">0x141d21c30</code></span></td>
   <td style="text-align:left">XOR to negate float</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Abs mask</td>
-  <td style="text-align:left"><code class="addr">0x7FFFFFFF</code></td>
-  <td style="text-align:left"><code class="addr">0x141d21c00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">HEADER_CHUNK_SIZE_MASK</span><code class="addr">0x7FFFFFFF</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_FLOAT_ABS_MASK</span><code class="addr">0x141d21c00</code></span></td>
   <td style="text-align:left">AND to get absolute value</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
@@ -292,14 +298,14 @@
 <tr>
   <td style="text-align:left">Unit Vec4</td>
   <td style="text-align:left">(1.0, 1.0, 1.0, 1.0)</td>
-  <td style="text-align:left"><code class="addr">0x141d21110</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_UNIT_VEC4</span><code class="addr">0x141d21110</code></span></td>
   <td style="text-align:left">Default identity multiplier</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Down Vec4</td>
   <td style="text-align:left">(0.0, 0.0, 0.0, -1.0)</td>
-  <td style="text-align:left"><code class="addr">0x141d21d30</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_DOWN_VEC4</span><code class="addr">0x141d21d30</code></span></td>
   <td style="text-align:left">Gravity direction setup</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
@@ -321,28 +327,28 @@
 <tr>
   <td style="text-align:left">Sleep damping</td>
   <td style="text-align:left">0.9</td>
-  <td style="text-align:left"><code class="addr">0x141ebcd00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_DAMPING</span><code class="addr">0x141ebcd00</code></span></td>
   <td style="text-align:left">Velocity damping when near-sleep</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Sleep threshold</td>
   <td style="text-align:left">0.01</td>
-  <td style="text-align:left"><code class="addr">0x141ebcd04</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_THRESHOLD</span><code class="addr">0x141ebcd04</code></span></td>
   <td style="text-align:left">Velocity below this = candidate for sleep</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Sleep enable flag</td>
   <td style="text-align:left">1</td>
-  <td style="text-align:left"><code class="addr">0x141ebccfc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_SLEEP_ENABLED</span><code class="addr">0x141ebccfc</code></span></td>
   <td style="text-align:left">Sleep system enabled</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Max iterations</td>
   <td style="text-align:left">1000</td>
-  <td style="text-align:left"><code class="addr">0x141ebccf8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CONST_MAX_PRESLEEP_ITERATIONS_1000</span><code class="addr">0x141ebccf8</code></span></td>
   <td style="text-align:left">Pre-sleep iteration count</td>
   <td style="text-align:left">Confirmed</td>
 </tr>
@@ -367,21 +373,21 @@
   <td style="text-align:left">CoefFriction</td>
   <td style="text-align:left">+0x58</td>
   <td style="text-align:left">1.0</td>
-  <td style="text-align:left"><code>"Tunings.CoefFriction"</code> at <code class="addr">0x141cb72c8</code></td>
+  <td style="text-align:left"><code>"Tunings.CoefFriction"</code> at <span class="named-addr"><span class="addr-name">str_Tunings_CoefFriction</span><code class="addr">0x141cb72c8</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">CoefAcceleration</td>
   <td style="text-align:left">+0x5C</td>
   <td style="text-align:left">1.0</td>
-  <td style="text-align:left"><code>"Tunings.CoefAcceleration"</code> at <code class="addr">0x141cb72a8</code></td>
+  <td style="text-align:left"><code>"Tunings.CoefAcceleration"</code> at <span class="named-addr"><span class="addr-name">str_Tunings_CoefAcceleration</span><code class="addr">0x141cb72a8</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">Sensibility</td>
   <td style="text-align:left">+0x60</td>
   <td style="text-align:left">1.0</td>
-  <td style="text-align:left"><code>"Tunings.Sensibility"</code> at <code class="addr">0x141cb7290</code></td>
+  <td style="text-align:left"><code>"Tunings.Sensibility"</code> at <span class="named-addr"><span class="addr-name">str_Tunings_Sensibility</span><code class="addr">0x141cb7290</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 </tbody>
@@ -401,22 +407,22 @@
 <tr>
   <td style="text-align:left">AccelCoef</td>
   <td style="text-align:left">+0x18</td>
-  <td style="text-align:left">1.0 (<code class="addr">0x3f800000</code>)</td>
-  <td style="text-align:left"><code>"Modifiers.AccelCoef"</code> at <code class="addr">0x141bd5b68</code></td>
+  <td style="text-align:left">1.0 (<span class="named-addr"><span class="addr-name">IEEE754_FLOAT_1_0</span><code class="addr">0x3f800000</code></span>)</td>
+  <td style="text-align:left"><code>"Modifiers.AccelCoef"</code> at <span class="named-addr"><span class="addr-name">str_Modifiers_AccelCoef</span><code class="addr">0x141bd5b68</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">ControlCoef</td>
   <td style="text-align:left">+0x1C</td>
-  <td style="text-align:left">1.0 (<code class="addr">0x3f800000</code>)</td>
-  <td style="text-align:left"><code>"Modifiers.ControlCoef"</code> at <code class="addr">0x141bd5b10</code></td>
+  <td style="text-align:left">1.0 (<span class="named-addr"><span class="addr-name">IEEE754_FLOAT_1_0</span><code class="addr">0x3f800000</code></span>)</td>
+  <td style="text-align:left"><code>"Modifiers.ControlCoef"</code> at <span class="named-addr"><span class="addr-name">str_Modifiers_ControlCoef</span><code class="addr">0x141bd5b10</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">GravityCoef</td>
   <td style="text-align:left">+0x20</td>
-  <td style="text-align:left">1.0 (<code class="addr">0x3f800000</code>)</td>
-  <td style="text-align:left"><code>"Modifiers.GravityCoef"</code> at <code class="addr">0x141bd5af8</code></td>
+  <td style="text-align:left">1.0 (<span class="named-addr"><span class="addr-name">IEEE754_FLOAT_1_0</span><code class="addr">0x3f800000</code></span>)</td>
+  <td style="text-align:left"><code>"Modifiers.GravityCoef"</code> at <span class="named-addr"><span class="addr-name">str_Modifiers_GravityCoef</span><code class="addr">0x141bd5af8</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 </tbody>
@@ -436,29 +442,29 @@
 <tr>
   <td style="text-align:left">AccelCoef</td>
   <td style="text-align:left">varies</td>
-  <td style="text-align:left">1.0 (<code class="addr">0x3f800000</code>)</td>
-  <td style="text-align:left"><code>"AccelCoef"</code> at <code class="addr">0x141bd35b8</code></td>
+  <td style="text-align:left">1.0 (<span class="named-addr"><span class="addr-name">IEEE754_FLOAT_1_0</span><code class="addr">0x3f800000</code></span>)</td>
+  <td style="text-align:left"><code>"AccelCoef"</code> at <span class="named-addr"><span class="addr-name">str_AccelCoef</span><code class="addr">0x141bd35b8</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">ControlCoef</td>
   <td style="text-align:left">varies</td>
-  <td style="text-align:left">1.0 (<code class="addr">0x3f800000</code>)</td>
-  <td style="text-align:left"><code>"ControlCoef"</code> at <code class="addr">0x141bd35a8</code></td>
+  <td style="text-align:left">1.0 (<span class="named-addr"><span class="addr-name">IEEE754_FLOAT_1_0</span><code class="addr">0x3f800000</code></span>)</td>
+  <td style="text-align:left"><code>"ControlCoef"</code> at <span class="named-addr"><span class="addr-name">str_ControlCoef</span><code class="addr">0x141bd35a8</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">GravityCoef</td>
   <td style="text-align:left">varies</td>
-  <td style="text-align:left">1.0 (<code class="addr">0x3f800000</code>)</td>
-  <td style="text-align:left"><code>"GravityCoef"</code> at <code class="addr">0x141bb3e18</code></td>
+  <td style="text-align:left">1.0 (<span class="named-addr"><span class="addr-name">IEEE754_FLOAT_1_0</span><code class="addr">0x3f800000</code></span>)</td>
+  <td style="text-align:left"><code>"GravityCoef"</code> at <span class="named-addr"><span class="addr-name">str_GravityCoef</span><code class="addr">0x141bb3e18</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 <tr>
   <td style="text-align:left">AdherenceCoef</td>
   <td style="text-align:left">varies</td>
-  <td style="text-align:left">1.0 (<code class="addr">0x3f800000</code>)</td>
-  <td style="text-align:left"><code>"AdherenceCoef"</code> at <code class="addr">0x141bd35d8</code></td>
+  <td style="text-align:left">1.0 (<span class="named-addr"><span class="addr-name">IEEE754_FLOAT_1_0</span><code class="addr">0x3f800000</code></span>)</td>
+  <td style="text-align:left"><code>"AdherenceCoef"</code> at <span class="named-addr"><span class="addr-name">str_AdherenceCoef</span><code class="addr">0x141bd35d8</code></span></td>
   <td style="text-align:left">Confirmed</td>
 </tr>
 </tbody>
@@ -1165,7 +1171,7 @@
 </div>
 </details>
 <h2 id="surface-gameplay-ids-eplugsurfacegameplayid"><a class="anchor" href="#surface-gameplay-ids-eplugsurfacegameplayid">#</a>Surface Gameplay IDs (EPlugSurfaceGameplayId)</h2>
-<p>Enum table at <code class="addr">0x141eb2f60</code>, 25 values. These IDs map to surface physics via <code>car_state+0x6B8</code> pointer table.</p>
+<p>Enum table at <span class="named-addr"><span class="addr-name">EPlugSurfaceGameplayId_EnumTable</span><code class="addr">0x141eb2f60</code></span>, 25 values. These IDs map to surface physics via <code>car_state+0x6B8</code> pointer table.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1176,83 +1182,83 @@
 <tbody>
 <tr>
   <td style="text-align:left">None</td>
-  <td style="text-align:left"><code class="addr">0x141b58e78</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_GameplayId_None</span><code class="addr">0x141b58e78</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">NoSteering</td>
-  <td style="text-align:left"><code class="addr">0x141be1238</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoSteering</span><code class="addr">0x141be1238</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">NoGrip</td>
-  <td style="text-align:left"><code class="addr">0x141be1244</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoGrip</span><code class="addr">0x141be1244</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Reset</td>
-  <td style="text-align:left"><code class="addr">0x141be124c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Reset</span><code class="addr">0x141be124c</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">ForceAcceleration</td>
-  <td style="text-align:left"><code class="addr">0x141be1258</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ForceAcceleration</span><code class="addr">0x141be1258</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Turbo</td>
-  <td style="text-align:left"><code class="addr">0x141be126c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Turbo</span><code class="addr">0x141be126c</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">FreeWheeling</td>
-  <td style="text-align:left"><code class="addr">0x141be1278</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FreeWheeling</span><code class="addr">0x141be1278</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Turbo2</td>
-  <td style="text-align:left"><code class="addr">0x141be1288</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Turbo2</span><code class="addr">0x141be1288</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">ReactorBoost2_Legacy</td>
-  <td style="text-align:left"><code class="addr">0x141be1290</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost2_Legacy</span><code class="addr">0x141be1290</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Fragile</td>
-  <td style="text-align:left"><code class="addr">0x141be12a8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Fragile</span><code class="addr">0x141be12a8</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">NoBrakes</td>
-  <td style="text-align:left"><code class="addr">0x141be12b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoBrakes</span><code class="addr">0x141be12b0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Bouncy</td>
-  <td style="text-align:left"><code class="addr">0x141be12bc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bouncy</span><code class="addr">0x141be12bc</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Bumper</td>
-  <td style="text-align:left"><code class="addr">0x141be12c4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bumper</span><code class="addr">0x141be12c4</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">SlowMotion</td>
-  <td style="text-align:left"><code class="addr">0x141be12d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SlowMotion</span><code class="addr">0x141be12d0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">ReactorBoost_Legacy</td>
-  <td style="text-align:left"><code class="addr">0x141be12e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost_Legacy</span><code class="addr">0x141be12e0</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Bumper2</td>
-  <td style="text-align:left"><code class="addr">0x141be12f8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bumper2</span><code class="addr">0x141be12f8</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">VehicleTransform_CarRally</td>
-  <td style="text-align:left"><code class="addr">0x141be1300</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarRally</span><code class="addr">0x141be1300</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">VehicleTransform_CarSnow</td>
-  <td style="text-align:left"><code class="addr">0x141be1320</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarSnow</span><code class="addr">0x141be1320</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">ReactorBoost_Oriented</td>
-  <td style="text-align:left"><code class="addr">0x141be1378</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost_Oriented</span><code class="addr">0x141be1378</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">ReactorBoost2_Oriented</td>
-  <td style="text-align:left"><code class="addr">0x141be13b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost2_Oriented</span><code class="addr">0x141be13b0</code></span></td>
 </tr>
 </tbody>
 </table></div>
@@ -1312,7 +1318,7 @@ grip_from_curve = curve_sample(model+0x1AC0, slip_angle_scaled)
 max_force = grip_from_curve * param_5 * param_4[+0xC] * friction_coef</code></pre></div>
 <p>Where:</p>
 <ul>
-  <li><code>3.6</code> at <code class="addr">0x141d1f71c</code> converts m/s to km/h for curve lookup</li>
+  <li><code>3.6</code> at <span class="named-addr"><span class="addr-name">CONST_MS_TO_KMH_3_6</span><code class="addr">0x141d1f71c</code></span> converts m/s to km/h for curve lookup</li>
   <li>If <code>force_linear > max_force</code>: clamp to <code>sign * max_force</code> (grip saturated)</li>
   <li>If <code>force_linear <= max_force</code>: use full linear force (within grip)</li>
   <li><code>friction_coef</code> is 1.0 normally, or <code>model[+0x1B10]</code> when braking</li>
@@ -1344,82 +1350,82 @@ max_force = grip_from_curve * param_5 * param_4[+0xC] * friction_coef</code></pr
 <tbody>
 <tr>
   <td style="text-align:left">NSceneVehiclePhy::ComputeForces</td>
-  <td style="text-align:left"><code class="addr">0x1408427d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><code class="addr">0x1408427d0</code></span></td>
   <td style="text-align:left">Main force computation entry</td>
 </tr>
 <tr>
   <td style="text-align:left">Standard car physics (case 0/1/2)</td>
-  <td style="text-align:left"><code class="addr">0x140869cd0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_Base_Cases012</span><code class="addr">0x140869cd0</code></span></td>
   <td style="text-align:left">4-wheel car model</td>
 </tr>
 <tr>
   <td style="text-align:left">Lateral grip (tire model)</td>
-  <td style="text-align:left"><code class="addr">0x14086af20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">LateralGripBicycleModel</span><code class="addr">0x14086af20</code></span></td>
   <td style="text-align:left">Slip-angle to lateral force</td>
 </tr>
 <tr>
   <td style="text-align:left">Curve interpolation</td>
-  <td style="text-align:left"><code class="addr">0x14042bcb0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CFuncKeysReal::SampleCurve</span><code class="addr">0x14042bcb0</code></span></td>
   <td style="text-align:left">Parameterized curve sampling</td>
 </tr>
 <tr>
   <td style="text-align:left">Steering reduction</td>
-  <td style="text-align:left"><code class="addr">0x1408456b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SlopeGravityFactor</span><code class="addr">0x1408456b0</code></span></td>
   <td style="text-align:left">Speed-dependent steer limiting</td>
 </tr>
 <tr>
   <td style="text-align:left">Tire grip state machine</td>
-  <td style="text-align:left"><code class="addr">0x140842310</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">TireGripStateMachine</span><code class="addr">0x140842310</code></span></td>
   <td style="text-align:left">Icing/grip recovery per wheel</td>
 </tr>
 <tr>
   <td style="text-align:left">Turbo timer update</td>
-  <td style="text-align:left"><code class="addr">0x1408426e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">UpdateWheelRotation</span><code class="addr">0x1408426e0</code></span></td>
   <td style="text-align:left">Per-wheel turbo state</td>
 </tr>
 <tr>
   <td style="text-align:left">ComputeGravity</td>
-  <td style="text-align:left"><code class="addr">0x1407f89d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeGravityAndSleepStateAndNewVels</span><code class="addr">0x1407f89d0</code></span></td>
   <td style="text-align:left">Gravity + sleep state</td>
 </tr>
 <tr>
   <td style="text-align:left">MgrDyna_Integrate</td>
-  <td style="text-align:left"><code class="addr">0x1408025a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::InternalPhysicsStep</span><code class="addr">0x1408025a0</code></span></td>
   <td style="text-align:left">Physics integration step</td>
 </tr>
 <tr>
   <td style="text-align:left">PhysicsStep_V2</td>
-  <td style="text-align:left"><code class="addr">0x140803920</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><code class="addr">0x140803920</code></span></td>
   <td style="text-align:left">Outer physics step</td>
 </tr>
 <tr>
   <td style="text-align:left">Tunings registration</td>
-  <td style="text-align:left"><code class="addr">0x141071b20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NGameSlotPhy::SMgr_TuningsRegistration</span><code class="addr">0x141071b20</code></span></td>
   <td style="text-align:left">CoefFriction/CoefAcceleration/Sensibility</td>
 </tr>
 <tr>
   <td style="text-align:left">VehiclePhyModelCustom reg</td>
-  <td style="text-align:left"><code class="addr">0x14061abb0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehiclePhyModelCustom::Register</span><code class="addr">0x14061abb0</code></span></td>
   <td style="text-align:left">Modifiers.AccelCoef/ControlCoef/GravityCoef</td>
 </tr>
 <tr>
   <td style="text-align:left">CSceneVehicleVisState reg</td>
-  <td style="text-align:left"><code class="addr">0x140726440</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSceneVehicleVisState::Register</span><code class="addr">0x140726440</code></span></td>
   <td style="text-align:left">Visual state struct layout</td>
 </tr>
 <tr>
   <td style="text-align:left">SSolverParams reg</td>
-  <td style="text-align:left"><code class="addr">0x1407f3fc0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::SSolverParams_Registration</span><code class="addr">0x1407f3fc0</code></span></td>
   <td style="text-align:left">Solver iteration counts</td>
 </tr>
 <tr>
   <td style="text-align:left">SSleepingParams reg</td>
-  <td style="text-align:left"><code class="addr">0x1407f4430</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SSleepingParams::Register</span><code class="addr">0x1407f4430</code></span></td>
   <td style="text-align:left">Sleep velocity thresholds</td>
 </tr>
 <tr>
   <td style="text-align:left">SConstraintModel reg</td>
-  <td style="text-align:left"><code class="addr">0x1404a6d20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SConstraintModel::Register</span><code class="addr">0x1404a6d20</code></span></td>
   <td style="text-align:left">Spring length/damping/frequency</td>
 </tr>
 </tbody>

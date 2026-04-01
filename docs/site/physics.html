@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -198,7 +204,7 @@ lVar18 = (ulonglong)*param_4 * 1000000;
 // NSceneDyna::PhysicsStep
 FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
 <p>Given TM2020 runs at 100Hz (10ms per physics tick), this produces 10,000,000 microseconds per tick.</p>
-<p>A separate <code>CSmArena::SimulationStep</code> function (at <code>FUN_1412e9ea0</code>, referenced at <code class="addr">0x141cec210</code>) orchestrates the overall simulation step. The strings <code>"SimulationTime"</code> and <code>"SimulationRelativeSpeed"</code> suggest the simulation tracks both absolute and relative (slow-motion/speed-up) time.</p>
+<p>A separate <code>CSmArena::SimulationStep</code> function (at <code>FUN_1412e9ea0</code>, referenced at <span class="named-addr"><span class="addr-name">str_SimulationStep_ref</span><code class="addr">0x141cec210</code></span>) orchestrates the overall simulation step. The strings <code>"SimulationTime"</code> and <code>"SimulationRelativeSpeed"</code> suggest the simulation tracks both absolute and relative (slow-motion/speed-up) time.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -210,42 +216,42 @@ FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
 <tbody>
 <tr>
   <td style="text-align:left"><code>"SimulationTime"</code></td>
-  <td style="text-align:left"><code class="addr">0x141b723a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SimulationTime</span><code class="addr">0x141b723a0</code></span></td>
   <td style="text-align:left">Absolute simulation clock</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"SimulationRelativeSpeed"</code></td>
-  <td style="text-align:left"><code class="addr">0x141b723d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SimulationRelativeSpeed</span><code class="addr">0x141b723d0</code></span></td>
   <td style="text-align:left">Speed multiplier for the simulation</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"PeriodEstimated"</code></td>
-  <td style="text-align:left"><code class="addr">0x141b723c0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_PeriodEstimated</span><code class="addr">0x141b723c0</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Estimated frame period</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"PeriodSmoothing"</code></td>
-  <td style="text-align:left"><code class="addr">0x141b723e8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_PeriodSmoothing</span><code class="addr">0x141b723e8</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Frame period smoothing factor</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"SimulationTimeCoef"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7e40</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SimulationTimeCoef</span><code class="addr">0x141be7e40</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Time coefficient for visuals</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"FixedStepCount"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd9a78</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FixedStepCount</span><code class="addr">0x141bd9a78</code></span></td>
   <td style="text-align:left">Referenced by <code>FUN_14062c780</code> -- animation fixed step count</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Use_TM_Simulation"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3fc8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Use_TM_Simulation</span><code class="addr">0x141bb3fc8</code></span></td>
   <td style="text-align:left">Flag distinguishing TM physics from generic dyna</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"DynaModel.Use_TM_Simulation"</code></td>
-  <td style="text-align:left"><code class="addr">0x141d1aab0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_DynaModel_Use_TM_Simulation</span><code class="addr">0x141d1aab0</code></span></td>
   <td style="text-align:left">Per-model flag for TM-specific simulation</td>
 </tr>
 </tbody>
@@ -258,10 +264,10 @@ FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
   <li><strong>Time scale</strong>: <code>fVar16 = (float)param_2[2] * DAT_141d1fa9c</code> (line 133)</li>
   <li><strong>Collision cache creation</strong>: Calls <code>FUN_1407f9da0</code> (DynamicCollisionCreateCache) (line 150)</li>
   <li><strong>InternalPhysicsStep dispatch</strong>: Calls <code>FUN_1408025a0</code> if bodies need updating (line 201)</li>
-  <li><strong>Body force clearing</strong>: Loop zeros <code>+0x8</code> in body array with stride <code>0x38</code> (56 bytes) (lines 214-232)</li>
+  <li><strong>Body force clearing</strong>: Loop zeros <code>+0x8</code> in body array with stride <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span> (56 bytes) (lines 214-232)</li>
 </ol>
 <p><strong>Struct Offset</strong>: <code>param_1[0xf4b]</code> = physics step counter (byte offset 0x7A58).</p>
-<p>The body force clearing uses both strides <code>0x38</code> (56 bytes, unrolled 4x as <code>0xE0</code> = 224 bytes) and single-iteration <code>0x38</code>. This confirms the per-body data structure is 56 bytes with forces at offset <code>+0x8</code>.</p>
+<p>The body force clearing uses both strides <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span> (56 bytes, unrolled 4x as <span class="named-addr"><span class="addr-name">vehicleModelCustom_modelScale</span><code class="addr">0xE0</code></span> = 224 bytes) and single-iteration <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span>. This confirms the per-body data structure is 56 bytes with forces at offset <code>+0x8</code>.</p>
 <hr>
 <h2 id="how-velocity-adaptive-sub-stepping-works"><a class="anchor" href="#how-velocity-adaptive-sub-stepping-works">#</a>How velocity-adaptive sub-stepping works</h2>
 <p>Sub-stepping (velocity-adaptive subdivision of a physics tick) keeps the simulation stable at high speeds. The engine computes more sub-steps for faster vehicles.</p>
@@ -409,31 +415,31 @@ remainder = scaled_dt - (scaled_dt_per_step * (num_substeps - 1));
 <tbody>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::ComputeForces</code></td>
-  <td style="text-align:left"><code class="addr">0x1408427d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><code class="addr">0x1408427d0</code></span></td>
   <td style="text-align:left">1713 B</td>
   <td style="text-align:left">Main vehicle force computation</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PairComputeForces</code></td>
-  <td style="text-align:left"><code class="addr">0x140842ed0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PairComputeForces</span><code class="addr">0x140842ed0</code></span></td>
   <td style="text-align:left">635 B</td>
   <td style="text-align:left">Vehicle-vs-vehicle force computation</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PhysicsStep_BeforeMgrDynaUpdate</code></td>
-  <td style="text-align:left"><code class="addr">0x1407cfce0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_BeforeMgrDynaUpdate</span><code class="addr">0x1407cfce0</code></span></td>
   <td style="text-align:left">1723 B</td>
   <td style="text-align:left">Pre-dynamics update (transforms, collision prep)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</code></td>
-  <td style="text-align:left"><code class="addr">0x1407d2b90</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</span><code class="addr">0x1407d2b90</code></span></td>
   <td style="text-align:left">339 B</td>
   <td style="text-align:left">Process collision contact points</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::ExtractVisStates</code></td>
-  <td style="text-align:left"><code class="addr">0x1407d29a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ExtractVisStates</span><code class="addr">0x1407d29a0</code></span></td>
   <td style="text-align:left">338 B</td>
   <td style="text-align:left">Copy physics state to visual state</td>
 </tr>
@@ -609,7 +615,7 @@ if ((fVar9 * fVar9 &lt; fVar8) &amp;&amp; (DAT_141d1ed34 &lt; fVar9)) {
     // Block 3: offsets 0x1900-0x1938 (stride 0xB8 from block 2)
     // Block 4: offsets 0x19B8-0x19F0 (stride 0xB8 from block 3)
 }</code></pre></div>
-<p>The 4 blocks at stride <code>0xB8</code> (184 bytes) correspond to the 4 wheels, each containing:</p>
+<p>The 4 blocks at stride <span class="named-addr"><span class="addr-name">WHEEL_STATE_BLOCK_STRIDE</span><code class="addr">0xB8</code></span> (184 bytes) correspond to the 4 wheels, each containing:</p>
 <ul>
   <li><code>+0x00</code>: Force model type (the 0x1790 selector)</li>
   <li><code>+0x04</code>: <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></li>
@@ -716,10 +722,10 @@ if (uVar2 &lt;= param_5 &amp;&amp; param_5 &lt;= uVar2 + *(uint *)(lVar6 + 0x16e
 <h3 id="turbo-levels-and-variants"><a class="anchor" href="#turbo-levels-and-variants">#</a>Turbo levels and variants</h3>
 <p>Two primary turbo levels exist:</p>
 <ul>
-  <li><strong>Turbo</strong> (level 1) -- <code>"Turbo"</code> at <code class="addr">0x141be126c</code></li>
-  <li><strong>Turbo2</strong> (level 2) -- <code>"Turbo2"</code> at <code class="addr">0x141be1288</code></li>
+  <li><strong>Turbo</strong> (level 1) -- <code>"Turbo"</code> at <span class="named-addr"><span class="addr-name">str_Turbo</span><code class="addr">0x141be126c</code></span></li>
+  <li><strong>Turbo2</strong> (level 2) -- <code>"Turbo2"</code> at <span class="named-addr"><span class="addr-name">str_Turbo2</span><code class="addr">0x141be1288</code></span></li>
 </ul>
-<p>Turbo parameters are configurable per track via <code>"TurboDuration"</code> / <code>"TurboVal"</code> (<code class="addr">0x141c52720</code>-<code class="addr">0x141c52780</code>).</p>
+<p>Turbo parameters are configurable per track via <code>"TurboDuration"</code> / <code>"TurboVal"</code> (<span class="named-addr"><span class="addr-name">str_TurboDuration_region</span><code class="addr">0x141c52720</code></span>-<span class="named-addr"><span class="addr-name">str_TurboVal_region</span><code class="addr">0x141c52780</code></span>).</p>
 <p>A separate <strong>reactor boost</strong> system exists:</p>
 <ul>
   <li><code>"ReactorBoost_Legacy"</code> / <code>"ReactorBoost2_Legacy"</code> -- Non-oriented boosts</li>
@@ -727,12 +733,12 @@ if (uVar2 &lt;= param_5 &amp;&amp; param_5 &lt;= uVar2 + *(uint *)(lVar6 + 0x16e
 </ul>
 <p>Reactor boost state fields:</p>
 <ul>
-  <li><code>"ReactorBoostLvl"</code> (at <code class="addr">0x141be7818</code>) -- Current boost level</li>
-  <li><code>"ReactorBoostType"</code> (at <code class="addr">0x141be7850</code>) -- Boost type enum</li>
-  <li><code>"ReactorAirControl"</code> (at <code class="addr">0x141be7838</code>) -- Air control when using reactor</li>
-  <li><code>"IsReactorGroundMode"</code> (at <code class="addr">0x141be7918</code>) -- Whether reactor works on ground</li>
+  <li><code>"ReactorBoostLvl"</code> (at <span class="named-addr"><span class="addr-name">str_ReactorBoostLvl</span><code class="addr">0x141be7818</code></span>) -- Current boost level</li>
+  <li><code>"ReactorBoostType"</code> (at <span class="named-addr"><span class="addr-name">str_ReactorBoostType</span><code class="addr">0x141be7850</code></span>) -- Boost type enum</li>
+  <li><code>"ReactorAirControl"</code> (at <span class="named-addr"><span class="addr-name">str_ReactorAirControl</span><code class="addr">0x141be7838</code></span>) -- Air control when using reactor</li>
+  <li><code>"IsReactorGroundMode"</code> (at <span class="named-addr"><span class="addr-name">str_IsReactorGroundMode</span><code class="addr">0x141be7918</code></span>) -- Whether reactor works on ground</li>
 </ul>
-<p>A randomized <strong>turbo roulette</strong> system provides <code>TurboRoulette_1</code>, <code>TurboRoulette_2</code>, <code>TurboRoulette_3</code> (<code class="addr">0x141cdfce8</code>-<code class="addr">0x141cdfec8</code>) with corresponding color variants.</p>
+<p>A randomized <strong>turbo roulette</strong> system provides <code>TurboRoulette_1</code>, <code>TurboRoulette_2</code>, <code>TurboRoulette_3</code> (<span class="named-addr"><span class="addr-name">str_TurboRoulette_region</span><code class="addr">0x141cdfce8</code></span>-<span class="named-addr"><span class="addr-name">str_TurboRoulette_region_end</span><code class="addr">0x141cdfec8</code></span>) with corresponding color variants.</p>
 <h3 id="complete-turbo-code-path"><a class="anchor" href="#complete-turbo-code-path">#</a>Complete turbo code path</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Surface Contact Detection
     |
@@ -764,47 +770,47 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
 <tbody>
 <tr>
   <td style="text-align:left"><code>"VehicleTransform_CarRally"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1300</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarRally</span><code class="addr">0x141be1300</code></span></td>
   <td style="text-align:left">Rally car transform</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"VehicleTransform_CarSnow"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1320</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarSnow</span><code class="addr">0x141be1320</code></span></td>
   <td style="text-align:left">Snow car transform</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"VehicleTransform_CarDesert"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1358</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarDesert</span><code class="addr">0x141be1358</code></span></td>
   <td style="text-align:left">Desert car transform</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"VehicleTransform_Reset"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1398</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_Reset</span><code class="addr">0x141be1398</code></span></td>
   <td style="text-align:left">Reset to default car</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"CarSport"</code></td>
-  <td style="text-align:left"><code class="addr">0x141c3c7c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CarSport</span><code class="addr">0x141c3c7c8</code></span></td>
   <td style="text-align:left">Stadium car model name</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"StadiumCar"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd3a00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_StadiumCar</span><code class="addr">0x141bd3a00</code></span></td>
   <td style="text-align:left">Alternate name for Stadium car</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"SnowCar"</code></td>
-  <td style="text-align:left"><code class="addr">0x141c5a348</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SnowCar</span><code class="addr">0x141c5a348</code></span></td>
   <td style="text-align:left">Snow car model name</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"RallyCar"</code></td>
-  <td style="text-align:left"><code class="addr">0x141c5a338</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_RallyCar</span><code class="addr">0x141c5a338</code></span></td>
   <td style="text-align:left">Rally car model name</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"DesertCar"</code></td>
-  <td style="text-align:left"><code class="addr">0x141c5a318</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_DesertCar</span><code class="addr">0x141c5a318</code></span></td>
   <td style="text-align:left">Desert car model name</td>
 </tr>
 </tbody>
@@ -833,42 +839,42 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
 <tbody>
 <tr>
   <td style="text-align:left"><code>Wheels.Elems[N].RotSpeed</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7950</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_RotSpeed</span><code class="addr">0x141be7950</code></span></td>
   <td style="text-align:left">Wheel rotational speed</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Wheels.Elems[N].DamperLength</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7980</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_DamperLength</span><code class="addr">0x141be7980</code></span></td>
   <td style="text-align:left">Suspension damper extension length</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Wheels.Elems[N].SteerAngle</code></td>
-  <td style="text-align:left"><code class="addr">0x141be79b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_SteerAngle</span><code class="addr">0x141be79b0</code></span></td>
   <td style="text-align:left">Current steering angle</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Wheels.Elems[N].Rot</code></td>
-  <td style="text-align:left"><code class="addr">0x141be79e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_Rot</span><code class="addr">0x141be79e0</code></span></td>
   <td style="text-align:left">Wheel rotation angle</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Wheels.Elems[N].TireWear01</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7a08</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_TireWear01</span><code class="addr">0x141be7a08</code></span></td>
   <td style="text-align:left">Tire wear factor (0.0 to 1.0)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Wheels.Elems[N].BreakNormedCoef</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7a40</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_BreakNormedCoef</span><code class="addr">0x141be7a40</code></span></td>
   <td style="text-align:left">Brake force coefficient (normalized)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Wheels.Elems[N].SlipCoef</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7a70</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_SlipCoef</span><code class="addr">0x141be7a70</code></span></td>
   <td style="text-align:left">Wheel slip coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Wheels.Elems[N].Icing01</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7aa0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Wheels_Icing01</span><code class="addr">0x141be7aa0</code></span></td>
   <td style="text-align:left">Ice coverage factor (0.0 to 1.0)</td>
 </tr>
 </tbody>
@@ -888,7 +894,7 @@ WheelRLd / dRLWheel   (Rear Left dynamic)
 WheelRRs / sRRWheel   (Rear Right static)
 WheelRRd / dRRWheel   (Rear Right dynamic)</code></pre></div>
 <h3 id="suspension-damper-model"><a class="anchor" href="#suspension-damper-model">#</a>Suspension / damper model</h3>
-<p>The class <code>CPlugVehicleWheelPhyModel</code> (string at <code class="addr">0x141bd55e8</code>) defines the wheel physics model:</p>
+<p>The class <code>CPlugVehicleWheelPhyModel</code> (string at <span class="named-addr"><span class="addr-name">str_CPlugVehicleWheelPhyModel</span><code class="addr">0x141bd55e8</code></span>) defines the wheel physics model:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -900,45 +906,45 @@ WheelRRd / dRRWheel   (Rear Right dynamic)</code></pre></div>
 <tbody>
 <tr>
   <td style="text-align:left"><code>"Spring.FreqHz"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3ec0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Spring_FreqHz</span><code class="addr">0x141bb3ec0</code></span></td>
   <td style="text-align:left">Spring natural frequency in Hz</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Spring.DampingRatio"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3ed0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Spring_DampingRatio</span><code class="addr">0x141bb3ed0</code></span></td>
   <td style="text-align:left">Damping ratio (critical = 1.0)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Spring.Length"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3ee8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Spring_Length</span><code class="addr">0x141bb3ee8</code></span></td>
   <td style="text-align:left">Spring rest length</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"DamperCompression"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd3b00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_DamperCompression</span><code class="addr">0x141bd3b00</code></span></td>
   <td style="text-align:left">Damper compression coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"DamperRestStateValue"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd3b50</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_DamperRestStateValue</span><code class="addr">0x141bd3b50</code></span></td>
   <td style="text-align:left">Rest state damper value</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"CollisionDamper"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb69a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CollisionDamper</span><code class="addr">0x141bb69a0</code></span></td>
   <td style="text-align:left">Collision damper coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"CollisionBounce"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb68c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CollisionBounce</span><code class="addr">0x141bb68c8</code></span></td>
   <td style="text-align:left">Bounce coefficient on collision</td>
 </tr>
 </tbody>
 </table></div>
-<p>The <code>SPlugVehiclePhyRestStateValues</code> structure (string at <code class="addr">0x141bd3b18</code>) stores the vehicle rest state.</p>
-<p><code>CPlugVehicleCarPhyShape</code> (string at <code class="addr">0x141bd5608</code>) defines the car's physical shape, including <code>"IsSteering"</code> (at <code class="addr">0x141bd5620</code>) which flags whether a wheel can steer.</p>
+<p>The <code>SPlugVehiclePhyRestStateValues</code> structure (string at <span class="named-addr"><span class="addr-name">str_SPlugVehiclePhyRestStateValues</span><code class="addr">0x141bd3b18</code></span>) stores the vehicle rest state.</p>
+<p><code>CPlugVehicleCarPhyShape</code> (string at <span class="named-addr"><span class="addr-name">str_CPlugVehicleCarPhyShape</span><code class="addr">0x141bd5608</code></span>) defines the car's physical shape, including <code>"IsSteering"</code> (at <span class="named-addr"><span class="addr-name">str_IsSteering</span><code class="addr">0x141bd5620</code></span>) which flags whether a wheel can steer.</p>
 <h3 id="reactor-jet-model"><a class="anchor" href="#reactor-jet-model">#</a>Reactor (jet) model</h3>
-<p>Four reactors are named <code>FLReactor</code>, <code>FRReactor</code>, <code>RLReactor</code>, <code>RRReactor</code> (at <code class="addr">0x141bd2cc8</code>-<code class="addr">0x141bd2cf8</code>). Each wheel position can have an associated thruster/reactor for "reactor" gameplay elements.</p>
+<p>Four reactors are named <code>FLReactor</code>, <code>FRReactor</code>, <code>RLReactor</code>, <code>RRReactor</code> (at <span class="named-addr"><span class="addr-name">str_FLReactor</span><code class="addr">0x141bd2cc8</code></span>-<span class="named-addr"><span class="addr-name">str_RRReactor</span><code class="addr">0x141bd2cf8</code></span>). Each wheel position can have an associated thruster/reactor for "reactor" gameplay elements.</p>
 <h3 id="contact-point-processing"><a class="anchor" href="#contact-point-processing">#</a>Contact point processing</h3>
 <p><strong>Evidence</strong>: <code>NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c:1-51</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407d2b90</p>
 <p>Contact points are processed in two phases:</p>
@@ -1034,10 +1040,10 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 (updated per physics tick)             (applied on contact)</code></pre></div>
 <p>The material system exposes:</p>
 <ul>
-  <li><code>"SurfaceIds.PhysicId"</code> (at <code class="addr">0x141bba768</code>)</li>
-  <li><code>"SurfaceIds.GameplayId"</code> (at <code class="addr">0x141bba780</code>)</li>
-  <li><code>"MaterialPhysicsId"</code> (at <code class="addr">0x141cbb890</code>)</li>
-  <li><code>"MaterialPhysics_GameplayRemap"</code> (at <code class="addr">0x141cbb760</code>) -- mapping table from physics material to gameplay effect</li>
+  <li><code>"SurfaceIds.PhysicId"</code> (at <span class="named-addr"><span class="addr-name">str_SurfaceIds_PhysicId</span><code class="addr">0x141bba768</code></span>)</li>
+  <li><code>"SurfaceIds.GameplayId"</code> (at <span class="named-addr"><span class="addr-name">str_SurfaceIds_GameplayId</span><code class="addr">0x141bba780</code></span>)</li>
+  <li><code>"MaterialPhysicsId"</code> (at <span class="named-addr"><span class="addr-name">str_MaterialPhysicsId</span><code class="addr">0x141cbb890</code></span>)</li>
+  <li><code>"MaterialPhysics_GameplayRemap"</code> (at <span class="named-addr"><span class="addr-name">str_MaterialPhysics_GameplayRemap</span><code class="addr">0x141cbb760</code></span>) -- mapping table from physics material to gameplay effect</li>
 </ul>
 <h3 id="surface-gameplay-effects"><a class="anchor" href="#surface-gameplay-effects">#</a>Surface gameplay effects</h3>
 <p>The <code>EPlugSurfaceGameplayId</code> enum values, in address order:</p>
@@ -1052,112 +1058,112 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 <tbody>
 <tr>
   <td style="text-align:left"><code>"NoSteering"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1238</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoSteering</span><code class="addr">0x141be1238</code></span></td>
   <td style="text-align:left">Disables steering</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"NoGrip"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1244</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoGrip</span><code class="addr">0x141be1244</code></span></td>
   <td style="text-align:left">Zero grip surface</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Reset"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be124c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Reset</span><code class="addr">0x141be124c</code></span></td>
   <td style="text-align:left">Resets vehicle</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"ForceAcceleration"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1258</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ForceAcceleration</span><code class="addr">0x141be1258</code></span></td>
   <td style="text-align:left">Forces acceleration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Turbo"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be126c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Turbo</span><code class="addr">0x141be126c</code></span></td>
   <td style="text-align:left">Turbo boost (level 1)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"FreeWheeling"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1278</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FreeWheeling</span><code class="addr">0x141be1278</code></span></td>
   <td style="text-align:left">Free-wheeling mode</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Turbo2"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1288</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Turbo2</span><code class="addr">0x141be1288</code></span></td>
   <td style="text-align:left">Turbo boost (level 2)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"ReactorBoost2_Legacy"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1290</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost2_Legacy</span><code class="addr">0x141be1290</code></span></td>
   <td style="text-align:left">Legacy reactor boost level 2</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Fragile"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12a8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Fragile</span><code class="addr">0x141be12a8</code></span></td>
   <td style="text-align:left">Fragile (crash) surface</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"NoBrakes"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoBrakes</span><code class="addr">0x141be12b0</code></span></td>
   <td style="text-align:left">Disables braking</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Bouncy"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12bc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bouncy</span><code class="addr">0x141be12bc</code></span></td>
   <td style="text-align:left">Bouncy surface</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Bumper"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12c4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bumper</span><code class="addr">0x141be12c4</code></span></td>
   <td style="text-align:left">Bumper surface</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"SlowMotion"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SlowMotion</span><code class="addr">0x141be12d0</code></span></td>
   <td style="text-align:left">Slow motion effect</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"ReactorBoost_Legacy"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost_Legacy</span><code class="addr">0x141be12e0</code></span></td>
   <td style="text-align:left">Legacy reactor boost</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Bumper2"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be12f8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bumper2</span><code class="addr">0x141be12f8</code></span></td>
   <td style="text-align:left">Bumper level 2</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"VehicleTransform_CarRally"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1300</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarRally</span><code class="addr">0x141be1300</code></span></td>
   <td style="text-align:left">Transform to Rally</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"VehicleTransform_CarSnow"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1320</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarSnow</span><code class="addr">0x141be1320</code></span></td>
   <td style="text-align:left">Transform to Snow</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"VehicleTransform_CarDesert"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1358</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarDesert</span><code class="addr">0x141be1358</code></span></td>
   <td style="text-align:left">Transform to Desert</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"ReactorBoost_Oriented"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1378</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost_Oriented</span><code class="addr">0x141be1378</code></span></td>
   <td style="text-align:left">Oriented reactor boost</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Cruise"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1390</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Cruise</span><code class="addr">0x141be1390</code></span></td>
   <td style="text-align:left">Cruise control surface</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"VehicleTransform_Reset"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be1398</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_Reset</span><code class="addr">0x141be1398</code></span></td>
   <td style="text-align:left">Transform back to Stadium</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"ReactorBoost2_Oriented"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be13b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost2_Oriented</span><code class="addr">0x141be13b0</code></span></td>
   <td style="text-align:left">Oriented reactor boost level 2</td>
 </tr>
 </tbody>
@@ -1165,12 +1171,12 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 <p>Deprecated effect names (e.g., <code>Turbo_Deprecated</code>, <code>TurboTechMagnetic_Deprecated</code>, <code>FreeWheelingWood_Deprecated</code>) suggest these effects were surface-specific in older versions and have since been unified.</p>
 <h3 id="known-surface-material-names"><a class="anchor" href="#known-surface-material-names">#</a>Known surface material names</h3>
 <ul>
-  <li><code>"Stadium\Media\Material_BlockCustom\CustomConcrete"</code> (<code class="addr">0x141ce4b48</code>)</li>
-  <li><code>"Stadium\Media\Material_BlockCustom\CustomDirt"</code> (<code class="addr">0x141ce4b80</code>)</li>
-  <li><code>"Stadium\Media\Material_BlockCustom\CustomGrass"</code> (<code class="addr">0x141ce4be0</code>)</li>
-  <li><code>"Stadium\Media\Material_BlockCustom\CustomPlasticShiny"</code> (<code class="addr">0x141ce4d10</code>)</li>
-  <li><code>"Stadium\Media\Material_BlockCustom\CustomRoughWood"</code> (<code class="addr">0x141ce4d78</code>)</li>
-  <li><code>"DecalOnRoadIce"</code> (<code class="addr">0x141ce4c40</code>)</li>
+  <li><code>"Stadium\Media\Material_BlockCustom\CustomConcrete"</code> (<span class="named-addr"><span class="addr-name">str_material_CustomConcrete</span><code class="addr">0x141ce4b48</code></span>)</li>
+  <li><code>"Stadium\Media\Material_BlockCustom\CustomDirt"</code> (<span class="named-addr"><span class="addr-name">str_material_CustomDirt</span><code class="addr">0x141ce4b80</code></span>)</li>
+  <li><code>"Stadium\Media\Material_BlockCustom\CustomGrass"</code> (<span class="named-addr"><span class="addr-name">str_material_CustomGrass</span><code class="addr">0x141ce4be0</code></span>)</li>
+  <li><code>"Stadium\Media\Material_BlockCustom\CustomPlasticShiny"</code> (<span class="named-addr"><span class="addr-name">str_material_CustomPlasticShiny</span><code class="addr">0x141ce4d10</code></span>)</li>
+  <li><code>"Stadium\Media\Material_BlockCustom\CustomRoughWood"</code> (<span class="named-addr"><span class="addr-name">str_material_CustomRoughWood</span><code class="addr">0x141ce4d78</code></span>)</li>
+  <li><code>"DecalOnRoadIce"</code> (<span class="named-addr"><span class="addr-name">str_DecalOnRoadIce</span><code class="addr">0x141ce4c40</code></span>)</li>
 </ul>
 <h3 id="friction-configuration"><a class="anchor" href="#friction-configuration">#</a>Friction configuration</h3>
 <div class="table-wrapper"><table>
@@ -1185,25 +1191,25 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 <tbody>
 <tr>
   <td style="text-align:left"><code>"FrictionDynaIterCount"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bed9e8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FrictionDynaIterCount</span><code class="addr">0x141bed9e8</code></span></td>
   <td style="text-align:left"><code>FUN_1407f3fc0</code></td>
   <td style="text-align:left">Dynamic friction solver iteration count</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"FrictionStaticIterCount"</code></td>
-  <td style="text-align:left"><code class="addr">0x141beda38</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FrictionStaticIterCount</span><code class="addr">0x141beda38</code></span></td>
   <td style="text-align:left"><code>FUN_1407f3fc0</code></td>
   <td style="text-align:left">Static friction solver iteration count</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Tunings.CoefFriction"</code></td>
-  <td style="text-align:left"><code class="addr">0x141cb72c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Tunings_CoefFriction</span><code class="addr">0x141cb72c8</code></span></td>
   <td style="text-align:left"><code>FUN_141071b20</code></td>
   <td style="text-align:left">Friction tuning coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"Tunings.CoefAcceleration"</code></td>
-  <td style="text-align:left"><code class="addr">0x141cb72a8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Tunings_CoefAcceleration</span><code class="addr">0x141cb72a8</code></span></td>
   <td style="text-align:left"><code>FUN_141071b20</code></td>
   <td style="text-align:left">Acceleration tuning coefficient</td>
 </tr>
@@ -1218,9 +1224,9 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 <p>The separate dynamic vs static iteration counts suggest an iterative Gauss-Seidel-style contact solver with different convergence requirements for static and dynamic friction.</p>
 <p>Tuning coefficients are registered in <code>NGameSlotPhy::SMgr</code>:</p>
 <ul>
-  <li><code>Tunings.CoefFriction</code> at struct offset <code>0x58</code></li>
-  <li><code>Tunings.CoefAcceleration</code> at struct offset <code>0x5C</code></li>
-  <li><code>Tunings.Sensibility</code> at struct offset <code>0x60</code></li>
+  <li><code>Tunings.CoefFriction</code> at struct offset <span class="named-addr"><span class="addr-name">CONTACT_POINT_STRIDE</span><code class="addr">0x58</code></span></li>
+  <li><code>Tunings.CoefAcceleration</code> at struct offset <span class="named-addr"><span class="addr-name">slotPhyMgr_coefAcceleration</span><code class="addr">0x5C</code></span></li>
+  <li><code>Tunings.Sensibility</code> at struct offset <span class="named-addr"><span class="addr-name">slotPhyMgr_sensibility</span><code class="addr">0x60</code></span></li>
 </ul>
 <h3 id="friction-solver-configuration"><a class="anchor" href="#friction-solver-configuration">#</a>Friction solver configuration</h3>
 <p><strong>Evidence</strong>: <code>FrictionIterCount_Config.c:1-105</code> <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> <strong>Address</strong>: FUN_1407f3fc0</p>
@@ -1260,7 +1266,7 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
   <td style="text-align:left">Position correction iterations</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code>0x10</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">vehicleState_dynaBodyId</span><code class="addr">0x10</code></span></td>
   <td style="text-align:center">float</td>
   <td style="text-align:left"><code>DepenImpulseFactor</code></td>
   <td style="text-align:left">Depenetration impulse scaling factor</td>
@@ -1290,7 +1296,7 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
   <td style="text-align:left">Velocity bias computation mode</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code>0x24</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">WHEEL_STRUCT_STRIDE_MP4</span><code class="addr">0x24</code></span></td>
   <td style="text-align:center">bool</td>
   <td style="text-align:left"><code>UseConstraints2</code></td>
   <td style="text-align:left">Whether to use second-generation constraints</td>
@@ -1307,10 +1313,10 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 <h3 id="surface-expressions"><a class="anchor" href="#surface-expressions">#</a>Surface expressions</h3>
 <p>Surface effects can be driven by runtime expressions:</p>
 <ul>
-  <li><code>"Surface_SkidSpeedKmhExpr"</code> (<code class="addr">0x141bd6d30</code>)</li>
-  <li><code>"Surface_SkidIntensityExpr"</code> (<code class="addr">0x141bd6d50</code>)</li>
-  <li><code>"Surface_SpeedKmhExpr"</code> (<code class="addr">0x141bd6dd0</code>)</li>
-  <li><code>"Surface_SurfaceIdExpr"</code> (<code class="addr">0x141bd6de8</code>)</li>
+  <li><code>"Surface_SkidSpeedKmhExpr"</code> (<span class="named-addr"><span class="addr-name">str_Surface_SkidSpeedKmhExpr</span><code class="addr">0x141bd6d30</code></span>)</li>
+  <li><code>"Surface_SkidIntensityExpr"</code> (<span class="named-addr"><span class="addr-name">str_Surface_SkidIntensityExpr</span><code class="addr">0x141bd6d50</code></span>)</li>
+  <li><code>"Surface_SpeedKmhExpr"</code> (<span class="named-addr"><span class="addr-name">str_Surface_SpeedKmhExpr</span><code class="addr">0x141bd6dd0</code></span>)</li>
+  <li><code>"Surface_SurfaceIdExpr"</code> (<span class="named-addr"><span class="addr-name">str_Surface_SurfaceIdExpr</span><code class="addr">0x141bd6de8</code></span>)</li>
 </ul>
 <hr>
 <h2 id="how-collision-detection-works-nhmscollision"><a class="anchor" href="#how-collision-detection-works-nhmscollision">#</a>How collision detection works (NHmsCollision)</h2>
@@ -1329,35 +1335,35 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 <tbody>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::StartPhyFrame</code></td>
-  <td style="text-align:left"><code class="addr">0x1402a9c60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NHmsCollision::StartPhyFrame</span><code class="addr">0x1402a9c60</code></span></td>
   <td style="text-align:left">297 B</td>
   <td style="text-align:left">1</td>
   <td style="text-align:left">Begin-of-frame setup</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::UpdateStatic</code></td>
-  <td style="text-align:left"><code class="addr">0x1402a6da0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NHmsCollision::UpdateStatic</span><code class="addr">0x1402a6da0</code></span></td>
   <td style="text-align:left">360 B</td>
   <td style="text-align:left">11</td>
   <td style="text-align:left">Update static collision world</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::UpdateDiscrete</code></td>
-  <td style="text-align:left"><code class="addr">0x1402a6960</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NHmsCollision::UpdateDiscrete</span><code class="addr">0x1402a6960</code></span></td>
   <td style="text-align:left">114 B</td>
   <td style="text-align:left">7</td>
   <td style="text-align:left">Discrete collision detection</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::UpdateContinuous</code></td>
-  <td style="text-align:left"><code class="addr">0x1402a6360</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NHmsCollision::UpdateContinuous</span><code class="addr">0x1402a6360</code></span></td>
   <td style="text-align:left">328 B</td>
   <td style="text-align:left">3</td>
   <td style="text-align:left">Continuous collision detection (CCD)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::MergeContacts</code></td>
-  <td style="text-align:left"><code class="addr">0x1402a8a70</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NHmsCollision::MergeContacts</span><code class="addr">0x1402a8a70</code></span></td>
   <td style="text-align:left">1717 B</td>
   <td style="text-align:left">1</td>
   <td style="text-align:left">Merge/resolve contact points</td>
@@ -1404,7 +1410,7 @@ for each item in set at param_1 + 0xA58:
 <ul>
   <li><code>+0x74</code>: Current position (vec3)</li>
   <li><code>+0x94</code>: Previous position (vec3, copied from current at frame start)</li>
-  <li><code>+0xA4</code>: Hit body index (uint, <code class="addr">0xFFFFFFFF</code> = no hit)</li>
+  <li><code>+0xA4</code>: Hit body index (uint, <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> = no hit)</li>
 </ul>
 <p>Two collision item sets exist at offsets <code>+0x9C8</code> and <code>+0xA58</code>, separating static-collidable and dynamic-collidable objects.</p>
 <h3 id="dynamic-collision-cache"><a class="anchor" href="#dynamic-collision-cache">#</a>Dynamic collision cache</h3>
@@ -1606,7 +1612,7 @@ pfVar2[3] = angular_force.z * angular_mass.z * param_9 + pfVar2[3];</code></pre>
 </tbody>
 </table></div>
 <h3 id="force-field-system"><a class="anchor" href="#force-field-system">#</a>Force field system</h3>
-<p><code>NPlugDyna::SForceFieldModel</code> (at <code class="addr">0x141bb3e60</code>) and <code>NPlugDyna::EForceFieldType</code> (at <code class="addr">0x141bb3e80</code>) indicate a force field system. <code>CSmArenaPhysics::ComputeForceFieldAction</code> (at <code class="addr">0x141cea540</code>) applies force field effects in the arena.</p>
+<p><code>NPlugDyna::SForceFieldModel</code> (at <span class="named-addr"><span class="addr-name">str_NPlugDyna_SForceFieldModel</span><code class="addr">0x141bb3e60</code></span>) and <code>NPlugDyna::EForceFieldType</code> (at <span class="named-addr"><span class="addr-name">str_NPlugDyna_EForceFieldType</span><code class="addr">0x141bb3e80</code></span>) indicate a force field system. <code>CSmArenaPhysics::ComputeForceFieldAction</code> (at <span class="named-addr"><span class="addr-name">str_CSmArenaPhysics_ComputeForceFieldAction</span><code class="addr">0x141cea540</code></span>) applies force field effects in the arena.</p>
 <hr>
 <h2 id="how-water-physics-works"><a class="anchor" href="#how-water-physics-works">#</a>How water physics works</h2>
 <p>Water force computation uses a two-tier lookup: per-body custom water zones and a global fallback.</p>
@@ -1806,7 +1812,7 @@ pfVar2[3] = angular_force.z * angular_mass.z * param_9 + pfVar2[3];</code></pre>
   <td style="text-align:center">4</td>
   <td style="text-align:center">uint</td>
   <td style="text-align:left"><code>TickStamp</code></td>
-  <td style="text-align:left">BeforeMgrDynaUpdate: <code class="addr">0xFFFFFFFF</code> = unset</td>
+  <td style="text-align:left">BeforeMgrDynaUpdate: <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> = unset</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x12E0</code></td>
@@ -2208,55 +2214,55 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <tbody>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::PhysicsStep</code></td>
-  <td style="text-align:left"><code class="addr">0x1407bd0e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep</span><code class="addr">0x1407bd0e0</code></span></td>
   <td style="text-align:left">126 B</td>
   <td style="text-align:left">Thin wrapper calling PhysicsStep_V2</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::PhysicsStep_V2</code></td>
-  <td style="text-align:left"><code class="addr">0x140803920</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><code class="addr">0x140803920</code></span></td>
   <td style="text-align:left">1351 B</td>
   <td style="text-align:left">Main physics step orchestrator</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::InternalPhysicsStep</code></td>
-  <td style="text-align:left"><code class="addr">0x1408025a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::InternalPhysicsStep</span><code class="addr">0x1408025a0</code></span></td>
   <td style="text-align:left">4991 B</td>
   <td style="text-align:left">Core integration/solver loop</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeGravityAndSleepStateAndNewVels</code></td>
-  <td style="text-align:left"><code class="addr">0x1407f89d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeGravityAndSleepStateAndNewVels</span><code class="addr">0x1407f89d0</code></span></td>
   <td style="text-align:left">790 B</td>
   <td style="text-align:left">Gravity + sleep + velocity integration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeExternalForces</code></td>
-  <td style="text-align:left"><code class="addr">0x1407f81c0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeExternalForces</span><code class="addr">0x1407f81c0</code></span></td>
   <td style="text-align:left">202 B</td>
   <td style="text-align:left">External force accumulation</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeWaterForces</code></td>
-  <td style="text-align:left"><code class="addr">0x1407f8290</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeWaterForces</span><code class="addr">0x1407f8290</code></span></td>
   <td style="text-align:left">370 B</td>
   <td style="text-align:left">Buoyancy/water forces</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::DynamicCollisionCreateCache</code></td>
-  <td style="text-align:left"><code class="addr">0x1407f9da0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::DynamicCollisionCreateCache</span><code class="addr">0x1407f9da0</code></span></td>
   <td style="text-align:left">472 B</td>
   <td style="text-align:left">Collision cache creation</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::Dynas_StaticCollisionDetection</code></td>
-  <td style="text-align:left"><code class="addr">0x1407fc730</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::Dynas_StaticCollisionDetection</span><code class="addr">0x1407fc730</code></span></td>
   <td style="text-align:left">180 B</td>
   <td style="text-align:left">Static collision dispatch</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::Dyna_GetItemsForStaticCollision</code></td>
-  <td style="text-align:left"><code class="addr">0x1407fc3c0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::Dyna_GetItemsForStaticCollision</span><code class="addr">0x1407fc3c0</code></span></td>
   <td style="text-align:left">318 B</td>
   <td style="text-align:left">Gather items for collision</td>
 </tr>
@@ -2284,17 +2290,17 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <tbody>
 <tr>
   <td style="text-align:left"><code>NGameVehiclePhy::SMgr</code></td>
-  <td style="text-align:left"><code class="addr">0x141cb7248</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NGameVehiclePhy_SMgr</span><code class="addr">0x141cb7248</code></span></td>
   <td style="text-align:left">Game-level vehicle physics manager</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CGameVehiclePhy</code></td>
-  <td style="text-align:left"><code class="addr">0x141cb7260</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CGameVehiclePhy</span><code class="addr">0x141cb7260</code></span></td>
   <td style="text-align:left">Game vehicle physics wrapper</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehicleVis::SMgr</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7e98</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NSceneVehicleVis_SMgr</span><code class="addr">0x141be7e98</code></span></td>
   <td style="text-align:left">Visual state manager</td>
 </tr>
 <tr>
@@ -2349,27 +2355,27 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <tbody>
 <tr>
   <td style="text-align:left"><code>"InputSteer"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7878</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_InputSteer</span><code class="addr">0x141be7878</code></span></td>
   <td style="text-align:left">Steering input value</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"InputBrakePedal"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7888</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_InputBrakePedal</span><code class="addr">0x141be7888</code></span></td>
   <td style="text-align:left">Brake pedal input</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"AccelInput"</code></td>
-  <td style="text-align:left"><code class="addr">0x141ce46f0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_AccelInput</span><code class="addr">0x141ce46f0</code></span></td>
   <td style="text-align:left">Acceleration input</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"SteerValue"</code></td>
-  <td style="text-align:left"><code class="addr">0x141cf3358</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SteerValue</span><code class="addr">0x141cf3358</code></span></td>
   <td style="text-align:left">Steering value (scripting)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"BrakeValue"</code></td>
-  <td style="text-align:left"><code class="addr">0x141cf3348</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_BrakeValue</span><code class="addr">0x141cf3348</code></span></td>
   <td style="text-align:left">Brake value (scripting)</td>
 </tr>
 </tbody>
@@ -2388,37 +2394,37 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <tbody>
 <tr>
   <td style="text-align:left"><code>"AccelCoef"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd35b8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_AccelCoef</span><code class="addr">0x141bd35b8</code></span></td>
   <td style="text-align:left">0.0 - 1.0</td>
   <td style="text-align:left">Acceleration coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"AdherenceCoef"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd35d8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_AdherenceCoef</span><code class="addr">0x141bd35d8</code></span></td>
   <td style="text-align:left">0.0 - 1.0</td>
   <td style="text-align:left">Grip/adherence coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"GravityCoef"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3e18</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_GravityCoef</span><code class="addr">0x141bb3e18</code></span></td>
   <td style="text-align:left">0.0 - 1.0</td>
   <td style="text-align:left">Gravity coefficient</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"TireWear"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd35c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_TireWear</span><code class="addr">0x141bd35c8</code></span></td>
   <td style="text-align:left">0.0 - 1.0</td>
   <td style="text-align:left">Tire wear level</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"MaxSpeedValue"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd35e8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_MaxSpeedValue</span><code class="addr">0x141bd35e8</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">Maximum speed</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"CruiseSpeedValue"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd35f8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CruiseSpeedValue</span><code class="addr">0x141bd35f8</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
   <td style="text-align:left">Cruise control speed</td>
 </tr>
@@ -2433,9 +2439,9 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <p><code>GravityCoef</code>, <code>AdherenceCoef</code>, <code>AccelCoef</code>, and <code>ControlCoef</code> are deprecated in favor of <code>SetPlayer_Delayed_AccelCoef</code>.</p>
 <h3 id="gameplay-handicaps"><a class="anchor" href="#gameplay-handicaps">#</a>Gameplay handicaps</h3>
 <ul>
-  <li><code>"HandicapNoGripDuration"</code> (<code class="addr">0x141cf6970</code>)</li>
-  <li><code>"HandicapNoSteeringDuration"</code> (<code class="addr">0x141cf6950</code>)</li>
-  <li><code>"HandicapNoBrakesDuration"</code> (<code class="addr">0x141cf6a98</code>)</li>
+  <li><code>"HandicapNoGripDuration"</code> (<span class="named-addr"><span class="addr-name">str_HandicapNoGripDuration</span><code class="addr">0x141cf6970</code></span>)</li>
+  <li><code>"HandicapNoSteeringDuration"</code> (<span class="named-addr"><span class="addr-name">str_HandicapNoSteeringDuration</span><code class="addr">0x141cf6950</code></span>)</li>
+  <li><code>"HandicapNoBrakesDuration"</code> (<span class="named-addr"><span class="addr-name">str_HandicapNoBrakesDuration</span><code class="addr">0x141cf6a98</code></span>)</li>
 </ul>
 <hr>
 <h2 id="how-the-kinematic-constraint-system-works-nplugdyna"><a class="anchor" href="#how-the-kinematic-constraint-system-works-nplugdyna">#</a>How the kinematic constraint system works (NPlugDyna)</h2>
@@ -2451,67 +2457,67 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <tbody>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::SKinematicConstraint</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb4188</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_SKinematicConstraint</span><code class="addr">0x141bb4188</code></span></td>
   <td style="text-align:left">Kinematic constraint definition</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::SConstraintModel</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3ef8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_SConstraintModel</span><code class="addr">0x141bb3ef8</code></span></td>
   <td style="text-align:left">General constraint model</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::EDynaConstraintType</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3ea0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_EDynaConstraintType</span><code class="addr">0x141bb3ea0</code></span></td>
   <td style="text-align:left">Constraint type enum</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::SForceFieldModel</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3e60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_SForceFieldModel</span><code class="addr">0x141bb3e60</code></span></td>
   <td style="text-align:left">Force field definition</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::EForceFieldType</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb3e80</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_EForceFieldType</span><code class="addr">0x141bb3e80</code></span></td>
   <td style="text-align:left">Force field type enum</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::SAnimFunc01Base</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb4050</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_SAnimFunc01Base</span><code class="addr">0x141bb4050</code></span></td>
   <td style="text-align:left">Animation function base (0-1 range)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::SAnimFunc01</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb40b8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_SAnimFunc01</span><code class="addr">0x141bb40b8</code></span></td>
   <td style="text-align:left">Animation function (0-1 range)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::SAnimFuncNat</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb4110</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_SAnimFuncNat</span><code class="addr">0x141bb4110</code></span></td>
   <td style="text-align:left">Natural animation function</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::EAxis</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb4070</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_EAxis</span><code class="addr">0x141bb4070</code></span></td>
   <td style="text-align:left">Axis enum (X/Y/Z)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::EAnimFuncBase</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb4088</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_EAnimFuncBase</span><code class="addr">0x141bb4088</code></span></td>
   <td style="text-align:left">Animation function type enum</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDyna::SPrefabConstraintParams</code></td>
-  <td style="text-align:left"><code class="addr">0x141bb4240</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NPlugDyna_SPrefabConstraintParams</span><code class="addr">0x141bb4240</code></span></td>
   <td style="text-align:left">Prefab constraint parameters</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NPlugDynaObjectModel::SInstanceParams</code></td>
-  <td style="text-align:left"><code class="addr">0x141bd5e10</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CPlugDynaObjectModel_SInstanceParams</span><code class="addr">0x141bd5e10</code></span></td>
   <td style="text-align:left">Per-instance parameters</td>
 </tr>
 </tbody>
 </table></div>
-<p>The <code>AngularSpeedClamp</code> string at <code class="addr">0x141bb3fe0</code> suggests angular velocity limits on constrained objects.</p>
+<p>The <code>AngularSpeedClamp</code> string at <span class="named-addr"><span class="addr-name">str_AngularSpeedClamp</span><code class="addr">0x141bb3fe0</code></span> suggests angular velocity limits on constrained objects.</p>
 <hr>
 <h2 id="how-the-audio-motor-simulation-ties-to-physics"><a class="anchor" href="#how-the-audio-motor-simulation-ties-to-physics">#</a>How the audio motor simulation ties to physics</h2>
 <p>The engine sound system is coupled to physics state:</p>
@@ -2526,42 +2532,42 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <tbody>
 <tr>
   <td style="text-align:left"><code>"EngineRpm"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bea4b8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_EngineRpm</span><code class="addr">0x141bea4b8</code></span></td>
   <td style="text-align:left">Engine RPM value</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"EngineOn"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7dc8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_EngineOn</span><code class="addr">0x141be7dc8</code></span></td>
   <td style="text-align:left">Engine on/off state</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"AudioMotors_Engine_Throttle"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bcdab8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_AudioMotors_Engine_Throttle</span><code class="addr">0x141bcdab8</code></span></td>
   <td style="text-align:left">Throttle audio parameter</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"AudioMotors_Engine_Release"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bcdad8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_AudioMotors_Engine_Release</span><code class="addr">0x141bcdad8</code></span></td>
   <td style="text-align:left">Engine release audio</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"AudioMotors_IdleLoop_Engine"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bcdbf8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_AudioMotors_IdleLoop_Engine</span><code class="addr">0x141bcdbf8</code></span></td>
   <td style="text-align:left">Idle loop sound</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"AudioMotors_LimiterLoop_Engine"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bcdc18</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_AudioMotors_LimiterLoop_Engine</span><code class="addr">0x141bcdc18</code></span></td>
   <td style="text-align:left">Rev limiter sound</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"RpmMaxFromEngine"</code></td>
-  <td style="text-align:left"><code class="addr">0x141bcdcd0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_RpmMaxFromEngine</span><code class="addr">0x141bcdcd0</code></span></td>
   <td style="text-align:left">Max RPM from engine model</td>
 </tr>
 </tbody>
 </table></div>
-<p>The gearbox class <code>CPlugVehicleGearBox</code> at <code class="addr">0x141bcea70</code> feeds gear ratios and shift logic into the RPM calculation. From Openplanet data, <code>CurGear</code> ranges 0-7 (8 gears) and <code>RPM</code> ranges 0-11000.</p>
+<p>The gearbox class <code>CPlugVehicleGearBox</code> at <span class="named-addr"><span class="addr-name">str_CPlugVehicleGearBox</span><code class="addr">0x141bcea70</code></span> feeds gear ratios and shift logic into the RPM calculation. From Openplanet data, <code>CurGear</code> ranges 0-7 (8 gears) and <code>RPM</code> ranges 0-11000.</p>
 <p>RPM IS simulated (not cosmetic). In TMNF's M6 model, RPM determines gear shifts, engine torque output, and burnout state machine entry.</p>
 <hr>
 <h2 id="what-the-vehicle-contact-event-system-tracks"><a class="anchor" href="#what-the-vehicle-contact-event-system-tracks">#</a>What the vehicle contact / event system tracks</h2>
@@ -2577,79 +2583,79 @@ Bit 16  (0x10000): SubStepCollisionResult -- set from FUN_141501090 return</code
 <tbody>
 <tr>
   <td style="text-align:left"><code>"ImpactWheelFront"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7590</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ImpactWheelFront</span><code class="addr">0x141be7590</code></span></td>
   <td style="text-align:left">Front wheel impact</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"ImpactWheelBack"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be75c8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ImpactWheelBack</span><code class="addr">0x141be75c8</code></span></td>
   <td style="text-align:left">Rear wheel impact</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"BeginFreeWheeling"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be75b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_BeginFreeWheeling</span><code class="addr">0x141be75b0</code></span></td>
   <td style="text-align:left">Start free-wheeling</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"EndFreeWheeling"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7650</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_EndFreeWheeling</span><code class="addr">0x141be7650</code></span></td>
   <td style="text-align:left">End free-wheeling</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"BeginBoost_1"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be76e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_BeginBoost_1</span><code class="addr">0x141be76e0</code></span></td>
   <td style="text-align:left">Boost level 1 start</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"BeginBoost_2"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be76f0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_BeginBoost_2</span><code class="addr">0x141be76f0</code></span></td>
   <td style="text-align:left">Boost level 2 start</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"EndBoost"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be76d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_EndBoost</span><code class="addr">0x141be76d0</code></span></td>
   <td style="text-align:left">Boost end</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"BeginNoGrip"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7610</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_BeginNoGrip</span><code class="addr">0x141be7610</code></span></td>
   <td style="text-align:left">No-grip start</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"EndNoGrip"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7600</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_EndNoGrip</span><code class="addr">0x141be7600</code></span></td>
   <td style="text-align:left">No-grip end</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"BeginBulletTime"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7630</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_BeginBulletTime</span><code class="addr">0x141be7630</code></span></td>
   <td style="text-align:left">Bullet time start</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"EndBulletTime"</code></td>
-  <td style="text-align:left"><code class="addr">0x141be7620</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_EndBulletTime</span><code class="addr">0x141be7620</code></span></td>
   <td style="text-align:left">Bullet time end</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"OnVehicleCollision"</code></td>
-  <td style="text-align:left"><code class="addr">0x141cf2020</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_OnVehicleCollision</span><code class="addr">0x141cf2020</code></span></td>
   <td style="text-align:left">Vehicle collision callback</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>"OnVehicleVsVehicleCollision"</code></td>
-  <td style="text-align:left"><code class="addr">0x141cf2038</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_OnVehicleVsVehicleCollision</span><code class="addr">0x141cf2038</code></span></td>
   <td style="text-align:left">Vehicle-vs-vehicle collision</td>
 </tr>
 </tbody>
 </table></div>
 <h3 id="contact-counts"><a class="anchor" href="#contact-counts">#</a>Contact counts</h3>
 <ul>
-  <li><code>"WheelsContactCount"</code> (<code class="addr">0x141cf6768</code>) -- Number of wheels in contact with ground</li>
-  <li><code>"WheelsSkiddingCount"</code> (<code class="addr">0x141cf6ab8</code>) -- Number of wheels skidding</li>
-  <li><code>"IsWheelsBurning"</code> (<code class="addr">0x141be78b8</code>) -- Burnout state</li>
+  <li><code>"WheelsContactCount"</code> (<span class="named-addr"><span class="addr-name">str_WheelsContactCount</span><code class="addr">0x141cf6768</code></span>) -- Number of wheels in contact with ground</li>
+  <li><code>"WheelsSkiddingCount"</code> (<span class="named-addr"><span class="addr-name">str_WheelsSkiddingCount</span><code class="addr">0x141cf6ab8</code></span>) -- Number of wheels skidding</li>
+  <li><code>"IsWheelsBurning"</code> (<span class="named-addr"><span class="addr-name">str_IsWheelsBurning</span><code class="addr">0x141be78b8</code></span>) -- Burnout state</li>
 </ul>
 <h3 id="tire-marks"><a class="anchor" href="#tire-marks">#</a>Tire marks</h3>
-<p><code>CSceneVehicleCarMarksModel</code> (<code class="addr">0x141becc18</code>) drives tire mark visuals. Mark parameters include <code>"WidthCoefForceZ"</code>, <code>"WidthCoefForceX"</code>, <code>"AlphaCoefForceZ"</code>, <code>"AlphaCoefForceX"</code> -- tire marks are modulated by force magnitude.</p>
+<p><code>CSceneVehicleCarMarksModel</code> (<span class="named-addr"><span class="addr-name">str_CSceneVehicleCarMarksModel</span><code class="addr">0x141becc18</code></span>) drives tire mark visuals. Mark parameters include <code>"WidthCoefForceZ"</code>, <code>"WidthCoefForceX"</code>, <code>"AlphaCoefForceZ"</code>, <code>"AlphaCoefForceX"</code> -- tire marks are modulated by force magnitude.</p>
 <hr>
 <h2 id="differences-from-tmnf"><a class="anchor" href="#differences-from-tmnf">#</a>Differences from TMNF</h2>
 <div class="table-wrapper"><table>
@@ -2962,7 +2968,7 @@ TM2020: FreqHz = sqrt(Ki / mass) / (2*pi)
   <td style="text-align:left">Compound collision shape type ID</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code class="addr">0xFFFFFFFF</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span></td>
   <td style="text-align:center">-1</td>
   <td style="text-align:left">Multiple</td>
   <td style="text-align:left">Sentinel: "no value" / "uninitialized"</td>
@@ -3109,7 +3115,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
 </tr>
 </tbody>
 </table></div>
-<p><code>NoGrip</code> (<code class="addr">0x141be1244</code>) is NOT a material -- it is a gameplay trigger zone that overrides normal friction. <code>SlowMotion</code> (<code class="addr">0x141be12d0</code>) reduces <code>SimulationTimeCoef</code>, slowing the entire physics simulation for that vehicle.</p>
+<p><code>NoGrip</code> (<span class="named-addr"><span class="addr-name">str_NoGrip</span><code class="addr">0x141be1244</code></span>) is NOT a material -- it is a gameplay trigger zone that overrides normal friction. <code>SlowMotion</code> (<span class="named-addr"><span class="addr-name">str_SlowMotion</span><code class="addr">0x141be12d0</code></span>) reduces <code>SimulationTimeCoef</code>, slowing the entire physics simulation for that vehicle.</p>
 <h3 id="how-does-the-gearboxengine-simulation-work"><a class="anchor" href="#how-does-the-gearboxengine-simulation-work">#</a>"How does the gearbox/engine simulation work?"</h3>
 <p>The decompiled <code>ComputeForces</code> dispatcher does NOT contain engine/gearbox logic. That code lives inside the force model functions (FUN_140851f00 etc.).</p>
 <p>From TMNF cross-reference (where the M6/Steer06 model was fully decompiled):</p>
@@ -3271,109 +3277,109 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
 <tbody>
 <tr>
   <td style="text-align:left"><code>PhysicsStep_TM</code></td>
-  <td style="text-align:center"><code class="addr">0x141501800</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><code class="addr">0x141501800</code></span></td>
   <td style="text-align:left"><code>PhysicsStep_TM.c</code></td>
   <td style="text-align:left">Per-vehicle physics step with adaptive sub-stepping</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::PhysicsStep</code></td>
-  <td style="text-align:center"><code class="addr">0x1407bd0e0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep</span><code class="addr">0x1407bd0e0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__PhysicsStep.c</code></td>
   <td style="text-align:left">Thin wrapper, converts time to microseconds</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::PhysicsStep_V2</code></td>
-  <td style="text-align:center"><code class="addr">0x140803920</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><code class="addr">0x140803920</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__PhysicsStep_V2.c</code></td>
   <td style="text-align:left">Main rigid body dynamics orchestrator</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::ComputeForces</code></td>
-  <td style="text-align:center"><code class="addr">0x1408427d0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><code class="addr">0x1408427d0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c</code></td>
   <td style="text-align:left">Vehicle force computation dispatch</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PairComputeForces</code></td>
-  <td style="text-align:center"><code class="addr">0x140842ed0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PairComputeForces</span><code class="addr">0x140842ed0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__PairComputeForces.c</code></td>
   <td style="text-align:left">Vehicle-vehicle pair setup</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PhysicsStep_BeforeMgrDynaUpdate</code></td>
-  <td style="text-align:center"><code class="addr">0x1407cfce0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_BeforeMgrDynaUpdate</span><code class="addr">0x1407cfce0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__PhysicsStep_BeforeMgrDynaUpdate.c</code></td>
   <td style="text-align:left">Pre-dynamics: transforms, contacts, history</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</code></td>
-  <td style="text-align:center"><code class="addr">0x1407d2b90</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</span><code class="addr">0x1407d2b90</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c</code></td>
   <td style="text-align:left">Contact point processing</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::ExtractVisStates</code></td>
-  <td style="text-align:center"><code class="addr">0x1407d29a0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ExtractVisStates</span><code class="addr">0x1407d29a0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__ExtractVisStates.c</code></td>
   <td style="text-align:left">Physics to visual state extraction</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeGravityAndSleepStateAndNewVels</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f89d0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeGravityAndSleepStateAndNewVels</span><code class="addr">0x1407f89d0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c</code></td>
   <td style="text-align:left">Gravity, sleep detection, velocity integration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeExternalForces</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f81c0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeExternalForces</span><code class="addr">0x1407f81c0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__ComputeExternalForces.c</code></td>
   <td style="text-align:left">External force accumulation</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeWaterForces</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f8290</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeWaterForces</span><code class="addr">0x1407f8290</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__ComputeWaterForces.c</code></td>
   <td style="text-align:left">Buoyancy/drag for water volumes</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::DynamicCollisionCreateCache</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f9da0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::DynamicCollisionCreateCache</span><code class="addr">0x1407f9da0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__DynamicCollisionCreateCache.c</code></td>
   <td style="text-align:left">Collision cache for solver</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>FrictionIterCount_Config</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f3fc0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::SSolverParams_Registration</span><code class="addr">0x1407f3fc0</code></span></td>
   <td style="text-align:left"><code>FrictionIterCount_Config.c</code></td>
   <td style="text-align:left">SSolverParams registration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CSmArenaPhysics::Players_BeginFrame</code></td>
-  <td style="text-align:center"><code class="addr">0x1412c2cc0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">CSmArenaPhysics::Players_BeginFrame</span><code class="addr">0x1412c2cc0</code></span></td>
   <td style="text-align:left"><code>CSmArenaPhysics__Players_BeginFrame.c</code></td>
   <td style="text-align:left">Arena physics frame start</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ArenaPhysics_CarPhyUpdate</code></td>
-  <td style="text-align:center"><code class="addr">0x1412e8490</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ArenaPhysics_CarPhyUpdate</span><code class="addr">0x1412e8490</code></span></td>
   <td style="text-align:left"><code>ArenaPhysics_CarPhyUpdate.c</code></td>
   <td style="text-align:left">Car physics update (zone, events)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Tunings_CoefFriction_CoefAcceleration</code></td>
-  <td style="text-align:center"><code class="addr">0x141071b20</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NGameSlotPhy::SMgr_TuningsRegistration</span><code class="addr">0x141071b20</code></span></td>
   <td style="text-align:left"><code>Tunings_CoefFriction_CoefAcceleration.c</code></td>
   <td style="text-align:left">NGameSlotPhy tuning registration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::MergeContacts</code></td>
-  <td style="text-align:center"><code class="addr">0x1402a8a70</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NHmsCollision::MergeContacts</span><code class="addr">0x1402a8a70</code></span></td>
   <td style="text-align:left"><code>NHmsCollision__MergeContacts.c</code></td>
   <td style="text-align:left">Contact point merging</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::StartPhyFrame</code></td>
-  <td style="text-align:center"><code class="addr">0x1402a9c60</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NHmsCollision::StartPhyFrame</span><code class="addr">0x1402a9c60</code></span></td>
   <td style="text-align:left"><code>NHmsCollision__StartPhyFrame.c</code></td>
   <td style="text-align:left">Collision frame initialization</td>
 </tr>
@@ -3586,10 +3592,10 @@ FUN_140801e20(param_1, (ulonglong)*param_2 * 1000000);</code></pre></div>
   <li><strong>Time scale</strong>: <code>fVar16 = (float)param_2[2] * DAT_141d1fa9c</code> (line 133) -- <code>DAT_141d1fa9c</code> is likely 1000.0f (the max sub-step cap value reused as a divisor)</li>
   <li><strong>Collision cache creation</strong>: Calls <code>FUN_1407f9da0</code> (DynamicCollisionCreateCache) (line 150)</li>
   <li><strong>InternalPhysicsStep dispatch</strong>: Calls <code>FUN_1408025a0</code> if bodies need updating (line 201)</li>
-  <li><strong>Body force clearing</strong>: Loop zeros <code>+0x8</code> in body array with stride <code>0x38</code> (56 bytes) (lines 214-232)</li>
+  <li><strong>Body force clearing</strong>: Loop zeros <code>+0x8</code> in body array with stride <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span> (56 bytes) (lines 214-232)</li>
 </ol>
 <p><strong>Struct Offset</strong>: <code>param_1[0xf4b]</code> = physics step counter (8-byte aligned: byte offset 0x7A58)</p>
-<p>The body force clearing uses both strides <code>0x38</code> (56 bytes, unrolled 4x as <code>0xE0</code> = 224 bytes) and single-iteration <code>0x38</code>. This confirms the per-body data structure is 56 bytes with forces at offset <code>+0x8</code>.</p>
+<p>The body force clearing uses both strides <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span> (56 bytes, unrolled 4x as <span class="named-addr"><span class="addr-name">vehicleModelCustom_modelScale</span><code class="addr">0xE0</code></span> = 224 bytes) and single-iteration <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span>. This confirms the per-body data structure is 56 bytes with forces at offset <code>+0x8</code>.</p>
 <hr>
 <h2 id="how-the-7-force-models-dispatch"><a class="anchor" href="#how-the-7-force-models-dispatch">#</a>How the 7 force models dispatch</h2>
 <p>The engine supports 7 force models, each implementing a different vehicle dynamics simulation. A switch at offset <code>+0x1790</code> on the vehicle model object selects which force computation function runs.</p>
@@ -3724,7 +3730,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
     // Block 4: offsets 0x19B8-0x19F0 (stride 0xB8 from block 3)
 }</code></pre></div>
 <p><strong>Struct Offset</strong>: <code>vehicle_model+0x238</code> is checked against value 5 (unsigned). This is likely a game-mode or vehicle-class identifier.</p>
-<p>The 4 blocks at stride <code>0xB8</code> (184 bytes) likely correspond to the 4 wheels, each containing:</p>
+<p>The 4 blocks at stride <span class="named-addr"><span class="addr-name">WHEEL_STATE_BLOCK_STRIDE</span><code class="addr">0xB8</code></span> (184 bytes) likely correspond to the 4 wheels, each containing:</p>
 <ul>
   <li><code>+0x00</code>: Force model type (the 0x1790 selector)</li>
   <li><code>+0x04</code>: <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></li>
@@ -3774,7 +3780,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
 <hr>
 <h2 id="what-the-vehicle-state-structure-contains"><a class="anchor" href="#what-the-vehicle-state-structure-contains">#</a>What the vehicle state structure contains</h2>
 <p>The vehicle entity state structure spans at least <strong>0x1CA0 bytes (~7,328 bytes)</strong>. Every physics function accesses offsets within this structure. The table below aggregates all observed offsets from the 18 decompiled files.</p>
-<p><strong>Quick version:</strong> The structure holds transforms, velocities, force accumulators, boost state, wheel contact history, collision flags, and simulation mode. Four per-wheel blocks at stride <code>0xB8</code> start at offset <code>+0x1790</code>.</p>
+<p><strong>Quick version:</strong> The structure holds transforms, velocities, force accumulators, boost state, wheel contact history, collision flags, and simulation mode. Four per-wheel blocks at stride <span class="named-addr"><span class="addr-name">WHEEL_STATE_BLOCK_STRIDE</span><code class="addr">0xB8</code></span> start at offset <code>+0x1790</code>.</p>
 <p><strong>Evidence</strong>: All 18 decompiled files, aggregated <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> for offsets observed in code; <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> for gaps</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -4009,7 +4015,7 @@ if ((1 &lt; *(int *)(local_118 + 0x238) - 5U) &amp;&amp;
   <td style="text-align:center">4</td>
   <td style="text-align:center">uint</td>
   <td style="text-align:left"><code>TickStamp</code></td>
-  <td style="text-align:left">BeforeMgrDynaUpdate: <code class="addr">0xFFFFFFFF</code> = unset</td>
+  <td style="text-align:left">BeforeMgrDynaUpdate: <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> = unset</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>+0x12E0</code></td>
@@ -4736,7 +4742,7 @@ for each item in set at param_1 + 0xA58:
 <ul>
   <li><code>+0x74</code>: Current position (3 x float32 = vec3)</li>
   <li><code>+0x94</code>: Previous position (3 x float32 = vec3, copied from current at frame start)</li>
-  <li><code>+0xA4</code>: Hit body index (uint, <code class="addr">0xFFFFFFFF</code> = no hit)</li>
+  <li><code>+0xA4</code>: Hit body index (uint, <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> = no hit)</li>
 </ul>
 <p>Two separate collision item sets exist at manager offsets <code>+0x9C8</code> and <code>+0xA58</code>. This suggests separation of static-collidable and dynamic-collidable objects.</p>
 <h3 id="how-dynamiccollisioncreatecache-builds-the-solver-cache"><a class="anchor" href="#how-dynamiccollisioncreatecache-builds-the-solver-cache">#</a>How DynamicCollisionCreateCache builds the solver cache</h3>
@@ -5000,7 +5006,7 @@ Phase 3: Remove consumed contacts
   <td style="text-align:left">Number of position correction iterations</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code>0x10</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">vehicleState_dynaBodyId</span><code class="addr">0x10</code></span></td>
   <td style="text-align:center">float</td>
   <td style="text-align:left"><code>DepenImpulseFactor</code></td>
   <td style="text-align:left">Depenetration impulse scaling factor</td>
@@ -5030,7 +5036,7 @@ Phase 3: Remove consumed contacts
   <td style="text-align:left">Velocity bias computation mode</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code>0x24</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">WHEEL_STRUCT_STRIDE_MP4</span><code class="addr">0x24</code></span></td>
   <td style="text-align:center">bool</td>
   <td style="text-align:left"><code>UseConstraints2</code></td>
   <td style="text-align:left">Whether to use second-generation constraints</td>
@@ -5060,112 +5066,112 @@ Phase 3: Remove consumed contacts
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1238</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoSteering</span><code class="addr">0x141be1238</code></span></td>
   <td style="text-align:left"><code>NoSteering</code></td>
   <td style="text-align:left">Disables steering input</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1244</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoGrip</span><code class="addr">0x141be1244</code></span></td>
   <td style="text-align:left"><code>NoGrip</code></td>
   <td style="text-align:left">Zero friction surface</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be124c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Reset</span><code class="addr">0x141be124c</code></span></td>
   <td style="text-align:left"><code>Reset</code></td>
   <td style="text-align:left">Resets vehicle to last checkpoint</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1258</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ForceAcceleration</span><code class="addr">0x141be1258</code></span></td>
   <td style="text-align:left"><code>ForceAcceleration</code></td>
   <td style="text-align:left">Forces constant acceleration</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be126c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Turbo</span><code class="addr">0x141be126c</code></span></td>
   <td style="text-align:left"><code>Turbo</code></td>
   <td style="text-align:left">Turbo boost level 1</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1278</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_FreeWheeling</span><code class="addr">0x141be1278</code></span></td>
   <td style="text-align:left"><code>FreeWheeling</code></td>
   <td style="text-align:left">Disengages engine (coasting)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1288</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Turbo2</span><code class="addr">0x141be1288</code></span></td>
   <td style="text-align:left"><code>Turbo2</code></td>
   <td style="text-align:left">Turbo boost level 2</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1290</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost2_Legacy</span><code class="addr">0x141be1290</code></span></td>
   <td style="text-align:left"><code>ReactorBoost2_Legacy</code></td>
   <td style="text-align:left">Legacy reactor boost level 2 (non-directional)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be12a8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Fragile</span><code class="addr">0x141be12a8</code></span></td>
   <td style="text-align:left"><code>Fragile</code></td>
   <td style="text-align:left">Vehicle breaks on hard impact</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be12b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_NoBrakes</span><code class="addr">0x141be12b0</code></span></td>
   <td style="text-align:left"><code>NoBrakes</code></td>
   <td style="text-align:left">Disables brake input</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be12bc</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bouncy</span><code class="addr">0x141be12bc</code></span></td>
   <td style="text-align:left"><code>Bouncy</code></td>
   <td style="text-align:left">High-restitution surface</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be12c4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bumper</span><code class="addr">0x141be12c4</code></span></td>
   <td style="text-align:left"><code>Bumper</code></td>
   <td style="text-align:left">Bumper surface level 1</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be12d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SlowMotion</span><code class="addr">0x141be12d0</code></span></td>
   <td style="text-align:left"><code>SlowMotion</code></td>
   <td style="text-align:left">Reduces simulation speed</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be12e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost_Legacy</span><code class="addr">0x141be12e0</code></span></td>
   <td style="text-align:left"><code>ReactorBoost_Legacy</code></td>
   <td style="text-align:left">Legacy reactor boost (non-directional)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be12f8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Bumper2</span><code class="addr">0x141be12f8</code></span></td>
   <td style="text-align:left"><code>Bumper2</code></td>
   <td style="text-align:left">Bumper surface level 2</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1300</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarRally</span><code class="addr">0x141be1300</code></span></td>
   <td style="text-align:left"><code>VehicleTransform_CarRally</code></td>
   <td style="text-align:left">Transforms vehicle to Rally car</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1320</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarSnow</span><code class="addr">0x141be1320</code></span></td>
   <td style="text-align:left"><code>VehicleTransform_CarSnow</code></td>
   <td style="text-align:left">Transforms vehicle to Snow car</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1358</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_CarDesert</span><code class="addr">0x141be1358</code></span></td>
   <td style="text-align:left"><code>VehicleTransform_CarDesert</code></td>
   <td style="text-align:left">Transforms vehicle to Desert car</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1378</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost_Oriented</span><code class="addr">0x141be1378</code></span></td>
   <td style="text-align:left"><code>ReactorBoost_Oriented</code></td>
   <td style="text-align:left">Directional reactor boost</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1390</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Cruise</span><code class="addr">0x141be1390</code></span></td>
   <td style="text-align:left"><code>Cruise</code></td>
   <td style="text-align:left">Sets cruise control speed</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be1398</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_VehicleTransform_Reset</span><code class="addr">0x141be1398</code></span></td>
   <td style="text-align:left"><code>VehicleTransform_Reset</code></td>
   <td style="text-align:left">Transforms vehicle back to Stadium car</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141be13b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ReactorBoost2_Oriented</span><code class="addr">0x141be13b0</code></span></td>
   <td style="text-align:left"><code>ReactorBoost2_Oriented</code></td>
   <td style="text-align:left">Directional reactor boost level 2</td>
 </tr>
@@ -5455,19 +5461,19 @@ if (param_8 != 0) {
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:center"><code>0x58</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">CONTACT_POINT_STRIDE</span><code class="addr">0x58</code></span></td>
   <td style="text-align:center">float</td>
   <td style="text-align:left"><code>Tunings.CoefFriction</code></td>
   <td style="text-align:left">Global friction multiplier</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code>0x5C</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">slotPhyMgr_coefAcceleration</span><code class="addr">0x5C</code></span></td>
   <td style="text-align:center">float</td>
   <td style="text-align:left"><code>Tunings.CoefAcceleration</code></td>
   <td style="text-align:left">Global acceleration multiplier</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code>0x60</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">slotPhyMgr_sensibility</span><code class="addr">0x60</code></span></td>
   <td style="text-align:center">float</td>
   <td style="text-align:left"><code>Tunings.Sensibility</code></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Sensibility tuning</td>
@@ -5558,7 +5564,7 @@ if (param_8 != 0) {
   <td style="text-align:left">Compound collision shape type ID</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code class="addr">0xFFFFFFFF</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span></td>
   <td style="text-align:center">-1</td>
   <td style="text-align:left">Multiple (boost start, hit body, body id)</td>
   <td style="text-align:left">Sentinel: "no value" / "uninitialized"</td>
@@ -5661,7 +5667,7 @@ if (param_8 != 0) {
   <td style="text-align:left">Arena state flag check</td>
 </tr>
 <tr>
-  <td style="text-align:center"><code class="addr">0xFFFFF5FF</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">CONTACT_PHY_FLAGS_CLEAR_MASK</span><code class="addr">0xFFFFF5FF</code></span></td>
   <td style="text-align:left">~(0x0600)</td>
   <td style="text-align:left">PhysicsStep_TM:69</td>
   <td style="text-align:left">Clears bits 9-10</td>
@@ -5818,7 +5824,7 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
     called each sub-step within PhysicsStep_TM</code></pre></div>
 <p><strong>Step-by-step from <code>NSceneVehiclePhy__ComputeForces.c:89-111</code>:</strong></p>
 <ol>
-  <li><strong>First tick with boost pending</strong> (line 89): The code checks <code>if (<em>(int </em>)(lVar6 + 0x16e8) == -1)</code>. If the boost start time is uninitialized (<code class="addr">0xFFFFFFFF</code>), it records the current tick: <code><em>(uint </em>)(lVar6 + 0x16e8) = param_5</code>.</li>
+  <li><strong>First tick with boost pending</strong> (line 89): The code checks <code>if (<em>(int </em>)(lVar6 + 0x16e8) == -1)</code>. If the boost start time is uninitialized (<span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span>), it records the current tick: <code><em>(uint </em>)(lVar6 + 0x16e8) = param_5</code>.</li>
 </ol>
 <ol>
   <li><strong>Event dispatch</strong> (lines 91-99): If the boost has a non-zero duration AND the arena has an event callback AND events are not disabled (bit 2 of <code>+0x1C7C</code> is clear) AND the vehicle has a valid player index, it dispatches a boost event via <code>FUN_1407d6200()</code>.</li>
@@ -5849,12 +5855,12 @@ NSceneVehiclePhy::ComputeForces (FUN_1408427d0)
 <tbody>
 <tr>
   <td style="text-align:center">Turbo</td>
-  <td style="text-align:left"><code>"Turbo"</code> at <code class="addr">0x141be126c</code></td>
+  <td style="text-align:left"><code>"Turbo"</code> at <span class="named-addr"><span class="addr-name">str_Turbo</span><code class="addr">0x141be126c</code></span></td>
   <td style="text-align:left">[NEEDS INVESTIGATION - stored in GBX tuning, not in .exe]</td>
 </tr>
 <tr>
   <td style="text-align:center">Turbo2</td>
-  <td style="text-align:left"><code>"Turbo2"</code> at <code class="addr">0x141be1288</code></td>
+  <td style="text-align:left"><code>"Turbo2"</code> at <span class="named-addr"><span class="addr-name">str_Turbo2</span><code class="addr">0x141be1288</code></span></td>
   <td style="text-align:left">[NEEDS INVESTIGATION - stored in GBX tuning, not in .exe]</td>
 </tr>
 <tr>
@@ -5911,7 +5917,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
     |  - Fragile surface check
     |  - Collision severity threshold</code></pre></div>
 <p>The <code>MinVelocityForRestitution</code> parameter at SSolverParams offset <code>0x28</code> defines the minimum impact velocity required for a bounce. Below this threshold, the collision is purely inelastic (no bounce). The actual coefficient of restitution value is [NEEDS INVESTIGATION -- likely stored per-material].</p>
-<p>The <code>Bouncy</code> gameplay surface (<code class="addr">0x141be12bc</code>) creates high-restitution behavior, confirming restitution is a per-surface property.</p>
+<p>The <code>Bouncy</code> gameplay surface (<span class="named-addr"><span class="addr-name">str_Bouncy</span><code class="addr">0x141be12bc</code></span>) creates high-restitution behavior, confirming restitution is a per-surface property.</p>
 <p>When the car hits a wall, multiple contact points may be generated (one per mesh triangle). The merge algorithm groups contacts where <code>distance < threshold</code> AND <code>dot(normal_i, normal_j) > dot_threshold</code>, averages them, and keeps one survivor per group. This reduces solver jitter.</p>
 <hr>
 <h3 id="how-does-icedirtgrass-affect-driving-1"><a class="anchor" href="#how-does-icedirtgrass-affect-driving-1">#</a>How does ice/dirt/grass affect driving?</h3>
@@ -5929,8 +5935,8 @@ Per-wheel GroundContactMaterial        Block/item trigger zones
 <p>Surface PHYSICS (friction) come from <code>EPlugSurfaceMaterialId</code>. Surface GAMEPLAY EFFECTS come from <code>EPlugSurfaceGameplayId</code>. These are independent systems.</p>
 <p>Each wheel independently detects its surface. You can have front wheels on asphalt and rear wheels on ice. The friction coefficient changes instantly when the wheel crosses a surface boundary. The actual friction multiplier is applied inside the force model functions.</p>
 <ul>
-  <li><code>NoGrip</code> (<code class="addr">0x141be1244</code>): A gameplay effect that sets friction to zero. This is NOT a material -- it is a gameplay trigger zone.</li>
-  <li><code>SlowMotion</code> (<code class="addr">0x141be12d0</code>): Reduces the <code>SimulationTimeCoef</code>, slowing the entire physics simulation for that vehicle.</li>
+  <li><code>NoGrip</code> (<span class="named-addr"><span class="addr-name">str_NoGrip</span><code class="addr">0x141be1244</code></span>): A gameplay effect that sets friction to zero. This is NOT a material -- it is a gameplay trigger zone.</li>
+  <li><code>SlowMotion</code> (<span class="named-addr"><span class="addr-name">str_SlowMotion</span><code class="addr">0x141be12d0</code></span>): Reduces the <code>SimulationTimeCoef</code>, slowing the entire physics simulation for that vehicle.</li>
 </ul>
 <hr>
 <h3 id="how-does-the-sub-stepping-algorithm-work-step-by-step"><a class="anchor" href="#how-does-the-sub-stepping-algorithm-work-step-by-step">#</a>How does the sub-stepping algorithm work step by step?</h3>
@@ -6533,109 +6539,109 @@ FUN_1407fb580 (not decompiled -- the actual buoyancy/drag computation)</code></p
 <tbody>
 <tr>
   <td style="text-align:left"><code>PhysicsStep_TM</code></td>
-  <td style="text-align:center"><code class="addr">0x141501800</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><code class="addr">0x141501800</code></span></td>
   <td style="text-align:left"><code>PhysicsStep_TM.c</code></td>
   <td style="text-align:left">Per-vehicle physics step with adaptive sub-stepping</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::PhysicsStep</code></td>
-  <td style="text-align:center"><code class="addr">0x1407bd0e0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep</span><code class="addr">0x1407bd0e0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__PhysicsStep.c</code></td>
   <td style="text-align:left">Thin wrapper, converts time to microseconds</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::PhysicsStep_V2</code></td>
-  <td style="text-align:center"><code class="addr">0x140803920</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><code class="addr">0x140803920</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__PhysicsStep_V2.c</code></td>
   <td style="text-align:left">Main rigid body dynamics orchestrator</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::ComputeForces</code></td>
-  <td style="text-align:center"><code class="addr">0x1408427d0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><code class="addr">0x1408427d0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__ComputeForces.c</code></td>
   <td style="text-align:left">Vehicle force computation dispatch</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PairComputeForces</code></td>
-  <td style="text-align:center"><code class="addr">0x140842ed0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PairComputeForces</span><code class="addr">0x140842ed0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__PairComputeForces.c</code></td>
   <td style="text-align:left">Vehicle-vehicle pair setup</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PhysicsStep_BeforeMgrDynaUpdate</code></td>
-  <td style="text-align:center"><code class="addr">0x1407cfce0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_BeforeMgrDynaUpdate</span><code class="addr">0x1407cfce0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__PhysicsStep_BeforeMgrDynaUpdate.c</code></td>
   <td style="text-align:left">Pre-dynamics: transforms, contacts, history</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</code></td>
-  <td style="text-align:center"><code class="addr">0x1407d2b90</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::PhysicsStep_ProcessContactPoints</span><code class="addr">0x1407d2b90</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__PhysicsStep_ProcessContactPoints.c</code></td>
   <td style="text-align:left">Contact point processing</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneVehiclePhy::ExtractVisStates</code></td>
-  <td style="text-align:center"><code class="addr">0x1407d29a0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ExtractVisStates</span><code class="addr">0x1407d29a0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy__ExtractVisStates.c</code></td>
   <td style="text-align:left">Physics to visual state extraction</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeGravityAndSleepStateAndNewVels</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f89d0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeGravityAndSleepStateAndNewVels</span><code class="addr">0x1407f89d0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__ComputeGravityAndSleepStateAndNewVels.c</code></td>
   <td style="text-align:left">Gravity, sleep detection, velocity integration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeExternalForces</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f81c0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeExternalForces</span><code class="addr">0x1407f81c0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__ComputeExternalForces.c</code></td>
   <td style="text-align:left">External force accumulation</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::ComputeWaterForces</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f8290</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::ComputeWaterForces</span><code class="addr">0x1407f8290</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__ComputeWaterForces.c</code></td>
   <td style="text-align:left">Buoyancy/drag for water volumes</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NSceneDyna::DynamicCollisionCreateCache</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f9da0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::DynamicCollisionCreateCache</span><code class="addr">0x1407f9da0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna__DynamicCollisionCreateCache.c</code></td>
   <td style="text-align:left">Collision cache for solver</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>FrictionIterCount_Config</code></td>
-  <td style="text-align:center"><code class="addr">0x1407f3fc0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NSceneDyna::SSolverParams_Registration</span><code class="addr">0x1407f3fc0</code></span></td>
   <td style="text-align:left"><code>FrictionIterCount_Config.c</code></td>
   <td style="text-align:left">SSolverParams registration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>CSmArenaPhysics::Players_BeginFrame</code></td>
-  <td style="text-align:center"><code class="addr">0x1412c2cc0</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">CSmArenaPhysics::Players_BeginFrame</span><code class="addr">0x1412c2cc0</code></span></td>
   <td style="text-align:left"><code>CSmArenaPhysics__Players_BeginFrame.c</code></td>
   <td style="text-align:left">Arena physics frame start</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>ArenaPhysics_CarPhyUpdate</code></td>
-  <td style="text-align:center"><code class="addr">0x1412e8490</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">ArenaPhysics_CarPhyUpdate</span><code class="addr">0x1412e8490</code></span></td>
   <td style="text-align:left"><code>ArenaPhysics_CarPhyUpdate.c</code></td>
   <td style="text-align:left">Car physics update (zone, events)</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>Tunings_CoefFriction_CoefAcceleration</code></td>
-  <td style="text-align:center"><code class="addr">0x141071b20</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NGameSlotPhy::SMgr_TuningsRegistration</span><code class="addr">0x141071b20</code></span></td>
   <td style="text-align:left"><code>Tunings_CoefFriction_CoefAcceleration.c</code></td>
   <td style="text-align:left">NGameSlotPhy tuning registration</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::MergeContacts</code></td>
-  <td style="text-align:center"><code class="addr">0x1402a8a70</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NHmsCollision::MergeContacts</span><code class="addr">0x1402a8a70</code></span></td>
   <td style="text-align:left"><code>NHmsCollision__MergeContacts.c</code></td>
   <td style="text-align:left">Contact point merging</td>
 </tr>
 <tr>
   <td style="text-align:left"><code>NHmsCollision::StartPhyFrame</code></td>
-  <td style="text-align:center"><code class="addr">0x1402a9c60</code></td>
+  <td style="text-align:center"><span class="named-addr"><span class="addr-name">NHmsCollision::StartPhyFrame</span><code class="addr">0x1402a9c60</code></span></td>
   <td style="text-align:left"><code>NHmsCollision__StartPhyFrame.c</code></td>
   <td style="text-align:left">Collision frame initialization</td>
 </tr>

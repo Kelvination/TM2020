@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -164,7 +170,7 @@ export const BLOCK_SIZE = 32.0;     // meters per block unit. CERTAIN (doc 19 Se
   <li><strong>Depends on</strong>: <code>@opentm/core</code></li>
   <li><strong>Depended on by</strong>: <code>@opentm/map</code>, <code>@opentm/ghost</code>, <code>@opentm/assets</code>, <code>@opentm/editor</code></li>
   <li><strong>Approximate size</strong>: ~8,000 LOC</li>
-  <li><strong>Reason</strong>: GBX is the universal container format for maps, items, ghosts, replays, materials, and meshes [doc 16, <span class="badge badge-verified">VERIFIED</span> from 5 real files in doc 26]. Everything loads through GBX. The parser must handle: magic/version/flags header, header chunks with index table, LookbackString system (4 flag modes), reference table (max 49,999 external refs), LZO1X body decompression (confirmed from real files in doc 26, NOT zlib for body), <code class="addr">0xFACADE01</code> sentinel, 200+ class ID remappings [doc 16 Section 11], and a chunk handler registry dispatching by (classId | chunkIndex).</li>
+  <li><strong>Reason</strong>: GBX is the universal container format for maps, items, ghosts, replays, materials, and meshes [doc 16, <span class="badge badge-verified">VERIFIED</span> from 5 real files in doc 26]. Everything loads through GBX. The parser must handle: magic/version/flags header, header chunks with index table, LookbackString system (4 flag modes), reference table (max 49,999 external refs), LZO1X body decompression (confirmed from real files in doc 26, NOT zlib for body), <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel, 200+ class ID remappings [doc 16 Section 11], and a chunk handler registry dispatching by (classId | chunkIndex).</li>
 </ul>
 <p><strong>Key interfaces</strong>:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">export interface GbxFile {
@@ -454,7 +460,7 @@ interface GhostSample {
   <li><strong>Depends on</strong>: <code>@opentm/core</code>, <code>@opentm/gbx-parser</code>, <code>@opentm/assets</code></li>
   <li><strong>Depended on by</strong>: <code>@opentm/physics</code> (collision meshes), <code>@opentm/renderer</code> (scene graph), <code>@opentm/editor</code>, <code>@opentm/ghost</code> (map validation)</li>
   <li><strong>Approximate size</strong>: ~6,000 LOC</li>
-  <li><strong>Reason</strong>: Maps are CGameCtnChallenge (class <code class="addr">0x03043000</code>) with a 23-stage loading pipeline [doc 22, doc 28]. The block system uses 32m units with blocks identified by name + variant + position + rotation [doc 19 Section 8]. Materials map to 19 surface types that determine physics friction [doc 19 Section 10, 208 materials catalogued]. Waypoint blocks (start, finish, checkpoint) must be identified for race logic.</li>
+  <li><strong>Reason</strong>: Maps are CGameCtnChallenge (class <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span>) with a 23-stage loading pipeline [doc 22, doc 28]. The block system uses 32m units with blocks identified by name + variant + position + rotation [doc 19 Section 8]. Materials map to 19 surface types that determine physics friction [doc 19 Section 10, 208 materials catalogued]. Waypoint blocks (start, finish, checkpoint) must be identified for race logic.</li>
 </ul>
 <p><strong>Loading pipeline</strong> (browser version of TM2020's 23-stage pipeline):</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>1. fetch(mapUrl) -&gt; ArrayBuffer
@@ -1307,7 +1313,7 @@ const assetWorker2 = new Worker(new URL(&#x27;./workers/asset.ts&#x27;, import.m
   <li><strong>Destroys</strong>: Previous map data (if any), previous collision world in physics</li>
   <li><strong>Transitions</strong>: -> Countdown (map fully loaded) | -> MainMenu (cancel/error)</li>
   <li><strong>Duration</strong>: < 5s for standard map</li>
-  <li><strong>Shows</strong>: Loading screen with map thumbnail (from GBX header chunk <code class="addr">0x03043007</code>)</li>
+  <li><strong>Shows</strong>: Loading screen with map thumbnail (from GBX header chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Thumbnail</span><code class="addr">0x03043007</code></span>)</li>
 </ul>
 <h4 id="countdown"><a class="anchor" href="#countdown">#</a>Countdown</h4>
 <ul>

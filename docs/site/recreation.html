@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -460,7 +466,7 @@ Node count: uint32</code></pre></div>
 <p>Body from <a href="file-formats.html">16-fileformat-deep-dive.md</a> Sections 6-8:</p>
 <ul>
   <li>If compressed: uncompressed_size uint32, compressed_size uint32, zlib-compressed data.</li>
-  <li>Chunk stream: repeating (chunk_id uint32, chunk_data) until <code class="addr">0xFACADE01</code> sentinel.</li>
+  <li>Chunk stream: repeating (chunk_id uint32, chunk_data) until <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> sentinel.</li>
   <li>Body stream compression controlled by format flag byte 2.</li>
 </ul>
 <p>Compression: zlib exclusively (<span class="badge badge-verified">VERIFIED</span>, <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 4).</p>
@@ -470,9 +476,9 @@ Node count: uint32</code></pre></div>
   <li>LookbackString system: 2-bit flag prefix -- 0b11 = new string, 0b10 = reference to previous, 0b00 = empty.</li>
   <li>Flag 0b01 meaning is <span class="badge badge-unknown">UNKNOWN</span> (community documentation gap).</li>
 </ul>
-<p>Map file (CGameCtnChallenge, class <code class="addr">0x03043000</code>):</p>
+<p>Map file (CGameCtnChallenge, class <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span>):</p>
 <ul>
-  <li>Known header chunks: <code class="addr">0x03043002</code> (map info), <code class="addr">0x03043003</code> (common header), <code class="addr">0x03043004</code> (version), <code class="addr">0x03043005</code> (community ref), <code class="addr">0x03043007</code> (thumbnail), <code class="addr">0x03043008</code> (author info).</li>
+  <li>Known header chunks: <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MapInfo</span><code class="addr">0x03043002</code></span> (map info), <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommonHeader</span><code class="addr">0x03043003</code></span> (common header), <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Version</span><code class="addr">0x03043004</code></span> (version), <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommunityRef</span><code class="addr">0x03043005</code></span> (community ref), <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Thumbnail</span><code class="addr">0x03043007</code></span> (thumbnail), <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AuthorInfo</span><code class="addr">0x03043008</code></span> (author info).</li>
   <li>22-stage loading pipeline (from <a href="file-formats.html">06-file-formats.md</a>).</li>
 </ul>
 <p><strong>What you do not know</strong>:</p>
@@ -531,7 +537,7 @@ Node count: uint32</code></pre></div>
 <p>Audio backend from <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 1 (<span class="badge badge-verified">VERIFIED</span>):</p>
 <ul>
   <li>OpenAL via <code>OpenAL64_bundled.dll</code> (dynamically loaded).</li>
-  <li>COalAudioPort::InitImplem at <code class="addr">0x14138c090</code>.</li>
+  <li>COalAudioPort::InitImplem at <span class="named-addr"><span class="addr-name">COalAudioPort::InitImplem</span><code class="addr">0x14138c090</code></span>.</li>
   <li>Initialization: alcOpenDevice -> alcCreateContext -> query mono/stereo sources -> check EFX.</li>
   <li>Function pointers XOR-obfuscated at offsets +0x298, +0x2B1 (anti-tamper).</li>
   <li>ALC version 1.x.</li>
@@ -617,7 +623,7 @@ Node count: uint32</code></pre></div>
 <ul>
   <li>DirectInput 8 for keyboard/mouse.</li>
   <li>XInput 9.1.0 for gamepads.</li>
-  <li>CInputPort::Update_StartFrame at <code class="addr">0x1402acea0</code> runs each frame (<span class="badge badge-verified">VERIFIED</span>).</li>
+  <li>CInputPort::Update_StartFrame at <span class="named-addr"><span class="addr-name">CInputPort::Update_StartFrame</span><code class="addr">0x1402acea0</code></span> runs each frame (<span class="badge badge-verified">VERIFIED</span>).</li>
 </ul>
 <p>CInputPort state from <a href="15-ghidra-research-findings.md">15-ghidra-research-findings.md</a> Section 2:</p>
 <ul>
@@ -923,7 +929,7 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 <p><strong>What you know</strong> (Confidence: HIGH for format, MEDIUM for rendering):</p>
 <p>Map file format from <a href="file-formats.html">16-fileformat-deep-dive.md</a> and <a href="file-formats.html">06-file-formats.md</a>:</p>
 <ul>
-  <li>CGameCtnChallenge (class <code class="addr">0x03043000</code>).</li>
+  <li>CGameCtnChallenge (class <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span>).</li>
   <li>22-stage loading pipeline.</li>
   <li>GBX v6 format with BUCR/BUCE flags.</li>
   <li>zlib-compressed body.</li>
@@ -1020,7 +1026,7 @@ cameraPos = targetPos + axis.xyz * distance</code></pre></div>
 </ul>
 <p>Entity ID masks from <a href="19-openplanet-intelligence.md">19-openplanet-intelligence.md</a> Section 4:</p>
 <ul>
-  <li><code class="addr">0x04000000</code> mask = replay/editor vehicle.</li>
+  <li><span class="named-addr"><span class="addr-name">ENTITY_ID_MASK_REPLAY_EDITOR</span><code class="addr">0x04000000</code></span> mask = replay/editor vehicle.</li>
 </ul>
 <p><strong>What you do not know</strong>:</p>
 <ul>

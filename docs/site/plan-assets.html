@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -142,7 +148,7 @@
 <tbody>
 <tr>
   <td style="text-align:left"><code>.Map.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x03043000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span></td>
   <td style="text-align:left">CGameCtnChallenge</td>
   <td style="text-align:left">Block placements, item placements, embedded items, thumbnail, metadata, MediaTracker clips, lightmap data</td>
   <td style="text-align:left">User files, TMX API, Nadeo API</td>
@@ -151,7 +157,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>.Replay.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x03093000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnReplayRecord_CLASS_ID</span><code class="addr">0x03093000</code></span></td>
   <td style="text-align:left">CGameCtnReplayRecord</td>
   <td style="text-align:left">Embedded map, ghost(s), checkpoint times, validation data, input replay</td>
   <td style="text-align:left">User files, Nadeo API</td>
@@ -160,7 +166,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>.Ghost.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x03092000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnGhost_CLASS_ID</span><code class="addr">0x03092000</code></span></td>
   <td style="text-align:left">CGameCtnGhost</td>
   <td style="text-align:left">Position/rotation samples at 50ms, checkpoint times, player info, input events</td>
   <td style="text-align:left">Extracted from replays, Nadeo API ghost download</td>
@@ -178,7 +184,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>.Block.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x2E002000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnBlockInfo_CLASS_ID</span><code class="addr">0x2E002000</code></span></td>
   <td style="text-align:left">CGameCtnBlockInfo variant</td>
   <td style="text-align:left">Custom block definition with variant info, clip connections</td>
   <td style="text-align:left">User Blocks/ folder, pack files</td>
@@ -187,7 +193,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>.Solid2.gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x090BB000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugSolid2Model_CLASS_ID</span><code class="addr">0x090BB000</code></span></td>
   <td style="text-align:left">CPlugSolid2Model</td>
   <td style="text-align:left">Vertex buffers (position, normal, UV, tangent), index buffers, material refs, LODs, bounding volumes</td>
   <td style="text-align:left">Pack files, embedded in items</td>
@@ -205,7 +211,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>.Profile.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x031CC000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">Profile_CLASS_ID</span><code class="addr">0x031CC000</code></span></td>
   <td style="text-align:left">Profile class</td>
   <td style="text-align:left">User preferences, garage state, campaign progress</td>
   <td style="text-align:left">User documents</td>
@@ -230,7 +236,7 @@
 <tbody>
 <tr>
   <td style="text-align:left"><code>Material.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x09026000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugShaderApply_CLASS_ID</span><code class="addr">0x09026000</code></span></td>
   <td style="text-align:left">CPlugShaderApply</td>
   <td style="text-align:left">Shader parameters, texture references, blend modes, surface properties</td>
   <td style="text-align:left">Pack files</td>
@@ -239,7 +245,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>Texture.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x09011000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugBitmap_CLASS_ID</span><code class="addr">0x09011000</code></span></td>
   <td style="text-align:left">CPlugBitmap</td>
   <td style="text-align:left">Texture metadata, mipmap chain, DDS/WebP/PNG data</td>
   <td style="text-align:left">Pack files</td>
@@ -257,7 +263,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>GpuCache.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x09053000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugGpuCompileCache_CLASS_ID</span><code class="addr">0x09053000</code></span></td>
   <td style="text-align:left">CPlugGpuCompileCache</td>
   <td style="text-align:left">Compiled DXBC shader bytecode, resource bindings, entry point names</td>
   <td style="text-align:left">Pack files (GpuCache_D3D11_SM5.zip)</td>
@@ -266,7 +272,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>.FuncShader.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x05015000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugFuncShader_CLASS_ID</span><code class="addr">0x05015000</code></span></td>
   <td style="text-align:left">CPlugFuncShader</td>
   <td style="text-align:left">Shader function parameters (e.g., cloud rendering params)</td>
   <td style="text-align:left">Pack files</td>
@@ -275,7 +281,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>FuncCloudsParam.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x09182000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FuncCloudsParam_CLASS_ID</span><code class="addr">0x09182000</code></span></td>
   <td style="text-align:left">FuncCloudsParam</td>
   <td style="text-align:left">Cloud rendering parameters (altitude, density)</td>
   <td style="text-align:left">Pack files</td>
@@ -284,7 +290,7 @@
 </tr>
 <tr>
   <td style="text-align:left"><code>ImageGen.Gbx</code></td>
-  <td style="text-align:left"><code class="addr">0x0902F000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ImageGen_CLASS_ID</span><code class="addr">0x0902F000</code></span></td>
   <td style="text-align:left">FuncImage</td>
   <td style="text-align:left">Procedural image generation parameters</td>
   <td style="text-align:left">Pack files</td>
@@ -351,7 +357,7 @@
 </tr>
 <tr>
   <td style="text-align:left">JPEG</td>
-  <td style="text-align:left">Map thumbnails (embedded in header chunk <code class="addr">0x03043007</code>)</td>
+  <td style="text-align:left">Map thumbnails (embedded in header chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Thumbnail</span><code class="addr">0x03043007</code></span>)</td>
   <td style="text-align:left">Native browser support</td>
   <td style="text-align:left"><strong>MVP-critical</strong></td>
 </tr>
@@ -534,7 +540,7 @@
   }
 }</code></pre></div>
 <p>Both <code>0b01</code> and <code>0b11</code> flags indicate new inline strings in TM2020 files. The old documentation claiming <code>0b01</code> = "well-known string ID" is INCORRECT for TM2020 (corrected in doc 16 section 29, verified in doc 26 hex walkthrough).</p>
-<p>Scope rules: the lookback table resets for each header chunk, but is shared across all body chunks for a single node. Encapsulated chunks (<code class="addr">0x03043040</code>, <code class="addr">0x03043043</code>, <code class="addr">0x03043044</code>, <code class="addr">0x0304304E</code>, <code class="addr">0x0304304F</code>, <code class="addr">0x03043054</code>, <code class="addr">0x03043058</code>) reset the lookback table locally.</p>
+<p>Scope rules: the lookback table resets for each header chunk, but is shared across all body chunks for a single node. Encapsulated chunks (<span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span>, <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_ZoneGenealogy</span><code class="addr">0x03043043</code></span>, <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_ScriptMetadata</span><code class="addr">0x03043044</code></span>, <span class="named-addr"><span class="addr-name">mapChunk_Encapsulated4E</span><code class="addr">0x0304304E</code></span>, <span class="named-addr"><span class="addr-name">mapChunk_Encapsulated4F</span><code class="addr">0x0304304F</code></span>, <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span>, <span class="named-addr"><span class="addr-name">mapChunk_Encapsulated58</span><code class="addr">0x03043058</code></span>) reset the lookback table locally.</p>
 <h3 id="class-registry-class-registryts"><a class="anchor" href="#class-registry-class-registryts">#</a>Class Registry (<code>class-registry.ts</code>)</h3>
 <p>Maps class IDs to chunk parsers with legacy ID remapping (doc 16 sections 11, 23).</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-typescript">type ChunkParser = (reader: BinaryReader, context: ParseContext) =&gt; void;
@@ -657,7 +663,7 @@ export class GbxParser {
   }
 }</code></pre></div>
 <h3 id="map-chunk-parsers-chunksmapts"><a class="anchor" href="#map-chunk-parsers-chunksmapts">#</a>Map Chunk Parsers (<code>chunks/map.ts</code>)</h3>
-<p>Priority chunks for CGameCtnChallenge (class <code class="addr">0x03043000</code>):</p>
+<p>Priority chunks for CGameCtnChallenge (class <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span>):</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -669,91 +675,91 @@ export class GbxParser {
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043002</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MapInfo</span><code class="addr">0x03043002</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Map UID, environment, author login</td>
   <td style="text-align:left">Header chunk</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043003</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommonHeader</span><code class="addr">0x03043003</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Map name, mood, decoration, map type</td>
   <td style="text-align:left">Header chunk, contains CIdent with lookback strings</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043004</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Version</span><code class="addr">0x03043004</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Version info</td>
   <td style="text-align:left">Header chunk, 4 bytes</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043005</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommunityRef</span><code class="addr">0x03043005</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">XML metadata string</td>
   <td style="text-align:left">Header chunk, heavy</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043007</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Thumbnail</span><code class="addr">0x03043007</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Thumbnail JPEG + comments</td>
   <td style="text-align:left">Header chunk, heavy, JPEG extraction</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043008</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AuthorInfo</span><code class="addr">0x03043008</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Author zone path</td>
   <td style="text-align:left">Header chunk</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0304300D</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_VehicleModel</span><code class="addr">0x0304300D</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Vehicle reference (car type)</td>
   <td style="text-align:left">Body chunk</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043011</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockData</span><code class="addr">0x03043011</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Block data array (main)</td>
   <td style="text-align:left">Body chunk, lookback block names + grid coords</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0304301F</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockDataFull</span><code class="addr">0x0304301F</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Block data (newer format)</td>
   <td style="text-align:left">Body chunk, extended block fields</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043040</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span></td>
   <td style="text-align:left">MVP</td>
   <td style="text-align:left">Anchored objects (items)</td>
   <td style="text-align:left">Body chunk, <strong>encapsulated</strong> (resets lookback)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043043</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_ZoneGenealogy</span><code class="addr">0x03043043</code></span></td>
   <td style="text-align:left">Important</td>
   <td style="text-align:left">Zone genealogy</td>
   <td style="text-align:left">Body chunk, encapsulated</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043044</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_ScriptMetadata</span><code class="addr">0x03043044</code></span></td>
   <td style="text-align:left">Important</td>
   <td style="text-align:left">Script metadata</td>
   <td style="text-align:left">Body chunk, encapsulated</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043048</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BakedBlocks</span><code class="addr">0x03043048</code></span></td>
   <td style="text-align:left">Important</td>
   <td style="text-align:left">Baked blocks</td>
   <td style="text-align:left">Body chunk</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0304304B</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MedalTimes</span><code class="addr">0x0304304B</code></span></td>
   <td style="text-align:left">Important</td>
   <td style="text-align:left">Medal times / objectives</td>
   <td style="text-align:left">Body chunk</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043054</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span></td>
   <td style="text-align:left">Important</td>
   <td style="text-align:left">Embedded items ZIP</td>
   <td style="text-align:left">Body chunk, encapsulated, contains custom item GBX files</td>
@@ -823,18 +829,18 @@ export interface ParsedMap {
   - User upload: File API -&gt; ArrayBuffer
   - Server cache: CDN-served pre-fetched maps</code></pre></div>
 <h3 id="step-2-parse-gbx-header"><a class="anchor" href="#step-2-parse-gbx-header">#</a>Step 2: Parse GBX Header</h3>
-<p><strong>Input</strong>: <code>ArrayBuffer</code> from step 1 <strong>Output</strong>: Magic validated, version (6), format flags ("BUCR"), class ID (<code class="addr">0x03043000</code>), header chunk index table <strong>Failure modes</strong>: Not a GBX file, unsupported version, not a map (wrong class ID) <strong>Timing</strong>: <1ms (first ~100 bytes)</p>
-<p>All TM2020 maps use version 6, format "BUCR", class <code class="addr">0x03043000</code>. The <code>user_data_size</code> field encompasses <code>4 (num_chunks) + 8*num_chunks (index) + sum(chunk_data_sizes)</code> (correction from doc 26).</p>
+<p><strong>Input</strong>: <code>ArrayBuffer</code> from step 1 <strong>Output</strong>: Magic validated, version (6), format flags ("BUCR"), class ID (<span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span>), header chunk index table <strong>Failure modes</strong>: Not a GBX file, unsupported version, not a map (wrong class ID) <strong>Timing</strong>: <1ms (first ~100 bytes)</p>
+<p>All TM2020 maps use version 6, format "BUCR", class <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span>. The <code>user_data_size</code> field encompasses <code>4 (num_chunks) + 8*num_chunks (index) + sum(chunk_data_sizes)</code> (correction from doc 26).</p>
 <h3 id="step-3-parse-header-chunks"><a class="anchor" href="#step-3-parse-header-chunks">#</a>Step 3: Parse Header Chunks</h3>
 <p><strong>Input</strong>: Header chunk index + data from step 2 <strong>Output</strong>: Map name, author, UID, thumbnail JPEG, XML metadata, decoration name, medal times <strong>Failure modes</strong>: Corrupt lookback strings, unexpected chunk version <strong>Timing</strong>: <5ms (parse 6 header chunks, ~25 KB of data)</p>
 <p>This step does NOT require body decompression. You can provide immediate UI feedback (map name, thumbnail) while the body loads.</p>
 <p>Key header chunks parsed:</p>
 <ul>
-  <li><code class="addr">0x03043002</code>: UID, environment (lookback string), author login.</li>
-  <li><code class="addr">0x03043003</code>: CIdent (uid/collection/author), map name, decoration CIdent (e.g. "NoStadium48x48Day", collection 26 = Stadium, author "Nadeo"), map kind.</li>
-  <li><code class="addr">0x03043005</code>: XML string with full metadata.</li>
-  <li><code class="addr">0x03043007</code>: JPEG thumbnail (24 KB typical, marked "heavy").</li>
-  <li><code class="addr">0x03043008</code>: Author zone ("World|Africa|South Africa").</li>
+  <li><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MapInfo</span><code class="addr">0x03043002</code></span>: UID, environment (lookback string), author login.</li>
+  <li><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommonHeader</span><code class="addr">0x03043003</code></span>: CIdent (uid/collection/author), map name, decoration CIdent (e.g. "NoStadium48x48Day", collection 26 = Stadium, author "Nadeo"), map kind.</li>
+  <li><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommunityRef</span><code class="addr">0x03043005</code></span>: XML string with full metadata.</li>
+  <li><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Thumbnail</span><code class="addr">0x03043007</code></span>: JPEG thumbnail (24 KB typical, marked "heavy").</li>
+  <li><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AuthorInfo</span><code class="addr">0x03043008</code></span>: Author zone ("World|Africa|South Africa").</li>
 </ul>
 <h3 id="step-4-decompress-body-lzo1x"><a class="anchor" href="#step-4-decompress-body-lzo1x">#</a>Step 4: Decompress Body (LZO1X)</h3>
 <p><strong>Input</strong>: Compressed body section (starts after reference table) <strong>Output</strong>: Decompressed body byte stream <strong>Failure modes</strong>: LZO decompression error, size mismatch <strong>Timing</strong>: 2-10ms (typical: 22 KB compressed -> 170 KB decompressed, 12.9% ratio)</p>
@@ -842,12 +848,12 @@ export interface ParsedMap {
 <p>For TechFlow.Map.Gbx: 21,867 bytes -> 170,018 bytes. Complex maps with many embedded items: 500 KB compressed -> 5 MB decompressed.</p>
 <h3 id="step-5-parse-body-chunks"><a class="anchor" href="#step-5-parse-body-chunks">#</a>Step 5: Parse Body Chunks</h3>
 <p><strong>Input</strong>: Decompressed body byte stream from step 4 <strong>Output</strong>: Arrays of <code>MapBlock[]</code>, <code>MapItem[]</code>, vehicle reference, medal times, embedded item data <strong>Failure modes</strong>: Unknown non-skippable chunk, corrupt chunk data, lookback table overflow <strong>Timing</strong>: 5-50ms (proportional to block/item count)</p>
-<p>The body is a sequential chunk stream terminated by <code class="addr">0xFACADE01</code>. Each chunk either has a "SKIP" marker (<code class="addr">0x534B4950</code>) + size (safe to skip if unknown) or is non-skippable (must parse or fail).</p>
+<p>The body is a sequential chunk stream terminated by <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span>. Each chunk either has a "SKIP" marker (<span class="named-addr"><span class="addr-name">GBX_SKIP_MARKER</span><code class="addr">0x534B4950</code></span>) + size (safe to skip if unknown) or is non-skippable (must parse or fail).</p>
 <p>Critical body chunks:</p>
 <ul>
-  <li><code class="addr">0x03043011</code> / <code class="addr">0x0304301F</code>: Block array -- for each block: lookback name, direction (byte), Nat3 grid coord, flags (uint32). If <code>flags == 0xFFFFFFFF</code>, read additional free-block position/rotation.</li>
-  <li><code class="addr">0x03043040</code> (encapsulated): Item array -- for each: lookback model name, Vec3 position, rotation, metadata.</li>
-  <li><code class="addr">0x03043054</code> (encapsulated): Embedded items -- ZIP archive of custom .Item.Gbx files.</li>
+  <li><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockData</span><code class="addr">0x03043011</code></span> / <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockDataFull</span><code class="addr">0x0304301F</code></span>: Block array -- for each block: lookback name, direction (byte), Nat3 grid coord, flags (uint32). If <code>flags == 0xFFFFFFFF</code>, read additional free-block position/rotation.</li>
+  <li><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span> (encapsulated): Item array -- for each: lookback model name, Vec3 position, rotation, metadata.</li>
+  <li><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span> (encapsulated): Embedded items -- ZIP archive of custom .Item.Gbx files.</li>
 </ul>
 <h3 id="step-6-resolve-block-definitions"><a class="anchor" href="#step-6-resolve-block-definitions">#</a>Step 6: Resolve Block Definitions</h3>
 <p><strong>Input</strong>: <code>MapBlock[]</code> array with block names (e.g., "StadiumRoadMainStraight") <strong>Output</strong>: For each block: geometry data (vertices, indices), material assignments, collision mesh <strong>Failure modes</strong>: <strong>Unknown block name</strong> (no geometry available), missing variant <strong>Timing</strong>: 1-10ms (lookup from pre-loaded block library)</p>
@@ -859,7 +865,7 @@ export interface ParsedMap {
 <p>Items fall into three categories:</p>
 <ol>
   <li><strong>Built-in items</strong>: Referenced by well-known paths (e.g., <code>\Vehicles\Items\CarSport.Item.gbx</code>). Must be pre-extracted from pack files.</li>
-  <li><strong>Embedded items</strong>: Custom items stored in chunk <code class="addr">0x03043054</code> as a ZIP. Each entry is a complete .Item.Gbx that you recursively parse.</li>
+  <li><strong>Embedded items</strong>: Custom items stored in chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span> as a ZIP. Each entry is a complete .Item.Gbx that you recursively parse.</li>
   <li><strong>External items</strong>: Referenced by path in user's Items/ folder. Not available in browser context; must be pre-uploaded.</li>
 </ol>
 <h3 id="step-8-build-collision-mesh"><a class="anchor" href="#step-8-build-collision-mesh">#</a>Step 8: Build Collision Mesh</h3>
@@ -1392,7 +1398,7 @@ Total GPU memory: ~20 MB compressed (BC7), ~80 MB uncompressed</code></pre></div
    - Extract validation data</code></pre></div>
 <p>The embedded map means replays are self-contained.</p>
 <h3 id="ghost-sample-decoding"><a class="anchor" href="#ghost-sample-decoding">#</a>Ghost Sample Decoding</h3>
-<p>Ghost samples are stored in chunk <code class="addr">0x03092012</code> (CPlugEntRecordData), zlib-compressed within the LZO-decompressed body. Two compression layers:</p>
+<p>Ghost samples are stored in chunk <span class="named-addr"><span class="addr-name">CGameCtnGhost_CHUNK_RecordData</span><code class="addr">0x03092012</code></span> (CPlugEntRecordData), zlib-compressed within the LZO-decompressed body. Two compression layers:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>File on disk
   -&gt; LZO decompress (outer, GBX body)
     -&gt; Parse ghost chunks

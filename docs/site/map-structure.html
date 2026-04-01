@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -273,7 +279,7 @@ MapSizeZ: 48</code></pre></div>
 </table></div>
 <p>A block with <code>flags == 0xFFFFFFFF</code> is a <strong>free block</strong> and uses additional fields for arbitrary position and rotation.</p>
 <h3 id="block-data-format-binary"><a class="anchor" href="#block-data-format-binary">#</a>Block Data Format (Binary)</h3>
-<p>Within body chunk <code class="addr">0x03043011</code>, each block is serialized as:</p>
+<p>Within body chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockData</span><code class="addr">0x03043011</code></span>, each block is serialized as:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Size    Type                Field
 ------  ----    ----                -----
 +0x00   4       LookbackString/Id   block_name       Block model name
@@ -404,7 +410,7 @@ MapSizeZ: 48</code></pre></div>
 </tbody>
 </table></div>
 <h3 id="item-placement-binary-format"><a class="anchor" href="#item-placement-binary-format">#</a>Item Placement Binary Format</h3>
-<p>Items are stored in body chunk <code class="addr">0x03043040</code> as <code>CGameCtnAnchoredObject</code> instances:</p>
+<p>Items are stored in body chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span> as <code>CGameCtnAnchoredObject</code> instances:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>Offset  Size    Type                Field
 ------  ----    ----                -----
 +0x00   4       LookbackString/Id   item_model       Item model reference name
@@ -427,7 +433,7 @@ MapSizeZ: 48</code></pre></div>
 <h3 id="embedded-vs-referenced-items"><a class="anchor" href="#embedded-vs-referenced-items">#</a>Embedded vs Referenced Items</h3>
 <ol>
   <li><strong>Built-in</strong>: Referenced by well-known name resolved against game asset packs.</li>
-  <li><strong>Embedded</strong>: Custom <code>.Item.Gbx</code> data stored inside the map file (body chunk <code class="addr">0x03043054</code>). Increases file size but makes the map self-contained.</li>
+  <li><strong>Embedded</strong>: Custom <code>.Item.Gbx</code> data stored inside the map file (body chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span>). Increases file size but makes the map self-contained.</li>
   <li><strong>Referenced externally</strong>: Items from the user's <code>Items/</code> folder, referenced by relative path.</li>
 </ol>
 <h3 id="item-model-pipeline"><a class="anchor" href="#item-model-pipeline">#</a>Item Model Pipeline</h3>
@@ -549,7 +555,7 @@ CGameCtnDecorationMaterialModifiers      -- Material appearance adjustments</cod
 </tr>
 </tbody>
 </table></div>
-<p>Vehicle type is stored in body chunk <code class="addr">0x0304300D</code>.</p>
+<p>Vehicle type is stored in body chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_VehicleModel</span><code class="addr">0x0304300D</code></span>.</p>
 <hr>
 <h2 id="map-loading-pipeline"><a class="anchor" href="#map-loading-pipeline">#</a>Map Loading Pipeline</h2>
 <p>Loading a .Map.Gbx into a playable map follows a <strong>22-stage pipeline</strong>. Each stage has a dedicated profiling marker.</p>
@@ -755,33 +761,33 @@ CGameCtnDecorationMaterialModifiers      -- Material appearance adjustments</cod
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043002</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MapInfo</span><code class="addr">0x03043002</code></span></td>
   <td style="text-align:left">Map UID, environment name, map author login</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043003</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommonHeader</span><code class="addr">0x03043003</code></span></td>
   <td style="text-align:left">Map name, mood, decoration name, map type, author display name</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043004</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Version</span><code class="addr">0x03043004</code></span></td>
   <td style="text-align:left">Version info</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043005</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommunityRef</span><code class="addr">0x03043005</code></span></td>
   <td style="text-align:left">XML community reference string</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043007</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Thumbnail</span><code class="addr">0x03043007</code></span></td>
   <td style="text-align:left">Thumbnail (JPEG) + comments</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043008</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AuthorInfo</span><code class="addr">0x03043008</code></span></td>
   <td style="text-align:left">Author zone path, author extra info</td>
 </tr>
 </tbody>
 </table></div>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="the-xml-header-chunk-0x03043005"><a class="anchor" href="#the-xml-header-chunk-0x03043005">#</a>The XML Header (Chunk <code class="addr">0x03043005</code>)</h3></summary>
+<summary><h3 id="the-xml-header-chunk-0x03043005"><a class="anchor" href="#the-xml-header-chunk-0x03043005">#</a>The XML Header (Chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommunityRef</span><code class="addr">0x03043005</code></span>)</h3></summary>
 <div class="collapsible-content">
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-xml">&lt;header type=&quot;map&quot; exever=&quot;3.3.0&quot; exebuild=&quot;2026-02-02_17_51&quot;
         title=&quot;TMStadium&quot; lightmap=&quot;0&quot;&gt;
@@ -794,7 +800,7 @@ CGameCtnDecorationMaterialModifiers      -- Material appearance adjustments</cod
 </div>
 </details>
 <h3 id="medal-times"><a class="anchor" href="#medal-times">#</a>Medal Times</h3>
-<p>Stored in body chunk <code class="addr">0x0304304B</code> as uint32 milliseconds. A value of <code class="addr">0xFFFFFFFF</code> means "not set."</p>
+<p>Stored in body chunk <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MedalTimes</span><code class="addr">0x0304304B</code></span> as uint32 milliseconds. A value of <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> means "not set."</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1087,52 +1093,52 @@ StadiumDecoWallStraight           -- Decorative wall, straight</code></pre></div
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0304300D</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_VehicleModel</span><code class="addr">0x0304300D</code></span></td>
   <td style="text-align:left">Yes</td>
   <td style="text-align:left">Vehicle/player model reference</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043011</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockData</span><code class="addr">0x03043011</code></span></td>
   <td style="text-align:left">No</td>
   <td style="text-align:left">Block data array (primary block storage)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0304301F</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockDataFull</span><code class="addr">0x0304301F</code></span></td>
   <td style="text-align:left">Yes</td>
   <td style="text-align:left">Block parameters + additional data</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043040</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span></td>
   <td style="text-align:left">Yes</td>
   <td style="text-align:left">Anchored object (item) placement</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043042</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AuthorDataNew</span><code class="addr">0x03043042</code></span></td>
   <td style="text-align:left">Yes</td>
   <td style="text-align:left">Author data (newer format)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043044</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_ScriptMetadata</span><code class="addr">0x03043044</code></span></td>
   <td style="text-align:left">Yes</td>
   <td style="text-align:left">Script metadata</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043048</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BakedBlocks</span><code class="addr">0x03043048</code></span></td>
   <td style="text-align:left">Yes</td>
   <td style="text-align:left">Baked blocks</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0304304B</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MedalTimes</span><code class="addr">0x0304304B</code></span></td>
   <td style="text-align:left">Yes</td>
   <td style="text-align:left">Objectives / medal times</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043054</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span></td>
   <td style="text-align:left">Yes</td>
   <td style="text-align:left">Embedded items</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0xFACADE01</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span></td>
   <td style="text-align:left">--</td>
   <td style="text-align:left">End sentinel</td>
 </tr>
@@ -1188,10 +1194,10 @@ Subsequent reads: uint32 flags_and_index
 </tr>
 <tr>
   <td style="text-align:left">Class ID</td>
-  <td style="text-align:left"><code class="addr">0x03043000</code></td>
-  <td style="text-align:left"><code class="addr">0x03043000</code></td>
-  <td style="text-align:left"><code class="addr">0x03043000</code></td>
-  <td style="text-align:left"><code class="addr">0x03043000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Header chunks</td>
@@ -1215,7 +1221,7 @@ Subsequent reads: uint32 flags_and_index
 </details>
 <h2 id="class-reference"><a class="anchor" href="#class-reference">#</a>Class Reference</h2>
 <h3 id="map-structure-classes"><a class="anchor" href="#map-structure-classes">#</a>Map Structure Classes</h3>
-<p><code>CGameCtnChallenge</code> is the root map class (class ID <code class="addr">0x03043000</code>). Known methods:</p>
+<p><code>CGameCtnChallenge</code> is the root map class (class ID <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span>). Known methods:</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>AutoSetIdsForLightMap, ConnectAdditionalDataClipsToBakedClips, CreateFreeClips,
 CreatePlayFields, InitAllAnchoredObjects, InitChallengeData_ClassicBlocks,
 InitChallengeData_Clips, InitChallengeData_Terrain, InitEmbeddedItemModels,
@@ -1232,33 +1238,33 @@ RemoveNonBlocksFromBlockStock, UpdateBakedBlockList</code></pre></div>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span></td>
   <td style="text-align:left">CGameCtnChallenge</td>
   <td style="text-align:left"><code>.Map.Gbx</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03093000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnReplayRecord_CLASS_ID</span><code class="addr">0x03093000</code></span></td>
   <td style="text-align:left">CGameCtnReplayRecord</td>
   <td style="text-align:left"><code>.Replay.Gbx</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x09011000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugBitmap_CLASS_ID</span><code class="addr">0x09011000</code></span></td>
   <td style="text-align:left">CPlugBitmap</td>
   <td style="text-align:left"><code>Texture.Gbx</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x09026000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugShaderApply_CLASS_ID</span><code class="addr">0x09026000</code></span></td>
   <td style="text-align:left">CPlugShaderApply</td>
   <td style="text-align:left"><code>Material.Gbx</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x090BB000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugSolid2Model_CLASS_ID</span><code class="addr">0x090BB000</code></span></td>
   <td style="text-align:left">CPlugSolid2Model</td>
   <td style="text-align:left"><code>.Solid2.gbx</code></td>
 </tr>
 </tbody>
 </table></div>
-<p>Legacy class ID <code class="addr">0x24003000</code> remaps to <code class="addr">0x03043000</code> for backward compatibility.</p>
+<p>Legacy class ID <span class="named-addr"><span class="addr-name">CGameCtnChallenge_LEGACY_CLASS_ID</span><code class="addr">0x24003000</code></span> remaps to <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span> for backward compatibility.</p>
 <hr>
 <h2 id="quick-reference-for-map-loader-implementors"><a class="anchor" href="#quick-reference-for-map-loader-implementors">#</a>Quick Reference for Map Loader Implementors</h2>
 <h3 id="minimum-viable-parser"><a class="anchor" href="#minimum-viable-parser">#</a>Minimum Viable Parser</h3>
@@ -1267,7 +1273,7 @@ RemoveNonBlocksFromBlockStock, UpdateBakedBlockList</code></pre></div>
   <li>Read header chunks (name, author, UID, thumbnail)</li>
   <li>Skip or parse the reference table</li>
   <li>Decompress the body (LZO)</li>
-  <li>Parse body chunks: <code class="addr">0x03043011</code> (blocks), <code class="addr">0x03043040</code> (items), <code class="addr">0x0304304B</code> (medal times), <code class="addr">0x03043054</code> (embedded items)</li>
+  <li>Parse body chunks: <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockData</span><code class="addr">0x03043011</code></span> (blocks), <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span> (items), <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MedalTimes</span><code class="addr">0x0304304B</code></span> (medal times), <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span> (embedded items)</li>
   <li>Handle LookbackString for block/item name resolution</li>
   <li>Apply class ID remapping for legacy files</li>
 </ol>
@@ -1287,7 +1293,7 @@ pivot:       vec3      (rotation center offset)</code></pre></div>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>world_position.x = block.coord_x * 32.0
 world_position.y = block.coord_y * 8.0
 world_position.z = block.coord_z * 32.0</code></pre></div>
-<p>The body chunk stream ends with <code class="addr">0xFACADE01</code>. Stop parsing when you read this as a chunk ID.</p>
+<p>The body chunk stream ends with <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span>. Stop parsing when you read this as a chunk ID.</p>
 <hr>
 <h2 id="related-pages"><a class="anchor" href="#related-pages">#</a>Related Pages</h2>
 <ul>

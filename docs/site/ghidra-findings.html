@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -125,7 +131,7 @@
 <p>Findings come from both the automated Ghidra agent and manual queries via <code>bridge_query.py</code>.</p>
 <h2 id="audio-openal-initialization"><a class="anchor" href="#audio-openal-initialization">#</a>Audio: OpenAL Initialization</h2>
 <p>The game uses OpenAL (via <code>OpenAL64_bundled.dll</code>) for all spatial audio.</p>
-<p><code>COalAudioPort::InitImplem</code> at <code class="addr">0x14138c090</code> runs this sequence:</p>
+<p><code>COalAudioPort::InitImplem</code> at <span class="named-addr"><span class="addr-name">COalAudioPort::InitImplem</span><code class="addr">0x14138c090</code></span> runs this sequence:</p>
 <ol>
   <li>Dynamically loads OpenAL DLL via <code>LoadLibrary</code></li>
   <li>Resolves function pointers: <code>alcOpenDevice</code>, <code>alcGetProcAddress</code>, <code>alcGetError</code>, <code>alcIsExtensionPresent</code></li>
@@ -197,7 +203,7 @@
 <p><strong>ALC constants used</strong>: 0x1000 (MAJOR_VERSION), 0x1001 (MINOR_VERSION), 0x1005 (DEFAULT_DEVICE_SPECIFIER), 0x1010 (MONO_SOURCES), 0x1011 (STEREO_SOURCES)</p>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
 <h2 id="input-per-frame-update"><a class="anchor" href="#input-per-frame-update">#</a>Input: Per-Frame Update</h2>
-<p><code>CInputPort::Update_StartFrame</code> (<code class="addr">0x1402acea0</code>) processes input each frame. It reads a global tick counter, checks a 150ms device connectivity timeout, processes the input event queue, calls virtual methods for per-device updates, then clears the queue.</p>
+<p><code>CInputPort::Update_StartFrame</code> (<span class="named-addr"><span class="addr-name">CInputPort::Update_StartFrame</span><code class="addr">0x1402acea0</code></span>) processes input each frame. It reads a global tick counter, checks a 150ms device connectivity timeout, processes the input event queue, calls virtual methods for per-device updates, then clears the queue.</p>
 <p><strong>CInputPort struct offsets</strong>:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -319,10 +325,10 @@
 <p>zlib strings appear in the binary. LZO does not appear as a string -- but LZO1X is the actual GBX body compressor.</p>
 <p><strong>zlib</strong>: CONFIRMED present in binary strings</p>
 <ul>
-  <li><code class="addr">0x14199b2b8</code>: <code>"zlib compression"</code></li>
-  <li><code class="addr">0x141b36c10</code>: <code>" unzip 1.01 Copyright 1998-2004 Gilles Vollant - http://www.winimage.com/zLibDll"</code></li>
-  <li><code class="addr">0x141be0f40</code>: <code>"zlib corrupt"</code></li>
-  <li><code class="addr">0x141be0ff0</code>: <code>"bad zlib header"</code></li>
+  <li><span class="named-addr"><span class="addr-name">str_zlibCompression</span><code class="addr">0x14199b2b8</code></span>: <code>"zlib compression"</code></li>
+  <li><span class="named-addr"><span class="addr-name">str_unzipCopyright</span><code class="addr">0x141b36c10</code></span>: <code>" unzip 1.01 Copyright 1998-2004 Gilles Vollant - http://www.winimage.com/zLibDll"</code></li>
+  <li><span class="named-addr"><span class="addr-name">str_zlibCorrupt</span><code class="addr">0x141be0f40</code></span>: <code>"zlib corrupt"</code></li>
+  <li><span class="named-addr"><span class="addr-name">str_badZlibHeader</span><code class="addr">0x141be0ff0</code></span>: <code>"bad zlib header"</code></li>
 </ul>
 <p><strong>LZO</strong>: NOT FOUND as a string (0 matches)</p>
 <p><strong>CORRECTION (from docs 16, 26, 29)</strong>: The original conclusion that "TM2020 uses zlib exclusively for GBX body compression" was <strong>incorrect</strong>. Real file analysis (doc 26) confirmed GBX body compression uses <strong>LZO1X</strong>, not zlib:</p>
@@ -347,52 +353,52 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141bb3e18</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_GravityCoef</span><code class="addr">0x141bb3e18</code></span></td>
   <td style="text-align:left"><code>"GravityCoef"</code></td>
   <td style="text-align:left">Gravity coefficient parameter</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141bb6a60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Gravity</span><code class="addr">0x141bb6a60</code></span></td>
   <td style="text-align:left"><code>"Gravity"</code></td>
   <td style="text-align:left">Base gravity reference</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141bbc740</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_TechGravityChange</span><code class="addr">0x141bbc740</code></span></td>
   <td style="text-align:left"><code>"TechGravityChange"</code></td>
   <td style="text-align:left">Gameplay surface: gravity modifier</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141bbc820</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_TechGravityReset</span><code class="addr">0x141bbc820</code></span></td>
   <td style="text-align:left"><code>"TechGravityReset"</code></td>
   <td style="text-align:left">Gameplay surface: gravity reset</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141bd5af8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_Modifiers_GravityCoef</span><code class="addr">0x141bd5af8</code></span></td>
   <td style="text-align:left"><code>"Modifiers.GravityCoef"</code></td>
   <td style="text-align:left">Modifier system gravity</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141bd7588</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_DefaultGravitySpawn</span><code class="addr">0x141bd7588</code></span></td>
   <td style="text-align:left"><code>"DefaultGravitySpawn"</code></td>
   <td style="text-align:left">Default gravity at spawn</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141cf26b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_GravityCoef_APIDesc</span><code class="addr">0x141cf26b0</code></span></td>
   <td style="text-align:left"><code>"Changes player's vehicle gravity coef with a 250ms delay"</code></td>
   <td style="text-align:left">API description</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141cf3bb0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_SetPlayer_Delayed_GravityCoef</span><code class="addr">0x141cf3bb0</code></span></td>
   <td style="text-align:left"><code>"SetPlayer_Delayed_GravityCoef"</code></td>
   <td style="text-align:left">ManiaScript function</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141cf4eb8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_GravityCoef_Validation</span><code class="addr">0x141cf4eb8</code></span></td>
   <td style="text-align:left"><code>"GravityCoef has to be between 0 and 1"</code></td>
   <td style="text-align:left">Validation string</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141cf6890</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_GravityCoef_Deprecated</span><code class="addr">0x141cf6890</code></span></td>
   <td style="text-align:left"><code>"This way of setting GravityCoef is deprecated, please use SetPlayer_Delayed_AccelCoef instead"</code></td>
   <td style="text-align:left">Deprecation notice</td>
 </tr>
@@ -411,9 +417,9 @@
 </ul>
 <p><strong>Custom NClassicThreadPool</strong>:</p>
 <ul>
-  <li><code>NClassicThreadPool::Destroy</code> (<code class="addr">0x141d094b8</code>)</li>
-  <li><code>NThreadPool_AddJobs</code> (<code class="addr">0x141d094f8</code>)</li>
-  <li><code>NClassicThreadPool::TaskWaitComplete</code> (<code class="addr">0x141d09510</code>)</li>
+  <li><code>NClassicThreadPool::Destroy</code> (<span class="named-addr"><span class="addr-name">NClassicThreadPool::Destroy</span><code class="addr">0x141d094b8</code></span>)</li>
+  <li><code>NThreadPool_AddJobs</code> (<span class="named-addr"><span class="addr-name">NThreadPool_AddJobs</span><code class="addr">0x141d094f8</code></span>)</li>
+  <li><code>NClassicThreadPool::TaskWaitComplete</code> (<span class="named-addr"><span class="addr-name">NClassicThreadPool::TaskWaitComplete</span><code class="addr">0x141d09510</code></span>)</li>
 </ul>
 <p>The <code>AddJobs</code>/<code>TaskWaitComplete</code> pattern is a standard fork-join model.</p>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span></p>
@@ -545,9 +551,9 @@
 <p>Two TXAA implementations exist. Uses <code>ResolveFromMotionVectors</code>, confirming motion vector-based temporal reprojection generated by the <code>CameraMotion</code> pass.</p>
 <p><strong>NVIDIA GFSDK TXAA</strong> (SDK integration):</p>
 <ul>
-  <li><code>GFSDK_TXAA_DX11_InitializeContext</code> (<code class="addr">0x141c0f120</code>)</li>
-  <li><code>GFSDK_TXAA_DX11_ResolveFromMotionVectors</code> (<code class="addr">0x141c0f178</code>)</li>
-  <li><code>GFSDK_TXAA_DX11_ReleaseContext</code> (<code class="addr">0x141c0f638</code>)</li>
+  <li><code>GFSDK_TXAA_DX11_InitializeContext</code> (<span class="named-addr"><span class="addr-name">GFSDK_TXAA_DX11_InitializeContext</span><code class="addr">0x141c0f120</code></span>)</li>
+  <li><code>GFSDK_TXAA_DX11_ResolveFromMotionVectors</code> (<span class="named-addr"><span class="addr-name">GFSDK_TXAA_DX11_ResolveFromMotionVectors</span><code class="addr">0x141c0f178</code></span>)</li>
+  <li><code>GFSDK_TXAA_DX11_ReleaseContext</code> (<span class="named-addr"><span class="addr-name">GFSDK_TXAA_DX11_ReleaseContext</span><code class="addr">0x141c0f638</code></span>)</li>
 </ul>
 <p><strong>Ubisoft Custom TXAA</strong> (<code>UBI_TXAA</code> / <code>UBI TXAA</code>):</p>
 <ul>
@@ -564,7 +570,7 @@
   <li><code>NPlugGpuHlsl_D3D12::NRootSign::EParamType</code> -- Parameter type enum</li>
   <li><code>NPlugGpuHlsl_D3D12::SRootSign</code> -- Root signature struct</li>
 </ul>
-<p><strong>Vulkan</strong>: 1 string reference (<code>"Vulkan"</code> at <code class="addr">0x141c099e8</code>), likely a graphics API enum label. No Vulkan API calls found in imports.</p>
+<p><strong>Vulkan</strong>: 1 string reference (<code>"Vulkan"</code> at <span class="named-addr"><span class="addr-name">str_Vulkan</span><code class="addr">0x141c099e8</code></span>), likely a graphics API enum label. No Vulkan API calls found in imports.</p>
 <p>D3D12/Vulkan are NOT actively used for rendering. The D3D12 code may exist for the Nadeo engine's cross-project sharing or future use.</p>
 <p>Confidence: <span class="badge badge-verified">VERIFIED</span> (code exists) / <span class="badge badge-plausible">PLAUSIBLE</span> (not actively used)</p>
 <h2 id="maniascript-complete-token-specification"><a class="anchor" href="#maniascript-complete-token-specification">#</a>ManiaScript: Complete Token Specification</h2>

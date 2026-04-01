@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -488,7 +494,7 @@ if (maxSpeed^2 &lt; speed_sq &amp;&amp; epsilon &lt; maxSpeed) {
 </tr>
 </tbody>
 </table></div>
-<p>When start time is -1 (<code class="addr">0xFFFFFFFF</code>), the first ComputeForces call with an active boost records the current tick. An event dispatches to the arena for audio/visual effects.</p>
+<p>When start time is -1 (<span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span>), the first ComputeForces call with an active boost records the current tick. An event dispatches to the arena for audio/visual effects.</p>
 <p>Actual duration and strength values for Turbo and Turbo2 are NOT in the binary -- they are in GBX tuning data. From TMNF cross-reference: Turbo=5.0/250ms, Turbo2=20.0/100ms. TM2020 values may differ. (10-physics-deep-dive.md, lines 1326-1330)</p>
 <h3 id="all-22-surface-gameplay-effects"><a class="anchor" href="#all-22-surface-gameplay-effects">#</a>All 22 Surface Gameplay Effects</h3>
 <p>From the complete <code>EPlugSurfaceGameplayId</code> enum (22-ghidra-gap-findings.md, lines 218-243; 10-physics-deep-dive.md, lines 878-903):</p>
@@ -631,7 +637,7 @@ if (maxSpeed^2 &lt; speed_sq &amp;&amp; epsilon &lt; maxSpeed) {
   <li>Collision severity at <code>vehicle+0x1C8C</code> exceeds global threshold <code>DAT_141d1ef7c</code></li>
   <li>Status nibble is NOT 2 or 3</li>
 </ol>
-<p><strong>Fragile is NOT "any contact = break."</strong> A collision severity threshold exists. Gentle landings survive. The threshold is a float at <code class="addr">0x141d1ef7c</code>, identified as value 0.1. (07-physics-constants.md, line 22)</p>
+<p><strong>Fragile is NOT "any contact = break."</strong> A collision severity threshold exists. Gentle landings survive. The threshold is a float at <span class="named-addr"><span class="addr-name">DAT_FRAGILE_SEVERITY_THRESHOLD</span><code class="addr">0x141d1ef7c</code></span>, identified as value 0.1. (07-physics-constants.md, line 22)</p>
 <p>Applied with a 250ms delay. (22-ghidra-gap-findings.md, line 272)</p>
 <h3 id="reactor-boost-the-flying-car"><a class="anchor" href="#reactor-boost-the-flying-car">#</a>Reactor Boost -- The Flying Car</h3>
 <p>TM2020 has four reactor boost variants (21-competitive-mechanics.md, lines 482-493):</p>
@@ -900,7 +906,7 @@ Post-collision checks (PhysicsStep_TM.c:191-195)
 <p>This chapter covers the 6 mechanisms TM2020 uses for deterministic physics and why WASM can match (and exceed) them. You will understand how replays and ghost validation work.</p>
 <h3 id="why-determinism-matters"><a class="anchor" href="#why-determinism-matters">#</a>Why Determinism Matters</h3>
 <p>Trackmania's replay system records <strong>inputs</strong>, not positions. The game re-runs physics with recorded inputs for ghost playback and server validation. Non-deterministic physics breaks this entire system. (21-competitive-mechanics.md, lines 111-116)</p>
-<p>The replay state copy is 2,168 bytes (<code>0x878</code>), including the complete force model configuration, velocity state, and all wheel data. (21-competitive-mechanics.md, lines 236-241)</p>
+<p>The replay state copy is 2,168 bytes (<span class="named-addr"><span class="addr-name">REPLAY_STATE_COPY_SIZE</span><code class="addr">0x878</code></span>), including the complete force model configuration, velocity state, and all wheel data. (21-competitive-mechanics.md, lines 236-241)</p>
 <h3 id="the-6-mechanisms"><a class="anchor" href="#the-6-mechanisms">#</a>The 6 Mechanisms</h3>
 <p><strong>Mechanism 1: Integer-based timing</strong> (PhysicsStep_TM.c, line 63; 21-competitive-mechanics.md, lines 117-127)</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">lVar18 = (ulonglong)*param_4 * 1000000;  // integer * integer = integer</code></pre></div>

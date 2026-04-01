@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -162,7 +168,7 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 <hr>
 <h2 id="vehicle-physics-class-hierarchy"><a class="anchor" href="#vehicle-physics-class-hierarchy">#</a>Vehicle Physics Class Hierarchy</h2>
 <h3 id="cgameitemmodel-top-level"><a class="anchor" href="#cgameitemmodel-top-level">#</a>CGameItemModel (Top Level)</h3>
-<p><strong>Registration</strong>: <code class="addr">0x140057760</code> | <strong>Class ID</strong>: <code class="addr">0x2E002000</code> | <strong>Size</strong>: <code>0x2C0</code> bytes</p>
+<p><strong>Registration</strong>: <span class="named-addr"><span class="addr-name">CGameItemModel::Register</span><code class="addr">0x140057760</code></span> | <strong>Class ID</strong>: <span class="named-addr"><span class="addr-name">CGameCtnBlockInfo_CLASS_ID</span><code class="addr">0x2E002000</code></span> | <strong>Size</strong>: <span class="named-addr"><span class="addr-name">CGAME_ITEM_MODEL_SIZE</span><code class="addr">0x2C0</code></span> bytes</p>
 <p>For vehicles, key offsets:</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -196,7 +202,7 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 </tbody>
 </table></div>
 <h3 id="cplugvehiclephymodelcustom-tuning-modifiers"><a class="anchor" href="#cplugvehiclephymodelcustom-tuning-modifiers">#</a>CPlugVehiclePhyModelCustom (Tuning Modifiers)</h3>
-<p><strong>Registration</strong>: <code class="addr">0x14061ABB0</code> | <strong>Archive</strong>: <code class="addr">0x14061AAE0</code> | <strong>Class ID</strong>: <code class="addr">0x0911E000</code> | <strong>Size</strong>: <code>0x38</code> bytes | <strong>GBX file</strong>: <code>VehiclePhyModelCustom.Gbx</code></p>
+<p><strong>Registration</strong>: <span class="named-addr"><span class="addr-name">CPlugVehiclePhyModelCustom::Register</span><code class="addr">0x14061ABB0</code></span> | <strong>Archive</strong>: <span class="named-addr"><span class="addr-name">CPlugVehiclePhyModelCustom::Archive</span><code class="addr">0x14061AAE0</code></span> | <strong>Class ID</strong>: <span class="named-addr"><span class="addr-name">CPlugVehiclePhyModelCustom_CLASS_ID</span><code class="addr">0x0911E000</code></span> | <strong>Size</strong>: <span class="named-addr"><span class="addr-name">RIGID_BODY_STRIDE</span><code class="addr">0x38</code></span> bytes | <strong>GBX file</strong>: <code>VehiclePhyModelCustom.Gbx</code></p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -233,10 +239,10 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 </table></div>
 <p>These three coefficients modify vehicle physics behavior. They are exposed as <code>Modifiers.AccelCoef</code>, <code>Modifiers.ControlCoef</code>, <code>Modifiers.GravityCoef</code> to the engine.</p>
 <h3 id="cplugvehiclecarphyshape-car-physics-shape"><a class="anchor" href="#cplugvehiclecarphyshape-car-physics-shape">#</a>CPlugVehicleCarPhyShape (Car Physics Shape)</h3>
-<p><strong>Registration</strong>: <code class="addr">0x140619210</code> | <strong>Archive</strong>: <code class="addr">0x140618A60</code> | <strong>Class ID</strong>: <code class="addr">0x0910E000</code> | <strong>Size</strong>: 400 bytes | <strong>Archive version</strong>: Up to 6</p>
+<p><strong>Registration</strong>: <span class="named-addr"><span class="addr-name">CPlugVehicleCarPhyShape::Register</span><code class="addr">0x140619210</code></span> | <strong>Archive</strong>: <span class="named-addr"><span class="addr-name">CPlugVehicleCarPhyShape::Archive</span><code class="addr">0x140618A60</code></span> | <strong>Class ID</strong>: <span class="named-addr"><span class="addr-name">CPlugVehicleCarPhyShape_CLASS_ID</span><code class="addr">0x0910E000</code></span> | <strong>Size</strong>: 400 bytes | <strong>Archive version</strong>: Up to 6</p>
 <p>This is the richest tuning data class, containing suspension geometry, collision shape, mass distribution, and physics curves. Key fields include shape geometry parameters, inertia/mass distribution floats, solid collision mesh references, and extended shape properties including likely contact points (v4+).</p>
 <h3 id="cplugvehiclegearbox"><a class="anchor" href="#cplugvehiclegearbox">#</a>CPlugVehicleGearBox</h3>
-<p><strong>Registration</strong>: <code class="addr">0x1405B58A0</code> | <strong>Class ID</strong>: <code class="addr">0x09094000</code> | <strong>Size</strong>: <code>0x58</code> bytes</p>
+<p><strong>Registration</strong>: <span class="named-addr"><span class="addr-name">CPlugVehicleGearBox::Register</span><code class="addr">0x1405B58A0</code></span> | <strong>Class ID</strong>: <span class="named-addr"><span class="addr-name">CPlugVehicleGearBox_CLASS_ID</span><code class="addr">0x09094000</code></span> | <strong>Size</strong>: <span class="named-addr"><span class="addr-name">CONTACT_POINT_STRIDE</span><code class="addr">0x58</code></span> bytes</p>
 <p>Default gear speed thresholds (7 gears, km/h):</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -250,43 +256,43 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 <tr>
   <td style="text-align:left">1</td>
   <td style="text-align:left">56.0</td>
-  <td style="text-align:left"><code class="addr">0x42600000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GEARBOX_SPEED_GEAR1_56KMH</span><code class="addr">0x42600000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">2</td>
   <td style="text-align:left">84.0</td>
-  <td style="text-align:left"><code class="addr">0x42A80000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GEARBOX_SPEED_GEAR2_84KMH</span><code class="addr">0x42A80000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">3</td>
   <td style="text-align:left">100.0</td>
-  <td style="text-align:left"><code class="addr">0x42C80000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GEARBOX_SPEED_GEAR3_100KMH</span><code class="addr">0x42C80000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">4</td>
   <td style="text-align:left">143.0</td>
-  <td style="text-align:left"><code class="addr">0x430F0000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GEARBOX_SPEED_GEAR4_143KMH</span><code class="addr">0x430F0000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">5</td>
   <td style="text-align:left">207.0</td>
-  <td style="text-align:left"><code class="addr">0x434F0000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GEARBOX_SPEED_GEAR5_207KMH</span><code class="addr">0x434F0000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">6</td>
   <td style="text-align:left">297.0</td>
-  <td style="text-align:left"><code class="addr">0x43948000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GEARBOX_SPEED_GEAR6_297KMH</span><code class="addr">0x43948000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">7</td>
   <td style="text-align:left">338.0</td>
-  <td style="text-align:left"><code class="addr">0x43A90000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GEARBOX_SPEED_GEAR7_338KMH</span><code class="addr">0x43A90000</code></span></td>
 </tr>
 </tbody>
 </table></div>
 <p>Other defaults: Max RPM = 7000, Shift RPM = 6500.</p>
 <h3 id="cplugvehiclewheelphymodel"><a class="anchor" href="#cplugvehiclewheelphymodel">#</a>CPlugVehicleWheelPhyModel</h3>
-<p><strong>Registration</strong>: <code class="addr">0x1406190C0</code> | <strong>Size</strong>: <code>0x0C</code> bytes</p>
+<p><strong>Registration</strong>: <span class="named-addr"><span class="addr-name">CPlugVehicleWheelPhyModel::Register</span><code class="addr">0x1406190C0</code></span> | <strong>Size</strong>: <code>0x0C</code> bytes</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -318,7 +324,7 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 </tbody>
 </table></div>
 <h3 id="cplugspawnmodel"><a class="anchor" href="#cplugspawnmodel">#</a>CPlugSpawnModel</h3>
-<p><strong>Registration</strong>: <code class="addr">0x1406219A0</code> | <strong>Size</strong>: <code>0x60</code> bytes | <strong>GBX file</strong>: <code>Spawn.gbx</code></p>
+<p><strong>Registration</strong>: <span class="named-addr"><span class="addr-name">CPlugSpawnModel::Register</span><code class="addr">0x1406219A0</code></span> | <strong>Size</strong>: <span class="named-addr"><span class="addr-name">slotPhyMgr_sensibility</span><code class="addr">0x60</code></span> bytes | <strong>GBX file</strong>: <code>Spawn.gbx</code></p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -504,7 +510,7 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 <hr>
 <h2 id="maniascript-runtime-tuning-interface"><a class="anchor" href="#maniascript-runtime-tuning-interface">#</a>ManiaScript Runtime Tuning Interface</h2>
 <h3 id="ngameslotphysmgr-tuning-parameters"><a class="anchor" href="#ngameslotphysmgr-tuning-parameters">#</a>NGameSlotPhy::SMgr Tuning Parameters</h3>
-<p><strong>Registration</strong>: <code class="addr">0x141071B20</code> | <strong>Size</strong>: <code>0x90</code> bytes</p>
+<p><strong>Registration</strong>: <span class="named-addr"><span class="addr-name">NGameSlotPhy::SMgr_TuningsRegistration</span><code class="addr">0x141071B20</code></span> | <strong>Size</strong>: <span class="named-addr"><span class="addr-name">vehicleState_currentTransform</span><code class="addr">0x90</code></span> bytes</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -549,7 +555,7 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 <p>Available modifications include NoBrakes, NoSteer, NoEngine, ForceEngine (binary toggles), AccelCoef (type 0xD), ControlCoef, GravityCoef, AdherenceCoef (multipliers [0..1]), BoostUp/BoostDown, TireWear, Cruise, Fragile, SlowMotion, VehicleTransform, and Reset.</p>
 <hr>
 <h2 id="vehicle-type-registry"><a class="anchor" href="#vehicle-type-registry">#</a>Vehicle Type Registry</h2>
-<p>The game maintains a static registry at <code class="addr">0x141F75540</code>, initialized by <code>FUN_140CD5590</code>:</p>
+<p>The game maintains a static registry at <span class="named-addr"><span class="addr-name">vehicleTypeRegistry</span><code class="addr">0x141F75540</code></span>, initialized by <code>FUN_140CD5590</code>:</p>
 <h3 id="tm2020-vehicles-items"><a class="anchor" href="#tm2020-vehicles-items">#</a>TM2020 Vehicles (Items)</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -638,97 +644,97 @@ RegisterField(&quot;FieldName&quot;, offset, type_descriptor);</code></pre></div
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141501800</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><code class="addr">0x141501800</code></span></td>
   <td style="text-align:left">PhysicsStep_TM</td>
   <td style="text-align:left">Main physics tick</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408427D0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><code class="addr">0x1408427D0</code></span></td>
   <td style="text-align:left">ComputeForces</td>
   <td style="text-align:left">Force dispatcher</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14085C9E0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ForceModel_NewA_Case6</span><code class="addr">0x14085C9E0</code></span></td>
   <td style="text-align:left">Case6_ComputeForces</td>
   <td style="text-align:left">TM2020 car forces</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14061ABB0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehiclePhyModelCustom::Register</span><code class="addr">0x14061ABB0</code></span></td>
   <td style="text-align:left">CPlugVehiclePhyModelCustom::Register</td>
   <td style="text-align:left">Tuning class registration</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14061AAE0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehiclePhyModelCustom::Archive</span><code class="addr">0x14061AAE0</code></span></td>
   <td style="text-align:left">CPlugVehiclePhyModelCustom::Archive</td>
   <td style="text-align:left">Tuning deserialization</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140618A60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehicleCarPhyShape::Archive</span><code class="addr">0x140618A60</code></span></td>
   <td style="text-align:left">CPlugVehicleCarPhyShape::Archive</td>
   <td style="text-align:left">Car shape deserialization</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1405B58A0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehicleGearBox::Register</span><code class="addr">0x1405B58A0</code></span></td>
   <td style="text-align:left">CPlugVehicleGearBox::Register</td>
   <td style="text-align:left">Gearbox registration</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1406219A0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugSpawnModel::Register</span><code class="addr">0x1406219A0</code></span></td>
   <td style="text-align:left">CPlugSpawnModel::Register</td>
   <td style="text-align:left">Spawn model registration</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1406190C0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CPlugVehicleWheelPhyModel::Register</span><code class="addr">0x1406190C0</code></span></td>
   <td style="text-align:left">CPlugVehicleWheelPhyModel::Register</td>
   <td style="text-align:left">Wheel model registration</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140CD5590</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">VehicleRegistry::Init</span><code class="addr">0x140CD5590</code></span></td>
   <td style="text-align:left">VehicleRegistry::Init</td>
   <td style="text-align:left">Vehicle type registry</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141071B20</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NGameSlotPhy::SMgr_TuningsRegistration</span><code class="addr">0x141071B20</code></span></td>
   <td style="text-align:left">NGameSlotPhy::Register</td>
   <td style="text-align:left">ManiaScript tuning</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141342950</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">SetDelayed_AccelCoef</span><code class="addr">0x141342950</code></span></td>
   <td style="text-align:left">SetDelayed_AccelCoef</td>
   <td style="text-align:left">ManiaScript AccelCoef handler</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141342450</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">QueueDelayedModification</span><code class="addr">0x141342450</code></span></td>
   <td style="text-align:left">QueueDelayedModification</td>
   <td style="text-align:left">Modification queue</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140904730</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><code class="addr">0x140904730</code></span></td>
   <td style="text-align:left">ArchiveNod::LoadGbx</td>
   <td style="text-align:left">GBX body loader</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140903D30</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ArchiveNod::LoadBody</span><code class="addr">0x140903D30</code></span></td>
   <td style="text-align:left">ArchiveNod::LoadBody</td>
   <td style="text-align:left">GBX body parser</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1409031D0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ArchiveNod::ReadChunks</span><code class="addr">0x1409031D0</code></span></td>
   <td style="text-align:left">ArchiveNod::ReadChunks</td>
   <td style="text-align:left">Chunk iteration</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1402D0D70</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ReadChunkVersion</span><code class="addr">0x1402D0D70</code></span></td>
   <td style="text-align:left">ReadChunkVersion</td>
   <td style="text-align:left">Version negotiation</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14012C310</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ArchiveFloat</span><code class="addr">0x14012C310</code></span></td>
   <td style="text-align:left">ArchiveFloat</td>
   <td style="text-align:left">Float serialize/deserialize</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140ABCE80</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameObjectPhyModel::LoadData</span><code class="addr">0x140ABCE80</code></span></td>
   <td style="text-align:left">CGameObjectPhyModel::LoadData</td>
   <td style="text-align:left">Physics model assembly</td>
 </tr>

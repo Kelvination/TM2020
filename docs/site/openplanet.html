@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -751,8 +757,8 @@
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>vehicles[i * 0x8] -&gt; CSceneVehicleVis pointer</code></pre></div>
 <p>Each CSceneVehicleVis starts with a uint32 entity ID at offset 0x0:</p>
 <ul>
-  <li>Entity IDs with mask <code class="addr">0x02000000</code> are local player vehicles</li>
-  <li>Entity IDs with mask <code class="addr">0x04000000</code> are replay/editor vehicles</li>
+  <li>Entity IDs with mask <span class="named-addr"><span class="addr-name">ENTITY_ID_MASK_LOCAL_PLAYER</span><code class="addr">0x02000000</code></span> are local player vehicles</li>
+  <li>Entity IDs with mask <span class="named-addr"><span class="addr-name">ENTITY_ID_MASK_REPLAY_EDITOR</span><code class="addr">0x04000000</code></span> are replay/editor vehicles</li>
 </ul>
 <hr>
 <h2 id="nadeo-services-api"><a class="anchor" href="#nadeo-services-api">#</a>Nadeo Services API</h2>

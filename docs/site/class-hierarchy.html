@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -314,32 +320,32 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141b71fc8</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CMwNod</span><code class="addr">0x141b71fc8</code></span></td>
   <td style="text-align:left"><code>"CMwNod"</code></td>
   <td style="text-align:left">Class name registration string</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141b71fd0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CMwNod_MwNod_StaticInit</span><code class="addr">0x141b71fd0</code></span></td>
   <td style="text-align:left"><code>"CMwNod::MwNod_StaticInit"</code></td>
   <td style="text-align:left">Static initialization function name</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141b71f60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_MwNod_CreateByMwClassId_error1</span><code class="addr">0x141b71f60</code></span></td>
   <td style="text-align:left"><code>"[MwNod] Trying to CreateByMwClassId('"</code></td>
   <td style="text-align:left">Factory method error string</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141b71fa0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_MwNod_CreateByMwClassId_error2</span><code class="addr">0x141b71fa0</code></span></td>
   <td style="text-align:left"><code>"[MwNod] Trying to CreateByMwClassId("</code></td>
   <td style="text-align:left">Factory method error string (variant)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141b58728</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_ParameterIsNotACMwNod</span><code class="addr">0x141b58728</code></span></td>
   <td style="text-align:left"><code>"Parameter is not a CMwNod."</code></td>
   <td style="text-align:left">Type-check assertion</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141c0cab0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">str_CMwNod_display</span><code class="addr">0x141c0cab0</code></span></td>
   <td style="text-align:left"><code>" CMwNod"</code></td>
   <td style="text-align:left">Possibly used in class info display</td>
 </tr>
@@ -347,7 +353,7 @@
 </table></div>
 <h3 id="class-registration-rtti-system"><a class="anchor" href="#class-registration-rtti-system">#</a>Class registration / RTTI system</h3>
 <p>The Nadeo engine implements its own RTTI system separate from MSVC RTTI.</p>
-<p><strong>Class ID (MwClassId)</strong>: Each class has a numeric class ID used for serialization and factory creation. Error messages referencing <code>"CreateByMwClassId"</code> confirm a factory pattern where objects are instantiated by integer class ID. These IDs are 32-bit integers (e.g., <code class="addr">0x03043000</code> for <code>CGameCtnChallenge</code>).</p>
+<p><strong>Class ID (MwClassId)</strong>: Each class has a numeric class ID used for serialization and factory creation. Error messages referencing <code>"CreateByMwClassId"</code> confirm a factory pattern where objects are instantiated by integer class ID. These IDs are 32-bit integers (e.g., <span class="named-addr"><span class="addr-name">CGameCtnChallenge_CLASS_ID</span><code class="addr">0x03043000</code></span> for <code>CGameCtnChallenge</code>).</p>
 <p><strong>StaticInit pattern</strong>: Classes register themselves via static initialization functions. Three <code>StaticInit</code> strings appear in the binary:</p>
 <ul>
   <li><code>CMwNod::MwNod_StaticInit</code> -- Base class registration</li>
@@ -986,23 +992,23 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14197e908</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">std_exception_vftable</span><code class="addr">0x14197e908</code></span></td>
   <td style="text-align:left"><code>std::exception::vftable</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14197e938</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">std_bad_alloc_vftable</span><code class="addr">0x14197e938</code></span></td>
   <td style="text-align:left"><code>std::bad_alloc::vftable</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14197e960</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">std_bad_function_call_vftable</span><code class="addr">0x14197e960</code></span></td>
   <td style="text-align:left"><code>std::bad_function_call::vftable</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141980280</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">type_info_vftable</span><code class="addr">0x141980280</code></span></td>
   <td style="text-align:left"><code>type_info::vftable</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141a3a0a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSingletonCriticalSection_vftable</span><code class="addr">0x141a3a0a0</code></span></td>
   <td style="text-align:left"><code>CSingletonCriticalSection::vftable</code></td>
 </tr>
 </tbody>
@@ -4839,7 +4845,7 @@ CVehicleSettings                          -- Vehicle settings</code></pre></div>
 <hr>
 <h2 id="maniascript-language-reference"><a class="anchor" href="#maniascript-language-reference">#</a>ManiaScript language reference</h2>
 <p><strong>Source</strong>: Ghidra binary strings (<code>15-ghidra-research-findings.md</code>), <code>CScriptEngine__Run.c</code> decompilation <strong>Confidence</strong>: <span class="badge badge-verified">VERIFIED</span> (40+ token strings found in binary)</p>
-<p>ManiaScript is the scripting language embedded in the ManiaPlanet/Trackmania engine. It is interpreted by <code>CScriptEngine</code> (confirmed by decompiled <code>CScriptEngine::Run</code> function at <code class="addr">0x140874270</code>).</p>
+<p>ManiaScript is the scripting language embedded in the ManiaPlanet/Trackmania engine. It is interpreted by <code>CScriptEngine</code> (confirmed by decompiled <code>CScriptEngine::Run</code> function at <span class="named-addr"><span class="addr-name">CScriptEngine::Run</span><code class="addr">0x140874270</code></span>).</p>
 <h3 id="data-types-12-primitive-types"><a class="anchor" href="#data-types-12-primitive-types">#</a>Data Types (12 primitive types)</h3>
 <div class="table-wrapper"><table>
 <thead>
@@ -5196,7 +5202,7 @@ CVehicleSettings                          -- Vehicle settings</code></pre></div>
   <li><code>LOCAL_STRUCT</code> -- Local struct declaration</li>
 </ul>
 <h3 id="script-engine-runtime"><a class="anchor" href="#script-engine-runtime">#</a>Script Engine Runtime</h3>
-<p>From <code>CScriptEngine__Run</code> decompilation (<code class="addr">0x140874270</code>):</p>
+<p>From <code>CScriptEngine__Run</code> decompilation (<span class="named-addr"><span class="addr-name">CScriptEngine::Run</span><code class="addr">0x140874270</code></span>):</p>
 <ol>
   <li>Sets script context pointer at <code>param_1 + 0x60</code></li>
   <li>Initializes profiling label: <code>"CScriptEngine::Run(%s)"</code> with script name</li>

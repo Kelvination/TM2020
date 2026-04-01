@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -454,18 +460,18 @@
 <tr>
   <td style="text-align:left">Chunk ID format (32-bit)</td>
   <td style="text-align:left">Engine byte + class byte + chunk byte</td>
-  <td style="text-align:left"><code class="addr">0x03043007</code> = Engine 03, Class 043, Chunk 007</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Thumbnail</span><code class="addr">0x03043007</code></span> = Engine 03, Class 043, Chunk 007</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
   <td style="text-align:left">End sentinel</td>
-  <td style="text-align:left"><code class="addr">0xFACADE01</code></td>
-  <td style="text-align:left"><code class="addr">0xFACADE01</code> (confirmed in chunk dispatch)</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> (confirmed in chunk dispatch)</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
   <td style="text-align:left">Skippable flag</td>
-  <td style="text-align:left"><code>0x10</code> flag, preceded by "SKIP" marker + size</td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">vehicleState_dynaBodyId</span><code class="addr">0x10</code></span> flag, preceded by "SKIP" marker + size</td>
   <td style="text-align:left">Skippable chunks include length prefix</td>
   <td style="text-align:left">MATCH</td>
 </tr>
@@ -588,79 +594,79 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043002</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MapInfo</span><code class="addr">0x03043002</code></span></td>
   <td style="text-align:left">Map metadata (times, cost, laps, checkpoints)</td>
   <td style="text-align:left">Confirmed in doc 16 section 16</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043003</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CommonHeader</span><code class="addr">0x03043003</code></span></td>
   <td style="text-align:left">Environment, map type, lightmap version</td>
   <td style="text-align:left">Referenced</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043007</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_Thumbnail</span><code class="addr">0x03043007</code></span></td>
   <td style="text-align:left">Thumbnail (JPEG) + comments</td>
   <td style="text-align:left">Referenced</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0304300F</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MapStructure</span><code class="addr">0x0304300F</code></span></td>
   <td style="text-align:left">Map structure (mapInfo, mapName, decoration, size, blocks)</td>
   <td style="text-align:left">Confirmed</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x0304301F</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BlockDataFull</span><code class="addr">0x0304301F</code></span></td>
   <td style="text-align:left">Full block data with rotations, coordinates, flags</td>
   <td style="text-align:left">Confirmed</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043027</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_CameraThumbnail</span><code class="addr">0x03043027</code></span></td>
   <td style="text-align:left">Camera thumbnail (position, FOV, clip planes)</td>
   <td style="text-align:left">Not analyzed</td>
   <td style="text-align:left"><strong>GAP</strong></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043036</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_ExtendedThumbnail</span><code class="addr">0x03043036</code></span></td>
   <td style="text-align:left">Extended thumbnail (pitch/yaw/roll)</td>
   <td style="text-align:left">Not analyzed</td>
   <td style="text-align:left"><strong>GAP</strong></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043040</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_AnchoredObjects</span><code class="addr">0x03043040</code></span></td>
   <td style="text-align:left">Anchored objects (items) - ENCAPSULATED</td>
   <td style="text-align:left">Confirmed</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043043</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_ZoneGenealogy</span><code class="addr">0x03043043</code></span></td>
   <td style="text-align:left">Zone genealogy</td>
   <td style="text-align:left">Not analyzed</td>
   <td style="text-align:left"><strong>GAP</strong></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043044</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_ScriptMetadata</span><code class="addr">0x03043044</code></span></td>
   <td style="text-align:left">Script metadata - ENCAPSULATED</td>
   <td style="text-align:left">Referenced</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043048</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_BakedBlocks</span><code class="addr">0x03043048</code></span></td>
   <td style="text-align:left">Baked blocks</td>
   <td style="text-align:left">Not deeply analyzed</td>
   <td style="text-align:left"><strong>GAP</strong></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043054</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_EmbeddedItems</span><code class="addr">0x03043054</code></span></td>
   <td style="text-align:left">Embedded ZIP (custom assets)</td>
   <td style="text-align:left">Confirmed (texture storage)</td>
   <td style="text-align:left">MATCH</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x03043069</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnChallenge_CHUNK_MacroblockInstances</span><code class="addr">0x03043069</code></span></td>
   <td style="text-align:left">Macroblock instances</td>
   <td style="text-align:left">Not analyzed</td>
   <td style="text-align:left"><strong>GAP</strong></td>
@@ -760,7 +766,7 @@
 <p>The integer range is the raw replay/input file encoding. The float range is the normalized physics/vis value. Conversion: <code>float_steer = int_steer / 65536.0</code>. Both are correct at their respective layers.</p>
 <h3 id="vehicle-state-cscenevehiclevisstate"><a class="anchor" href="#vehicle-state-cscenevehiclevisstate">#</a>Vehicle State (CSceneVehicleVisState)</h3>
 <p>All major vehicle state properties match between Openplanet and our RE: Position, WorldVel, Dir/Left/Up, FrontSpeed, SideSpeed, CurGear, RPM, EngineOn, InputSteer, InputGasPedal, InputBrakePedal, IsGroundContact, IsTurbo, TurboTime, ReactorBoostLvl, ReactorBoostType, SimulationTimeCoef.</p>
-<p>The Openplanet API confirms the class ID as <code class="addr">0x0A00C000</code> (Engine 0x0A = Scene, Class 00C).</p>
+<p>The Openplanet API confirms the class ID as <span class="named-addr"><span class="addr-name">CSceneVehicleVisState_CLASS_ID</span><code class="addr">0x0A00C000</code></span> (Engine 0x0A = Scene, Class 00C).</p>
 <h3 id="per-wheel-data-from-openplanet"><a class="anchor" href="#per-wheel-data-from-openplanet">#</a>Per-Wheel Data (from Openplanet)</h3>
 <p>These properties fill gaps in our RE:</p>
 <div class="table-wrapper"><table>
@@ -1090,28 +1096,28 @@
 <tbody>
 <tr>
   <td style="text-align:left">CTrackMania</td>
-  <td style="text-align:left"><code class="addr">0x24001000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CTrackMania_CLASS_ID</span><code class="addr">0x24001000</code></span></td>
   <td style="text-align:left">TrackMania</td>
 </tr>
 <tr>
   <td style="text-align:left">CTrackManiaMenus</td>
-  <td style="text-align:left"><code class="addr">0x2402E000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CTrackManiaMenus_CLASS_ID</span><code class="addr">0x2402E000</code></span></td>
   <td style="text-align:left">TrackMania</td>
 </tr>
 <tr>
   <td style="text-align:left">CTrackManiaNetwork</td>
-  <td style="text-align:left"><code class="addr">0x2402F000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CTrackManiaNetwork_CLASS_ID</span><code class="addr">0x2402F000</code></span></td>
   <td style="text-align:left">TrackMania</td>
 </tr>
 <tr>
   <td style="text-align:left">CSceneVehicleVisState</td>
-  <td style="text-align:left"><code class="addr">0x0A00C000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSceneVehicleVisState_CLASS_ID</span><code class="addr">0x0A00C000</code></span></td>
   <td style="text-align:left">Scene</td>
 </tr>
 </tbody>
 </table></div>
 <h3 id="block-coordinate-system"><a class="anchor" href="#block-coordinate-system">#</a>Block Coordinate System</h3>
-<p>From community: block coordinates use (X, Y, Z) integers, rotation is 0-3 (90-degree increments). In GBX format version >= 6, coordinates are offset-adjusted by subtracting (1, 0, 1). Blocks with flags == <code class="addr">0xFFFFFFFF</code> are "null" blocks and should be skipped.</p>
+<p>From community: block coordinates use (X, Y, Z) integers, rotation is 0-3 (90-degree increments). In GBX format version >= 6, coordinates are offset-adjusted by subtracting (1, 0, 1). Blocks with flags == <span class="named-addr"><span class="addr-name">SENTINEL_NO_VALUE</span><code class="addr">0xFFFFFFFF</code></span> are "null" blocks and should be skipped.</p>
 <hr>
 <h2 id="contradictions-to-investigate"><a class="anchor" href="#contradictions-to-investigate">#</a>Contradictions to Investigate</h2>
 <details class="collapsible collapsed-by-default">
@@ -1210,7 +1216,7 @@
 </table></div>
 <h3 id="recommended-next-steps"><a class="anchor" href="#recommended-next-steps">#</a>Recommended Next Steps</h3>
 <ol>
-  <li>Verify community class IDs against our binary's class registry (especially CSceneVehicleVisState = <code class="addr">0x0A00C000</code>).</li>
+  <li>Verify community class IDs against our binary's class registry (especially CSceneVehicleVisState = <span class="named-addr"><span class="addr-name">CSceneVehicleVisState_CLASS_ID</span><code class="addr">0x0A00C000</code></span>).</li>
   <li>Map the 24 PhysicsId values to our decompiled surface effect code.</li>
   <li>Integrate ghost sample encoding into our file format documentation.</li>
   <li>Cross-reference GBX.NET chunk implementations with our decompiled chunk readers.</li>

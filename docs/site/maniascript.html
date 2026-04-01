@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -783,7 +789,7 @@ foreach (Id =&gt; Name in IdToName) {
 </table></div>
 <hr>
 <h2 id="coroutines-and-cooperative-multitasking"><a class="anchor" href="#coroutines-and-cooperative-multitasking">#</a>Coroutines and cooperative multitasking</h2>
-<p>ManiaScript uses cooperative multitasking through four coroutine primitives (a coroutine is a function that can pause and resume across frames). All are confirmed as lexer tokens in the binary (addresses <code class="addr">0x141c023a8</code>, <code class="addr">0x141c024c8</code>, <code class="addr">0x141c024b0</code>).</p>
+<p>ManiaScript uses cooperative multitasking through four coroutine primitives (a coroutine is a function that can pause and resume across frames). All are confirmed as lexer tokens in the binary (addresses <span class="named-addr"><span class="addr-name">str_ManiaScript_SLEEP</span><code class="addr">0x141c023a8</code></span>, <span class="named-addr"><span class="addr-name">str_ManiaScript_WAIT</span><code class="addr">0x141c024c8</code></span>, <span class="named-addr"><span class="addr-name">str_ManiaScript_YIELD</span><code class="addr">0x141c024b0</code></span>).</p>
 <h3 id="yield"><a class="anchor" href="#yield">#</a>Yield</h3>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-maniascript">yield;</code></pre></div>
 <p>Pauses execution and returns control to the engine. The script resumes at the next frame. Every ManiaScript main loop must include <code>yield;</code> to prevent infinite loops.</p>
@@ -2174,7 +2180,7 @@ TestMapWithMode(&quot;TrackMania/TM_TimeAttack_Online&quot;);</code></pre></div>
 <hr>
 <h2 id="script-engine-internals-from-re"><a class="anchor" href="#script-engine-internals-from-re">#</a>Script engine internals (from RE)</h2>
 <details class="collapsible collapsed-by-default">
-<summary><h3 id="cscriptenginerun-0x140874270"><a class="anchor" href="#cscriptenginerun-0x140874270">#</a>CScriptEngine::Run (<code class="addr">0x140874270</code>)</h3></summary>
+<summary><h3 id="cscriptenginerun-0x140874270"><a class="anchor" href="#cscriptenginerun-0x140874270">#</a>CScriptEngine::Run (<span class="named-addr"><span class="addr-name">CScriptEngine::Run</span><code class="addr">0x140874270</code></span>)</h3></summary>
 <div class="collapsible-content">
 <p>The main entry point for executing ManiaScript. Decompiled from <code>Trackmania.exe</code>. Size: 316 bytes.</p>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code class="language-c">void CScriptEngine__Run(longlong engine, longlong context, undefined4 mode) {

@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -265,7 +271,7 @@
 <h2 id="how-the-binary-is-protected"><a class="anchor" href="#how-the-binary-is-protected">#</a>How the binary is protected</h2>
 <p>The binary employs code protection/packing that hides most of its real imports.</p>
 <ul>
-  <li>The entry point (<code class="addr">0x14291e317</code>) lives in a non-standard <code>.D."</code> section, not <code>.text</code>.</li>
+  <li>The entry point (<span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span>) lives in a non-standard <code>.D."</code> section, not <code>.text</code>.</li>
   <li>Three TLS callbacks execute before the main entry point (anti-debug/unpacking).</li>
   <li>Only 35 imported symbols exist across 23 DLLs. Most real imports resolve at runtime via <code>LoadLibrary</code>/<code>GetProcAddress</code>.</li>
   <li>Three randomly-named sections (<code>.A2U</code>, <code>.9Bv</code>, <code>.D."</code>) contain ~10 MB of executable code.</li>
@@ -339,7 +345,7 @@
 </tbody>
 </table></div>
 <h3 id="main-game-loop"><a class="anchor" href="#main-game-loop">#</a>Main game loop</h3>
-<p>No function is named "GameLoop." The game loop lives in <code>CGameCtnApp::UpdateGame</code> at <code class="addr">0x140b78f10</code> -- a 216 KB function implementing a massive state machine. Three nested tiers of state machines drive the game:</p>
+<p>No function is named "GameLoop." The game loop lives in <code>CGameCtnApp::UpdateGame</code> at <span class="named-addr"><span class="addr-name">CGameCtnApp::UpdateGame</span><code class="addr">0x140b78f10</code></span> -- a 216 KB function implementing a massive state machine. Three nested tiers of state machines drive the game:</p>
 <ol>
   <li><strong>Game states</strong>: <code>GameState_LocalLoopPlaying</code>, <code>GameState_NetPlaying</code>, <code>GameState_Menus</code>, etc.</li>
   <li><strong>Network states</strong>: <code>CGameCtnNetwork::MainLoop_Menus</code>, <code>MainLoop_PlaygroundPlay</code>, <code>MainLoop_SetUp</code></li>
@@ -472,7 +478,7 @@ External:
   <li><strong>GBX header</strong> uses magic "GBX" (3 bytes), version uint16 (3-6 supported), and format flags "BUCE"/"BUCR".</li>
   <li><strong>5 files validated byte-exact</strong> against spec: Map, Profile, Block, FuncShader, ImageGen.</li>
   <li><strong>LZO1X body compression</strong> confirmed from real files (not zlib).</li>
-  <li><strong>Chunk-based body</strong> with <code class="addr">0xFACADE01</code> end-of-chunks sentinel.</li>
+  <li><strong>Chunk-based body</strong> with <span class="named-addr"><span class="addr-name">GBX_CHUNK_END_SENTINEL</span><code class="addr">0xFACADE01</code></span> end-of-chunks sentinel.</li>
   <li><strong>Two-level class registry</strong> at <code>DAT_141ff9d58</code> with TLS-cached lookups.</li>
   <li><strong>200+ legacy class ID remappings</strong> for backward compatibility across engine versions.</li>
   <li><strong>431 <code>.Gbx</code> file extensions</strong> catalogued.</li>
@@ -507,31 +513,31 @@ External:
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14291e317</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span></td>
   <td style="text-align:left"><code>entry</code> (obfuscated, in .D." section)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141521c28</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">WinMainCRTStartup</span><code class="addr">0x141521c28</code></span></td>
   <td style="text-align:left"><code>WinMainCRTStartup</code> (MSVC CRT)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140aa7470</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">WinMain</span><code class="addr">0x140aa7470</code></span></td>
   <td style="text-align:left"><code>WinMain</code> (actual)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1400a6ec0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGbxGame::InitApp</span><code class="addr">0x1400a6ec0</code></span></td>
   <td style="text-align:left"><code>CGbxGame::InitApp</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140aaac00</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGbxApp::Init1</span><code class="addr">0x140aaac00</code></span></td>
   <td style="text-align:left"><code>CGbxApp::Init1</code> (80 KB)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140ab00a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGbxApp::Init2</span><code class="addr">0x140ab00a0</code></span></td>
   <td style="text-align:left"><code>CGbxApp::Init2</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140b78f10</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnApp::UpdateGame</span><code class="addr">0x140b78f10</code></span></td>
   <td style="text-align:left"><code>CGameCtnApp::UpdateGame</code> (216 KB, main loop)</td>
 </tr>
 </tbody>
@@ -546,27 +552,27 @@ External:
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141312870</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSmArenaClient::UpdatePhysics</span><code class="addr">0x141312870</code></span></td>
   <td style="text-align:left"><code>CSmArenaClient::UpdatePhysics</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1412c2cc0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSmArenaPhysics::Players_BeginFrame</span><code class="addr">0x1412c2cc0</code></span></td>
   <td style="text-align:left"><code>CSmArenaPhysics::Players_BeginFrame</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141501800</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">PhysicsStep_TM</span><code class="addr">0x141501800</code></span></td>
   <td style="text-align:left"><code>PhysicsStep_TM</code> (per-vehicle)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140803920</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::PhysicsStep_V2</span><code class="addr">0x140803920</code></span></td>
   <td style="text-align:left"><code>NSceneDyna::PhysicsStep_V2</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408025a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneDyna::InternalPhysicsStep</span><code class="addr">0x1408025a0</code></span></td>
   <td style="text-align:left"><code>NSceneDyna::InternalPhysicsStep</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1408427d0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NSceneVehiclePhy::ComputeForces</span><code class="addr">0x1408427d0</code></span></td>
   <td style="text-align:left"><code>NSceneVehiclePhy::ComputeForces</code></td>
 </tr>
 </tbody>
@@ -581,23 +587,23 @@ External:
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1409aa750</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CDx11Viewport::DeviceCreate</span><code class="addr">0x1409aa750</code></span></td>
   <td style="text-align:left"><code>CDx11Viewport::DeviceCreate</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140936810</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSystemConfigDisplay_SettingsRegistration</span><code class="addr">0x140936810</code></span></td>
   <td style="text-align:left"><code>CSystemConfigDisplay</code> settings registration</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14095d430</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CVisionViewport::PrepareShadowAndProjectors</span><code class="addr">0x14095d430</code></span></td>
   <td style="text-align:left"><code>CVisionViewport::PrepareShadowAndProjectors</code></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14097cfb0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">VisionShader::GetOrCreate</span><code class="addr">0x14097cfb0</code></span></td>
   <td style="text-align:left"><code>VisionShader::GetOrCreate</code> (shader cache)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140a811a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">Dxgi_Present_HookCallback</span><code class="addr">0x140a811a0</code></span></td>
   <td style="text-align:left"><code>Dxgi_Present_HookCallback</code></td>
 </tr>
 </tbody>
@@ -612,27 +618,27 @@ External:
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140904730</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CSystemArchiveNod::LoadGbx</span><code class="addr">0x140904730</code></span></td>
   <td style="text-align:left"><code>CSystemArchiveNod::LoadGbx</code> (main entry)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140900e60</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_HeaderMagicVersionValidation</span><code class="addr">0x140900e60</code></span></td>
   <td style="text-align:left">GBX header magic/version validation</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140901850</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">GBX_Version6FormatFlagParsing</span><code class="addr">0x140901850</code></span></td>
   <td style="text-align:left">GBX version 6 format flag parsing</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1402cf380</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CMwNod::CreateByMwClassId</span><code class="addr">0x1402cf380</code></span></td>
   <td style="text-align:left"><code>CreateByMwClassId</code> (class factory)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1402f2610</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">ClassIdBackwardCompatibilityRemap</span><code class="addr">0x1402f2610</code></span></td>
   <td style="text-align:left">Class ID backward-compatibility remap</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141ff9d58</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">DAT_globalClassRegistry</span><code class="addr">0x141ff9d58</code></span></td>
   <td style="text-align:left">Global class registry (data)</td>
 </tr>
 </tbody>
@@ -897,7 +903,7 @@ External:
   <li><a href="architecture.html">08-game-architecture.md</a> -- Engine architecture and deep dive</li>
 </ul>
 <details><summary>Analysis metadata</summary>
-<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020 / Trackmania Nations remake by Nadeo/Ubisoft) <strong>File size</strong>: 45,467,720 bytes (43.4 MB) <strong>Format</strong>: PE32+ x86-64, Windows GUI <strong>Image base</strong>: <code class="addr">0x140000000</code> <strong>Date of analysis</strong>: 2026-03-27 <strong>Tools</strong>: Ghidra 12.0.4 via PyGhidra headless bridge <strong>Analyst</strong>: Automated multi-agent analysis with manual oversight</p>
+<p><strong>Binary</strong>: <code>Trackmania.exe</code> (Trackmania 2020 / Trackmania Nations remake by Nadeo/Ubisoft) <strong>File size</strong>: 45,467,720 bytes (43.4 MB) <strong>Format</strong>: PE32+ x86-64, Windows GUI <strong>Image base</strong>: <span class="named-addr"><span class="addr-name">PE_IMAGE_BASE</span><code class="addr">0x140000000</code></span> <strong>Date of analysis</strong>: 2026-03-27 <strong>Tools</strong>: Ghidra 12.0.4 via PyGhidra headless bridge <strong>Analyst</strong>: Automated multi-agent analysis with manual oversight</p>
 </details>
 
                         <nav class="prev-next"><a class="next" href="architecture.html">Architecture &rarr;</a></nav>

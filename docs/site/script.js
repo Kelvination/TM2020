@@ -77,25 +77,6 @@
             });
         });
 
-        // Mermaid diagram rendering
-        if (typeof mermaid !== "undefined") {
-            mermaid.initialize({
-                startOnLoad: false,
-                theme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "default",
-                securityLevel: "loose"
-            });
-            var mermaidBlocks = document.querySelectorAll("code.language-mermaid");
-            mermaidBlocks.forEach(function(code, i) {
-                var codeBlock = code.closest(".code-block");
-                if (!codeBlock) return;
-                var container = document.createElement("div");
-                container.className = "mermaid";
-                container.textContent = code.textContent;
-                codeBlock.parentNode.replaceChild(container, codeBlock);
-            });
-            mermaid.run();
-        }
-
         // Syntax highlighting
         if (typeof hljs !== "undefined") {
             document.querySelectorAll("pre code").forEach(function(block) {
@@ -144,6 +125,46 @@
             techToggleBtn.addEventListener("click", function() {
                 var isCurrentlyHidden = techToggleBtn.classList.contains("collapsed");
                 setTechSectionsState(!isCurrentlyHidden);
+            });
+        }
+
+        // Address toggle (show/hide hex addresses alongside symbol names)
+        var ADDR_TOGGLE_KEY = "tm2020-docs-addr-visible";
+        var addrToggleBtn = document.getElementById("addr-toggle");
+
+        function setAddrState(visible) {
+            if (visible) {
+                document.body.classList.add("show-addresses");
+            } else {
+                document.body.classList.remove("show-addresses");
+            }
+            if (addrToggleBtn) {
+                var icon = addrToggleBtn.querySelector(".toggle-icon");
+                if (visible) {
+                    addrToggleBtn.classList.remove("collapsed");
+                    icon.innerHTML = "&#9660;";
+                    addrToggleBtn.childNodes[addrToggleBtn.childNodes.length - 1].textContent = " Hide Hex Addresses";
+                } else {
+                    addrToggleBtn.classList.add("collapsed");
+                    icon.innerHTML = "&#9654;";
+                    addrToggleBtn.childNodes[addrToggleBtn.childNodes.length - 1].textContent = " Show Hex Addresses";
+                }
+            }
+            localStorage.setItem(ADDR_TOGGLE_KEY, visible ? "1" : "0");
+        }
+
+        // Initialize: default is hidden (only names shown)
+        var addrVisible = localStorage.getItem(ADDR_TOGGLE_KEY);
+        if (addrVisible === null) {
+            setAddrState(false);
+        } else {
+            setAddrState(addrVisible === "1");
+        }
+
+        if (addrToggleBtn) {
+            addrToggleBtn.addEventListener("click", function() {
+                var isCurrentlyVisible = document.body.classList.contains("show-addresses");
+                setAddrState(!isCurrentlyVisible);
             });
         }
 

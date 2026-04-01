@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -628,7 +634,7 @@ FUN_14083df50(..., fVar25, ...);</code></pre></div>
   <td style="text-align:left"></td>
 </tr>
 <tr>
-  <td style="text-align:left">Flag clear masks (<code class="addr">0xFFFFF5FF</code>, 0x1800)</td>
+  <td style="text-align:left">Flag clear masks (<span class="named-addr"><span class="addr-name">CONTACT_PHY_FLAGS_CLEAR_MASK</span><code class="addr">0xFFFFF5FF</code></span>, 0x1800)</td>
   <td style="text-align:left">YES</td>
   <td style="text-align:left"></td>
 </tr>
@@ -1020,13 +1026,13 @@ if (fVar16 &lt; (float)((uint)((float)local_120 * *(float *)(lVar12 + 0xab4)) ^ 
 </tr>
 <tr>
   <td style="text-align:left">DAT_141d21c00</td>
-  <td style="text-align:left"><code class="addr">0x7FFFFFFF</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">HEADER_CHUNK_SIZE_MASK</span><code class="addr">0x7FFFFFFF</code></span></td>
   <td style="text-align:left">Float abs mask (clear sign bit)</td>
   <td style="text-align:left">HIGH (standard technique)</td>
 </tr>
 <tr>
   <td style="text-align:left">DAT_141d21c30</td>
-  <td style="text-align:left"><code class="addr">0x80000000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">HEADER_CHUNK_HEAVY_FLAG</span><code class="addr">0x80000000</code></span></td>
   <td style="text-align:left">Float sign flip mask (toggle sign bit)</td>
   <td style="text-align:left">HIGH (standard technique)</td>
 </tr>

@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -596,7 +602,7 @@ Camera  Cascade 0   Cascade 1    Cascade 2      Cascade 3
   |     (near)      (mid-near)   (mid-far)      (far)
   |&lt;---&gt;|&lt;---------&gt;|&lt;----------&gt;|&lt;------------&gt;|
   |  highest res    medium res    lower res       lowest res</code></pre></div>
-<p>Configuration from decompiled code (<code>CVisionViewport::VisibleZonePrepareShadowAndProjectors</code> at <code class="addr">0x14095d430</code>):</p>
+<p>Configuration from decompiled code (<code>CVisionViewport::VisibleZonePrepareShadowAndProjectors</code> at <span class="named-addr"><span class="addr-name">CVisionViewport::PrepareShadowAndProjectors</span><code class="addr">0x14095d430</code></span>):</p>
 <ul>
   <li>Default: <strong>4 cascades</strong></li>
   <li>Simplified: <strong>1 cascade</strong> (when <code>flag & 0x40</code> -- "Minimum" shadow quality)</li>
@@ -713,7 +719,7 @@ RUNTIME (DeferredRead phase):
 <h3 id="txaa-temporal-anti-aliasing"><a class="anchor" href="#txaa-temporal-anti-aliasing">#</a>TXAA -- Temporal Anti-Aliasing</h3>
 <p>TM2020 has TWO implementations:</p>
 <ol>
-  <li><strong>NVIDIA GFSDK TXAA</strong> -- hardware vendor SDK, at <code class="addr">0x141c0f178</code>. Optimized for NVIDIA GPUs.</li>
+  <li><strong>NVIDIA GFSDK TXAA</strong> -- hardware vendor SDK, at <span class="named-addr"><span class="addr-name">GFSDK_TXAA_DX11_ResolveFromMotionVectors</span><code class="addr">0x141c0f178</code></span>. Optimized for NVIDIA GPUs.</li>
   <li><strong>Ubisoft Custom TXAA</strong> (<code>UBI_TXAA</code>) -- software fallback via <code>TemporalAA_p.hlsl</code>. Cross-vendor.</li>
 </ol>
 <div class="code-block"><button class="copy-btn" title="Copy to clipboard">Copy</button><pre><code>TEMPORAL AA:
@@ -769,7 +775,7 @@ Step 3: ReconstructNormal_p.hlsl     -- Normals from depth derivatives
 Step 4: CoarseAO_p.hlsl             -- Main AO at quarter resolution
 Step 5: ReinterleaveAO_p.hlsl       -- Recombine layers
 Step 6: BlurX_p.hlsl + BlurY_p.hlsl -- Bilateral blur</code></pre></div>
-<p><strong>It runs TWICE.</strong> Two parameter sets from the decompiled config at <code class="addr">0x14091f4e0</code>:</p>
+<p><strong>It runs TWICE.</strong> Two parameter sets from the decompiled config at <span class="named-addr"><span class="addr-name">NSysCfgVision::SSSAmbOcc_Registration</span><code class="addr">0x14091f4e0</code></span>:</p>
 <ul>
   <li><code>NvHBAO.*</code> -- Small-scale (contact shadows, fine detail)</li>
   <li><code>NvHBAO_BigScale.*</code> -- Big-scale (room-scale ambient occlusion)</li>

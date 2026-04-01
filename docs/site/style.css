@@ -449,6 +449,37 @@ code.addr {
     font-weight: 500;
 }
 
+/* Named addresses: show symbol name, hide hex by default */
+.named-addr .addr {
+    display: none;
+    margin-left: 3px;
+    font-size: 0.85em;
+    opacity: 0.6;
+}
+
+.named-addr .addr::before {
+    content: "(";
+}
+
+.named-addr .addr::after {
+    content: ")";
+}
+
+body.show-addresses .named-addr .addr {
+    display: inline;
+}
+
+.addr-name {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--bg-code);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--code-addr);
+    font-weight: 500;
+    word-break: break-word;
+}
+
 /* Code blocks */
 .code-block {
     position: relative;
@@ -490,17 +521,6 @@ code.addr {
 .code-block:hover .copy-btn { opacity: 1; }
 .copy-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
 .copy-btn.copied { color: var(--badge-verified); }
-
-/* Mermaid diagrams */
-.mermaid {
-    margin: 1.5em 0;
-    padding: 1.5em;
-    background: var(--bg-code);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow-x: auto;
-    text-align: center;
-}
 
 /* Tables */
 .table-wrapper {
@@ -724,15 +744,113 @@ hr {
     }
 
     .content-wrapper {
-        padding: 16px;
+        padding: 12px;
     }
 
-    h1 { font-size: 22px; }
-    h2 { font-size: 18px; }
-    h3 { font-size: 16px; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 17px; }
+    h3 { font-size: 15px; }
+    h4 { font-size: 14px; }
+
+    body { font-size: 14px; }
 
     .prev-next { flex-direction: column; }
     .prev-next a { max-width: 100%; }
+
+    /* Named addresses on mobile */
+    .addr-name {
+        font-size: 0.82em;
+        padding: 1px 4px;
+        word-break: break-all;
+    }
+
+    .named-addr .addr {
+        font-size: 0.78em;
+    }
+
+    /* Tables on mobile */
+    .table-wrapper {
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 6px 8px;
+    }
+
+    th {
+        white-space: normal;
+    }
+
+    /* Code blocks on mobile */
+    .code-block pre {
+        padding: 12px;
+        font-size: 12px;
+    }
+
+    .code-block pre code {
+        font-size: 12px;
+    }
+
+    /* Inline code on mobile */
+    code {
+        font-size: 0.82em;
+        padding: 1px 4px;
+    }
+
+    /* Touch-friendly targets */
+    .sidebar-toggle button {
+        min-height: 44px;
+    }
+
+    .nav-item {
+        min-height: 44px;
+        padding: 10px 16px;
+    }
+
+    /* Disclaimer compact */
+    .disclaimer {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+
+    /* Collapsible sections on mobile */
+    details.collapsible summary {
+        padding: 8px 8px 8px 12px;
+    }
+
+    details.collapsible .collapsible-content {
+        padding: 0 0 0.5em 8px;
+    }
+
+    /* Scroll top button - larger touch target */
+    .scroll-top {
+        width: 44px;
+        height: 44px;
+        bottom: 16px;
+        right: 16px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+    .content-wrapper {
+        padding: 8px;
+    }
+
+    h1 { font-size: 18px; }
+    h2 { font-size: 16px; }
+
+    table { font-size: 11px; }
+    th, td { padding: 4px 6px; }
+
+    .addr-name {
+        font-size: 0.78em;
+    }
 }
 
 /* Collapsible sections */

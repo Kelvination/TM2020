@@ -31,6 +31,12 @@
                     Hide Technical Details
                 </button>
             </div>
+            <div class="sidebar-toggle">
+                <button id="addr-toggle" class="tech-toggle collapsed" title="Toggle hex address display alongside symbol names">
+                    <span class="toggle-icon">&#9654;</span>
+                     Show Hex Addresses
+                </button>
+            </div>
             <nav class="sidebar-nav" id="sidebar-nav">
                 <div class="nav-section">Reverse Engineering</div>
 <div class="nav-subsection">Core Systems</div>
@@ -144,7 +150,7 @@
 </tr>
 <tr>
   <td style="text-align:left">Image base</td>
-  <td style="text-align:left"><code class="addr">0x140000000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">PE_IMAGE_BASE</span><code class="addr">0x140000000</code></span></td>
 </tr>
 <tr>
   <td style="text-align:left">Subsystem</td>
@@ -176,43 +182,43 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14291e317</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span></td>
   <td style="text-align:left"><code>entry</code></td>
   <td style="text-align:left">Function</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14299e63a</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">tls_callback_0</span><code class="addr">0x14299e63a</code></span></td>
   <td style="text-align:left"><code>tls_callback_0</code></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141521958</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">tls_callback_1</span><code class="addr">0x141521958</code></span></td>
   <td style="text-align:left"><code>tls_callback_1</code></td>
   <td style="text-align:left">Function</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1415223d4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">tls_callback_2</span><code class="addr">0x1415223d4</code></span></td>
   <td style="text-align:left"><code>tls_callback_2</code></td>
   <td style="text-align:left">Function</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140a811a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">Dxgi_Present_HookCallback</span><code class="addr">0x140a811a0</code></span></td>
   <td style="text-align:left"><code>Dxgi_Present_HookCallback</code></td>
   <td style="text-align:left">Function</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141e70f38</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">AmdPowerXpressRequestHighPerformance</span><code class="addr">0x141e70f38</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - no function]</span></td>
   <td style="text-align:left">Data</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141e70f3c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NvOptimusEnablement</span><code class="addr">0x141e70f3c</code></span></td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span> - no function]</span></td>
   <td style="text-align:left">Data</td>
 </tr>
 </tbody>
 </table></div>
-<p>The main <code>entry</code> at <code class="addr">0x14291e317</code> resides in the <code>.D."</code> section, not <code>.text</code>. Three TLS callbacks execute before the main entry point -- a common technique in packed binaries for anti-debug or unpacking logic. <code>Dxgi_Present_HookCallback</code> is an intentional DXGI present hook for overlay rendering. The two unnamed entries at <code class="addr">0x141e70f38</code>/<code class="addr">0x141e70f3c</code> are the <code>AmdPowerXpressRequestHighPerformance</code> and <code>NvOptimusEnablement</code> data exports for GPU selection.</p>
+<p>The main <code>entry</code> at <span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span> resides in the <code>.D."</code> section, not <code>.text</code>. Three TLS callbacks execute before the main entry point -- a common technique in packed binaries for anti-debug or unpacking logic. <code>Dxgi_Present_HookCallback</code> is an intentional DXGI present hook for overlay rendering. The two unnamed entries at <span class="named-addr"><span class="addr-name">AmdPowerXpressRequestHighPerformance</span><code class="addr">0x141e70f38</code></span>/<span class="named-addr"><span class="addr-name">NvOptimusEnablement</span><code class="addr">0x141e70f3c</code></span> are the <code>AmdPowerXpressRequestHighPerformance</code> and <code>NvOptimusEnablement</code> data exports for GPU selection.</p>
 </div>
 </details>
 <h2 id="how-the-sections-are-laid-out"><a class="anchor" href="#how-the-sections-are-laid-out">#</a>How the sections are laid out</h2>
@@ -230,7 +236,7 @@
 <tbody>
 <tr>
   <td style="text-align:left">Headers</td>
-  <td style="text-align:left"><code class="addr">0x140000000</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">PE_IMAGE_BASE</span><code class="addr">0x140000000</code></span></td>
   <td style="text-align:left"><code class="addr">0x1400003ff</code></td>
   <td style="text-align:left">1,024 B</td>
   <td style="text-align:left">R</td>
@@ -330,7 +336,7 @@
 <p>Three sections have randomly-generated names, a hallmark of commercial executable protectors (e.g., Themida, VMProtect, or Ubisoft's proprietary solution).</p>
 <p><strong><code>.A2U</code></strong> (5.97 MB, RX) is a large executable section. It likely contains protector code or a packed payload.</p>
 <p><strong><code>.9Bv</code></strong> (6,144 B, RW) is tiny and writable. It probably holds configuration, decryption keys, or runtime state for the protector.</p>
-<p><strong><code>.D."</code></strong> (4.23 MB, RX) contains the main entry point (<code class="addr">0x14291e317</code>). The protector stub here runs first, decrypts/decompresses <code>.text</code>, and transfers control.</p>
+<p><strong><code>.D."</code></strong> (4.23 MB, RX) contains the main entry point (<span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span>). The protector stub here runs first, decrypts/decompresses <code>.text</code>, and transfers control.</p>
 <p><strong>Size distribution of executable code:</strong></p>
 <ul>
   <li><code>.text</code>: 25.43 MB (main application code)</li>
@@ -569,37 +575,37 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14291e317</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">entry</span><code class="addr">0x14291e317</code></span></td>
   <td style="text-align:left"><code>entry</code></td>
   <td style="text-align:left">Main entry point</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14299e63a</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">tls_callback_0</span><code class="addr">0x14299e63a</code></span></td>
   <td style="text-align:left"><code>tls_callback_0</code></td>
   <td style="text-align:left">TLS callback (pre-entry)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141521958</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">tls_callback_1</span><code class="addr">0x141521958</code></span></td>
   <td style="text-align:left"><code>tls_callback_1</code></td>
   <td style="text-align:left">TLS callback</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1415223d4</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">tls_callback_2</span><code class="addr">0x1415223d4</code></span></td>
   <td style="text-align:left"><code>tls_callback_2</code></td>
   <td style="text-align:left">TLS callback</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140a811a0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">Dxgi_Present_HookCallback</span><code class="addr">0x140a811a0</code></span></td>
   <td style="text-align:left"><code>Dxgi_Present_HookCallback</code> / <code>Ordinal_2</code></td>
   <td style="text-align:left">DXGI present hook</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141e70f38</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">AmdPowerXpressRequestHighPerformance</span><code class="addr">0x141e70f38</code></span></td>
   <td style="text-align:left"><code>AmdPowerXpressRequestHighPerformance</code> / <code>Ordinal_1</code></td>
   <td style="text-align:left">AMD GPU selection flag</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141e70f3c</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">NvOptimusEnablement</span><code class="addr">0x141e70f3c</code></span></td>
   <td style="text-align:left"><code>NvOptimusEnablement</code> / <code>Ordinal_3</code></td>
   <td style="text-align:left">NVIDIA Optimus GPU selection flag</td>
 </tr>
@@ -625,7 +631,7 @@
 </tr>
 <tr>
   <td style="text-align:left">Largest function</td>
-  <td style="text-align:left">80,516 bytes (78.6 KB) at <code class="addr">0x14006bc80</code></td>
+  <td style="text-align:left">80,516 bytes (78.6 KB) at <span class="named-addr"><span class="addr-name">FUN_largestFunction_80KB</span><code class="addr">0x14006bc80</code></span></td>
 </tr>
 </tbody>
 </table></div>
@@ -640,52 +646,52 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14006bc80</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_largestFunction_80KB</span><code class="addr">0x14006bc80</code></span></td>
   <td style="text-align:left">80,516</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span> Possibly a generated parser, state machine, or VM interpreter</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1400a7980</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_secondLargestFunction_37KB</span><code class="addr">0x1400a7980</code></span></td>
   <td style="text-align:left">37,526</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140b78f10</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">CGameCtnApp::UpdateGame</span><code class="addr">0x140b78f10</code></span></td>
   <td style="text-align:left">34,959</td>
   <td style="text-align:left"><code>CGameCtnApp::UpdateGame</code> (main game loop state machine)</td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x141194010</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_unknownLarge_33KB</span><code class="addr">0x141194010</code></span></td>
   <td style="text-align:left">33,561</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140efa200</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_unknownLarge_31KB</span><code class="addr">0x140efa200</code></span></td>
   <td style="text-align:left">31,877</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1409b93e0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_unknownLarge_30KB</span><code class="addr">0x1409b93e0</code></span></td>
   <td style="text-align:left">30,071</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x140606250</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_unknownLarge_29KB_a</span><code class="addr">0x140606250</code></span></td>
   <td style="text-align:left">29,993</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1400d98b0</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_unknownLarge_29KB_b</span><code class="addr">0x1400d98b0</code></span></td>
   <td style="text-align:left">29,731</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x1411d3960</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_unknownLarge_29KB_c</span><code class="addr">0x1411d3960</code></span></td>
   <td style="text-align:left">29,475</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
 <tr>
-  <td style="text-align:left"><code class="addr">0x14144e600</code></td>
+  <td style="text-align:left"><span class="named-addr"><span class="addr-name">FUN_unknownLarge_27KB</span><code class="addr">0x14144e600</code></span></td>
   <td style="text-align:left">27,867</td>
   <td style="text-align:left"><span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span></td>
 </tr>
@@ -697,7 +703,7 @@
 <h2 id="summary-of-findings"><a class="anchor" href="#summary-of-findings">#</a>Summary of findings</h2>
 <p><strong>What we know:</strong></p>
 <ol>
-  <li>PE32+ x86-64, image base <code class="addr">0x140000000</code>, 43 MB GUI application</li>
+  <li>PE32+ x86-64, image base <span class="named-addr"><span class="addr-name">PE_IMAGE_BASE</span><code class="addr">0x140000000</code></span>, 43 MB GUI application</li>
   <li>Code protection with non-standard sections, minimal imports, and 3 TLS callbacks</li>
   <li>Direct3D 11 is the confirmed graphics API. D3D12 status is <span class="badge badge-unknown">[<span class="badge badge-unknown">UNKNOWN</span>]</span>.</li>
   <li>DirectInput 8 + XInput 9.1.0 for controller support</li>
