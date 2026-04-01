@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# Except docs/
+!docs/
+!docs/**
+
+# Keep .gitignore itself
+!.gitignore

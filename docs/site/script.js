@@ -77,6 +77,25 @@
             });
         });
 
+        // Mermaid diagram rendering
+        if (typeof mermaid !== "undefined") {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "default",
+                securityLevel: "loose"
+            });
+            var mermaidBlocks = document.querySelectorAll("code.language-mermaid");
+            mermaidBlocks.forEach(function(code, i) {
+                var codeBlock = code.closest(".code-block");
+                if (!codeBlock) return;
+                var container = document.createElement("div");
+                container.className = "mermaid";
+                container.textContent = code.textContent;
+                codeBlock.parentNode.replaceChild(container, codeBlock);
+            });
+            mermaid.run();
+        }
+
         // Syntax highlighting
         if (typeof hljs !== "undefined") {
             document.querySelectorAll("pre code").forEach(function(block) {

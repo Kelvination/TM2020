@@ -491,6 +491,17 @@ code.addr {
 .copy-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
 .copy-btn.copied { color: var(--badge-verified); }
 
+/* Mermaid diagrams */
+.mermaid {
+    margin: 1.5em 0;
+    padding: 1.5em;
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow-x: auto;
+    text-align: center;
+}
+
 /* Tables */
 .table-wrapper {
     overflow-x: auto;
